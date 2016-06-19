@@ -1,0 +1,232 @@
+﻿{% load staticfiles %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>挖福利是做什么的？挖福利怎么样？挖福利好吗？- 挖福利的公司简介</title>
+<meta name="keywords" content="挖福利是做什么，挖福利怎么样，挖福利好吗" />
+<meta name="description" content="挖福利一直在寻找最高价值的互联网福利，给大家带来最后的福利体验。" />
+<link rel="shortcut icon" href="/static/images/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/welfare.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/page.css' %}" />
+<link rel="stylesheet" href="{% static 'css/lrtk.css' %}">
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<script type="text/javascript" src="{% static 'js/hashtabber.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/page.js' %}"></script>
+<style>
+a:hover{color: #fff;}
+</style>
+<script type="text/javascript">
+var data='[data]<div class="o0-0p"><a href="{url}"><article>'+
+	'<h4 class="oi-0o">{title}</h4><span class="spn-00">{time}</span>'+
+	'<p class="io0-0">{summary}...</p></article></a></div>[/data]';
+var url = "{% url 'get_press_page' %}" + "?page={page}&size={pageSize}&";
+
+$(function(){
+   	$('.about_h a').toggleClass("vo");
+	$("#pagedata1").ajaxPage({
+	    url:url+"type=1",
+	    pageId:$("#page1"),
+	    pageSize:5,
+	    run:true,
+	    content:data,
+	});
+	$("#pagedata2").ajaxPage({
+	    url:url+"type=2",
+	    pageId:$("#page2"),
+	    pageSize:5,
+	    run:true,
+	    content:data,
+	});
+	$("#pagedata3").ajaxPage({
+	    url:url+"type=3",
+	    pageId:$("#page3"),
+	    pageSize:5,
+	    run:true,
+	    content:data,
+	});
+	$("#pagedata4").ajaxPage({
+	    url:url+"type=5",
+	    pageId:$("#page4"),
+	    pageSize:5,
+	    run:true,
+	    content:data,
+	});
+});
+</script>
+</head>
+<body>
+{% include "header.html" %}
+<div id="content">
+   <div><img src="{{ad_list.pic.url}}"  class="co-imgp"/></div>
+    <!-- 代码 开始 -->
+    <div class="po-0q">
+    <section class="example">
+        <section class="hashTabber-sandstone-wrapper">
+        <ol class="hashTabber-nav hashTabber-sandstone" data-hashtabber-id="cont" data-hashtabber-default="pterosaur">
+            <h2 class="abt-h2">关于我们<p class="abt-p">About&nbsp;US</p><hr class="gh-hr"/><hr class="gh-hrr"/></h2>
+                <li data-hashtabber-pair=intro class="active">
+                    <a href="">公司介绍</a>
+                </li>
+                <li data-hashtabber-pair="announcement" class="">
+                    <a href="" >公告列表</a>
+                </li>
+                <li data-hashtabber-pair="strategy" class="">
+                    <a href="" >福利攻略</a>
+                </li>
+                <li data-hashtabber-pair="exchange_help" class="">
+                    <a href="" >兑奖帮助</a>
+                </li>
+                <li data-hashtabber-pair="news" class="">
+                    <a href="" >新闻动态</a>
+                </li>
+                <li data-hashtabber-pair="public" class="">
+                    <a href="">福利发布</a>
+                </li>
+                <li data-hashtabber-pair="cooperation" class="">
+                    <a href="">商务合作</a>
+                </li>
+                <li data-hashtabber-pair="statement" class="">
+                    <a href="">版权申明</a>
+                </li>
+                <li data-hashtabber-pair="contact" class="">
+                    <a href="contact">联系我们</a>
+                </li>
+                <li data-hashtabber-pair="declaration" class="">
+                    <a href="declaration">免责声明</a>
+                </li>
+        </ol><!--
+     --><ol class="hashTabber-data hashTabber-sandstone" data-hashtabber-id="cont">
+                <li data-hashtabber-pair="intro" class="active">
+                    <article>
+                        <h3>公司简介</h3>
+                            <p><b>红包、优惠券、返利、0元购、免费</b>等字眼近些年成了互联网产品宣传的噱头，每每听说这些公司为了宣传烧了多少钱，但是，</p>
+                            <p>&nbsp;</p>
+                            <p>为什么每次当我在使用某个产品迫切需要优惠的时候却找不到活动了呢？<br/>为什么等我去抢的时候奖励已经结束了呢？<br/>为什么大家都能抢到那么多，而我获得的奖励却那么少？</p>
+                            <p>&nbsp;</p>
+                            <p>挖福利从用户角度出发，致力于对整合对用户有价值的互联网产品，打造全国首家互联网产品体验超市。</p>
+                            <img src="{% static 'images/about1.png' %}" style="width: 30%;"/>
+                            <p>&nbsp;</p>
+                    </article>
+                    <article>
+                        <h3 style="float:right;margin-right: 135px;">我们的使命</h3>
+                        	<div><img src="{% static 'images/about2.png' %}" style="float: left;margin-left:40px"/></div>
+                            <p class="ki-0p">在这里，我们能让您，<br/>获得红包、优惠券、流量话费的最新信息；<br/>通过完成体验任务获得返利；<br/>投资理财产品获得更多收益。</p>
+                            <img src="{% static 'images/about3.png' %}" style="margin-left: 3rem;"/>
+                    </article>
+                    <article>
+                        <h3>资深团队</h3>
+                            <p class="iu-0f">挖福利团队聚集的不仅是一群阳光活力的“四有青年”，更是一批有着坚定目标并脚踏实地的践行者，他们来自互联网、银行、新能源等行业中的top企业中，</p>
+                            <p class="iu-0f">对于当前互联网潮流有着很深的见解，同时具有专业的理财投资眼光。</p><p>&nbsp;</p>
+                            
+                            <p class="iu-0f">我们始终以高质的服务理念和高效的执行能力为工作准则，将企业目标和
+社会发展有机结合，协同前进。</p>
+                            <img src="{% static 'images/about4.png' %}" style="width: 30%;"/>
+                    </article>
+                </li>
+                <li data-hashtabber-pair="announcement" class="">
+                	<div id="pagedata1">
+	                
+	                </div>
+	                <div class="changes-p-about">
+		                <div class="page"  id="page1">
+		                
+	                 	</div>
+	                </div>
+                </li>
+            
+                <li data-hashtabber-pair="strategy" class="">
+	                <div id="pagedata2">
+	                
+	                </div>
+	                <div class="changes-p-about">
+		                <div class="page"  id="page2">
+		                
+	                 	</div>
+	                </div>
+                </li>
+                <li data-hashtabber-pair="exchange_help" class="">
+	                <div id="pagedata4">
+	                
+	                </div>
+	                <div class="changes-p-about">
+		                <div class="page"  id="page4">
+		                
+	                 	</div>
+	                </div>
+                </li>
+                <li data-hashtabber-pair="news" class="">
+	                <div id="pagedata3">
+	                
+	                </div>
+	                <div class="changes-p-about">
+		                <div class="page"  id="page3">
+		                
+	                 	</div>
+	                </div>
+                </li>
+                <li data-hashtabber-pair="public" class="">
+                    <article>
+                        4
+                    </article>
+                </li>
+            
+                <li data-hashtabber-pair="cooperation" class="">
+                    <article>
+                        5
+                    </article>
+                </li>
+                <li data-hashtabber-pair="statement" class="">
+                    <article>
+						6
+                    </article>
+                </li>
+                <li data-hashtabber-pair="contact" class="">
+                    <article>
+						7
+                    </article>
+                </li>
+                <li data-hashtabber-pair="declaration" class="">
+                    <article>
+                        8
+                    </article>
+                </li>
+        </ol>
+        </section>
+    </section>
+    </div>
+    <script>
+    var tabber = new HashTabber();
+    tabber.run();
+    </script>
+    <!-- 代码 结束 -->
+	<script>
+		function subMenu(liElement){
+			
+			var brother = liElement.nextSibling.nextSibling;
+			if(brother.style.display!='none'){
+				brother.style.display = 'none';
+				brother.nextSibling.nextSibling.style.display='none';
+			}else{
+				brother.style.display = 'block';
+				brother.nextSibling.nextSibling.style.display='block';
+			}
+		}
+	</script>
+  
+
+
+
+
+    	
+</div>
+<div style="clear:both"></div>
+<!--底部-->
+  {% include "footer.html" %}
+  <!--浮动窗口-->  
+  {% include "outline.html" %}
+</body>
+</html>

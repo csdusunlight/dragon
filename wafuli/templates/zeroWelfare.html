@@ -1,0 +1,185 @@
+﻿{% load staticfiles %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>一个提供免费福利的网络理财平台，挖福利。</title>
+<meta name="keywords" content="免费福利，理财红包，理财活动，购物红包，体验红包" />
+<meta name="description" content="挖福利免费为您提供互联网优惠券和免费福利领取活动信息！" />
+<link rel="shortcut icon" href="/static/images/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/welfare.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/page.css' %}" />
+
+<script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.flexslider-min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jQuery.infiniteCarousel.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/MSClass.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/page.js' %}"></script>
+<script type="text/javascript">
+var data='[data]<li class="tab-li">'+
+	'<a target="_blank" href="{url}"><img src="{pic}" alt="" width="238" height="148"/></a>'+
+	'<h2><a target="_blank" href="{url}"  class="tli-title">{title}</a></h2>'+
+	'<p class="line-k">商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 家：{provider}<br />浏 览 数 ：{view}<br />'+
+	'活动时间：{time}</p><a target="_blank" href="{url}" class="mores">立即查看</a></li>[/data]';
+var data2='[data]<li class="tab-li">'+
+	'<a target="_blank" href="{url}"><img src="{pic}" alt="" width="238" height="148"/></a>'+
+	'<h2><a target="_blank" href="{url}"  class="tli-title">{title}</a></h2>'+
+	'<p class="line-k">商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 家：{provider}<br />浏 览 数 ：{view}<br />'+
+	'活动时间：{time}</p><a target="_blank" href="{url}" class="ends">立即查看</a></li>[/data]';
+var url = "{% url 'get_wel_page' %}" + "?page={page}&size={pageSize}&";
+
+$(function(){
+   	$('.zero_h a').toggleClass("vo");
+	$("#pagedata1").ajaxPage({
+	    url:url+"state=1&filter=0",
+	    pageId:$("#page1"),
+	    pageSize:6,
+	    run:true,
+	    content:data,
+	});
+	$("#pagedata2").ajaxPage({
+	    url:url+"state=2&filter=0",
+	    pageId:$("#page2"),
+	    pageSize:6,
+	    run:true,
+	    content:data2,
+	});
+ 	$("#tab li").click(function(){
+		if($(this).attr("class")!="cur"){
+			$(this).toggleClass("cur").siblings().removeClass("cur")
+			var index = $(this).index();
+			$("#page1").empty();
+			$("#pagedata1").ajaxPage({
+			    url:url+"state=1&filter="+index, 
+			    pageId:$("#page1"),
+			    pageSize:6,
+			    run:true,
+			    content:data,
+			});
+		}
+ 	});
+ 	$("#tabg li").click(function(){
+		if($(this).attr("class")!="curs"){
+			$(this).toggleClass("curs").siblings().removeClass("curs")
+			var index = $(this).index();
+			$("#page2").empty();
+			$("#pagedata2").ajaxPage({
+			    url:url+"state=2&filter="+index, 
+			    pageId:$("#page2"),
+			    pageSize:6,
+			    run:true,
+			    content:data2,
+			});
+		}
+ 	});
+    $('.flexslider').flexslider({
+           directionNav: true,
+           pauseOnAction: false
+    });
+
+});
+</script>
+<!--[if IE 6]>
+<script src="js/DD_belatedPNG.js"></script>
+<script>
+    DD_belatedPNG.fix('.ie6Png,.ie6Png img,*');
+</script>
+<![endif]-->
+</head>
+<body>
+{% include "header.html" %}
+<div id="content">
+   <div id="index-banner">
+    <div class="flexslider">
+      <ul class="slides">
+	  {% for adv in ad_list %}
+        <li onclick="location='{{adv.url}}'" style="background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li>
+      {%endfor%}
+      </ul>
+    </div>
+  </div>
+    <div class="cont-box">
+	<div class="cont">
+    <span class="we-one"><b>0元福利体验步骤</b>:</span>
+    <span><img src="{% static 'images/number.png' %}" class="ew-img"/><span class="ew">1</span></span><span><a href="#" class="ew-dian">点击查看操作流程</a><img src="{% static 'images/jiantou.png' %}" class="ew-jt" style="margin-left: 12rem;"/></span>
+    <span style="margin-left: 18rem;"><img src="{% static 'images/number.png' %}" class="ew-img"/><span class="ew">2</span></span><span><a href="#" class="ew-dian">阅读操作步骤</a><img src="{% static 'images/jiantou.png' %}" class="ew-jt" style="margin-left: 10rem;"/></span>
+     <span style="margin-left: 15.5rem;"><img src="{% static 'images/number.png' %}" class="ew-img"/><span class="ew">3</span></span><span><a href="#" class="ew-dian">进入商家领取福利</a></span>
+    </div>
+    </div>
+    
+    <div class="conte">
+    	<div class="ew-left">
+        	<!-- 代码 begin -->
+            
+                <div id="tab">
+                <span class="rep-one"> <img src="{% static 'images/shape.png' %}"/>正在进行的免费福利</span>
+                  <div class="tabList" style="float:right;">
+                    
+                    <ul>
+                        <li class="cur">全部</li>
+                        <li>购物</li>
+                        <li>体验金</li>
+                        <li>流量</li>
+                        <li>话费</li>
+                        <li>其他</li>
+                    </ul>
+                  </div>
+                  <div class="tabCon">
+                    <div class="cur">
+                    	<ul id="pagedata1">
+
+                      </ul>
+                    </div>
+                  </div>
+            </div>
+            <div class="changes-p">
+				<div class="page"  id="page1">
+				</div>
+            </div>
+            
+            <!-- 代码 begin -->
+            
+                <div id="tabg" style="margin-top:2rem">
+                <span class="rep-one"> <img src="{% static 'images/shape.png' %}"/>已经结束的免费福利</span>
+                  <div class="tabList" style="float:right;">
+                    
+                    <ul>
+                        <li class="curs">全部</li>
+                        <li>购物</li>
+                        <li>体验金</li>
+                        <li>流量</li>
+                        <li>话费</li>
+                        <li>其他</li>
+                    </ul>
+                  </div>
+                  <div class="tabCon">
+                    <div class="curs">
+                    	<ul id="pagedata2">
+                        
+                      </ul>
+                    </div>
+                    <div>购物</div>
+                    <div>体验金</div>
+                    <div>流量</div>
+                    <div>话费</div>
+                    <div>其他</div>
+                  </div>
+            </div>
+            <div class="changes-p">
+            	<div class="page"  id="page2">
+            	</div>
+            </div>
+        </div>
+       {% include 'right.html' %}
+        </div>
+    </div>
+<div style="clear:both"></div>
+<!--底部-->
+  {% include "footer.html" %}
+  <!--浮动窗口-->  
+  {% include "outline.html" %}
+
+</body>
+</html>
