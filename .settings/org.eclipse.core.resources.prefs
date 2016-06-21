@@ -14,7 +14,6 @@ encoding//account/tools.py=utf-8
 encoding//account/varify.py=utf-8
 encoding//account/views.py=utf-8
 encoding//captcha/helpers.py=utf-8
-encoding//captcha/migrations/0001_initial.py=utf-8
 encoding//captcha/tests/tests.py=utf-8
 encoding//static/css/activity.css=UTF-8
 encoding//static/css/commodity.css=UTF-8

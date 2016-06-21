@@ -45,6 +45,10 @@ class News(Base):
     exp_code = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, verbose_name=u"上传二维码")
     advert = models.ForeignKey("Advertisement",blank=True, null=True, on_delete=models.SET_NULL)
     company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True)
+    #增加title、keywords、description等seo字段
+    seo_title = models.CharField(max_length=200, verbose_name=u"SEO标题", blank=True)
+    seo_keywords = models.CharField(max_length=200, verbose_name=u"SEO关键词", blank=True)
+    seo_description = models.CharField(max_length=200, verbose_name=u"SEO描述", blank=True)
     class Meta:
         abstract = True
     def clean(self):
@@ -280,6 +284,10 @@ class Press(Base):
                          imagePath="photos/%(year)s/%(month)s/%(day)s/",
                          filePath="photos/%(year)s/%(month)s/%(day)s/", 
                          upload_settings={"imageMaxSize":1204000},settings={},command=None,blank=True)
+    #增加title、keywords、description等seo字段
+    seo_title = models.CharField(max_length=200, verbose_name=u"SEO标题", blank=True)
+    seo_keywords = models.CharField(max_length=200, verbose_name=u"SEO关键词", blank=True)
+    seo_description = models.CharField(max_length=200, verbose_name=u"SEO描述", blank=True)
     def clean(self):
         if self.type == '3' and not self.pic:
             raise ValidationError({'pic': u'新闻类型必输'})
