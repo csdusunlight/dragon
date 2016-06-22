@@ -22,9 +22,9 @@
 .flex-control-nav a{display:inline-block;width:11px;height:11px;line-height:40px;overflow:hidden;background: url(../images/btn-1.png) no-repeat;cursor:pointer;}
 .flex-control-nav .flex-active{background: url(../images/btn-2.png) no-repeat;}
 .index-banner-main{width:1100px;height:auto;display:inline-block;text-align:left;position:relative;z-index:100;}
-.index_29{width:182px;height:47px;clear:both;margin-left:50px;margin-top:100px;display:inline-block;text-align:left;}
+.index_29{width:182px;height:47px;clear:both;margin-left:0px;margin-top:100px;display:inline-block;text-align:left;}
 .index_29 a{display:block;widht:100%;height:100%;text-align:center;line-height:47px;background: url(../images/bg-11.png) no-repeat;color:#fff;font-size:20px;font-weight:bold;}
-.index_30{width:224px;height:42px;clear:both;margin-left:57px;display:inline-block;text-align:left;line-height:42px;font-size:14px;color:#fff;}
+.index_30{width:224px;height:42px;clear:both;margin-left:auto;margin-right:auto;display:inline-block;text-align:center;line-height:42px;font-size:14px;color:#fff;}
 .index_30 a{color:#ffe404;}
 .index_31{width:281px;height:276px;display:inline-block;text-align:center;background: url(../images/bg-12.png) no-repeat;position:absolute;top:37px;right:0;}#index_8{width:100%;height:211px;clear:both;text-align:center;background: url(../images/line-1.gif) repeat-x;}
 .index_9{width:1100px;height:211px;display:inline-block;text-align:left;}
