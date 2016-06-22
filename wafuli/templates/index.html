@@ -97,6 +97,10 @@
   <div id="index_12">
     <div class="index_13"><h2>免费福利</h2><h3>抢到就是赚到</h3><a href="{%url 'welfare'%}" class="more">更多 &gt;</a></div>
     <div class="index_15">
+      <div class="icobox">
+          	<img src="{% static 'images/ico1.png' %}" class="ico1" />
+            <img src="{% static 'images/ico2.png' %}" class="ico2" />
+      </div>
       <ul>
 {% for news in zero_list %}
         <li>
@@ -117,6 +121,10 @@
   <div id="index_16">
     <div class="index_17"><h2>体验福利</h2><h3>完成任务就送福利</h3><a href="{%url 'task'%}" class="more">更多 &gt;</a></div>
     <div class="index_18">
+      <div class="icobox">
+          	<img src="{% static 'images/ico3.png' %}" class="ico1" />
+            <img src="{% static 'images/ico4.png' %}" class="ico3" />
+      </div>
       <ul>
 {% for news in task_list %}
         <li>
@@ -137,6 +145,10 @@
   <div id="index_20">
     <div class="index_21"><h2>理财福利</h2><h3>让您多些利息</h3><a href="{%url 'finance'%}" class="more">更多 &gt;</a></div>
     <div class="index_22">
+      <div class="icobox">
+          	<img src="{% static 'images/ico5.png' %}" class="ico1" />
+            <img src="{% static 'images/ico6.png' %}" class="ico3" />
+      </div>
       <ul>
 {% for news in finance_list %}
         <li>
@@ -167,6 +179,10 @@
   </div>
   <div id="index_23">
     <div class="index_26"><h2>积分商城</h2><h3>积分也能购物</h3><a href="{% url 'mall' %}" class="more">更多 &gt;</a></div>
+    <div class="icobox">
+          	<img src="{% static 'images/ico1.png' %}" class="ico4" />
+            <img src="{% static 'images/ico2.png' %}" class="ico5" />
+    </div>
     <div class="index_33">
       <div class="index_36 s1">
         <h2>数码产品</h2>
@@ -212,7 +228,7 @@
   </div>
   <div id="index_32">
     <div class="index_38">
-      <div class="index_34">新闻动态<a href="{% url 'aboutus' %}#cont=news" class="more">更多 +</a></div>
+      <div class="index_34">活动中心<a href="{% url 'aboutus' %}#cont=news" class="more">更多 +</a></div>
       <div class="index_35">
         <div class="index_40"><img src="{% static "images/i316x241.jpg" %}" alt="" width="316" height="241"/></div>
         <div class="index_37">
