@@ -94,6 +94,7 @@
       </script>
     </div>
   </div>
+<div class="box_back">
   <div id="index_12">
     <div class="index_13"><h2>免费福利</h2><h3>抢到就是赚到</h3><a href="{%url 'welfare'%}" class="more">更多 &gt;</a></div>
     <div class="index_15">
@@ -132,6 +133,7 @@
           <h2><a target="_blank" href="{{news.url}}">{{news.title}}</a></h2>
           商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 家：{{news.provider}}<br />浏 览 数 ：{{news.view_count}}<br />活动时间：{{news.time_limit}}
           <a target="_blank" href="{{news.url}}" class="more">立即查看</a>
+          <div class="newpost">新</div>
         </li>
 {% endfor %}
       </ul>
@@ -152,7 +154,8 @@
       <ul>
 {% for news in finance_list %}
         <li>
-          <h2>{{news.title}}</h2>
+          <h2>{{news.title}}<img src="{% static 'images/new_cont.png' %}" class="new_cont" /></h2>
+          
           <div class="lf" text-align="center">
           <table width="100%" cellpadding="0" cellspacing="0">
             <tr class="thead">
@@ -226,6 +229,7 @@
     new Marquee(["scroll","ulscroll"],0,1,298,356,20,0,0);
     </script>
   </div>
+</div>
   <div id="index_32">
     <div class="index_38">
       <div class="index_34">活动中心<a href="{% url 'aboutus' %}#cont=news" class="more">更多 +</a></div>
