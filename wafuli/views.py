@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.http.response import Http404
 from wafuli.models import ZeroPrice, Task, Finance, News, Commodity,\
-    ExchangeRecord, Press, UserEvent, Advertisement
+    ExchangeRecord, Press, UserEvent, Advertisement, Activity
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
@@ -17,7 +17,7 @@ def index(request):
     zero_list = ZeroPrice.objects.filter(state='1')[0:3]
     task_list = Task.objects.filter(state='1')[0:3]
     finance_list = Finance.objects.filter(state='1')[0:3]
-    news_list = Press.objects.filter(type='3')[0:2]
+    news_list = Activity.objects.filter(is_hidden=False)[0:2]
     exchange_list = ExchangeRecord.objects.all()[0:10]
     strategy_list = Press.objects.filter(type='2')[0:6]
     return render(request, 'index.html', {'ad_list':ad_list, 'zero_list': zero_list, 
