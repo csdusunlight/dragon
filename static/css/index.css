@@ -182,8 +182,8 @@ table{border-collapse:collapse;}
 
 .box_in { float:left; width:912px; height:auto; background:url(../images/newback1.png) no-repeat right; padding-right:2px; box-sizing:border-box;}
 .frcont { float:right; width:165px; height:auto; margin-top:23px;}
-.frcont p { font-size:13px; color:#a7a7a7; line-height:35px; margin:0;}
-.frcont p font { color:#eb891b;}
+.frcont p { font-size:13px; color:#3a3a3a; line-height:35px; margin:0;}
+.frcont p font { color:#ff0000; display:inline-block; width:40px; text-align:center;}
 
 .box_back { float:left; width:100%; height:auto; background:#fbfbfb; padding-bottom:20px;}
 .ico1 { position:absolute; left:0; top:0;}
