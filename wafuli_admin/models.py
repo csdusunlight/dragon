@@ -13,6 +13,7 @@ class DayStatis(models.Model):
     coupon_amount = models.DecimalField(u'红包兑现金额', decimal_places = 2, max_digits=10, default=0)
     exchange_num = models.PositiveIntegerField(u"兑换人数", default=0)
     exchange_scores = models.PositiveIntegerField(u"积分兑换", default=0)
+    new_wel_num = models.PositiveIntegerField(u"今日上线福利", default=0)
     def __unicode__(self):
         return self.date.strftime("%Y-%m-%d")
     class Meta:
@@ -28,3 +29,8 @@ class RecommendRank(models.Model):
         return self.user.username +',' + str(self.acc_num) + ','+str(self.award)+','+str(self.rank)
     class Meta:
         ordering = ['-acc_num']
+
+class GlobalStatis(models.Model):
+    time = models.DateTimeField(u"统计时间", auto_now=True)
+    all_wel_num = models.PositiveIntegerField(u"福利总数", default=0)
+    withdraw_total = models.PositiveIntegerField(u'累计提现金额', default=0)

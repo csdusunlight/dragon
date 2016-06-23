@@ -33,6 +33,10 @@ class Base(models.Model):
     view_count = models.IntegerField(u"浏览量", default=0)
     change_user = models.CharField(u"上次修改用户", max_length=200, blank=True)
     url = models.CharField(u"本页面地址",max_length=200)
+    def is_new(self):
+        now = datetime.datetime.now()
+        days = (now-self.pub_date).days
+        return days == 0
     class Meta:
         abstract = True
     def __unicode__(self):

@@ -1,7 +1,7 @@
 #coding:utf-8
 from django.shortcuts import render
 from django.http.response import Http404
-from wafuli.models import ZeroPrice, Task, Finance, News, Commodity,\
+from wafuli.models import ZeroPrice, Task, Finance, Commodity,\
     ExchangeRecord, Press, UserEvent, Advertisement, Activity
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
@@ -9,6 +9,8 @@ from django.http import JsonResponse
 from account.transaction import charge_score
 from django.db.models import Q
 import logging
+from datetime import date
+from wafuli_admin.models import DayStatis, GlobalStatis
 logger = logging.getLogger('wafuli')
 
 def index(request):
@@ -20,12 +22,30 @@ def index(request):
     news_list = Activity.objects.filter(is_hidden=False)[0:2]
     exchange_list = ExchangeRecord.objects.all()[0:10]
     strategy_list = Press.objects.filter(type='2')[0:6]
-    return render(request, 'index.html', {'ad_list':ad_list, 'zero_list': zero_list, 
-                                          'task_list': task_list, 'announce_list':announce_list,
-                                          'finance_list': finance_list,
-                                         'news_list': news_list,'exchange_list': exchange_list,
-                                         'strategy_list': strategy_list,
-                                          })
+    context = {'ad_list':ad_list, 
+               'zero_list': zero_list, 
+               'task_list': task_list, 'announce_list':announce_list,
+               'finance_list': finance_list,
+               'news_list': news_list,'exchange_list': exchange_list,
+               'strategy_list': strategy_list,
+    }
+    try:
+        statis = DayStatis.objects.get(date=date.today())
+    except:
+        new_wel_num = 0
+    else:
+        new_wel_num = statis.new_wel_num
+    glo_statis = GlobalStatis.objects.first()
+    if glo_statis:
+        all_wel_num = glo_statis.all_wel_num
+        withdraw_total = glo_statis.withdraw_total
+        
+    else:
+        withdraw_total = 0
+        all_wel_num = 0
+    context.update({'new_wel_num':new_wel_num, 'all_wel_num':all_wel_num, 'withdraw_total':withdraw_total})
+    print new_wel_num
+    return render(request, 'index.html', context)
 def finance(request, id=None):
     if id is None:
         ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='4'),is_hidden=False)[0:8]
