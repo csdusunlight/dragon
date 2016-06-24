@@ -92,7 +92,7 @@
       <div class="frcont">
       	<p>今日上线福利：       <font>{{new_wel_num}}</font>      个</p>
         <p>总计上线福利：    <font>{{all_wel_num}}</font>     个</p>
-        <p>累积提现金额：  <font>{{withdraw_total}}</font>   元</p>
+        <p>累积奖励现金：  <font>{{withdraw_total}}</font>   元</p>
       </div>
 	  <script type="text/javascript">
       $(function(){
@@ -116,15 +116,13 @@
           <h2><a target="_blank" href="{{news.url}}" >{{news.title}}</a></h2>
           <p>商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 家：{{news.provider}}<br />浏 览 数 ：{{news.view_count}}<br />活动时间：{{news.time_limit}}</p>
           <a href="{{news.url}}" class="more" target="_blank">立即查看</a>
+          {% if news.is_new %}
+          <div class="newpost zero">新</div>
+          {% endif %}
         </li>
 {% endfor %}
       </ul>
     </div>
-  <script type="text/javascript">
-  $(function(){
-      $(".index_15 ul li:nth-child(3)").addClass('s');
-  });
-  </script>
   </div>
   <div id="index_16">
     <div class="index_17"><h2>体验福利</h2><h3>完成任务就送福利</h3><a href="{%url 'task'%}" class="more">更多 &gt;</a></div>
