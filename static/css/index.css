@@ -198,3 +198,4 @@ table{border-collapse:collapse;}
 .newpost { position:absolute; left:21px; top:20px; background:url(../images/newbox.png) no-repeat center; width:41px; height:41px; line-height:20px; box-sizing:border-box; padding-left:3px; text-align:left; color:#fff; font-size:16px;}
 .newpost.zero {top:0;}
 .new_cont { vertical-align:top; margin-left:10px; margin-top:10px;}
+.new_cont2 { vertical-align:top; margin-left:10px; margin-top:-7px;}

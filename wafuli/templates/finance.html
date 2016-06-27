@@ -169,7 +169,27 @@ $(function(){
             </div>
 		  </div>
 		</div>
-		{% include 'right.html' %}
+	<div class="ew-right">
+		<div class="ew-more">
+	    	<div class="er-h2"><span>奖励现金排行榜</span></div>
+	        <ul class="toplist">
+            	<li><font>第一名</font>     <span>nihao</span>          <font>564563</font>元</li>
+            	<li><font>第二名</font>     <span>nihao</span>          <font>564563</font>元</li>
+            	<li><font>第三名</font>     <span>nihao</span>          <font>564563</font>元</li>
+            	<li>第四名    <span>nihao</span>          <font>564563</font>元</li>
+            	<li>第五名    <span>nihao</span>          <font>564563</font>元</li>
+            	<li>第六名    <span>nihao</span>          <font>564563</font>元</li>
+            </ul>
+	    </div>
+		<div class="ew-more s">
+	    	<div class="er-h2"><span>福利攻略</span><span><a href="{% url 'aboutus'%}#cont=strategy" class="er-hr">MORE</a></span></div>
+	        <ul>
+	        {% for news in strategy_list %}
+	        	<li class="er-li"><a href="{{news.url}}">{{news.title}}</a></li>
+	        {% endfor %}
+	        </ul>
+	    </div>
+	</div>
   </div>
 </div>
 <div style="clear:both"></div>

@@ -138,6 +138,7 @@ def expsubmit(request):
         return JsonResponse(result)
     news_id = request.POST.get('id', None)
     news_type = request.POST.get('type', None)
+    is_futou = request.POST.get('is_futou', '0')
     telnum = request.POST.get('telnum', None)
     remark = request.POST.get('remark', '')
     if not (news_id and news_type and telnum):
@@ -156,9 +157,9 @@ def expsubmit(request):
 #         msg = u'该项目已结束或未开始！'
 #         result = {'code':code, 'msg':msg}
 #         return JsonResponse(result)
-    if news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
+    if str(is_futou)!='1' and news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
         code = '2'
-        msg = u'该注册用户已存在，请不要重复提交！'
+        msg = u'该注册手机号已被提交过，请不要重复提交！'
     else:
         UserEvent.objects.create(user=request.user, event_type='1', invest_account=telnum,
                          content_object=news, audit_state='1',remark=remark,)
@@ -307,7 +308,7 @@ def get_finance_page(request):
         contacts = paginator.page(paginator.num_pages)
     data = []
     for con in contacts:
-        i = {"title":con.title,
+        i = {"title":con.title + ('' if not con.is_new() else '<img src="/static/images/new_cont.png" class="new_cont2">'),
              "interest":con.interest,
              "amount":con.amount_to_invest,
              "time":con.investTime,

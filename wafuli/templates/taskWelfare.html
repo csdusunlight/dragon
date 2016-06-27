@@ -171,7 +171,47 @@ $(function(){
                 </div>
             </div>
         </div>
-         {% include 'right.html' %}
+        	<div class="ew-right">
+		<div class="ew-more">
+	    	<div class="er-h2"><span>奖励现金排行榜</span></div>
+	        <div id="colee" style="overflow:hidden;height:320px; width:100%;">
+                <div id="colee1">
+                       <li>
+                       		<p><font>jh*****is</font>&nbsp;&nbsp;&nbsp; 体验了<span>1分钟前</span></p>
+                       		<a href="#">小诺理财最高返现50元</a>
+                       </li>
+                       <li>
+                       		<p><font>jh*****is</font>&nbsp;&nbsp;&nbsp; 体验了<span>1分钟前</span></p>
+                       		<a href="#">小诺理财最高返现50元</a>
+                       </li>
+                       <li>
+                       		<p><font>jh*****is</font>&nbsp;&nbsp;&nbsp; 体验了<span>1分钟前</span></p>
+                       		<a href="#">小诺理财最高返现50元</a>
+                       </li>
+                       <li>
+                       		<p><font>jh*****is</font>&nbsp;&nbsp;&nbsp; 体验了<span>1分钟前</span></p>
+                       		<a href="#">小诺理财最高返现50元</a>
+                       </li>
+                       <li>
+                       		<p><font>jh*****is</font>&nbsp;&nbsp;&nbsp; 体验了<span>1分钟前</span></p>
+                       		<a href="#">小诺理财最高返现50元</a>
+                       </li>
+                       <li>
+                       		<p><font>jh*****is</font>&nbsp;&nbsp;&nbsp; 体验了<span>1分钟前</span></p>
+                       		<a href="#">小诺理财最高返现50元</a>
+                       </li>
+                </div><div id="colee2"></div>     
+            </div>
+	    </div>
+		<div class="ew-more s">
+	    	<div class="er-h2"><span>福利攻略</span><span><a href="{% url 'aboutus'%}#cont=strategy" class="er-hr">MORE</a></span></div>
+	        <ul>
+	        {% for news in strategy_list %}
+	        	<li class="er-li"><a href="{{news.url}}">{{news.title}}</a></li>
+	        {% endfor %}
+	        </ul>
+	    </div>
+	</div>
     </div>
 </div>
 <div style="clear:both"></div>
@@ -179,6 +219,26 @@ $(function(){
   {% include "footer.html" %}
   <!--浮动窗口-->  
   {% include "outline.html" %} 
-
+  <script type="text/javascript">
+<!--
+var wwwzzjsnet = document.getElementById("colee");
+var www_zzjs_net_1 = document.getElementById("colee1");
+var www_zzjs_net_2 = document.getElementById("colee2");
+var speed=50;    //滚动速度值，值越大速度越慢
+var nnn=200/www_zzjs_net_1.offsetHeight;
+for(i=0;i<nnn;i++){www_zzjs_net_1.innerHTML+=""+ www_zzjs_net_1.innerHTML}
+www_zzjs_net_2.innerHTML = www_zzjs_net_1.innerHTML    //克隆www_zzjs_net_2为www_zzjs_net_1
+function Marquee(){
+    if(www_zzjs_net_2.offsetTop-wwwzzjsnet.scrollTop<=0)    //当滚动至www_zzjs_net_1与www_zzjs_net_2交界时
+        wwwzzjsnet.scrollTop-=www_zzjs_net_1.offsetHeight    //wwwzzjsnet跳到最顶端
+    else{
+        wwwzzjsnet.scrollTop++     //如果是横向的 将 所有的 height top 改成 width left
+    }
+}//欢迎来到站长特效网，我们的网址是www.zzjs.net，很好记，zz站长，js就是js特效，.net打造靓站，还有许多广告代码下载。
+var MyMar = setInterval(Marquee,speed);        //设置定时器
+wwwzzjsnet.onmouseover = function(){clearInterval(MyMar)}    //鼠标经过时清除定时器达到滚动停止的目的
+wwwzzjsnet.onmouseout = function(){MyMar = setInterval(Marquee,speed)}    //鼠标移开时重设定时器
+-->
+</script>
 </body>
 </html>

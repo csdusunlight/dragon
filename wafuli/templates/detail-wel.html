@@ -59,9 +59,11 @@ $(function(){
 	});
 	$("button.td-tj").click(function(){
 		var telnum = $('input#telnum').val();
+		telnum = telnum.replace(/(^\s*)|(\s*$)/g, "");
 		var remark = $('input#remark').val();
-		if (!telnum){
-			return;
+		var re=/^1[1,2,3,4,6,5,7,8,9]\d{9}$/;
+		if(!re.test(telnum)){
+			alert("手机号格式不正确！")
 		}
 		else{
 			$('#myModal').modal();
@@ -70,6 +72,10 @@ $(function(){
 	$("a#confirm").click(function(){
 		var telnum = $('input#telnum').val();
 		var remark = $('input#remark').val();
+		var is_futou = 0;
+		if($('input[name="futou"]:eq(0)').is(':checked')){
+			is_futou = 1;
+		}
 		$.ajax({
 			url:"{%url 'expsubmit' %}?type=" + type +"&id=" + id + "&telnum=" + telnum 
 					+ "&remark=" + remark,
@@ -78,6 +84,7 @@ $(function(){
 			data:{
 				'type':type,
 				'id':id,
+				'is_futou':is_futou,
 				'telnum':telnum,
 				'remark':remark,
 			},
@@ -127,9 +134,14 @@ $(function(){
  {%if type == 'Task' or type == 'Finance' %}
   <div class="td-msg">
   	<div class="msg-ti"><img src="{% static 'images/task-02.png' %}" class="ms-pd"/><span class="mag-pp">信息登记</span></div>
-    	<div class="ma-div">注册手机号:<input type="text" placeholder="请输入您的手机号..." class="ms-input" id='telnum'/></div>
-        <div class="ma-div">备注:<input type="text" class="ms-input" id='remark'/></div>
-        <p class="td-yy"><button class="md-trigger td-tj">提交</button></p>
+   	<div class="ma-div">注册手机号：<input type="text" placeholder="输入您的手机号，若有多个请分别提交" class="ms-input" id='telnum'/></div>
+	<div class="ma-div2">是否复投：  
+		<input type="radio" name="futou" id="radio_box"/><label for="radio_box">是</label>
+		<input type="radio" name="futou" id="radio_box" checked="checked"/><label for="radio_box">否</label>
+	</div>
+    <div class="ma-div3">备注：<input type="text" class="ms-input" id='remark'/></div>
+    <p class="td-yy"><button class="md-trigger td-tj">提交</button></p>
+    <div class="clearboth"></div>
   </div>
   <div class="td-msgs">
   	<div class="msg-ti"><img src="{% static 'images/task-03.png' %}" class="ms-pd"/><span class="mag-pp">奖励规则</span></div>
