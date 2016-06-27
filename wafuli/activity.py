@@ -60,7 +60,7 @@ def recommend(request, id=None):
 def get_activity_recommend_page(request):
     res={'code':0,}
     user = request.user
-    if not ( user.is_authenticated() and user.is_staff):
+    if not user.is_authenticated():
         res['code'] = -1
         res['url'] = reverse('login') + "?next=" + reverse('activity_recommend')
         return JsonResponse(res)
@@ -104,7 +104,7 @@ def get_activity_recommend_page(request):
 def get_recommend_rank_page(request):
     res={'code':0,}
     user = request.user
-    if not ( user.is_authenticated() and user.is_staff):
+    if not user.is_authenticated():
         res['code'] = -1
         res['url'] = reverse('login') + "?next=" + reverse('activity_recommend')
         return JsonResponse(res)
