@@ -308,13 +308,14 @@ def get_finance_page(request):
         contacts = paginator.page(paginator.num_pages)
     data = []
     for con in contacts:
-        i = {"title":con.title + ('' if not con.is_new() else '<img src="/static/images/new_cont.png" class="new_cont2">'),
+        i = {"title":con.title,
              "interest":con.interest,
              "amount":con.amount_to_invest,
              "time":con.investTime,
              "scores":con.scrores,
              "benefit":con.benefit,
              "url":con.url,
+             "is_new":'new' if con.is_new() else '',
         }
         data.append(i)
     if data:
@@ -362,6 +363,7 @@ def get_task_page(request):
              "pic":con.pic.url,
              "view":con.view_count,
              'provider':con.provider,
+             "is_new":'new' if con.is_new() else '',
         }
         data.append(i)
     if data:
@@ -405,6 +407,7 @@ def get_wel_page(request):
              "pic":con.pic.url,
              "view":con.view_count,
              'provider':con.provider,
+             "is_new":'new' if con.is_new() else '',
         }
         data.append(i)
     if data:

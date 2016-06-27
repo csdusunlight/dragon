@@ -18,7 +18,7 @@
 <script type="text/javascript" src="{% static 'js/MSClass.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/page.js' %}"></script>
 <script type="text/javascript">
-var data='[data]<li class="tab-li">'+
+var data='[data]<li class="tab-li {is_new}">'+
 	'<a target="_blank" href="{url}"><img src="{pic}" alt="" width="238" height="148"/></a>'+
 	'<h2><a target="_blank" href="{url}"  class="tli-title">{title}</a></h2>'+
 	'<p class="line-k">商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 家：{provider}<br />浏 览 数 ：{view}<br />'+
@@ -29,7 +29,9 @@ var data2='[data]<li class="tab-li">'+
 	'<p class="line-k">商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 家：{provider}<br />浏 览 数 ：{view}<br />'+
 	'活动时间：{time}</p><a target="_blank" href="{url}" class="ends">立即查看</a></li>[/data]';
 var url = "{% url 'get_wel_page' %}" + "?page={page}&size={pageSize}&";
-
+function pagecallback(){
+	$(".tab-li.new").prepend('<div class="newpost z">新</div>');
+}
 $(function(){
    	$('.zero_h a').toggleClass("vo");
 	$("#pagedata1").ajaxPage({
@@ -38,6 +40,7 @@ $(function(){
 	    pageSize:6,
 	    run:true,
 	    content:data,
+	    complete:pagecallback,
 	});
 	$("#pagedata2").ajaxPage({
 	    url:url+"state=2&filter=0",
@@ -57,6 +60,7 @@ $(function(){
 			    pageSize:6,
 			    run:true,
 			    content:data,
+			    complete:pagecallback,
 			});
 		}
  	});
@@ -172,7 +176,28 @@ $(function(){
             	</div>
             </div>
         </div>
-       {% include 'right.html' %}
+	       	<div class="ew-right">
+	       	<div class="rightimg"><img src="{%static 'images/img4.jpg'%}" /></div>
+			<div class="ew-more">
+		    	<div class="er-h2"><span>奖励现金排行榜</span></div>
+		        <ul class="toplist">
+	            	<li><font>第一名</font>     <span>nihao</span>          <font>564563</font>元</li>
+	            	<li><font>第二名</font>     <span>nihao</span>          <font>564563</font>元</li>
+	            	<li><font>第三名</font>     <span>nihao</span>          <font>564563</font>元</li>
+	            	<li>第四名    <span>nihao</span>          <font>564563</font>元</li>
+	            	<li>第五名    <span>nihao</span>          <font>564563</font>元</li>
+	            	<li>第六名    <span>nihao</span>          <font>564563</font>元</li>
+	            </ul>
+		    </div>
+			<div class="ew-more s">
+		    	<div class="er-h2"><span>福利攻略</span><span><a href="{% url 'aboutus'%}#cont=strategy" class="er-hr">MORE</a></span></div>
+		        <ul>
+		        {% for news in strategy_list %}
+		        	<li class="er-li"><a href="{{news.url}}">{{news.title}}</a></li>
+		        {% endfor %}
+		        </ul>
+		    </div>
+		</div>
         </div>
     </div>
 <div style="clear:both"></div>

@@ -33,10 +33,10 @@ margin-top: 1.5rem;}
 
 .conte{width:1100px;margin:1rem auto;}
 .ew-left{width:75%;float:left;}
-.ew-right{width:24%;float:right;}
+.ew-right{width:250px;float:right;}
 .ews-left{width:25%;float:left;margin-top:1rem;}
 .ews-right{width:75%;float:right;margin-top:1rem;}
-.ew-more{width:250px;height:330px;border: 1px solid #EEEEEE; float:right;}
+.ew-more{width:250px;height:auto;border: 1px solid #EEEEEE; float:right;}
 .ew-more.s{margin-top:15px;}
 .toplist { float:left; width:100%; height:auto; box-sizing:border-box; padding:0 12px; text-align:left;}
 .toplist li { font-size:14px; color:#888888; line-height:35px; display:block; float:left; width:100%;}
@@ -55,8 +55,6 @@ margin-right: 1rem;}
 .er-li{text-align: left;
 margin: 5px 0px 5px 1rem;}
 .er-li a:hover{color:#028FD7;}
-.re-imge{float: right;
-margin-top: 1rem;}
 .rep-one{
 	font-size: 18px;
 color: rgb(17, 17, 17);
@@ -71,10 +69,11 @@ border-bottom: 1px solid #eee;}
 .tab-li{
     float: left;
 width: 245px;
-text-align: left;
+text-align: center;
 padding-right: 0px;
-padding-left: 23px;
+padding-left: 18px;
 margin-top:2rem;
+    position: relative;
 }
 .tli-title{font-size: 18px;
 color: #3A3A3A;
@@ -89,7 +88,7 @@ margin-bottom: 1rem;}
 	color: rgb(255, 255, 255);
 	border-radius: 20px;
 	padding: 6px 30px;
-	margin: 4rem 2.5rem 1rem 48px;
+/*	margin: 4rem 2.5rem 1rem 48px; */
 }
 .ends{
 	background: rgb(184, 161, 136) none repeat scroll 0% 0%;
@@ -185,9 +184,7 @@ ul,li{list-style:none;}
 	padding-top: 35px;
 }
 #tab .tabCon div{
-	padding:10px;
-	position:absolute;
-	opacity:0;
+	
 	filter:alpha(opacity=0);
 }
 #tab .tabList li.cur{
@@ -196,6 +193,8 @@ ul,li{list-style:none;}
 	color: #fff;
 }
 #tab .tabCon div.cur{
+	position:absolute;
+	padding:10px;
 	opacity:1;
 	filter:alpha(opacity=100);
 }
@@ -218,7 +217,7 @@ ul,li{list-style:none;}
 	width: 137px;
 	height: 137px;
 	line-height: 114px;
-	margin-left: 40px;
+	margin-left: 50px;
 	margin-top: 0px;
 	background: url("../images/bg-1.jpg") no-repeat;
 	margin-bottom: 0.5rem;
@@ -563,4 +562,8 @@ img{
 #colee li a { font-size:12px; color:#f08519; line-height:20px; margin:0; text-align:left; display:block;}
 #colee li p span { float:right; font-size:12px; color:#d1d1d1; line-height:26px;}
 #colee li p font { color:#a0a0a0;}
-#colee { box-sizing:border-box; padding: 0 12px; margin-top:6px; float:left;}
+#colee { box-sizing:border-box; padding: 0 12px; margin-top:0px; float:left;}
+.newpost.t { position:absolute; left:41px; top:-10px; background:url(../images/newbox.png) no-repeat center; width:41px; height:41px; line-height:20px; box-sizing:border-box; padding-left:3px; text-align:left; color:#fff; font-size:16px;}
+.newpost.z { position:absolute; left:18px; top:0px; background:url(../images/newbox.png) no-repeat center; width:41px; height:41px; line-height:20px; box-sizing:border-box; padding-left:3px; text-align:left; color:#fff; font-size:16px;}
+.rightimg { float:right; width:100%; height:auto;}
+.rightimg img { width:100%; margin-bottom:15px;}
