@@ -84,7 +84,7 @@ h2 {
 h3 {
 	font-size:1.5rem
 }
-p:not(:first-child),pre:not(:first-child),section.example:not(:first-child) {
+#intro p:not(:first-child),.summp p:not(:first-child),pre:not(:first-child),section.example:not(:first-child) {
 	margin: 0px 0px 0px 3rem;
 	text-align: left;
 	color: #ABABAB;
