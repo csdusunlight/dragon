@@ -177,30 +177,12 @@ $(function(){
 	    	<div class="er-h2"><span>奖励现金排行榜</span></div>
 	        <div id="colee" style="overflow:hidden;height:320px; width:100%;">
                 <div id="colee1">
+                 {%for exp in exps %}
                        <li>
-                       		<p><font>jh*****is</font>&nbsp;&nbsp;&nbsp; 体验了<span>1分钟前</span></p>
-                       		<a href="#">小诺理财最高返现50元</a>
+                       		<p><font>{{exp.username}}</font>&nbsp;&nbsp;&nbsp; 体验了<span>1分钟前</span></p>
+                       		<a href="#">{{exp.title}}</a>
                        </li>
-                       <li>
-                       		<p><font>jh*****is</font>&nbsp;&nbsp;&nbsp; 体验了<span>1分钟前</span></p>
-                       		<a href="#">小诺理财最高返现50元</a>
-                       </li>
-                       <li>
-                       		<p><font>jh*****is</font>&nbsp;&nbsp;&nbsp; 体验了<span>1分钟前</span></p>
-                       		<a href="#">小诺理财最高返现50元</a>
-                       </li>
-                       <li>
-                       		<p><font>jh*****is</font>&nbsp;&nbsp;&nbsp; 体验了<span>1分钟前</span></p>
-                       		<a href="#">小诺理财最高返现50元</a>
-                       </li>
-                       <li>
-                       		<p><font>jh*****is</font>&nbsp;&nbsp;&nbsp; 体验了<span>1分钟前</span></p>
-                       		<a href="#">小诺理财最高返现50元</a>
-                       </li>
-                       <li>
-                       		<p><font>jh*****is</font>&nbsp;&nbsp;&nbsp; 体验了<span>1分钟前</span></p>
-                       		<a href="#">小诺理财最高返现50元</a>
-                       </li>
+				{% endfor %}
                 </div><div id="colee2"></div>     
             </div>
 	    </div>
@@ -221,7 +203,6 @@ $(function(){
   <!--浮动窗口-->  
   {% include "outline.html" %} 
   <script type="text/javascript">
-<!--
 var wwwzzjsnet = document.getElementById("colee");
 var www_zzjs_net_1 = document.getElementById("colee1");
 var www_zzjs_net_2 = document.getElementById("colee2");
@@ -239,7 +220,6 @@ function Marquee(){
 var MyMar = setInterval(Marquee,speed);        //设置定时器
 wwwzzjsnet.onmouseover = function(){clearInterval(MyMar)}    //鼠标经过时清除定时器达到滚动停止的目的
 wwwzzjsnet.onmouseout = function(){MyMar = setInterval(Marquee,speed)}    //鼠标移开时重设定时器
--->
 </script>
 </body>
 </html>

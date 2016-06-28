@@ -88,7 +88,13 @@ margin-bottom: 1rem;}
 	color: rgb(255, 255, 255);
 	border-radius: 20px;
 	padding: 6px 30px;
-/*	margin: 4rem 2.5rem 1rem 48px; */
+}
+.submit_mores{
+	background: rgb(240, 134, 25) none repeat scroll 0% 0%;
+	color: rgb(255, 255, 255);
+	border-radius: 20px;
+	padding: 6px 30px;
+	margin: 4rem 2.5rem 1rem 48px; 
 }
 .ends{
 	background: rgb(184, 161, 136) none repeat scroll 0% 0%;

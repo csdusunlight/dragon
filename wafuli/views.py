@@ -10,7 +10,9 @@ from account.transaction import charge_score
 from django.db.models import Q
 import logging
 from datetime import date
-from wafuli_admin.models import DayStatis, GlobalStatis
+from wafuli_admin.models import DayStatis, GlobalStatis, RecommendRank
+from account.models import MyUser
+from django.contrib.contenttypes.models import ContentType
 logger = logging.getLogger('wafuli')
 
 def index(request):
@@ -44,13 +46,24 @@ def index(request):
         withdraw_total = 0
         all_wel_num = 0
     context.update({'new_wel_num':new_wel_num, 'all_wel_num':all_wel_num, 'withdraw_total':withdraw_total})
-    print new_wel_num
     return render(request, 'index.html', context)
 def finance(request, id=None):
     if id is None:
         ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='4'),is_hidden=False)[0:8]
         strategy_list = Press.objects.filter(type='2')[0:10]
-        return render(request, 'finance.html',{'ad_list':ad_list,'strategy_list':strategy_list})
+        context = {'ad_list':ad_list,'strategy_list':strategy_list}
+        rank_users = MyUser.objects.order_by('-accu_income')[0:6]
+        for i in range(len(rank_users)):
+            key = 'rank'+str(i+1)
+            username = rank_users[i].username
+            if len(username) > 4:
+                username = username[0:4] + '****'
+            else:
+                username = username + '****'
+            income = rank_users[i].accu_income
+            context.update({key:{'username':username,'income':str(income)}})
+            print context
+        return render(request, 'finance.html',context)
     else:
         id = int(id)
         try:
@@ -63,7 +76,20 @@ def task(request, id=None):
     if id is None:
         ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='3'),is_hidden=False)[0:8]
         strategy_list = Press.objects.filter(type='2')[0:10]
-        return render(request, 'taskWelfare.html',{'ad_list':ad_list,'strategy_list':strategy_list})
+        context = {'ad_list':ad_list,'strategy_list':strategy_list}
+        task_type = ContentType.objects.get_for_model(Task)
+        event_list = UserEvent.objects.filter(user=request.user, content_type = task_type)[0:6]
+        exps = []
+        for event in event_list:
+            username = event.user.username
+            task = event.content_object
+            if len(username) > 4:
+                username = username[0:4] + '****'
+            else:
+                username = username + '****'
+            exps.append({'username':username,'title':task.title})
+        context.update({'exps':exps})
+        return render(request, 'taskWelfare.html', context)
     else:
         id = int(id)
         try:
@@ -89,7 +115,18 @@ def welfare(request, id=None):
     if id is None:
         ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='2'),is_hidden=False)[0:8]
         strategy_list = Press.objects.filter(type='2')[0:10]
-        return render(request, 'zeroWelfare.html',{'ad_list':ad_list,'strategy_list':strategy_list})
+        context = {'ad_list':ad_list,'strategy_list':strategy_list}
+        ranks = RecommendRank.objects.all()[0:6]
+        for i in range(len(ranks)):
+            key = 'rank'+str(i+1)
+            username = ranks[i].user.username
+            if len(username) > 4:
+                username = username[0:4] + '****'
+            else:
+                username = username + '****'
+            acc_num = ranks[i].acc_num
+            context.update({key:{'username':username,'acc_num':str(acc_num)+u'条'}})
+        return render(request, 'zeroWelfare.html', context)
     else:
         id = int(id)
         try:
