@@ -78,7 +78,7 @@ def task(request, id=None):
         strategy_list = Press.objects.filter(type='2')[0:10]
         context = {'ad_list':ad_list,'strategy_list':strategy_list}
         task_type = ContentType.objects.get_for_model(Task)
-        event_list = UserEvent.objects.filter(user=request.user, content_type = task_type)[0:6]
+        event_list = UserEvent.objects.filter(user=request.user, content_type = task_type.id)[0:6]
         exps = []
         for event in event_list:
             username = event.user.username
