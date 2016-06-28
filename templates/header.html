@@ -5,12 +5,12 @@
     	<div class="rt">
     	{% if not user.is_authenticated %}
     	<a href="{% url 'register' %}">注册</a>&nbsp; | &nbsp;<a href="{% url 'login' %}">登录</a>
-  		&nbsp;| &nbsp;<a href="{% url 'aboutus' %}#cont=strategy">帮助</a>
+  		&nbsp;| &nbsp;
   		{% else %}
-  		欢迎，<a href="{% url 'account_index' %}">{{user.mobile}}</a>
-    	&nbsp;| &nbsp;<a href="{%url 'logout' %}">退出</a>
-    	{% endif %}
-    	
+  		<font>您好，<a href="{% url 'account_index' %}">{{user.mobile}}</a></font><a href="{%url 'logout' %}">退出</a>&nbsp; | &nbsp;
+  		<a href="{%url 'account_message' %}">消息中心</a>&nbsp; | &nbsp;
+  		{% endif %}
+  		<a href="{%url 'aboutus' %}#cont=strategy">帮助</a>
     	</div>
     </div>
     <div class="header-b">

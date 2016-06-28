@@ -33,4 +33,4 @@ class RecommendRank(models.Model):
 class GlobalStatis(models.Model):
     time = models.DateTimeField(u"统计时间", auto_now=True)
     all_wel_num = models.PositiveIntegerField(u"福利总数", default=0)
-    withdraw_total = models.PositiveIntegerField(u'累计提现金额', default=0)
+    award_total = models.PositiveIntegerField(u'累计奖励金额', default=0)

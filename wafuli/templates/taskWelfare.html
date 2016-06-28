@@ -182,7 +182,9 @@ $(function(){
                        		<p><font>{{exp.username}}</font>&nbsp;&nbsp;&nbsp; 体验了<span>1分钟前</span></p>
                        		<a href="#">{{exp.title}}</a>
                        </li>
-				{% endfor %}
+                 {% empty %}
+						<li>最近还没有人提交。</li>
+				 {% endfor %}
                 </div><div id="colee2"></div>     
             </div>
 	    </div>

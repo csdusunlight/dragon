@@ -79,15 +79,17 @@ class Command(BaseCommand):
             n = r.acc_num
             r.save(update_fields=['rank'])
         
-        dict_with = UserEvent.objects.filter(event_type='2',audit_state='0').\
-            aggregate(cou=Count('user',distinct=True),sum=Sum('translist__transAmount'))
-        withdraw_total = dict_with.get('sum') or 0
+#         dict_with = UserEvent.objects.filter(event_type='2',audit_state='0').\
+#             aggregate(cou=Count('user',distinct=True),sum=Sum('translist__transAmount'))
+        total_award = MyUser.objects.aggregate(sum=Sum('accu_income'))
+        print total_award
         global_statis = GlobalStatis.objects.first()
         if not global_statis:
             global_statis = GlobalStatis()
         global_statis.all_wel_num = ZeroPrice.objects.count() + Task.objects.count() + Finance.objects.count()
-        global_statis.withdraw_total = withdraw_total
+        global_statis.award_total = total_award.get('sum')
         global_statis.save()
+        print global_statis.award_total
         
         end_time = time.time()
         logger.info("******Statistics is finished, time:%s*********",end_time-begin_time)
