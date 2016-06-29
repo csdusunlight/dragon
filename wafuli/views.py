@@ -194,6 +194,8 @@ def expsubmit(request):
 #         msg = u'该项目已结束或未开始！'
 #         result = {'code':code, 'msg':msg}
 #         return JsonResponse(result)
+    if str(is_futou)=='1':
+        remark = u"复投：" + remark
     if str(is_futou)!='1' and news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
         code = '2'
         msg = u'该注册手机号已被提交过，请不要重复提交！'
