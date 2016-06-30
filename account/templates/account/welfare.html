@@ -19,6 +19,10 @@ var data = '<table width="100%"><thead><tr><th width="20%">项目</th><th width=
 	'<th width="20%">提交时间</th><th width="20%">状态</th><th width="20%">备注</th></tr></thead><tbody>'+
 	'[data]<tr><td>{title}</td><td>{username}</td><td>{time}</td><td>{state}</td><td>{reason}</td></tr>[/data]'
 	+ '</tbody></table>';
+var data2 = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="20%">提交手机号</th>'+
+	'<th width="20%">提交时间</th><th width="20%">状态</th><th width="20%">拒绝原因</th></tr></thead><tbody>'+
+	'[data]<tr><td>{title}</td><td>{username}</td><td>{time}</td><td>{state}</td><td>{reason}</td></tr>[/data]'
+	+ '</tbody></table>';
 var turl = "{% url 'get_user_wel_page' %}" + "?tpage={page}&size={pageSize}&filter=";
 var furl = "{% url 'get_user_wel_page' %}" + "?fpage={page}&size={pageSize}&filter=";
 function emptydisplay(obj){
@@ -46,13 +50,17 @@ $(function(){
 		if($(this).attr("class")!="on"){
 			$(this).toggleClass("on").siblings().removeClass("on")
 			var index = $(this).index();
+			var pdata = data;
+			if (index==3){
+				pdata = data2;
+			}
 			$("#page1").empty();
 			$("#pagedata1").ajaxPage({
 			    url:turl+index, 
 			    pageId:$("#page1"),
 			    pageSize:6,
 			    run:true,
-			    content:data,
+			    content:pdata,
 			});
 		}						
 	});
@@ -60,13 +68,17 @@ $(function(){
 		if($(this).attr("class")!="on"){
 			$(this).toggleClass("on").siblings().removeClass("on")
 			var index = $(this).index();
+			var pdata = data;
+			if (index==3){
+				pdata = data2;
+			}
 			$("#page2").empty();
 			$("#pagedata2").ajaxPage({
 			    url:furl+index, 
 			    pageId:$("#page2"),
 			    pageSize:6,
 			    run:true,
-			    content:data,
+			    content:pdata,
 			});
 		}						
 	});

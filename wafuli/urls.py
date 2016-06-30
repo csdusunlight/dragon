@@ -42,4 +42,7 @@ urlpatterns = [
     url(r'^activity/recommend/$', 'wafuli.activity.recommend', name='activity_recommend'),
     url(r'^activity/recompage/$', 'wafuli.activity.get_activity_recommend_page', name='get_activity_recommend_page'),
     url(r'^activity/recomrankpage/$', 'wafuli.activity.get_recommend_rank_page', name='get_recommend_rank_page'),
+    
+    url(r'^activity/lottery/$', 'wafuli.activity.lottery', name='activity_lottery'),
+    url(r'^activity/lottery/get_lottery/$', 'wafuli.activity.get_lottery', name='get_lottery'),
 ]

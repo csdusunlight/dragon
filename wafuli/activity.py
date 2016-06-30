@@ -13,11 +13,13 @@ from django.http.response import JsonResponse, Http404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from wafuli_admin.models import RecommendRank
 import datetime
+from wafuli.tools import weighted_random
 logger = logging.getLogger('wafuli')
 def recommend(request, id=None):
     if request.method == "POST":
         if not request.is_ajax():
             logger.warning("Experience refused no-ajax request!!!")
+            raise Http404
         result = {}
         if not request.user.is_authenticated():
             result['code'] = -1
@@ -147,3 +149,24 @@ def get_recommend_rank_page(request):
     res["recordCount"] = item_list.count()
     res["data"] = data
     return JsonResponse(res)
+
+def lottery(request):
+    adv = Advertisement.objects.filter(location='7',is_hidden=False).first()
+    user = request.user
+    context = {'adv':adv,}
+    return render(request, 'activity_lottery.html',context)
+
+def get_lottery(request):
+    if request.method != "POST" or not request.is_ajax():
+        logger.warning("Experience refused no-ajax request!!!")
+        raise Http404
+    result = {}
+    if not request.user.is_authenticated():
+        result['code'] = -1
+        result['url'] = reverse('login') + "?next=" + reverse('activity_lottery')
+        return JsonResponse(result)
+    award_list = [(1, 66.67), (2, 22.22), (3, 7.41), (4, 2), (5, 2), (6, 2),]
+    itemid = weighted_random(award_list)
+    result['code'] = 0
+    result['itemid'] = itemid
+    return JsonResponse(result)

@@ -140,7 +140,7 @@ def aboutus(request):
 
 def experience(request):
     if not request.is_ajax():
-        logger.error("Experience refused no-ajax request!!!")
+        logger.warning("Experience refused no-ajax request!!!")
         raise Http404
     code = '0'
     url = ''
@@ -165,7 +165,7 @@ def experience(request):
     return JsonResponse(result)
 def expsubmit(request):
     if not request.is_ajax():
-        logger.error("Expsubmit refused no-ajax request!!!")
+        logger.warning("Expsubmit refused no-ajax request!!!")
         raise Http404
     code = '0'
     url = ''

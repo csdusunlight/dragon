@@ -1,6 +1,7 @@
 #coding:utf-8
 from django.conf import settings
 import time,os
+import random
 def createUrl():
     tstr = time.strftime('%Y/%m/%d/')
     html_name = str(int(time.time()))+'.html'
@@ -24,3 +25,12 @@ def writeHtml(html,url):
         html = html.encode('utf-8')        
         html_file.write(html)
     return 0
+ 
+def weighted_random(items): 
+    total = sum(w for _,w in items) 
+    n = random.uniform(0, total)#在饼图扔骰子 
+    for x, w in items:#遍历找出骰子所在的区间 
+        if n<w: 
+            break
+        n -= w 
+    return x

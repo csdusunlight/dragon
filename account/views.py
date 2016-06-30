@@ -398,12 +398,18 @@ def get_user_wel_page(request):
         contacts = paginator.page(paginator.num_pages)
     data = []
     
-    for con in contacts:     
+    for con in contacts:
+        reason = con.remark
+        if filter == 3:
+            log = con.audited_logs.first()
+            if log:
+                reason = log.reason
         i = {"title":con.content_object.title,
              "username":con.invest_account,
              "time":con.time.strftime("%Y-%m-%d %H:%M:%S"),
              "state":con.get_audit_state_display(),
-             "reason":con.remark}
+             "reason":reason,
+             }
         data.append(i)
     if data:
         res['code'] = 1
