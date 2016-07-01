@@ -98,7 +98,7 @@ def admin_recommend_return(request):
         
         
         if res['code'] == 0:
-            admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='1')
+            admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='9')
             if translist:
                 translist.admin_event = admin_event
                 translist.save(update_fields=['admin_event'])

@@ -679,7 +679,7 @@ def withdraw(request):
             result['code'] = -1
             result['res_msg'] = u'参数不合法！'
             return JsonResponse(result)
-        if withdraw_amount < 10 or withdraw_amount > user.balance:
+        if withdraw_amount < 10 or withdraw_amount > float(user.balance)+0.01:
             result['code'] = -1
             result['res_msg'] = u'提现金额错误！'
             return JsonResponse(result)
@@ -901,7 +901,7 @@ def invite(request):
     inviter = request.user
     if request.method == 'GET':
         withdraw_thismonth = UserEvent.objects.filter(user__inviter=inviter, event_type='2',
-                    audit_state='0',time__year=ttime.localtime()[0],time__month=ttime.localtime()[1]).\
+                    audit_state='0',audit_time__year=ttime.localtime()[0],audit_time__month=ttime.localtime()[1]).\
                     aggregate(sumofwith=Sum('invest_amount'))
         acc_count = inviter.invitees.count()
         acc_with_count = UserEvent.objects.filter(user__inviter=inviter, event_type='2',

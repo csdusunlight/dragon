@@ -68,8 +68,11 @@ $(function (){
 					itemid = parseInt(itemid)
 					lottery(itemid);
 				}
+				else if(ret.code==-2){
+					$(".popup5").display();
+				}
 				else{
-					alert(ret.res_msg);
+					alert(u"参数错误，请联系电话客服！")
 				}
 			},
 			error:function(){

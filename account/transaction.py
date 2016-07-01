@@ -24,7 +24,7 @@ def charge_money(user, type, amount, reason):
     if type == '0':
         user.balance += amount
         user.accu_income += amount
-    elif user.balance < amount:
+    elif user.balance < amount - Decimal(0.001):
         logger.info('I:The account balance is not enough!')
         return None
     else:

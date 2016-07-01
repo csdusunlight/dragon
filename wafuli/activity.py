@@ -14,6 +14,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from wafuli_admin.models import RecommendRank
 import datetime
 from wafuli.tools import weighted_random
+from account.transaction import charge_score, charge_money
 logger = logging.getLogger('wafuli')
 def recommend(request, id=None):
     if request.method == "POST":
@@ -157,6 +158,7 @@ def lottery(request):
     return render(request, 'activity_lottery.html',context)
 
 def get_lottery(request):
+    user = request.user
     if request.method != "POST" or not request.is_ajax():
         logger.warning("Experience refused no-ajax request!!!")
         raise Http404
@@ -165,8 +167,29 @@ def get_lottery(request):
         result['code'] = -1
         result['url'] = reverse('login') + "?next=" + reverse('activity_lottery')
         return JsonResponse(result)
-    award_list = [(1, 66.67), (2, 22.22), (3, 7.41), (4, 2), (5, 2), (6, 2),]
+    if user.scores < 10:
+        result['code'] = -2
+        return JsonResponse(result)
+    trans = charge_score(user, '1', 10, u"积分抽奖")
+    if not trans:
+        result['code'] = -3
+        return JsonResponse(result)
+    event = UserEvent.objects.create(user=request.user, event_type='7', audit_state='1')
+    award_list = [(1, 61), (2, 30), (3, 6), (4, 2), (5, 1), (6, 0),]
     itemid = weighted_random(award_list)
+    translist = None
+    if itemid == 1:
+        pass
+    elif itemid == 2:
+        translist = charge_score(user, '0', 10, u'抽奖获奖')
+    elif itemid == 4:
+        translist = charge_money(user, '0', 0.8, u'抽奖获奖')
+        if translist:
+            translist.user_event = event
+            translist.save(update_fields=['user_event'])
+        else:
+            result['code'] = -4
+            result['res_msg'] = "记账失败！"
     result['code'] = 0
     result['itemid'] = itemid
     return JsonResponse(result)

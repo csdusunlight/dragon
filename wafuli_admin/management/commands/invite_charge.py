@@ -22,7 +22,7 @@ class Command(BaseCommand):
         inviters = MyUser.objects.all()
         for inviter in inviters:
             invite_lastmonth = UserEvent.objects.filter(user__inviter=inviter, event_type='2',
-                        audit_state='0',time__year=year,time__month=month,audit_time__year=year,audit_time__month=month).\
+                        audit_state='0',audit_time__year=year,audit_time__month=month).\
                         aggregate(sumofwith=Sum('invest_amount'))
             award_lastmonth = float(invite_lastmonth.get('sumofwith') or 0)*settings.AWARD_RATE
             award_lastmonth = ("%.2f" % award_lastmonth)
