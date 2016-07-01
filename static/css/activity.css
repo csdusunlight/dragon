@@ -60,6 +60,7 @@
 .mytable {
     width: 1030px;
     margin: auto;
+    table-layout: fixed;
 }
 
     .mytable a {
