@@ -467,7 +467,8 @@ def get_user_score_page(request):
              "id":con.pk,
              }
         if filter == 1:
-            i["state"]=con.user_event.get_audit_state_display()
+            event = con.user_event
+            i["state"]=event.get_audit_state_display() if event.event_type!='7' else "无"
         data.append(i)
     if data:
         res['code'] = 1

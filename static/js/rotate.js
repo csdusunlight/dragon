@@ -1,14 +1,22 @@
+var bRotate = false;
 function rnd(n, m){
     return Math.floor(Math.random()*(m-n+1)+n)
 }
-var rotateFn = function (angles, txt){
+var rotateFn = function (flag, angles, txt){
 	$('#rotate').stopRotate();
 	$('#rotate').rotate({
 		angle:0,
 		animateTo:angles+1800,
 		duration:8000,
 		callback:function (){
-			alert(txt);
+			if(flag){
+				$(".popup1 font").text(txt);
+				$(".popup1").css("display","block");
+			}
+			else{
+				$(".popup6").css("display","block");
+			}
+			bRotate = false;
 		}
 	})
 };
@@ -17,27 +25,27 @@ function lottery(item){
 	switch (item) {
 		case 2:
 		angle += 30;
-			rotateFn(angle, '10积分');
+			rotateFn(1, angle, '10积分');
 			break;
 		case 4:
 			angle += 90;
-			rotateFn(angle, '0.8元现金');
+			rotateFn(1, angle, '0.8元现金');
 			break;
 		case 3:
 			angle += 150;
-			rotateFn(angle, '50积分');
+			rotateFn(1, angle, '50积分');
 			break;
 		case 5:
 			angle += -150;
-			rotateFn(angle, '2元现金');
+			rotateFn(1, angle, '2元现金');
 			break;
 		case 1:
 			angle += -90;
-			rotateFn(angle, '谢谢参与');
+			rotateFn(0, angle, '谢谢参与');
 			break;
 		case 6:
 			angle += -30;
-			rotateFn(angle, 'iPhone');
+			rotateFn(1, angle, 'iPhone');
 			break;
 	}
 }
@@ -52,9 +60,8 @@ $(function (){
             }
         });
     };
-    var bRotate = false;
-    $('.pointer').click(function (){
-		$.ajax({
+    var ajaxFunc = function(){
+    	$.ajax({
 			url: get_lottery_url,
 			dataType:"json",
 			type:"post",
@@ -69,17 +76,37 @@ $(function (){
 					lottery(itemid);
 				}
 				else if(ret.code==-2){
-					$(".popup5").display();
+					$(".popup7").css("display","block");
+					bRotate = false;
 				}
 				else{
-					alert(u"参数错误，请联系电话客服！")
+					alert("参数错误，请联系电话客服！");
+					bRotate = false;
 				}
 			},
 			error:function(){
 				alert('网络超时，请检查您的网络设置！');
+				bRotate = false;
 			}
         });
+    };
+    $('.pointer').click(function (){
+    	if (bRotate){
+    		return;
+    	}
+    	else {
+    		bRotate = true;
+    		$(".popup4").css("display","block");
+    	}
     });
-
-
+    $('.confirm_lottery').click(function(){
+    	ajaxFunc();
+    });
+    $('.btn_x').click(function(){
+    	$(this).parent().parent().hide();
+    	bRotate = false;
+    });
+    $('.btn_cont button').click(function(){
+    	$(this).parent().parent().parent().parent().hide();
+    });
 });

@@ -93,6 +93,13 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         return self.mobile
     def get_short_name(self):
         return self.mobile
+    def get_abbre_name(self):
+        username = self.username
+        if len(username) > 4:
+            username = username[0:4] + '****'
+        else:
+            username = username + '****'
+        return username
     def __unicode__(self): 
         return self.mobile
     

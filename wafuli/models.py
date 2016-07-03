@@ -329,3 +329,12 @@ class Activity(Base):
         ordering = ["-news_priority","-pub_date"]
         verbose_name = u"热门活动"
         verbose_name_plural = u"热门活动"
+        
+class LotteryRecord(models.Model):
+    user = models.ForeignKey(MyUser, related_name="lottery_record")
+    award = models.CharField(u"奖品", max_length=20)
+    date = models.DateTimeField(u"创建时间", auto_now_add=True, db_index=True)
+    class Meta:
+        ordering = ["-date"]
+    def __unicode__(self):
+        return u"%s中了%s" % (self.user, self.award)

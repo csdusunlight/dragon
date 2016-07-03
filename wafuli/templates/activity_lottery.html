@@ -13,6 +13,7 @@
 <script type="text/javascript" src="{%static 'js/jquery-1.11.2.min.js'%}"></script>
 <script src="{%static 'js/awardrotate.js'%}"></script>
 <script src="{%static 'js/rotate.js'%}"></script>
+<script type="text/javascript" src="{% static "js/MSClass.js" %}"></script>
 <script>
     var get_lottery_url = "{%url 'get_lottery'%}"
    	$.ajaxSetup({
@@ -75,63 +76,25 @@
                         	<span>时间</span>
                         	<span>中奖奖品</span>
                         </div>
-                        <ul class="table_list">
-                        	<li>
-                            	<table width="100%">
-                                	<tr>
-                                    	<td>nihao123</td>
-                                    	<td>2016.6.20</td>
-                                    	<td>0.8元现金</td>
-                                    </tr>
-                                </table>
-                            </li>
-                        	<li>
-                            	<table width="100%">
-                                	<tr>
-                                    	<td>nihao123</td>
-                                    	<td>2016.6.20</td>
-                                    	<td>0.8元现金</td>
-                                    </tr>
-                                </table>
-                            </li>
-                        	<li>
-                            	<table width="100%">
-                                	<tr>
-                                    	<td>nihao123</td>
-                                    	<td>2016.6.20</td>
-                                    	<td>0.8元现金</td>
-                                    </tr>
-                                </table>
-                            </li>
-                        	<li>
-                            	<table width="100%">
-                                	<tr>
-                                    	<td>nihao123</td>
-                                    	<td>2016.6.20</td>
-                                    	<td>0.8元现金</td>
-                                    </tr>
-                                </table>
-                            </li>
-                        	<li>
-                            	<table width="100%">
-                                	<tr>
-                                    	<td>nihao123</td>
-                                    	<td>2016.6.20</td>
-                                    	<td>0.8元现金</td>
-                                    </tr>
-                                </table>
-                            </li>
-                        	<li>
-                            	<table width="100%">
-                                	<tr>
-                                    	<td>nihao123</td>
-                                    	<td>2016.6.20</td>
-                                    	<td>0.8元现金</td>
-                                    </tr>
-                                </table>
-                            </li>
-                        </ul>
+                        <div id="lscroll">
+	                        <ul class="table_list" id="lulscroll">
+	                        {%for r in record%}
+	                        	<li>
+	                            	<table width="100%">
+	                                	<tr>
+	                                    	<td>{{r.user}}</td>
+	                                    	<td>{{r.date}}</td>
+	                                    	<td>{{r.award}}</td>
+	                                    </tr>
+	                                </table>
+	                            </li>
+	                        {%endfor%}
+	                        </ul>
+	                     </div>
                     </div>
+	                <script type="text/javascript">
+				    	new Marquee(["lscroll","lulscroll"],0,1,340,346,20,0,0);
+				    </script>
                 </div>
             </div>
           </div>
@@ -182,7 +145,7 @@
             <p>恭喜您中奖！奖品为<font>0.8元现金</font>，稍后可在账户中心查收！</p>
             <div class="btn_cont">
             	<button>确  定</button>
-                <button>继续抽奖</button>
+                <button class="confirm_lottery">继续抽奖</button>
             </div>
         </div>
         <div class="btn_x"><button></button></div>
@@ -239,14 +202,14 @@
         	<h2>温馨提示</h2>
             <p>本次抽奖将消耗您<font>10积分</font>！</p>
             <div class="btn_cont">
-            	<button>确  定</button>
+            	<button class="confirm_lottery">确  定</button>
             </div>
         </div>
         <div class="btn_x"><button></button></div>
     </div>
   </div>
   <!--温馨提示2-->
-  <div class="popup5" style="display:none;">
+  <div class="popup7" style="display:none;">
   	<div class="w698_box">
     	<div class="pop_left">
         	<h2>温馨提示</h2>
@@ -267,21 +230,21 @@
             <p>信息提交成功！请保持电话通畅，挖福利会尽快与您取得联系！</p>
             <div class="btn_cont">
             	<button>确  定</button>
-            	<button>继续抽奖</button>
+            	<button class="confirm_lottery">继续抽奖</button>
             </div>
         </div>
         <div class="btn_x"><button></button></div>
     </div>
   </div>
   <!--谢谢参与-->
-  <div class="popup5" style="display:none;">
+  <div class="popup6" style="display:none;">
   	<div class="w698_box">
     	<div class="pop_left">
         	<h2>温馨提示</h2>
             <p>您知道吗？平均每三次抽奖，就能中奖一次哦~</p>
             <div class="btn_cont">
             	<button>确  定</button>
-            	<button>继续抽奖</button>
+            	<button class="confirm_lottery">继续抽奖</button>
             </div>
         </div>
         <div class="btn_x"><button></button></div>

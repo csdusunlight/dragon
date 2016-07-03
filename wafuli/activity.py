@@ -6,7 +6,7 @@ Created on 20160614
 '''
 from django.shortcuts import render
 
-from wafuli.models import Advertisement, UserWelfare, UserEvent
+from wafuli.models import Advertisement, UserWelfare, UserEvent, LotteryRecord
 import logging
 from django.core.urlresolvers import reverse
 from django.http.response import JsonResponse, Http404
@@ -15,6 +15,7 @@ from wafuli_admin.models import RecommendRank
 import datetime
 from wafuli.tools import weighted_random
 from account.transaction import charge_score, charge_money
+from wafuli.data import AwardTable
 logger = logging.getLogger('wafuli')
 def recommend(request, id=None):
     if request.method == "POST":
@@ -133,11 +134,7 @@ def get_recommend_rank_page(request):
         contacts = paginator.page(paginator.num_pages)
     data = []
     for con in contacts:
-        username = con.user.username
-        if len(username) > 4:
-            username = username[0:4] + '****'
-        else:
-            username = username + '****'
+        username = con.user.get_abbre_name()
         i = {"username":username,
              "num":con.acc_num,
              "rank":con.rank,
@@ -155,6 +152,15 @@ def lottery(request):
     adv = Advertisement.objects.filter(location='7',is_hidden=False).first()
     user = request.user
     context = {'adv':adv,}
+    record_list = LotteryRecord.objects.all()[0:20]
+    record_list_c = []
+    for record in record_list:
+        record_list_c.append({
+             'user': record.user.get_abbre_name(),
+             'date': record.date.strftime("%H:%M:%S"),
+             'award':record.award,               
+        })
+    context.update({"record":record_list_c});
     return render(request, 'activity_lottery.html',context)
 
 def get_lottery(request):
@@ -163,7 +169,7 @@ def get_lottery(request):
         logger.warning("Experience refused no-ajax request!!!")
         raise Http404
     result = {}
-    if not request.user.is_authenticated():
+    if not user.is_authenticated():
         result['code'] = -1
         result['url'] = reverse('login') + "?next=" + reverse('activity_lottery')
         return JsonResponse(result)
@@ -173,23 +179,31 @@ def get_lottery(request):
     trans = charge_score(user, '1', 10, u"积分抽奖")
     if not trans:
         result['code'] = -3
+        logger.error("lottery 10 scores charge error!")
         return JsonResponse(result)
-    event = UserEvent.objects.create(user=request.user, event_type='7', audit_state='1')
+    event = UserEvent.objects.create(user=user, event_type='7', audit_state='1')
+    trans.user_event = event
+    trans.save(update_fields=['user_event'])
     award_list = [(1, 61), (2, 30), (3, 6), (4, 2), (5, 1), (6, 0),]
     itemid = weighted_random(award_list)
     translist = None
-    if itemid == 1:
-        pass
-    elif itemid == 2:
+    if itemid == 2:
         translist = charge_score(user, '0', 10, u'抽奖获奖')
+    elif itemid == 3:
+        translist = charge_score(user, '0', 50, u'抽奖获奖')
     elif itemid == 4:
         translist = charge_money(user, '0', 0.8, u'抽奖获奖')
-        if translist:
+    elif itemid == 5:
+        translist = charge_money(user, '0', 2, u'抽奖获奖')
+    if itemid!=1 and not translist:
+        result['code'] = -4
+        logger.error("Get lottery award charge error!")
+        result['res_msg'] = "记账失败！"
+    else:
+        result['code'] = 0
+        result['itemid'] = itemid
+        if itemid != 1:
+            LotteryRecord.objects.create(user=user, award = AwardTable.get(itemid, u'未知'))
             translist.user_event = event
             translist.save(update_fields=['user_event'])
-        else:
-            result['code'] = -4
-            result['res_msg'] = "记账失败！"
-    result['code'] = 0
-    result['itemid'] = itemid
     return JsonResponse(result)
