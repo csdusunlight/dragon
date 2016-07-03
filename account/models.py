@@ -71,6 +71,9 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     is_email_authenticated =  models.BooleanField('是否通过邮箱认证', default=False)
     zhifubao = models.CharField(u'支付宝账号', max_length=64, blank=True, default='')
     zhifubao_name = models.CharField(u'支付宝姓名', max_length=30, blank=True, default='')
+    admin_permissions = models.ManyToManyField('AdminPermission',
+        verbose_name='admin permissions', blank=True,
+        related_name="user_set", related_query_name="user")
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
@@ -100,6 +103,8 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         else:
             username = username + '****'
         return username
+    def has_admin_perms(self, code):
+        return self.admin_permissions.filter(code=code).exists()
     def __unicode__(self): 
         return self.mobile
     
@@ -144,3 +149,9 @@ class Access_Token(models.Model):
     app_secret = models.CharField(u"app_secret",max_length=40,)
     access_token = models.CharField(u"access_token",max_length=60,)
     expire_stramp = models.IntegerField(u"expire_time")
+    
+class AdminPermission(models.Model):
+    code = models.CharField(unique=True, max_length=3)
+    name = models.CharField('name', max_length=255)
+    def __unicode__(self):
+        return self.code + ',' + self.name

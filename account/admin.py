@@ -2,7 +2,9 @@ from django.contrib import admin
 from .models import MyUser
 from .forms import MyUserChangeForm, MyUserCreationForm
 from django.contrib.auth.admin import UserAdmin
-from account.models import UserSignIn, Userlogin, Access_Token, MobileCode
+from account.models import UserSignIn, Userlogin, Access_Token, MobileCode,\
+    AdminPermission
+from django.contrib.auth.models import Permission
 # Register your models here.
 class MyUserAdmin(UserAdmin):
 # The forms to add and change user instances
@@ -12,7 +14,7 @@ class MyUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'mobile','username','password')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser',
-                                       'groups', 'user_permissions')}),
+                                       'groups', 'user_permissions', 'admin_permissions')}),
         ('Important dates', {'fields': ('last_login_time', 'date_joined', 'invite_code')}),
         ('others', {'fields': ('accu_income','accu_scores','balance','scores','invite_account','invite_income',
                                'invite_scores','inviter','isSigned', 'last_login_time', 'this_login_time',
@@ -35,3 +37,5 @@ admin.site.register(UserSignIn)
 admin.site.register(Userlogin)
 admin.site.register(Access_Token)
 admin.site.register(MobileCode)
+admin.site.register(Permission)
+admin.site.register(AdminPermission)
