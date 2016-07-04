@@ -130,6 +130,10 @@ def admin_return(request):
         return render(request,"admin_return.html")
     if request.method == "POST":
         res = {}
+        if not admin_user.has_admin_perms('002'):
+            res['code'] = -5
+            res['res_msg'] = u'您没有操作权限！'
+            return JsonResponse(res)
         if not request.is_ajax():
             raise Http404
         if not ( admin_user.is_authenticated() and admin_user.is_staff):
@@ -319,6 +323,10 @@ def admin_user(request):
         return render(request,"admin_user.html")
     if request.method == "POST":
         res = {}
+        if not admin_user.has_admin_perms('005'):
+            res['code'] = -5
+            res['res_msg'] = u'您没有操作权限！'
+            return JsonResponse(res)
         if not request.is_ajax():
             raise Http404
         if not ( admin_user.is_authenticated() and admin_user.is_staff):
@@ -522,6 +530,10 @@ def admin_withdraw(request):
         return render(request,"admin_withdraw.html")
     if request.method == "POST":
         res = {}
+        if not admin_user.has_admin_perms('004'):
+            res['code'] = -5
+            res['res_msg'] = u'您没有操作权限！'
+            return JsonResponse(res)
         if not request.is_ajax():
             raise Http404
         if not ( admin_user.is_authenticated() and admin_user.is_staff):
@@ -685,6 +697,10 @@ def admin_score(request):
         return render(request,"admin_score.html")
     if request.method == "POST":
         res = {}
+        if not admin_user.has_admin_perms('003'):
+            res['code'] = -5
+            res['res_msg'] = u'您没有操作权限！'
+            return JsonResponse(res)
         if not request.is_ajax():
             raise Http404
         if not ( admin_user.is_authenticated() and admin_user.is_staff):

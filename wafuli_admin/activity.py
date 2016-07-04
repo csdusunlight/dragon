@@ -28,6 +28,10 @@ def admin_recommend_return(request):
         return render(request,"admin_recommend.html")
     if request.method == "POST":
         res = {}
+        if not admin_user.has_admin_perms('003'):
+            res['code'] = -5
+            res['res_msg'] = u'您没有操作权限！'
+            return JsonResponse(res)
         if not request.is_ajax():
             raise Http404
         if not ( admin_user.is_authenticated() and admin_user.is_staff):

@@ -83,6 +83,7 @@
 .mytable tr {
     height: 50px;
     font-size: 14px;
+    word-break: break-all;
 }
 
 .mytable1 {
