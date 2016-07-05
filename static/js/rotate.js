@@ -100,6 +100,7 @@ $(function (){
     	}
     });
     $('.confirm_lottery').click(function(){
+    	bRotate = true;
     	ajaxFunc();
     });
     $('.btn_x').click(function(){
