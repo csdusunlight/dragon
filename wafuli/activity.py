@@ -16,6 +16,7 @@ import datetime
 from wafuli.tools import weighted_random
 from account.transaction import charge_score, charge_money
 from wafuli.data import AwardTable
+from django.db.models import Q
 logger = logging.getLogger('wafuli')
 def recommend(request, id=None):
     if request.method == "POST":
@@ -45,7 +46,7 @@ def recommend(request, id=None):
                 result['code'] = 0
         return JsonResponse(result)
     else:
-        adv = Advertisement.objects.filter(location='8',is_hidden=False).first()
+        adv = Advertisement.objects.filter(Q(location='0')|Q(location='8'),is_hidden=False).first()
         user = request.user
         context = {'adv':adv,}
         if user.is_authenticated():
@@ -149,7 +150,7 @@ def get_recommend_rank_page(request):
     return JsonResponse(res)
 
 def lottery(request):
-    adv = Advertisement.objects.filter(location='9',is_hidden=False).first()
+    adv = Advertisement.objects.filter(Q(location='0')|Q(location='9'),is_hidden=False).first()
     user = request.user
     context = {'adv':adv,}
     record_list = LotteryRecord.objects.all()[0:20]
