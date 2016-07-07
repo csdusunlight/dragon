@@ -45,7 +45,7 @@ def recommend(request, id=None):
                 result['code'] = 0
         return JsonResponse(result)
     else:
-        adv = Advertisement.objects.filter(location='7',is_hidden=False).first()
+        adv = Advertisement.objects.filter(location='8',is_hidden=False).first()
         user = request.user
         context = {'adv':adv,}
         if user.is_authenticated():
@@ -149,7 +149,7 @@ def get_recommend_rank_page(request):
     return JsonResponse(res)
 
 def lottery(request):
-    adv = Advertisement.objects.filter(location='7',is_hidden=False).first()
+    adv = Advertisement.objects.filter(location='9',is_hidden=False).first()
     user = request.user
     context = {'adv':adv,}
     record_list = LotteryRecord.objects.all()[0:20]
