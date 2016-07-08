@@ -145,6 +145,17 @@ def register(request):
             result['res_msg'] = u'创建用户失败！'
         else:
             result['code'] = '0'
+            # 邀请人奖励20积分
+            if inviter:
+                invite_award_scores = 20
+                inviter.invite_scores += invite_award_scores
+                translist = charge_score(inviter, '0', invite_award_scores, u"邀请奖励")
+                if translist:
+                    logger.debug('Inviting Award scores is successfully payed!')
+                    inviter.save(update_fields=['invite_scores'])
+                else:
+                    logger.debug('Inviting Award scores is failed to pay!!!')
+            result['code'] = '0'
             try:
                 userl = authenticate(username=username, password=password)
                 auth_login(request, userl)
