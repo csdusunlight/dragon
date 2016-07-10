@@ -33,8 +33,8 @@ def index(request):
 #     print query,query_today
 #     num_today = {'with_num_today':0,'ret_num_today':0,'coupon_num_today':0,'exc_num_today':0,}
 #     num = {'with_num':0,'ret_num':0,'coupon_num':0,'exc_num':0}
-    num_today = {'1':0,'2':0,'3':0,'4':0,}
-    num = {'1':0,'2':0,'3':0,'4':0}
+    num_today = {'1':0,'2':0,'3':0,'4':0,'6':0}
+    num = {'1':0,'2':0,'3':0,'4':0,'6':0}
     for q in query:
         index = q.get('event_type')
         num[index] = q.get('sum')
