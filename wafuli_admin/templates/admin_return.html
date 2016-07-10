@@ -6,11 +6,10 @@ $.ajaxSetup({
 });
 var data = '<table width="100%"><tr><th>用户名</th><th>手机号</th><th>项目类型</th><th>公司名称</th>'+
 	'<th>项目名称</th><th>提交手机号</th><th>提交备注</th><th>提交时间</th><th>处理状态</th>'+
-	'<th>操作人</th><th>操作时间</th><th width="6%">操作金额</th><th width="6%">操作积分</th>'+
 	'<th>操作</th><th>备注</th></tr>[data]<tr><td>{username}</td><td>{mobile}</td><td>{type}</td>'+
 	'<td>{company}</td><td>{project}</td><td>{mobile_sub}</td><td>{remark_sub}</td>'+
-	'<td>{time_sub}</td><td>{state}</td><td>{admin}</td><td>{time_admin}</td>'+
-	'<td>{amount}</td><td>{score}</td><td id="item_{id}"><a class="fyin" onclick="pass({id})">返现'+
+	'<td>{time_sub}</td><td>{state}</td>'+
+	'<td id="item_{id}"><a class="fyin" onclick="pass({id})">返现'+
 	'</a> │ <a class="jion-s" onclick="refuse({id})">拒绝</a></td><td>{remark}</td></tr>[/data]</table>';
 var data2 = '<table width="100%"><tr><th>用户名</th><th>手机号</th><th>项目类型</th><th>公司名称</th>'+
 	'<th>项目名称</th><th>提交手机号</th><th>提交备注</th><th>提交时间</th><th>处理状态</th>'+
