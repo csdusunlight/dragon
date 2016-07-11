@@ -41,6 +41,13 @@ class Command(BaseCommand):
         new_wel_num = ZeroPrice.objects.filter(pub_date__gte=today).count() + \
                 Task.objects.filter(pub_date__gte=today).count() + \
                 Finance.objects.filter(pub_date__gte=today).count()
+                
+        dict = UserEvent.objects.filter(time__gte=today,event_type='7').\
+                aggregate(cou=Count('user_id',distinct=True),cou_total=Count('*'))
+        print dict
+        lottery_people = dict.get('cou')
+        lottery_num = dict.get('cou_total')
+        
         update_fields = {
                          'new_reg_num':new_reg_num,
                          'active_num':active_num,
@@ -52,6 +59,8 @@ class Command(BaseCommand):
                          'exchange_num':exchange_num,
                          'exchange_scores':exchange_scores,
                          'new_wel_num':new_wel_num,
+                         'lottery_people':lottery_people,
+                         'lottery_num':lottery_num,
         }
         DayStatis.objects.update_or_create(date=today, defaults=update_fields)
         
