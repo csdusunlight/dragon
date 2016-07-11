@@ -113,6 +113,8 @@ def get_admin_index_page(request):
              "ret_num":con.ret_num,
              "coupon_amount":con.coupon_amount,
              "exchange_scores":con.exchange_scores,
+             "lottery_people":con.lottery_people,
+             "lottery_num":con.lottery_num,
              }
         data.append(i)
     if data:

@@ -44,7 +44,6 @@ class Command(BaseCommand):
                 
         dict = UserEvent.objects.filter(time__gte=today,event_type='7').\
                 aggregate(cou=Count('user_id',distinct=True),cou_total=Count('*'))
-        print dict
         lottery_people = dict.get('cou')
         lottery_num = dict.get('cou_total')
         
