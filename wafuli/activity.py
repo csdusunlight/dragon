@@ -19,14 +19,20 @@ from wafuli.data import AwardTable
 from django.db.models import Q
 logger = logging.getLogger('wafuli')
 def recommend(request, id=None):
+    user = request.user
     if request.method == "POST":
         if not request.is_ajax():
             logger.warning("Experience refused no-ajax request!!!")
             raise Http404
         result = {}
-        if not request.user.is_authenticated():
+        if not user.is_authenticated():
             result['code'] = -1
             result['url'] = reverse('login') + "?next=" + reverse('activity_recommend')
+            return JsonResponse(result)
+        sumbit_num_today = UserWelfare.objects.filter(user=user, date__gte=datetime.date.today()).count()
+        if sumbit_num_today>=5:
+            result['code'] = 4
+            result['res_msg'] = u'每天最多只能提交5条哦，请明日再来！'
             return JsonResponse(result)
         title = request.POST.get('title', '')
         url = request.POST.get('url', '')
@@ -36,18 +42,17 @@ def recommend(request, id=None):
             result['res_msg'] = u'输入参数长度有误！'
         else:
             try:
-                wel = UserWelfare.objects.create(user=request.user, title=title,url=url,reason=reason)
-                UserEvent.objects.create(user=request.user, event_type='6', content_object=wel, audit_state='1')
+                wel = UserWelfare.objects.create(user=user, title=title,url=url,reason=reason)
+                UserEvent.objects.create(user=user, event_type='6', content_object=wel, audit_state='1')
             except Exception as e:
                 result['code'] = 2
                 result['res_msg'] = u'重复提交或数据有误！'
-                logger.error(e)
+                logger.warning(e)
             else:
                 result['code'] = 0
         return JsonResponse(result)
     else:
         adv = Advertisement.objects.filter(Q(location='0')|Q(location='8'),is_hidden=False).first()
-        user = request.user
         context = {'adv':adv,}
         if user.is_authenticated():
             if hasattr(user, 'rank_of'):
