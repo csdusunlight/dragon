@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block js %}
+{% endblock%}
+{% block right %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>积分抽奖</title>
+<meta name="keywords" content="积分抽奖" />
+<meta name="description" content="积分抽奖" />
+<link rel="shortcut icon" href="/static/images/favicon.ico" />
+<script type="text/javascript" src="{%static 'js/jquery-1.11.2.min.js'%}"></script>
+<script type="text/javascript" src="{%static 'js/ajaxfileupload.js'%}"></script>
+<script>
+    var deliver_coupon_url = "{%url 'deliver_coupon'%}"
+    var parse_file_url = "{%url 'parse_file'%}"
+   	$.ajaxSetup({
+   	    data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+   	});
+    $("li.home9").toggleClass("on");
+    
+    $(function(){
+    	$('#type').change(function(){
+    		$("select#project").empty();
+    		var id=$(this).children('option:selected').val();
+    		alert(typeof(id));
+    		if(id==='-1'){
+    			return;
+    		}
+    		$.ajax({
+    			url:"{%url 'get_project_list' %}",
+    			dataType:"json",
+    			type:"GET",
+    			data:{
+    				'id':id,
+    			},
+    			success:function(ret){
+    				if(ret.prolist){
+    					dict = ret.prolist
+    					for (var x in dict){
+    					//	x = eval(x);
+    						$("select#project").append('<option value='+x+'>'+dict[x]+'</option>');
+    					}
+    					
+    				}
+    			},
+    			error:function(){
+    				alert("请检查网络连接");
+    			}
+    		});
+    	});
+    	
+    	$("#submit_form").click(function(){
+    	    $("form#deliver_form").submit();
+		});
+    	$('#fileupload').on('change', function() { 
+	    	$.ajaxFileUpload({  
+	            url:'parse_file_url',  
+	            secureuri:false,  
+	            fileElementId:'fileupload',//file标签的id  
+	            dataType: 'json',//返回数据的类型  
+	            data:{name:'what'},//一同上传的数据  
+	            success: function (data, status) { 
+	            	alert('ddd');
+	                var obj = jQuery.parseJSON(data);  
+	                $("#upload").attr("src", "../image/"+obj.fileName);  
+	      
+	                if(typeof(data.error) != 'undefined') {  
+	                    if(data.error != '') {  
+	                        alert(data.error);  
+	                    } else {  
+	                        alert(data.msg);  
+	                    }  
+	                }
+	            },  
+	            error: function (data, status, e) {  
+	                alert(e);  
+	            }  
+	        });
+    	});
+    });
+</script>
+</head>
+<body>
+<form id="deliver_form" action="" method="post">
+	{%csrf_token%}
+	<i style="letter-spacing:4.8px;">项目类型：</i>
+	<select name="selectAge" id="type">
+	<option value="-1">--</option>
+	{% for x in type_list %}
+	    <option value="{{x.0}}">{{x.1}}</option>
+	{%endfor%}
+	</select>
+	<i style="letter-spacing:4.8px;">选择项目：</i>
+	<select name="selectAge" id="project">
+	</select>
+	<div id="cash_coupon">
+	<i style="letter-spacing:4.8px;">选择发送用户：</i>
+	<select name="selectAge" id="send_users">
+		<option value="1">全部用户</option>
+		<option value="2">指定用户</option>
+	</select>
+	<i style="letter-spacing:4.8px;">发送指定用户：</i>
+	<textarea name="users" rows="15" cols="20"></textarea>
+	<i style="letter-spacing:4.8px;">发送指定用户：</i>
+	<textarea name="users" rows="15" cols="20"></textarea>
+	<label for="fileupload">Filename:</label>
+	<input id="fileupload" type="file"></input>
+	</div>
+</form>
+	<button id="submit_form">提交</button>
+</body>
+</html>
+{%endblock%}
