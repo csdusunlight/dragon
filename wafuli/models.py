@@ -139,20 +139,24 @@ class Commodity(models.Model):
         verbose_name = u"商品"
         verbose_name_plural = u"积分商品"
 class CouponProject(models.Model):
+    type = models.CharField(max_length=1, choices=COUPON_TYPE, verbose_name=u"优惠券类型")
     title = models.CharField(u"项目名称",max_length=30)
+    amount =models.DecimalField(u'涉及金额', blank=True, null=True,decimal_places = 2, max_digits=6)
+    provider = models.CharField(u"商家", max_length=10)
+    url = models.CharField(u"商家地址", blank=True, max_length=200)
     endtime = models.DateField(u"截止日期")
+    introduction = models.TextField(u"使用说明",max_length=200)
+    claim_limit = models.SmallIntegerField(u"限领次数", blank=True, default=1)
+    pub_date = models.DateTimeField(u"创建时间", auto_now_add=True)
     def __unicode__(self):
-        return self.title
+        return '%s:%s' % (self.get_type_display(), self.title)
     class Meta:
         verbose_name = u"优惠券项目"
         verbose_name_plural = u"优惠券项目"
 class Coupon(models.Model):
-    user = models.ForeignKey(MyUser, related_name="user_coupons")
-    type = models.CharField(max_length=1, choices=COUPON_TYPE, verbose_name=u"优惠券类型")
-    amount = models.PositiveIntegerField()
+    user = models.ForeignKey(MyUser, related_name="user_coupons", null=True)
     project = models.ForeignKey(CouponProject, related_name="coupons")
-    introduction = models.TextField(u"使用说明",max_length=200)
-    time = models.DateField(u"发放日期", auto_now_add=True)
+    time = models.DateField(u"领取或发放日期", auto_now_add=True)
     url = models.CharField(u"网站地址", default="http://www.wafuli.com/", max_length=100)
     exchange_code = models.CharField(u"兑换码", blank=True, max_length=50)
     is_used = models.BooleanField(u"是否已使用", default = False)
@@ -338,3 +342,4 @@ class LotteryRecord(models.Model):
         ordering = ["-date"]
     def __unicode__(self):
         return u"%s中了%s" % (self.user, self.award)
+    

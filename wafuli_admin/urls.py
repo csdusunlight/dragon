@@ -14,4 +14,7 @@ urlpatterns = [
     url(r'^scorepage/$', 'wafuli_admin.views.get_admin_score_page', name='get_admin_score_page'),
     url(r'^admin_recommend_return', 'wafuli_admin.activity.admin_recommend_return', name='admin_recommend_return'),
     url(r'^return_recommend_page/$', 'wafuli_admin.activity.get_admin_recommend_return_page', name='get_admin_recommend_return_page'),
+    url(r'^deliver_coupon', 'wafuli_admin.coupon.deliver_coupon', name='deliver_coupon'),
+    url(r'^get_project_list', 'wafuli_admin.coupon.get_project_list', name='get_project_list'),
+    url(r'^parse_file', 'wafuli_admin.coupon.parse_file', name='parse_file'),
 ]
