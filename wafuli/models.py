@@ -157,7 +157,6 @@ class Coupon(models.Model):
     user = models.ForeignKey(MyUser, related_name="user_coupons", null=True)
     project = models.ForeignKey(CouponProject, related_name="coupons")
     time = models.DateField(u"领取或发放日期", auto_now_add=True)
-    url = models.CharField(u"网站地址", default="http://www.wafuli.com/", max_length=100)
     exchange_code = models.CharField(u"兑换码", blank=True, max_length=50)
     is_used = models.BooleanField(u"是否已使用", default = False)
     user_event = GenericRelation("UserEvent",related_query_name='coupon')

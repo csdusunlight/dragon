@@ -1,8 +1,7 @@
 jQuery.extend({
-	handleError: function( s, xhr, status, e ) {
-		// If a local callback was specified, fire it
+	handleError: function( s, xhr, status, e )   { 
 
-	},
+	  },
     createUploadIframe: function (id, uri) {//id为当前系统时间字符串，uri是外部传入的json对象的一个参数
         //create frame
         var frameId = 'jUploadFrame' + id; //给iframe添加一个独一无二的id
@@ -123,13 +122,28 @@ jQuery.extend({
         jQuery('#' + frameId).load(uploadCallback); //ajax 请求从服务器加载数据，同时传入回调函数
         return { abort: function () { } };
     },
-    uploadHttpData: function (r, type) {        var data = !type;
-        data = type == "xml" || data ? r.responseXML : r.responseText;        // If the type is "script", eval it in global context
-        if (type == "script")
-            jQuery.globalEval(data);        // Get the JavaScript object, if JSON is used.
-        if (type == "json")
-            eval("data = " + data);        // evaluate scripts within html
-        if (type == "html")
-            jQuery("<div>").html(data).evalScripts();        return data;
+    uploadHttpData: function( r, type ) {
+		  var data = !type;
+		  data = type == "xml" || data ? r.responseXML : r.responseText;
+		  // If the type is "script", eval it in global context
+		  if ( type == "script" )
+		   jQuery.globalEval( data );
+		  // Get the JavaScript object, if JSON is used.
+		  if ( type == "json" ){
+		   // 因为json数据会被<pre>标签包着，所以有问题，现在添加以下代码，
+		   // update by hzy
+		   var reg = /<pre.+?>(.+)<\/pre>/g; 
+		   var result = data.match(reg);
+		   result = RegExp.$1;
+		   // update end
+		   data = $.parseJSON(result);
+		   // eval( "data = " + data );
+		  // evaluate scripts within html
+		 }
+		  if ( type == "html" )
+		   jQuery("<div>").html(data).evalScripts();
+		   //alert($('param', data).each(function(){alert($(this).attr('value'));}));
+		  return data;
     }
+
 })

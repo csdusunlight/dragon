@@ -72,7 +72,8 @@ class ActivityAdmin(admin.ModelAdmin):
         else:  
             fields=['change_user']
             return fields  
-
+class TransListAdmin(admin.ModelAdmin):
+    search_fields = ['user__mobile',]
 admin.site.register(Finance,FinanceAdmin)
 admin.site.register(Company, ComAdmin)
 admin.site.register(ZeroPrice, ZeroAdmin)
@@ -82,7 +83,7 @@ admin.site.register(UserEvent, UserEventAdmin)
 admin.site.register(AuditLog)
 admin.site.register(AdminEvent)
 admin.site.register(ScoreTranlist)
-admin.site.register(TransList)
+admin.site.register(TransList,TransListAdmin)
 admin.site.register(ExchangeRecord)
 admin.site.register(Press,PressAdmin)
 admin.site.register(CouponProject)

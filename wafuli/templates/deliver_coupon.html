@@ -25,7 +25,6 @@
     	$('#type').change(function(){
     		$("select#project").empty();
     		var id=$(this).children('option:selected').val();
-    		alert(typeof(id));
     		if(id==='-1'){
     			return;
     		}
@@ -55,25 +54,20 @@
     	$("#submit_form").click(function(){
     	    $("form#deliver_form").submit();
 		});
-    	$('#fileupload').on('change', function() { 
+    	$('button#uploadbtn').click(function() { 
 	    	$.ajaxFileUpload({  
 	            url:'parse_file_url',  
 	            secureuri:false,  
 	            fileElementId:'fileupload',//file标签的id  
 	            dataType: 'json',//返回数据的类型  
 	            data:{name:'what'},//一同上传的数据  
-	            success: function (data, status) { 
-	            	alert('ddd');
-	                var obj = jQuery.parseJSON(data);  
-	                $("#upload").attr("src", "../image/"+obj.fileName);  
-	      
-	                if(typeof(data.error) != 'undefined') {  
-	                    if(data.error != '') {  
-	                        alert(data.error);  
-	                    } else {  
-	                        alert(data.msg);  
-	                    }  
+	            success: function (data, status) {
+	            	var value = ''
+	            	userlist = data.user;
+	                for (x in userlist) {
+	                	value += String(userlist[x])+'\n';
 	                }
+	                $("#part_users").val(value);
 	            },  
 	            error: function (data, status, e) {  
 	                alert(e);  
@@ -87,29 +81,28 @@
 <form id="deliver_form" action="" method="post">
 	{%csrf_token%}
 	<i style="letter-spacing:4.8px;">项目类型：</i>
-	<select name="selectAge" id="type">
+	<select name="selecttype" id="type">
 	<option value="-1">--</option>
 	{% for x in type_list %}
 	    <option value="{{x.0}}">{{x.1}}</option>
 	{%endfor%}
 	</select>
 	<i style="letter-spacing:4.8px;">选择项目：</i>
-	<select name="selectAge" id="project">
+	<select name="selectproject" id="project">
 	</select>
 	<div id="cash_coupon">
 	<i style="letter-spacing:4.8px;">选择发送用户：</i>
-	<select name="selectAge" id="send_users">
+	<select name="selectuser" id="send_users">
 		<option value="1">全部用户</option>
 		<option value="2">指定用户</option>
 	</select>
 	<i style="letter-spacing:4.8px;">发送指定用户：</i>
-	<textarea name="users" rows="15" cols="20"></textarea>
-	<i style="letter-spacing:4.8px;">发送指定用户：</i>
-	<textarea name="users" rows="15" cols="20"></textarea>
-	<label for="fileupload">Filename:</label>
-	<input id="fileupload" type="file"></input>
+	<textarea id="part_users" name="users" rows="15" cols="20"></textarea>
 	</div>
 </form>
+	<label for="fileupload">Filename:</label>
+	<input id="fileupload" name="file"  type="file"/>
+	<button id="uploadbtn">上传</button>
 	<button id="submit_form">提交</button>
 </body>
 </html>
