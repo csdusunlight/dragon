@@ -42,8 +42,15 @@ def deliver_coupon(request):
                 for i in MyUser.objects.all():
                     Coupon.objects.create(user=i, project=project)
             elif select_user == '2':
-                select_list = request.POST.get('users')
-                print select_list
+                select_list_str = request.POST.get('users')
+                select_list_str = select_list_str.strip().split('\n')
+                user_set = set([])
+                for user in select_list_str:
+                    user_set.add(user)
+                success_list = []
+                
+                for user in user_set:
+                    
         return HttpResponseRedirect('deliver_coupon')
             
             
