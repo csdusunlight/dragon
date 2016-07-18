@@ -50,6 +50,7 @@ def deliver_coupon(request):
                 success_list = []
                 
                 for user in user_set:
+                    pass
                     
         return HttpResponseRedirect('deliver_coupon')
             
@@ -71,9 +72,20 @@ def get_project_list(request):
     return JsonResponse(result)
 @csrf_exempt
 def parse_file(request):
-    ret = handle_uploaded_file(request.FILES['file'])
-    result={'user':ret}
-    return JsonResponse(result)
+    res={'code':-9,}
+    file = request.FILES.get('file')
+    if not file:
+        res['code'] = -2
+        res['res_msg'] = u'请先选择文件！'
+    else:
+        try:
+            res['list'] = handle_uploaded_file(file)
+        except:
+            res['code'] = -3
+            res['res_msg'] = u'文件格式有误！'
+        else:
+            res['code'] = 0
+    return JsonResponse(res)
 
 def handle_uploaded_file(f):
     ret = []

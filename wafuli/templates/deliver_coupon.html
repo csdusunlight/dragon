@@ -1,16 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block js %}
-{% endblock%}
-{% block right %}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>积分抽奖</title>
-<meta name="keywords" content="积分抽奖" />
-<meta name="description" content="积分抽奖" />
-<link rel="shortcut icon" href="/static/images/favicon.ico" />
 <script type="text/javascript" src="{%static 'js/jquery-1.11.2.min.js'%}"></script>
 <script type="text/javascript" src="{%static 'js/ajaxfileupload.js'%}"></script>
 <script>
@@ -27,6 +17,14 @@
     		var id=$(this).children('option:selected').val();
     		if(id==='-1'){
     			return;
+    		}
+    		else if(id==='2'){
+    			$("div#cash_coupon").hide();
+    			$("div#use_coupon").css("display", 'block');
+    		}
+    		else {
+    			$("div#use_coupon").hide();
+    			$("div#cash_coupon").css("display", 'block');
     		}
     		$.ajax({
     			url:"{%url 'get_project_list' %}",
@@ -51,23 +49,60 @@
     		});
     	});
     	
-    	$("#submit_form").click(function(){
-    	    $("form#deliver_form").submit();
+    	$("button#submit").click(function(){
+    		var id=$(this).children('option:selected').val();
+    		var data = {
+    			selecttype: id,
+    		};
+    		if(id==='2'){
+    			data.codes = $("input#codes").val();
+    		}
+    		else if (id==='0' || id==='1'){
+    			data.selectproject = $("input#project").val();
+    			data.selectuser = $("input#project").val();
+    			data.users = $("input#users").val();
+    		}
+    		$.ajax({
+    			url: deliver_coupon_url,
+    			dataType:"json",
+    			type:"POST",
+    			data: data,
+    			success:function(ret){
+    				alert(ret.code);
+    			},
+    			error:function(){
+    				alert("请检查网络连接");
+    			}
+    		});
 		});
-    	$('button#uploadbtn').click(function() { 
+    	$('button.uploadbtn').click(function() {
+    		var fileElementId = null, areaId = null;
+    		if ($(this).attr("id") === 'uploadbtn1'){
+    			fileElementId = 'fileupload1';
+    			areaId = 'users';
+    		}
+    		else {
+    			fileElementId = 'fileupload2';
+    			areaId = 'codes';
+    		}
 	    	$.ajaxFileUpload({  
 	            url:'parse_file_url',  
 	            secureuri:false,  
-	            fileElementId:'fileupload',//file标签的id  
+	            fileElementId:fileElementId,//file标签的id  
 	            dataType: 'json',//返回数据的类型  
-	            data:{name:'what'},//一同上传的数据  
+	            data:{},//一同上传的数据  
 	            success: function (data, status) {
-	            	var value = ''
-	            	userlist = data.user;
-	                for (x in userlist) {
-	                	value += String(userlist[x])+'\n';
-	                }
-	                $("#part_users").val(value);
+	            	if (data.code==0){
+	            		var value = ''
+    	            	userlist = data.list;
+    	                for (x in userlist) {
+    	                	value += String(userlist[x])+'\n';
+    	                }
+    	                $("#"+areaId).val(value);
+	            	}
+	            	else {
+	            		alert(data.res_msg);
+	            	}
 	            },  
 	            error: function (data, status, e) {  
 	                alert(e);  
@@ -76,10 +111,8 @@
     	});
     });
 </script>
-</head>
-<body>
-<form id="deliver_form" action="" method="post">
-	{%csrf_token%}
+{% endblock js%}
+{% block right %}
 	<i style="letter-spacing:4.8px;">项目类型：</i>
 	<select name="selecttype" id="type">
 	<option value="-1">--</option>
@@ -90,20 +123,25 @@
 	<i style="letter-spacing:4.8px;">选择项目：</i>
 	<select name="selectproject" id="project">
 	</select>
-	<div id="cash_coupon">
-	<i style="letter-spacing:4.8px;">选择发送用户：</i>
-	<select name="selectuser" id="send_users">
-		<option value="1">全部用户</option>
-		<option value="2">指定用户</option>
-	</select>
-	<i style="letter-spacing:4.8px;">发送指定用户：</i>
-	<textarea id="part_users" name="users" rows="15" cols="20"></textarea>
+	<div id="cash_coupon" style="display:none">
+		<i style="letter-spacing:4.8px;">选择发送用户：</i>
+		<select name="selectuser" id="selectuser">
+			<option value="1">全部用户</option>
+			<option value="2">指定用户</option>
+		</select>
+		<i style="letter-spacing:4.8px;">发送指定用户：</i>
+		<textarea id="users" name="users" rows="15" cols="20"></textarea>
+		<label for="fileupload1">导入（纯文本文件，每行一个）：</label>
+		<input id="fileupload1" name="file"  type="file"/>
+		<button class="uploadbtn" id="uploadbtn1">上传</button>
 	</div>
-</form>
-	<label for="fileupload">Filename:</label>
-	<input id="fileupload" name="file"  type="file"/>
-	<button id="uploadbtn">上传</button>
-	<button id="submit_form">提交</button>
-</body>
-</html>
+	<div id="use_coupon" style="display:none">
+		<i style="letter-spacing:4.8px;">优惠码：</i>
+		<textarea id="codes" name="codes" rows="15" cols="20"></textarea>
+		<label for="fileupload2">导入（纯文本文件，每行一个）：</label>
+		<input id="fileupload2" name="file"  type="file"/>
+		<button class="uploadbtn" id="uploadbtn2">上传</button>
+	</div>
+
+	<button id="submit">提交</button>
 {%endblock%}
