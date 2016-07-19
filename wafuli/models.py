@@ -74,6 +74,8 @@ class ZeroPrice(News):
         verbose_name = u"免费福利"
         verbose_name_plural = u"免费福利"
         ordering = ["-news_priority", "-pub_date"]
+class CouponZero(ZeroPrice):
+    intrduct = models.CharField(max_length=100)
 class Task(News):
     amount_to_invest = models.IntegerField(u"投资金额")
     scroreToAdd = models.IntegerField(u"奖励积分")
@@ -148,9 +150,11 @@ class CouponProject(models.Model):
     introduction = models.TextField(u"使用说明",max_length=200)
     claim_limit = models.SmallIntegerField(u"限领次数", blank=True, default=1)
     pub_date = models.DateTimeField(u"创建时间", auto_now_add=True)
+    is_del = models.BooleanField(u"删除", default=False)
     def __unicode__(self):
         return '%s:%s' % (self.get_type_display(), self.title)
     class Meta:
+        ordering = ['-pub_date']
         verbose_name = u"优惠券项目"
         verbose_name_plural = u"优惠券项目"
 class Coupon(models.Model):
@@ -161,7 +165,7 @@ class Coupon(models.Model):
     is_used = models.BooleanField(u"是否已使用", default = False)
     user_event = GenericRelation("UserEvent",related_query_name='coupon')
     def __unicode__(self):
-        return self.project.title + ':' + self.user.username
+        return self.project.title
     class Meta:
         verbose_name = u"优惠券"
         verbose_name_plural = u"优惠券"

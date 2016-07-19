@@ -50,17 +50,22 @@
     	});
     	
     	$("button#submit").click(function(){
-    		var id=$(this).children('option:selected').val();
+    		var id=$("select#type").children('option:selected').val();
+    		var project = $("select#project").children('option:selected').val();
+    		if (!id || !project){
+    			alert("输入不完整！");
+    			return;
+    		}
     		var data = {
     			selecttype: id,
+    			selectproject: project,
     		};
     		if(id==='2'){
-    			data.codes = $("input#codes").val();
+    			data.codes = $("textarea#codes").val();
     		}
     		else if (id==='0' || id==='1'){
-    			data.selectproject = $("input#project").val();
-    			data.selectuser = $("input#project").val();
-    			data.users = $("input#users").val();
+    			data.selectuser = $("select#selectuser").children('option:selected').val();
+    			data.users = $("textarea#users").val();
     		}
     		$.ajax({
     			url: deliver_coupon_url,
@@ -68,7 +73,21 @@
     			type:"POST",
     			data: data,
     			success:function(ret){
-    				alert(ret.code);
+    				if(ret.code=='0'){
+    					var succ_num = ret.succ_num;
+    					var fail_list = ret.fail_list;
+    					var fail_str = '';
+    					for (x in fail_list){
+    						fail_str += fail_list[x] + '；';
+    					}
+    					if (fail_str){
+    						fail_str = "；导入失败：" + fail_str;
+    					}
+    					alert("新建优惠券"+succ_num+"张" + fail_str);
+    				}
+    				else {
+    					alert(ret.res_msg);
+    				}
     			},
     			error:function(){
     				alert("请检查网络连接");
