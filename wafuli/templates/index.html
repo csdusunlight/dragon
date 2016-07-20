@@ -13,6 +13,7 @@
 <script type="text/javascript" src="{% static "js/jquery.flexslider-min.js" %}"></script>
 <script type="text/javascript" src="{% static "js/jQuery.infiniteCarousel.js" %}"></script>
 <script type="text/javascript" src="{% static "js/MSClass.js" %}"></script>
+<script type="text/javascript" src="{% static "js/define.js" %}"></script>
 <!--[if IE 6]>
 <script src="{% static "js/DD_belatedPNG.js" %}"></script>
 <script>
@@ -42,12 +43,27 @@
     <div class="index-banner-main">
       <div class="index_31">
       {% if user.is_authenticated %}
-        <div class="index_29"><a href="{% url 'account_index' %}">个人中心</a></div>
+        <div class="Icon"><img src="{% static "images/Icon.png" %}" alt=""/></div>
+        <div class="usemame">尊敬的：</div>
+        <div class="welcome">欢迎来到挖福利</div>
         <div class="index_30">推荐好友送现金，<a href="{% url 'account_index' %}">立即推荐</a></div>
+        <div class="signin"><a href="">每日签到</a></div>
+        <div class="lottery"><a href="">积分抽奖</a></div>
       {%else%}
       	<div class="index_29"><a href="{% url 'register' %}">注册领现金</a></div>
         <div class="index_30">若已有账号，请<a href="{% url 'login' %}">登录</a></div>
       {%endif%}
+      </div>
+    <div class="navbox">
+        <img src="{% static "images/nav-bg.png" %}" />
+        <div class="nav">
+            <a href="">积分抽奖</a>
+            <a href="">众福利</a>
+            <a href="">众福利</a>
+            <a href="">注册有礼</a>
+            <a href="">了解挖福利</a>
+            <a href="">新版上线</a>
+        </div>
       </div>
     </div>
     </div>
@@ -103,13 +119,25 @@
   </div>
 <div class="box_back">
   <div id="index_12">
-    <div class="index_13"><h2>免费福利</h2><h3>抢到就是赚到</h3><a href="{%url 'welfare'%}" class="more">更多 &gt;</a></div>
+    <div class="index_13" style="display: block;">
+    	<h2>免费福利</h2><h3>抢到就是赚到</h3><a href="{%url 'welfare'%}" class="more">更多 &gt;</a>
+        <div class="index_13_nav">
+        <a>红包</a>
+        <a>9.9包邮</a>
+        <a>优惠券</a>
+        </div>
+    </div>
+<script>
+$(function(){
+	$(".index_13_nav a").mouseenter();
+	})
+</script>
     <div class="index_15">
       <div class="icobox">
           	<img src="{% static 'images/ico1.png' %}" class="ico1" />
             <img src="{% static 'images/ico2.png' %}" class="ico2" />
       </div>
-      <ul>
+      <ul style="display: block;">
 {% for news in zero_list %}
         <li>
           <a target="_blank" href="{{news.url}}" ><img src="{{news.pic.url}}" alt="{{news.title}}" width="258" height="148"/></a>
@@ -121,17 +149,83 @@
           {% endif %}
         </li>
 {% endfor %}
+       <img src="{% static 'images/fenge.png' %}" class="LINE" />
+       <img src="{% static 'images/pic_28.png' %}" class="Tag" />
+       <div class="story">
+        <img src="{% static 'images/pic_32.png' %}" />
+        <div class="text">
+        	<h1>六月，我与挖福利的故事</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus..</p>
+        </div>
+        <div class="more"><a>更多精彩>></a></div>
+        </div>
+      </ul>
+      
+      <ul>
+		{% for news in zero_list %}
+        <li>
+          <a target="_blank" href="{{news.url}}" ><img src="{{news.pic.url}}" alt="{{news.title}}" width="258" height="148"/></a>
+          <h2><a target="_blank" href="{{news.url}}" >{{news.title}}</a></h2>
+          <p>商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 家：{{news.provider}}<br />浏 览 数 ：{{news.view_count}}<br />活动时间：{{news.time_limit}}</p>
+          <a href="{{news.url}}" class="more" target="_blank">立即查看</a>
+          {% if news.is_new %}
+          <div class="newpost zero">新</div>
+          {% endif %}
+        </li>
+{% endfor %}
+       <img src="{% static 'images/fenge.png' %}" class="LINE" />
+       <img src="{% static 'images/pic_28.png' %}" class="Tag" />
+       <div class="story">
+        <img src="{% static 'images/pic_32.png' %}" />
+        <div class="text">
+        	<h1>六月，我与挖福利的故事</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus..</p>
+        </div>
+        <div class="more"><a>更多精彩>></a></div>
+        </div>
+      </ul>
+      
+      <ul>
+		{% for news in zero_list %}
+        <li>
+          <a target="_blank" href="{{news.url}}" ><img src="{{news.pic.url}}" alt="{{news.title}}" width="258" height="148"/></a>
+          <h2><a target="_blank" href="{{news.url}}" >{{news.title}}</a></h2>
+          <p>商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 家：{{news.provider}}<br />浏 览 数 ：{{news.view_count}}<br />活动时间：{{news.time_limit}}</p>
+          <a href="{{news.url}}" class="more" target="_blank">立即查看</a>
+          {% if news.is_new %}
+          <div class="newpost zero">新</div>
+          {% endif %}
+        </li>
+{% endfor %}
+       <img src="{% static 'images/fenge.png' %}" class="LINE" />
+       <img src="{% static 'images/pic_28.png' %}" class="Tag" />
+       <div class="story">
+        <img src="{% static 'images/pic_32.png' %}" />
+        <div class="text">
+        	<h1>六月，我与挖福利的故事</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus..</p>
+        </div>
+        <div class="more"><a>更多精彩>></a></div>
+        </div>
       </ul>
     </div>
+    
+    
   </div>
   <div id="index_16">
-    <div class="index_17"><h2>体验福利</h2><h3>完成任务就送福利</h3><a href="{%url 'task'%}" class="more">更多 &gt;</a></div>
+    <div class="index_17">
+    	<h2>体验福利</h2><h3>完成任务就送福利</h3><a href="{%url 'task'%}" class="more">更多 &gt;</a>
+        <div class="index_17_nav">
+        <a>注册有礼</a>
+        <a>小试牛刀</a>
+        </div>
+    </div>
     <div class="index_18">
       <div class="icobox">
           	<img src="{% static 'images/ico3.png' %}" class="ico1" />
             <img src="{% static 'images/ico4.png' %}" class="ico3" />
       </div>
-      <ul>
+      <ul style="display: block;">
 {% for news in task_list %}
         <li>
           <p><img src="{{news.pic.url}}" alt=""/></p>
@@ -144,6 +238,21 @@
         </li>
 {% endfor %}
       </ul>
+      
+      <ul>
+		{% for news in task_list %}
+        <li>
+          <p><img src="{{news.pic.url}}" alt=""/></p>
+          <h2><a target="_blank" href="{{news.url}}">{{news.title}}</a></h2>
+          商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 家：{{news.provider}}<br />浏 览 数 ：{{news.view_count}}<br />活动时间：{{news.time_limit}}
+          <a target="_blank" href="{{news.url}}" class="more">立即查看</a>
+          {% if news.is_new %}
+          <div class="newpost">新</div>
+          {% endif %}
+        </li>
+{% endfor %}
+      </ul>
+      
     </div>
   <script type="text/javascript">
   $(function(){
@@ -152,13 +261,19 @@
   </script>
   </div>
   <div id="index_20">
-    <div class="index_21"><h2>理财福利</h2><h3>让您多些利息</h3><a href="{%url 'finance'%}" class="more">更多 &gt;</a></div>
+    <div class="index_21">
+    	<h2>理财福利</h2><h3>让您多些利息</h3><a href="{%url 'finance'%}" class="more">更多 &gt;</a>
+        <div class="index_21_nav">
+        <a>高收益</a>
+        <a>低风险</a>
+        </div>
+    </div>
     <div class="index_22">
       <div class="icobox">
           	<img src="{% static 'images/ico5.png' %}" class="ico1" />
             <img src="{% static 'images/ico6.png' %}" class="ico3" />
       </div>
-      <ul>
+      <ul style="display: block;">
 {% for news in finance_list %}
         <li>
           <h2>{{news.title}}
@@ -189,6 +304,39 @@
         </li>
 {% endfor %}
       </ul>
+      
+      <ul style="display: block;">
+		{% for news in finance_list %}
+        <li>
+          <h2>{{news.title}}
+          {% if news.is_new %}
+          	<img src="{% static 'images/new_cont.png' %}" class="new_cont" />
+          {% endif %}
+          </h2>
+          
+          <div class="lf" text-align="center">
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr class="thead">
+              <td width=140px>官网利息</td>
+              <td width=140px>起投金额</td>
+              <td width=140px>标期长度</td>
+              <td width=140px>补贴收益</td>
+              <td width=140px>赠送积分</td>
+            </tr>
+            <tr>
+              <td class="s1">{{news.interest}}</td>
+              <td>{{news.amount_to_invest}}元</td>
+              <td>{{news.investTime}}</td>
+              <td class="s2">+{{news.benefit}}</td>
+              <td class="s2">+{{news.scrores}}</td>
+            </tr>
+          </table>
+          </div>
+          <div class="rt"><a target="_blank" href="{{news.url}}">立即投资</a></div>
+        </li>
+{% endfor %}
+      </ul>
+      
     </div>
   </div>
   <div id="index_23">
