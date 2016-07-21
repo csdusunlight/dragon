@@ -74,8 +74,6 @@ class ZeroPrice(News):
         verbose_name = u"免费福利"
         verbose_name_plural = u"免费福利"
         ordering = ["-news_priority", "-pub_date"]
-class CouponZero(ZeroPrice):
-    intrduct = models.CharField(max_length=100)
 class Task(News):
     amount_to_invest = models.IntegerField(u"投资金额")
     scroreToAdd = models.IntegerField(u"奖励积分")
@@ -158,12 +156,16 @@ class CouponProject(models.Model):
         verbose_name = u"优惠券项目"
         verbose_name_plural = u"优惠券项目"
 class Coupon(models.Model):
+    type = models.CharField(max_length=1, choices=COUPON_TYPE, verbose_name=u"优惠券类型")
+    amount =models.DecimalField(u'涉及金额', blank=True, null=True,decimal_places = 2, max_digits=6)
     user = models.ForeignKey(MyUser, related_name="user_coupons", null=True)
     project = models.ForeignKey(CouponProject, related_name="coupons")
     time = models.DateField(u"领取或发放日期", auto_now_add=True)
     exchange_code = models.CharField(u"兑换码", blank=True, max_length=50)
     is_used = models.BooleanField(u"是否已使用", default = False)
+    introduction = models.TextField(u"使用说明",max_length=200)
     user_event = GenericRelation("UserEvent",related_query_name='coupon')
+    url = models.CharField(u"商家地址", blank=True, max_length=200)
     def __unicode__(self):
         return self.project.title
     class Meta:

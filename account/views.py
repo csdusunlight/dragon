@@ -354,11 +354,9 @@ def welfare(request):
     ftype = ContentType.objects.get_for_model(Finance)
     tcount_u = UserEvent.objects.filter(user=request.user.id, content_type = ttype.id).count()
     fcount_u = UserEvent.objects.filter(user=request.user.id, content_type = ftype.id).count()
-    tsum = Task.objects.aggregate(tsum=Sum('view_count'))
-    fsum = Finance.objects.aggregate(fsum=Sum('view_count'))
-    statis = {'tcount':tcount,'fcount':fcount,'tcount_u':tcount_u,'fcount_u':fcount_u}
-    statis.update(tsum)
-    statis.update(fsum)
+    tsum = UserEvent.objects.filter(time__gte=date.today(), content_type = ttype.id).count()
+    fsum = UserEvent.objects.filter(time__gte=date.today(), content_type = ftype.id).count()
+    statis = {'tcount':tcount,'fcount':fcount,'tcount_u':tcount_u,'fcount_u':fcount_u,'tsum':tsum,'fsum':fsum}
     return render(request, 'account/welfare.html', {'statis':statis})
 
 

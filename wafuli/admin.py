@@ -76,8 +76,6 @@ class TransListAdmin(admin.ModelAdmin):
     search_fields = ['user__mobile',]
 class CouponAdmin(admin.ModelAdmin):
     list_display = ('project','user', 'exchange_code','is_used',)
-class CouponZeroAdmin(admin.ModelAdmin):
-    list_display = ('id','intrduct')
 admin.site.register(Finance,FinanceAdmin)
 admin.site.register(Company, ComAdmin)
 admin.site.register(ZeroPrice, ZeroAdmin)
@@ -97,4 +95,3 @@ admin.site.register(Advertisement)
 admin.site.register(UserWelfare)
 admin.site.register(Activity, ActivityAdmin)
 admin.site.register(LotteryRecord)
-admin.site.register(CouponZero,CouponZeroAdmin)
