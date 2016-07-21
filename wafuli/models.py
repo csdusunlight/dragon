@@ -74,8 +74,6 @@ class ZeroPrice(News):
         verbose_name = u"免费福利"
         verbose_name_plural = u"免费福利"
         ordering = ["-news_priority", "-pub_date"]
-class CouponZero(ZeroPrice):
-    intrduct = models.CharField(max_length=100)
 class Task(News):
     amount_to_invest = models.IntegerField(u"投资金额")
     scroreToAdd = models.IntegerField(u"奖励积分")

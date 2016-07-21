@@ -167,11 +167,7 @@ def register(request):
 
 @login_required
 def get_nums(request):
-    coupon_num = 0
-    coupons = Coupon.objects.filter(user=request.user, is_used=False,)
-    for coupon in coupons:
-        if not coupon.is_expired():
-            coupon_num += 1
+    coupon_num = Coupon.objects.filter(user=request.user, is_used=False, project__is_del=False).count()
     message_num = Message.objects.filter(user=request.user, is_read=False).count()
     result = {'coupon_num':coupon_num,'message_num':message_num,}
     return JsonResponse(result)
