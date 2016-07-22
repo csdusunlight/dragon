@@ -20,6 +20,22 @@
     DD_belatedPNG.fix('.ie6Png,.ie6Png img,*');
 </script>
 <![endif]-->
+<script type="text/javascript">
+var textarray=[];
+function getText(n) {
+	 if (textarray[n-1])
+		 return textarray[n-1];
+	 else
+		 return n;
+}
+$(function(){
+	$('.home a').toggleClass("vo");
+	$('.flexslider').flexslider({
+		directionNav: true,
+		pauseOnAction: false
+	});
+});
+</script>
 </head>
 <body>
 {% include "header.html" %}
@@ -29,23 +45,15 @@
       <ul class="slides">
       {% for adv in ad_list %}
         <li onclick="location='{{adv.url}}'" style="background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li>
+        <script>textarray.push("{{adv.navigation}}");</script>
       {%endfor%}
       </ul>
-      <script type="text/javascript">
-        $(function(){
-        	$('.home a').toggleClass("vo");
-            $('.flexslider').flexslider({
-                directionNav: true,
-                pauseOnAction: false
-            });
-        });
-      </script>
     <div class="index-banner-main">
       <div class="index_31">
       {% if user.is_authenticated %}
         <div class="Icon"><img src="{% static "images/Icon.png" %}" alt=""/></div>
-        <div class="usemame">尊敬的：</div>
-        <div class="welcome">欢迎来到挖福利</div>
+        <div class="usemame">尊敬的 </div>
+        <div class="welcome">欢迎来到挖福利</div>	
         <div class="index_30">推荐好友送现金，<a href="{% url 'account_index' %}">立即推荐</a></div>
         <div class="signin"><a href="">每日签到</a></div>
         <div class="lottery"><a href="">积分抽奖</a></div>
@@ -56,14 +64,6 @@
       </div>
     <div class="navbox">
         <img src="{% static "images/nav-bg.png" %}" />
-        <div class="nav">
-            <a href="">积分抽奖</a>
-            <a href="">众福利</a>
-            <a href="">众福利</a>
-            <a href="">注册有礼</a>
-            <a href="">了解挖福利</a>
-            <a href="">新版上线</a>
-        </div>
       </div>
     </div>
     </div>
