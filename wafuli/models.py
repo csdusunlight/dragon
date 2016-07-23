@@ -43,7 +43,7 @@ class Base(models.Model):
         return self.title
 class News(Base):
     state = models.CharField(u"项目状态", max_length=1, choices=STATE)
-    pic = models.ImageField(upload_to='photos/%Y/%m/%d', verbose_name=u"标志图片上传")
+    pic = models.ImageField(upload_to='photos/%Y/%m/%d', verbose_name=u"标志图片上传（最大不超过30k，越小越好）")
     isonMobile = models.BooleanField(u'是否为移动端活动', default= False)
     exp_url = models.CharField(u"活动地址", blank=True, max_length=200)
     exp_code = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, verbose_name=u"上传二维码")
@@ -60,6 +60,8 @@ class News(Base):
             raise ValidationError({'exp_url': u'请输入活动体验地址'})
         elif self.isonMobile == True and self.exp_code == '':
             raise ValidationError({'exp_code': u'请上传手机扫描二维码'})
+        if self.pic.size > 30000:
+            raise ValidationError({'pic': u'图片大小不能超过30k'})
     def is_expired(self):
         return self.state == '2'
 class ZeroPrice(News):
@@ -306,7 +308,7 @@ class Press(Base):
         verbose_name_plural = u"新闻（公告、攻略等）"
 class Advertisement(Base):
     pic = models.ImageField(upload_to='photos/%Y/%m/%d', blank=False,
-                             verbose_name=u"banner图片上传(1920*300)")
+                             verbose_name=u"banner图片上传(1920*300)，小于100k")
     location = models.CharField(u"广告位置", max_length=2, choices=ADLOCATION)
     is_hidden = models.BooleanField(u"是否隐藏",default=False)
     navigation = models.CharField(u"banner导航文字", max_length=6)
@@ -314,6 +316,9 @@ class Advertisement(Base):
         ordering = ["-news_priority","-pub_date"]
         verbose_name = u"横幅广告"
         verbose_name_plural = u"横幅广告"
+    def clean(self):
+        if self.pic.size > 100000:
+            raise ValidationError({'pic': u'图片大小不能超过100k'})
 class UserWelfare(models.Model):
     user = models.ForeignKey(MyUser, related_name="submited_welfare")
     title = models.CharField(max_length=200, verbose_name=u"标题")

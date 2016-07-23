@@ -14,6 +14,7 @@ from account.models import MyUser
 from django.db.models import Q
 from wafuli_admin.models import DayStatis
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
 # Create your views here.
 logger = logging.getLogger('wafuli')
 def index(request):
@@ -274,6 +275,12 @@ def get_admin_return_page(request):
     adminname = request.GET.get("adminname", None)
     if adminname:
         item_list = item_list.filter(audited_logs__user__username=adminname)
+    if projecttype=='1':
+        task_type = ContentType.objects.get_for_model(Task)
+        item_list = item_list.filter(content_type = task_type.id)
+    if projecttype=='2':
+        task_type = ContentType.objects.get_for_model(Finance)
+        item_list = item_list.filter(content_type = task_type.id)
     item_list = item_list.filter(event_type='1', audit_state=state).select_related('user').order_by('time')
     
     paginator = Paginator(item_list, size)
@@ -288,10 +295,6 @@ def get_admin_return_page(request):
     data = []
     for con in contacts:
         project = con.content_object
-        if projecttype=='2' and not isinstance(project, Finance):
-            continue
-        elif projecttype=='1' and not isinstance(project, Task):
-            continue
         i = {"username":con.user.username,
              "mobile":con.user.mobile,
              "type":con.content_object.get_type(),

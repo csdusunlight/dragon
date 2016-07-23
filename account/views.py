@@ -87,12 +87,6 @@ def login(request, template_name='registration/login.html',
 import logging
 logger = logging.getLogger('wafuli')
 def register(request):
-    if request.method == 'GET':
-        hashkey = CaptchaStore.generate_key()
-        codimg_url = captcha_image_url(hashkey)
-        icode = request.GET.get('icode','')
-        return render(request,'registration/register.html',
-                  {'hashkey':hashkey, 'codimg_url':codimg_url, 'icode':icode})
     if request.method == 'POST':
         if not request.is_ajax():
             raise Http404
@@ -164,7 +158,12 @@ def register(request):
             except:
                 pass
         return JsonResponse(result)
-
+    else:
+        hashkey = CaptchaStore.generate_key()
+        codimg_url = captcha_image_url(hashkey)
+        icode = request.GET.get('icode','')
+        return render(request,'registration/register.html',
+                  {'hashkey':hashkey, 'codimg_url':codimg_url, 'icode':icode})
 @login_required
 def get_nums(request):
     coupon_num = Coupon.objects.filter(user=request.user, is_used=False, project__is_del=False).count()
