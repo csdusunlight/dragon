@@ -716,9 +716,9 @@ def coupon(request):
     user = request.user
     coupons = user.user_coupons.filter(is_used=False)
     dict = {
-        'cash_num' : coupons.filter(type='0').count(),
-        'interest_num' : coupons.filter(type='1').count(),
-        'exc_num' : coupons.filter(type='2').count()     
+        'cash_num' : coupons.filter(project__type='0').count(),
+        'interest_num' : coupons.filter(project__type='1').count(),
+        'exc_num' : coupons.filter(project__type='2').count()
     }
     return render(request, 'account/account_coupon.html', {'dict':dict})
 def get_user_coupon_page(request):
@@ -736,7 +736,7 @@ def get_user_coupon_page(request):
         size = 2
     if not page or not filter or size <= 0:
         raise Http404
-    item_list = Coupon.objects.filter(user=request.user,type=str(filter),is_used=False)
+    item_list = Coupon.objects.filter(user=request.user,project__type=str(filter),is_used=False).select_related('project')
     paginator = Paginator(item_list, size)
     try:
         contacts = paginator.page(page)
@@ -747,12 +747,13 @@ def get_user_coupon_page(request):
     # If page is out of range (e.g. 9999), deliver last page of results.
         contacts = paginator.page(paginator.num_pages)
     data = []
-    for con in contacts:        
-        i = {"title":con.project.title,
-             "amount":con.amount,
-             "introduction":con.introduction,
-             "url":con.url,
-             'endtime':con.project.endtime,
+    for con in contacts:  
+        project = con.project      
+        i = {"title":project.title,
+             "amount":project.amount,
+             "introduction":project.introduction,
+             "url":project.url,
+             'endtime':project.endtime,
              'id':con.id,
              'code':con.exchange_code
         }
@@ -791,12 +792,12 @@ def get_user_coupon_exchange_detail(request):
     for con in contacts:
         coupon = con.content_object
         i = {"title":coupon.project.title,
-             "amount":coupon.amount,
+             "amount":coupon.project.amount,
              "account":con.invest_account,
              "state":con.get_audit_state_display(),
              'remark':con.remark,
              'time':con.time.strftime("%Y-%m-%d %H:%M:%S"),
-             'type':coupon.get_type_display()
+             'type':coupon.project.get_type_display()
         }
         data.append(i)
     if data:

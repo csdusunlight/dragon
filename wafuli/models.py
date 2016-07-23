@@ -143,7 +143,7 @@ class Commodity(models.Model):
 class CouponProject(models.Model):
     type = models.CharField(max_length=1, choices=COUPON_TYPE, verbose_name=u"优惠券类型")
     title = models.CharField(u"项目名称",max_length=30)
-    amount =models.DecimalField(u'涉及金额', blank=True, null=True,decimal_places = 2, max_digits=6)
+    amount =models.CharField(u'金额(xx元或x%)', max_length=10)
     provider = models.CharField(u"商家", max_length=10)
     url = models.CharField(u"商家地址", blank=True, max_length=200)
     endtime = models.DateField(u"截止日期")
@@ -170,9 +170,9 @@ class Coupon(models.Model):
         verbose_name = u"优惠券"
         verbose_name_plural = u"优惠券"
         ordering = ['-time']
-    def clean(self):
-        if self.type == '2' and self.exchange_code == '':
-            raise ValidationError({'exchange_code': u'使用券的兑换码是必输项'})
+#     def clean(self):
+#         if self.type == '2' and self.exchange_code == '':
+#             raise ValidationError({'exchange_code': u'使用券的兑换码是必输项'})
     def is_to_expired(self):
         endTime = self.project.endtime
         today = datetime.date.today()

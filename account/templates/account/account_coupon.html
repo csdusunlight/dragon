@@ -16,10 +16,10 @@
 $.ajaxSetup({
     data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
 });
-var data1 = '<ul>[data]<li><strong>{amount} <font>元</font></strong><span>{title}</span>'+
+var data1 = '<ul>[data]<li><strong>{amount} <font></font></strong><span>{title}</span>'+
 '<p><b>使用说明：</b>{introduction}<br />有效期至：{endtime}</p>'+
 '<a target="_blank" href="{url}">进入网站</a><a id={id} onClick="pop({id})" class="bul">兑  换</a></li>[/data]</ul>';
-var data2 = '<ul>[data]<li><strong>{amount} <font>元</font></strong><span>{title}</span>'+
+var data2 = '<ul>[data]<li><strong>{amount} <font></font></strong><span>{title}</span>'+
 '<p><b>兑换码：</b>{code}<br /><b>使用说明：</b>{introduction}<br />有效期至：{endtime}</p>'+
 '<a target="_blank" href="{url}">进入网站</a></li>[/data]</ul>';
 var data3 = '<table width="100%"><thead><tr><th width="80">类型</th><th width="130">项目'+
