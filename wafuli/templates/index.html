@@ -37,6 +37,23 @@ $(function(){
 });
 </script>
 </head>
+<div class="window">
+	<div style="margin:auto; margin-top:20%; position:relative">
+    <img src="{% static "images/window.png" %}" />
+    <h1 style="color:#00b4ff; font-size:23px; position:absolute; top:40px; left:895px;">温馨提示</h1>
+    <p style="position:absolute;color:#8b8b8e; font-size:14px;top:85px; left:853px;">签到成功！连续签到有惊喜呢~！</p>
+    <img src="{% static "images/ensure.png" %}" style=" position:absolute;top:160px; left:895px;" />
+    <a class="ensure" onclick="ensure()">确定</a>
+    </div>
+</div>
+<script type="text/javascript">
+function alertcheck(){
+		$(".window").fadeIn();
+	};
+function ensure(){
+	$(".window").fadeOut();
+	}
+</script>
 <body>
 {% include "header.html" %}
 <div id="content">
@@ -52,11 +69,12 @@ $(function(){
       <div class="index_31">
       {% if user.is_authenticated %}
         <div class="Icon"><img src="{% static "images/Icon.png" %}" alt=""/></div>
-        <div class="usemame">尊敬的 </div>
-        <div class="welcome">欢迎来到挖福利</div>	
-        <div class="index_30">推荐好友送现金，<a href="{% url 'account_index' %}">立即推荐</a></div>
-        <div class="signin"><a href="">每日签到</a></div>
-        <div class="lottery"><a href="">积分抽奖</a></div>
+        <div class="usename">尊敬的：</div>
+        <div class="usename_1"><a href="{%url 'account_index'%}">{{user.username}}</a></div>
+        <div class="welcome">欢迎来到挖福利</div>
+        <div class="index_30">推荐好友送现金，<a href="{% url 'account_invite' %}">立即推荐</a></div>
+        <div class="signin"><a onclick="alertcheck()">每日签到</a></div>
+        <div class="lottery"><a href="{% url 'activity_lottery' %}">积分抽奖</a></div>
       {%else%}
       	<div class="index_29"><a href="{% url 'register' %}">注册领现金</a></div>
         <div class="index_30">若已有账号，请<a href="{% url 'login' %}">登录</a></div>

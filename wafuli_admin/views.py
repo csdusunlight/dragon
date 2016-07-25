@@ -133,17 +133,16 @@ def admin_return(request):
         return render(request,"admin_return.html")
     if request.method == "POST":
         res = {}
-        if not admin_user.has_admin_perms('002'):
-            res['code'] = -5
-            res['res_msg'] = u'您没有操作权限！'
-            return JsonResponse(res)
         if not request.is_ajax():
             raise Http404
         if not ( admin_user.is_authenticated() and admin_user.is_staff):
             res['code'] = -1
             res['url'] = reverse('admin:login') + "?next=" + reverse('admin_return')
             return JsonResponse(res)
-         
+        if not admin_user.has_admin_perms('002'):
+            res['code'] = -5
+            res['res_msg'] = u'您没有操作权限！'
+            return JsonResponse(res) 
         event_id = request.POST.get('id', None)
         cash = request.POST.get('cash', None)
         score = request.POST.get('score', None)
