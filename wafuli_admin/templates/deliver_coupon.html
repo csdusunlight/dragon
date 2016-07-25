@@ -9,9 +9,8 @@
    	$.ajaxSetup({
    	    data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
    	});
-    $("li.home9").toggleClass("on");
-    
     $(function(){
+    	$("li.home9").toggleClass("on");
     	$('#type').change(function(){
     		$("select#project").empty();
     		var id=$(this).children('option:selected').val();
