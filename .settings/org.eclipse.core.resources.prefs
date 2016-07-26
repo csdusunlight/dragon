@@ -41,6 +41,7 @@ encoding//wafuli_admin/activity.py=utf-8
 encoding//wafuli_admin/coupon.py=utf-8
 encoding//wafuli_admin/migrations/0002_daystatis_recommendrank.py=utf-8
 encoding//wafuli_admin/models.py=utf-8
+encoding//wafuli_admin/templates/admin_coupon.html=UTF-8
 encoding//wafuli_admin/templates/admin_index.html=UTF-8
 encoding//wafuli_admin/templates/admin_recommend.html=UTF-8
 encoding//wafuli_admin/templates/admin_return.html=UTF-8
