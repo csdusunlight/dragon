@@ -8,12 +8,17 @@
 .header-t .rt a:hover{color:#f08519;}
 .header-t .rt font{ color:#8c8c8c; font-size:12px; margin-right:20px;}
 .header-b{width:1100px;height:100px;clear:both;display:inline-block;text-align:left;}
+
+.window{width:100%; height:100%;position:fixed; background:rgba(0,0,0,0.7); z-index:1000; display:none}
+.ensure{display:block; position:absolute;top:161px; left:928px; color:#fff; font-size:16px;}
+
 #logo{width:340px;height:53px;margin-top:23px;float:left;display:inline;text-align:left;}
 #menu{width:664px;height:35px;margin-top:32px;float:right;display:inline;text-align:left;}
 #menu ul li{width:84px;height:35px;float:left;text-align:center;line-height:35px;margin-left:32px;font-size:15px;}
 #menu ul li.home{margin:0;}
 #menu ul li a{display:block;}
 #menu ul li a:hover{background: url(../images/menu-hover.png) no-repeat;color:#fff;}
+
 #index-banner{width:100%;height:350px;clear:both;text-align:center;}
 .flexslider{position:relative;height:350px;}
 .slides{position:relative;z-index:1;}
@@ -32,10 +37,10 @@
 .lottery a{width:92px;height:35px;background:url(../images/lottery.png) no-repeat; clear:both; padding-top:6px; padding-left:10px;}
 .signin img,.lottery img{display:block}
 .signin a,.lottery a{display:block; font-size:12px; color:#FFF;cursor:pointer}
-.welcome{ font-size:12px; color:#FFF; margin-top:-26px; margin-left:10px;}
+.welcome{ font-size:12px; color:#FFF; margin-top:-3px; margin-left:12px;}
 
-.usemame{font-size:18px;color:#FFF;float:left; margin-top:-54px; margin-left:102px;}
-.usename span{ font-size:18px; color:#FFF; width:100px; height:50px; overflow:hidden}
+.usename{font-size:16px;color:#FFF;float:left; margin-top:-65px; margin-left:102px;}
+.usename_1{ position:absolute;left:102px;top:88px; font-size:18px; color:#f08519;}
 .navbox{width:1920px; margin-top:310px; margin-left:-410px;}
 .nav{width:1920px;margin-left:420px;margin-top:-40px;}
 .nav a{line-height:40px;float:left;padding-left:55px;padding-right:55px;font-size:14px; color:#FFF}
@@ -74,6 +79,7 @@
 .index_13 h2{line-height:27px;font-size:30px;color:#fff;position:absolute;bottom:86px;left:25px;}
 .index_13 h3{line-height:27px;font-size:15px;color:#fff;position:absolute;bottom:52px;left:55px;}
 .index_13 a.more{line-height:28px;font-size:13px;color:#fff;position:absolute;right:9px;bottom:52px;}
+
 .index_13_nav{ margin-left:170px; margin-top:220px;}
 .index_13_nav a{ font-size:14px; color:#FFF; display:block; width:80px; height:34px; text-align:center; padding-top:10px;}
 .index_17_nav{ margin-left:165px; margin-top:150px;}
@@ -81,6 +87,7 @@
 .index_21_nav{ margin-left:170px; margin-top:175px;}
 .index_21_nav a{ font-size:14px; color:#FFF; width:80px; height:34px;display:block; text-align:center; padding-top:10px;}
 .current{background-color:#FFF;}
+
 .index_15{position:relative;float:left;width:862px;height:375px;display:inline;text-align:left;}
 .index_15 > ul{position: absolute;}
 .index_15 ul {display: none; float:left; width:100%; height:592px; background:#fff;  padding:20px 0 22px; margin-top:10px; border-bottom:2px solid #d74700; box-sizing:border-box;}
@@ -90,7 +97,9 @@
 .index_15 ul li h2 a{color:#3a3a3a;}
 .index_15 ul li p{margin:0;padding:0;line-height:27px;font-size:13px;color:#888;}
 .index_15 ul li a.more{display:block;width:89px;height:27px;text-align:center;line-height:27px;font-size:14px;color:#fff;background: url(../images/bg-7.png) no-repeat;position:absolute;bottom:0;left:107px;}
+
 #index_16{width:1100px;height:385px;clear:both;display:inline-block;margin-top:248px;text-align:left;}
+
 .index_17{width:238px;height:385px;float:left;display:inline;text-align:left;background:#00d6b3 url(../images/bg-3.png) no-repeat 84px 40px;position:relative;}
 .index_17 h2{line-height:27px;font-size:30px;color:#fff;position:absolute;bottom:86px;left:25px;}
 .index_17 h3{line-height:27px;font-size:15px;color:#fff;position:absolute;bottom:52px;left:55px;}
@@ -205,4 +214,31 @@ table{border-collapse:collapse;}
 .index_57{width:140px;height:70px;clear:both;margin-top:21px;display:inline-block;text-align:left;line-height:70px;font-size:20px;color:#fff;font-weight:bold;}
 .index_58{width:123px;height:123px;clear:both;display:inline-block;text-align:left;background:#fff;padding:7px 7px 7px 8px;border:1px solid #ccc;}
 .index_59{width:1100px;height:56px;clear:both;display:inline-block;text-align:left;line-height:56px;color:#fff;}
-.index_59 .rt a{margin-left:
+.index_59 .rt a{margin-left:6px;}
+#online{width:63px;overflow:hidden;clear:both;text-align:left;position:fixed;top:30%;right:6px;z-index:1000;border:1px solid #f5f5f5;border-bottom:none;}
+#online li{width:63px;height:74px;float:left;display:inline-block;text-align:center;border-bottom:1px solid #f5f5f5;background:#fff;line-height:26px;}
+#online li a{display:block;width:63px;height:74px;color:#ccc;}
+#online li a:hover { color:#fff; background:#f08519;}
+#online li.qq img{padding-top:6px;}
+#online li.weixin img{padding-top:9px;}
+#online li.top img{padding-top:18px;}
+
+.box_in { float:left; width:912px; height:auto; background:url(../images/newback1.png) no-repeat right; padding-right:2px; box-sizing:border-box;}
+.frcont { float:right; width:175px; height:auto; margin-top:-110px; margin-left:100px;}
+.frcont p { font-size:13px; color:#3a3a3a; line-height:35px; margin:0;font-weight:bold;}
+.frcont p font { color:#ff0000; display:inline-block; width:54px; text-align:center;}
+
+.box_back { float:left; width:100%; height:auto; background:#fbfbfb; padding-bottom:20px;}
+.ico1 { position:absolute; left:0; top:0;}
+.ico2 { position:absolute; left:0; bottom:-235px;}
+.ico3 { position:absolute; left:0; bottom:0;}
+.ico4 { position:absolute; left:237px; top:0;}
+.ico5 { position:absolute; left:237px; bottom:0;}
+#scroll { margin-top:10px; background-color:#fff; border-bottom:2px solid #dea700;}
+.no { display:none;}
+#online li:hover .no { display:inline !important;}
+#online li:hover img { display:none;}
+.newpost { position:absolute; left:21px; top:20px; background:url(../images/newbox.png) no-repeat center; width:41px; height:41px; line-height:20px; box-sizing:border-box; padding-left:3px; text-align:left; color:#fff; font-size:16px;}
+.newpost.zero {top:0;}
+.new_cont { vertical-align:top; margin-left:10px; margin-top:10px;}
+.new_cont2 { vertical-align:top; margin-left:10px; margin-top:-7px;}

@@ -20,7 +20,6 @@ from account.models import MyUser
 from wafuli_admin.models import RecommendRank
 from wafuli.data import COUPON_TYPE
 from django.views.decorators.csrf import csrf_exempt
-from Canvas import Line
 from httplib import HTTPResponse
 # Create your views here.
 logger = logging.getLogger('wafuli')
