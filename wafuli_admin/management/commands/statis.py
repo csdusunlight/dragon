@@ -9,7 +9,7 @@ import time,datetime
 from django.db import connection
 from django.db.models import Sum, Count,Avg
 from dircache import annotate
-from wafuli.models import ZeroPrice, Task, Finance
+from wafuli.models import Welfare, Task, Finance
 logger = logging.getLogger("wafuli")
 from django.core.management.base import BaseCommand, CommandError
 from account.models import MyUser, Userlogin
@@ -38,7 +38,7 @@ class Command(BaseCommand):
                 aggregate(cou=Count('user_id',distinct=True),sum=Sum('invest_amount'))
         exchange_scores = dict.get('sum') or 0
         exchange_num = dict.get('cou')
-        new_wel_num = ZeroPrice.objects.filter(pub_date__gte=today).count() + \
+        new_wel_num = Welfare.objects.filter(pub_date__gte=today).count() + \
                 Task.objects.filter(pub_date__gte=today).count() + \
                 Finance.objects.filter(pub_date__gte=today).count()
                 
@@ -93,7 +93,7 @@ class Command(BaseCommand):
         global_statis = GlobalStatis.objects.first()
         if not global_statis:
             global_statis = GlobalStatis()
-        global_statis.all_wel_num = ZeroPrice.objects.count() + Task.objects.count() + Finance.objects.count()
+        global_statis.all_wel_num = Welfare.objects.count() + Task.objects.count() + Finance.objects.count()
         global_statis.award_total = total_award.get('sum')
         global_statis.save()
         

@@ -337,8 +337,8 @@ def signin(request):
             UserSignIn.objects.create(user=request.user, date=date.today(), signed_conse_days=signed_conse_days)
             charge_score(request.user, '0', 5, u"签到奖励")
             if signed_conse_days%7 == 0:
-                ret = charge_score(request.user, '0', 20, u"连续签到7天奖励")
-        result['code'] = 0
+                charge_score(request.user, '0', 20, u"连续签到7天奖励")
+            result['code'] = 0
     return JsonResponse(result)
 
 @login_required

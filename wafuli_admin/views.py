@@ -1,7 +1,7 @@
 #coding:utf-8
 from django.shortcuts import render, redirect
 from wafuli.models import UserEvent, AdminEvent, AuditLog, TransList, Company,\
-    Finance, Task, ZeroPrice
+    Finance, Task, Welfare
 import datetime
 from django.db.models import Sum, Count
 from django.core.urlresolvers import reverse

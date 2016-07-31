@@ -9,6 +9,7 @@
 <link rel="shortcut icon" href="/static/images/favicon.ico" />
 <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}" />
 <link rel="stylesheet" type="text/css" href="{% static "css/index.css" %}" />
+<link rel="stylesheet" type="text/css" href="{% static "css/dialog.css" %}" />
 <script type="text/javascript" src="{% static "js/jquery-1.11.2.min.js" %}"></script>
 <script type="text/javascript" src="{% static "js/jquery.flexslider-min.js" %}"></script>
 <script type="text/javascript" src="{% static "js/jQuery.infiniteCarousel.js" %}"></script>
@@ -34,26 +35,35 @@ $(function(){
 		directionNav: true,
 		pauseOnAction: false
 	});
+	$(".signin a").click(function(){
+		$.ajax({
+			url:"{%url 'signin' %}",
+			dataType:"json",
+			success:function(ret){
+				if(ret.code==0){
+					$("div.popup1").fadeIn();
+				}
+				else if((ret.code==1)){
+					$("div.popup2").fadeIn();
+				}
+				else if(ret.code==-1){
+					alert("该页面已过期，请重新登录！");
+					window.location.href = ret.url;
+				}
+			},
+			error:function(){
+				alert("请检查网络连接");
+			}
+		});
+	});
+	$('.btn_cont button').click(function(){
+    	$(this).parent().parent().parent().parent().hide();
+    });
+	$(".index_13_nav a").eq(0).mouseenter();
+	$(".index_10").infiniteCarousel();
 });
 </script>
 </head>
-<div class="window">
-	<div style="margin:auto; margin-top:20%; position:relative">
-    <img src="{% static "images/window.png" %}" />
-    <h1 style="color:#00b4ff; font-size:23px; position:absolute; top:40px; left:895px;">温馨提示</h1>
-    <p style="position:absolute;color:#8b8b8e; font-size:14px;top:85px; left:853px;">签到成功！连续签到有惊喜呢~！</p>
-    <img src="{% static "images/ensure.png" %}" style=" position:absolute;top:160px; left:895px;" />
-    <a class="ensure" onclick="ensure()">确定</a>
-    </div>
-</div>
-<script type="text/javascript">
-function alertcheck(){
-		$(".window").fadeIn();
-	};
-function ensure(){
-	$(".window").fadeOut();
-	}
-</script>
 <body>
 {% include "header.html" %}
 <div id="content">
@@ -73,7 +83,7 @@ function ensure(){
         <div class="usename_1"><a href="{%url 'account_index'%}">{{user.username}}</a></div>
         <div class="welcome">欢迎来到挖福利</div>
         <div class="index_30">推荐好友送现金，<a href="{% url 'account_invite' %}">立即推荐</a></div>
-        <div class="signin"><a onclick="alertcheck()">每日签到</a></div>
+        <div class="signin"><a>每日签到</a></div>
         <div class="lottery"><a href="{% url 'activity_lottery' %}">积分抽奖</a></div>
       {%else%}
       	<div class="index_29"><a href="{% url 'register' %}">注册领现金</a></div>
@@ -88,11 +98,6 @@ function ensure(){
   </div>
   <div id="index_8">
     <div class="index_9">
-	<script type="text/javascript">
-    $(function(){
-        $(".index_10").infiniteCarousel();
-    });
-    </script>
       <div class="index_10">
         <h2>最新公告：</h2>
         <div class="show-list" rel="wrapper">
@@ -145,18 +150,14 @@ function ensure(){
         <a>优惠券</a>
         </div>
     </div>
-<script>
-$(function(){
-	$(".index_13_nav a").mouseenter();
-	})
-</script>
+
     <div class="index_15">
       <div class="icobox">
           	<img src="{% static 'images/ico1.png' %}" class="ico1" />
             <img src="{% static 'images/ico2.png' %}" class="ico2" />
       </div>
       <ul style="display: block;">
-{% for news in zero_list %}
+{% for news in hongbao_list %}
         <li>
           <a target="_blank" href="{{news.url}}" ><img src="{{news.pic.url}}" alt="{{news.title}}" width="258" height="148"/></a>
           <h2><a target="_blank" href="{{news.url}}" >{{news.title}}</a></h2>
@@ -180,7 +181,7 @@ $(function(){
       </ul>
       
       <ul>
-		{% for news in zero_list %}
+{% for news in baoyou_list %}
         <li>
           <a target="_blank" href="{{news.url}}" ><img src="{{news.pic.url}}" alt="{{news.title}}" width="258" height="148"/></a>
           <h2><a target="_blank" href="{{news.url}}" >{{news.title}}</a></h2>
@@ -204,7 +205,7 @@ $(function(){
       </ul>
       
       <ul>
-		{% for news in zero_list %}
+{% for news in youhuiquan_list %}
         <li>
           <a target="_blank" href="{{news.url}}" ><img src="{{news.pic.url}}" alt="{{news.title}}" width="258" height="148"/></a>
           <h2><a target="_blank" href="{{news.url}}" >{{news.title}}</a></h2>
@@ -453,7 +454,29 @@ $(function(){
 <div style="clear:both"></div>  
 <!--底部-->
   {% include "footer.html" %}
-  <!--浮动窗口-->  
+  <!--浮动窗口-->
   {% include "outline.html" %}
+<div class="popup1" style="display:none;">
+  	<div class="w698_box">
+    	<div class="pop_left">
+        	<h2>温馨提示</h2>
+            <p>签到成功！连续签到有惊喜呢~</p>
+            <div class="btn_cont">
+            	<button class="confirm_lottery">确  定</button>
+            </div>
+        </div>
+    </div>
+  </div>
+<div class="popup2" style="display:none;">
+  	<div class="w698_box">
+    	<div class="pop_left">
+        	<h2>温馨提示</h2>
+            <p>今日已经签到过了~</p>
+            <div class="btn_cont">
+            	<button class="confirm_lottery">确  定</button>
+            </div>
+        </div>
+    </div>
+  </div>
 </body>
 </html>

@@ -1,7 +1,7 @@
 #coding:utf-8
 from django.shortcuts import render
 from django.http.response import Http404
-from wafuli.models import ZeroPrice, Task, Finance, Commodity,\
+from wafuli.models import Welfare, Task, Finance, Commodity,\
     ExchangeRecord, Press, UserEvent, Advertisement, Activity
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
@@ -18,14 +18,18 @@ logger = logging.getLogger('wafuli')
 def index(request):
     ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='1'),is_hidden=False)[0:8]
     announce_list = Press.objects.filter(type='1')[0:5]
-    zero_list = ZeroPrice.objects.filter(state='1')[0:3]
+    hongbao_list = Welfare.objects.filter(type='hongbao')[0:3]
+    baoyou_list = Welfare.objects.filter(type='baoyou')[0:3]
+    youhuiquan_list = Welfare.objects.filter(type='youhuiquan')[0:3]
     task_list = Task.objects.filter(state='1')[0:3]
     finance_list = Finance.objects.filter(state='1')[0:3]
     news_list = Activity.objects.filter(is_hidden=False)[0:2]
     exchange_list = ExchangeRecord.objects.all()[0:10]
     strategy_list = Press.objects.filter(type='2')[0:6]
     context = {'ad_list':ad_list, 
-               'zero_list': zero_list, 
+               'hongbao_list': hongbao_list,
+               'baoyou_list': baoyou_list, 
+               'youhuiquan_list': youhuiquan_list, 
                'task_list': task_list, 'announce_list':announce_list,
                'finance_list': finance_list,
                'news_list': news_list,'exchange_list': exchange_list,
@@ -130,10 +134,10 @@ def welfare(request, id=None):
     else:
         id = int(id)
         try:
-            news = ZeroPrice.objects.get(id=id)
-        except ZeroPrice.DoesNotExist:
+            news = Welfare.objects.get(id=id)
+        except Welfare.DoesNotExist:
             raise Http404(u"该页面不存在")
-        return render(request, 'detail-wel.html',{'news':news,'type':'ZeroPrice'})
+        return render(request, 'detail-wel.html',{'news':news,'type':'Welfare'})
 def aboutus(request):
     ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='6'),is_hidden=False).first
     return render(request, 'aboutus.html',{'ad_list':ad_list})
@@ -423,7 +427,7 @@ def get_wel_page(request):
         size = 6
     if not page or size <= 0:
         raise Http404
-    item_list = ZeroPrice.objects.all()
+    item_list = Welfare.objects.all()
     filter = str(filter)
     state = str(state)
     if filter != '0':
