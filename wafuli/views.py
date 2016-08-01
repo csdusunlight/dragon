@@ -74,7 +74,7 @@ def finance(request, id=None):
             news = Finance.objects.get(id=id)
         except Finance.DoesNotExist:
             raise Http404(u"该页面不存在")
-        return render(request, 'detail-wel.html',{'news':news,'type':'Finance'})
+        return render(request, 'detail-taskandfinance.html',{'news':news,'type':'Finance'})
         
 def task(request, id=None):
     if id is None:
@@ -100,7 +100,7 @@ def task(request, id=None):
             news = Task.objects.get(id=id)
         except Task.DoesNotExist:
             raise Http404(u"该页面不存在")
-        return render(request, 'detail-wel.html',{'news':news,'type':'Task'})
+        return render(request, 'detail-taskandfinance.html',{'news':news,'type':'Task'})
 def commodity(request, id):
     id = int(id)
     try:
@@ -115,34 +115,12 @@ def press(request, id):
     except Press.DoesNotExist:
         raise Http404(u"该页面不存在")
     return render(request, 'detail-press.html',{'press':press})
-def welfare(request, id=None):
-    if id is None:
-        ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='2'),is_hidden=False)[0:8]
-        strategy_list = Press.objects.filter(type='2')[0:10]
-        context = {'ad_list':ad_list,'strategy_list':strategy_list}
-        ranks = RecommendRank.objects.all()[0:6]
-        for i in range(len(ranks)):
-            key = 'rank'+str(i+1)
-            username = ranks[i].user.username
-            if len(username) > 4:
-                username = username[0:4] + '****'
-            else:
-                username = username + '****'
-            acc_num = ranks[i].acc_num
-            context.update({key:{'username':username,'acc_num':str(acc_num)+u'条'}})
-        return render(request, 'zeroWelfare.html', context)
-    else:
-        id = int(id)
-        try:
-            news = Welfare.objects.get(id=id)
-        except Welfare.DoesNotExist:
-            raise Http404(u"该页面不存在")
-        return render(request, 'detail-wel.html',{'news':news,'type':'Welfare'})
+
 def aboutus(request):
     ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='6'),is_hidden=False).first
     return render(request, 'aboutus.html',{'ad_list':ad_list})
 
-def experience(request):
+def experience_taskandfinance(request):
     if not request.is_ajax():
         logger.warning("Experience refused no-ajax request!!!")
         raise Http404

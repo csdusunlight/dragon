@@ -30,9 +30,10 @@ urlpatterns = [
     url(r'^taskpage/$', 'wafuli.views.get_task_page', name='get_task_page'),
     url(r'^welpage/$', 'wafuli.views.get_wel_page', name='get_wel_page'),
     url(r'^presspage/$', 'wafuli.views.get_press_page', name='get_press_page'),
-    url(r'^aboutus/', 'wafuli.views.aboutus', name="aboutus"),
-    url(r'^exp/', 'wafuli.views.experience', name='exp'),
-    url(r'^expsubmit/', 'wafuli.views.expsubmit', name='expsubmit'),
+    url(r'^aboutus/$', 'wafuli.views.aboutus', name="aboutus"),
+    url(r'^exp_tf/$', 'wafuli.views.experience_taskandfinance', name='exp_tf'),
+    url(r'^exp_wel/$', 'wafuli.welfare.exp_welfare_common', name='exp_welfare_common'),
+    url(r'^expsubmit/$', 'wafuli.views.expsubmit', name='expsubmit'),
     url(r'^lookup_order/$', 'wafuli.views.lookup_order', name='lookup_order'),
     url(r'^submit_order/$', 'wafuli.views.submit_order', name='submit_order'),
     

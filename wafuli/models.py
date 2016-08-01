@@ -96,6 +96,7 @@ class Welfare(Base):
                          upload_settings={"imageMaxSize":1204000},settings={},command=None,blank=True)
     advert = models.ForeignKey("Advertisement",blank=True, null=True, on_delete=models.SET_NULL)
     is_del = models.BooleanField(u"删除", default=False)
+    exp_url = models.CharField(u"商家地址", blank=True, max_length=200)
     def clean(self):
         if self.pic.size > 30000:
             raise ValidationError({'pic': u'图片大小不能超过30k'})
@@ -105,7 +106,6 @@ class Welfare(Base):
         ordering = ["-news_priority", "-pub_date"]
 class Hongbao(Welfare):
     isonMobile = models.BooleanField(u'是否为移动端活动', default= False)
-    exp_url = models.CharField(u"活动地址", blank=True, max_length=200)
     exp_code = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, verbose_name=u"上传二维码")
     def clean(self):
         super(Hongbao, self).clean()
@@ -118,7 +118,6 @@ class Hongbao(Welfare):
         verbose_name_plural = u"红包"
 class Baoyou(Welfare):
     isonMobile = models.BooleanField(u'是否为移动端活动', default= False)
-    exp_url = models.CharField(u"活动地址", blank=True, max_length=200)
     exp_code = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, verbose_name=u"上传二维码")
     def clean(self):
         super(Baoyou, self).clean()
@@ -132,7 +131,6 @@ class Baoyou(Welfare):
 class CouponProject(Welfare):
     ctype = models.CharField(max_length=1, choices=COUPON_TYPE, verbose_name=u"优惠券类型")
     amount =models.CharField(u'金额(xx元或x%)', max_length=10)
-    exp_url = models.CharField(u"商家地址", blank=True, max_length=200)
     endtime = models.DateField(u"截止日期")
     introduction = models.TextField(u"使用说明",max_length=200)
     claim_limit = models.SmallIntegerField(u"限领次数", blank=True, default=1)
