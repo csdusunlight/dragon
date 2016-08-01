@@ -68,6 +68,12 @@ ZERO_TYPE = (
     ('4', u'话费'),
     ('5', u'其他'),
 )
+WELFARE_TYPE = (
+    ('hongbao', u'红包'),
+    ('baoyou', u'9.9包邮'),
+    ('youhuiquan', u'优惠券'),
+    ('qita', u'其他'),
+)
 NEWS_TYPE = (
     ('1', u'公告'),
     ('2', u'福利攻略'),

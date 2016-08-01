@@ -76,6 +76,97 @@ class ZeroPrice(News):
         verbose_name = u"免费福利"
         verbose_name_plural = u"免费福利"
         ordering = ["-news_priority", "-pub_date"]
+class Mark(models.Model):
+    name = models.CharField(max_length=10, verbose_name=u"标签名", unique=True)
+    inviter = models.ForeignKey('self', related_name = 'child_marks', 
+                                blank=True, null=True, on_delete=models.SET_NULL)
+class Welfare(Base):
+    type = models.CharField(max_length=10, choices=WELFARE_TYPE, editable=False, verbose_name=u"福利类型")
+    marks = models.ManyToManyField(Mark, verbose_name='标签', related_name="welfare_set", blank=True)
+    state = models.CharField(u"项目状态", max_length=1, choices=STATE)
+    pic = models.ImageField(upload_to='photos/%Y/%m/%d', verbose_name=u"标志图片上传（最大不超过30k，越小越好）")
+    provider = models.CharField(u"商家", max_length=10)
+    seo_title = models.CharField(max_length=200, verbose_name=u"SEO标题", blank=True)
+    seo_keywords = models.CharField(max_length=200, verbose_name=u"SEO关键词", blank=True)
+    seo_description = models.CharField(max_length=200, verbose_name=u"SEO描述", blank=True)
+    time_limit = models.CharField(u"活动时间", max_length=24)
+    strategy=UEditorField(u"活动内容", width=900, height=600, toolbars="full", 
+                         imagePath="photos/%(year)s/%(month)s/%(day)s/",
+                         filePath="photos/%(year)s/%(month)s/%(day)s/", 
+                         upload_settings={"imageMaxSize":1204000},settings={},command=None,blank=True)
+    advert = models.ForeignKey("Advertisement",blank=True, null=True, on_delete=models.SET_NULL)
+    is_del = models.BooleanField(u"删除", default=False)
+    def clean(self):
+        if self.pic.size > 30000:
+            raise ValidationError({'pic': u'图片大小不能超过30k'})
+    def is_expired(self):
+        pass
+    class Meta:
+        ordering = ["-news_priority", "-pub_date"]
+class Hongbao(Welfare):
+    isonMobile = models.BooleanField(u'是否为移动端活动', default= False)
+    exp_url = models.CharField(u"活动地址", blank=True, max_length=200)
+    exp_code = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, verbose_name=u"上传二维码")
+    def clean(self):
+        super(Hongbao, self).clean()
+        if self.isonMobile == False and self.exp_url == '':
+            raise ValidationError({'exp_url': u'请输入活动体验地址'})
+        elif self.isonMobile == True and self.exp_code == '':
+            raise ValidationError({'exp_code': u'请上传手机扫描二维码'})
+    class Meta:
+        verbose_name = u"红包"
+        verbose_name_plural = u"红包"
+class Baoyou(Welfare):
+    isonMobile = models.BooleanField(u'是否为移动端活动', default= False)
+    exp_url = models.CharField(u"活动地址", blank=True, max_length=200)
+    exp_code = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, verbose_name=u"上传二维码")
+    def clean(self):
+        super(Baoyou, self).clean()
+        if self.isonMobile == False and self.exp_url == '':
+            raise ValidationError({'exp_url': u'请输入活动体验地址'})
+        elif self.isonMobile == True and self.exp_code == '':
+            raise ValidationError({'exp_code': u'请上传手机扫描二维码'})
+    class Meta:
+        verbose_name = u"9.9包邮"
+        verbose_name_plural = u"9.9包邮"
+class CouponProject(Welfare):
+    ctype = models.CharField(max_length=1, choices=COUPON_TYPE, verbose_name=u"优惠券类型")
+    amount =models.CharField(u'金额(xx元或x%)', max_length=10)
+    exp_url = models.CharField(u"商家地址", blank=True, max_length=200)
+    endtime = models.DateField(u"截止日期")
+    introduction = models.TextField(u"使用说明",max_length=200)
+    claim_limit = models.SmallIntegerField(u"限领次数", blank=True, default=1)
+    def __unicode__(self):
+        return '%s:%s' % (self.get_ctype_display(), self.title)
+    class Meta:
+        ordering = ['-pub_date']
+        verbose_name = u"优惠券项目"
+        verbose_name_plural = u"优惠券项目"
+class Coupon(models.Model):
+    user = models.ForeignKey(MyUser, related_name="user_coupons", null=True)
+    project = models.ForeignKey(CouponProject, related_name="coupons")
+    time = models.DateField(u"领取或发放日期", auto_now_add=True)
+    exchange_code = models.CharField(u"兑换码", blank=True, max_length=50)
+    is_used = models.BooleanField(u"是否已使用", default = False)
+    user_event = GenericRelation("UserEvent",related_query_name='coupon')
+    def __unicode__(self):
+        return self.project.title
+    class Meta:
+        verbose_name = u"优惠券"
+        verbose_name_plural = u"优惠券"
+        ordering = ['-time']
+#     def clean(self):
+#         if self.type == '2' and self.exchange_code == '':
+#             raise ValidationError({'exchange_code': u'使用券的兑换码是必输项'})
+    def is_to_expired(self):
+        endTime = self.project.endtime
+        today = datetime.date.today()
+        dif = (endTime-today).days
+        return dif <= 7 and dif >= 0
+    def is_expired(self):
+        endTime = self.project.endtime
+        today = datetime.date.today()
+        return endTime < today
 class Task(News):
     amount_to_invest = models.IntegerField(u"投资金额")
     scroreToAdd = models.IntegerField(u"奖励积分")
@@ -140,48 +231,6 @@ class Commodity(models.Model):
     class Meta:
         verbose_name = u"商品"
         verbose_name_plural = u"积分商品"
-class CouponProject(models.Model):
-    type = models.CharField(max_length=1, choices=COUPON_TYPE, verbose_name=u"优惠券类型")
-    title = models.CharField(u"项目名称",max_length=30)
-    amount =models.CharField(u'金额(xx元或x%)', max_length=10)
-    provider = models.CharField(u"商家", max_length=10)
-    url = models.CharField(u"商家地址", blank=True, max_length=200)
-    endtime = models.DateField(u"截止日期")
-    introduction = models.TextField(u"使用说明",max_length=200)
-    claim_limit = models.SmallIntegerField(u"限领次数", blank=True, default=1)
-    pub_date = models.DateTimeField(u"创建时间", auto_now_add=True)
-    is_del = models.BooleanField(u"删除", default=False)
-    def __unicode__(self):
-        return '%s:%s' % (self.get_type_display(), self.title)
-    class Meta:
-        ordering = ['-pub_date']
-        verbose_name = u"优惠券项目"
-        verbose_name_plural = u"优惠券项目"
-class Coupon(models.Model):
-    user = models.ForeignKey(MyUser, related_name="user_coupons", null=True)
-    project = models.ForeignKey(CouponProject, related_name="coupons")
-    time = models.DateField(u"领取或发放日期", auto_now_add=True)
-    exchange_code = models.CharField(u"兑换码", blank=True, max_length=50)
-    is_used = models.BooleanField(u"是否已使用", default = False)
-    user_event = GenericRelation("UserEvent",related_query_name='coupon')
-    def __unicode__(self):
-        return self.project.title
-    class Meta:
-        verbose_name = u"优惠券"
-        verbose_name_plural = u"优惠券"
-        ordering = ['-time']
-#     def clean(self):
-#         if self.type == '2' and self.exchange_code == '':
-#             raise ValidationError({'exchange_code': u'使用券的兑换码是必输项'})
-    def is_to_expired(self):
-        endTime = self.project.endtime
-        today = datetime.date.today()
-        dif = (endTime-today).days
-        return dif <= 7 and dif >= 0
-    def is_expired(self):
-        endTime = self.project.endtime
-        today = datetime.date.today()
-        return endTime < today
 class Message(models.Model):
     user = models.ForeignKey(MyUser, related_name="user_msgs")
     title = models.CharField(u"标题", max_length=30)
@@ -213,10 +262,6 @@ class UserEvent(models.Model):
         return u"%s的用户事件：%s" % (self.user, self.get_event_type_display())
     class Meta:
         ordering = ["-time",]
-# class Log_ZeoroPrice(BaseLog):
-#     zeroprice = models.ForeignKey(ZeroPrice, related_name='history_related')
-# class Log_Task(BaseLog):
-#     task = models.ForeignKey(Task, related_name='history_related')
 class AdminEvent(models.Model):
     admin_user = models.ForeignKey(MyUser, related_name="user_admin_history")
     custom_user = models.ForeignKey(MyUser, related_name="user_awarding_history")

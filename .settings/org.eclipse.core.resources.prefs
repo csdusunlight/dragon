@@ -31,6 +31,7 @@ encoding//wafuli/activity.py=utf-8
 encoding//wafuli/admin.py=utf-8
 encoding//wafuli/data.py=utf-8
 encoding//wafuli/migrations/0009_auto_20160717_1350.py=utf-8
+encoding//wafuli/migrations/0016_auto_20160731_1635.py=utf-8
 encoding//wafuli/models.py=utf-8
 encoding//wafuli/templates/activity_recommend.html=UTF-8
 encoding//wafuli/templates/admin/wafuli/Commodity/change_form.html=UTF-8
