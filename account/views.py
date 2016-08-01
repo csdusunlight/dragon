@@ -1017,7 +1017,7 @@ def get_user_invite_page(request):
             take_award = ("%.2f" % take_award)
             i = {
                  "mobile":con.user.mobile,
-                 "time":con.time.strftime("%Y-%m-%d %H:%M"),
+                 "time":con.audit_time.strftime("%Y-%m-%d %H:%M"),
                  "amount":con.invest_amount,
                  "take":take_award,
              }
