@@ -671,7 +671,6 @@ def get_admin_with_page(request):
     data = []
     for con in contacts:
         obj_user = con.user
-        print con.user.mobile + con.time.strftime("%Y-%m-%d %H:%M")
         i = {"username":obj_user.username,
              "mobile":obj_user.mobile,
              "balance":obj_user.balance,

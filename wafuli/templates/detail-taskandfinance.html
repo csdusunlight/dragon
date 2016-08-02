@@ -17,7 +17,7 @@ $(function(){
 			dataType:"json",
 			success:function(ret){
 				if(ret.code==0){
-					alert("ÇëÏÈµÇÂ¼£¡")
+					alert("è¯·å…ˆç™»å½•ï¼")
 					window.location.href = ret.url;
 				}
 				else if(ret.code==1){
@@ -31,7 +31,7 @@ $(function(){
 				}
 			},
 			error:function(){
-				alert("Çë¼ì²éÍøÂçÁ¬½Ó");
+				alert("è¯·æ£€æŸ¥ç½‘ç»œè¿æ¥");
 			}
 		});
 	});
@@ -41,7 +41,7 @@ $(function(){
 		var remark = $('input#remark').val();
 		var re=/^1[1,2,3,4,6,5,7,8,9]\d{9}$/;
 		if(!re.test(telnum)){
-			alert("ÊÖ»úºÅ¸ñÊ½²»ÕıÈ·£¡")
+			alert("æ‰‹æœºå·æ ¼å¼ä¸æ­£ç¡®ï¼")
 		}
 		else{
 			$('#myModal').modal();
@@ -68,7 +68,7 @@ $(function(){
 			dataType:"json",
 			success:function(ret){
 				if(ret.code==0){
-					alert("ÇëÏÈµÇÂ¼£¡")
+					alert("è¯·å…ˆç™»å½•ï¼")
 					window.location.href = ret.url;
 				}
 				else {
@@ -77,7 +77,7 @@ $(function(){
 				}
 			},
 			error:function(){
-				alert("Çë¼ì²éÍøÂçÁ¬½Ó");
+				alert("è¯·æ£€æŸ¥ç½‘ç»œè¿æ¥");
 			}
 		});
 	});
@@ -91,33 +91,33 @@ $(function(){
     	<p class="tli-title td-tij">{{news.title}}</p>
         <p class="td-p">
         {% if not user.is_authenticated %}
-        	<span><a href="{%url 'register' %}"  style="color:#0090D7;">×¢²á</a></span>&nbsp;»ò&nbsp;<span>
-        	<a class="login" href="{%url 'login' %}"  style="color:#0090D7;">µÇÂ½</a>&nbsp;</span>
-			ÍÚ¸£ÀûÌåÑé,Íê³ÉºóÇëË¢ĞÂ±¾Ò³,²é¿´×îĞÂ×´Ì¬
+        	<span><a href="{%url 'register' %}"  style="color:#0090D7;">æ³¨å†Œ</a></span>&nbsp;æˆ–&nbsp;<span>
+        	<a class="login" href="{%url 'login' %}"  style="color:#0090D7;">ç™»é™†</a>&nbsp;</span>
+			æŒ–ç¦åˆ©ä½“éªŒ,å®Œæˆåè¯·åˆ·æ–°æœ¬é¡µ,æŸ¥çœ‹æœ€æ–°çŠ¶æ€
 		{% else %}
-        	ÇëÈÏÕæÔÄ¶ÁÏÂÃæµÄ½±Àø¹æÔòºÍÌåÑé²½ÖèºóÔÙµã»÷¡°Á¢¼´ÌåÑé¡±
+        	è¯·è®¤çœŸé˜…è¯»ä¸‹é¢çš„å¥–åŠ±è§„åˆ™å’Œä½“éªŒæ­¥éª¤åå†ç‚¹å‡»â€œç«‹å³ä½“éªŒâ€
         {% endif %}
         </p>
         {% if not news.is_expired %}
-        <button class="md-trigger te-mo">Á¢¼´ÌåÑé</button>
+        <button class="md-trigger te-mo">ç«‹å³ä½“éªŒ</button>
         {% else %}
-        <button class="te-moe">ÒÑ½áÊø</button>
+        <button class="te-moe">å·²ç»“æŸ</button>
         {% endif %}
     </div>
   </div>
   <div class="td-msg">
-  	<div class="msg-ti"><img src="{% static 'images/task-02.png' %}" class="ms-pd"/><span class="mag-pp">ĞÅÏ¢µÇ¼Ç</span></div>
-   	<div class="ma-div">×¢²áÊÖ»úºÅ£º<input type="text" placeholder="ÊäÈëÄúµÄÊÖ»úºÅ£¬ÈôÓĞ¶à¸öÇë·Ö±ğÌá½»" class="ms-input" id='telnum'/></div>
-	<div class="ma-div2">ÊÇ·ñ¸´Í¶£º  
-		<input type="radio" name="futou" id="radio_box"/><label for="radio_box">ÊÇ</label>
-		<input type="radio" name="futou" id="radio_box" checked="checked"/><label for="radio_box">·ñ</label>
+  	<div class="msg-ti"><img src="{% static 'images/task-02.png' %}" class="ms-pd"/><span class="mag-pp">ä¿¡æ¯ç™»è®°</span></div>
+   	<div class="ma-div">æ³¨å†Œæ‰‹æœºå·ï¼š<input type="text" placeholder="è¾“å…¥æ‚¨çš„æ‰‹æœºå·ï¼Œè‹¥æœ‰å¤šä¸ªè¯·åˆ†åˆ«æäº¤" class="ms-input" id='telnum'/></div>
+	<div class="ma-div2">æ˜¯å¦å¤æŠ•ï¼š  
+		<input type="radio" name="futou" id="radio_box"/><label for="radio_box">æ˜¯</label>
+		<input type="radio" name="futou" id="radio_box" checked="checked"/><label for="radio_box">å¦</label>
 	</div>
-    <div class="ma-div3">±¸×¢£º<input type="text" class="ms-input" id='remark'/></div>
-    <p class="td-yy"><button class="md-trigger td-tj">Ìá½»</button></p>
+    <div class="ma-div3">å¤‡æ³¨ï¼š<input type="text" class="ms-input" id='remark'/></div>
+    <p class="td-yy"><button class="md-trigger td-tj">æäº¤</button></p>
     <div class="clearboth"></div>
   </div>
   <div class="td-msgs">
-  	<div class="msg-ti"><img src="{% static 'images/task-03.png' %}" class="ms-pd"/><span class="mag-pp">½±Àø¹æÔò</span></div>
+  	<div class="msg-ti"><img src="{% static 'images/task-03.png' %}" class="ms-pd"/><span class="mag-pp">å¥–åŠ±è§„åˆ™</span></div>
 	<div class="detail-html">{{news.rules|safe}}</div>
   </div>
 {%endblock%}

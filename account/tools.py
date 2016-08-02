@@ -15,6 +15,8 @@ mail_host="smtp.126.com"  #设置服务器
 mail_user="hunanjinyezi@126.com"    #用户名
 mail_pass="jinyezi520"   #口令 
 mail_postfix="126.com"  #发件箱的后缀
+import logging
+logger = logging.getLogger('wafuli')
 def random_str(randomlength=10):
     str = ''
     chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'
@@ -43,7 +45,6 @@ def send_mail(to_email, id):
     active_addr = settings.DOMAIN_URL + reverse('active_email')+'?code='+active_code
     content_html = str( render_to_response("account/email_template.html", {'url':active_addr}))
     content_html = content_html[content_html.index('<meta content="text/html; charset=utf-8" />'):]
-    print content_html
     content = content_html
     msg = MIMEText(content,_subtype='html',_charset='utf-8') #创建一个实例，这里设置为html格式邮件
     msg['Subject'] = u'挖福利邮箱激活'    #设置主题
@@ -57,7 +58,7 @@ def send_mail(to_email, id):
         s.close()  
         return active_code
     except Exception, e:  
-        print str(e)  
+        logger.error(str(e))
         return ''
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')

@@ -17,7 +17,7 @@ $(function(){
 			dataType:"json",
 			success:function(ret){
 				if(ret.code==0){
-					alert("ÇëÏÈµÇÂ¼£¡")
+					alert("è¯·å…ˆç™»å½•ï¼")
 					window.location.href = ret.url;
 				}
 				else if(ret.code==1){
@@ -31,7 +31,7 @@ $(function(){
 				}
 			},
 			error:function(){
-				alert("Çë¼ì²éÍøÂçÁ¬½Ó");
+				alert("è¯·æ£€æŸ¥ç½‘ç»œè¿æ¥");
 			}
 		});
 	});
@@ -41,7 +41,7 @@ $(function(){
 		var remark = $('input#remark').val();
 		var re=/^1[1,2,3,4,6,5,7,8,9]\d{9}$/;
 		if(!re.test(telnum)){
-			alert("ÊÖ»úºÅ¸ñÊ½²»ÕıÈ·£¡")
+			alert("æ‰‹æœºå·æ ¼å¼ä¸æ­£ç¡®ï¼")
 		}
 		else{
 			$('#myModal').modal();
@@ -68,7 +68,7 @@ $(function(){
 			dataType:"json",
 			success:function(ret){
 				if(ret.code==0){
-					alert("ÇëÏÈµÇÂ¼£¡")
+					alert("è¯·å…ˆç™»å½•ï¼")
 					window.location.href = ret.url;
 				}
 				else {
@@ -77,7 +77,7 @@ $(function(){
 				}
 			},
 			error:function(){
-				alert("Çë¼ì²éÍøÂçÁ¬½Ó");
+				alert("è¯·æ£€æŸ¥ç½‘ç»œè¿æ¥");
 			}
 		});
 	});
@@ -92,28 +92,28 @@ $(function(){
     	<p class="tli-title td-tij">{{news.title}}</p>
         <p class="td-p">
         {% if not user.is_authenticated %}
-        	<span><a href="{%url 'register' %}"  style="color:#0090D7;">×¢²á</a></span>&nbsp;»ò&nbsp;<span>
-        	<a class="login" href="{%url 'login' %}"  style="color:#0090D7;">µÇÂ½</a>&nbsp;</span>
-			ÍÚ¸£ÀûÌåÑé,Íê³ÉºóÇëË¢ĞÂ±¾Ò³,²é¿´×îĞÂ×´Ì¬
+        	<span><a href="{%url 'register' %}"  style="color:#0090D7;">æ³¨å†Œ</a></span>&nbsp;æˆ–&nbsp;<span>
+        	<a class="login" href="{%url 'login' %}"  style="color:#0090D7;">ç™»é™†</a>&nbsp;</span>
+			æŒ–ç¦åˆ©ä½“éªŒ,å®Œæˆåè¯·åˆ·æ–°æœ¬é¡µ,æŸ¥çœ‹æœ€æ–°çŠ¶æ€
 		{% else %}
-        	ÇëÈÏÕæÔÄ¶ÁÏÂÃæµÄ½±Àø¹æÔòºÍÌåÑé²½ÖèºóÔÙµã»÷¡°Á¢¼´ÌåÑé¡±
+        	è¯·è®¤çœŸé˜…è¯»ä¸‹é¢çš„å¥–åŠ±è§„åˆ™å’Œä½“éªŒæ­¥éª¤åå†ç‚¹å‡»â€œç«‹å³ä½“éªŒâ€
         {% endif %}
         </p>
         {% if not news.is_expired %}
-        <button class="md-trigger te-mo">Á¢¼´ÌåÑé</button>
+        <button class="md-trigger te-mo">ç«‹å³ä½“éªŒ</button>
         {% else %}
-        <button class="te-moe">ÒÑ½áÊø</button>
+        <button class="te-moe">å·²ç»“æŸ</button>
         {% endif %}
     </div>
   </div>
   {%endblock%}
 	{%block dialogblock%}
-  <!--//ÌåÑé-->
+  <!--//ä½“éªŒ-->
       <div class="modal fade" id="myReModal">
           <div class="modal-dialog modal-mg">
             <div class="modal-content">
             <div>
-                <p style="color:#F08619;font-size:16px;margin:2em 0px 0em 0px;">ÓÃÊÖ»úÉ¨Ãè¶şÎ¬Âë½øĞĞÌåÑé</p>
+                <p style="color:#F08619;font-size:16px;margin:2em 0px 0em 0px;">ç”¨æ‰‹æœºæ‰«æäºŒç»´ç è¿›è¡Œä½“éªŒ</p>
                 <img id='erweima' src="#" style="margin:2em 0px 3em 0px;"/>
             </div>            
                 </div>
@@ -125,10 +125,10 @@ $(function(){
             <div class="modal-content">
              <div class="md-content">
 				<div>
-					<p style="color:#04B3FF;font-size:25px;">ÎÂÜ°ÌáÊ¾</p>
-					<p style="padding: 0px 0px 30px 0px;">ÄÚÈİÌá½»ºó²»¿É¸ü¸Ä,Ìá½»±ğÈËµÄĞÅÏ¢»á¶³½áÕË»§,Çë½÷É÷È·ÈÏ</p>
-                    <a id="confirm" class="submit_mores">È·ÈÏ</a>
-                    <a id="cancel" class="submit_mores" class="close" data-dismiss="modal" aria-label="Close">È¡Ïû</a>
+					<p style="color:#04B3FF;font-size:25px;">æ¸©é¦¨æç¤º</p>
+					<p style="padding: 0px 0px 30px 0px;">å†…å®¹æäº¤åä¸å¯æ›´æ”¹,æäº¤åˆ«äººçš„ä¿¡æ¯ä¼šå†»ç»“è´¦æˆ·,è¯·è°¨æ…ç¡®è®¤</p>
+                    <a id="confirm" class="submit_mores">ç¡®è®¤</a>
+                    <a id="cancel" class="submit_mores" class="close" data-dismiss="modal" aria-label="Close">å–æ¶ˆ</a>
 				</div>
 			</div>
 				</div><!-- modal-body-->

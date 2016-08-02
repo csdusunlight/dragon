@@ -66,7 +66,6 @@ def finance(request, id=None):
                 username = username + '****'
             income = rank_users[i].accu_income
             context.update({key:{'username':username,'income':str(income)}})
-            print context
         return render(request, 'finance.html',context)
     else:
         id = int(id)
@@ -256,7 +255,7 @@ def lookup_order(request):
     except ExchangeRecord.DoesNotExist: 
         result['code'] = 1
     except Exception as e:
-        print e
+        logger.error(e.reason)
     else:
         result['name'] = record.name
         result['tel'] = record.tel

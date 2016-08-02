@@ -11,7 +11,6 @@ def createUrl():
     with open(os.path.join(directory, html_name), 'w') as html_file:
         pass
     url = os.path.join(settings.MEDIA_URL,'html', tstr, html_name).replace('\\','/')
-    print 'url',url
     return url
 def writeHtml(html,url):
     s = len(settings.MEDIA_URL)

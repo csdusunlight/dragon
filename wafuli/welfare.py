@@ -56,6 +56,10 @@ def exp_welfare_common(request):
         logger.error("wel_id is missing!!!")
         raise Http404
     wel = Welfare.objects.get(id=wel_id)
+    if wel.type == "hongbao":
+        wel = wel.hongbao
+    elif wel.type == "baoyou":
+        wel = wel.baoyou
     if wel.isonMobile:
         result['url'] = wel.exp_code.url
     else:
