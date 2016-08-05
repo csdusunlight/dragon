@@ -17,7 +17,22 @@
 <script type="text/javascript" src="{% static 'js/jQuery.infiniteCarousel.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/MSClass.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/page.js' %}"></script>
+ <script type="text/javascript">
+ 
+ $(function(){
+	  $('.middle a').click(function(){
+	 var index=$(this).index();
+	 $('.middle a').attr('class','')
+	 $(this).attr('class','active')
+	 $('.box').hide();
+	 $('.box').eq(index).show();
+	 })
+	  
+ })
+ </script>
+
 <script type="text/javascript">
+
 var data='[data]<li class="tab-li {is_new}">'+
 	'<a target="_blank" href="{url}"><img src="{pic}" alt="" width="238" height="148"/></a>'+
 	'<h2><a target="_blank" href="{url}"  class="tli-title">{title}</a></h2>'+
@@ -113,8 +128,7 @@ function MM_swapImage() { //v3.0
 </script>
 <![endif]-->
 </head>
-<body onload="MM_preloadImages('images/pic-14')">
-<center>
+<body>
 {% include "header.html" %}
 <div id="content">
    <div id="index-banner">
@@ -205,7 +219,8 @@ $(".nav_5").mouseleave(function(){
 $(this).children().attr("src","{%static 'images/nav-5.png'%}");
 });
 </script>
- 
+
+
 <div class="search">
     <input />
     <img src="{%static 'images/search.png'%}" />
@@ -222,9 +237,28 @@ $(this).children().attr("src","{%static 'images/nav-5.png'%}");
     <div class="walfare_top_2"></div>
   </div>
    <div class="middle">
-      <a>正在进行的免费福利</a>&nbsp;&nbsp;&nbsp;&nbsp;<a>已经结束的免费福利</a>
+      <a class="active">正在进行的免费福利</a>&nbsp;&nbsp;&nbsp;&nbsp;<a>已经结束的免费福利</a>
    </div>
   <div class="box">
+    <ul>
+    {%for wel in wel_list%}
+      <li>
+        <div class="box_children">
+        <div class="box_pic"><img src="{{wel.pic.url}}" /></div>
+        <a href="{%url 'welfare' id=wel.id%}" class="box_name">{{wel.title}}</a>
+        <div class="box_line"></div>
+        <div>
+        <a class="classes">{{wel.get_type_display}}</a>
+        <img src="{%static 'images/pict_60.png'%}" class="see" />
+        <span class="number">100</span>
+        </div> 
+      </div>
+      </li>
+      {%endfor%}
+    </ul>   
+  </div>
+      
+        <div class="box" style="display:none">
     <ul>
       <li>
         <div class="box_children">
@@ -232,7 +266,7 @@ $(this).children().attr("src","{%static 'images/nav-5.png'%}");
         <a class="box_name">5-10元代金券</a>
         <div class="box_line"></div>
         <div>
-        <a class="classes">代金券</a>
+        <a class="classes">123123214124券</a>
         <img src="{%static 'images/pict_60.png'%}" class="see" />
         <span class="number">100</span>
         </div> 
@@ -381,7 +415,35 @@ $(this).children().attr("src","{%static 'images/nav-5.png'%}");
        </li>
      </ul>   
       </div>
+      
+  <div class="item_con_pager">
+            <div class="pager_container">
+                  <!-- 上一页处理 -->
+                 <a rel="nofollow" href="javascript:;" class="page_no pager_prev_disabled" data-index="">上一页</a>
+                
+                <!-- 如果前面页数过多,显示"..." -->
+                                
+                <!-- 显示当前页附近的页 -->
+                                                
+                    <!-- 当前页号不需要设置链接 -->
+                    <a rel="nofollow" href="javascript:;" class="page_no pager_is_current" data-index="1">1</a>
+                                    
+                    <!-- 当前页号不需要设置链接 -->
+                    <a class="page_no" data-index="2">2</a>
+                                    
+                    <!-- 当前页号不需要设置链接 -->
+                    <a class="page_no" data-index="3">3</a>
+                                    
+                <!-- 如果后面页数过多,显示"..." -->
+                                    ···
+                   <a class="page_no" data-index="10">10</a>
+                
+                <!-- 下一页处理 -->
+                   <a class="page_no" data-index="2">下一页</a>
+             </div>
+        </div>
   </div>
+
  </div> 
 <script>
 $(".box_children").mouseover(
@@ -468,6 +530,5 @@ $(".box_children").mouseover(
   {% include "footer.html" %}
   <!--浮动窗口-->  
   {% include "outline.html" %}
-</center>
 </body>
 </html>

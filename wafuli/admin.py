@@ -46,7 +46,7 @@ class ZeroAdmin(NewsAdmin):
     def save_model(self, request, obj, form, change):
         super(ZeroAdmin,self).save_model (request, obj, form, change) 
         if not change:
-            obj.url = reverse('welfare_detail', kwargs={'id': obj.pk})
+            obj.url = reverse('welfare', kwargs={'id': obj.pk})
             obj.save(update_fields=['url',])
 class PressAdmin(NewsAdmin):
     readonly_fields = ('pub_date','change_user','url')
@@ -105,7 +105,7 @@ class WelfareAdmin(admin.ModelAdmin):
             obj.advert = Advertisement.objects.filter(location='7',is_hidden=False).first()
         super(WelfareAdmin,self).save_model (request, obj, form, change)
         if not change:
-            obj.url = reverse('welfare_detail', kwargs={'id': obj.pk})
+            obj.url = reverse('welfare', kwargs={'id': obj.pk})
             obj.save(update_fields=['url',])
 class HongbaoAdmin(WelfareAdmin):
     def save_model(self, request, obj, form, change):
