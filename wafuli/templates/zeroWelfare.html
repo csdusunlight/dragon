@@ -260,21 +260,21 @@ $(this).children().attr("src","{%static 'images/nav-5.png'%}");
   <div class="item_con_pager">
             <div class="pager_container">
             {% if wel_list.number != 1 %}
-				<a href="{%url 'welfare-list' page=wel_list.previous_page_number %}" class="page_no" >上一页</a>
+				<a href="{{page_dic.pre_path}}list-page{{wel_list.previous_page_number}}{{page_dic.suf_path}}" class="page_no" >上一页</a>
 			{% else %}
 				<a class="page_no pager_prev_disabled">上一页</a>
 			{% endif %}
-			{% for i in wel_list.paginator.page_range %}
-				{% if i == wel_list.number %}
-					<a href="{%url 'welfare-list' page=i %}" class="page_no pager_is_current">{{i}}</a>
+			{% for i in page_dic.page_list %}
+				{% if i == "..." %}
+					...
+				{% elif i == wel_list.number %}
+					<a class="page_no pager_is_current">{{i}}</a>
 				{% else %}
-					{% if i > wel_list.number|add:-3 and i < wel_list.number|add:3 or i <= 5 and wel_list.number <= 2 or i >= wel_list.paginator.num_pages|add:-4 and wel_list.number >= wel_list.paginator.num_pages|add:-1 %}
-						<a href="{%url 'welfare-list' page=i %}" class="page_no">{{i}}</a>
-					{% endif %}
+					<a href="{{page_dic.pre_path}}list-page{{i}}{{page_dic.suf_path}}" class="page_no">{{i}}</a>
 				{% endif  %}
 			{% endfor %}
 			{% if wel_list.number != wel_list.paginator.num_pages %}
-				<a href="{%url 'welfare-list' page=wel_list.next_page_number %}" class="page_no" >下一页</a>
+				<a href="{{page_dic.pre_path}}list-page{{wel_list.next_page_number}}{{page_dic.suf_path}}" class="page_no" >下一页</a>
 			{% else %}
 				<a class="page_no pager_prev_disabled">下一页</a>
 			{% endif %}

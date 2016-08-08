@@ -18,14 +18,16 @@ import re
 logger = logging.getLogger('wafuli')
 
 def welfare(request, id=None, page=None, type=None):
-    full_path = str(request.get_full_path())
-    path_split = re.split('list-page\d+',full_path)
-    page_dic = {}
-    page_dic['pre_path'] = path_split[0]
-    page_dic['suf_path'] = path_split[1]
     if not id:
         if not page:
             page = 1
+        else:
+            page = int(page)
+        full_path = str(request.get_full_path())
+        path_split = re.split('list-page\d+',full_path)
+        page_dic = {}
+        page_dic['pre_path'] = path_split[0]
+        page_dic['suf_path'] = path_split[1]
         wel_list = Welfare.objects.filter(is_del=False)
         state = request.GET.get('state', '1')
         if state:
@@ -41,13 +43,19 @@ def welfare(request, id=None, page=None, type=None):
                 wel_list = wel_list.filter(type="baoyou")
         wel_list, page_num = listing(wel_list, 1, int(page))
         print wel_list
-        page_list = []
         if page_num < 10:
-            page_list = range(1,10)
-        elif page
+            page_list = range(1,page_num+1)
+        else:
+            if page < 6:
+                page_list = range(1,8) + ["...",page_num]
+            elif page > page_num - 5:
+                page_list = [1,'...'] + range(page_num-6, page_num+1)
+            else:
+                page_list = [1,'...'] + range(page-2, page+3) + ['...',page_num]
+        page_dic['page_list'] = page_list
         ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='2'),is_hidden=False)[0:8]
         strategy_list = Press.objects.filter(type='2')[0:10]
-        context = {'wel_list':wel_list,'ad_list':ad_list,'strategy_list':strategy_list}
+        context = {'wel_list':wel_list,'ad_list':ad_list,'strategy_list':strategy_list,'page_dic':page_dic}
         ranks = RecommendRank.objects.all()[0:6]
         for i in range(len(ranks)):
             key = 'rank'+str(i+1)
