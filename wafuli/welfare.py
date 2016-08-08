@@ -14,9 +14,15 @@ import logging
 from wafuli_admin.models import RecommendRank
 from account.models import MyUser
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import re
 logger = logging.getLogger('wafuli')
 
 def welfare(request, id=None, page=None, type=None):
+    full_path = str(request.get_full_path())
+    path_split = re.split('list-page\d+',full_path)
+    page_dic = {}
+    page_dic['pre_path'] = path_split[0]
+    page_dic['suf_path'] = path_split[1]
     if not id:
         if not page:
             page = 1
@@ -33,7 +39,12 @@ def welfare(request, id=None, page=None, type=None):
                 wel_list = wel_list.filter(type="youhuiquan")
             elif type == 'by':
                 wel_list = wel_list.filter(type="baoyou")
-        wel_list = listing(wel_list, 4, int(page))
+        wel_list, page_num = listing(wel_list, 1, int(page))
+        print wel_list
+        page_list = []
+        if page_num < 10:
+            page_list = range(1,10)
+        elif page
         ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='2'),is_hidden=False)[0:8]
         strategy_list = Press.objects.filter(type='2')[0:10]
         context = {'wel_list':wel_list,'ad_list':ad_list,'strategy_list':strategy_list}
@@ -95,4 +106,4 @@ def listing(con_list, num, page):
     except EmptyPage:
     # If page is out of range (e.g. 9999), deliver last page of results.
         contacts = paginator.page(paginator.num_pages)
-    return contacts
+    return contacts, paginator.num_pages
