@@ -25,12 +25,27 @@ def welfare(request, id=None, page=None, type=None):
             page = int(page)
         full_path = str(request.get_full_path())
         path_split = re.split('list-page\d+',full_path)
+        if len(path_split)==1:
+            path_split.append(1)
         page_dic = {}
+        ref_dic = {}
         page_dic['pre_path'] = path_split[0]
         page_dic['suf_path'] = path_split[1]
         wel_list = Welfare.objects.filter(is_del=False)
         state = request.GET.get('state', '1')
+        ref_path1 = re.sub(r'state=\d+&?', '', full_path, 1)
+        ref_path2, num = re.subn(r'state=\d+', 'state=2', full_path)
+        if num == 0:
+            if '?' in ref_path2:
+                ref_path2 += '&state=2'
+            else:
+                ref_path2 += '?state=2'
+        if ref_path1[-1] == '?' or ref_path1[-1] == '&':
+            ref_path1 = ref_path1[:-1]
+        print full_path,ref_path1,ref_path2,num
+        ref_dic = {'state':state, 'ref_path1':ref_path1, 'ref_path2':ref_path2,}
         if state:
+#             ref_path = re.sub(r'state=\d+', 'state=1', full_path, 1)
             state = str(state)
             wel_list = wel_list.filter(state=state)
         if type:
@@ -42,7 +57,6 @@ def welfare(request, id=None, page=None, type=None):
             elif type == 'by':
                 wel_list = wel_list.filter(type="baoyou")
         wel_list, page_num = listing(wel_list, 1, int(page))
-        print wel_list
         if page_num < 10:
             page_list = range(1,page_num+1)
         else:
@@ -55,7 +69,13 @@ def welfare(request, id=None, page=None, type=None):
         page_dic['page_list'] = page_list
         ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='2'),is_hidden=False)[0:8]
         strategy_list = Press.objects.filter(type='2')[0:10]
-        context = {'wel_list':wel_list,'ad_list':ad_list,'strategy_list':strategy_list,'page_dic':page_dic}
+        context = {
+            'wel_list':wel_list,
+            'ad_list':ad_list,
+            'strategy_list':strategy_list,
+            'page_dic':page_dic,
+            'ref_dic':ref_dic,       
+        }
         ranks = RecommendRank.objects.all()[0:6]
         for i in range(len(ranks)):
             key = 'rank'+str(i+1)
