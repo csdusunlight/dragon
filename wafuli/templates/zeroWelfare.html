@@ -17,82 +17,69 @@
 <script type="text/javascript" src="{% static 'js/jQuery.infiniteCarousel.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/MSClass.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/page.js' %}"></script>
- <script type="text/javascript">
- 
- $(function(){
-	  $('.middle a').click(function(){
-	 var index=$(this).index();
-	 $('.middle a').attr('class','')
-	 $(this).attr('class','active')
-	 $('.box').hide();
-	 $('.box').eq(index).show();
-	 })
-	  
- })
- </script>
 
 <script type="text/javascript">
 
-var data='[data]<li class="tab-li {is_new}">'+
-	'<a target="_blank" href="{url}"><img src="{pic}" alt="" width="238" height="148"/></a>'+
-	'<h2><a target="_blank" href="{url}"  class="tli-title">{title}</a></h2>'+
-	'<p class="line-k">商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 家：{provider}<br />浏 览 数 ：{view}<br />'+
-	'活动时间：{time}</p><a target="_blank" href="{url}" class="mores">立即查看</a></li>[/data]';
-var data2='[data]<li class="tab-li">'+
-	'<a target="_blank" href="{url}"><img src="{pic}" alt="" width="238" height="148"/></a>'+
-	'<h2><a target="_blank" href="{url}"  class="tli-title">{title}</a></h2>'+
-	'<p class="line-k">商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 家：{provider}<br />浏 览 数 ：{view}<br />'+
-	'活动时间：{time}</p><a target="_blank" href="{url}" class="ends">立即查看</a></li>[/data]';
-var url = "{% url 'get_wel_page' %}" + "?page={page}&size={pageSize}&";
+var data='[data]&lt;li class="tab-li {is_new}"&gt;'+
+  '&lt;a target="_blank" href="{url}"&gt;&lt;img src="{pic}" alt="" width="238" height="148"/&gt;&lt;/a&gt;'+
+  '&lt;h2&gt;&lt;a target="_blank" href="{url}"  class="tli-title"&gt;{title}&lt;/a&gt;&lt;/h2&gt;'+
+  '&lt;p class="line-k"&gt;商&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 家：{provider}&lt;br /&gt;浏 览 数 ：{view}&lt;br /&gt;'+
+  '活动时间：{time}&lt;/p&gt;&lt;a target="_blank" href="{url}" class="mores"&gt;立即查看&lt;/a&gt;&lt;/li&gt;[/data]';
+var data2='[data]&lt;li class="tab-li"&gt;'+
+  '&lt;a target="_blank" href="{url}"&gt;&lt;img src="{pic}" alt="" width="238" height="148"/&gt;&lt;/a&gt;'+
+  '&lt;h2&gt;&lt;a target="_blank" href="{url}"  class="tli-title"&gt;{title}&lt;/a&gt;&lt;/h2&gt;'+
+  '&lt;p class="line-k"&gt;商&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 家：{provider}&lt;br /&gt;浏 览 数 ：{view}&lt;br /&gt;'+
+  '活动时间：{time}&lt;/p&gt;&lt;a target="_blank" href="{url}" class="ends"&gt;立即查看&lt;/a&gt;&lt;/li&gt;[/data]';
+var url = "/welpage/" + "?page={page}&amp;size={pageSize}&amp;";
 function pagecallback(){
-	$(".tab-li.new").prepend('<div class="newpost z">新</div>');
+  $(".tab-li.new").prepend('&lt;div class="newpost z"&gt;新&lt;/div&gt;');
 }
 $(function(){
-   	$('.zero_h a').toggleClass("vo");
-	$("#pagedata1").ajaxPage({
-	    url:url+"state=1&filter=0",
-	    pageId:$("#page1"),
-	    pageSize:6,
-	    run:true,
-	    content:data,
-	    complete:pagecallback,
-	});
-	$("#pagedata2").ajaxPage({
-	    url:url+"state=2&filter=0",
-	    pageId:$("#page2"),
-	    pageSize:6,
-	    run:true,
-	    content:data2,
-	});
- 	$("#tab li").click(function(){
-		if($(this).attr("class")!="cur"){
-			$(this).toggleClass("cur").siblings().removeClass("cur")
-			var index = $(this).index();
-			$("#page1").empty();
-			$("#pagedata1").ajaxPage({
-			    url:url+"state=1&filter="+index, 
-			    pageId:$("#page1"),
-			    pageSize:6,
-			    run:true,
-			    content:data,
-			    complete:pagecallback,
-			});
-		}
- 	});
- 	$("#tabg li").click(function(){
-		if($(this).attr("class")!="curs"){
-			$(this).toggleClass("curs").siblings().removeClass("curs")
-			var index = $(this).index();
-			$("#page2").empty();
-			$("#pagedata2").ajaxPage({
-			    url:url+"state=2&filter="+index, 
-			    pageId:$("#page2"),
-			    pageSize:6,
-			    run:true,
-			    content:data2,
-			});
-		}
- 	});
+    $('.zero_h a').toggleClass("vo");
+  $("#pagedata1").ajaxPage({
+      url:url+"state=1&amp;filter=0",
+      pageId:$("#page1"),
+      pageSize:6,
+      run:true,
+      content:data,
+      complete:pagecallback,
+  });
+  $("#pagedata2").ajaxPage({
+      url:url+"state=2&amp;filter=0",
+      pageId:$("#page2"),
+      pageSize:6,
+      run:true,
+      content:data2,
+  });
+  $("#tab li").click(function(){
+    if($(this).attr("class")!="cur"){
+      $(this).toggleClass("cur").siblings().removeClass("cur")
+      var index = $(this).index();
+      $("#page1").empty();
+      $("#pagedata1").ajaxPage({
+          url:url+"state=1&amp;filter="+index,
+          pageId:$("#page1"),
+          pageSize:6,
+          run:true,
+          content:data,
+          complete:pagecallback,
+      });
+    }
+  });
+  $("#tabg li").click(function(){
+    if($(this).attr("class")!="curs"){
+      $(this).toggleClass("curs").siblings().removeClass("curs")
+      var index = $(this).index();
+      $("#page2").empty();
+      $("#pagedata2").ajaxPage({
+          url:url+"state=2&amp;filter="+index,
+          pageId:$("#page2"),
+          pageSize:6,
+          run:true,
+          content:data2,
+      });
+    }
+  });
     $('.flexslider').flexslider({
            directionNav: true,
            pauseOnAction: false
@@ -135,25 +122,34 @@ $(function(){
         </div>
     </div>
   </div>
-
-<div class="nav">
-	<div class="nav_1">
-    	<img id="img1" src="{%static 'images/nav-1.png'%}" />
-        <a href="{%url 'welfare-list' %}">全部</a>
-    </div>
-	<div class="nav_2">
-    	<img src="{%static 'images/nav-2.png'%}" /></a>
-        <a href="{%url 'welfare-list' type='hb' %}">红包</a>
-    </div>
-    <div class="nav_3">
-    	<img src="{%static 'images/nav-3.png'%}" />
-        <a href="{%url 'welfare-list' type='yhq' %}">优惠券</a>
-    </div>
-    <div class="nav_4">
-    	<img src="{%static 'images/nav-4.png'%}" />
-        <a href="{%url 'welfare-list' type='by' %}">9.9包邮</a>
-    </div>
-</div> 
+<div class="wel_nav">
+  <ul class="nav_children">
+    <li>
+        <a class="nav_1" href="{%url 'welfare-list' %}">
+			<img id="img1" src="{%static 'images/nav-1.png'%}" />
+			<p>全部</p>
+        </a>
+  </li>
+    <li>
+	    <a class="nav_2" href="{%url 'welfare-list' type='hb' %}">
+	        <img src="{%static 'images/nav-2.png'%}" />
+	        <p>红包</p>
+	    </a>
+    </li>
+    <li>
+		<a class="nav_3" href="{%url 'welfare-list' type='yhq' %}">
+			<img src="{%static 'images/nav-3.png'%}" />
+		    <p>优惠券</p>
+		</a>
+    </li>
+    <li>
+	    <a class="nav_4" href="{%url 'welfare-list' type='by' %}">
+	    	<img src="{%static 'images/nav-4.png'%}" />
+	    	<p>9.9包邮</p>
+    	</a>
+    </li>
+ </ul>
+</div>
 <div class="nav_2_children">
         <a>体验金</a>
         <a>流量</a>
@@ -198,18 +194,20 @@ $(this).children().attr("src","{%static 'images/nav-5.png'%}");
 
 
 <div class="search">
-    <input />
-    <img src="{%static 'images/search.png'%}" />
-</div>   
+  <form>
+    <input type="text">
+    <input type="submit" value="搜索">
+    <!-- <img src="images/search.png"> -->
+  </form>
+</div>
 
 <div class="walfare">
   <div class="walfare_top">
     <div class="walfare_top_1"></div>
     <div class="walfare_font">
          <h1>福利大全</h1>
-         <a>WALFARE</a>
-         <img src="{%static 'images/pict_38.png'%}" />
-    </div>
+         <a>WELFARE</a>
+        	<img src="{%static 'images/pict_38.png'%}" />
     <div class="walfare_top_2"></div>
   </div>
    <div class="middle">
@@ -219,10 +217,15 @@ $(this).children().attr("src","{%static 'images/nav-5.png'%}");
    </div>
   <div class="box">
     <ul>
-    {%for wel in wel_list%}
+       {%for wel in wel_list%}
       <li>
         <div class="box_children">
-        <div class="box_pic"><img src="{{wel.pic.url}}" /></div>
+        <div class="box_pic">
+          <a href="{%url 'welfare' id=wel.id%}"><img src="{{wel.pic.url}}"></a>
+          <div class="box_pic_bg">
+            <p style="color:#FFF; font-size:10px;">剩余&nbsp;<span style="color:#fdde00">100</span>&nbsp;张，<a style="color:#FF0">点击领取</a></p>
+          </div>
+        </div>
         <a href="{%url 'welfare' id=wel.id%}" class="box_name">{{wel.title}}</a>
         <div class="box_line"></div>
         <div>
@@ -233,8 +236,11 @@ $(this).children().attr("src","{%static 'images/nav-5.png'%}");
       </div>
       </li>
       {%endfor%}
-    </ul>   
-  {% if wel_list.paginator.num_pages >= 2 %}      
+
+     </ul>
+  </div>
+
+   {% if wel_list.paginator.num_pages >= 2 %}      
   <div class="item_con_pager">
             <div class="pager_container">
             {% if wel_list.number != 1 %}
@@ -262,12 +268,12 @@ $(this).children().attr("src","{%static 'images/nav-5.png'%}");
   {%endif%}
   </div>
 
- </div> 
+ </div>
 <script>
 $(".box_children").mouseover(
   function(){
-	  $(this).attr("src","{%static 'images/pict_42.png'%}")
-	  }
+    $(this).attr("src","images/pict_42.png")
+    }
 )
 </script>
 <div class="Business">
@@ -282,22 +288,22 @@ $(".box_children").mouseover(
         <div class="Business_top_2"></div>
       </div>
   <div class="Business_box">
-    <img src="{%static 'images/logo-1.png'%}" />
-    <img src="{%static 'images/logo-2.png'%}" />
-    <img src="{%static 'images/logo-3.png'%}" />
-    <img src="{%static 'images/logo-4.png'%}" />
-    <img src="{%static 'images/logo-5.png'%}" />
+    <a href="#"><img src="{%static 'images/logo-1.png'%}" /></a>
+    <a href="#"><img src="{%static 'images/logo-2.png'%}" /></a>
+    <a href="#"><img src="{%static 'images/logo-3.png'%}" /></a>
+    <a href="#"><img src="{%static 'images/logo-4.png'%}" /></a>
+    <a href="#"><img src="{%static 'images/logo-5.png'%}" /></a>
   </div>
   <div class="Business_box">
-    <img src="{%static 'images/logo-6.png'%}" />
-    <img src="{%static 'images/logo-7.png'%}" />
-    <img src="{%static 'images/logo-8.png'%}" />
-    <img src="{%static 'images/logo-9.png'%}" />
-    <img src="{%static 'images/logo-10.png'%}" />
+    <a href="#"><img src="{%static 'images/logo-1.png'%}" /></a>
+    <a href="#"><img src="{%static 'images/logo-2.png'%}" /></a>
+    <a href="#"><img src="{%static 'images/logo-3.png'%}" /></a>
+    <a href="#"><img src="{%static 'images/logo-4.png'%}" /></a>
+    <a href="#"><img src="{%static 'images/logo-5.png'%}" /></a>
   </div>
   <img src="{%static 'images/pict_94.png'%}" class="more_bg" /><a class="more">MORE>></a>
   </div>
-</div>     
+</div>
 
 <div class="footer_box">
   <div class="other">
@@ -307,7 +313,7 @@ $(".box_children").mouseover(
     </div>
     <div class="other_box">
        <div class="other_1">
-                <div class="other_pic"><img src="{%static 'images/box_pic.png'%}" /></div>
+                <div class="other_pic"><a><img src="{%static 'images/box_pic.png'%}" /></a></div>
                 <a class="other_name">5-10元代金券</a>
                 <div class="other_line"></div>
                 <div>
@@ -317,7 +323,7 @@ $(".box_children").mouseover(
                 </div>
         </div>
         <div class="other_2">
-                <div class="other_pic"><img src="{%static 'images/box_pic.png'%}" /></div>
+                <div class="other_pic"><a><img src="{%static 'images/box_pic.png'%}" /></a></div>
                 <a class="other_name">5-10元代金券</a>
                 <div class="other_line"></div>
                 <div>
@@ -328,7 +334,7 @@ $(".box_children").mouseover(
          </div>
     </div>
   </div>
-  
+
   <div class="subject">
     <div class="subject_top">
       <div>专题栏目</div>
@@ -342,7 +348,6 @@ $(".box_children").mouseover(
   </div>
 </div>
 
-</div>
 <div style="clear:both"></div>
 <!--底部-->
   {% include "footer.html" %}

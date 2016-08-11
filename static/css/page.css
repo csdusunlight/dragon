@@ -20,9 +20,9 @@
 .Page-in-exc-coupon-detail { position:absolute; width:880px; border-top:none !important; height:auto; padding:10px 0; text-align:right; top:360px;}
 .Page-in-recomm{margin-right:50px;margin-top:10px;}
 .changes-p {
-    /*border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #eee;
     border-left: 1px solid #eee;
-    border-right: 1px solid #eee;*/
+    border-right: 1px solid #eee;
     height:auto;
     line-height: 50px;
     text-align: right;
