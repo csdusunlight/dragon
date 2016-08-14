@@ -97,7 +97,7 @@ def get_project_list(request):
     type = request.GET.get('id', None)
     if not type:
         raise Http404
-    pro_list = CouponProject.objects.filter(type=str(type), is_del=False).only('id','title')
+    pro_list = CouponProject.objects.filter(ctype=str(type), is_del=False).only('id','title')
     pro_dic={}
     for x in pro_list:
         pro_dic[str(x.id)] = x.title

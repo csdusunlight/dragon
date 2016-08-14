@@ -35,7 +35,7 @@ $(function(){
 	$("a.login").attr("href",ahref);
 	$("button.te-mo").click(function(){
 		$.ajax({
-			url:"{%url 'exp_wel' %}?id=" + id,
+			url:"{%url 'exp_welfare_common' %}?id=" + id,
 			dataType:"json",
 			success:function(ret){
 				if(ret.code==0){

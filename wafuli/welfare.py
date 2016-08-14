@@ -6,7 +6,8 @@ Created on 2016年8月1日
 '''
 from django.shortcuts import render
 from django.http.response import Http404
-from wafuli.models import Welfare, Advertisement, Press, Hongbao, Baoyou, CouponProject
+from wafuli.models import Welfare, Advertisement, Press, Hongbao, Baoyou, CouponProject,\
+    Company
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
 from django.db.models import Q
@@ -24,17 +25,23 @@ def welfare(request, id=None, page=None, type=None):
         else:
             page = int(page)
         full_path = str(request.get_full_path())
-        path_split = re.split('list-page\d+',full_path)
-        if len(path_split)==1:
-            path_split.append(1)
+        path_split = []
+        if 'list-page' in full_path:
+            path_split = re.split('list-page\d+',full_path)
+        elif '?' in full_path:
+            path_split = full_path.split('?')
+            path_split[1] = '?' + path_split[1]
+        else:
+            path_split=[full_path, '']
         page_dic = {}
         ref_dic = {}
         page_dic['pre_path'] = path_split[0]
         page_dic['suf_path'] = path_split[1]
-        wel_list = Welfare.objects.filter(is_del=False)
+        wel_list = Welfare.objects.filter(is_del=False,is_display=True)
         state = request.GET.get('state', '1')
-        ref_path1 = re.sub(r'state=\d+&?', '', full_path, 1)
-        ref_path2, num = re.subn(r'state=\d+', 'state=2', full_path)
+        full_path_ = re.sub(r'/list-page\d+&?', '', full_path, 1)
+        ref_path1 = re.sub(r'state=\d+&?', '', full_path_, 1)
+        ref_path2, num = re.subn(r'state=\d+', 'state=2', full_path_)
         if num == 0:
             if '?' in ref_path2:
                 ref_path2 += '&state=2'
@@ -42,7 +49,6 @@ def welfare(request, id=None, page=None, type=None):
                 ref_path2 += '?state=2'
         if ref_path1[-1] == '?' or ref_path1[-1] == '&':
             ref_path1 = ref_path1[:-1]
-        print full_path,ref_path1,ref_path2,num
         ref_dic = {'state':state, 'ref_path1':ref_path1, 'ref_path2':ref_path2,}
         if state:
 #             ref_path = re.sub(r'state=\d+', 'state=1', full_path, 1)
@@ -56,7 +62,13 @@ def welfare(request, id=None, page=None, type=None):
                 wel_list = wel_list.filter(type="youhuiquan")
             elif type == 'by':
                 wel_list = wel_list.filter(type="baoyou")
-        wel_list, page_num = listing(wel_list, 1, int(page))
+        search_key = request.GET.get('key', '')
+        if search_key:
+            wel_list = wel_list.filter(Q(title__contains=search_key)|Q(company__name__contains=search_key))
+        business = request.GET.get('business', '')
+        if business:
+            wel_list = wel_list.filter(company__name=business)
+        wel_list, page_num = listing(wel_list, 12, int(page))
         if page_num < 10:
             page_list = range(1,page_num+1)
         else:
@@ -69,12 +81,17 @@ def welfare(request, id=None, page=None, type=None):
         page_dic['page_list'] = page_list
         ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='2'),is_hidden=False)[0:8]
         strategy_list = Press.objects.filter(type='2')[0:10]
+        hot_wel_list = Welfare.objects.filter(is_del=False,is_display=True).order_by('-view_count')[0:2]
+        business_list = Company.objects.all()[0:10]
         context = {
             'wel_list':wel_list,
+            'business_list':business_list,
             'ad_list':ad_list,
             'strategy_list':strategy_list,
             'page_dic':page_dic,
-            'ref_dic':ref_dic,       
+            'ref_dic':ref_dic,
+            'hot1':hot_wel_list[0],
+            'hot2':hot_wel_list[1],
         }
         ranks = RecommendRank.objects.all()[0:6]
         for i in range(len(ranks)):
@@ -96,6 +113,11 @@ def welfare(request, id=None, page=None, type=None):
         template = 'detail-common.html'
         if wel.type == "youhuiquan":
             template = 'detail-youhuiquan.html'
+            wel = wel.couponproject
+        elif wel.type == "hongbao":
+            wel = wel.hongbao
+        elif wel.type == "baoyou":
+            wel = wel.baoyou
         return render(request, template,{'news':wel,'type':'Welfare'})
     
 def exp_welfare_common(request):

@@ -18,9 +18,9 @@ logger = logging.getLogger('wafuli')
 def index(request):
     ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='1'),is_hidden=False)[0:8]
     announce_list = Press.objects.filter(type='1')[0:5]
-    hongbao_list = Welfare.objects.filter(type='hongbao')[0:3]
-    baoyou_list = Welfare.objects.filter(type='baoyou')[0:3]
-    youhuiquan_list = Welfare.objects.filter(type='youhuiquan')[0:3]
+    hongbao_list = Welfare.objects.filter(type='hongbao',is_del=False,is_display=True,state='1')[0:3]
+    baoyou_list = Welfare.objects.filter(type='baoyou',is_del=False,is_display=True,state='1')[0:3]
+    youhuiquan_list = Welfare.objects.filter(type='youhuiquan',is_del=False,is_display=True,state='1')[0:3]
     task_list = Task.objects.filter(state='1')[0:3]
     finance_list = Finance.objects.filter(state='1')[0:3]
     news_list = Activity.objects.filter(is_hidden=False)[0:2]

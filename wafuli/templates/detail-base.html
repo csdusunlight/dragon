@@ -23,7 +23,6 @@
 	var id = '{{news.id}}'
 	var type = '{{type}}'
 	view_count_url = "{%url 'statistic:update' %}?type=" + type +"&id=" + id;
-	$.get(view_count_url,{r:Math.random()});
 </script>
 	{% block jsblock %}
 	
@@ -61,6 +60,8 @@
 	{% block dialogblock %}
 	
 	{% endblock %}
-  </div>  
+<script type="text/javascript">
+	$.get(view_count_url,{r:Math.random()});
+</script>
 </body>
 </html>

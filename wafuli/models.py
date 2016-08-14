@@ -11,25 +11,27 @@ from django.template.defaultfilters import default
 from django.utils import timezone
 import datetime
 class Company(models.Model):
-    name = models.CharField(u"平台名称",max_length=100,unique=True)
-    level = models.CharField(u"安全评级",max_length=100)
-    site = models.CharField(u"网站地址",max_length=100)
-    capital = models.CharField(u"注册资金",max_length=100)
-    address = models.CharField(u"所在地区",max_length=100)
-    launch_date = models.CharField(u"上线时间",max_length=100)
-    trusteeship = models.CharField(u"托管情况",max_length=100)
-    background = models.CharField(u"平台背景",max_length=100)
-    information = models.CharField(u"公司信息",max_length=200)
-    logo = models.FileField(u"网站logo（260*78）", upload_to='logo/%Y/%m/%d',default='')
+    name = models.CharField(u"平台名称(必填)",max_length=100,unique=True)
+    level = models.CharField(u"安全评级",max_length=100,blank=True)
+    site = models.CharField(u"网站地址",max_length=100,blank=True)
+    capital = models.CharField(u"注册资金",max_length=100,blank=True)
+    address = models.CharField(u"所在地区",max_length=100,blank=True)
+    launch_date = models.CharField(u"上线时间",max_length=100,blank=True)
+    trusteeship = models.CharField(u"托管情况",max_length=100,blank=True)
+    background = models.CharField(u"平台背景",max_length=100,blank=True)
+    information = models.CharField(u"公司信息",max_length=200,blank=True)
+    logo = models.FileField(u"网站logo（210*100）", upload_to='logo/%Y/%m/%d',default='')
+    view_count = models.IntegerField(u"热门度（点击总量，系统自动更新）", default=0)
     class Meta:
-        verbose_name_plural = u"合作平台"
-        verbose_name = u"合作平台"
+        verbose_name_plural = u"商家"
+        verbose_name = u"商家"
+        ordering = ["-view_count",]
     def __unicode__(self):
         return self.name
 class Base(models.Model):
     title = models.CharField(max_length=200, verbose_name=u"标题") 
     news_priority = models.IntegerField(u"优先级",default=3)
-    pub_date = models.DateTimeField(u"创建时间", auto_now_add=True)
+    pub_date = models.DateTimeField(u"创建时间", default=timezone.now)
     view_count = models.IntegerField(u"浏览量", default=0)
     change_user = models.CharField(u"上次修改用户", max_length=200, blank=True)
     url = models.CharField(u"本页面地址",max_length=200)
@@ -82,9 +84,11 @@ class Mark(models.Model):
                                 blank=True, null=True, on_delete=models.SET_NULL)
 class Welfare(Base):
     type = models.CharField(max_length=10, choices=WELFARE_TYPE, editable=False, verbose_name=u"福利类型")
+    is_display = models.BooleanField(default=True, verbose_name=u"是否在免费福利中显示")
     marks = models.ManyToManyField(Mark, verbose_name='标签', related_name="welfare_set", blank=True)
     state = models.CharField(u"项目状态", max_length=1, choices=STATE)
-    pic = models.ImageField(upload_to='photos/%Y/%m/%d', verbose_name=u"标志图片上传（最大不超过30k，越小越好）")
+    pic = models.ImageField(upload_to='photos/%Y/%m/%d', verbose_name=u"标志图片上传（最大不超过30k，越小越好）",blank=False)
+    company = models.ForeignKey(Company)
     provider = models.CharField(u"商家", max_length=10)
     seo_title = models.CharField(max_length=200, verbose_name=u"SEO标题", blank=True)
     seo_keywords = models.CharField(max_length=200, verbose_name=u"SEO关键词", blank=True)
@@ -98,7 +102,7 @@ class Welfare(Base):
     is_del = models.BooleanField(u"删除", default=False)
     exp_url = models.CharField(u"商家地址", blank=True, max_length=200)
     def clean(self):
-        if self.pic.size > 30000:
+        if self.pic and self.pic.size > 30000:
             raise ValidationError({'pic': u'图片大小不能超过30k'})
     def is_expired(self):
         pass

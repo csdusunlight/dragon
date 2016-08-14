@@ -41,6 +41,7 @@ encoding//wafuli/views.py=utf-8
 encoding//wafuli/welfare.py=utf-8
 encoding//wafuli_admin/activity.py=utf-8
 encoding//wafuli_admin/coupon.py=utf-8
+encoding//wafuli_admin/management/commands/transfer.py=utf-8
 encoding//wafuli_admin/models.py=utf-8
 encoding//wafuli_admin/templates/admin_coupon.html=UTF-8
 encoding//wafuli_admin/templates/admin_index.html=UTF-8

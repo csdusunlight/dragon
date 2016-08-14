@@ -133,8 +133,7 @@ def register(request):
             else:
                 logger.debug('Registering Award money is failed to pay!!!')
         except Exception,e:
-            print e
-            logger.error('Creating User is failed!!!')
+            logger.error(e)
             result['code'] = '4'
             result['res_msg'] = u'创建用户失败！'
         else:

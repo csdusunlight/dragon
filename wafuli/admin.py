@@ -125,5 +125,5 @@ class CouponProjectAdmin(WelfareAdmin):
 admin.site.register(Hongbao,HongbaoAdmin)
 admin.site.register(CouponProject,CouponProjectAdmin)
 admin.site.register(Baoyou,BaoyouAdmin)
-admin.site.register(Welfare)
+admin.site.register(Welfare,WelfareAdmin)
 admin.site.register(Mark)
