@@ -237,3 +237,15 @@ table{border-collapse:collapse;}
 .newpost.zero {top:0;}
 .new_cont { vertical-align:top; margin-left:10px; margin-top:10px;}
 .new_cont2 { vertical-align:top; margin-left:10px; margin-top:-7px;}
+
+@media only screen and (max-width: 800px) {
+    #footer {
+        width: 1300px;
+    }
+    body {
+        width:1300px
+    }
+    #content {
+        width: 1300px;
+    }
+}
