@@ -237,8 +237,7 @@ table{border-collapse:collapse;}
 .newpost.zero {top:0;}
 .new_cont { vertical-align:top; margin-left:10px; margin-top:10px;}
 .new_cont2 { vertical-align:top; margin-left:10px; margin-top:-7px;}
-
-@media only screen and (max-width: 800px) {
+@media screen and (max-width: 1000px) {
     #footer {
         width: 1300px;
     }
