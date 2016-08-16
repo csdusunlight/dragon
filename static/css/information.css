@@ -1,0 +1,82 @@
+body{ font-family:"微软雅黑"}
+a{blr:expression(this.onFocus=this.close());} /* 只支持IE，过多使用效率低 */
+
+a{blr:expression(this.onFocus=this.blur());} /* 只支持IE，过多使用效率低 */
+
+a:focus { -moz-outline-style: none; } /* IE不支持 */
+
+a:focus { outline: none; } /*很多网站都会加的属性*/
+.cont{width:1100px;
+    margin:0 auto;
+    height:85px;
+    text-align: left;}
+.we-one{color: rgb(243, 132, 25);
+font-size: 20px;
+line-height: 85px;
+float: left;}
+.ew{position: absolute;
+margin-left: -27px;
+font-size: 20px;
+color: rgb(240, 133, 25);
+margin-top: -3px;
+line-height: 85px;}
+.ew-img{margin-top: 1.3rem;
+margin-left: 2rem;}
+.ew-dian{
+font-size: 18px;
+color: rgb(240, 133, 25);
+margin-left: 19px;
+position: absolute;
+line-height: 85px;}
+.ew-dian:hover{ text-decoration:underline;}
+.ew-jt{position: absolute;
+margin-left: 11.5rem;
+margin-top: 1.5rem;}
+
+.top{width:281px;
+   height:315px;
+   display:inline-block;
+   text-align:center;background: url(../images/bg-12.png);
+   position:absolute;
+   top:22px;
+   right:0px;}
+.top_nav{font-size: 20px;
+     color:#000;
+     text-align: left;
+     line-height: 50px;
+     margin-top:1px;
+     margin-left:42px;
+     }
+.top_list{float:left;
+      width:100%;
+      height:auto;
+      box-sizing:border-box;
+      padding:0 34px;
+      text-align:left;
+      margin-top:-8px;}
+.top_list li {font-size:18px;
+        color:#FFF;
+        line-height:55px;
+        display:block;
+        float:left;
+        width:100%;}
+.top_list li span { display:inline-block;
+          width:75px;
+          height:auto;
+          font-size:18px;
+          color:#FFF;
+          line-height:35px;
+          margin-left:15px;}
+
+/*搜索*/
+.search {
+    margin:0 auto;
+    margin-top: 20px;
+    width: 1100px;
+    height: auto;
+    overflow: hidden;
+}
+.search div {
+    float: left;
+    color: #000;
+}

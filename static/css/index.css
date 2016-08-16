@@ -79,10 +79,10 @@
 .index_13_nav a{ font-size:14px; color:#FFF; display:block; width:80px; height:34px; text-align:center; padding-top:10px;}
 .index_13_nav a.active{background:#fff;color:#ff8b52}
 .index_17_nav{ margin-left:165px; margin-top:150px;}
-.index_17_nav a{ font-size:14px; color:#FFF; width:80px; height:34px;display:block; text-align:center; padding-top:10px;}
+.index_17_nav a{ font-size:14px; color:#FFF; width:80px; height:34px;display:none; text-align:center; padding-top:10px;}
 .index_17_nav a.active{background:#fff;color:#00d6b3}
 .index_21_nav{ margin-left:170px; margin-top:175px;}
-.index_21_nav a{ font-size:14px; color:#FFF; width:80px; height:34px;display:block; text-align:center; padding-top:10px;}
+.index_21_nav a{ font-size:14px; color:#FFF; width:80px; height:34px;display:none; text-align:center; padding-top:10px;}
 .index_21_nav a.active{background:#fff;color:#52c5ff}
 .current{background-color:#FFF;}
 .index_15{position:relative;float:left;width:862px;height:375px;display:inline;text-align:left;}
