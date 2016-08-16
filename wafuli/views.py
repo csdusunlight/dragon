@@ -158,6 +158,7 @@ def expsubmit(request):
     news_type = request.POST.get('type', None)
     is_futou = request.POST.get('is_futou', '0')
     telnum = request.POST.get('telnum', None)
+    telnum = str(telnum).strip()
     remark = request.POST.get('remark', '')
     if not (news_id and news_type and telnum):
         logger.error("news_id or news_type is missing!!!")
