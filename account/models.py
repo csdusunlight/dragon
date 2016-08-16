@@ -133,7 +133,7 @@ class MobileCode(models.Model):
     create_at = models.DateTimeField("created at", auto_now_add=True, editable=True)
     remote_ip = models.CharField('remote_ip', max_length=15, blank=True, null=True)
     def __unicode__(self):
-        return self.identifier + ':' + self.mobile
+        return self.identifier + ':' + self.mobile + ':' + self.remote_ip
     class Meta:
         ordering = ['-create_at']
 class EmailActCode(models.Model):

@@ -315,8 +315,7 @@ class ScoreTranlist(models.Model):
     user_event = models.ForeignKey(UserEvent, related_name="score_translist", null=True)
     admin_event = models.ForeignKey(AdminEvent, related_name="score_translist", null=True)
     def __unicode__(self):
-        return u"%s:%s了%s积分 提交时间%s" % (self.user, self.get_transType_display(),self.transAmount,
-                                       self.user_event.time if self.user_event else "")
+        return u"%s:%s了%s积分 提交时间%s" % (self.user, self.get_transType_display(),self.transAmount, self.time)
     class Meta:
         ordering = ['-time']
 

@@ -138,9 +138,9 @@ def register(request):
             result['res_msg'] = u'创建用户失败！'
         else:
             result['code'] = '0'
-            # 邀请人奖励20积分
+            # 邀请人奖励10积分
             if inviter:
-                invite_award_scores = 20
+                invite_award_scores = 10
                 inviter.invite_scores += invite_award_scores
                 translist = charge_score(inviter, '0', invite_award_scores, u"邀请奖励")
                 if translist:

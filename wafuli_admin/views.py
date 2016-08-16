@@ -15,6 +15,7 @@ from django.db.models import Q
 from wafuli_admin.models import DayStatis
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth import logout as auth_logout
 # Create your views here.
 logger = logging.getLogger('wafuli')
 def index(request):
@@ -421,6 +422,7 @@ def admin_user(request):
         elif type == 3:
             obj_user.is_active = False
             obj_user.save(update_fields=['is_active'])
+            auth_logout(request)
             admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=obj_user, event_type='6', remark=u"加黑")
             res['code'] = 0
         elif type == 4:
