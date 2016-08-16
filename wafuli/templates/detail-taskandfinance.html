@@ -38,6 +38,7 @@ $(function(){
 	$("button.td-tj").click(function(){
 		var telnum = $('input#telnum').val();
 		telnum = telnum.replace(/(^\s*)|(\s*$)/g, "");
+		$('input#telnum').val(telnum);
 		var remark = $('input#remark').val();
 		var re=/^1[1,2,3,4,6,5,7,8,9]\d{9}$/;
 		if(!re.test(telnum)){
