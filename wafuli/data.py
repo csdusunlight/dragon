@@ -127,3 +127,9 @@ AwardTable = {
     5:u'2元现金',
     6:'iphone',
 }
+INFORMATION_TYPE = (
+    ('wahangqing', u'挖行情'),
+    ('wagushi', u'挖故事'),
+    ('washuju', u'挖数据'),
+    ('wahuodong', u'挖活动'),
+)

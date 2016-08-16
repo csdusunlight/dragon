@@ -350,8 +350,8 @@ class Press(Base):
             raise ValidationError({'pic': u'新闻类型必输'})
     class Meta:
         ordering = ["-news_priority","-pub_date"]
-        verbose_name = u"新闻（公告、攻略等）"
-        verbose_name_plural = u"新闻（公告、攻略等）"
+        verbose_name = u"公告、攻略（关于我们）"
+        verbose_name_plural = u"公告、攻略（关于我们）"
 class Advertisement(Base):
     pic = models.ImageField(upload_to='photos/%Y/%m/%d', blank=False,
                              verbose_name=u"banner图片上传(1920*300)，小于100k")
@@ -396,3 +396,25 @@ class LotteryRecord(models.Model):
     def __unicode__(self):
         return u"%s中了%s" % (self.user, self.award)
     
+class Information(Base):
+    summary = models.TextField(verbose_name=u"摘要")
+    type = models.CharField(u"新闻类型", max_length=10, choices=INFORMATION_TYPE)
+    pic_mini = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, null=True,
+                             verbose_name=u"新闻图片上传(110*72)")
+    pic_max = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, null=True,
+                             verbose_name=u"新闻图片上传(110*72)")
+    content=UEditorField(u"内容", width=900, height=300, toolbars="full", 
+                         imagePath="photos/%(year)s/%(month)s/%(day)s/",
+                         filePath="photos/%(year)s/%(month)s/%(day)s/", 
+                         upload_settings={"imageMaxSize":1204000},settings={},command=None,blank=True)
+    #增加title、keywords、description等seo字段
+    seo_title = models.CharField(max_length=200, verbose_name=u"SEO标题", blank=True)
+    seo_keywords = models.CharField(max_length=200, verbose_name=u"SEO关键词", blank=True)
+    seo_description = models.CharField(max_length=200, verbose_name=u"SEO描述", blank=True)
+    def clean(self):
+        if self.type == '3' and not self.pic:
+            raise ValidationError({'pic': u'新闻类型必输'})
+    class Meta:
+        ordering = ["-news_priority","-pub_date"]
+        verbose_name = u"公告、攻略（关于我们）"
+        verbose_name_plural = u"公告、攻略（关于我们）"
