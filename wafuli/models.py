@@ -25,7 +25,6 @@ class Company(models.Model):
     class Meta:
         verbose_name_plural = u"商家"
         verbose_name = u"商家"
-        ordering = ["-view_count",]
     def __unicode__(self):
         return self.name
 class Base(models.Model):
