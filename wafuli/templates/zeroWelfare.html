@@ -159,15 +159,13 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
           <a href="{{wel.url}}"><img src="{{wel.pic.url}}"></a>
           <div class="box_pic_bg">
           	<p style="color:#FFF; font-size:10px;">
+          	<a href="{{wel.url}}" style="color:#FF0">
           {%if wel.type == 'youhuiquan'%}
-          	{%if wel.couponproject.ctype == '2' %}
-            	剩余&nbsp;<span style="color:#fdde00">{{wel.couponproject.coupons.count}}</span>&nbsp;张，
-            {%endif%}
-            	<a href="{{wel.url}}" style="color:#FF0">点击领取</a>
+            	点击领取
           {%else%}
-          		<a href="{{wel.url}}" style="color:#FF0">点击体验</a>
+          		点击体验
           {%endif%}
-          	</p>
+          	</a></p>
           </div>
         </div>
         <a href="{{wel.url}}" class="box_name">{{wel.title}}</a>
@@ -237,7 +235,7 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
     <a href="{%url 'welfare-list'%}?business={{busi.name}}"><img src="{{busi.logo.url}}" /></a>
    {%endfor%}
   </div>
-  <img src="{%static 'images/pict_94.png'%}" class="more_bg" /><a class="more">MORE>></a>
+  <img src="{%static 'images/pict_94.png'%}" class="more_bg" /><a href="{%url 'business_list'%}" class="more">MORE>></a>
   </div>
 </div>
 

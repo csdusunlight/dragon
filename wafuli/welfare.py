@@ -7,7 +7,7 @@ Created on 2016年8月1日
 from django.shortcuts import render
 from django.http.response import Http404
 from wafuli.models import Welfare, Advertisement, Press, Hongbao, Baoyou, CouponProject,\
-    Company
+    Company, Coupon
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
 from django.db.models import Q
@@ -17,6 +17,7 @@ from account.models import MyUser
 import re
 from .tools import listing
 logger = logging.getLogger('wafuli')
+import datetime
 
 def welfare(request, id=None, page=None, type=None):
     if not id:
@@ -37,7 +38,7 @@ def welfare(request, id=None, page=None, type=None):
         ref_dic = {}
         page_dic['pre_path'] = path_split[0]
         page_dic['suf_path'] = path_split[1]
-        wel_list = Welfare.objects.filter(is_del=False,is_display=True)
+        wel_list = Welfare.objects.filter(is_display=True)
         state = request.GET.get('state', '1')
         full_path_ = re.sub(r'/list-page\d+&?', '', full_path, 1)
         ref_path1 = re.sub(r'state=\d+&?', '', full_path_, 1)
@@ -81,7 +82,7 @@ def welfare(request, id=None, page=None, type=None):
         page_dic['page_list'] = page_list
         ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='2'),is_hidden=False)[0:8]
         strategy_list = Press.objects.filter(type='2')[0:10]
-        hot_wel_list = Welfare.objects.filter(is_del=False,is_display=True).order_by('-view_count')[0:2]
+        hot_wel_list = Welfare.objects.filter(is_display=True).order_by('-view_count')[0:2]
         business_list = Company.objects.order_by('-view_count')[0:10]
         context = {
             'wel_list':wel_list,
@@ -144,4 +145,40 @@ def exp_welfare_common(request):
     else:
         result['url'] = wel.exp_url
     result['code'] = '1'
+    return JsonResponse(result)
+
+def exp_welfare_youhuiquan(request):
+    user = request.user
+    if not request.is_ajax():
+        logger.warning("Experience refused no-ajax request!!!")
+        raise Http404
+    result = {}
+    if not user.is_authenticated():
+        url = reverse('login') + '?next=' + request.META['HTTP_REFERER']
+        result['url'] = url
+        result['code'] = '0'
+        return JsonResponse(result)
+    wel_id = request.GET.get('id', None)
+    if not wel_id:
+        logger.error("wel_id is missing!!!")
+        raise Http404
+    wel = CouponProject.objects.get(id=wel_id)
+    if wel.state != '1':
+        result['code'] = '4'
+        return JsonResponse(result)
+    draw_count = user.user_coupons.filter(project=wel).count()
+    if draw_count >= wel.claim_limit:
+        result['code'] = '2'
+        return JsonResponse(result)
+    if wel.ctype == '2':
+        coupon = Coupon.objects.filter(project=wel,user__isnull=True).first()
+        if coupon is None:
+            result['code'] = '1'
+            return JsonResponse(result)
+        coupon.user = user
+        coupon.time = datetime.datetime.now()
+        coupon.save(update_fields=['user','time'])
+    else:
+        Coupon.objects.create(user=user, project=wel)
+    result['code'] = '3'
     return JsonResponse(result)

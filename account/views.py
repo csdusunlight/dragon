@@ -165,7 +165,7 @@ def register(request):
                   {'hashkey':hashkey, 'codimg_url':codimg_url, 'icode':icode})
 @login_required
 def get_nums(request):
-    coupon_num = Coupon.objects.filter(user=request.user, is_used=False, project__is_del=False).count()
+    coupon_num = Coupon.objects.filter(user=request.user, is_used=False).count()
     message_num = Message.objects.filter(user=request.user, is_read=False).count()
     result = {'coupon_num':coupon_num,'message_num':message_num,}
     return JsonResponse(result)
@@ -715,9 +715,9 @@ def coupon(request):
     user = request.user
     coupons = user.user_coupons.filter(is_used=False)
     dict = {
-        'cash_num' : coupons.filter(project__type='0').count(),
-        'interest_num' : coupons.filter(project__type='1').count(),
-        'exc_num' : coupons.filter(project__type='2').count()
+        'cash_num' : coupons.filter(project__ctype='0').count(),
+        'interest_num' : coupons.filter(project__ctype='1').count(),
+        'exc_num' : coupons.filter(project__ctype='2').count()
     }
     return render(request, 'account/account_coupon.html', {'dict':dict})
 def get_user_coupon_page(request):
@@ -735,7 +735,7 @@ def get_user_coupon_page(request):
         size = 2
     if not page or not filter or size <= 0:
         raise Http404
-    item_list = Coupon.objects.filter(user=request.user,project__type=str(filter),is_used=False).select_related('project')
+    item_list = Coupon.objects.filter(user=request.user,project__ctype=str(filter),is_used=False).select_related('project')
     paginator = Paginator(item_list, size)
     try:
         contacts = paginator.page(page)
@@ -747,11 +747,11 @@ def get_user_coupon_page(request):
         contacts = paginator.page(paginator.num_pages)
     data = []
     for con in contacts:  
-        project = con.project      
+        project = con.project
         i = {"title":project.title,
              "amount":project.amount,
              "introduction":project.introduction,
-             "url":project.url,
+             "url":project.exp_url,
              'endtime':project.endtime,
              'id':con.id,
              'code':con.exchange_code
@@ -796,7 +796,7 @@ def get_user_coupon_exchange_detail(request):
              "state":con.get_audit_state_display(),
              'remark':con.remark,
              'time':con.time.strftime("%Y-%m-%d %H:%M:%S"),
-             'type':coupon.project.get_type_display()
+             'type':coupon.project.get_ctype_display()
         }
         data.append(i)
     if data:

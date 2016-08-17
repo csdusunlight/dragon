@@ -20,9 +20,9 @@ import re
 def index(request):
     ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='1'),is_hidden=False)[0:8]
     announce_list = Press.objects.filter(type='1')[0:5]
-    hongbao_list = Welfare.objects.filter(type='hongbao',is_del=False,is_display=True,state='1')[0:3]
-    baoyou_list = Welfare.objects.filter(type='baoyou',is_del=False,is_display=True,state='1')[0:3]
-    youhuiquan_list = Welfare.objects.filter(type='youhuiquan',is_del=False,is_display=True,state='1')[0:3]
+    hongbao_list = Welfare.objects.filter(type='hongbao',is_display=True,state='1')[0:3]
+    baoyou_list = Welfare.objects.filter(type='baoyou',is_display=True,state='1')[0:3]
+    youhuiquan_list = Welfare.objects.filter(type='youhuiquan',is_display=True,state='1')[0:3]
     task_list = Task.objects.filter(state='1')[0:3]
     finance_list = Finance.objects.filter(state='1')[0:3]
     news_list = Activity.objects.filter(is_hidden=False)[0:2]
@@ -518,7 +518,7 @@ def business(request, page=None):
         else:
             page_list = [1,'...'] + range(page-2, page+3) + ['...',page_num]
     page_dic['page_list'] = page_list
-    hot_wel_list = Welfare.objects.filter(is_del=False,is_display=True).order_by('-view_count')[0:8]
+    hot_wel_list = Welfare.objects.filter(is_display=True).order_by('-view_count')[0:8]
     content = {
         'page_dic':page_dic,
         'hot_business_list':hot_business_list,

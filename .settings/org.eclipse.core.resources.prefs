@@ -36,6 +36,7 @@ encoding//wafuli/templates/activity_recommend.html=UTF-8
 encoding//wafuli/templates/admin/wafuli/Commodity/change_form.html=UTF-8
 encoding//wafuli/templates/detail-common.html=UTF-8
 encoding//wafuli/templates/detail-taskandfinance.html=UTF-8
+encoding//wafuli/templates/detail-youhuiquan.html=UTF-8
 encoding//wafuli/templates/right.html=UTF-8
 encoding//wafuli/tools.py=utf-8
 encoding//wafuli/views.py=utf-8
