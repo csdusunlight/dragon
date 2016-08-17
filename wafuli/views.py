@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.http.response import Http404
 from wafuli.models import Welfare, Task, Finance, Commodity,\
-    ExchangeRecord, Press, UserEvent, Advertisement, Activity
+    ExchangeRecord, Press, UserEvent, Advertisement, Activity, Company
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
@@ -14,6 +14,8 @@ from wafuli_admin.models import DayStatis, GlobalStatis, RecommendRank
 from account.models import MyUser
 from django.contrib.contenttypes.models import ContentType
 logger = logging.getLogger('wafuli')
+from .tools import listing
+import re
 
 def index(request):
     ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='1'),is_hidden=False)[0:8]
@@ -481,3 +483,46 @@ def freshman_introduction(request):
     return render(request, "freshman_introduction.html")
 def freshman_award(request):
     return render(request, "freshman_award.html")
+
+def business(request, page=None):
+    if not page:
+        page = 1
+    else:
+        page = int(page)
+    hot_business_list = Company.objects.order_by('-view_count')[0:8]
+    business_list = Company.objects.all()
+    search_key = request.GET.get('key', '')
+    if search_key:
+        business_list = business_list.filter(name__contains=search_key)
+    business_list, page_num = listing(business_list, 36, page)
+    full_path = str(request.get_full_path())
+    path_split = []
+    if 'list-page' in full_path:
+        path_split = re.split('list-page\d+',full_path)
+    elif '?' in full_path:
+        path_split = full_path.split('?')
+        path_split[1] = '?' + path_split[1]
+    else:
+        path_split=[full_path, '']
+    page_dic = {}
+    page_dic['pre_path'] = path_split[0]
+    page_dic['suf_path'] = path_split[1]
+    page_list = []
+    if page_num < 10:
+        page_list = range(1,page_num+1)
+    else:
+        if page < 6:
+            page_list = range(1,8) + ["...",page_num]
+        elif page > page_num - 5:
+            page_list = [1,'...'] + range(page_num-6, page_num+1)
+        else:
+            page_list = [1,'...'] + range(page-2, page+3) + ['...',page_num]
+    page_dic['page_list'] = page_list
+    hot_wel_list = Welfare.objects.filter(is_del=False,is_display=True).order_by('-view_count')[0:8]
+    content = {
+        'page_dic':page_dic,
+        'hot_business_list':hot_business_list,
+        'business_list':business_list,
+        'hot_wel_list':hot_wel_list,
+    }
+    return render(request, "business.html", content)

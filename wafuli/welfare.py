@@ -14,8 +14,8 @@ from django.db.models import Q
 import logging
 from wafuli_admin.models import RecommendRank
 from account.models import MyUser
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import re
+from .tools import listing
 logger = logging.getLogger('wafuli')
 
 def welfare(request, id=None, page=None, type=None):
@@ -82,7 +82,7 @@ def welfare(request, id=None, page=None, type=None):
         ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='2'),is_hidden=False)[0:8]
         strategy_list = Press.objects.filter(type='2')[0:10]
         hot_wel_list = Welfare.objects.filter(is_del=False,is_display=True).order_by('-view_count')[0:2]
-        business_list = Company.objects.all()[0:10]
+        business_list = Company.objects.order_by('-view_count')[0:10]
         context = {
             'wel_list':wel_list,
             'business_list':business_list,
@@ -145,15 +145,3 @@ def exp_welfare_common(request):
         result['url'] = wel.exp_url
     result['code'] = '1'
     return JsonResponse(result)
-
-def listing(con_list, num, page):
-    paginator = Paginator(con_list, num) # Show 2 contacts per page
-    try:
-        contacts = paginator.page(page)
-    except PageNotAnInteger:
-    # If page is not an integer, deliver first page.
-        contacts = paginator.page(1)
-    except EmptyPage:
-    # If page is out of range (e.g. 9999), deliver last page of results.
-        contacts = paginator.page(paginator.num_pages)
-    return contacts, paginator.num_pages
