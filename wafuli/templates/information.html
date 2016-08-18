@@ -3,10 +3,30 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>福利资讯-挖福利</title>
-<meta name="keywords" content="福利,福利资讯,福利最新信息" />
+{%if type == 'wahangqing' %}
+<title>行业资讯-各行业最新资讯-挖福利行业资讯频道</title>
+<meta name="keywords" content="行业资讯，财富人物，理财行情，干货分享" />
+<meta name="description" content="挖行情提供包括行业经济行情，行业经济产业动态，行业经济行业新闻，行业经济商业信息，
+行业经济商业资讯，行业经济行业资讯，行业经济最新资讯，行业经济行业前景等投资项目资讯。" />
+{%elif type == 'wagushi'%}
+<title>福利资讯-挖故事</title>
+<meta name="keywords" content="公司动态，运营数据，挖福利" />
+<meta name="description" content="挖故事提供免费福利，挖掘互联网活动的收集并为广大活动爱好者提供活动的详细利用方法。" />
+{%elif type == 'washuju'%}
+<title>公司动态-挖数据</title>
+<meta name="keywords" content="福利，福利资讯，福利最新信息" />
 <meta name="description" content="挖福利资讯，挖福利资讯24小时提供免费福利资讯、理财资讯、
 金融行业资讯、理财科普，福利聚焦，福利资讯刷不停，大参考、第一解读、谈兵论战提供大智慧和犀利观点。" />
+{%elif type == 'wahuodong'%}
+<title>活动资讯，免费有奖活动</title>
+<meta name="keywords" content="活动网，微信活动，QQ活动，试用活动，微博活动，领集分宝，有奖活动，团购活动，优惠券，免费活动，有奖一起赚" />
+<meta name="description" content="挖活动提供国内免费有奖活动分享-提供活动线报，网友互助，赚客心经，大家一起做活动赚钱省钱。" />
+{%else%}
+<title>福利资讯-挖福利</title>
+<meta name="keywords" content="福利，福利资讯，福利最新信息" />
+<meta name="description" content="挖福利资讯，挖福利资讯24小时提供免费福利资讯、理财资讯、
+金融行业资讯、理财科普，福利聚焦，福利资讯刷不停，大参考、第一解读、谈兵论战提供大智慧和犀利观点。" />
+{%endif%}
 <link href="{% static 'images/favicon.ico'%}" rel="shortcut icon"/>
 <link href="{% static 'css/style.css'%}" type="text/css" rel="stylesheet">
 <link href="{% static 'css/index.css'%}" type="text/css" rel="stylesheet">
@@ -27,21 +47,21 @@
  <div class="left">
    <div class="left_box">
      <div class="left_box_nav">
-       <a>全部资讯</a>
-       <a>挖行情</a>
-       <a>挖故事</a>
-       <a>挖数据</a>
-       <a>挖活动</a>
+       <a href="{% url 'information_list' %}">全部资讯</a>
+       <a href="{% url 'information_list' type='wahangqing' %}">挖行情</a>
+       <a href="{% url 'information_list' type='wagushi' %}">挖故事</a>
+       <a href="{% url 'information_list' type='washuju' %}">挖数据</a>
+       <a href="{% url 'information_list' type='wahuodong' %}">挖活动</a>
      </div>
  <div class="partition">
  </div>
    <div class="left_box_children">
    {%for info in info_list%}
      <div class="small_box">
-      <img src="{{info.pic.url}}">
+      <a href="{% url 'information' id=info.id %}"><img src="{{info.pic.url}}"></a>
       <div class="small_box_children">
        <a>{{info.get_type_display}}</a>
-       <h1>{{info.title}}</h1>
+       <a href="{% url 'information' id=info.id %}"><h1>{{info.title}}</h1></a>
        <p>{{info.summary}}</p>
       </div>
      </div>
@@ -80,18 +100,18 @@
      <div class="right-top-nav">本周热点</div>
     {%for info in hot_info_list%}
       {%if forloop.counter < 4%}
-     <p><span class="circle1">{{forloop.counter}}</span><span class="text1">{{info.title}}</span></p>
+     <p><span class="circle1">{{forloop.counter}}</span><a><span class="text1">{{info.title}}</span></a></p>
       {%else%}
-      <p><span class="circle2">{{forloop.counter}}</span><span class="text2">{{info.title}}</span></p>
+      <p><span class="circle2">{{forloop.counter}}</span><a><span class="text2">{{info.title}}</span></a></p>
       {%endif%}
 	{%endfor%}
    </div>
    <div class="right-middle">
     {%for wel in hot_wel_list%}
       {%if forloop.counter < 4%}
-     <p><span class="circle1">{{forloop.counter}}</span><span class="text1">{{wel.title}}</span></p>
+     <p><span class="circle1">{{forloop.counter}}</span><a><span class="text1">{{wel.title}}</span></a></p>
       {%else%}
-      <p><span class="circle2">{{forloop.counter}}</span><span class="text2">{{wel.title}}</span></p>
+      <p><span class="circle2">{{forloop.counter}}</span><a><span class="text2">{{wel.title}}</span></a></p>
       {%endif%}
 	{%endfor%}
    </div>

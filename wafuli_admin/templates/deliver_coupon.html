@@ -47,7 +47,15 @@
     			}
     		});
     	});
-    	
+    	$('#selectuser').change(function(){
+    		var select_val = $(this).children('option:selected').val();
+			if (select_val ==='1'){
+				$("div.part_user").hide();
+			}
+			else {
+				$("div.part_user").css("display", 'block');
+			}
+    	}); 
     	$("button#submit").click(function(){
     		var id=$("select#type").children('option:selected').val();
     		var project = $("select#project").children('option:selected').val();
@@ -147,11 +155,13 @@
 			<option value="1">全部用户</option>
 			<option value="2">指定用户</option>
 		</select>
-		<i style="letter-spacing:4.8px;">发送指定用户：</i>
-		<textarea id="users" name="users" rows="15" cols="20"></textarea>
-		<label for="fileupload1">导入（纯文本文件，每行一个）：</label>
-		<input id="fileupload1" name="file"  type="file"/>
-		<button class="uploadbtn" id="uploadbtn1">上传</button>
+		<div class="part_user" style="display:none">
+			<i style="letter-spacing:4.8px;">发送指定用户：</i>
+			<textarea id="users" name="users" rows="15" cols="20"></textarea>
+			<label for="fileupload1">导入（纯文本文件，每行一个）：</label>
+			<input id="fileupload1" name="file"  type="file"/>
+			<button class="uploadbtn" id="uploadbtn1">上传</button>
+		</div>
 	</div>
 	<div id="use_coupon" style="display:none">
 		<i style="letter-spacing:4.8px;">优惠码：</i>

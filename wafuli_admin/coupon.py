@@ -22,15 +22,19 @@ from django.views.decorators.csrf import csrf_exempt
 logger = logging.getLogger('wafuli')
 
 def deliver_coupon(request):
-    user = request.user
+    admin_user = request.user
     if request.method == 'GET':
-        if not ( user.is_authenticated() and user.is_staff):
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
             return redirect(reverse('admin:login') + "?next=" + reverse('admin_index'))
         else:
             return render(request, 'deliver_coupon.html', {'type_list':COUPON_TYPE})
     elif request.method == 'POST':
         result = {'code':0}
-        if not user.has_admin_perms('006'):
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            result['code'] = -4
+            result['res_msg'] = u'请登录！'
+            return JsonResponse(result)
+        if not admin_user.has_admin_perms('006'):
             result['code'] = -5
             result['res_msg'] = u'您没有操作权限！'
             return JsonResponse(result)
@@ -65,6 +69,7 @@ def deliver_coupon(request):
                 for user in select_list:
                     if user:
                         user_set.add(user)
+                print select_list
                 for username in user_set:
                     try:
                         user = MyUser.objects.get(username = username)

@@ -561,16 +561,7 @@ def information(request, type=None, page=None, id=None):
         ref_dic = {'state':state, 'ref_path1':ref_path1, 'ref_path2':ref_path2,}
         if type:
             type = str(type)
-            if type == '0':
-                pass
-            if type == '1':
-                info_list = info_list.filter(type="wahangqing")
-            elif type == '2':
-                info_list = info_list.filter(type="wagushi")
-            elif type == '3':
-                info_list = info_list.filter(type="washuju")
-            elif type == '4':
-                info_list = info_list.filter(type="wahuodong")
+            info_list = info_list.filter(type=type)
         info_list, page_num = listing(info_list, 6, int(page))
         if page_num < 10:
             page_list = range(1,page_num+1)
@@ -589,6 +580,7 @@ def information(request, type=None, page=None, id=None):
             'page_dic':page_dic,
             'hot_info_list':hot_info_list,
             'hot_wel_list':hot_wel_list,
+            'type':type,
         }
         return render(request, 'information.html', context)
     elif id:
