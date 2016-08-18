@@ -527,7 +527,7 @@ def business(request, page=None):
     }
     return render(request, "business.html", content)
 
-def information(request, type=None, page=None):
+def information(request, type=None, page=None, id=None):
     if not id:
         if not page:
             page = 1
