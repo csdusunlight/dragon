@@ -2,6 +2,7 @@
 from django.conf import settings
 import time,os
 import random
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def createUrl():
     tstr = time.strftime('%Y/%m/%d/')
     html_name = str(int(time.time()))+'.html'
@@ -33,3 +34,16 @@ def weighted_random(items):
             break
         n -= w 
     return x
+
+
+def listing(con_list, num, page):
+    paginator = Paginator(con_list, num) # Show 2 contacts per page
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+    # If page is not an integer, deliver first page.
+        contacts = paginator.page(1)
+    except EmptyPage:
+    # If page is out of range (e.g. 9999), deliver last page of results.
+        contacts = paginator.page(paginator.num_pages)
+    return contacts, paginator.num_pages

@@ -25,7 +25,6 @@ class Company(models.Model):
     class Meta:
         verbose_name_plural = u"商家"
         verbose_name = u"商家"
-        ordering = ["-view_count",]
     def __unicode__(self):
         return self.name
 class Base(models.Model):
@@ -99,13 +98,12 @@ class Welfare(Base):
                          filePath="photos/%(year)s/%(month)s/%(day)s/", 
                          upload_settings={"imageMaxSize":1204000},settings={},command=None,blank=True)
     advert = models.ForeignKey("Advertisement",blank=True, null=True, on_delete=models.SET_NULL)
-    is_del = models.BooleanField(u"删除", default=False)
     exp_url = models.CharField(u"商家地址", blank=True, max_length=200)
     def clean(self):
         if self.pic and self.pic.size > 30000:
             raise ValidationError({'pic': u'图片大小不能超过30k'})
     def is_expired(self):
-        pass
+        return self.state == '2'
     class Meta:
         ordering = ["-news_priority", "-pub_date"]
 class Hongbao(Welfare):
@@ -144,10 +142,14 @@ class CouponProject(Welfare):
         ordering = ['-pub_date']
         verbose_name = u"优惠券项目"
         verbose_name_plural = u"优惠券项目"
+    def clean(self):
+        super(CouponProject, self).clean()
+        if not self.exp_url:
+            raise ValidationError({'exp_url': u'请输入活动体验地址'})
 class Coupon(models.Model):
     user = models.ForeignKey(MyUser, related_name="user_coupons", null=True)
     project = models.ForeignKey(CouponProject, related_name="coupons")
-    time = models.DateField(u"领取或发放日期", auto_now_add=True)
+    time = models.DateField(u"领取或发放日期", default=timezone.now)
     exchange_code = models.CharField(u"兑换码", blank=True, max_length=50)
     is_used = models.BooleanField(u"是否已使用", default = False)
     user_event = GenericRelation("UserEvent",related_query_name='coupon')
@@ -156,7 +158,7 @@ class Coupon(models.Model):
     class Meta:
         verbose_name = u"优惠券"
         verbose_name_plural = u"优惠券"
-        ordering = ['-time']
+#         ordering = ['-time']
 #     def clean(self):
 #         if self.type == '2' and self.exchange_code == '':
 #             raise ValidationError({'exchange_code': u'使用券的兑换码是必输项'})
@@ -315,8 +317,7 @@ class ScoreTranlist(models.Model):
     user_event = models.ForeignKey(UserEvent, related_name="score_translist", null=True)
     admin_event = models.ForeignKey(AdminEvent, related_name="score_translist", null=True)
     def __unicode__(self):
-        return u"%s:%s了%s积分 提交时间%s" % (self.user, self.get_transType_display(),self.transAmount,
-                                       self.user_event.time if self.user_event else "")
+        return u"%s:%s了%s积分 提交时间%s" % (self.user, self.get_transType_display(),self.transAmount, self.time)
     class Meta:
         ordering = ['-time']
 

@@ -32,7 +32,8 @@ urlpatterns = [
     url(r'^presspage/$', 'wafuli.views.get_press_page', name='get_press_page'),
     url(r'^aboutus/$', 'wafuli.views.aboutus', name="aboutus"),
     url(r'^exp_tf/$', 'wafuli.views.experience_taskandfinance', name='exp_tf'),
-    url(r'^exp_wel/$', 'wafuli.welfare.exp_welfare_common', name='exp_welfare_common'),
+    url(r'^exp_wel_common/$', 'wafuli.welfare.exp_welfare_common', name='exp_welfare_common'),
+    url(r'^exp_wel_youhuiquan/$', 'wafuli.welfare.exp_welfare_youhuiquan', name='exp_welfare_youhuiquan'),
     url(r'^expsubmit/$', 'wafuli.views.expsubmit', name='expsubmit'),
     url(r'^lookup_order/$', 'wafuli.views.lookup_order', name='lookup_order'),
     url(r'^submit_order/$', 'wafuli.views.submit_order', name='submit_order'),
@@ -46,4 +47,6 @@ urlpatterns = [
     
     url(r'^activity/lottery/$', 'wafuli.activity.lottery', name='activity_lottery'),
     url(r'^activity/lottery/get_lottery/$', 'wafuli.activity.get_lottery', name='get_lottery'),
+    
+    url(r'^business/(?:list-page(?P<page>[0-9]*)/)?$', 'wafuli.views.business', name='business_list'),
 ]
