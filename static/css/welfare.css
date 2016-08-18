@@ -337,33 +337,27 @@ margin-top: 1.5rem;}
          position:relative;
          overflow: hidden;
          }
-.subject_box img{ /*position:absolute;*/
+.subject_box img{
           float: left;
           width:261px;
           height:162px;
           margin-right: 20px;
           margin-bottom: 10px;
-          /*left:0px;*/}
+
 .subject_box h1{ font-size:18px;
          color:#000;
          margin-bottom: 20px;
-         /*position:absolute;
-         left:352px;
-         top:10px;*/
+
          }
-.subject_box p{ width:160px;
+.subject_box p{
          height:140px;
          font-size: 12px;
-         /*position:absolute;*/
          font-size:12px;
          color:#000;
          line-height: 1.8;
          letter-spacing: 1px;
          text-align: left;
          text-indent: 26px;
-         /*left:363px;
-         top:70px;*/
-         /*overflow:hidden;*/
          }
 
 .conte{width:1100px;margin:1rem auto;}
