@@ -32,11 +32,11 @@
 .lottery a{width:92px;height:35px;background:url(../images/lottery.png) no-repeat; clear:both; padding-top:6px; padding-left:10px;}
 .signin img,.lottery img{display:block}
 .signin a,.lottery a{display:block; font-size:12px; color:#FFF;cursor:pointer}
-.welcome{ font-size:12px; color:#b8b8b8; margin-top:10px; margin-left:10px;}
+.welcome{ font-size:12px; color:#ebebeb; margin-top:10px; margin-left:10px;}
 
-.usename{font-size:14px;color:#b8b8b8;float:left; margin-top:-60px; margin-left:102px;}
-.usename_1{margin-top:-30px;}
-.usename_1 a{color:#fff;font-size:16px;}
+.usename{font-size:14px;color:#f5f5f5;float:left; margin-top:-80px; margin-left:102px;}
+.usename_1{margin-top:-50px;}
+.usename_1 a{color:#ffe404;font-size:16px;}
 .navbox{width:1920px; margin-top:310px; margin-left:-410px; background:rgb(0,0,0,0.14)}
 .nav{width:1920px;margin-left:420px;margin-top:-40px;}
 .nav a{line-height:40px;float:left;padding-left:55px;padding-right:55px;font-size:14px; color:#FFF}
