@@ -5,6 +5,7 @@ a:focus { -moz-outline-style: none; } /* IE不支持 */
 a:focus { outline: none; } /*很多网站都会加的属性*/
 .all{ width:1130px; margin-left:auto; margin-right:auto;}
 .left{ float:left; width:910px;}
+.left img:hover {opacity: 0.7;}
 .right{ float:right; width:203px;}
 .hot-nav{ background:url(../images/01_03.jpg) no-repeat; color:#008fd7; font-size:18px; padding-left:32px; padding-top:0px; margin-top:20px; font-weight:bold; text-align: left;}
 .list{ margin-left:-18px; overflow:hidden;}
@@ -18,7 +19,7 @@ a:focus { outline: none; } /*很多网站都会加的属性*/
 .list_img{ border:#e5e5e5 solid 2px;width: 200px;height:95px;}
 .input_box input[type=text]{ width:185px; height:27px; border:solid 1px #008fd7;border-radius: 13px; margin:0;padding:0;outline:none;padding:0 5px 0;}
 .input_box input[type=submit]{position: relative;top: 8px;background-image: url(../images/01_19.jpg);background-position: center center;background-repeat: no-repeat;height: 27px;width: 27px;border: none;background-color: transparent;margin-left: -40px;}
-.input_box{ margin-left:-145px; margin-top:-33px;}
+.input_box{ margin-left:630px; margin-top:-33px;}
 /*.right-box{ margin-top:20px;}*/
 .right-box h3{ font-size:16px; color:#000;text-align: left;margin-left: 22px;}
 .right-box h3::before {
