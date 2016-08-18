@@ -49,4 +49,5 @@ urlpatterns = [
     url(r'^activity/lottery/get_lottery/$', 'wafuli.activity.get_lottery', name='get_lottery'),
     
     url(r'^business/(?:list-page(?P<page>[0-9]*)/)?$', 'wafuli.views.business', name='business_list'),
+    url(r'^information/(?:(?P<type>hb|yhq|by)/)?(?:list-page(?P<page>[0-9]*)/)?$', 'wafuli.views.information', name='information_list'),
 ]
