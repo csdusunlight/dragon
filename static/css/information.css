@@ -8,9 +8,10 @@ a:focus { outline: none; } /*很多网站都会加的属性*/
 .left{ float:left; width:834px;}
 .right{ float:right; width:265px;}
 .left_box{height: auto; border:solid 1px #e5e5e5; overflow:hidden;}
-.left_box_nav{ border-bottom:solid 1px #e5e5e5; position:relative;}
+.left_box_nav{ border-bottom:solid 1px #e5e5e5; position:relative;overflow: hidden;}
 .left_box_nav .left_box_active{ background-image:url(images/zx_07.jpg);}
-.left_box_nav a{ font-size:18px; color:#000; line-height:46px;display: inline-block;width: 150px;}
+.left_box_nav a{float: left; font-size:18px; color:#000; line-height:46px;display:block;width: 165px;}
+.left_box_nav a:hover {background: #f08519;color: #fff;}
 .left_box_nav a:not(.not) {border-right: 1px solid #dfdfdf;}
 .small_box {height: auto;overflow: hidden;border-bottom:dotted 1px #e5e5e5;}
 .small_box img{ display:block; float:left; margin-left:65px; margin-top:30px;}
