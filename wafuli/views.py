@@ -1,7 +1,7 @@
 #coding:utf-8
 from django.shortcuts import render
 from django.http.response import Http404
-from wafuli.models import Welfare, Task, Finance, Commodity,\
+from wafuli.models import Welfare, Task, Finance, Commodity, Information, \
     ExchangeRecord, Press, UserEvent, Advertisement, Activity, Company
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
@@ -526,3 +526,75 @@ def business(request, page=None):
         'hot_wel_list':hot_wel_list,
     }
     return render(request, "business.html", content)
+
+def information(request, type=None, page=None, id=None):
+    if not id:
+        if not page:
+            page = 1
+        else:
+            page = int(page)
+        full_path = str(request.get_full_path())
+        path_split = []
+        if 'list-page' in full_path:
+            path_split = re.split('list-page\d+',full_path)
+        elif '?' in full_path:
+            path_split = full_path.split('?')
+            path_split[1] = '?' + path_split[1]
+        else:
+            path_split=[full_path, '']
+        page_dic = {}
+        ref_dic = {}
+        page_dic['pre_path'] = path_split[0]
+        page_dic['suf_path'] = path_split[1]
+        info_list = Information.objects.filter(is_display=True)
+        state = request.GET.get('state', '1')
+        full_path_ = re.sub(r'/list-page\d+&?', '', full_path, 1)
+        ref_path1 = re.sub(r'state=\d+&?', '', full_path_, 1)
+        ref_path2, num = re.subn(r'state=\d+', 'state=2', full_path_)
+        if num == 0:
+            if '?' in ref_path2:
+                ref_path2 += '&state=2'
+            else:
+                ref_path2 += '?state=2'
+        if ref_path1[-1] == '?' or ref_path1[-1] == '&':
+            ref_path1 = ref_path1[:-1]
+        ref_dic = {'state':state, 'ref_path1':ref_path1, 'ref_path2':ref_path2,}
+        if type:
+            type = str(type)
+            if type == '0':
+                pass
+            if type == '1':
+                info_list = info_list.filter(type="wahangqing")
+            elif type == '2':
+                info_list = info_list.filter(type="wagushi")
+            elif type == '3':
+                info_list = info_list.filter(type="washuju")
+            elif type == '4':
+                info_list = info_list.filter(type="wahuodong")
+        info_list, page_num = listing(info_list, 1, int(page))
+        if page_num < 10:
+            page_list = range(1,page_num+1)
+        else:
+            if page < 6:
+                page_list = range(1,8) + ["...",page_num]
+            elif page > page_num - 5:
+                page_list = [1,'...'] + range(page_num-6, page_num+1)
+            else:
+                page_list = [1,'...'] + range(page-2, page+3) + ['...',page_num]
+        page_dic['page_list'] = page_list
+        hot_info_list = Information.objects.filter(is_display=True).order_by('-view_count')[0:2]
+        hot_wel_list = Company.objects.order_by('-view_count')[0:10]
+        context = {
+            'info_list':info_list,
+            'page_dic':page_dic,
+            'hot_info_list':hot_info_list,
+            'hot_wel_list':hot_wel_list,
+        }
+        return render(request, 'information.html', context)
+    elif id:
+        id = int(id)
+        try:
+            info = Information.objects.get(id=id)
+        except Information.DoesNotExist:
+            raise Http404(u"该页面不存在")
+        return render(request, 'detail-information',{'news':info,})
