@@ -571,13 +571,7 @@ def information(request, type=None, page=None):
                 info_list = info_list.filter(type="washuju")
             elif type == '4':
                 info_list = info_list.filter(type="wahuodong")
-        search_key = request.GET.get('key', '')
-        if search_key:
-            info_list = info_list.filter(Q(title__contains=search_key)|Q(company__name__contains=search_key))
-        business = request.GET.get('business', '')
-        if business:
-            info_list = info_list.filter(company__name=business)
-        info_list, page_num = listing(info_list, 12, int(page))
+        info_list, page_num = listing(info_list, 1, int(page))
         if page_num < 10:
             page_list = range(1,page_num+1)
         else:
@@ -588,43 +582,19 @@ def information(request, type=None, page=None):
             else:
                 page_list = [1,'...'] + range(page-2, page+3) + ['...',page_num]
         page_dic['page_list'] = page_list
-        ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='2'),is_hidden=False)[0:8]
-        strategy_list = Press.objects.filter(type='2')[0:10]
         hot_info_list = Information.objects.filter(is_display=True).order_by('-view_count')[0:2]
-        business_list = Company.objects.order_by('-view_count')[0:10]
+        hot_wel_list = Company.objects.order_by('-view_count')[0:10]
         context = {
             'info_list':info_list,
-            'business_list':business_list,
-            'ad_list':ad_list,
-            'strategy_list':strategy_list,
             'page_dic':page_dic,
-            'ref_dic':ref_dic,
-            'hot1':hot_info_list[0],
-            'hot2':hot_info_list[1],
+            'hot_info_list':hot_info_list,
+            'hot_wel_list':hot_wel_list,
         }
-        ranks = RecommendRank.objects.all()[0:6]
-        for i in range(len(ranks)):
-            key = 'rank'+str(i+1)
-            username = ranks[i].user.username
-            if len(username) > 4:
-                username = username[0:4] + '****'
-            else:
-                username = username + '****'
-            acc_num = ranks[i].acc_num
-            context.update({key:{'username':username,'acc_num':str(acc_num)+u'条'}})
-        return render(request, 'zeroinfo.html', context)
+        return render(request, 'information.html', context)
     elif id:
         id = int(id)
         try:
             info = Information.objects.get(id=id)
-        except info.DoesNotExist:
+        except Information.DoesNotExist:
             raise Http404(u"该页面不存在")
-        template = 'detail-common.html'
-        if info.type == "youhuiquan":
-            template = 'detail-youhuiquan.html'
-            info = info.couponproject
-        elif info.type == "hongbao":
-            info = info.hongbao
-        elif info.type == "baoyou":
-            info = info.baoyou
-        return render(request, template,{'news':info,'type':'info'})
+        return render(request, 'detail-information',{'news':info,})

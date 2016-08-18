@@ -3,59 +3,11 @@
 <head>
 <meta charset="utf-8">
 <title>无标题文档</title>
-<link href="images/favicon.ico" rel="shortcut icon">
-<link href="css/style.css" type="text/css" rel="stylesheet">
-<link href="css/index.css" type="text/css" rel="stylesheet">
-<!-- <link href="css/page.css" type="text/css" rel="stylesheet"> -->
-<link href="css/information.css" type="text/css" rel="stylesheet">
-<style>
-body{ font-family:"微软雅黑"}
-a{blr:expression(this.onFocus=this.close());} /* 只支持IE，过多使用效率低 */
-a{blr:expression(this.onFocus=this.blur());} /* 只支持IE，过多使用效率低 */
-a:focus { -moz-outline-style: none; } /* IE不支持 */
-a:focus { outline: none; } /*很多网站都会加的属性*/
-.content-box{margin-top: 20px;height: auto;overflow: hidden;}
-.all{ width:1130px; margin-left:auto; margin-right:auto;}
-.left{ float:left; width:834px;}
-.right{ float:right; width:265px;}
-.left_box{height: auto; border:solid 1px #e5e5e5; overflow:hidden;}
-.left_box_nav{ border-bottom:solid 1px #e5e5e5; position:relative;}
-.left_box_nav .left_box_active{ background-image:url(images/zx_07.jpg);}
-.left_box_nav a{ font-size:18px; color:#000; line-height:46px;display: inline-block;width: 150px;}
-.left_box_nav a:not(.not) {border-right: 1px solid #dfdfdf;}
-.small_box {height: auto;overflow: hidden;border-bottom:dotted 1px #e5e5e5;}
-.small_box img{ display:block; float:left; margin-left:65px; margin-top:30px;}
-.small_box_children{ float:left; width:490px; margin-left:50px; margin-top:25px;text-align: left;}
-.small_box_children a{ font-size:16px; color:#f08519;}
-.small_box_children h1{ font-weight:normal; font-size:18px; color:#000; margin-top:10px;margin-bottom: 10px;}
-.small_box_children p{width:490px; color:#828181; font-size:16px; height:65px; overflow:hidden; margin-top:-4px;}
+<link href="{% static 'images/favicon.ico'%}" rel="shortcut icon">
+<link href="{% static 'css/style.css'%}" type="text/css" rel="stylesheet">
+<link href="{% static 'css/index.css'%}" type="text/css" rel="stylesheet">
+<link href="{% static 'css/information.css'%}" type="text/css" rel="stylesheet">
 
-.item_con_pager{top:1095px;left:620px; text-align:center;height: auto;overflow:hidden;margin-top: 30px;margin-bottom: 20px; }
-.pager_container span,.pager_container .page_no{cursor:pointer;color:#555;display:inline-block;border:1px solid #e8e8e8;height:21px;line-height:21px;padding:3px 10px;margin:0 5px;font-size:14px;text-decoration:none}
-.pager_container span:first-child{margin:0 5px 0 0}
-.pager_container .page_no:not(.pager_next_disabled):not(.pager_prev_disabled):hover,.pager_container span:not(.pager_next_disabled):not(.pager_prev_disabled):hover{background-color:#f08519;border-color:#f08519;text-decoration:none;color:#fff}
-.pager_container .pager_is_current{background-color:#f08519!important;color:#fff!important;font-weight:700;border-color:#f08519!important}
-.pager_container .pager_lgthen{color:#337BAC}
-.pager_container .pager_prev_disabled,.pager_container .pager_next_disabled,.pager_container .pager_lgthen_dis{color:silver!important;cursor:default!important}
-.partition{ position:absolute; left:435px; top:24px;}
-.partition img{ margin-left:150px;}
-
-.right-top{ border:solid 1px #e5e5e5;}
-.right-top-nav{ font-size:16px; color:#000; border-bottom:solid 1px #e5e5e5; padding-left:10px; line-height:35px;}
-.right-top p{ margin-left:10px; margin-top:15px; width:223px; white-space:nowrap; overflow:hidden;}
-.circle1{background-color:#e60012; color:#FFF; text-align:center; padding-left:8px; padding-right:8px; padding-top:5px; padding-bottom:5px;}
-.circle2{ margin-left:8px;}
-.text1{ margin-left:10px;}
-.text2{ margin-left:18px;}
-
-.right-middle{ border:solid 1px #e5e5e5; margin-top:20px;}
-.right-middle p{ margin-left:10px; margin-top:15px; width:223px;}
-
-.right-bottom{ margin-top:20px;}
-.right-bottom a{ color:#000; font-size:16px;}
-.right-bottom img{ display:block; margin:10px auto 0;}
-
-</style>
 </head>
 
 <body>
@@ -75,7 +27,7 @@ a:focus { outline: none; } /*很多网站都会加的属性*/
 <div class="header-b">
 <div id="logo">
 <a href="/">
-<img alt="logo" src="images/logo.jpg">
+<img alt="logo" src="{% static 'images/logo.jpg'%}">
 </a>
 </div>
 <div id="menu">
@@ -124,7 +76,7 @@ a:focus { outline: none; } /*很多网站都会加的属性*/
  </div>
    <div class="left_box_children">
      <div class="small_box">
-      <img src="images/01_09.png">
+      <img src="{% static 'images/01_09.png'%}">
       <div class="small_box_children">
        <a>挖行情</a>
        <h1>注意！银行这些行为属于违规</h1>
@@ -132,7 +84,7 @@ a:focus { outline: none; } /*很多网站都会加的属性*/
       </div>
      </div>
      <div class="small_box">
-      <img src="images/01_09.png">
+      <img src="{% static 'images/01_09.png'%}">
       <div class="small_box_children">
        <a>挖行情</a>
        <h1>注意！银行这些行为属于违规</h1>
@@ -140,7 +92,7 @@ a:focus { outline: none; } /*很多网站都会加的属性*/
       </div>
      </div>
      <div class="small_box">
-      <img src="images/01_09.png">
+      <img src="{% static 'images/01_09.png'%}">
       <div class="small_box_children">
        <a>挖行情</a>
        <h1>注意！银行这些行为属于违规</h1>
@@ -148,7 +100,7 @@ a:focus { outline: none; } /*很多网站都会加的属性*/
       </div>
      </div>
      <div class="small_box">
-      <img src="images/01_09.png">
+      <img src="{% static 'images/01_09.png'%}">
       <div class="small_box_children">
        <a>挖行情</a>
        <h1>注意！银行这些行为属于违规</h1>
@@ -156,7 +108,7 @@ a:focus { outline: none; } /*很多网站都会加的属性*/
       </div>
      </div>
      <div class="small_box">
-      <img src="images/01_09.png">
+      <img src="{% static 'images/01_09.png'%}">
       <div class="small_box_children">
        <a>挖行情</a>
        <h1>注意！银行这些行为属于违规</h1>
@@ -164,7 +116,7 @@ a:focus { outline: none; } /*很多网站都会加的属性*/
       </div>
      </div>
      <div class="small_box">
-      <img src="images/01_09.png">
+      <img src="{% static 'images/01_09.png'%}">
       <div class="small_box_children">
        <a>挖行情</a>
        <h1>注意！银行这些行为属于违规</h1>
@@ -213,7 +165,7 @@ a:focus { outline: none; } /*很多网站都会加的属性*/
    </div>
  <div class="right-bottom">
    <a>你可能感兴趣的福利</a>
-   <img src="images/01_09.png">
+   <img src="{% static 'images/01_09.png'%}">
  </div>
  </div>
 
@@ -264,22 +216,22 @@ a:focus { outline: none; } /*很多网站都会加的属性*/
           </div>
           <div class="index_56">
             <div class="index_57">挖福利官方微信</div>
-            <div class="index_58"><img width="123" height="123" alt="微信二维码" src="images/code.jpg"></div>
+            <div class="index_58"><img width="123" height="123" alt="微信二维码" src="{% static 'images/code.jpg'%}"></div>
           </div>
         </div>
         <div class="index_59">Copyright&nbsp; &copy; 2015-2024&nbsp; 挖福利 版权所有 备案号：湘ICP备15015815号-2<span class="rt">
-        <a href="#"><img alt="" src="images/icon-1.png"></a>
-        <a href="#"><img alt="" src="images/icon-2.png"></a>
-        <a href="#"><img alt="" src="images/icon-3.png"></a></span></div>
+        <a href="#"><img alt="" src="{% static 'images/icon-1.png'%}"></a>
+        <a href="#"><img alt="" src="{% static 'images/icon-2.png'%}"></a>
+        <a href="#"><img alt="" src="{% static 'images/icon-3.png'%}"></a></span></div>
       </div>
     </div>
   <!--浮动窗口-->
 
 <meta charset="utf-8&quot;">
   <ul id="online">
-      <li class="qq"><a "="" href="http://wpa.qq.com/msgrd?v=3&amp;uin=122142551&amp;site=qq&amp;menu=yes" target="_blank"><img alt="qq" src="images/icon-4.png"><br>QQ客服</a></li>
-      <li class="weixin"><a href="#"><img alt="weixin" src="images/icon-5.png"><br>微信客服</a></li>
-      <li class="top"><a onclick="$('body,html').animate({scrollTop:0},600);" href="javascript:;"><img alt="top" src="images/top.png"></a></li>
+      <li class="qq"><a "="" href="http://wpa.qq.com/msgrd?v=3&amp;uin=122142551&amp;site=qq&amp;menu=yes" target="_blank"><img alt="qq" src="{% static 'images/icon-4.png'%}"><br>QQ客服</a></li>
+      <li class="weixin"><a href="#"><img alt="weixin" src="{% static 'images/icon-5.png'%}"><br>微信客服</a></li>
+      <li class="top"><a onclick="$('body,html').animate({scrollTop:0},600);" href="javascript:;"><img alt="top" src="{% static 'images/top.png'%}"></a></li>
    </ul>
 </body>
 </html>
