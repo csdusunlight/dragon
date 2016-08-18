@@ -32,10 +32,11 @@
 .lottery a{width:92px;height:35px;background:url(../images/lottery.png) no-repeat; clear:both; padding-top:6px; padding-left:10px;}
 .signin img,.lottery img{display:block}
 .signin a,.lottery a{display:block; font-size:12px; color:#FFF;cursor:pointer}
-.welcome{ font-size:12px; color:#FFF; margin-top:-26px; margin-left:10px;}
+.welcome{ font-size:12px; color:#b8b8b8; margin-top:10px; margin-left:10px;}
 
-.usemame{font-size:18px;color:#FFF;float:left; margin-top:-54px; margin-left:102px;}
-
+.usename{font-size:14px;color:#b8b8b8;float:left; margin-top:-60px; margin-left:102px;}
+.usename_1{margin-top:-30px;}
+.usename_1 a{color:#fff;font-size:16px;}
 .navbox{width:1920px; margin-top:310px; margin-left:-410px; background:rgb(0,0,0,0.14)}
 .nav{width:1920px;margin-left:420px;margin-top:-40px;}
 .nav a{line-height:40px;float:left;padding-left:55px;padding-right:55px;font-size:14px; color:#FFF}
@@ -211,13 +212,13 @@ table{border-collapse:collapse;}
 .index_59{width:1100px;height:56px;clear:both;display:inline-block;text-align:left;line-height:56px;color:#fff;}
 .index_59 .rt a{margin-left:6px;}
 #online{width:63px;overflow:hidden;clear:both;text-align:left;position:fixed;top:30%;right:6px;z-index:1000;border:1px solid #f5f5f5;border-bottom:none;}
-#online li{width:63px;height:74px;float:left;display:inline-block;text-align:center;border-bottom:1px solid #f5f5f5;background:#fff;line-height:26px;}
+#online li{position: static;width:63px;height:74px;float:left;display:inline-block;text-align:center;border-bottom:1px solid #f5f5f5;background:#fff;line-height:26px;}
 #online li a{display:block;width:63px;height:74px;color:#ccc;}
 #online li a:hover { color:#fff; background:#f08519;}
 #online li.qq img{padding-top:6px;}
 #online li.weixin img{padding-top:9px;}
 #online li.top img{padding-top:18px;}
-
+#online li.top{position:static;}
 .box_in { float:left; width:912px; height:auto; background:url(../images/newback1.png) no-repeat right; padding-right:2px; box-sizing:border-box;}
 .frcont { float:right; width:175px; height:auto; margin-top:23px;}
 .frcont p { font-size:13px; color:#3a3a3a; line-height:35px; margin:0;font-weight:bold;}
