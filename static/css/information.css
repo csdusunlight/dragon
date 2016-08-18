@@ -14,8 +14,8 @@ a:focus { outline: none; } /*很多网站都会加的属性*/
 .left_box_nav a:hover {background: #f08519;color: #fff;}
 .left_box_nav a:not(.not) {border-right: 1px solid #dfdfdf;}
 .small_box {height: auto;overflow: hidden;border-bottom:dotted 1px #e5e5e5;}
-.small_box img{ display:block; float:left; margin-left:65px; margin-top:30px;}
-.small_box_children{ float:left; width:490px; margin-left:50px; margin-top:25px;text-align: left;}
+.small_box img{ display:block; float:left; margin-left:35px; margin-top:30px;width:260px;height:160px;}
+.small_box_children{ float:left; width:400px; margin-left:50px; margin-top:25px;text-align: left;}
 .small_box_children a{ font-size:16px; color:#f08519;}
 .small_box_children h1{ font-weight:normal; font-size:18px; color:#000; margin-top:10px;margin-bottom: 10px;}
 .small_box_children p{width:490px; color:#828181; font-size:16px; height:65px; overflow:hidden; margin-top:-4px;}

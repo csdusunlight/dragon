@@ -571,7 +571,7 @@ def information(request, type=None, page=None, id=None):
                 info_list = info_list.filter(type="washuju")
             elif type == '4':
                 info_list = info_list.filter(type="wahuodong")
-        info_list, page_num = listing(info_list, 1, int(page))
+        info_list, page_num = listing(info_list, 6, int(page))
         if page_num < 10:
             page_list = range(1,page_num+1)
         else:
@@ -582,8 +582,8 @@ def information(request, type=None, page=None, id=None):
             else:
                 page_list = [1,'...'] + range(page-2, page+3) + ['...',page_num]
         page_dic['page_list'] = page_list
-        hot_info_list = Information.objects.filter(is_display=True).order_by('-view_count')[0:2]
-        hot_wel_list = Company.objects.order_by('-view_count')[0:10]
+        hot_info_list = Information.objects.filter(is_display=True).order_by('-view_count')[0:10]
+        hot_wel_list = Welfare.objects.order_by('-view_count')[0:10]
         context = {
             'info_list':info_list,
             'page_dic':page_dic,

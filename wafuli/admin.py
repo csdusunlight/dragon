@@ -127,3 +127,13 @@ admin.site.register(CouponProject,CouponProjectAdmin)
 admin.site.register(Baoyou,BaoyouAdmin)
 admin.site.register(Welfare,WelfareAdmin)
 admin.site.register(Mark)
+
+class InformationAdmin(NewsAdmin):
+    readonly_fields = ('pub_date','change_user','url')
+    def save_model(self, request, obj, form, change):
+        obj.change_user = str(request.user)
+        obj.save()
+        if not change:
+            obj.url = reverse('information', kwargs={'id': obj.pk})
+            obj.save(update_fields=['url',])
+admin.site.register(Information,InformationAdmin)

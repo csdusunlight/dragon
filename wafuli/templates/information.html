@@ -31,103 +31,70 @@
        <a>挖行情</a>
        <a>挖故事</a>
        <a>挖数据</a>
-       <a class="not">挖活动</a>
+       <a>挖活动</a>
      </div>
  <div class="partition">
  </div>
    <div class="left_box_children">
+   {%for info in info_list%}
      <div class="small_box">
-      <img src="{% static 'images/01_09.png'%}">
+      <img src="{{info.pic.url}}">
       <div class="small_box_children">
-       <a>挖行情</a>
-       <h1>注意！银行这些行为属于违规</h1>
-       <p>据国家发展和改革委员会网站消息，发改委近日印发《商业银行收费行为执法指南》。《指南》认定商业银行多种违规收费行为......</p>
+       <a>{{info.get_type_display}}</a>
+       <h1>{{info.title}}</h1>
+       <p>{{info.summary}}</p>
       </div>
      </div>
-     <div class="small_box">
-      <img src="{% static 'images/01_09.png'%}">
-      <div class="small_box_children">
-       <a>挖行情</a>
-       <h1>注意！银行这些行为属于违规</h1>
-       <p>据国家发展和改革委员会网站消息，发改委近日印发《商业银行收费行为执法指南》。《指南》认定商业银行多种违规收费行为......</p>
-      </div>
-     </div>
-     <div class="small_box">
-      <img src="{% static 'images/01_09.png'%}">
-      <div class="small_box_children">
-       <a>挖行情</a>
-       <h1>注意！银行这些行为属于违规</h1>
-       <p>据国家发展和改革委员会网站消息，发改委近日印发《商业银行收费行为执法指南》。《指南》认定商业银行多种违规收费行为......</p>
-      </div>
-     </div>
-     <div class="small_box">
-      <img src="{% static 'images/01_09.png'%}">
-      <div class="small_box_children">
-       <a>挖行情</a>
-       <h1>注意！银行这些行为属于违规</h1>
-       <p>据国家发展和改革委员会网站消息，发改委近日印发《商业银行收费行为执法指南》。《指南》认定商业银行多种违规收费行为......</p>
-      </div>
-     </div>
-     <div class="small_box">
-      <img src="{% static 'images/01_09.png'%}">
-      <div class="small_box_children">
-       <a>挖行情</a>
-       <h1>注意！银行这些行为属于违规</h1>
-       <p>据国家发展和改革委员会网站消息，发改委近日印发《商业银行收费行为执法指南》。《指南》认定商业银行多种违规收费行为......</p>
-      </div>
-     </div>
-     <div class="small_box">
-      <img src="{% static 'images/01_09.png'%}">
-      <div class="small_box_children">
-       <a>挖行情</a>
-       <h1>注意！银行这些行为属于违规</h1>
-       <p>据国家发展和改革委员会网站消息，发改委近日印发《商业银行收费行为执法指南》。《指南》认定商业银行多种违规收费行为......</p>
-      </div>
-     </div>
-     <div class="item_con_pager">
+    {%endfor%}
+        {% if info_list.paginator.num_pages >= 2 %}
+  <div class="item_con_pager">
             <div class="pager_container">
-                 <a rel="nofollow" href="javascript:;" class="page_no pager_prev_disabled" data-index="">上一页</a>
-                 <a rel="nofollow" href="javascript:;" class="page_no pager_is_current" data-index="1">1</a>
-                 <a class="page_no" data-index="2">2</a>
-                 <a class="page_no" data-index="3">3</a>
-                 <a class="page_no" data-index="10">10</a>
-                 <a class="page_no" data-index="2">下一页</a>
+            {% if info_list.number != 1 %}
+				<a href="{{page_dic.pre_path}}list-page{{info_list.previous_page_number}}{{page_dic.suf_path}}" class="page_no" >上一页</a>
+			{% else %}
+				<a class="page_no pager_prev_disabled">上一页</a>
+			{% endif %}
+			{% for i in page_dic.page_list %}
+				{% if i == "..." %}
+					...
+				{% elif i == info_list.number %}
+					<a class="page_no pager_is_current">{{i}}</a>
+				{% else %}
+					<a href="{{page_dic.pre_path}}list-page{{i}}{{page_dic.suf_path}}" class="page_no">{{i}}</a>
+				{% endif  %}
+			{% endfor %}
+			{% if info_list.number != info_list.paginator.num_pages %}
+				<a href="{{page_dic.pre_path}}list-page{{info_list.next_page_number}}{{page_dic.suf_path}}" class="page_no" >下一页</a>
+			{% else %}
+				<a class="page_no pager_prev_disabled">下一页</a>
+			{% endif %}
+
              </div>
-      </div>
+        </div>
+  {%endif%}
    </div>
    </div>
  </div>
  <div class="right">
    <div class="right-top">
      <div class="right-top-nav">本周热点</div>
-     <p><span class="circle1">1</span><span class="text1">人设部终于回应五个问题</span></p>
-     <p><span class="circle1">2</span><span class="text1">人设部终于回应五个问题</span></p>
-     <p><span class="circle1">3</span><span class="text1">人设部终于回应五个问题</span></p>
-     <p><span class="circle2">4</span><span class="text2">人设部终于回应五个问题</span></p>
-     <p><span class="circle2">5</span><span class="text2">人设部终于回应五个问题</span></p>
-     <p><span class="circle2">6</span><span class="text2">人设部终于回应五个问题</span></p>
-     <p><span class="circle2">7</span><span class="text2">人设部终于回应五个问题</span></p>
-     <p><span class="circle2">8</span><span class="text2">人设部终于回应五个问题</span></p>
-     <p><span class="circle2">9</span><span class="text2">人设部终于回应五个问题</span></p>
-     <p><span class="circle2">10</span><span class="text2">人设部终于回应五个问题</span></p>
+    {%for info in hot_info_list%}
+      {%if forloop.counter < 4%}
+     <p><span class="circle1">{{forloop.counter}}</span><span class="text1">{{info.title}}</span></p>
+      {%else%}
+      <p><span class="circle2">{{forloop.counter}}</span><span class="text2">{{info.title}}</span></p>
+      {%endif%}
+	{%endfor%}
    </div>
    <div class="right-middle">
-     <div class="right-top-nav">福利活动</div>
-     <p><span class="circle1">1</span><span class="text1">人设部终于回应五个问题</span></p>
-     <p><span class="circle1">2</span><span class="text1">人设部终于回应五个问题</span></p>
-     <p><span class="circle1">3</span><span class="text1">人设部终于回应五个问题</span></p>
-     <p><span class="circle2">4</span><span class="text2">人设部终于回应五个问题</span></p>
-     <p><span class="circle2">5</span><span class="text2">人设部终于回应五个问题</span></p>
-     <p><span class="circle2">6</span><span class="text2">人设部终于回应五个问题</span></p>
-     <p><span class="circle2">7</span><span class="text2">人设部终于回应五个问题</span></p>
-     <p><span class="circle2">8</span><span class="text2">人设部终于回应五个问题</span></p>
-     <p><span class="circle2">9</span><span class="text2">人设部终于回应五个问题</span></p>
-     <p><span class="circle2">10</span><span class="text2">人设部终于回应五个问题</span></p>
+    {%for wel in hot_wel_list%}
+      {%if forloop.counter < 4%}
+     <p><span class="circle1">{{forloop.counter}}</span><span class="text1">{{wel.title}}</span></p>
+      {%else%}
+      <p><span class="circle2">{{forloop.counter}}</span><span class="text2">{{wel.title}}</span></p>
+      {%endif%}
+	{%endfor%}
    </div>
- <div class="right-bottom">
-   <a>你可能感兴趣的福利</a>
-   <img src="{% static 'images/01_09.png'%}">
- </div>
  </div>
 
 </div>

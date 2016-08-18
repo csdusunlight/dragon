@@ -400,10 +400,9 @@ class LotteryRecord(models.Model):
     
 class Information(Base):
     summary = models.TextField(verbose_name=u"摘要")
-    type = models.CharField(u"新闻类型", max_length=10, choices=INFORMATION_TYPE)
+    type = models.CharField(u"资讯类型", max_length=10, choices=INFORMATION_TYPE)
     is_display = models.BooleanField(default=True, verbose_name=u"是否在列别页中显示")
-    pic = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, null=True,
-                             verbose_name=u"新闻图片上传(110*72)")
+    pic = models.ImageField(upload_to='photos/%Y/%m/%d', verbose_name=u"图片上传(260*160)")
     content=UEditorField(u"内容", width=900, height=300, toolbars="full", 
                          imagePath="photos/%(year)s/%(month)s/%(day)s/",
                          filePath="photos/%(year)s/%(month)s/%(day)s/", 
@@ -412,10 +411,7 @@ class Information(Base):
     seo_title = models.CharField(max_length=200, verbose_name=u"SEO标题", blank=True)
     seo_keywords = models.CharField(max_length=200, verbose_name=u"SEO关键词", blank=True)
     seo_description = models.CharField(max_length=200, verbose_name=u"SEO描述", blank=True)
-    def clean(self):
-        if self.type == '3' and not self.pic:
-            raise ValidationError({'pic': u'新闻类型必输'})
     class Meta:
         ordering = ["-news_priority","-pub_date"]
-        verbose_name = u"公告、攻略（关于我们）"
-        verbose_name_plural = u"公告、攻略（关于我们）"
+        verbose_name = u"资讯"
+        verbose_name_plural = u"资讯"
