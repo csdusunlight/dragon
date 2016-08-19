@@ -84,7 +84,7 @@ def welfare(request, id=None, page=None, type=None):
         strategy_list = Press.objects.filter(type='2')[0:10]
         hot_wel_list = Welfare.objects.filter(is_display=True).order_by('-view_count')[0:2]
         business_list = Company.objects.order_by('-view_count')[0:10]
-        hot_info = Information.objects.first()
+        hot_info = Information.objects.filter(is_display=True).order_by('-view_count').first()
         context = {
             'wel_list':wel_list,
             'business_list':business_list,

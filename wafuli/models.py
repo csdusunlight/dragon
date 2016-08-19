@@ -419,3 +419,6 @@ class Information(Base):
         ordering = ["-news_priority","-pub_date"]
         verbose_name = u"资讯"
         verbose_name_plural = u"资讯"
+    def clean(self):
+        if self.pic and self.pic.size > 30000:
+            raise ValidationError({'pic': u'图片大小不能超过30k'})

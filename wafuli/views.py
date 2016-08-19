@@ -35,6 +35,7 @@ def index(request):
     news_list = Activity.objects.filter(is_hidden=False)[0:2]
     exchange_list = ExchangeRecord.objects.all()[0:10]
     strategy_list = Press.objects.filter(type='2')[0:6]
+    info = Information.objects.filter(is_display=True).first()
     context = {'ad_list':ad_list, 
                'hongbao_list': hongbao_list,
                'baoyou_list': baoyou_list, 
@@ -43,6 +44,7 @@ def index(request):
                'finance_list': finance_list,
                'news_list': news_list,'exchange_list': exchange_list,
                'strategy_list': strategy_list,
+               'info': info,
     }
     try:
         statis = DayStatis.objects.get(date=date.today())

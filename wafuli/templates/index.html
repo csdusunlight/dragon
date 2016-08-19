@@ -198,10 +198,10 @@ $(function(){
        <img src="{% static 'images/fenge.png' %}" class="LINE" />
        <img src="{% static 'images/pic_28.png' %}" class="Tag" />
        <div class="story">
-	        <img src="{% static 'images/pic_32.png' %}" />
+	        <img src="{{info.pic.url}}" />
 	        <div class="text">
-	        	<h1>六月，我与挖福利的故事</h1>
-	            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus..</p>
+	        	<h1>{{info.title}}</h1>
+	            <p>{{info.summary}}</p>
 	        </div>
 	        <div class="more"><a href="{% url 'information_list' %}">更多精彩>></a></div>
         </div>
