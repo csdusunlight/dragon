@@ -589,4 +589,5 @@ def information(request, type=None, page=None, id=None):
             info = Information.objects.get(id=id)
         except Information.DoesNotExist:
             raise Http404(u"该页面不存在")
-        return render(request, 'detail-information',{'news':info,})
+        hot_info_list = Information.objects.filter(is_display=True).order_by('-view_count')[0:6]
+        return render(request, 'detail-information.html',{'info':info, 'hot_info_list':hot_info_list})

@@ -401,6 +401,7 @@ class LotteryRecord(models.Model):
 class Information(Base):
     summary = models.TextField(verbose_name=u"摘要")
     type = models.CharField(u"资讯类型", max_length=10, choices=INFORMATION_TYPE)
+    source = models.CharField(u"来源", max_length=10, default=u"挖福利")
     is_display = models.BooleanField(default=True, verbose_name=u"是否在列别页中显示")
     pic = models.ImageField(upload_to='photos/%Y/%m/%d', verbose_name=u"图片上传(260*160)")
     content=UEditorField(u"内容", width=900, height=300, toolbars="full", 

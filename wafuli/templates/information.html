@@ -9,9 +9,9 @@
 <meta name="description" content="挖行情提供包括行业经济行情，行业经济产业动态，行业经济行业新闻，行业经济商业信息，
 行业经济商业资讯，行业经济行业资讯，行业经济最新资讯，行业经济行业前景等投资项目资讯。" />
 {%elif type == 'wagushi'%}
-<title>福利资讯-挖故事</title>
-<meta name="keywords" content="公司动态，运营数据，挖福利" />
-<meta name="description" content="挖故事提供免费福利，挖掘互联网活动的收集并为广大活动爱好者提供活动的详细利用方法。" />
+<title>用户与挖福利的故事-挖故事</title>
+<meta name="keywords" content="用户与挖福利的故事" />
+<meta name="description" content="用户与挖福利的故事。" />
 {%elif type == 'washuju'%}
 <title>公司动态-挖数据</title>
 <meta name="keywords" content="福利，福利资讯，福利最新信息" />
@@ -39,7 +39,19 @@
 
 <div class="search">
     <div>当前位置：<a href="{% url 'index' %}">挖福利</a> > <a href="{% url 'information_list' %}">福利资讯</a> > 
-    <a href="{% url 'information_list' type='wahuodong' %}">挖活动</a></div>
+    <a href="">
+    {%if type == 'wahangqing' %}
+	挖行情
+	{%elif type == 'wagushi'%}
+	挖故事
+	{%elif type == 'washuju'%}
+	挖数据
+	{%elif type == 'wahuodong'%}
+	挖活动
+	{%else%}
+	全部资讯
+	{%endif%}
+	</a></div>
 </div>
 <!-- 内容 -->
 <div class="content-box">
@@ -60,7 +72,7 @@
      <div class="small_box">
       <a href="{% url 'information' id=info.id %}"><img src="{{info.pic.url}}"></a>
       <div class="small_box_children">
-       <a>{{info.get_type_display}}</a>
+       <a href={%url 'information_list' type=info.type %}>{{info.get_type_display}}</a>
        <a href="{% url 'information' id=info.id %}"><h1>{{info.title}}</h1></a>
        <p>{{info.summary}}</p>
       </div>
