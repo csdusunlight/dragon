@@ -76,6 +76,8 @@ class TransListAdmin(admin.ModelAdmin):
     search_fields = ['user__mobile',]
 class CouponAdmin(admin.ModelAdmin):
     list_display = ('project','user', 'exchange_code','is_used',)
+class AdvertisementAdmin(admin.ModelAdmin):
+    list_filter = ('location',)
 admin.site.register(Finance,FinanceAdmin)
 admin.site.register(Company, ComAdmin)
 admin.site.register(Task, TaskAdmin)
@@ -90,7 +92,7 @@ admin.site.register(Press,PressAdmin)
 
 admin.site.register(Coupon, CouponAdmin)
 admin.site.register(Message)
-admin.site.register(Advertisement)
+admin.site.register(Advertisement, AdvertisementAdmin)
 admin.site.register(UserWelfare)
 admin.site.register(Activity, ActivityAdmin)
 admin.site.register(LotteryRecord)

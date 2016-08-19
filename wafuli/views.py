@@ -2,7 +2,8 @@
 from django.shortcuts import render
 from django.http.response import Http404
 from wafuli.models import Welfare, Task, Finance, Commodity, Information, \
-    ExchangeRecord, Press, UserEvent, Advertisement, Activity, Company
+    ExchangeRecord, Press, UserEvent, Advertisement, Activity, Company,\
+    CouponProject, Baoyou, Hongbao
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
@@ -20,9 +21,15 @@ import re
 def index(request):
     ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='1'),is_hidden=False)[0:8]
     announce_list = Press.objects.filter(type='1')[0:5]
-    hongbao_list = Welfare.objects.filter(type='hongbao',is_display=True,state='1')[0:3]
-    baoyou_list = Welfare.objects.filter(type='baoyou',is_display=True,state='1')[0:3]
-    youhuiquan_list = Welfare.objects.filter(type='youhuiquan',is_display=True,state='1')[0:3]
+    hongbao_list = Hongbao.objects.filter(is_display=True,state='1')[0:3]
+    baoyou_list = Baoyou.objects.filter(is_display=True,state='1')[0:3]
+    youhuiquan_list = CouponProject.objects.filter(is_display=True,state='1')[0:3]
+    for wel in youhuiquan_list:
+        wel.draw_count = wel.coupons.filter(user__isnull=False)
+        if wel.ctype == '2':
+            wel.left_count = wel.coupons.filter(user__isnull=True)
+        else:
+            wel.left_count = u"充足"
     task_list = Task.objects.filter(state='1')[0:3]
     finance_list = Finance.objects.filter(state='1')[0:3]
     news_list = Activity.objects.filter(is_hidden=False)[0:2]
@@ -575,12 +582,14 @@ def information(request, type=None, page=None, id=None):
         page_dic['page_list'] = page_list
         hot_info_list = Information.objects.filter(is_display=True).order_by('-view_count')[0:10]
         hot_wel_list = Welfare.objects.order_by('-view_count')[0:10]
+        ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='10'),is_hidden=False)[0:8]
         context = {
             'info_list':info_list,
             'page_dic':page_dic,
             'hot_info_list':hot_info_list,
             'hot_wel_list':hot_wel_list,
             'type':type,
+            'ad_list':ad_list,
         }
         return render(request, 'information.html', context)
     elif id:
