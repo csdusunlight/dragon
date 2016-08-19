@@ -1,6 +1,6 @@
 from django.http.response import Http404
 from django.http import JsonResponse
-from wafuli.models import Welfare, Task, Finance
+from wafuli.models import Welfare, Task, Finance, Information
 # Create your views here.
 import logging
 logger = logging.getLogger('wafuli')
