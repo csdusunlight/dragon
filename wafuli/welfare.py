@@ -7,7 +7,7 @@ Created on 2016年8月1日
 from django.shortcuts import render
 from django.http.response import Http404
 from wafuli.models import Welfare, Advertisement, Press, Hongbao, Baoyou, CouponProject,\
-    Company, Coupon
+    Company, Coupon, Information
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
 from django.db.models import Q
@@ -84,6 +84,7 @@ def welfare(request, id=None, page=None, type=None):
         strategy_list = Press.objects.filter(type='2')[0:10]
         hot_wel_list = Welfare.objects.filter(is_display=True).order_by('-view_count')[0:2]
         business_list = Company.objects.order_by('-view_count')[0:10]
+        hot_info = Information.objects.first()
         context = {
             'wel_list':wel_list,
             'business_list':business_list,
@@ -93,6 +94,7 @@ def welfare(request, id=None, page=None, type=None):
             'ref_dic':ref_dic,
             'hot1':hot_wel_list[0],
             'hot2':hot_wel_list[1],
+            'info':hot_info,
         }
         ranks = RecommendRank.objects.all()[0:6]
         for i in range(len(ranks)):

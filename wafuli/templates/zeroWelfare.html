@@ -63,7 +63,7 @@ $(function(){
 	            </ul>
               <div class="submit">
               	<img src="{%static 'images/submit.png'%}" />
-                <a>提交福利送现金</a>
+                <a href="{%url 'activity_recommend' %}">提交福利送现金</a>
               </div>
               </div>
         </div>
@@ -274,9 +274,9 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
       <img src="{%static 'images/pict_100.png'%}" />
     </div>
     <div class="subject_box">
-        <img src="{%static 'images/picture_104.png'%}"  />
-        <h1>六月，我与挖福利的故事</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar            tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus..</p>
+        <a href="{{info.url}}"><img src="{{info.pic.url}}"  /></a>
+        <a href="{{info.url}}"><h1>{{info.title}}</h1></a>
+        <p>{{info.summary}}</p>
       </div>
   </div>
 </div>
