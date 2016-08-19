@@ -183,7 +183,7 @@ $(function(){
         <li>
           <a target="_blank" href="{{news.url}}" ><img src="{{news.pic.url}}" alt="{{news.title}}" width="258" height="148"/></a>
           <h2><a target="_blank" href="{{news.url}}" >{{news.title}}</a></h2>
-          <p>商品简介：{{news.provider}}<br />市场价：{{news.view_count}}<br />现&nbsp;&nbsp;价：{{news.time_limit}}</p>
+          <p>商品简介：{{news.profile}}<br />市场价：{{news.mprice}}<br />现&nbsp;&nbsp;价：{{news.nprice}}</p>
           <a href="{{news.url}}" class="more" target="_blank">立即抢购</a>
           {% if news.is_new %}
           <div class="newpost zero">新</div>

@@ -25,9 +25,9 @@ def index(request):
     baoyou_list = Baoyou.objects.filter(is_display=True,state='1')[0:3]
     youhuiquan_list = CouponProject.objects.filter(is_display=True,state='1')[0:3]
     for wel in youhuiquan_list:
-        wel.draw_count = wel.coupons.filter(user__isnull=False)
+        wel.draw_count = wel.coupons.filter(user__isnull=False).count()
         if wel.ctype == '2':
-            wel.left_count = wel.coupons.filter(user__isnull=True)
+            wel.left_count = wel.coupons.filter(user__isnull=True).count()
         else:
             wel.left_count = u"充足"
     task_list = Task.objects.filter(state='1')[0:3]
