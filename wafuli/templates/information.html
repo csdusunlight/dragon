@@ -52,21 +52,7 @@ $(function(){
             <li onclick="location='{{adv.url}}'" style="background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li>
           {%endfor%}
           </ul>
-        <div class="index-banner-main">
-              <div class="top">
-                <div class="top_nav"><span>本月提交福利排行榜</span></div>
-            <ul class="top_list">
-                <li><img src="{%static 'images/top-1.png'%}" /> &nbsp;&nbsp; <span>{{rank1.username}}</span>&nbsp;&nbsp;&nbsp;&nbsp; {{rank1.acc_num}}</li>
-                <li><img src="{%static 'images/top-2.png'%}" /> &nbsp;&nbsp; <span>{{rank2.username}}</span>&nbsp;&nbsp;&nbsp;&nbsp; {{rank2.acc_num}}</li>
-                <li><img src="{%static 'images/top-3.png'%}" /> &nbsp;&nbsp; <span>{{rank3.username}}</span>&nbsp;&nbsp;&nbsp;&nbsp; {{rank3.acc_num}}</li>
-                <li><img src="{%static 'images/top-4.png'%}" /> &nbsp;&nbsp; <span>{{rank4.username}}</span>&nbsp;&nbsp;&nbsp;&nbsp; {{rank4.acc_num}}</li>
-              </ul>
-              <div class="submit">
-                <img src="{%static 'images/submit.png'%}" />
-                <a>提交福利送现金</a>
-              </div>
-              </div>
-        </div>
+
     </div>
   </div>
 
