@@ -22,25 +22,25 @@
 function pagecallback(){
   $(".tab-li.new").prepend('&lt;div class="newpost z"&gt;新&lt;/div&gt;');
 }
+var textarray=[];
+function getText(n) {
+	 if (textarray[n-1])
+		 return textarray[n-1];
+	 else
+		 return n;
+}
 $(function(){
-  $('.zero_h a').toggleClass("vo");
-  
-    $('.flexslider').flexslider({
-           directionNav: true,
-           pauseOnAction: false
-    });
-    $(".box_children").mouseover(function(){
-    	$(this).attr("src","images/pict_42.png")
-    });
+	$('.zero_h a').toggleClass("vo");
+	$('.flexslider').flexslider({
+	       directionNav: true,
+	       pauseOnAction: false
+	});
+	$(".box_children").mouseover(function(){
+		$(this).attr("src","images/pict_42.png")
+	});
 });
 
 </script>
-<!--[if IE 6]>
-<script src="js/DD_belatedPNG.js"></script>
-<script>
-    DD_belatedPNG.fix('.ie6Png,.ie6Png img,*');
-</script>
-<![endif]-->
 </head>
 <body>
 {% include "header.html" %}
@@ -50,6 +50,7 @@ $(function(){
           <ul class="slides">
           {% for adv in ad_list %}
             <li onclick="location='{{adv.url}}'" style="background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li>
+            <script>textarray.push("{{adv.navigation}}");</script>
           {%endfor%}
           </ul>
         <div class="index-banner-main">
@@ -63,7 +64,7 @@ $(function(){
 	            </ul>
               <div class="submit">
               	<img src="{%static 'images/submit.png'%}" />
-                <a>提交福利送现金</a>
+                <a href="{%url 'activity_recommend' %}">提交福利送现金</a>
               </div>
               </div>
         </div>
@@ -274,9 +275,9 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
       <img src="{%static 'images/pict_100.png'%}" />
     </div>
     <div class="subject_box">
-        <img src="{%static 'images/picture_104.png'%}"  />
-        <h1>六月，我与挖福利的故事</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar            tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus..</p>
+        <a href="{{info.url}}"><img src="{{info.pic.url}}"  /></a>
+        <a href="{{info.url}}"><h1>{{info.title}}</h1></a>
+        <p>{{info.summary}}</p>
       </div>
   </div>
 </div>

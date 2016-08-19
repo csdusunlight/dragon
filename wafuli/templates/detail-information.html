@@ -8,6 +8,7 @@
 <link href="{% static 'css/style.css'%}" type="text/css" rel="stylesheet">
 <link href="{% static 'css/index.css'%}" type="text/css" rel="stylesheet">
 <link href="{% static 'css/zixun-style.css'%}" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 </head>
 <body>
  {% include "header.html" %}
@@ -21,7 +22,7 @@
 <div class="content">
   <div class="main">
       <h2>{{info.title}}</h2>
-      <h5>发稿时间：{{info.pub_date|date:"Y-m-d H:i"}} 来源：{{info.source}}</h5>
+      <h5>发稿时间：{{info.pub_date|date:"Y-m-d H:i"}} &nbsp;&nbsp; 来源：{{info.source}}</h5>
       <div>{{info.content|safe}}</div>
   </div>
 
@@ -42,4 +43,10 @@
   {% include "footer.html" %}
   <!--浮动窗口-->  
   {% include "outline.html" %}
+<script type="text/javascript">
+	var id = '{{info.id}}'
+	var type = '{{type}}'
+	view_count_url = "{%url 'statistic:update' %}?type=" + type +"&id=" + id;
+	$.get(view_count_url,{r:Math.random()});
+</script>
 </body></html>
