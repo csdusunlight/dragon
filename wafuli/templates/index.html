@@ -141,7 +141,7 @@ $(function(){
 <div class="box_back">
   <div id="index_12">
     <div class="index_13" style="display: block;">
-    	<h2>免费福利</h2><h3>抢到就是赚到</h3><a href="{%url 'welfare' id=1%}" class="more">更多 &gt;</a>
+    	<h2>免费福利</h2><h3>抢到就是赚到</h3><a href="{%url 'welfare_list' %}" class="more">更多 &gt;</a>
         <div class="index_13_nav">
         <a>红包</a>
         <a>9.9包邮</a>
@@ -166,16 +166,6 @@ $(function(){
           {% endif %}
         </li>
 {% endfor %}
-       <img src="{% static 'images/fenge.png' %}" class="LINE" />
-       <img src="{% static 'images/pic_28.png' %}" class="Tag" />
-       <div class="story">
-        <img src="{% static 'images/pic_32.png' %}" />
-        <div class="text">
-        	<h1>六月，我与挖福利的故事</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus..</p>
-        </div>
-        <div class="more"><a>更多精彩>></a></div>
-        </div>
       </ul>
 
       <ul>
@@ -190,16 +180,6 @@ $(function(){
           {% endif %}
         </li>
 {% endfor %}
-       <img src="{% static 'images/fenge.png' %}" class="LINE" />
-       <img src="{% static 'images/pic_28.png' %}" class="Tag" />
-       <div class="story">
-        <img src="{% static 'images/pic_32.png' %}" />
-        <div class="text">
-        	<h1>六月，我与挖福利的故事</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus..</p>
-        </div>
-        <div class="more"><a>更多精彩>></a></div>
-        </div>
       </ul>
 
       <ul>
@@ -214,17 +194,17 @@ $(function(){
           {% endif %}
         </li>
 {% endfor %}
+      </ul>
        <img src="{% static 'images/fenge.png' %}" class="LINE" />
        <img src="{% static 'images/pic_28.png' %}" class="Tag" />
        <div class="story">
-        <img src="{% static 'images/pic_32.png' %}" />
-        <div class="text">
-        	<h1>六月，我与挖福利的故事</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus..</p>
+	        <img src="{% static 'images/pic_32.png' %}" />
+	        <div class="text">
+	        	<h1>六月，我与挖福利的故事</h1>
+	            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus..</p>
+	        </div>
+	        <div class="more"><a href="{% url 'information_list' %}">更多精彩>></a></div>
         </div>
-        <div class="more"><a>更多精彩>></a></div>
-        </div>
-      </ul>
     </div>
 
 
