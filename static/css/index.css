@@ -72,11 +72,13 @@
 .index_11 ul li .rt h2{line-height:42px;font-size:20px;color:#3a3a3a;}
 .index_11 ul li .rt p{margin:0;padding:0;color:#a3a3a3;line-height:25px;font-size:13px;}
 #index_12{width:1100px;height:385px;clear:both;display:inline-block;margin-top:28px;text-align:left;}
-p.youhuiquan {line-height: 22px !important;}
+/*p.youhuiquan {line-height: 22px !important;}*/
+.shichangjia {text-decoration: line-through;}
+.xianjia {color: #ff8b52;font-size: 22px;}
 .index_13{width:238px;height:610px;float:left;display:inline;text-align:left;background:#ff8b52 url(../images/bg-2.png) no-repeat 89px 43px;position:relative;}
 .index_13 h2{line-height:27px;font-size:30px;color:#fff;position:absolute;bottom:86px;left:25px;}
 .index_13 h3{line-height:27px;font-size:15px;color:#fff;position:absolute;bottom:52px;left:55px;}
-.index_13 a.more{line-height:28px;font-size:13px;color:#fff;position:absolute;right:9px;bottom:52px;}
+.index_13 a.more{line-height:28px;font-size:13px;color:#fff;position:absolute;right:4px;bottom:52px;padding: 0;}
 .index_13_nav{ margin-left:170px; margin-top:220px;}
 .index_13_nav a{ font-size:14px; color:#FFF; display:block; width:80px; height:34px; text-align:center; padding-top:10px;}
 .index_13_nav a.active{background:#fff;color:#ff8b52}
@@ -100,7 +102,7 @@ p.youhuiquan {line-height: 22px !important;}
 .index_17{width:238px;height:385px;float:left;display:inline;text-align:left;background:#00d6b3 url(../images/bg-3.png) no-repeat 84px 40px;position:relative;}
 .index_17 h2{line-height:27px;font-size:30px;color:#fff;position:absolute;bottom:86px;left:25px;}
 .index_17 h3{line-height:27px;font-size:15px;color:#fff;position:absolute;bottom:52px;left:55px;}
-.index_17 a.more{line-height:28px;font-size:13px;color:#fff;position:absolute;right:9px;bottom:52px;}
+.index_17 a.more{line-height:28px;font-size:13px;color:#fff;position:absolute;right:4px;bottom:52px;padding: 0;}
 .index_18{width:862px;height:385px;float:left;display:inline;text-align:left; position:relative;}
 .index_18 ul {display:none;position: absolute; float:left; width:100%; height:365px; background:#fff; border-bottom:2px solid #00d6b3; margin-top:10px;}
 .index_18 ul li{width:286px;height:365px;float:left;border-right:1px solid #eee;text-align:center;line-height:27px;font-size:13px;color:#888;position:relative;}
@@ -116,7 +118,7 @@ p.youhuiquan {line-height: 22px !important;}
 .index_21{width:238px;height:445px;float:left;display:inline;text-align:left;background:#52c5ff url(../images/bg-4.png) no-repeat 81px 40px;position:relative;}
 .index_21 h2{line-height:27px;font-size:30px;color:#fff;position:absolute;bottom:86px;left:25px;}
 .index_21 h3{line-height:27px;font-size:15px;color:#fff;position:absolute;bottom:52px;left:55px;}
-.index_21 a.more{line-height:28px;font-size:13px;color:#fff;position:absolute;right:9px;bottom:52px;}
+.index_21 a.more{line-height:28px;font-size:13px;color:#fff;position:absolute;right:4px;bottom:52px;padding: 0;}
 table{border-collapse:collapse;}
 .index_22{width:862px;height:445px;float:left;display:inline;text-align:left; position:relative;}
 .index_22 ul {display:none;position: absolute; float:left; width:100%; height:423px; background:#fff; margin-top:10px; border-bottom:2px solid #0090d8;}

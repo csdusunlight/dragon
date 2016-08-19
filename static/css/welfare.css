@@ -317,7 +317,7 @@ margin-top: 1.5rem;}
 .other_number{ position:absolute;
      font-size:12px;
      color:#000;
-     right:10px;
+     right:4px;
      top:195px;}
 .other_see{ position:absolute;
          right:35px;
@@ -355,8 +355,8 @@ margin-top: 1.5rem;}
          font-size: 12px;
          font-size:12px;
          color:#000;
-         line-height: 1.8;
-         letter-spacing: 1px;
+         line-height: 18px;
+         /*letter-spacing: 1px;*/
          text-align: left;
          text-indent: 26px;
          }
