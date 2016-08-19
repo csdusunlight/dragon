@@ -116,7 +116,13 @@ class BaoyouAdmin(WelfareAdmin):
     def save_model(self, request, obj, form, change):
         if not change:
             obj.type = 'baoyou'
-        super(BaoyouAdmin,self).save_model (request, obj, form, change)
+        obj.change_user = str(request.user)
+        if obj.advert is None:
+            obj.advert = Advertisement.objects.filter(location='7',is_hidden=False).first()
+        super(WelfareAdmin,self).save_model (request, obj, form, change)
+        if not change:
+            obj.url = obj.exp_url
+            obj.save(update_fields=['url',])
 class CouponProjectAdmin(WelfareAdmin):
     def save_model(self, request, obj, form, change):
         if not change:
