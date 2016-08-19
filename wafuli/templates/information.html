@@ -54,7 +54,7 @@ $(function(){
  <div class="left">
    <div class="left_box">
      <div class="left_box_nav">
-       <a href="{% url 'information_list' %}">全部资讯</a>
+       <a class="add" href="{% url 'information_list' %}">全部资讯</a>
        <a href="{% url 'information_list' type='wahangqing' %}">挖行情</a>
        <a href="{% url 'information_list' type='wagushi' %}">挖故事</a>
        <a href="{% url 'information_list' type='washuju' %}">挖数据</a>
@@ -156,7 +156,12 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
 
 
 <script>
-
+  $(function(){
+  $('.left_box_nav a').click(function() {
+    $('.left_box_nav a').removeClass('add');
+    $(this).addClass('add')
+  });
+  });
 </script>
 
 <!--底部-->

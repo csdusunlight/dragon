@@ -11,7 +11,8 @@ a:focus { outline: none; } /*很多网站都会加的属性*/
 .left_box_nav{ border-bottom:solid 1px #e5e5e5; position:relative;overflow: hidden;}
 .left_box_nav .left_box_active{ background-image:url(images/zx_07.jpg);}
 .left_box_nav a{float: left; font-size:18px; color:#000; line-height:46px;display:block;width: 20%;box-sizing: border-box;}
-.left_box_nav a:hover {background: #f08519;color: #fff;}
+/*.left_box_nav a:hover {background: #f08519;color: #fff;}*/
+.left_box_nav .add {background-image: url(../images/zx_07.jpg);background-repeat: no-repeat;background-position: center bottom;}
 .left_box_nav a:not(:last-child) {border-right: 1px solid #dfdfdf;}
 .small_box {height: 200px;overflow: hidden;border-bottom:dotted 1px #e5e5e5;}
 .small_box img{ display:block; float:left; margin-left:35px; margin-top:20px;width:260px;height:160px;}
