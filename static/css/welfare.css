@@ -276,7 +276,7 @@ margin-top: 1.5rem;}
       bottom:-100px;}
 .footer_box{ margin-left:auto; margin-right:auto; position:relative; width:1220px;}
 .other{ float:left; margin-left:40px;}
-.subject{ float:right; width:530px;}
+.subject{ float:left; width:530px; margin-left:20px;}
 .other_top{  margin-top:25px;}
 .other_top div{font-size:18px;
       color:#f08519;
@@ -346,8 +346,9 @@ margin-top: 1.5rem;}
 }
 .subject_box h1{ font-size:18px;
          color:#000;
-         margin-bottom: 20px;
-         }
+         margin-bottom: 10px;
+         margin-top: 13px;
+}
 .subject_box p{
          height:140px;
          font-size: 12px;
