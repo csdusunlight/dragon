@@ -235,7 +235,8 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
     <a href="{%url 'welfare_list'%}?business={{busi.name}}"><img src="{{busi.logo.url}}" /></a>
    {%endfor%}
   </div>
-  <img src="{%static 'images/pict_94.png'%}" class="more_bg" /><a href="{%url 'business_list'%}" class="more">MORE>></a>
+  <a href="{%url 'business_list'%}"><img src="{%static 'images/pict_94.png'%}" class="more_bg" /></a>
+  <a href="{%url 'business_list'%}" class="more">MORE>></a>
   </div>
 </div>
 

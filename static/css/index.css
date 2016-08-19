@@ -20,7 +20,7 @@
 .slides li{height:350px;}
 
 .flex-control-nav{position:absolute;bottom:0px;z-index:100;width:100%;text-align:center; left:0px;background:rgba(0,0,0,0.24)}
-.flex-control-nav li{width:100px;height:38px; display:inline-block; margin-left:90px;}
+.flex-control-nav li{width:100px;height:38px; display:inline-block; margin-left:45px; margin-right:45px;}
 .flex-control-nav a{width:128px;;line-height:40px;cursor:pointer;font-size:14px; color:#FFF;display:block}
 .flex-control-nav .flex-active{background: url(../images/btn-3.png) no-repeat; height:38px;}
 
