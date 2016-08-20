@@ -198,9 +198,9 @@ $(function(){
        <img src="{% static 'images/fenge.png' %}" class="LINE" />
        <img src="{% static 'images/pic_28.png' %}" class="Tag" />
        <div class="story">
-	        <img src="{{info.pic.url}}" />
+	        <a href="{{info.url}}"><img src="{{info.pic.url}}" /></a>
 	        <div class="text">
-	        	<h1>{{info.title}}</h1>
+	        	<a href="{{info.url}}"><h1>{{info.title}}</h1></a>
 	            <p>{{info.summary}}</p>
 	        </div>
 	        <div class="more"><a href="{% url 'information_list' %}">更多精彩>></a></div>

@@ -42,10 +42,10 @@
 .nav a{line-height:40px;float:left;padding-left:55px;padding-right:55px;font-size:14px; color:#FFF}
 
 .story {position: absolute;bottom: -220px;}
-.story img{ float:left; margin-left:25px; margin-top:12px; width:260px; height:160px;}
+.story img{margin-left:25px; margin-top:12px; width:260px; height:160px;}
 .text{ width:650px;float:left; margin-left:1px; margin-top:-145px;}
 .text h1{ padding-left:310px; padding-top:1px; font-size:18px; line-height:1px;}
-.text p{margin-top:22px; width:500px; padding-left:310px; font-size:14px; line-height:27px; height:100px; text-indent:2em;}
+.text p{width:500px; padding-left:310px; font-size:14px; line-height:27px; height:135px; text-indent:1.5em;overflow:hidden;}
 .more{float:right}
 .more a{color:#f08519;font-size:14px; }
 .LINE{ width:865px; margin-top:20px;}

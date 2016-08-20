@@ -150,6 +150,9 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
       &nbsp;&nbsp;&nbsp;&nbsp;
       <a href="{{ref_dic.ref_path2}}" {% if ref_dic.state == '2' %} class="active" {%endif%}>已经结束的免费福利</a>
    </div>
+  {%if not wel_list %}
+   <div class="box content-box">抱歉，您要找的福利不存在，或者已经结束了。</div>
+  {%else%}
   <div class="box">
     <ul>
        {%for wel in wel_list%}
@@ -181,7 +184,7 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
 
      </ul>
   </div>
-
+{%endif%}
    {% if wel_list.paginator.num_pages >= 2 %}
   <div class="item_con_pager">
             <div class="pager_container">

@@ -119,7 +119,7 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(os.path.dirname(__file__), '..', 'media').replace('\\','/')
-# STATIC_ROOT = os.path.join(os.path.dirname(__file__), '..', 'static').replace('\\','/')  
+# STATIC_ROOT = os.path.join(os.path.dirname(__file__), '..', 'static').replace('\\','/')
 MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'account.MyUser'
 LOGIN_URL = 'login'
