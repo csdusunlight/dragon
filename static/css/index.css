@@ -48,8 +48,8 @@
 .text p{width:500px; padding-left:310px; font-size:14px; line-height:27px; height:135px; text-indent:1.5em;overflow:hidden;}
 .more{float:right}
 .more a{color:#f08519;font-size:14px; }
-.LINE{ width:865px; margin-top:20px;}
-.Tag{ margin-top:8px;}
+.LINE{ width:865px; margin-top:20px;position: absolute;top: 350px;}
+.Tag{ margin-top:8px;position: absolute;top: 372px;}
 .index_29{width:182px;height:47px;clear:both;margin-left:0px;margin-top:100px;display:inline-block;text-align:left;}
 .index_29 a{display:block;widht:100%;height:100%;text-align:center;line-height:47px;background: url(../images/bg-11.png) no-repeat;color:#fff;font-size:20px;font-weight:bold;}
 .index_30{width:224px;height:42px;clear:both;margin-left:auto;margin-right:auto;display:inline-block;text-align:center;line-height:68px;font-size:14px;color:#fff;}
