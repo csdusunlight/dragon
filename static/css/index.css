@@ -44,7 +44,7 @@
 .story {position: absolute;bottom: -220px;}
 .story img{margin-left:25px; margin-top:12px; width:260px; height:160px;}
 .text{ width:650px;float:left; margin-left:1px; margin-top:-155px;}
-.text h1{ padding-left:310px; padding-top:1px; font-size:18px; line-height:1px;}
+.text h1{width: 100%; padding-left:310px; padding-top:1px; font-size:18px; line-height:1px;}
 .text h1:hover{color:#f08519;text-decoration:underline;}
 .text h1:before{content:"";width:10px;height:10px;background-color:#c71e1e;display:inline-block;margin-right:6px}
 .text p{width:500px; padding-left:310px; font-size:14px; line-height:27px; height:135px; text-indent:1.5em;overflow:hidden;}
