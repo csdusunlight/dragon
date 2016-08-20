@@ -98,7 +98,7 @@
 .index_15 ul li{width:258px;height:319px;float:left;position:relative;padding-left:22px;text-align:center;}
 .index_15 ul li.s{padding:0;}
 .index_15 ul li h2{line-height:46px;font-size:20px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
-.index_15 ul li h2+div{position:absolute;background-color:#efefef;z-index:1000;display:none !important;padding:0 10px 0;font-size:12px;}
+.index_15 ul li h2+div{position:absolute;background-color:rgba(0,0,0,0.5);color:#f0f0f0;z-index:1000;display:none !important;padding:0 10px 0;font-size:12px;top: 124px;}
 .index_15 ul li h2:hover+div{display:block !important;}
 .index_15 ul li h2+div:hover{display:block !important;}
 .index_15 ul li h2 a{color:#3a3a3a;}
