@@ -3,7 +3,30 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>一个提供免费福利的网络理财平台，挖福利。</title>
+{%if type == 'wahangqing' %}
+<title>行业资讯-各行业最新资讯-挖福利行业资讯频道</title>
+<meta name="keywords" content="行业资讯，财富人物，理财行情，干货分享" />
+<meta name="description" content="挖行情提供包括行业经济行情，行业经济产业动态，行业经济行业新闻，行业经济商业信息，
+行业经济商业资讯，行业经济行业资讯，行业经济最新资讯，行业经济行业前景等投资项目资讯。" />
+{%elif type == 'wagushi'%}
+<title>用户与挖福利的故事-挖故事</title>
+<meta name="keywords" content="用户与挖福利的故事" />
+<meta name="description" content="用户与挖福利的故事。" />
+{%elif type == 'washuju'%}
+<title>公司动态-挖数据</title>
+<meta name="keywords" content="福利，福利资讯，福利最新信息" />
+<meta name="description" content="挖福利资讯，挖福利资讯24小时提供免费福利资讯、理财资讯、
+金融行业资讯、理财科普，福利聚焦，福利资讯刷不停，大参考、第一解读、谈兵论战提供大智慧和犀利观点。" />
+{%elif type == 'wahuodong'%}
+<title>活动资讯，免费有奖活动</title>
+<meta name="keywords" content="活动网，微信活动，QQ活动，试用活动，微博活动，领集分宝，有奖活动，团购活动，优惠券，免费活动，有奖一起赚" />
+<meta name="description" content="挖活动提供国内免费有奖活动分享-提供活动线报，网友互助，赚客心经，大家一起做活动赚钱省钱。" />
+{%else%}
+<title>福利资讯-挖福利</title>
+<meta name="keywords" content="福利，福利资讯，福利最新信息" />
+<meta name="description" content="挖福利资讯，挖福利资讯24小时提供免费福利资讯、理财资讯、
+金融行业资讯、理财科普，福利聚焦，福利资讯刷不停，大参考、第一解读、谈兵论战提供大智慧和犀利观点。" />
+{%endif%}
 <meta name="keywords" content="免费福利，理财红包，理财活动，购物红包，体验红包" />
 <meta name="description" content="挖福利免费为您提供互联网优惠券和免费福利领取活动信息！" />
 <link href="{% static 'images/favicon.ico'%}" rel="shortcut icon"/>
@@ -19,6 +42,7 @@
 
 <script type="text/javascript">
 var textarray=[];
+var type = "{{type}}";
 function getText(n) {
 	 if (textarray[n-1])
 		 return textarray[n-1];
@@ -30,6 +54,12 @@ $(function(){
            directionNav: true,
            pauseOnAction: false
     });
+    if (type!=="None"){
+    	$('.left_box_nav .'+type).toggleClass("add");
+    }
+    else {
+    	$('.left_box_nav .all').toggleClass("add");
+    }
 });
 
 </script>
@@ -54,11 +84,11 @@ $(function(){
  <div class="left">
    <div class="left_box">
      <div class="left_box_nav">
-       <a class="add" href="{% url 'information_list' %}">全部资讯</a>
-       <a href="{% url 'information_list' type='wahangqing' %}">挖行情</a>
-       <a href="{% url 'information_list' type='wagushi' %}">挖故事</a>
-       <a href="{% url 'information_list' type='washuju' %}">挖数据</a>
-       <a href="{% url 'information_list' type='wahuodong' %}">挖活动</a>
+       <a class="all" href="{% url 'information_list' %}">全部资讯</a>
+       <a class="wahangqing" href="{% url 'information_list' type='wahangqing' %}">挖行情</a>
+       <a class="wagushi" href="{% url 'information_list' type='wagushi' %}">挖故事</a>
+       <a class="washuju" href="{% url 'information_list' type='washuju' %}">挖数据</a>
+       <a class="wahuodong" href="{% url 'information_list' type='wahuodong' %}">挖活动</a>
      </div>
  <div class="partition">
  </div>
@@ -107,9 +137,9 @@ $(function(){
      <div class="right-top-nav">本周热点</div>
     {%for info in hot_info_list%}
       {%if forloop.counter < 4%}
-     <p><span class="circle1">{{forloop.counter}}</span><a><span class="text1">{{info.title}}</span></a></p>
+     <p><span class="circle1">{{forloop.counter}}</span><a href="{{info.url}}"><span class="text1">{{info.title}}</span></a></p>
       {%else%}
-      <p><span class="circle2">{{forloop.counter}}</span><a><span class="text2">{{info.title}}</span></a></p>
+      <p><span class="circle2">{{forloop.counter}}</span><a href="{{info.url}}"><span class="text2">{{info.title}}</span></a></p>
       {%endif%}
   {%endfor%}
    </div>
@@ -117,9 +147,9 @@ $(function(){
       <div class="right-top-nav">福利活动</div>
     {%for wel in hot_wel_list%}
       {%if forloop.counter < 4%}
-     <p><span class="circle1">{{forloop.counter}}</span><a><span class="text1">{{wel.title}}</span></a></p>
+     <p><span class="circle1">{{forloop.counter}}</span><a href="{{wel.url}}"><span class="text1">{{wel.title}}</span></a></p>
       {%else%}
-      <p><span class="circle2">{{forloop.counter}}</span><a><span class="text2">{{wel.title}}</span></a></p>
+      <p><span class="circle2">{{forloop.counter}}</span><a href="{{wel.url}}"><span class="text2">{{wel.title}}</span></a></p>
       {%endif%}
   {%endfor%}
    </div>

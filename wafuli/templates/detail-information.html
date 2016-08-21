@@ -30,9 +30,9 @@
       <h2>大家都在看</h2>
       {%for info in hot_info_list%}
       <div class="box">
-        <img src="{{info.pic.url}}" alt="{{info.title}}">
+        <a href="{{info.url}}"><img src="{{info.pic.url}}" alt="{{info.title}}"></a>
         <div>
-            <h3>{{info.title}}</h3>
+            <a href="{{info.url}}"><h3>{{info.title}}</h3></a>
             <p>来源：{{info.source}}</p>
         </div>
       </div>

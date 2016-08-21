@@ -122,7 +122,7 @@ class BaoyouAdmin(WelfareAdmin):
         if obj.advert is None:
             obj.advert = Advertisement.objects.filter(location='7',is_hidden=False).first()
         super(WelfareAdmin,self).save_model (request, obj, form, change)
-        if not change:
+        if obj.url != obj.exp_url:
             obj.url = obj.exp_url
             obj.save(update_fields=['url',])
 class CouponProjectAdmin(WelfareAdmin):

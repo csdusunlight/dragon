@@ -119,7 +119,6 @@ class Hongbao(Welfare):
         verbose_name = u"红包"
         verbose_name_plural = u"红包"
 class Baoyou(Welfare):
-    profile = models.CharField(u"商品简介", max_length=10)
     mprice = models.CharField(u"市场价", max_length=10)
     nprice = models.CharField(u"现价", max_length=10)
     isonMobile = models.BooleanField(u'是否为移动端活动', default= False)
