@@ -159,6 +159,7 @@ $(function(){
         <li>
           <a target="_blank" href="{{news.url}}" ><img src="{{news.pic.url}}" alt="{{news.title}}" width="258" height="148"/></a>
           <h2><a target="_blank" href="{{news.url}}" >{{news.title}}</a></h2>
+          <div>{{news.title}}</div>
           <p>商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 家：{{news.provider}}<br />浏 览 数 ：{{news.view_count}}<br />活动时间：{{news.time_limit}}</p>
           <a href="{{news.url}}" class="more" target="_blank">立即查看</a>
           {% if news.is_new %}
@@ -173,6 +174,7 @@ $(function(){
         <li>
           <a target="_blank" href="{{news.url}}" ><img src="{{news.pic.url}}" alt="{{news.title}}" width="258" height="148"/></a>
           <h2><a target="_blank" href="{{news.url}}" >{{news.title}}</a></h2>
+          <div>{{news.title}}</div>
           <p>商品简介：{{news.profile}}<br />市场价：<span class="shichangjia">{{news.mprice}}</span><br />现&nbsp;&nbsp;价：<span class="xianjia">{{news.nprice}}</span></p>
           <a href="{{news.url}}" class="more" target="_blank">立即抢购</a>
           {% if news.is_new %}
@@ -187,6 +189,7 @@ $(function(){
         <li>
           <a target="_blank" href="{{news.url}}" ><img src="{{news.pic.url}}" alt="{{news.title}}" width="258" height="148"/></a>
           <h2><a target="_blank" href="{{news.url}}" >{{news.title}}</a></h2>
+          <div>{{news.title}}</div>
           <p>商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 家：{{news.provider}}<br />剩余张数 ：{{news.left_count}}<br />活动时间：{{news.time_limit}}</p>
           <a href="{{news.url}}" class="more" target="_blank">立即领取</a>
           {% if news.is_new %}
