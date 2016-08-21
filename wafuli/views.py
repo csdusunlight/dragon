@@ -1,8 +1,9 @@
 #coding:utf-8
 from django.shortcuts import render
 from django.http.response import Http404
-from wafuli.models import ZeroPrice, Task, Finance, Commodity,\
-    ExchangeRecord, Press, UserEvent, Advertisement, Activity
+from wafuli.models import Welfare, Task, Finance, Commodity, Information, \
+    ExchangeRecord, Press, UserEvent, Advertisement, Activity, Company,\
+    CouponProject, Baoyou, Hongbao
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
@@ -14,22 +15,36 @@ from wafuli_admin.models import DayStatis, GlobalStatis, RecommendRank
 from account.models import MyUser
 from django.contrib.contenttypes.models import ContentType
 logger = logging.getLogger('wafuli')
+from .tools import listing
+import re
 
 def index(request):
     ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='1'),is_hidden=False)[0:8]
     announce_list = Press.objects.filter(type='1')[0:5]
-    zero_list = ZeroPrice.objects.filter(state='1')[0:3]
+    hongbao_list = Hongbao.objects.filter(is_display=True,state='1')[0:3]
+    baoyou_list = Baoyou.objects.filter(is_display=True,state='1')[0:3]
+    youhuiquan_list = CouponProject.objects.filter(is_display=True,state='1')[0:3]
+    for wel in youhuiquan_list:
+        wel.draw_count = wel.coupons.filter(user__isnull=False).count()
+        if wel.ctype == '2':
+            wel.left_count = wel.coupons.filter(user__isnull=True).count()
+        else:
+            wel.left_count = u"充足"
     task_list = Task.objects.filter(state='1')[0:3]
     finance_list = Finance.objects.filter(state='1')[0:3]
     news_list = Activity.objects.filter(is_hidden=False)[0:2]
     exchange_list = ExchangeRecord.objects.all()[0:10]
     strategy_list = Press.objects.filter(type='2')[0:6]
+    info = Information.objects.filter(is_display=True).first()
     context = {'ad_list':ad_list, 
-               'zero_list': zero_list, 
+               'hongbao_list': hongbao_list,
+               'baoyou_list': baoyou_list, 
+               'youhuiquan_list': youhuiquan_list, 
                'task_list': task_list, 'announce_list':announce_list,
                'finance_list': finance_list,
                'news_list': news_list,'exchange_list': exchange_list,
                'strategy_list': strategy_list,
+               'info': info,
     }
     try:
         statis = DayStatis.objects.get(date=date.today())
@@ -62,7 +77,6 @@ def finance(request, id=None):
                 username = username + '****'
             income = rank_users[i].accu_income
             context.update({key:{'username':username,'income':str(income)}})
-            print context
         return render(request, 'finance.html',context)
     else:
         id = int(id)
@@ -70,7 +84,7 @@ def finance(request, id=None):
             news = Finance.objects.get(id=id)
         except Finance.DoesNotExist:
             raise Http404(u"该页面不存在")
-        return render(request, 'detail-wel.html',{'news':news,'type':'Finance'})
+        return render(request, 'detail-taskandfinance.html',{'news':news,'type':'Finance'})
         
 def task(request, id=None):
     if id is None:
@@ -96,7 +110,7 @@ def task(request, id=None):
             news = Task.objects.get(id=id)
         except Task.DoesNotExist:
             raise Http404(u"该页面不存在")
-        return render(request, 'detail-wel.html',{'news':news,'type':'Task'})
+        return render(request, 'detail-taskandfinance.html',{'news':news,'type':'Task'})
 def commodity(request, id):
     id = int(id)
     try:
@@ -111,34 +125,12 @@ def press(request, id):
     except Press.DoesNotExist:
         raise Http404(u"该页面不存在")
     return render(request, 'detail-press.html',{'press':press})
-def welfare(request, id=None):
-    if id is None:
-        ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='2'),is_hidden=False)[0:8]
-        strategy_list = Press.objects.filter(type='2')[0:10]
-        context = {'ad_list':ad_list,'strategy_list':strategy_list}
-        ranks = RecommendRank.objects.all()[0:6]
-        for i in range(len(ranks)):
-            key = 'rank'+str(i+1)
-            username = ranks[i].user.username
-            if len(username) > 4:
-                username = username[0:4] + '****'
-            else:
-                username = username + '****'
-            acc_num = ranks[i].acc_num
-            context.update({key:{'username':username,'acc_num':str(acc_num)+u'条'}})
-        return render(request, 'zeroWelfare.html', context)
-    else:
-        id = int(id)
-        try:
-            news = ZeroPrice.objects.get(id=id)
-        except ZeroPrice.DoesNotExist:
-            raise Http404(u"该页面不存在")
-        return render(request, 'detail-wel.html',{'news':news,'type':'ZeroPrice'})
+
 def aboutus(request):
     ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='6'),is_hidden=False).first
     return render(request, 'aboutus.html',{'ad_list':ad_list})
 
-def experience(request):
+def experience_taskandfinance(request):
     if not request.is_ajax():
         logger.warning("Experience refused no-ajax request!!!")
         raise Http404
@@ -177,6 +169,7 @@ def expsubmit(request):
     news_type = request.POST.get('type', None)
     is_futou = request.POST.get('is_futou', '0')
     telnum = request.POST.get('telnum', None)
+    telnum = str(telnum).strip()
     remark = request.POST.get('remark', '')
     if not (news_id and news_type and telnum):
         logger.error("news_id or news_type is missing!!!")
@@ -274,7 +267,7 @@ def lookup_order(request):
     except ExchangeRecord.DoesNotExist: 
         result['code'] = 1
     except Exception as e:
-        print e
+        logger.error(e.reason)
     else:
         result['name'] = record.name
         result['tel'] = record.tel
@@ -423,7 +416,7 @@ def get_wel_page(request):
         size = 6
     if not page or size <= 0:
         raise Http404
-    item_list = ZeroPrice.objects.all()
+    item_list = Welfare.objects.all()
     filter = str(filter)
     state = str(state)
     if filter != '0':
@@ -499,3 +492,113 @@ def freshman_introduction(request):
     return render(request, "freshman_introduction.html")
 def freshman_award(request):
     return render(request, "freshman_award.html")
+
+def business(request, page=None):
+    if not page:
+        page = 1
+    else:
+        page = int(page)
+    hot_business_list = Company.objects.order_by('-view_count')[0:8]
+    business_list = Company.objects.all()
+    search_key = request.GET.get('key', '')
+    if search_key:
+        business_list = business_list.filter(name__contains=search_key)
+    business_list, page_num = listing(business_list, 36, page)
+    full_path = str(request.get_full_path())
+    path_split = []
+    if 'list-page' in full_path:
+        path_split = re.split('list-page\d+',full_path)
+    elif '?' in full_path:
+        path_split = full_path.split('?')
+        path_split[1] = '?' + path_split[1]
+    else:
+        path_split=[full_path, '']
+    page_dic = {}
+    page_dic['pre_path'] = path_split[0]
+    page_dic['suf_path'] = path_split[1]
+    page_list = []
+    if page_num < 10:
+        page_list = range(1,page_num+1)
+    else:
+        if page < 6:
+            page_list = range(1,8) + ["...",page_num]
+        elif page > page_num - 5:
+            page_list = [1,'...'] + range(page_num-6, page_num+1)
+        else:
+            page_list = [1,'...'] + range(page-2, page+3) + ['...',page_num]
+    page_dic['page_list'] = page_list
+    hot_wel_list = Welfare.objects.filter(is_display=True).order_by('-view_count')[0:8]
+    content = {
+        'page_dic':page_dic,
+        'hot_business_list':hot_business_list,
+        'business_list':business_list,
+        'hot_wel_list':hot_wel_list,
+    }
+    return render(request, "business.html", content)
+
+def information(request, type=None, page=None, id=None):
+    if not id:
+        if not page:
+            page = 1
+        else:
+            page = int(page)
+        full_path = str(request.get_full_path())
+        path_split = []
+        if 'list-page' in full_path:
+            path_split = re.split('list-page\d+',full_path)
+        elif '?' in full_path:
+            path_split = full_path.split('?')
+            path_split[1] = '?' + path_split[1]
+        else:
+            path_split=[full_path, '']
+        page_dic = {}
+        ref_dic = {}
+        page_dic['pre_path'] = path_split[0]
+        page_dic['suf_path'] = path_split[1]
+        info_list = Information.objects.filter(is_display=True)
+        state = request.GET.get('state', '1')
+        full_path_ = re.sub(r'/list-page\d+&?', '', full_path, 1)
+        ref_path1 = re.sub(r'state=\d+&?', '', full_path_, 1)
+        ref_path2, num = re.subn(r'state=\d+', 'state=2', full_path_)
+        if num == 0:
+            if '?' in ref_path2:
+                ref_path2 += '&state=2'
+            else:
+                ref_path2 += '?state=2'
+        if ref_path1[-1] == '?' or ref_path1[-1] == '&':
+            ref_path1 = ref_path1[:-1]
+        ref_dic = {'state':state, 'ref_path1':ref_path1, 'ref_path2':ref_path2,}
+        if type:
+            type = str(type)
+            info_list = info_list.filter(type=type)
+        info_list, page_num = listing(info_list, 6, int(page))
+        if page_num < 10:
+            page_list = range(1,page_num+1)
+        else:
+            if page < 6:
+                page_list = range(1,8) + ["...",page_num]
+            elif page > page_num - 5:
+                page_list = [1,'...'] + range(page_num-6, page_num+1)
+            else:
+                page_list = [1,'...'] + range(page-2, page+3) + ['...',page_num]
+        page_dic['page_list'] = page_list
+        hot_info_list = Information.objects.filter(is_display=True).order_by('-view_count')[0:10]
+        hot_wel_list = Welfare.objects.order_by('-view_count')[0:10]
+        ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='10'),is_hidden=False)[0:8]
+        context = {
+            'info_list':info_list,
+            'page_dic':page_dic,
+            'hot_info_list':hot_info_list,
+            'hot_wel_list':hot_wel_list,
+            'type':type,
+            'ad_list':ad_list,
+        }
+        return render(request, 'information.html', context)
+    elif id:
+        id = int(id)
+        try:
+            info = Information.objects.get(id=id)
+        except Information.DoesNotExist:
+            raise Http404(u"该页面不存在")
+        hot_info_list = Information.objects.filter(is_display=True).order_by('-view_count')[0:6]
+        return render(request, 'detail-information.html',{'info':info, 'hot_info_list':hot_info_list, 'type':'Information'})

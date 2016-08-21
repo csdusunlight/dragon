@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>{% block title %}挖福利{% endblock title %}</title>
-<link rel="shortcut icon" href="/static/images/favicon.ico" />
+<link href="{% static 'images/favicon.ico'%}" rel="shortcut icon"/>
 <link rel="stylesheet" type="text/css" href="{% static 'wafuli_admin/css/index.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'wafuli_admin/css/style-i.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/page.css' %}" />
@@ -46,6 +46,8 @@
                         	<li class="home6"><a href="{%url 'admin_recommend_return'%}">推荐管理</a></li>
                         	<li class="home7"><a href="#">优惠券管理</a></li>
                         	<li class="home8"><a href="#">操作日志</a></li>
+                        	<li class="home9"><a href="{%url 'deliver_coupon'%}">优惠券发放</a></li>
+                        	<li class="home10"><a href="{%url 'admin_coupon'%}">优惠券审核</a></li>
                         </ul>
                     </div>
                 </td>

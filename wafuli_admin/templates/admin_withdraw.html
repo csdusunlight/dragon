@@ -14,11 +14,11 @@ var data = '<table width="100%"><tr><th>用户名</th><th>手机号</th><th>账�
 	'</a> │ <a class="jion-s" onclick="refuse({id})">拒绝</a></td><td>{remark}</td></tr>[/data]</table>';
 var data2 = '<table width="100%"><tr><th>用户名</th><th>手机号</th><th>账户余额</th><th>支付宝姓名</th>'+
 	'<th>支付宝帐户</th><th>申请提现金额</th><th>申请时间</th><th>处理状态</th>'+
-	'<th>处理人</th><th>处理时间</th><th>处理</th><th>备注</th>'+
+	'<th>处理人</th><th>处理时间</th><th>备注</th>'+
 	'</tr>[data]<tr><td>{username}</td><td>{mobile}</td><td>{balance}</td>'+
 	'<td>{zhifubao_name}</td><td>{zhifubao}</td><td>{amount}</td><td>{time}</td>'+
 	'<td>{state}</td><td>{admin}</td><td>{time_admin}</td>'+
-	'<td>不可操作</td><td>{remark}</td></tr>[/data]</table>';
+	'<td>{remark}</td></tr>[/data]</table>';
 var url = "{% url 'get_admin_with_page' %}" + "?page={page}&size={pageSize}";
 var selected_id = 0;
 function pass(id){

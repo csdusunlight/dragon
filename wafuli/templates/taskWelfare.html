@@ -6,7 +6,7 @@
 <title>体验福利，互联网产品体验返现。</title>
 <meta name="keywords" content="体验福利，e贝宝返现，借贷宝返现，小诺理财返现，唐小僧返现，理财返现，前海航交所返现，爱房筹返现" />
 <meta name="description" content="挖福利为您提供互联网金融产品返现的优质活动信息！让你体验不一样的金融理财。" />
-<link rel="shortcut icon" href="/static/images/favicon.ico" />
+<link href="{% static 'images/favicon.ico'%}" rel="shortcut icon"/>
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/welfare.css' %}" />
@@ -34,6 +34,14 @@ var url = "{% url 'get_task_page' %}" + "?page={page}&size={pageSize}&";
 function pagecallback(){
 	$(".tab-li.new").prepend('<div class="newpost t">新</div>');
 }
+var textarray=[];
+function getText(n) {
+	 if (textarray[n-1])
+		 return textarray[n-1];
+	 else
+		 return n;
+}
+
 $(function(){
    	$('.task_h a').toggleClass("vo");
 	$("#pagedata1").ajaxPage({
@@ -87,12 +95,7 @@ $(function(){
 
 });
 </script>
-<!--[if IE 6]>
-<script src="js/DD_belatedPNG.js"></script>
-<script>
-    DD_belatedPNG.fix('.ie6Png,.ie6Png img,*');
-</script>
-<![endif]-->
+
 </head>
 <body>
 {% include "header.html" %}
@@ -102,6 +105,7 @@ $(function(){
       <ul class="slides">
 	  {% for adv in ad_list %}
         <li onclick="location='{{adv.url}}'" style="background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li>
+        <script>textarray.push("{{adv.navigation}}");</script>
       {%endfor%}
       </ul>
 

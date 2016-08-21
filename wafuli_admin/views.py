@@ -1,7 +1,7 @@
 #coding:utf-8
 from django.shortcuts import render, redirect
 from wafuli.models import UserEvent, AdminEvent, AuditLog, TransList, Company,\
-    Finance, Task, ZeroPrice
+    Finance, Task, Welfare
 import datetime
 from django.db.models import Sum, Count
 from django.core.urlresolvers import reverse
@@ -14,6 +14,8 @@ from account.models import MyUser
 from django.db.models import Q
 from wafuli_admin.models import DayStatis
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth import logout as auth_logout
 # Create your views here.
 logger = logging.getLogger('wafuli')
 def index(request):
@@ -113,6 +115,8 @@ def get_admin_index_page(request):
              "ret_num":con.ret_num,
              "coupon_amount":con.coupon_amount,
              "exchange_scores":con.exchange_scores,
+             "lottery_people":con.lottery_people,
+             "lottery_num":con.lottery_num,
              }
         data.append(i)
     if data:
@@ -130,17 +134,16 @@ def admin_return(request):
         return render(request,"admin_return.html")
     if request.method == "POST":
         res = {}
-        if not admin_user.has_admin_perms('002'):
-            res['code'] = -5
-            res['res_msg'] = u'您没有操作权限！'
-            return JsonResponse(res)
         if not request.is_ajax():
             raise Http404
         if not ( admin_user.is_authenticated() and admin_user.is_staff):
             res['code'] = -1
             res['url'] = reverse('admin:login') + "?next=" + reverse('admin_return')
             return JsonResponse(res)
-         
+        if not admin_user.has_admin_perms('002'):
+            res['code'] = -5
+            res['res_msg'] = u'您没有操作权限！'
+            return JsonResponse(res) 
         event_id = request.POST.get('id', None)
         cash = request.POST.get('cash', None)
         score = request.POST.get('score', None)
@@ -272,6 +275,12 @@ def get_admin_return_page(request):
     adminname = request.GET.get("adminname", None)
     if adminname:
         item_list = item_list.filter(audited_logs__user__username=adminname)
+    if projecttype=='1':
+        task_type = ContentType.objects.get_for_model(Task)
+        item_list = item_list.filter(content_type = task_type.id)
+    if projecttype=='2':
+        task_type = ContentType.objects.get_for_model(Finance)
+        item_list = item_list.filter(content_type = task_type.id)
     item_list = item_list.filter(event_type='1', audit_state=state).select_related('user').order_by('time')
     
     paginator = Paginator(item_list, size)
@@ -286,10 +295,6 @@ def get_admin_return_page(request):
     data = []
     for con in contacts:
         project = con.content_object
-        if projecttype=='2' and not isinstance(project, Finance):
-            continue
-        elif projecttype=='1' and not isinstance(project, Task):
-            continue
         i = {"username":con.user.username,
              "mobile":con.user.mobile,
              "type":con.content_object.get_type(),
@@ -417,6 +422,7 @@ def admin_user(request):
         elif type == 3:
             obj_user.is_active = False
             obj_user.save(update_fields=['is_active'])
+            auth_logout(request)
             admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=obj_user, event_type='6', remark=u"加黑")
             res['code'] = 0
         elif type == 4:
@@ -667,7 +673,6 @@ def get_admin_with_page(request):
     data = []
     for con in contacts:
         obj_user = con.user
-        print con.user.mobile + con.time.strftime("%Y-%m-%d %H:%M")
         i = {"username":obj_user.username,
              "mobile":obj_user.mobile,
              "balance":obj_user.balance,

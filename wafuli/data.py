@@ -68,6 +68,12 @@ ZERO_TYPE = (
     ('4', u'话费'),
     ('5', u'其他'),
 )
+WELFARE_TYPE = (
+    ('hongbao', u'红包'),
+    ('baoyou', u'9.9包邮'),
+    ('youhuiquan', u'优惠券'),
+    ('qita', u'其他'),
+)
 NEWS_TYPE = (
     ('1', u'公告'),
     ('2', u'福利攻略'),
@@ -86,6 +92,7 @@ ADLOCATION = (
     ('7', u'默认内容页'),
     ('8', u'福利推荐活动'),
     ('9', u'积分抽奖活动'),
+    ('10', u'资讯列表页'),
 )
 USER_EVENT_TYPE = (
     ('1', u'福利审核'),
@@ -112,7 +119,6 @@ COUPON_TYPE = (
     ('0', u'现金券'),
     ('1', u'加息券'),
     ('2', u'使用券'),
-    ('3', u'其他'),
 )
 AwardTable = {
     1:'Nothing',
@@ -122,3 +128,9 @@ AwardTable = {
     5:u'2元现金',
     6:'iphone',
 }
+INFORMATION_TYPE = (
+    ('wahangqing', u'挖行情'),
+    ('wagushi', u'挖故事'),
+    ('washuju', u'挖数据'),
+    ('wahuodong', u'挖活动'),
+)

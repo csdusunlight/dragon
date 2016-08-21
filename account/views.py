@@ -87,12 +87,6 @@ def login(request, template_name='registration/login.html',
 import logging
 logger = logging.getLogger('wafuli')
 def register(request):
-    if request.method == 'GET':
-        hashkey = CaptchaStore.generate_key()
-        codimg_url = captcha_image_url(hashkey)
-        icode = request.GET.get('icode','')
-        return render(request,'registration/register.html',
-                  {'hashkey':hashkey, 'codimg_url':codimg_url, 'icode':icode})
     if request.method == 'POST':
         if not request.is_ajax():
             raise Http404
@@ -139,15 +133,14 @@ def register(request):
             else:
                 logger.debug('Registering Award money is failed to pay!!!')
         except Exception,e:
-            print e
-            logger.error('Creating User is failed!!!')
+            logger.error(e)
             result['code'] = '4'
             result['res_msg'] = u'创建用户失败！'
         else:
             result['code'] = '0'
-            # 邀请人奖励20积分
+            # 邀请人奖励10积分
             if inviter:
-                invite_award_scores = 20
+                invite_award_scores = 10
                 inviter.invite_scores += invite_award_scores
                 translist = charge_score(inviter, '0', invite_award_scores, u"邀请奖励")
                 if translist:
@@ -164,14 +157,15 @@ def register(request):
             except:
                 pass
         return JsonResponse(result)
-
+    else:
+        hashkey = CaptchaStore.generate_key()
+        codimg_url = captcha_image_url(hashkey)
+        icode = request.GET.get('icode','')
+        return render(request,'registration/register.html',
+                  {'hashkey':hashkey, 'codimg_url':codimg_url, 'icode':icode})
 @login_required
 def get_nums(request):
-    coupon_num = 0
-    coupons = Coupon.objects.filter(user=request.user, is_used=False,)
-    for coupon in coupons:
-        if not coupon.is_expired():
-            coupon_num += 1
+    coupon_num = Coupon.objects.filter(user=request.user, is_used=False).count()
     message_num = Message.objects.filter(user=request.user, is_read=False).count()
     result = {'coupon_num':coupon_num,'message_num':message_num,}
     return JsonResponse(result)
@@ -342,8 +336,8 @@ def signin(request):
             UserSignIn.objects.create(user=request.user, date=date.today(), signed_conse_days=signed_conse_days)
             charge_score(request.user, '0', 5, u"签到奖励")
             if signed_conse_days%7 == 0:
-                ret = charge_score(request.user, '0', 20, u"连续签到7天奖励")
-        result['code'] = 0
+                charge_score(request.user, '0', 20, u"连续签到7天奖励")
+            result['code'] = 0
     return JsonResponse(result)
 
 @login_required
@@ -354,11 +348,9 @@ def welfare(request):
     ftype = ContentType.objects.get_for_model(Finance)
     tcount_u = UserEvent.objects.filter(user=request.user.id, content_type = ttype.id).count()
     fcount_u = UserEvent.objects.filter(user=request.user.id, content_type = ftype.id).count()
-    tsum = Task.objects.aggregate(tsum=Sum('view_count'))
-    fsum = Finance.objects.aggregate(fsum=Sum('view_count'))
-    statis = {'tcount':tcount,'fcount':fcount,'tcount_u':tcount_u,'fcount_u':fcount_u}
-    statis.update(tsum)
-    statis.update(fsum)
+    tsum = UserEvent.objects.filter(time__gte=date.today(), content_type = ttype.id).count()
+    fsum = UserEvent.objects.filter(time__gte=date.today(), content_type = ftype.id).count()
+    statis = {'tcount':tcount,'fcount':fcount,'tcount_u':tcount_u,'fcount_u':fcount_u,'tsum':tsum,'fsum':fsum}
     return render(request, 'account/welfare.html', {'statis':statis})
 
 
@@ -723,9 +715,9 @@ def coupon(request):
     user = request.user
     coupons = user.user_coupons.filter(is_used=False)
     dict = {
-        'cash_num' : coupons.filter(type='0').count(),
-        'interest_num' : coupons.filter(type='1').count(),
-        'exc_num' : coupons.filter(type='2').count()     
+        'cash_num' : coupons.filter(project__ctype='0').count(),
+        'interest_num' : coupons.filter(project__ctype='1').count(),
+        'exc_num' : coupons.filter(project__ctype='2').count()
     }
     return render(request, 'account/account_coupon.html', {'dict':dict})
 def get_user_coupon_page(request):
@@ -743,7 +735,7 @@ def get_user_coupon_page(request):
         size = 2
     if not page or not filter or size <= 0:
         raise Http404
-    item_list = Coupon.objects.filter(user=request.user,type=str(filter),is_used=False)
+    item_list = Coupon.objects.filter(user=request.user,project__ctype=str(filter),is_used=False).select_related('project')
     paginator = Paginator(item_list, size)
     try:
         contacts = paginator.page(page)
@@ -754,12 +746,13 @@ def get_user_coupon_page(request):
     # If page is out of range (e.g. 9999), deliver last page of results.
         contacts = paginator.page(paginator.num_pages)
     data = []
-    for con in contacts:        
-        i = {"title":con.project.title,
-             "amount":con.amount,
-             "introduction":con.introduction,
-             "url":con.url,
-             'endtime':con.project.endtime,
+    for con in contacts:  
+        project = con.project
+        i = {"title":project.title,
+             "amount":project.amount,
+             "introduction":project.introduction,
+             "url":project.exp_url,
+             'endtime':project.endtime,
              'id':con.id,
              'code':con.exchange_code
         }
@@ -798,12 +791,12 @@ def get_user_coupon_exchange_detail(request):
     for con in contacts:
         coupon = con.content_object
         i = {"title":coupon.project.title,
-             "amount":coupon.amount,
+             "amount":coupon.project.amount,
              "account":con.invest_account,
              "state":con.get_audit_state_display(),
              'remark':con.remark,
              'time':con.time.strftime("%Y-%m-%d %H:%M:%S"),
-             'type':coupon.get_type_display()
+             'type':coupon.project.get_ctype_display()
         }
         data.append(i)
     if data:

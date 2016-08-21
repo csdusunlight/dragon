@@ -1,4 +1,4 @@
-﻿{% load staticfiles %}
+{% load staticfiles %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -6,205 +6,290 @@
 <title>一个提供免费福利的网络理财平台，挖福利。</title>
 <meta name="keywords" content="免费福利，理财红包，理财活动，购物红包，体验红包" />
 <meta name="description" content="挖福利免费为您提供互联网优惠券和免费福利领取活动信息！" />
-<link rel="shortcut icon" href="/static/images/favicon.ico" />
+<link href="{% static 'images/favicon.ico'%}" rel="shortcut icon"/>
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/welfare.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'css/page.css' %}" />
 
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/jquery.flexslider-min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/jQuery.infiniteCarousel.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/MSClass.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/page.js' %}"></script>
+
 <script type="text/javascript">
-var data='[data]<li class="tab-li {is_new}">'+
-	'<a target="_blank" href="{url}"><img src="{pic}" alt="" width="238" height="148"/></a>'+
-	'<h2><a target="_blank" href="{url}"  class="tli-title">{title}</a></h2>'+
-	'<p class="line-k">商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 家：{provider}<br />浏 览 数 ：{view}<br />'+
-	'活动时间：{time}</p><a target="_blank" href="{url}" class="mores">立即查看</a></li>[/data]';
-var data2='[data]<li class="tab-li">'+
-	'<a target="_blank" href="{url}"><img src="{pic}" alt="" width="238" height="148"/></a>'+
-	'<h2><a target="_blank" href="{url}"  class="tli-title">{title}</a></h2>'+
-	'<p class="line-k">商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 家：{provider}<br />浏 览 数 ：{view}<br />'+
-	'活动时间：{time}</p><a target="_blank" href="{url}" class="ends">立即查看</a></li>[/data]';
-var url = "{% url 'get_wel_page' %}" + "?page={page}&size={pageSize}&";
+
 function pagecallback(){
-	$(".tab-li.new").prepend('<div class="newpost z">新</div>');
+  $(".tab-li.new").prepend('&lt;div class="newpost z"&gt;新&lt;/div&gt;');
+}
+var textarray=[];
+function getText(n) {
+	 if (textarray[n-1])
+		 return textarray[n-1];
+	 else
+		 return n;
 }
 $(function(){
-   	$('.zero_h a').toggleClass("vo");
-	$("#pagedata1").ajaxPage({
-	    url:url+"state=1&filter=0",
-	    pageId:$("#page1"),
-	    pageSize:6,
-	    run:true,
-	    content:data,
-	    complete:pagecallback,
+	$('.zero_h a').toggleClass("vo");
+	$('.flexslider').flexslider({
+	       directionNav: true,
+	       pauseOnAction: false
 	});
-	$("#pagedata2").ajaxPage({
-	    url:url+"state=2&filter=0",
-	    pageId:$("#page2"),
-	    pageSize:6,
-	    run:true,
-	    content:data2,
+	$(".box_children").mouseover(function(){
+		$(this).attr("src","images/pict_42.png")
 	});
- 	$("#tab li").click(function(){
-		if($(this).attr("class")!="cur"){
-			$(this).toggleClass("cur").siblings().removeClass("cur")
-			var index = $(this).index();
-			$("#page1").empty();
-			$("#pagedata1").ajaxPage({
-			    url:url+"state=1&filter="+index, 
-			    pageId:$("#page1"),
-			    pageSize:6,
-			    run:true,
-			    content:data,
-			    complete:pagecallback,
-			});
-		}
- 	});
- 	$("#tabg li").click(function(){
-		if($(this).attr("class")!="curs"){
-			$(this).toggleClass("curs").siblings().removeClass("curs")
-			var index = $(this).index();
-			$("#page2").empty();
-			$("#pagedata2").ajaxPage({
-			    url:url+"state=2&filter="+index, 
-			    pageId:$("#page2"),
-			    pageSize:6,
-			    run:true,
-			    content:data2,
-			});
-		}
- 	});
-    $('.flexslider').flexslider({
-           directionNav: true,
-           pauseOnAction: false
-    });
-
 });
+
 </script>
-<!--[if IE 6]>
-<script src="js/DD_belatedPNG.js"></script>
-<script>
-    DD_belatedPNG.fix('.ie6Png,.ie6Png img,*');
-</script>
-<![endif]-->
 </head>
 <body>
 {% include "header.html" %}
 <div id="content">
    <div id="index-banner">
     <div class="flexslider">
-      <ul class="slides">
-	  {% for adv in ad_list %}
-        <li onclick="location='{{adv.url}}'" style="background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li>
-      {%endfor%}
-      </ul>
+          <ul class="slides">
+          {% for adv in ad_list %}
+            <li onclick="location='{{adv.url}}'" style="background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li>
+            <script>textarray.push("{{adv.navigation}}");</script>
+          {%endfor%}
+          </ul>
+        <div class="index-banner-main">
+              <div class="top">
+              	<div class="top_nav"><span>本月提交福利排行榜</span></div>
+		        <ul class="top_list">
+	            	<li><img src="{%static 'images/top-1.png'%}" /> &nbsp;&nbsp; <span>{{rank1.username}}</span>&nbsp;&nbsp;&nbsp;&nbsp; {{rank1.acc_num}}</li>
+	            	<li><img src="{%static 'images/top-2.png'%}" /> &nbsp;&nbsp; <span>{{rank2.username}}</span>&nbsp;&nbsp;&nbsp;&nbsp; {{rank2.acc_num}}</li>
+	            	<li><img src="{%static 'images/top-3.png'%}" /> &nbsp;&nbsp; <span>{{rank3.username}}</span>&nbsp;&nbsp;&nbsp;&nbsp; {{rank3.acc_num}}</li>
+	            	<li><img src="{%static 'images/top-4.png'%}" /> &nbsp;&nbsp; <span>{{rank4.username}}</span>&nbsp;&nbsp;&nbsp;&nbsp; {{rank4.acc_num}}</li>
+	            </ul>
+              <div class="submit">
+              	<img src="{%static 'images/submit.png'%}" />
+                <a href="{%url 'activity_recommend' %}">提交福利送现金</a>
+              </div>
+              </div>
+        </div>
     </div>
   </div>
-    <div class="cont-box">
-	<div class="cont">
-    <span class="we-one"><b>0元福利体验步骤</b>:</span>
-    <span><img src="{% static 'images/number.png' %}" class="ew-img"/><span class="ew">1</span></span><span><a href="#" class="ew-dian">点击查看操作流程</a><img src="{% static 'images/jiantou.png' %}" class="ew-jt" style="margin-left: 12rem;"/></span>
-    <span style="margin-left: 18rem;"><img src="{% static 'images/number.png' %}" class="ew-img"/><span class="ew">2</span></span><span><a href="#" class="ew-dian">阅读操作步骤</a><img src="{% static 'images/jiantou.png' %}" class="ew-jt" style="margin-left: 10rem;"/></span>
-     <span style="margin-left: 15.5rem;"><img src="{% static 'images/number.png' %}" class="ew-img"/><span class="ew">3</span></span><span><a href="#" class="ew-dian">进入商家领取福利</a></span>
-    </div>
-    </div>
-    
-    <div class="conte">
-    	<div class="ew-left">
-        	<!-- 代码 begin -->
-            
-                <div id="tab">
-                <span class="rep-one"> <img src="{% static 'images/shape.png' %}"/>正在进行的免费福利</span>
-                  <div class="tabList" style="float:right;">
-                    
-                    <ul>
-                        <li class="cur">全部</li>
-                        <li>购物</li>
-                        <li>体验金</li>
-                        <li>流量</li>
-                        <li>话费</li>
-                        <li>其他</li>
-                    </ul>
-                  </div>
-                  <div class="tabCon">
-                    <div class="cur">
-                    	<ul id="pagedata1">
+<div class="wel_nav">
+  <ul class="nav_children">
+    <li>
+        <a class="nav_1" href="{%url 'welfare_list' %}">
+			<img id="img1" src="{%static 'images/nav-1.png'%}" />
+			<p>全部</p>
+        </a>
+  </li>
+    <li>
+	    <a class="nav_2" href="{%url 'welfare_list' type='hb' %}">
+	        <img src="{%static 'images/nav-2.png'%}" />
+	        <p>红包</p>
+	    </a>
+    </li>
+    <li>
+		<a class="nav_3" href="{%url 'welfare_list' type='yhq' %}">
+			<img src="{%static 'images/nav-3.png'%}" />
+		    <p>优惠券</p>
+		</a>
+    </li>
+    <li>
+	    <a class="nav_4" href="{%url 'welfare_list' type='by' %}">
+	    	<img src="{%static 'images/nav-4.png'%}" />
+	    	<p>9.9包邮</p>
+    	</a>
+    </li>
+ </ul>
+</div>
 
-                      </ul>
-                    </div>
-                  </div>
-            </div>
-            <div class="changes-p">
-				<div class="page"  id="page1">
-				</div>
-            </div>
-            
-            <!-- 代码 begin -->
-            
-                <div id="tabg" style="margin-top:2rem">
-                <span class="rep-one"> <img src="{% static 'images/shape.png' %}"/>已经结束的免费福利</span>
-                  <div class="tabList" style="float:right;">
-                    
-                    <ul>
-                        <li class="curs">全部</li>
-                        <li>购物</li>
-                        <li>体验金</li>
-                        <li>流量</li>
-                        <li>话费</li>
-                        <li>其他</li>
-                    </ul>
-                  </div>
-                  <div class="tabCon">
-                    <div class="curs">
-                    	<ul id="pagedata2">
-                        
-                      </ul>
-                    </div>
-                    <div>购物</div>
-                    <div>体验金</div>
-                    <div>流量</div>
-                    <div>话费</div>
-                    <div>其他</div>
-                  </div>
-            </div>
-            <div class="changes-p">
-            	<div class="page"  id="page2">
-            	</div>
-            </div>
+<script>
+$(".nav_1").mouseover(function(){
+$(this).children().attr("src","{%static 'images/pic_14.png'%}");
+});
+$(".nav_1").mouseleave(function(){
+$(this).children().attr("src","{%static 'images/nav-1.png'%}");
+});
+$(".nav_2").mouseover(function(){
+$(this).children().attr("src","{%static 'images/pic_08.png'%}");
+});
+$(".nav_2").mouseleave(function(){
+$(this).children().attr("src","{%static 'images/nav-2.png'%}");
+
+});
+$(".nav_3").mouseover(function(){
+$(this).children().attr("src","{%static 'images/pic_03.png'%}");
+});
+$(".nav_3").mouseleave(function(){
+$(this).children().attr("src","{%static 'images/nav-3.png'%}");
+});
+$(".nav_4").mouseover(function(){
+$(this).children().attr("src","{%static 'images/pic_05.png'%}");
+});
+$(".nav_4").mouseleave(function(){
+$(this).children().attr("src","{%static 'images/nav-4.png'%}");
+});
+</script>
+
+
+<div class="search">
+  <form action="{%url 'welfare_list'%}" method="get">
+    <input name="key" type="text">
+    <input type="submit" value="搜&nbsp;&nbsp;索">
+    <!-- <img src="images/search.png"> -->
+  </form>
+</div>
+
+<div class="walfare">
+  <div class="walfare_top">
+    <div class="walfare_top_1"></div>
+    <div class="walfare_font">
+         <h1>福利大全</h1>
+         <a>WELFARE</a>
+        	<img src="{%static 'images/pict_38.png'%}" />
+    <div class="walfare_top_2"></div>
+  </div>
+   <div class="middle">
+      <a href="{{ref_dic.ref_path1}}" {% if ref_dic.state == '1' %} class="active" {%endif%}>正在进行的免费福利</a>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="{{ref_dic.ref_path2}}" {% if ref_dic.state == '2' %} class="active" {%endif%}>已经结束的免费福利</a>
+   </div>
+  {%if not wel_list %}
+   <div class="box content-box">抱歉，您要找的福利不存在，或者已经结束了。</div>
+  {%else%}
+  <div class="box">
+    <ul>
+       {%for wel in wel_list%}
+      <li>
+        <div class="box_children">
+        <div class="box_pic">
+          <a href="{{wel.url}}"><img src="{{wel.pic.url}}"></a>
+          <div class="box_pic_bg">
+          	<p style="color:#FFF; font-size:10px;">
+          	<a href="{{wel.url}}" style="color:#FF0">
+          {%if wel.type == 'youhuiquan'%}
+            	点击领取
+          {%else%}
+          		点击体验
+          {%endif%}
+          	</a></p>
+          </div>
         </div>
-	       	<div class="ew-right">
-	       	<div class="rightimg"><a href="{%url 'activity_recommend'%}"><img src="{%static 'images/img4.jpg'%}" /></a></div>
-			<div class="ew-more">
-		    	<div class="er-h2"><span>本月提交福利排行榜</span></div>
-		        <ul class="toplist">
-	            	<li><font>第一名</font> &nbsp;&nbsp; <span>{{rank1.username}}</span>&nbsp;&nbsp;&nbsp;&nbsp; {{rank1.acc_num}}</li>
-	            	<li><font>第二名</font> &nbsp;&nbsp; <span>{{rank2.username}}</span>&nbsp;&nbsp;&nbsp;&nbsp; {{rank2.acc_num}}</li>
-	            	<li><font>第三名</font> &nbsp;&nbsp; <span>{{rank3.username}}</span>&nbsp;&nbsp;&nbsp;&nbsp; {{rank3.acc_num}}</li>
-	            	<li>第四名 &nbsp;&nbsp; <span>{{rank4.username}}</span>&nbsp;&nbsp;&nbsp;&nbsp; {{rank4.acc_num}}</li>
-	            	<li>第五名 &nbsp;&nbsp; <span>{{rank5.username}}</span>&nbsp;&nbsp;&nbsp;&nbsp; {{rank5.acc_num}}</li>
-	            	<li>第六名 &nbsp;&nbsp; <span>{{rank6.username}}</span>&nbsp;&nbsp;&nbsp;&nbsp; {{rank6.acc_num}}</li>
-	            </ul>
-		    </div>
-			<div class="ew-more s">
-		    	<div class="er-h2"><span>福利攻略</span><span><a href="{% url 'aboutus'%}#cont=strategy" class="er-hr">MORE</a></span></div>
-		        <ul>
-		        {% for news in strategy_list %}
-		        	<li class="er-li"><a href="{{news.url}}">{{news.title}}</a></li>
-		        {% endfor %}
-		        </ul>
-		    </div>
-		</div>
+        <a href="{{wel.url}}" class="box_name">{{wel.title}}</a>
+        <div class="box_line"></div>
+        <div>
+        <a class="classes">{{wel.get_type_display}}</a>
+        <img src="{%static 'images/pict_60.png'%}" class="see" />
+        <span class="number">{{wel.view_count}}</span>
         </div>
+      </div>
+      </li>
+      {%endfor%}
+
+     </ul>
+  </div>
+{%endif%}
+   {% if wel_list.paginator.num_pages >= 2 %}
+  <div class="item_con_pager">
+            <div class="pager_container">
+            {% if wel_list.number != 1 %}
+				<a href="{{page_dic.pre_path}}list-page{{wel_list.previous_page_number}}{{page_dic.suf_path}}" class="page_no" >上一页</a>
+			{% else %}
+				<a class="page_no pager_prev_disabled">上一页</a>
+			{% endif %}
+			{% for i in page_dic.page_list %}
+				{% if i == "..." %}
+					...
+				{% elif i == wel_list.number %}
+					<a class="page_no pager_is_current">{{i}}</a>
+				{% else %}
+					<a href="{{page_dic.pre_path}}list-page{{i}}{{page_dic.suf_path}}" class="page_no">{{i}}</a>
+				{% endif  %}
+			{% endfor %}
+			{% if wel_list.number != wel_list.paginator.num_pages %}
+				<a href="{{page_dic.pre_path}}list-page{{wel_list.next_page_number}}{{page_dic.suf_path}}" class="page_no" >下一页</a>
+			{% else %}
+				<a class="page_no pager_prev_disabled">下一页</a>
+			{% endif %}
+
+             </div>
+        </div>
+  {%endif%}
+  </div>
+
+ </div>
+<script>
+
+</script>
+<div class="Business">
+  <div class="Business_children">
+      <div class="Business_top">
+        <div class="Business_top_1"></div>
+        <div class="Business_font">
+             <h1>商家大全</h1>
+             <a>MARCHANT</a>
+             <img src="{%static 'images/pict_38.png'%}" />
+        </div>
+        <div class="Business_top_2"></div>
+      </div>
+  <div class="Business_box">
+  {%for busi in business_list|slice:":5" %}
+    <a href="{%url 'welfare_list'%}?business={{busi.name}}"><img src="{{busi.logo.url}}" /></a>
+   {%endfor%}
+  </div>
+  <div class="Business_box">
+  {%for busi in business_list|slice:"5:10" %}
+    <a href="{%url 'welfare_list'%}?business={{busi.name}}"><img src="{{busi.logo.url}}" /></a>
+   {%endfor%}
+  </div>
+  <a href="{%url 'business_list'%}"><img src="{%static 'images/pict_94.png'%}" class="more_bg" /></a>
+  <a href="{%url 'business_list'%}" class="more">MORE>></a>
+  </div>
+</div>
+
+<div class="footer_box">
+  <div class="other">
+    <div class="other_top">
+      <div>你可能感兴趣的福利</div>
+      <img src="{%static 'images/pict_98.png'%}" />
     </div>
+    <div class="other_box">
+       <div class="other_1">
+                <div class="other_pic"><a href="{{hot1.url}}"><img src="{{hot1.pic.url}}" /></a></div>
+                <a href="{{hot1.url}}" class="other_name">{{hot1.title}}</a>
+                <div class="other_line"></div>
+                <div>
+                <a class="other_classes">{{hot1.get_type_display}}</a>
+                <img src="{%static 'images/pict_60.png'%}" class="other_see" />
+                <span class="other_number">{{hot1.view_count}}</span>
+                </div>
+        </div>
+        <div class="other_2">
+                <div class="other_pic"><a href="{{hot2.url}}"><img src="{{hot2.pic.url}}" /></a></div>
+                <a href="{{hot2.url}}" class="other_name">{{hot2.title}}</a>
+                <div class="other_line"></div>
+                <div>
+                <a class="other_classes">{{hot2.get_type_display}}</a>
+                <img src="{%static 'images/pict_60.png'%}" class="other_see" />
+                <span class="other_number">{{hot2.view_count}}</span>
+                </div>
+         </div>
+    </div>
+  </div>
+
+  <div class="subject">
+    <div class="subject_top">
+      <div>专题栏目</div>
+      <img src="{%static 'images/pict_100.png'%}" />
+    </div>
+    <div class="subject_box">
+        <a href="{{info.url}}"><img src="{{info.pic.url}}"  /></a>
+        <a href="{{info.url}}"><h1>{{info.title}}</h1></a>
+        <p>{{info.summary}}</p>
+      </div>
+  </div>
+</div>
+
 <div style="clear:both"></div>
 <!--底部-->
   {% include "footer.html" %}
-  <!--浮动窗口-->  
+  <!--浮动窗口-->
   {% include "outline.html" %}
-
 </body>
 </html>

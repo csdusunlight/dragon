@@ -1,6 +1,6 @@
 from django.http.response import Http404
 from django.http import JsonResponse
-from wafuli.models import ZeroPrice, Task, Finance
+from wafuli.models import Welfare, Task, Finance, Information
 # Create your views here.
 import logging
 logger = logging.getLogger('wafuli')
@@ -16,6 +16,10 @@ def update(request):
             news = model.objects.get(id=news_id)
             news.view_count += 1
             news.save(update_fields=['view_count',])
+            company = news.company
+            if company:
+                company.view_count += 1
+                company.save(update_fields=['view_count',])
             result['code'] = 0
         except Exception as e:
             logger.error(e)

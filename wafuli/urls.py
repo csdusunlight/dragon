@@ -20,8 +20,8 @@ urlpatterns = [
     url(r'^finance/(?P<id>[0-9]*)/$', 'wafuli.views.finance', name='finance_detail'),
     url(r'^task/$', 'wafuli.views.task', name='task'),
     url(r'^task/(?P<id>[0-9]*)/$', 'wafuli.views.task', name='task_detail'),
-    url(r'^welfare/$', 'wafuli.views.welfare', name='welfare'),
-    url(r'^welfare/(?P<id>[0-9]*)/$', 'wafuli.views.welfare', name='welfare_detail'),
+    url(r'^welfare/(?:(?P<id>[0-9]*)/)?$', 'wafuli.welfare.welfare', name='welfare'),
+    url(r'^welfare/(?:(?P<type>hb|yhq|by)/)?(?:list-page(?P<page>[0-9]*)/)?$', 'wafuli.welfare.welfare', name='welfare_list'),
     url(r'^mall/$', 'wafuli.views.mall', name='mall'),
     url(r'^commodity/(?P<id>[0-9]*)/$', 'wafuli.views.commodity', name='commodity_detail'),
     url(r'^press/(?P<id>[0-9]*)/$', 'wafuli.views.press', name='press_detail'),
@@ -30,9 +30,11 @@ urlpatterns = [
     url(r'^taskpage/$', 'wafuli.views.get_task_page', name='get_task_page'),
     url(r'^welpage/$', 'wafuli.views.get_wel_page', name='get_wel_page'),
     url(r'^presspage/$', 'wafuli.views.get_press_page', name='get_press_page'),
-    url(r'^aboutus/', 'wafuli.views.aboutus', name="aboutus"),
-    url(r'^exp/', 'wafuli.views.experience', name='exp'),
-    url(r'^expsubmit/', 'wafuli.views.expsubmit', name='expsubmit'),
+    url(r'^aboutus/$', 'wafuli.views.aboutus', name="aboutus"),
+    url(r'^exp_tf/$', 'wafuli.views.experience_taskandfinance', name='exp_tf'),
+    url(r'^exp_wel_common/$', 'wafuli.welfare.exp_welfare_common', name='exp_welfare_common'),
+    url(r'^exp_wel_youhuiquan/$', 'wafuli.welfare.exp_welfare_youhuiquan', name='exp_welfare_youhuiquan'),
+    url(r'^expsubmit/$', 'wafuli.views.expsubmit', name='expsubmit'),
     url(r'^lookup_order/$', 'wafuli.views.lookup_order', name='lookup_order'),
     url(r'^submit_order/$', 'wafuli.views.submit_order', name='submit_order'),
     
@@ -45,4 +47,8 @@ urlpatterns = [
     
     url(r'^activity/lottery/$', 'wafuli.activity.lottery', name='activity_lottery'),
     url(r'^activity/lottery/get_lottery/$', 'wafuli.activity.get_lottery', name='get_lottery'),
+    
+    url(r'^business/(?:list-page(?P<page>[0-9]*)/)?$', 'wafuli.views.business', name='business_list'),
+    url(r'^information/(?:(?P<id>[0-9]*)/)?$', 'wafuli.views.information', name='information'),
+    url(r'^information/(?:(?P<type>wahangqing|wagushi|washuju|wahuodong)/)?(?:list-page(?P<page>[0-9]*)/)?$', 'wafuli.views.information', name='information_list'),
 ]
