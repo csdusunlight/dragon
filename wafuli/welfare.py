@@ -82,7 +82,7 @@ def welfare(request, id=None, page=None, type=None):
         page_dic['page_list'] = page_list
         ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='2'),is_hidden=False)[0:8]
         strategy_list = Press.objects.filter(type='2')[0:10]
-        hot_wel_list = Welfare.objects.filter(is_display=True).order_by('-view_count')[0:2]
+        hot_wel_list = Welfare.objects.filter(is_display=True, state='1').order_by('-view_count')[0:2]
         business_list = Company.objects.order_by('-view_count')[0:10]
         hot_info = Information.objects.filter(is_display=True).order_by('-view_count').first()
         context = {
@@ -113,6 +113,7 @@ def welfare(request, id=None, page=None, type=None):
             wel = Welfare.objects.get(id=id)
         except Welfare.DoesNotExist:
             raise Http404(u"该页面不存在")
+        other_wel_list = Welfare.objects.filter(is_display=True, state='1').order_by('-view_count')[0:10]
         template = 'detail-common.html'
         if wel.type == "youhuiquan":
             template = 'detail-youhuiquan.html'
@@ -121,7 +122,7 @@ def welfare(request, id=None, page=None, type=None):
             wel = wel.hongbao
         elif wel.type == "baoyou":
             wel = wel.baoyou
-        return render(request, template,{'news':wel,'type':'Welfare'})
+        return render(request, template,{'news':wel,'type':'Welfare', 'other_wel_list':other_wel_list})
     
 def exp_welfare_common(request):
     if not request.is_ajax():

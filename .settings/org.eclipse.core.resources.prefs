@@ -9,7 +9,6 @@ encoding//DjangoUeditor/widgets.py=utf-8
 encoding//account/models.py=utf-8
 encoding//account/templates/account/email_template.html=UTF-8
 encoding//account/templates/account/left.html=UTF-8
-encoding//account/templates/left.html=UTF-8
 encoding//account/tools.py=utf-8
 encoding//account/varify.py=utf-8
 encoding//account/views.py=utf-8

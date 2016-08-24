@@ -84,7 +84,8 @@ def finance(request, id=None):
             news = Finance.objects.get(id=id)
         except Finance.DoesNotExist:
             raise Http404(u"该页面不存在")
-        return render(request, 'detail-taskandfinance.html',{'news':news,'type':'Finance'})
+        other_wel_list = Finance.objects.filter(state='1').order_by('-view_count')[0:10]
+        return render(request, 'detail-taskandfinance.html',{'news':news,'type':'Finance','other_wel_list':other_wel_list})
         
 def task(request, id=None):
     if id is None:
@@ -110,7 +111,8 @@ def task(request, id=None):
             news = Task.objects.get(id=id)
         except Task.DoesNotExist:
             raise Http404(u"该页面不存在")
-        return render(request, 'detail-taskandfinance.html',{'news':news,'type':'Task'})
+        other_wel_list = Task.objects.filter(state='1').order_by('-view_count')[0:10]
+        return render(request, 'detail-taskandfinance.html',{'news':news,'type':'Task','other_wel_list':other_wel_list})
 def commodity(request, id):
     id = int(id)
     try:
@@ -527,7 +529,7 @@ def business(request, page=None):
         else:
             page_list = [1,'...'] + range(page-2, page+3) + ['...',page_num]
     page_dic['page_list'] = page_list
-    hot_wel_list = Welfare.objects.filter(is_display=True).order_by('-view_count')[0:8]
+    hot_wel_list = Welfare.objects.filter(is_display=True, state='1').order_by('-view_count')[0:8]
     content = {
         'page_dic':page_dic,
         'hot_business_list':hot_business_list,

@@ -42,14 +42,9 @@
   </div>
   <div class="td-msgs others">
       <div class="msg-ti"><span class="mag-pp">其他福利</span></div>
-      <a href="#" class="hy-p">领50元微信理财通红包</a>
-      <a href="#" class="hy-p">天天基金四周年10元红包</a>
-      <a href="#" class="hy-p">5-10元电影代金券</a>
-      <a href="#" class="hy-p">领取1月到20年爱奇艺会员</a>
-      <a href="#" class="hy-p">领取1.88-2.88理财通红包</a>
-      <a href="#" class="hy-p">100%领取支付宝1元红包</a>
-      <a href="#" class="hy-p">美团外卖抵用红包</a>
-      <a href="#" class="hy-p">点击领取2.36元理财通红包</a>
+      {%for wel in other_wel_list%}
+      <a href="{{wel.url}}" class="hy-p">{{wel.title}}</a>
+      {%endfor%}
 
   </div>
   <div class="td-msgs">
