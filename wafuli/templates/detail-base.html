@@ -7,12 +7,12 @@
 <meta name="keywords" content="{{news.seo_keywords}}" />
 <meta name="description" content="{{news.seo_description}}" />
 <link href="{% static 'images/favicon.ico'%}" rel="shortcut icon"/>
-<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />  
+<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
 <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/default.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/component.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'css/welfare.css' %}" />   
+<link rel="stylesheet" type="text/css" href="{% static 'css/welfare.css' %}" />
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
 <script type="text/javascript">
@@ -25,7 +25,7 @@
 	view_count_url = "{%url 'statistic:update' %}?type=" + type +"&id=" + id;
 </script>
 	{% block jsblock %}
-	
+
 	{% endblock %}
 </head>
 <body>
@@ -33,12 +33,23 @@
 <div id="content">
   <div><a href="{{news.advert.url}}"><img src="{{news.advert.pic.url}}"  class="co-imgp"/></a></div>
 	{% block expblock %}
-	
+	<p>当前位置：<span><a href="#">挖福利</a> > <a href="#">免费福利</a> > <a href="#">正在进行的福利</a></span></p>
 	{% endblock %}
   <div class="td-msgs">
   	<div class="msg-ti"><img src="{% static 'images/task-04.png' %}" class="ms-pd"/><span class="mag-pp">体验步骤</span></div>
     <div class="detail-html">{{news.strategy|safe}}</div>
-    
+
+  </div>
+  <div class="td-msgs others">
+      <a href="#" class="hy-p">领50元微信理财通红包</a>
+      <a href="#" class="hy-p">天天基金四周年10元红包</a>
+      <a href="#" class="hy-p">5-10元电影代金券</a>
+      <a href="#" class="hy-p">领取1月到20年爱奇艺会员</a>
+      <a href="#" class="hy-p">领取1.88-2.88理财通红包</a>
+      <a href="#" class="hy-p">100%领取支付宝1元红包</a>
+      <a href="#" class="hy-p">美团外卖抵用红包</a>
+      <a href="#" class="hy-p">点击领取2.36元理财通红包</a>
+
   </div>
   <div class="td-msgs">
   	<div class="msg-ti"><img src="{% static 'images/task-05.png' %}" class="ms-pd"/><span class="mag-pp">温馨提示</span></div>
@@ -46,7 +57,7 @@
     	<p class="hy-p">2、投资有风险，入市需谨慎；挖福利尽最大可能的提供最优质的理财渠道、筛选有诚信的合作平台，但是挖福利不对合作平台提供任何的风险担保；</p>
     	<p class="hy-p">3、挖福利对福利数据的审核具有最终解释权。</p>
         <p class="hy-p">如有疑问请联系<span><a href="#" style="color:#F08618;">在线客服</a></span>或拨打 <span style="color:#F08618;">服务热线：0734-8344414</span></p>
-    
+
   </div>
 </div>
 
@@ -54,11 +65,11 @@
   <div style="clear:both"></div>
  <!--底部-->
   {% include "footer.html" %}
-  <!--浮动窗口-->  
+  <!--浮动窗口-->
   {% include "outline.html" %}
-  
+
 	{% block dialogblock %}
-	
+
 	{% endblock %}
 <script type="text/javascript">
 	$.get(view_count_url,{r:Math.random()});
