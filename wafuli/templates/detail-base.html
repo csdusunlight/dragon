@@ -32,8 +32,8 @@
  {% include "header.html" %}
 <div id="content">
   <div><a href="{{news.advert.url}}"><img src="{{news.advert.pic.url}}"  class="co-imgp"/></a></div>
-	{% block expblock %}
 	<p>当前位置：<span><a href="#">挖福利</a> > <a href="#">免费福利</a> > <a href="#">正在进行的福利</a></span></p>
+  {% block expblock %}
 	{% endblock %}
   <div class="td-msgs">
   	<div class="msg-ti"><img src="{% static 'images/task-04.png' %}" class="ms-pd"/><span class="mag-pp">体验步骤</span></div>
@@ -41,6 +41,7 @@
 
   </div>
   <div class="td-msgs others">
+      <div class="msg-ti"><span class="mag-pp">其他福利</span></div>
       <a href="#" class="hy-p">领50元微信理财通红包</a>
       <a href="#" class="hy-p">天天基金四周年10元红包</a>
       <a href="#" class="hy-p">5-10元电影代金券</a>
