@@ -296,7 +296,7 @@ margin-top: 1.5rem;}
 .other_pic{ width:258px;
       height:148px;
       position:absolute;
-      /*left:10px;*/
+      left:10px;
       top:10px;}
 .other_name{ font-size:12px;
        color:#000;
@@ -331,7 +331,7 @@ margin-top: 1.5rem;}
       }
 .subject_top img{ margin-top:10px; display:block}
 .subject_box{ width:530px;
-         height:220px;
+         height:212px;
          background-color:#f7f7f7;
          /*margin-left:-30px;*/
          margin-top:20px;
@@ -354,7 +354,7 @@ margin-top: 1.5rem;}
          font-size: 12px;
          font-size:12px;
          color:#000;
-         line-height: 18px;
+         line-height: 19px;
          /*letter-spacing: 1px;*/
          text-align: left;
          text-indent: 26px;
@@ -914,3 +914,7 @@ img{
       background-position: left center;
       padding-top: 34px;
   }
+
+#content>p{width:1100px;margin:0 auto;text-align:left;font-size:14px;line-height:2;margin-top:20px;}
+#content .others span {margin-left:30px}
+#content .others .hy-p {display:inline-block;width:45%;text-decoration:underline;}
