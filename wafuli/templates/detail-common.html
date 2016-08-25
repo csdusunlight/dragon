@@ -6,34 +6,36 @@
 var ismobile = true;
 {%else%}
 var ismobile = false;
+var url_openwindow = "{% url 'exp_welfare_openwindow' %}"
 {%endif%}
 $(function(){
 	var ahref = $("a.login").attr("href");
 	ahref += "?next="+this_url;
 	$("a.login").attr("href",ahref);
 	$("button.te-mo").click(function(){
-		$.ajax({
-			url:"{%url 'exp_welfare_common' %}?id=" + id,
-			dataType:"json",
-			success:function(ret){
-				if(ret.code==0){
-					alert("请先登录！")
-					window.location.href = ret.url;
-				}
-				else if(ret.code==1){
-					if(ismobile){
+		if(ismobile){
+			$.ajax({
+				url:"{%url 'exp_welfare_erweima' %}?id=" + id,
+				dataType:"json",
+				success:function(ret){
+					if(ret.code==0){
+						alert("请先登录！")
+						window.location.href = ret.url;
+					}
+					else if(ret.code==1){
 						$('img#erweima').attr('src',ret.url);
 						$('#myReModal').modal();
 					}
-					else{
-						window.location.href=ret.url;
-					}
+				},
+				error:function(){
+					alert("请检查网络连接");
 				}
-			},
-			error:function(){
-				alert("请检查网络连接");
-			}
-		});
+			});
+		}
+		else {
+			window.open(url_openwindow + "?id=" + id);
+		}
+		
 	});
 	$("button.td-tj").click(function(){
 		var telnum = $('input#telnum').val();
