@@ -123,7 +123,7 @@ class BaoyouAdmin(WelfareAdmin):
             obj.advert = Advertisement.objects.filter(location='7',is_hidden=False).first()
         if not change:
             obj.save()
-        obj.url = reverse('exp_welfare_openwindow') + '?id=' + str(obj.id)
+        obj.url = reverse('exp_welfare_openwindow') + '?id=' + str(obj.id) + "&type=Welfare"
         obj.save()
 class CouponProjectAdmin(WelfareAdmin):
     def save_model(self, request, obj, form, change):

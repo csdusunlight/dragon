@@ -159,10 +159,10 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
       <li>
         <div class="box_children">
         <div class="box_pic">
-          <a href="{{wel.url}}"><img src="{{wel.pic.url}}"></a>
+          <a href="{{wel.url}}" target="_blank"><img src="{{wel.pic.url}}"></a>
           <div class="box_pic_bg">
           	<p style="color:#FFF; font-size:10px;">
-          	<a href="{{wel.url}}" style="color:#FF0">
+          	<a href="{{wel.url}}" target="_blank" style="color:#FF0">
           {%if wel.type == 'youhuiquan'%}
             	点击领取
           {%else%}
@@ -171,7 +171,7 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
           	</a></p>
           </div>
         </div>
-        <a href="{{wel.url}}" class="box_name">{{wel.title}}</a>
+        <a href="{{wel.url}}"  target="_blank" class="box_name">{{wel.title}}</a>
         <div class="box_line"></div>
         <div>
         <a class="classes">{{wel.get_type_display}}</a>
@@ -251,8 +251,8 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
     </div>
     <div class="other_box">
        <div class="other_1">
-                <div class="other_pic"><a href="{{hot1.url}}"><img src="{{hot1.pic.url}}" /></a></div>
-                <a href="{{hot1.url}}" class="other_name">{{hot1.title}}</a>
+                <div class="other_pic"><a href="{{hot1.url}}" target="_blank"><img src="{{hot1.pic.url}}" /></a></div>
+                <a href="{{hot1.url}}" class="other_name" target="_blank">{{hot1.title}}</a>
                 <div class="other_line"></div>
                 <div>
                 <a class="other_classes">{{hot1.get_type_display}}</a>
@@ -261,8 +261,8 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
                 </div>
         </div>
         <div class="other_2">
-                <div class="other_pic"><a href="{{hot2.url}}"><img src="{{hot2.pic.url}}" /></a></div>
-                <a href="{{hot2.url}}" class="other_name">{{hot2.title}}</a>
+                <div class="other_pic"><a href="{{hot2.url}}" target="_blank"><img src="{{hot2.pic.url}}" /></a></div>
+                <a href="{{hot2.url}}" class="other_name" target="_blank">{{hot2.title}}</a>
                 <div class="other_line"></div>
                 <div>
                 <a class="other_classes">{{hot2.get_type_display}}</a>
@@ -279,8 +279,8 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
       <img src="{%static 'images/pict_100.png'%}" />
     </div>
     <div class="subject_box">
-        <a href="{{info.url}}"><img src="{{info.pic.url}}"  /></a>
-        <a href="{{info.url}}"><h1>{{info.title}}</h1></a>
+        <a href="{{info.url}}" target="_blank"><img src="{{info.pic.url}}"  /></a>
+        <a href="{{info.url}}" target="_blank"><h1>{{info.title}}</h1></a>
         <p>{{info.summary}}</p>
       </div>
   </div>

@@ -15,7 +15,7 @@ $(function(){
 	$("button.te-mo").click(function(){
 		if(ismobile){
 			$.ajax({
-				url:"{%url 'exp_welfare_erweima' %}?id=" + id,
+				url:"{%url 'exp_welfare_erweima' %}?id=" + id + "&type=" + type,
 				dataType:"json",
 				success:function(ret){
 					if(ret.code==0){
@@ -33,7 +33,7 @@ $(function(){
 			});
 		}
 		else {
-			window.open(url_openwindow + "?id=" + id);
+			window.open(url_openwindow + "?id=" + id + "&type=" + type);
 		}
 		
 	});

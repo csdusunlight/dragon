@@ -1,3 +1,4 @@
+
 #coding:utf-8
 '''
 Created on 2016年8月13日
@@ -18,7 +19,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         baoyou = Baoyou.objects.all()
         for wel in baoyou:
-            wel.url = reverse('exp_welfare_openwindow') + '?id=' + str(wel.id)
+            wel.url = reverse('exp_welfare_openwindow') + '?id=' + str(wel.id)+ "&type=Welfare"
             wel.save()
 #         zero_all = ZeroPrice.objects.all()
 #         for zero in zero_all:

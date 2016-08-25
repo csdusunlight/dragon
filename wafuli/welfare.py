@@ -7,7 +7,7 @@ Created on 2016年8月1日
 from django.shortcuts import render
 from django.http.response import Http404, HttpResponse
 from wafuli.models import Welfare, Advertisement, Press, Hongbao, Baoyou, CouponProject,\
-    Company, Coupon, Information
+    Company, Coupon, Information, Task, Finance
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
 from django.db.models import Q
@@ -135,18 +135,23 @@ def exp_welfare_erweima(request):
         result['code'] = '0'
         return JsonResponse(result)
     wel_id = request.GET.get('id', None)
-    if not wel_id:
+    wel_type = request.GET.get('type', None)
+    if not wel_id or not wel_type:
         logger.error("wel_id is missing!!!")
         raise Http404
-    wel = Welfare.objects.get(id=wel_id)
-    if wel.type == "hongbao":
-        wel = wel.hongbao
-    elif wel.type == "baoyou":
-        wel = wel.baoyou
+    wel_id = int(wel_id)
+    wel_type = str(wel_type)
+    model = globals()[wel_type]
+    wel = model.objects.get(id=wel_id)
+    if wel_type == 'Welfare':
+        if wel.type == "hongbao":
+            wel = wel.hongbao
+        elif wel.type == "baoyou":
+            wel = wel.baoyou
     if wel.isonMobile:
         result['url'] = wel.exp_code.url
     else:
-        logger.error("Welfare:" + str(wel.id) + " is not onMobile wel !!!")
+        logger.error(str(model) + ":" + str(wel.id) + " is not onMobile wel !!!")
         raise Http404
     result['code'] = '1'
     return JsonResponse(result)
@@ -154,10 +159,14 @@ def exp_welfare_erweima(request):
 @login_required
 def exp_welfare_openwindow(request):
     wel_id = request.GET.get('id', None)
-    if not wel_id:
-        logger.error("wel_id is missing!!!")
+    wel_type = request.GET.get('type', None)
+    if not wel_id or not wel_type:
+        logger.error("wel_id or type is missing!!!")
         raise Http404
-    wel = Welfare.objects.get(id=wel_id)
+    wel_id = int(wel_id)
+    wel_type = str(wel_type)
+    model = globals()[wel_type]
+    wel = model.objects.get(id=wel_id)
     url = wel.exp_url
     js = "<script>window.location.href='"+url+"';</script>"
     return HttpResponse(js)
