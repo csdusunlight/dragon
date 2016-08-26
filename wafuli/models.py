@@ -79,7 +79,7 @@ class ZeroPrice(News):
         ordering = ["-news_priority", "-pub_date"]
 class Mark(models.Model):
     name = models.CharField(max_length=10, verbose_name=u"标签名", unique=True)
-    inviter = models.ForeignKey('self', related_name = 'child_marks', 
+    inviter = models.ForeignKey('self', related_name = 'child_marks', verbose_name=u"父标签",
                                 blank=True, null=True, on_delete=models.SET_NULL)
     def __unicode__(self):
         return self.name
