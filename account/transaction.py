@@ -9,6 +9,8 @@ from wafuli.models import TransList, ScoreTranlist
 from account.models import MyUser
 import logging
 from decimal import Decimal
+from django.db import transaction
+from django.db.models import F
 logger = logging.getLogger('wafuli')
 def charge_money(user, type, amount, reason):
     if not (isinstance(user, MyUser) and reason) or type !='0' and type != '1':
@@ -17,30 +19,27 @@ def charge_money(user, type, amount, reason):
         amount = Decimal(amount)
     except:
         return None
-    trans = TransList(user=user, transType=type)
-    trans.initAmount = user.balance
-    trans.transAmount = amount
-    trans.reason = reason
-    if type == '0':
-        user.balance += amount
-        user.accu_income += amount
-    elif user.balance < amount - Decimal(0.001):
-        logger.info('I:The account balance is not enough!')
+    trans = None
+    try:
+        with transaction.atomic():
+            user = MyUser.objects.get(id=user.id)
+            trans = TransList.objects.create(user=user, transType=type, initAmount = user.balance, 
+                              transAmount=amount, reason=reason)
+            if type == '0':
+                user.balance = F('balance') + amount
+                user.accu_income = F('accu_income') + amount
+                user.save(update_fields=['accu_income','balance'])
+            elif user.balance < amount - Decimal(0.001):
+                raise ValueError('The account ' + user.mobile + '\'s balance is not enough!')
+            else:
+                user.balance = F('balance') - amount
+                user.save(update_fields=['balance'])
+    except Exception, e:
+        logger.info(e)
         return None
     else:
-        user.balance -= amount
-    try:
-        trans.save()
-    except:
-        logger.critical('Saving trans object is failed!!!')
-        return None
-    try:
-        user.save(update_fields=['accu_income','balance'])
         return trans
-    except:
-        logger.critical('Saving User Info is failed!!!')
-        trans.delete()
-        return None
+
 
 def correct_money(user, type, amount, reason):
     pass
@@ -52,28 +51,26 @@ def charge_score(user, type, amount, reason):
         amount = int(amount)
     except:
         return None
-    trans = ScoreTranlist(user=user, transType=type)
-    trans.initAmount = user.scores
-    trans.transAmount = amount
-    trans.reason = reason
-    if type == '0':
-        user.scores += amount
-        user.accu_scores += amount
-    elif user.scores < amount:
-        logger.info('I:The account scores is not enough!')
+    trans = None
+    try:
+        with transaction.atomic():
+            user = MyUser.objects.get(id=user.id)
+            trans = ScoreTranlist.objects.create(user=user, transType=type, initAmount = user.scores, 
+                              transAmount=amount, reason=reason)
+            if type == '0':
+                user.scores = F('scores') + amount
+                user.accu_scores = F('accu_scores') + amount
+                user.save(update_fields=['accu_scores','scores'])
+            elif user.scores < amount:
+                raise ValueError('The account ' + user.mobile + '\'s scores is not enough!')
+            else:
+                user.scores = F('scores') - amount
+                user.save(update_fields=['scores'])
+    except Exception, e:
+        logger.info(e)
         return None
     else:
-        user.scores -= amount
-    try:
-        trans.save()
-    except:
-        return None
-    try:
-        user.save(update_fields=['scores','accu_scores'])
         return trans
-    except:
-        trans.delete()
-        return None
-
+    
 def correct_score(user, type, amount):
     pass

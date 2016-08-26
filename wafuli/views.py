@@ -14,6 +14,7 @@ from datetime import date
 from wafuli_admin.models import DayStatis, GlobalStatis, RecommendRank
 from account.models import MyUser
 from django.contrib.contenttypes.models import ContentType
+from django.db import transaction
 logger = logging.getLogger('wafuli')
 from .tools import listing
 import re
@@ -181,7 +182,6 @@ def expsubmit(request):
         return JsonResponse(result)
     news = None
     model = globals()[news_type]
-    news = model.objects.get(pk=news_id)
 #     if news.state != '1':
 #         code = '4'
 #         msg = u'该项目已结束或未开始！'
@@ -189,14 +189,20 @@ def expsubmit(request):
 #         return JsonResponse(result)
     if str(is_futou)=='1':
         remark = u"复投：" + remark
-    if str(is_futou)!='1' and news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
+    try:
+        with transaction.atomic():
+            news = model.objects.get(pk=news_id)
+            if str(is_futou)!='1' and news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
+                raise ValueError('This invest_account is repective in project:' + str(news.id))
+            else:
+                UserEvent.objects.create(user=request.user, event_type='1', invest_account=telnum,
+                                 content_object=news, audit_state='1',remark=remark,)
+                code = '1'
+                msg = u'提交成功，请通过用户中心查询！'
+    except Exception, e:
+        logger.info(e)
         code = '2'
         msg = u'该注册手机号已被提交过，请不要重复提交！'
-    else:
-        UserEvent.objects.create(user=request.user, event_type='1', invest_account=telnum,
-                         content_object=news, audit_state='1',remark=remark,)
-        code = '1'
-        msg = u'提交成功，请通过用户中心查询！'
     result = {'code':code, 'msg':msg}
     return JsonResponse(result)
 

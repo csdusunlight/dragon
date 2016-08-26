@@ -157,43 +157,6 @@ $(function(){
 
 </div>
 </div>
-<script>
-$(".nav_1").mouseover(function(){
-$(this).children().attr("src","{%static 'images/pic_14.png'%}");
-});
-$(".nav_1").mouseleave(function(){
-$(this).children().attr("src","{%static 'images/nav-1.png'%}");
-});
-$(".nav_2").mouseover(function(){
-$(this).children().attr("src","{%static 'images/pic_08.png'%}");
-});
-$(".nav_2").mouseleave(function(){
-$(this).children().attr("src","{%static 'images/nav-2.png'%}");
-
-});
-$(".nav_3").mouseover(function(){
-$(this).children().attr("src","{%static 'images/pic_03.png'%}");
-});
-$(".nav_3").mouseleave(function(){
-$(this).children().attr("src","{%static 'images/nav-3.png'%}");
-});
-$(".nav_4").mouseover(function(){
-$(this).children().attr("src","{%static 'images/pic_05.png'%}");
-});
-$(".nav_4").mouseleave(function(){
-$(this).children().attr("src","{%static 'images/nav-4.png'%}");
-});
-</script>
-
-
-<script>
-  $(function(){
-  $('.left_box_nav a').click(function() {
-    $('.left_box_nav a').removeClass('add');
-    $(this).addClass('add')
-  });
-  });
-</script>
 
 <!--底部-->
   {% include "footer.html" %}

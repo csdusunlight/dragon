@@ -101,6 +101,7 @@ class WelfareAdmin(admin.ModelAdmin):
     search_fields = ['title',]
     list_filter = ['news_priority', 'change_user',]
     readonly_fields = ('pub_date','change_user','url')
+    filter_horizontal = ('marks',)
     def save_model(self, request, obj, form, change):
         obj.change_user = str(request.user)
         if obj.advert is None:
