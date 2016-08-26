@@ -130,31 +130,31 @@ def aboutus(request):
     ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='6'),is_hidden=False).first
     return render(request, 'aboutus.html',{'ad_list':ad_list})
 
-def experience_taskandfinance(request):
-    if not request.is_ajax():
-        logger.warning("Experience refused no-ajax request!!!")
-        raise Http404
-    code = '0'
-    url = ''
-    if not request.user.is_authenticated():
-        url = reverse('login') + '?next=' + request.META['HTTP_REFERER']
-        result = {'code':code, 'url':url}
-        return JsonResponse(result)
-    news_id = request.GET.get('id', None)
-    news_type = request.GET.get('type', None)
-    if not (news_id and news_type):
-        logger.error("news_id or news_type is missing!!!")
-        raise Http404
-    news = None
-    model = globals()[news_type]
-    news = model.objects.get(pk=news_id)
-    code = '1'
-    if news.isonMobile:
-        url = news.exp_code.url
-    else:
-        url = news.exp_url
-    result = {'code':code, 'url':url}
-    return JsonResponse(result)
+# def experience_taskandfinance(request):
+#     if not request.is_ajax():
+#         logger.warning("Experience refused no-ajax request!!!")
+#         raise Http404
+#     code = '0'
+#     url = ''
+#     if not request.user.is_authenticated():
+#         url = reverse('login') + '?next=' + request.META['HTTP_REFERER']
+#         result = {'code':code, 'url':url}
+#         return JsonResponse(result)
+#     news_id = request.GET.get('id', None)
+#     news_type = request.GET.get('type', None)
+#     if not (news_id and news_type):
+#         logger.error("news_id or news_type is missing!!!")
+#         raise Http404
+#     news = None
+#     model = globals()[news_type]
+#     news = model.objects.get(pk=news_id)
+#     code = '1'
+#     if news.isonMobile:
+#         url = news.exp_code.url
+#     else:
+#         url = news.exp_url
+#     result = {'code':code, 'url':url}
+#     return JsonResponse(result)
 def expsubmit(request):
     if not request.is_ajax():
         logger.warning("Expsubmit refused no-ajax request!!!")

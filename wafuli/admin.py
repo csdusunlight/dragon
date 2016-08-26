@@ -121,10 +121,10 @@ class BaoyouAdmin(WelfareAdmin):
         obj.change_user = str(request.user)
         if obj.advert is None:
             obj.advert = Advertisement.objects.filter(location='7',is_hidden=False).first()
-        super(WelfareAdmin,self).save_model (request, obj, form, change)
-        if obj.url != obj.exp_url:
-            obj.url = obj.exp_url
-            obj.save(update_fields=['url',])
+        if not change:
+            obj.save()
+        obj.url = reverse('exp_welfare_openwindow') + '?id=' + str(obj.id) + "&type=Welfare"
+        obj.save()
 class CouponProjectAdmin(WelfareAdmin):
     def save_model(self, request, obj, form, change):
         if not change:
