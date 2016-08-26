@@ -560,6 +560,7 @@ def admin_withdraw(request):
             res['res_msg'] = u'该项目已审核过，不要重复审核！'
             return JsonResponse(res)
         log = AuditLog(user=admin_user,item=event)
+        admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event.user, event_type='2')
         if type==1:
             event.audit_state = '0'
             log.audit_result = True
@@ -575,10 +576,14 @@ def admin_withdraw(request):
                         logger.debug('Inviting Award scores is successfully payed!')
                         inviter.save(update_fields=['invite_scores'])
                         translist.user_event = event
-                        translist.save(update_fields=['user_event'])
+                        translist.admin_event = admin_event
+                        translist.save(update_fields=['user_event','admin_event'])
                     else:
                         logger.debug('Inviting Award scores is failed to pay!!!')
-                        
+            trans_withdraw = event.translist.first()
+            if trans_withdraw:
+                trans_withdraw.admin_event = admin_event
+                trans_withdraw.save(update_fields=['admin_event'])
         elif type == 2:
             reason = request.POST.get('reason', '')
             if not reason:
@@ -591,15 +596,14 @@ def admin_withdraw(request):
             translist = charge_money(event.user, '0', event.invest_amount, u'冲账')
             if translist:
                 translist.user_event = event
-                translist.save(update_fields=['user_event'])
+                translist.admin_event = admin_event
+                translist.save(update_fields=['user_event','admin_event'])
                 res['code'] = 0
             else:
                 logger.critical(u"Charging cash is failed!!!")
                 res['code'] = -2
                 res['res_msg'] = u"现金记账失败，请检查输入合法性后再次提交！"
                 return JsonResponse(res)
-        
-        admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event.user, event_type='2')
         log.admin_item = admin_event
         log.save()
         event.audit_time = log.time
