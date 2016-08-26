@@ -85,6 +85,13 @@ margin-top: 1.5rem;}
     margin-right:auto}
 .nav_children{ position:relative; width:1230px;}
 .nav_children li{ width:91px; height:100px; float:left;margin-left:67px;margin-right:67px; position:relative;}
+.nav_children a.box-shadow img {
+    box-shadow: 0 0 15px #f08519;
+    border-radius: 50%;
+}
+.nav_children a.box-shadow p {
+    color: #f08519;
+}
 .nav_1,.nav_2,.nav_3,.nav_4,.nav_5{position:absolute;left:10px;top:10px;width:71px;height:110px;display: block;}
 .nav_1 p,.nav_2 p,.nav_3 p,.nav_4 p{cursor:pointer;
     color:#000;

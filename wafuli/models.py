@@ -80,12 +80,14 @@ class ZeroPrice(News):
         ordering = ["-news_priority", "-pub_date"]
 class Mark(models.Model):
     name = models.CharField(max_length=10, verbose_name=u"标签名", unique=True)
-    inviter = models.ForeignKey('self', related_name = 'child_marks', 
+    inviter = models.ForeignKey('self', related_name = 'child_marks', verbose_name=u"父标签",
                                 blank=True, null=True, on_delete=models.SET_NULL)
+    def __unicode__(self):
+        return self.name
 class Welfare(Base):
     type = models.CharField(max_length=10, choices=WELFARE_TYPE, editable=False, verbose_name=u"福利类型")
     is_display = models.BooleanField(default=True, verbose_name=u"是否在免费福利中显示")
-    marks = models.ManyToManyField(Mark, verbose_name='标签', related_name="welfare_set", blank=True)
+    marks = models.ManyToManyField(Mark, verbose_name=u'标签', related_name="welfare_set", blank=True)
     state = models.CharField(u"项目状态", max_length=1, choices=STATE)
     pic = models.ImageField(upload_to='photos/%Y/%m/%d', verbose_name=u"标志图片上传（最大不超过30k，越小越好）",blank=False)
     company = models.ForeignKey(Company)
