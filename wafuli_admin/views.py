@@ -839,3 +839,76 @@ def get_admin_score_page(request):
     res["recordCount"] = item_list.count()
     res["data"] = data
     return JsonResponse(res)
+
+def admin_charge(request):
+    admin_user = request.user
+    if request.method == "GET":
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            return redirect(reverse('admin:login') + "?next=" + reverse('admin_charge'))
+        return render(request,"admin_charge.html")
+    
+def get_admin_charge_page(request):
+    res={'code':0,}
+    user = request.user
+    if not ( user.is_authenticated() and user.is_staff):
+        res['code'] = -1
+        res['url'] = reverse('admin:login') + "?next=" + reverse('admin_return')
+        return JsonResponse(res)
+    page = request.GET.get("page", None)
+    size = request.GET.get("size", 10)
+    try:
+        size = int(size)
+    except ValueError:
+        size = 10
+
+    if not page or size <= 0:
+        raise Http404
+    item_list = []
+
+    item_list = TransList.objects.all()
+    startTime = request.GET.get("startTime", None)
+    endTime = request.GET.get("endTime", None)
+    if startTime and endTime:
+        s = datetime.datetime.strptime(startTime,'%Y-%m-%dT%H:%M')
+        e = datetime.datetime.strptime(endTime,'%Y-%m-%dT%H:%M')
+        item_list = item_list.filter(time__range=(s,e))
+        
+    username = request.GET.get("username", None)
+    if username:
+        item_list = item_list.filter(user__username=username)
+    
+    mobile = request.GET.get("mobile", None)
+    if mobile:
+        item_list = item_list.filter(user__mobile=mobile)
+        
+    adminname = request.GET.get("adminname", None)
+    if adminname:
+        item_list = item_list.filter(admin_event__admin_user__username=adminname)
+    
+    paginator = Paginator(item_list, size)
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+    # If page is not an integer, deliver first page.
+        contacts = paginator.page(1)
+    except EmptyPage:
+    # If page is out of range (e.g. 9999), deliver last page of results.
+        contacts = paginator.page(paginator.num_pages)
+    data = []
+    for con in contacts:
+        i = {"username":con.user.username,
+             "mobile":con.user.mobile,
+             "time":con.time.strftime("%Y-%m-%d %H:%M"),
+             "init_amount":con.initAmount,
+             "charge_amount":('+' if con.transType=='0' else '-') + str(con.transAmount),
+             "reason": con.reason,
+             "remark": con.remark,
+             "admin_user":u'无' if not con.admin_event else con.admin_event.admin_user.username,
+             }
+        data.append(i)
+    if data:
+        res['code'] = 1
+    res["pageCount"] = paginator.num_pages
+    res["recordCount"] = item_list.count()
+    res["data"] = data
+    return JsonResponse(res)
