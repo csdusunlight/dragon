@@ -10,6 +10,7 @@ from .data import *
 from django.template.defaultfilters import default
 from django.utils import timezone
 import datetime
+from django.core.urlresolvers import reverse
 class Company(models.Model):
     name = models.CharField(u"平台名称(必填)",max_length=100,unique=True)
     level = models.CharField(u"安全评级",max_length=100,blank=True)
@@ -113,6 +114,10 @@ class Welfare(Base):
         now = datetime.datetime.now()
         days = (now-self.startTime).days
         return days == 0 
+    def get_type(self):
+        return u"免费福利"
+    def get_type_url(self):
+        return reverse('welfare')
 class Hongbao(Welfare):
     isonMobile = models.BooleanField(u'是否为移动端活动', default= False)
     exp_code = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, verbose_name=u"上传二维码")
@@ -197,6 +202,8 @@ class Task(News):
     user_event = GenericRelation("UserEvent",related_query_name='task')
     def get_type(self):
         return u"体验福利"
+    def get_type_url(self):
+        return reverse('task')
     class Meta:
         verbose_name = u"体验福利"
         verbose_name_plural = u"体验福利"
@@ -219,6 +226,8 @@ class Finance(News):
     user_event = GenericRelation("UserEvent",related_query_name='finance')
     def get_type(self):
         return u"理财福利"
+    def get_type_url(self):
+        return reverse('finance')
     class Meta:
         verbose_name = u"理财福利"
         verbose_name_plural = u"理财福利"
