@@ -88,6 +88,7 @@ class Welfare(Base):
     is_display = models.BooleanField(default=True, verbose_name=u"是否在免费福利中显示")
     marks = models.ManyToManyField(Mark, verbose_name=u'标签', related_name="welfare_set", blank=True)
     state = models.CharField(u"项目状态", max_length=1, choices=STATE)
+    startTime = models.DateTimeField(u"生效时间（粒度为小时）", default=timezone.now)
     pic = models.ImageField(upload_to='photos/%Y/%m/%d', verbose_name=u"标志图片上传（最大不超过30k，越小越好）",blank=False)
     company = models.ForeignKey(Company)
     provider = models.CharField(u"商家", max_length=10)
@@ -107,7 +108,11 @@ class Welfare(Base):
     def is_expired(self):
         return self.state == '2'
     class Meta:
-        ordering = ["-news_priority", "-pub_date"]
+        ordering = ["-news_priority", "-startTime"]
+    def is_new(self):
+        now = datetime.datetime.now()
+        days = (now-self.startTime).days
+        return days == 0 
 class Hongbao(Welfare):
     isonMobile = models.BooleanField(u'是否为移动端活动', default= False)
     exp_code = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, verbose_name=u"上传二维码")

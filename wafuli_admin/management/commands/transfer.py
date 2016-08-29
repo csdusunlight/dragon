@@ -14,13 +14,15 @@ from account.models import MyUser
 from django.conf import settings
 from decimal import Decimal
 from django.core.urlresolvers import reverse
+from django.db.models import F
 logger = logging.getLogger("wafuli")
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        baoyou = Baoyou.objects.all()
-        for wel in baoyou:
-            wel.url = reverse('exp_welfare_openwindow') + '?id=' + str(wel.id)+ "&type=Welfare"
-            wel.save()
+        wels = Welfare.objects.update(startTime=F('pub_date'))
+#         baoyou = Baoyou.objects.all()
+#         for wel in baoyou:
+#             wel.url = reverse('exp_welfare_openwindow') + '?id=' + str(wel.id)+ "&type=Welfare"
+#             wel.save()
 #         zero_all = ZeroPrice.objects.all()
 #         for zero in zero_all:
 #             wel = Hongbao.objects.create(title=zero.title,news_priority=zero.news_priority,
