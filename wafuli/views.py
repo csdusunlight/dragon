@@ -15,6 +15,7 @@ from wafuli_admin.models import DayStatis, GlobalStatis, RecommendRank
 from account.models import MyUser
 from django.contrib.contenttypes.models import ContentType
 from django.db import transaction
+from wafuli.tools import update_view_count
 logger = logging.getLogger('wafuli')
 from .tools import listing
 import re
@@ -81,10 +82,12 @@ def finance(request, id=None):
         return render(request, 'finance.html',context)
     else:
         id = int(id)
+        news = None
         try:
             news = Finance.objects.get(id=id)
         except Finance.DoesNotExist:
             raise Http404(u"该页面不存在")
+        update_view_count(news)
         other_wel_list = Finance.objects.filter(state='1').order_by('-view_count')[0:10]
         return render(request, 'detail-taskandfinance.html',{'news':news,'type':'Finance','other_wel_list':other_wel_list})
         
@@ -108,10 +111,12 @@ def task(request, id=None):
         return render(request, 'taskWelfare.html', context)
     else:
         id = int(id)
+        news = None
         try:
             news = Task.objects.get(id=id)
         except Task.DoesNotExist:
             raise Http404(u"该页面不存在")
+        update_view_count(news)
         other_wel_list = Task.objects.filter(state='1').order_by('-view_count')[0:10]
         return render(request, 'detail-taskandfinance.html',{'news':news,'type':'Task','other_wel_list':other_wel_list})
 def commodity(request, id):
@@ -604,9 +609,11 @@ def information(request, type=None, page=None, id=None):
         return render(request, 'information.html', context)
     elif id:
         id = int(id)
+        info = None
         try:
             info = Information.objects.get(id=id)
         except Information.DoesNotExist:
             raise Http404(u"该页面不存在")
+        update_view_count(info)
         hot_info_list = Information.objects.filter(is_display=True).order_by('-view_count')[0:6]
         return render(request, 'detail-information.html',{'info':info, 'hot_info_list':hot_info_list, 'type':'Information'})

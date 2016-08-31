@@ -132,7 +132,8 @@ def handle_uploaded_file(f):
             destination.write(chunk)
     with open('./name', 'r') as file:
         for line in file:
-            line = unicode(line, errors='ignore')
+            line = line.decode('gbk')
+#             line = unicode(line, errors='ignore')
             ret.append(line.strip())
     return ret
 
