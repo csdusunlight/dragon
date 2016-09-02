@@ -220,14 +220,18 @@ margin-top: 1.5rem;}
 .classes{ position:absolute;
       left:10px;
       top:195px;
-      width: 36px;
       color:#fff;
       font-size:12px;
       line-height: 20px;
-      background: #ff6767;
-      border-radius: 4px;
 }
-.classes-02 {left:50px;}
+.classes span {
+    display: inline-block;
+    margin-right: 10px;
+    background: #ff6767;
+    padding: 0 4px;
+    border-radius: 4px;
+}
+
 .number{ position:absolute;
      font-size:12px;
      color:#000;
