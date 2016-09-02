@@ -192,14 +192,22 @@ margin-top: 1.5rem;}
 .tag{z-index:100}
 .tag img{}
 .tag a{color:#fff;}
-.box_pic{ width:258px;
-      height:148px;
-      position:absolute;
-      left:10px;
-      top:10px;
-      }
+.box_pic{
+    position: absolute;
+    top: 162px;
+    right: 4px;
+    font-size: 12px;
+    color: #ff6767;
+}
 .box_pic > a > img {width:258px; height:148px; }
 .box_pic_bg{background-color:#000; opacity:0.7; width:258px; height:25px; margin-top:-24px;}
+.box_children .tag {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: 258px;
+    height: 148px;
+}
 .box_name{ font-size:12px;
        color:#000;
        position:absolute;
@@ -214,8 +222,14 @@ margin-top: 1.5rem;}
 .classes{ position:absolute;
       left:10px;
       top:195px;
-      color:#000;
-      font-size:12px;}
+      width: 36px;
+      color:#fff;
+      font-size:12px;
+      line-height: 20px;
+      background: #ff6767;
+      border-radius: 4px;
+}
+.classes-02 {left:50px;}
 .number{ position:absolute;
      font-size:12px;
      color:#000;
@@ -338,7 +352,7 @@ margin-top: 1.5rem;}
       }
 .subject_top img{ margin-top:10px; display:block}
 .subject_box{ width:530px;
-         height:212px;
+         height:200px;
          background-color:#f7f7f7;
          /*margin-left:-30px;*/
          margin-top:20px;

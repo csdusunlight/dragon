@@ -172,9 +172,10 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
           </div>
         </div>
         <a href="{{wel.url}}"  target="_blank" class="box_name">{{wel.title}}</a>
+        <span class="tag">红包</span>
         <div class="box_line"></div>
         <div>
-        <a class="classes">{{wel.get_type_display}}</a>
+        <a class="classes"><!-- {{wel.get_type_display}} -->流量</a><a class="classes classes-02"><!-- {{wel.get_type_display}} -->流量</a>
         <img src="{%static 'images/pict_60.png'%}" class="see" />
         <span class="number">{{wel.view_count}}</span>
         </div>
