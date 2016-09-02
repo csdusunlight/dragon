@@ -194,19 +194,17 @@ margin-top: 1.5rem;}
 .tag a{color:#fff;}
 .box_pic{
     position: absolute;
-    top: 162px;
-    right: 4px;
-    font-size: 12px;
-    color: #ff6767;
+    top: 10px;
+    left: 10px;
 }
 .box_pic > a > img {width:258px; height:148px; }
 .box_pic_bg{background-color:#000; opacity:0.7; width:258px; height:25px; margin-top:-24px;}
 .box_children .tag {
     position: absolute;
     left: 10px;
-    top: 10px;
-    width: 258px;
-    height: 148px;
+    top: 162px;
+    font-size: 12px;
+    color: #ff6767;
 }
 .box_name{ font-size:12px;
        color:#000;
