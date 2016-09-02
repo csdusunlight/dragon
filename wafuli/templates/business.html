@@ -80,7 +80,10 @@
     <div class="right-box">
       <h3>你可能感兴趣的福利</h3>
       {%for wel in hot_wel_list%}
-      	<a target="_blank" href="{{wel.url}}"><img src="{{wel.pic.url}}"></a>
+      	<a target="_blank" href="{{wel.url}}">
+          <img src="{{wel.pic.url}}">
+          <p>商家标题</p>
+        </a>
       {%endfor%}
     </div>
   </div>
@@ -88,6 +91,6 @@
 </div>
 <!--底部-->
   {% include "footer.html" %}
-  <!--浮动窗口-->  
+  <!--浮动窗口-->
   {% include "outline.html" %}
 </body></html>

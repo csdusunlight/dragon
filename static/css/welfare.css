@@ -206,7 +206,7 @@ margin-top: 1.5rem;}
     font-size: 12px;
     color: #ff6767;
 }
-.box_name{ font-size:12px;
+.box_name{ font-size:14px;
        color:#000;
        position:absolute;
        left:10px;
@@ -368,16 +368,19 @@ margin-top: 1.5rem;}
           height:162px;
           margin-right: 10px;
 }
-.subject_box h1{ font-size:18px;
-         color:#000;
-         margin-bottom: 10px;
+.subject_box h1{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size:18px;
+        color:#000;
+        margin-bottom: 10px;
 }
 .subject_box p{
          height:140px;
-         font-size: 12px;
-         font-size:12px;
+         font-size:14px;
          color:#000;
-         line-height: 19px;
+         line-height: 26px;
          /*letter-spacing: 1px;*/
          text-align: left;
          text-indent: 26px;

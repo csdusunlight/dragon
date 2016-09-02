@@ -81,7 +81,7 @@
 .index_13{width:238px;height:610px;float:left;display:inline;text-align:left;background:#ff8b52 url(../images/bg-2.png) no-repeat 89px 43px;position:relative;}
 .index_13 h2{line-height:27px;font-size:30px;color:#fff;position:absolute;bottom:86px;left:25px;}
 .index_13 h3{line-height:27px;font-size:15px;color:#fff;position:absolute;bottom:52px;left:55px;}
-.index_13 a.more{line-height:28px;font-size:13px;color:#fff;position:absolute;right:4px;top:358px;padding: 0;text-decoration: underline;}
+.index_13 a.more{ display: none;line-height:28px;font-size:13px;color:#fff;position:absolute;right:4px;top:358px;padding: 0;text-decoration: underline;}
 .index_13 a.more:hover {color: #008fd7;}
 .index_13_nav{ margin-left:170px; margin-top:220px;}
 .index_13_nav a{ font-size:14px; color:#FFF; display:block; width:80px; height:34px; text-align:center; padding-top:10px;}
@@ -105,6 +105,16 @@
 .index_15 ul li h2 a{color:#3a3a3a;}
 .index_15 ul li p{margin:0;padding:0;line-height:27px;font-size:13px;color:#888;}
 .index_15 ul li a.more{display:block;width:89px;height:27px;text-align:center;line-height:27px;font-size:14px;color:#fff;background: url(../images/bg-7.png) no-repeat;position:absolute;bottom:0;left:107px;}
+.index_15 ul .more-content {
+    position: absolute;
+    top: 330px;
+    right: 0;
+    width: 100px;
+    font-size: 14px;
+    color: #f08519;
+    text-decoration: underline;
+    text-align: right;
+}
 #index_16{width:1100px;height:385px;clear:both;display:inline-block;margin-top:248px;text-align:left;}
 .index_17{width:238px;height:385px;float:left;display:inline;text-align:left;background:#00d6b3 url(../images/bg-3.png) no-repeat 84px 40px;position:relative;}
 .index_17 h2{line-height:27px;font-size:30px;color:#fff;position:absolute;bottom:86px;left:25px;}
