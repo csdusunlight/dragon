@@ -41,7 +41,7 @@ margin-top: 1.5rem;}
    top:22px;
    right:0px;}
 .top_nav{font-size: 20px;
-     color:#000;
+     color:#fff;
      text-align: left;
      line-height: 50px;
      margin-top:1px;
@@ -301,7 +301,9 @@ margin-top: 1.5rem;}
 .footer_box{ margin-left:auto; margin-right:auto; position:relative; width:1220px;}
 .other{ float:left; margin-left:40px;}
 .subject{ float:left; width:530px; margin-left:20px;}
-.other_top{  margin-top:25px;}
+
+.box-bottom {margin-top: 20px;}
+./*other_top{  margin-top:25px;}
 .other_top div{font-size:18px;
       color:#f08519;
       margin-left:-428px;
@@ -344,7 +346,7 @@ margin-top: 1.5rem;}
      top:195px;}
 .other_see{ position:absolute;
          right:35px;
-         top:202px;}
+         top:202px;}*/
 
 .subject_top{/*margin-left:-28px;*/margin-top:35px;}
 .subject_top div{font-size:18px;

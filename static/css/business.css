@@ -17,9 +17,9 @@ a:focus { outline: none; } /*很多网站都会加的属性*/
 .right a{ display:block; position: relative;}
 .right p {
         position: absolute;
-        top: 60px;
+        top: 79px;
         background: #000;
-        width: 100%;
+        width: 200px;
         color: #fff;
         opacity: 0;
 }
