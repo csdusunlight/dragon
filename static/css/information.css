@@ -20,6 +20,7 @@ a:focus { outline: none; } /*很多网站都会加的属性*/
 .small_box_children{ float:left; width:400px; margin-left:50px; margin-top:25px;text-align: left;}
 .small_box_children a{ font-size:16px; color:#f08519;}
 .small_box_children h1{ font-weight:normal; font-size:18px; color:#000; margin-top:10px;margin-bottom: 10px;}
+.small_box_children h1:hover {color: #f08519;}
 .small_box_children p{width:470px; color:#828181; font-size:14px; height:76px; overflow:hidden;margin:0 10px 0 0; }
 
 .item_con_pager{top:1095px;left:620px; text-align:center;height: auto;overflow:hidden;margin-top: 30px;margin-bottom: 20px; }
@@ -35,11 +36,12 @@ a:focus { outline: none; } /*很多网站都会加的属性*/
 .right-top{ border:solid 1px #e5e5e5;}
 .right-top-nav{ font-size:16px; color:#000; border-bottom:solid 1px #e5e5e5; padding-left:10px; line-height:35px;}
 .right-top p{text-align: left; margin-left:20px; margin-top:15px; width:225px; white-space:nowrap; overflow:hidden;}
+
 .circle1{background-color:#e60012; color:#FFF; text-align:center; padding-left:8px; padding-right:8px; padding-top:5px; padding-bottom:5px;}
 .circle2{ margin-left:8px;}
 .text1{ margin-left:10px;font-size: 14px;}
 .text2{ margin-left:18px;font-size: 12px;}
-
+.text1:hover,.text2:hover {text-decoration: underline;}
 .right-middle{ border:solid 1px #e5e5e5; margin-top:20px;}
 .right-middle p{text-align: left; margin-left:20px; margin-top:15px; width:225px;}
 

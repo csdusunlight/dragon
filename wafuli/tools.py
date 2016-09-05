@@ -3,6 +3,9 @@ from django.conf import settings
 import time,os
 import random
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import F
+import logging
+logger = logging.getLogger('wafuli')
 def createUrl():
     tstr = time.strftime('%Y/%m/%d/')
     html_name = str(int(time.time()))+'.html'
@@ -47,3 +50,15 @@ def listing(con_list, num, page):
     # If page is out of range (e.g. 9999), deliver last page of results.
         contacts = paginator.page(paginator.num_pages)
     return contacts, paginator.num_pages
+
+def update_view_count(welfare):
+    try:
+        welfare.view_count = F('view_count') + 1
+        welfare.save(update_fields=['view_count',])
+        if hasattr(welfare, 'company'):
+            company = welfare.company
+            if company:
+                company.view_count = F('view_count') + 1
+                company.save(update_fields=['view_count',])
+    except Exception, e:
+        logger.error(e)

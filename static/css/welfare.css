@@ -41,7 +41,7 @@ margin-top: 1.5rem;}
    top:22px;
    right:0px;}
 .top_nav{font-size: 20px;
-     color:#000;
+     color:#fff;
      text-align: left;
      line-height: 50px;
      margin-top:1px;
@@ -111,24 +111,23 @@ margin-top: 1.5rem;}
 
 .search{ margin-left:1px; margin-top:42px;}
 .search input[type=text]{ width:500px;
-         height:33px;
+         height:36px;
          border:#ff8b52 2px solid;
          margin:0;
          padding:0;
          padding-left: 20px;
-         outline:none;}
-.search input[type=submit]{ margin-left:-4px;
+         outline:none;
+         box-sizing: border-box;
+}
+.search input[type=submit]{
+                      margin-left:-4px;
                       height: 36px;
                       background:#ff8b52;
                       width: 100px;
                       border: none;
                       /*font-weight: bold;*/
-                      color:#4a4a4a;
-                      /*font-weight: bold;*/
-                      font-size: 16px;
-                      position: relative;
-                      top: 2px;
-       margin-top:-2px;}
+                      color:#fff;
+}
 
 
 .active{ color:#f08519;}
@@ -192,15 +191,22 @@ margin-top: 1.5rem;}
 .tag{z-index:100}
 .tag img{}
 .tag a{color:#fff;}
-.box_pic{ width:258px;
-      height:148px;
-      position:absolute;
-      left:10px;
-      top:10px;
-      }
+.box_pic{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
 .box_pic > a > img {width:258px; height:148px; }
 .box_pic_bg{background-color:#000; opacity:0.7; width:258px; height:25px; margin-top:-24px;}
-.box_name{ font-size:12px;
+.box_pic_bg p a {display: block;}
+.box_children .tag {
+    position: absolute;
+    right: 12px;
+    top: 162px;
+    font-size: 12px;
+    color: #ff6767;
+}
+.box_name{ font-size:14px;
        color:#000;
        position:absolute;
        left:10px;
@@ -213,17 +219,46 @@ margin-top: 1.5rem;}
        top:190px;}
 .classes{ position:absolute;
       left:10px;
-      top:195px;
-      color:#000;
-      font-size:12px;}
+      top:198px;
+      color:#fff;
+      font-size:9px;
+      line-height: 16px;
+}
+.classes span {
+    display: inline-block;
+    margin-right: 10px;
+    background: #ff6767;
+    padding: 0 3px;
+    border-radius: 3px;
+}
+.classes .new-price,
+.classes .old-price {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+
+}
+.classes .new-price {
+    color: #ff6767;
+    font-size: 14px;
+    font-weight: bold;
+}
+.classes .old-price {
+    color: #bbb;
+    font-size: 12px;
+    text-decoration: line-through;
+}
+
 .number{ position:absolute;
      font-size:12px;
      color:#000;
-     right:4px;
+     right:12px;
      top:195px;}
-.see{ position:absolute;
-    right:35px;
-    top:202px;}
+.see{
+     position:absolute;
+     right:48px;
+     top:202px;
+}
 .Business{
      margin-top:50px;
      background-color:#f5f4f9;
@@ -285,7 +320,9 @@ margin-top: 1.5rem;}
 .footer_box{ margin-left:auto; margin-right:auto; position:relative; width:1220px;}
 .other{ float:left; margin-left:40px;}
 .subject{ float:left; width:530px; margin-left:20px;}
-.other_top{  margin-top:25px;}
+
+.box-bottom {margin-top: 20px;}
+.other_top{  margin-top:25px; margin-left: -20px;}
 .other_top div{font-size:18px;
       color:#f08519;
       margin-left:-428px;
@@ -293,6 +330,7 @@ margin-top: 1.5rem;}
       }
 .other_top img{ margin-top:10px; display:block}
 .other_box{width:605px; margin-left:-25px;}
+/*
 .other_1,.other_2{margin-left:15px;
      margin-top:20px;
      width:279px;
@@ -328,7 +366,7 @@ margin-top: 1.5rem;}
      top:195px;}
 .other_see{ position:absolute;
          right:35px;
-         top:202px;}
+         top:202px;}*/
 
 .subject_top{/*margin-left:-28px;*/margin-top:35px;}
 .subject_top div{font-size:18px;
@@ -338,7 +376,7 @@ margin-top: 1.5rem;}
       }
 .subject_top img{ margin-top:10px; display:block}
 .subject_box{ width:530px;
-         height:212px;
+         height:200px;
          background-color:#f7f7f7;
          /*margin-left:-30px;*/
          margin-top:20px;
@@ -352,16 +390,19 @@ margin-top: 1.5rem;}
           height:162px;
           margin-right: 10px;
 }
-.subject_box h1{ font-size:18px;
-         color:#000;
-         margin-bottom: 10px;
+.subject_box h1{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size:18px;
+        color:#000;
+        margin-bottom: 10px;
 }
 .subject_box p{
          height:140px;
-         font-size: 12px;
-         font-size:12px;
+         font-size:14px;
          color:#000;
-         line-height: 19px;
+         line-height: 26px;
          /*letter-spacing: 1px;*/
          text-align: left;
          text-indent: 26px;

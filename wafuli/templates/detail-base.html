@@ -22,7 +22,6 @@
 	var this_url = window.location.href;
 	var id = '{{news.id}}'
 	var type = '{{type}}'
-	view_count_url = "{%url 'statistic:update' %}?type=" + type +"&id=" + id;
 </script>
 	{% block jsblock %}
 
@@ -68,8 +67,5 @@
 	{% block dialogblock %}
 
 	{% endblock %}
-<script type="text/javascript">
-	$.get(view_count_url,{r:Math.random()});
-</script>
 </body>
 </html>
