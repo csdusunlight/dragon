@@ -23,6 +23,7 @@ function pagecallback(){
   $(".tab-li.new").prepend('&lt;div class="newpost z"&gt;新&lt;/div&gt;');
 }
 var textarray=[];
+var type = "{{type}}";
 function getText(n) {
 	 if (textarray[n-1])
 		 return textarray[n-1];
@@ -31,6 +32,12 @@ function getText(n) {
 }
 $(function(){
 	$('.zero_h a').toggleClass("vo");
+	if (type!=="None"){
+    	$('.nav_'+type).toggleClass("box-shadow");
+    }
+    else {
+    	$('.nav_all').toggleClass("box-shadow");
+    }
 	$('.flexslider').flexslider({
 	       directionNav: true,
 	       pauseOnAction: false
@@ -73,25 +80,25 @@ $(function(){
 <div class="wel_nav">
   <ul class="nav_children">
     <li>
-        <a class="nav_1 box-shadow" href="{%url 'welfare_list' %}">
+        <a class="nav_all" href="{%url 'welfare_list' %}">
 			<img id="img1" src="{%static 'images/nav-1.png'%}" />
 			<p>全部</p>
         </a>
   </li>
     <li>
-	    <a class="nav_2" href="{%url 'welfare_list' type='hb' %}">
+	    <a class="nav_hb" href="{%url 'welfare_list' type='hb' %}">
 	        <img src="{%static 'images/nav-2.png'%}" />
 	        <p>红包</p>
 	    </a>
     </li>
     <li>
-		<a class="nav_3" href="{%url 'welfare_list' type='yhq' %}">
+		<a class="nav_yhq" href="{%url 'welfare_list' type='yhq' %}">
 			<img src="{%static 'images/nav-3.png'%}" />
 		    <p>优惠券</p>
 		</a>
     </li>
     <li>
-	    <a class="nav_4" href="{%url 'welfare_list' type='by' %}">
+	    <a class="nav_by" href="{%url 'welfare_list' type='by' %}">
 	    	<img src="{%static 'images/nav-4.png'%}" />
 	    	<p>9.9包邮</p>
     	</a>
@@ -100,29 +107,29 @@ $(function(){
 </div>
 
 <script>
-$(".nav_1").mouseover(function(){
+$(".nav_all").mouseover(function(){
 $(this).children().attr("src","{%static 'images/pic_14.png'%}");
 });
-$(".nav_1").mouseleave(function(){
+$(".nav_all").mouseleave(function(){
 $(this).children().attr("src","{%static 'images/nav-1.png'%}");
 });
-$(".nav_2").mouseover(function(){
+$(".nav_hb").mouseover(function(){
 $(this).children().attr("src","{%static 'images/pic_08.png'%}");
 });
-$(".nav_2").mouseleave(function(){
+$(".nav_hb").mouseleave(function(){
 $(this).children().attr("src","{%static 'images/nav-2.png'%}");
 
 });
-$(".nav_3").mouseover(function(){
+$(".nav_yhq").mouseover(function(){
 $(this).children().attr("src","{%static 'images/pic_03.png'%}");
 });
-$(".nav_3").mouseleave(function(){
+$(".nav_yhq").mouseleave(function(){
 $(this).children().attr("src","{%static 'images/nav-3.png'%}");
 });
-$(".nav_4").mouseover(function(){
+$(".nav_by").mouseover(function(){
 $(this).children().attr("src","{%static 'images/pic_05.png'%}");
 });
-$(".nav_4").mouseleave(function(){
+$(".nav_by").mouseleave(function(){
 $(this).children().attr("src","{%static 'images/nav-4.png'%}");
 });
 </script>
@@ -176,9 +183,13 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
         <div class="box_line"></div>
         <div>
         {%if wel.type == 'baoyou'%}
-            <a class="classes"><span class="new-price">￥{{wel.baoyou.nprice}}</span>&nbsp;<span class="old-price">￥{{wel.baoyou.mprice}}</span></a>
+            <div class="classes"><span class="new-price">￥{{wel.baoyou.nprice}}</span>&nbsp;<span class="old-price">￥{{wel.baoyou.mprice}}</span></div>
         {%else%}
-          	<a class="classes"><span>流量</span><span>VIP会员</span></a>
+          	<div class="classes">
+          	{% for mark in wel.marks.all|slice:":3" %}
+          	<span>{{mark.name}}</span>
+          	{% endfor %}
+          	</div>
         {%endif%}
         <img src="{%static 'images/pict_60.png'%}" class="see" />
         <span class="number">{{wel.view_count}}</span>

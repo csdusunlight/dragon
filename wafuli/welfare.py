@@ -97,6 +97,7 @@ def welfare(request, id=None, page=None, type=None):
             'hot1':hot_wel_list[0],
             'hot2':hot_wel_list[1],
             'info':hot_info,
+            'type':type,
         }
         ranks = RecommendRank.objects.all()[0:6]
         for i in range(len(ranks)):

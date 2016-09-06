@@ -167,7 +167,7 @@ $(function(){
           {% endif %}
         </li>
 {% endfor %}
-      <a href="#" class="more-content">更多红包>></a>
+      <a href="{% url 'welfare_list' type='hb' %}" class="more-content">更多红包>></a>
       </ul>
 
       <ul>
@@ -176,14 +176,14 @@ $(function(){
           <a target="_blank" href="{{news.url}}" ><img src="{{news.pic.url}}" alt="{{news.title}}" width="258" height="148"/></a>
           <h2><a target="_blank" href="{{news.url}}" >{{news.title}}</a></h2>
           <div>{{news.title}}</div>
-          <p>商家：{{news.provider}}<br />市场价：<span class="shichangjia">{{news.mprice}}</span><br />现&nbsp;&nbsp;价：<span class="xianjia">{{news.nprice}}</span></p>
+          <p>商家：{{news.provider}}<br />市场价：<span class="shichangjia">￥{{news.mprice}}</span><br />现&nbsp;&nbsp;价：<span class="xianjia">￥{{news.nprice}}</span></p>
           <a href="{{news.url}}" class="more" target="_blank">立即抢购</a>
           {% if news.is_new %}
           <div class="newpost zero">新</div>
           {% endif %}
         </li>
 {% endfor %}
-      <a href="#" class="more-content">更多包邮>></a>
+      <a href="{% url 'welfare_list' type='by' %}" class="more-content">更多包邮>></a>
       </ul>
 
       <ul>
@@ -199,7 +199,7 @@ $(function(){
           {% endif %}
         </li>
 {% endfor %}
-      <a href="#" class="more-content">更多优惠>></a>
+      <a href="{% url 'welfare_list' type='yhq' %}" class="more-content">更多优惠>></a>
       </ul>
        <img src="{% static 'images/fenge.png' %}" class="LINE" />
        <img src="{% static 'images/pic_28.png' %}" class="Tag" />
