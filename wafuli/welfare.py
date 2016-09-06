@@ -94,8 +94,7 @@ def welfare(request, id=None, page=None, type=None):
             'strategy_list':strategy_list,
             'page_dic':page_dic,
             'ref_dic':ref_dic,
-            'hot1':hot_wel_list[0],
-            'hot2':hot_wel_list[1],
+            'hot_wel_list':hot_wel_list,
             'info':hot_info,
             'type':type,
         }

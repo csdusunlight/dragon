@@ -199,6 +199,8 @@ def expsubmit(request):
     try:
         with transaction.atomic():
             news = model.objects.get(pk=news_id)
+            info_str = "news_id:" + news_id + "| invest_account:" + telnum + "| is_futou:" + is_futou
+            logger.info(info_str)
             if str(is_futou)!='1' and news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
                 raise ValueError('This invest_account is repective in project:' + str(news.id))
             else:

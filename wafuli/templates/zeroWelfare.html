@@ -266,72 +266,39 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
       <img src="{%static 'images/pict_98.png'%}" />
     </div>
     <div class="other_box">
-        <div class="box_children box-bottom">
-          <div class="box_pic">
-            <a href="{{wel.url}}" target="_blank"><img src="{{wel.pic.url}}"></a>
-            <div class="box_pic_bg">
-              <p style="color:#FFF; font-size:10px;">
-              <a href="{{wel.url}}" target="_blank" style="color:#FF0">
-            {%if wel.type == 'youhuiquan'%}
-                点击领取
-            {%else%}
-                点击体验
-            {%endif%}
-              </a></p>
-            </div>
+    {% for wel in hot_wel_list %}
+       <div class="box_children box-bottom">
+        <div class="box_pic">
+          <a href="{{wel.url}}" target="_blank"><img src="{{wel.pic.url}}"></a>
+          <div class="box_pic_bg">
+          	<p style="color:#FFF; font-size:10px;">
+          	<a href="{{wel.url}}" target="_blank" style="color:#FF0">
+          {%if wel.type == 'youhuiquan'%}
+            	点击领取
+          {%else%}
+          		点击体验
+          {%endif%}
+          	</a></p>
           </div>
-          <a href="{{wel.url}}"  target="_blank" class="box_name">{{wel.title}}</a>
-          <span class="tag">红包</span>
-          <div class="box_line"></div>
-          <div>
-          <a class="classes"><span><!-- {{wel.get_type_display}} -->流量</span><span><!-- {{wel.get_type_display}} -->VIP会员</span></a>
-          <img src="{%static 'images/pict_60.png'%}" class="see" />
-          <span class="number">{{wel.view_count}}</span>
-          </div>
-      </div>
-      <div class="box_children box-bottom">
-          <div class="box_pic">
-            <a href="{{wel.url}}" target="_blank"><img src="{{wel.pic.url}}"></a>
-            <div class="box_pic_bg">
-              <p style="color:#FFF; font-size:10px;">
-              <a href="{{wel.url}}" target="_blank" style="color:#FF0">
-            {%if wel.type == 'youhuiquan'%}
-                点击领取
-            {%else%}
-                点击体验
-            {%endif%}
-              </a></p>
-            </div>
-          </div>
-          <a href="{{wel.url}}"  target="_blank" class="box_name">{{wel.title}}</a>
-          <span class="tag">红包</span>
-          <div class="box_line"></div>
-          <div>
-          <a class="classes"><span><!-- {{wel.get_type_display}} -->流量</span><span><!-- {{wel.get_type_display}} -->VIP会员</span></a>
-          <img src="{%static 'images/pict_60.png'%}" class="see" />
-          <span class="number">{{wel.view_count}}</span>
-          </div>
-      </div>
-       <!-- <div class="other_1">
-                <div class="other_pic"><a href="{{hot1.url}}" target="_blank"><img src="{{hot1.pic.url}}" /></a></div>
-                <a href="{{hot1.url}}" class="other_name" target="_blank">{{hot1.title}}</a>
-                <div class="other_line"></div>
-                <div>
-                <a class="other_classes">{{hot1.get_type_display}}</a>
-                <img src="{%static 'images/pict_60.png'%}" class="other_see" />
-                <span class="other_number">{{hot1.view_count}}</span>
-                </div>
         </div>
-        <div class="other_2">
-                <div class="other_pic"><a href="{{hot2.url}}" target="_blank"><img src="{{hot2.pic.url}}" /></a></div>
-                <a href="{{hot2.url}}" class="other_name" target="_blank">{{hot2.title}}</a>
-                <div class="other_line"></div>
-                <div>
-                <a class="other_classes">{{hot2.get_type_display}}</a>
-                <img src="{%static 'images/pict_60.png'%}" class="other_see" />
-                <span class="other_number">{{hot2.view_count}}</span>
-                </div>
-         </div> -->
+        <a href="{{wel.url}}"  target="_blank" class="box_name">{{wel.title}}</a>
+        <span class="tag">{{wel.get_type_display}}</span>
+        <div class="box_line"></div>
+        <div>
+        {%if wel.type == 'baoyou'%}
+            <div class="classes"><span class="new-price">￥{{wel.baoyou.nprice}}</span>&nbsp;<span class="old-price">￥{{wel.baoyou.mprice}}</span></div>
+        {%else%}
+          	<div class="classes">
+          	{% for mark in wel.marks.all|slice:":3" %}
+          	<span>{{mark.name}}</span>
+          	{% endfor %}
+          	</div>
+        {%endif%}
+        <img src="{%static 'images/pict_60.png'%}" class="see" />
+        <span class="number">{{wel.view_count}}</span>
+        </div>
+      </div>
+      {%endfor%}
     </div>
   </div>
 
