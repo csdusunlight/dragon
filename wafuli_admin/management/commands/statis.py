@@ -38,7 +38,7 @@ class Command(BaseCommand):
                 aggregate(cou=Count('user_id',distinct=True),sum=Sum('invest_amount'))
         exchange_scores = dict.get('sum') or 0
         exchange_num = dict.get('cou')
-        new_wel_num = Welfare.objects.filter(startTime__gte=today).count() + \
+        new_wel_num = Welfare.objects.filter(state='1',startTime__gte=today).count() + \
                 Task.objects.filter(pub_date__gte=today).count() + \
                 Finance.objects.filter(pub_date__gte=today).count()
                 
