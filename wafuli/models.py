@@ -62,7 +62,7 @@ class News(Base):
             raise ValidationError({'exp_url': u'请输入活动体验地址'})
         elif self.isonMobile == True and self.exp_code == '':
             raise ValidationError({'exp_code': u'请上传手机扫描二维码'})
-        if self.pic.size > 30000:
+        if self.pic and self.pic.size > 30000:
             raise ValidationError({'pic': u'图片大小不能超过30k'})
     def is_expired(self):
         return self.state == '2'
