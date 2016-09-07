@@ -1,6 +1,5 @@
 from django.conf.urls import url
 from captcha import views
-from captcha import validate
 urlpatterns = [
     url(r'image/(?P<key>\w+)/$', views.captcha_image, name='captcha-image', kwargs={'scale': 1}),
     url(r'image/(?P<key>\w+)@2/$', views.captcha_image, name='captcha-image-2x', kwargs={'scale': 2}),
