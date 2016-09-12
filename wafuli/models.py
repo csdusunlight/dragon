@@ -375,6 +375,8 @@ class Press(Base):
 class Advertisement(Base):
     pic = models.ImageField(upload_to='photos/%Y/%m/%d', blank=False,
                              verbose_name=u"banner图片上传(1920*300)，小于100k")
+    pic = models.ImageField(upload_to='photos/%Y/%m/%d', blank=False,
+                             verbose_name=u"banner图片上传(414*160)，小于30k")
     location = models.CharField(u"广告位置", max_length=2, choices=ADLOCATION)
     is_hidden = models.BooleanField(u"是否隐藏",default=False)
     navigation = models.CharField(u"banner导航文字", max_length=6)
