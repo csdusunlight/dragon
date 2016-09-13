@@ -386,9 +386,22 @@ class Advertisement(Base):
         verbose_name = u"横幅广告"
         verbose_name_plural = u"横幅广告"
     def clean(self):
-        if self.pic.size > 100000:
+        if self.pic and self.pic.size > 100000:
             raise ValidationError({'pic': u'图片大小不能超过100k'})
-        if self.mpic.size > 30000:
+        if self.mpic and self.mpic.size > 30000:
+            raise ValidationError({'pic': u'图片大小不能超过30k'})
+class MAdvert(Base):
+    pic = models.ImageField(upload_to='photos/%Y/%m/%d', blank=False,
+                             verbose_name=u"图片上传，图片大小根据位置设计好，小于30k")
+    location = models.CharField(u"广告位置", max_length=2, choices=MADLOCATION)
+    is_hidden = models.BooleanField(u"是否隐藏",default=False)
+    navigation = models.CharField(u"banner导航文字", max_length=6)
+    class Meta:
+        ordering = ["-news_priority","-pub_date"]
+        verbose_name = u"普通广告"
+        verbose_name_plural = u"普通广告"
+    def clean(self):
+        if self.pic and self.pic.size > 30000:
             raise ValidationError({'pic': u'图片大小不能超过30k'})
 class UserWelfare(models.Model):
     user = models.ForeignKey(MyUser, related_name="submited_welfare")
