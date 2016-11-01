@@ -35,7 +35,7 @@ $(function(){
 		else {
 			window.open(url_openwindow + "?id=" + id + "&type=" + type);
 		}
-		
+
 	});
 	$("button.td-tj").click(function(){
 		var telnum = $('input#telnum').val();
@@ -58,7 +58,7 @@ $(function(){
 			is_futou = 1;
 		}
 		$.ajax({
-			url:"{%url 'expsubmit' %}?type=" + type +"&id=" + id + "&telnum=" + telnum 
+			url:"{%url 'expsubmit' %}?type=" + type +"&id=" + id + "&telnum=" + telnum
 					+ "&remark=" + remark,
 			type:'post',
 			data:{
@@ -111,7 +111,9 @@ $(function(){
   <div class="td-msg">
   	<div class="msg-ti"><img src="{% static 'images/task-02.png' %}" class="ms-pd"/><span class="mag-pp">信息登记</span></div>
    	<div class="ma-div">注册手机号：<input type="text" placeholder="输入您的手机号，若有多个请分别提交" class="ms-input" id='telnum'/></div>
-	<div class="ma-div2">是否复投：  
+    <div class="ma-div">投资金额：<input type="text" placeholder="输入您的投资金额" class="ms-input"/></div>
+    <div class="ma-div">投资标期：<input type="text" placeholder="输入您的投资标期" class="ms-input"/></div>
+	<div class="ma-div2">是否复投：
 		<input type="radio" name="futou" id="radio_box"/><label for="radio_box">是</label>
 		<input type="radio" name="futou" id="radio_box" checked="checked"/><label for="radio_box">否</label>
 	</div>
