@@ -4,6 +4,7 @@ Created on 20160222
 @author: lch
 '''
 from django.conf.urls import url,include
+from django.views.generic.base import TemplateView
 
 # url_about = [
 #     url(r'^aboutus/$', 'wafuli.views.aboutus', name="about"),
@@ -52,4 +53,6 @@ urlpatterns = [
     url(r'^business/(?:list-page(?P<page>[0-9]*)/)?$', 'wafuli.views.business', name='business_list'),
     url(r'^information/(?:(?P<id>[0-9]*)/)?$', 'wafuli.views.information', name='information'),
     url(r'^information/(?:(?P<type>wahangqing|wagushi|washuju|wahuodong)/)?(?:list-page(?P<page>[0-9]*)/)?$', 'wafuli.views.information', name='information_list'),
+    
+    url(r'^sitemap/$', TemplateView.as_view(template_name="sitemap.html"), name='sitemap'),
 ]
