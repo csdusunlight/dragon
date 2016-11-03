@@ -595,25 +595,16 @@ ul,li{list-style:none;}
     border-bottom: 1px solid #eee;
 }
 .p-img{
-   margin: 0;
-  padding: 0;
-  width: 137px;
-  height: 137px;
-  line-height: 114px;
-  margin-left: 50px;
-  margin-top: 0px;
-  background: url("../images/bg-1.jpg") no-repeat;
+  margin: 0 auto;
+  width: 234px;
+  height: 154px;
   margin-bottom: 0.5rem;
 }
 .o-img{
-   max-width: 137px;
-    max-height: 137px;
+   max-width: 234px;
+    max-height: 154px;
     *margin-top: expression((137 - this.height )/2);
     vertical-align: middle;
-/*  padding: 30px 6px 6px 20px;*/
-}
-.p-img:hover{
-    background: url("../images/bg-1-hover.jpg") no-repeat;
 }
 .morest{background: #CACACA;
 color: rgb(255, 255, 255);
