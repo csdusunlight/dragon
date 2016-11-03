@@ -243,12 +243,8 @@
         }
         /*3d反转*/
 
-        * {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-        .ty-content {
+        .index_18 .ty-content {
+            display: block;
             margin: 10px auto 0;
         }
 
