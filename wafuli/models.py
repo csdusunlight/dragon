@@ -133,6 +133,7 @@ class Hongbao(Welfare):
 class Baoyou(Welfare):
     mprice = models.CharField(u"市场价", max_length=10)
     nprice = models.CharField(u"现价", max_length=10)
+    desc = models.CharField(u"描述", max_length=20)
     isonMobile = models.BooleanField(u'是否为移动端活动', default= False)
     exp_code = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, verbose_name=u"上传二维码")
     def clean(self):
@@ -149,7 +150,7 @@ class CouponProject(Welfare):
     amount =models.CharField(u'金额(xx元或x%)', max_length=10)
     endtime = models.DateField(u"截止日期")
     introduction = models.TextField(u"使用说明",max_length=200)
-    claim_limit = models.SmallIntegerField(u"限领次数", blank=True, default=1)
+    claim_limit = models.SmallIntegerField(u"限领次数", default=1)
     def __unicode__(self):
         return '%s:%s' % (self.get_ctype_display(), self.title)
     class Meta:
@@ -346,6 +347,7 @@ class ExchangeRecord(models.Model):
     name = models.CharField(u'收件人姓名', max_length=20)
     tel = models.CharField(u'收件人手机号', max_length=14)
     addr = models.CharField(u'收件人地址', max_length=100)
+    postcode = models.CharField(u'邮编', max_length=10)
     message = models.CharField(u'留言', default=u"暂无", max_length=100)
     user_event = GenericRelation("UserEvent",related_query_name='exchangerecord')
     def __unicode__(self):
@@ -392,7 +394,7 @@ class Advertisement(Base):
             raise ValidationError({'pic': u'图片大小不能超过30k'})
 class MAdvert(Base):
     pic = models.ImageField(upload_to='photos/%Y/%m/%d', blank=False,
-                             verbose_name=u"图片上传，图片大小根据位置设计好，小于30k")
+                             verbose_name=u"banner图片上传(1920*300)，小于100k")
     location = models.CharField(u"广告位置", max_length=2, choices=MADLOCATION)
     is_hidden = models.BooleanField(u"是否隐藏",default=False)
     navigation = models.CharField(u"banner导航文字", max_length=6)
