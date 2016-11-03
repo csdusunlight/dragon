@@ -115,19 +115,19 @@
     text-decoration: underline;
     text-align: right;
 }
-#index_16{width:1100px;height:385px;clear:both;display:inline-block;margin-top:248px;text-align:left;}
-.index_17{width:238px;height:385px;float:left;display:inline;text-align:left;background:#00d6b3 url(../images/bg-3.png) no-repeat 84px 40px;position:relative;}
+#index_16{width:1100px;height:330px;clear:both;display:inline-block;margin-top:248px;text-align:left;}
+.index_17{width:238px;height:330px;float:left;display:inline;text-align:left;background:#00d6b3 url(../images/bg-3.png) no-repeat 84px 40px;position:relative;}
 .index_17 h2{line-height:27px;font-size:30px;color:#fff;position:absolute;bottom:86px;left:25px;}
 .index_17 h3{line-height:27px;font-size:15px;color:#fff;position:absolute;bottom:52px;left:55px;}
 .index_17 a.more{line-height:28px;font-size:13px;color:#fff;position:absolute;right:4px;bottom:52px;padding: 0;}
-.index_18{width:862px;height:385px;float:left;display:inline;text-align:left; position:relative;}
-.index_18 ul {display:none;position: absolute; float:left; width:100%; height:365px; background:#fff; border-bottom:2px solid #00d6b3; margin-top:10px;}
+.index_18{width:862px;height:330px;float:left;display:inline;text-align:left; position:relative;}
+.index_18 .ty-container-box {display:none;position: absolute; float:left; width:100%; height:310px; background:#fff; border-bottom:2px solid #00d6b3; margin-top:10px;}
 /*体验福利改版*/
     .ty-container-box>li {
         float: left;
         margin-left: 20px;
         width: 258px;
-        height: 365px;
+        height: auto;
     }
     h2 {
         margin-top: 10px;
@@ -248,15 +248,8 @@
             transform: translateY(0);
         }
         /*反转*/
-
-        * {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-
         .ty-content {
-            display: block !important;
+            display: block;
             margin: 10px auto 0;
         }
 
@@ -271,6 +264,7 @@
         .ty-content li {
             cursor: pointer;
             -webkit-perspective: 4000px;
+            perspective: 4000px;
             width: 124px;
             height: 84px;
             float: left;
@@ -281,7 +275,9 @@
         .ty-content .wrapper {
             position: relative;
             -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
             -webkit-transition: -webkit-transform .6s;
+            transition: -webkit-transform .6s;
         }
 
         .ty-content li img {
@@ -289,32 +285,36 @@
             border-radius: 3px;
             position: absolute;
             -webkit-transform: translateZ(42px);
+            transform: translateZ(42px);
             -webkit-transition: all .6s;
+            transition: all .6s;
         }
 
         .ty-content li p {
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(250, 241, 244, 1)), color-stop(100%, rgba(190, 202, 217, 0.6)));
             position: absolute;
-            -webkit-transform: rotateX(-90deg) translateZ(42px);
-            transform: rotateX(-90deg) translateZ(42px);
-            -webkit-transition: all .6s;
-            transition: all .6s;
-            display: block;
             top: 0;
+            display: block;
+            padding: 8px;
+            width: 124px;
+            height: 84px;
+            margin: 0;
             text-align: left;
             border-radius: 15px;
             font-size: 12px;
             line-height: 1.5;
             color: #333;
-            padding: 8px;
             box-sizing: border-box;
-            width: 124px;
-            height: 84px;
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(250, 241, 244, 1)), color-stop(100%, rgba(190, 202, 217, 0.6)));
             box-shadow: none;
+            -webkit-transform: rotateX(-90deg) translateZ(42px);
+            transform: rotateX(-90deg) translateZ(42px);
+            -webkit-transition: all .6s;
+            transition: all .6s;
         }
 
         .ty-content li:hover .wrapper {
             -webkit-transform: rotateX(90deg);
+            transform: rotateX(90deg);
         }
 
         .ty-content li:hover img {
