@@ -644,8 +644,18 @@ padding: 15px;}
 line-height: 35px;color: #898989;}
 .td-msg{width:1100px; height:auto; margin:2rem auto;border:1px solid #EBEBEB;}
 /*体验福利新加样式*/
-#preview{width:260px;height:190px;border:1px solid #000;overflow:hidden;}
-#imghead {filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);}
+#preview{
+  width:100%;overflow:hidden;
+  margin-top: 20px;clear: both;
+}
+#imghead {
+  max-height: 200px;
+  width: auto;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);
+}
+#preview+input[type=file] {
+  display: block;
+  margin: 10px auto;
+}
 /*体验福利新加样式 end*/
 .td-msgs{width:1100px; height:auto; margin:2rem auto;border:1px solid #EBEBEB;}
 .detail-html{padding:20px;}
