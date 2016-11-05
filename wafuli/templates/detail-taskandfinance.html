@@ -86,6 +86,65 @@ $(function(){
 	});
 });
 </script>
+<!-- 图片上传部分js -->
+<script type="text/javascript">
+                //图片上传预览    IE是用了滤镜。
+        function previewImage(file)
+        {
+          var MAXWIDTH  = 260;
+          var MAXHEIGHT = 180;
+          var div = document.getElementById('preview');
+          if (file.files && file.files[0])
+          {
+              div.innerHTML ='<img id=imghead>';
+              var img = document.getElementById('imghead');
+              img.onload = function(){
+                var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+                img.width  =  rect.width;
+                img.height =  rect.height;
+//                 img.style.marginLeft = rect.left+'px';
+                img.style.marginTop = rect.top+'px';
+              }
+              var reader = new FileReader();
+              reader.onload = function(evt){img.src = evt.target.result;}
+              reader.readAsDataURL(file.files[0]);
+          }
+          else //兼容IE
+          {
+            var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+            file.select();
+            var src = document.selection.createRange().text;
+            div.innerHTML = '<img id=imghead>';
+            var img = document.getElementById('imghead');
+            img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+            var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+            status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
+            div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
+          }
+        }
+        function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+            var param = {top:0, left:0, width:width, height:height};
+            if( width>maxWidth || height>maxHeight )
+            {
+                rateWidth = width / maxWidth;
+                rateHeight = height / maxHeight;
+
+                if( rateWidth > rateHeight )
+                {
+                    param.width =  maxWidth;
+                    param.height = Math.round(height / rateWidth);
+                }else
+                {
+                    param.width = Math.round(width / rateHeight);
+                    param.height = maxHeight;
+                }
+            }
+
+            param.left = Math.round((maxWidth - param.width) / 2);
+            param.top = Math.round((maxHeight - param.height) / 2);
+            return param;
+        }
+</script>
 {%endblock%}
 {%block expblock%}
   <div class="td-ti">
@@ -113,16 +172,29 @@ $(function(){
    	<div class="ma-div">注册手机号：<input type="text" placeholder="输入您的手机号，若有多个请分别提交" class="ms-input" id='telnum'/></div>
     <div class="ma-div">投资金额：<input type="text" placeholder="输入您的投资金额" class="ms-input"/></div>
     <div class="ma-div">投资标期：<input type="text" placeholder="输入您的投资标期" class="ms-input"/></div>
-	<div class="ma-div2">是否复投：
-		<input type="radio" name="futou" id="radio_box"/><label for="radio_box">是</label>
-		<input type="radio" name="futou" id="radio_box" checked="checked"/><label for="radio_box">否</label>
-	</div>
+  	<div class="ma-div2">是否复投：
+  		<input type="radio" name="futou" id="radio_box"/><label for="radio_box">是</label>
+  		<input type="radio" name="futou" id="radio_box" checked="checked"/><label for="radio_box">否</label>
+  	</div>
     <div class="ma-div3">备注：<input type="text" class="ms-input" id='remark'/></div>
     <p class="td-yy"><button class="md-trigger td-tj">提交</button></p>
     <div class="clearboth"></div>
   </div>
+  <!-- 体验福利改变部分 -->
+  <div class="td-msg">
+    <div class="msg-ti"><img src="{% static 'images/task-02.png' %}" class="ms-pd"/><span class="mag-pp">任务提交</span></div>
+    <div class="ma-div">注册手机号：<input type="text" placeholder="输入您的手机号，若有多个请分别提交" class="ms-input" id='telnum'/></div>
+    <div id="preview">
+        <img id="imghead" src='<%=request.getContextPath()%>/images/defaul.jpg'>
+    </div>
+    <input type="file" onchange="previewImage(this)" />
+    <p class="td-yy"><button class="md-trigger td-tj">提交</button></p>
+    <div class="clearboth"></div>
+  </div><!-- 体验福利改变部分 end -->
   <div class="td-msgs">
   	<div class="msg-ti"><img src="{% static 'images/task-03.png' %}" class="ms-pd"/><span class="mag-pp">奖励规则</span></div>
 	<div class="detail-html">{{news.rules|safe}}</div>
   </div>
 {%endblock%}
+
+
