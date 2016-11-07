@@ -677,7 +677,7 @@ padding-left: 7px;}
   font-size: 16px;
   width: 500px;
   text-align: right;
-  float: left;
+  /*float: left;*/
 }
 .ma-div2{margin: 20px 0px 0px 346px;
   font-size: 16px;
@@ -694,8 +694,9 @@ padding-left: 7px;}
   float: left;
 }
 .clearboth{clear:both}
-.td-tj{float: left;
-margin: 1rem 0rem;
+.td-tj{
+/*float: left;*/
+margin: 1rem auto;
 background: rgb(240, 134, 25) none repeat scroll 0% 0%;
 color: rgb(255, 255, 255);
 border-radius: 20px;
@@ -705,6 +706,7 @@ font-size: 15px;}
   float: left;
   margin: 5px 0px 0px 23px;
 }
+.td-msg .submit {float: none;}
 .mag-tab{width: 660px;
 height: 160px;
 border: 1px solid rgb(204, 204, 204);
