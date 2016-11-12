@@ -4,6 +4,7 @@ Created on 20160222
 @author: lch
 '''
 from django.conf.urls import url,include
+from django.views.generic.base import TemplateView
 
 # url_about = [
 #     url(r'^aboutus/$', 'wafuli.views.aboutus', name="about"),
@@ -31,8 +32,9 @@ urlpatterns = [
     url(r'^welpage/$', 'wafuli.views.get_wel_page', name='get_wel_page'),
     url(r'^presspage/$', 'wafuli.views.get_press_page', name='get_press_page'),
     url(r'^aboutus/$', 'wafuli.views.aboutus', name="aboutus"),
-    url(r'^exp_tf/$', 'wafuli.views.experience_taskandfinance', name='exp_tf'),
-    url(r'^exp_wel_common/$', 'wafuli.welfare.exp_welfare_common', name='exp_welfare_common'),
+#     url(r'^exp_tf/$', 'wafuli.views.experience_taskandfinance', name='exp_tf'),
+    url(r'^exp_wel_erweima/$', 'wafuli.welfare.exp_welfare_erweima', name='exp_welfare_erweima'),
+    url(r'^exp_wel_openwindow/$', 'wafuli.welfare.exp_welfare_openwindow', name='exp_welfare_openwindow'),
     url(r'^exp_wel_youhuiquan/$', 'wafuli.welfare.exp_welfare_youhuiquan', name='exp_welfare_youhuiquan'),
     url(r'^expsubmit/$', 'wafuli.views.expsubmit', name='expsubmit'),
     url(r'^lookup_order/$', 'wafuli.views.lookup_order', name='lookup_order'),
@@ -51,4 +53,6 @@ urlpatterns = [
     url(r'^business/(?:list-page(?P<page>[0-9]*)/)?$', 'wafuli.views.business', name='business_list'),
     url(r'^information/(?:(?P<id>[0-9]*)/)?$', 'wafuli.views.information', name='information'),
     url(r'^information/(?:(?P<type>wahangqing|wagushi|washuju|wahuodong)/)?(?:list-page(?P<page>[0-9]*)/)?$', 'wafuli.views.information', name='information_list'),
+    
+    url(r'^sitemap/$', TemplateView.as_view(template_name="sitemap.html"), name='sitemap'),
 ]

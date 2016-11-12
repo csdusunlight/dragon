@@ -29,7 +29,7 @@ class MyUserAdmin(UserAdmin):
     ordering = ('mobile',)
     list_display = ('mobile', 'email', 'username','is_staff','date_joined')
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
-
+    filter_horizontal = ('groups', 'user_permissions', 'admin_permissions')
 # Now register the new UserAdmin...
 admin.site.register(MyUser, MyUserAdmin)
 admin.site.register(UserSignIn)

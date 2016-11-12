@@ -14,7 +14,17 @@ a:focus { outline: none; } /*很多网站都会加的属性*/
 .whole-nav-font{color:#008fd7; text-align: left;padding-left: 34px; font-size:18px; font-weight:bold;background-image: url(../images/01_20.jpg);background-position: left center;background-repeat: no-repeat;}
 .whole-content{ margin-left:-18px; overflow:hidden}
 .whole-content img{ float:left;margin-left:20px; margin-top:20px;}
-.right a{ display:block}
+.right a{ display:block; position: relative;}
+.right p {
+        position: absolute;
+        top: 79px;
+        background: #000;
+        width: 200px;
+        color: #fff;
+        opacity: 0;
+}
+.right a:hover p {opacity: 0.5;transition: opacity 1s;}
+.tight p:hover {opacity: 0.5;}
 .right img{ display:block}
 .list_img{ border:#e5e5e5 solid 2px;width: 200px;height:95px;}
 .input_box input[type=text]{ width:185px; height:27px; border:solid 1px #008fd7;border-radius: 13px; margin:0;padding:0;outline:none;padding:0 5px 0;}

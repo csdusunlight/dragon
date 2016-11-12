@@ -310,7 +310,9 @@ def get_admin_return_page(request):
              "score":u'无' if con.audit_state!='0' or not con.score_translist.exists() else con.score_translist.first().transAmount,
              "id":con.id,
              "remark": con.remark or u'无' if con.audit_state!='2' or not con.audited_logs.exists() else con.audited_logs.first().reason,
-             }
+             "amount": con.invest_amount,
+             "term": con.invest_term,
+        }
         data.append(i)
     if data:
         res['code'] = 1
@@ -560,6 +562,7 @@ def admin_withdraw(request):
             res['res_msg'] = u'该项目已审核过，不要重复审核！'
             return JsonResponse(res)
         log = AuditLog(user=admin_user,item=event)
+        admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event.user, event_type='2')
         if type==1:
             event.audit_state = '0'
             log.audit_result = True
@@ -575,10 +578,14 @@ def admin_withdraw(request):
                         logger.debug('Inviting Award scores is successfully payed!')
                         inviter.save(update_fields=['invite_scores'])
                         translist.user_event = event
-                        translist.save(update_fields=['user_event'])
+                        translist.admin_event = admin_event
+                        translist.save(update_fields=['user_event','admin_event'])
                     else:
                         logger.debug('Inviting Award scores is failed to pay!!!')
-                        
+            trans_withdraw = event.translist.first()
+            if trans_withdraw:
+                trans_withdraw.admin_event = admin_event
+                trans_withdraw.save(update_fields=['admin_event'])
         elif type == 2:
             reason = request.POST.get('reason', '')
             if not reason:
@@ -591,15 +598,14 @@ def admin_withdraw(request):
             translist = charge_money(event.user, '0', event.invest_amount, u'冲账')
             if translist:
                 translist.user_event = event
-                translist.save(update_fields=['user_event'])
+                translist.admin_event = admin_event
+                translist.save(update_fields=['user_event','admin_event'])
                 res['code'] = 0
             else:
                 logger.critical(u"Charging cash is failed!!!")
                 res['code'] = -2
                 res['res_msg'] = u"现金记账失败，请检查输入合法性后再次提交！"
                 return JsonResponse(res)
-        
-        admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event.user, event_type='2')
         log.admin_item = admin_event
         log.save()
         event.audit_time = log.time
@@ -831,6 +837,79 @@ def get_admin_score_page(request):
              "admin":u'无' if con.audit_state=='1' or not con.audited_logs.exists() else con.audited_logs.first().user.username,
              "time_admin":u'无' if con.audit_state=='1' or not con.audit_time else con.audit_time.strftime("%Y-%m-%d %H:%M"),
              "remark":u'无' if con.audit_state!='2' or not con.audited_logs.exists() else con.audited_logs.first().reason,
+             }
+        data.append(i)
+    if data:
+        res['code'] = 1
+    res["pageCount"] = paginator.num_pages
+    res["recordCount"] = item_list.count()
+    res["data"] = data
+    return JsonResponse(res)
+
+def admin_charge(request):
+    admin_user = request.user
+    if request.method == "GET":
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            return redirect(reverse('admin:login') + "?next=" + reverse('admin_charge'))
+        return render(request,"admin_charge.html")
+    
+def get_admin_charge_page(request):
+    res={'code':0,}
+    user = request.user
+    if not ( user.is_authenticated() and user.is_staff):
+        res['code'] = -1
+        res['url'] = reverse('admin:login') + "?next=" + reverse('admin_return')
+        return JsonResponse(res)
+    page = request.GET.get("page", None)
+    size = request.GET.get("size", 10)
+    try:
+        size = int(size)
+    except ValueError:
+        size = 10
+
+    if not page or size <= 0:
+        raise Http404
+    item_list = []
+
+    item_list = TransList.objects.all()
+    startTime = request.GET.get("startTime", None)
+    endTime = request.GET.get("endTime", None)
+    if startTime and endTime:
+        s = datetime.datetime.strptime(startTime,'%Y-%m-%dT%H:%M')
+        e = datetime.datetime.strptime(endTime,'%Y-%m-%dT%H:%M')
+        item_list = item_list.filter(time__range=(s,e))
+        
+    username = request.GET.get("username", None)
+    if username:
+        item_list = item_list.filter(user__username=username)
+    
+    mobile = request.GET.get("mobile", None)
+    if mobile:
+        item_list = item_list.filter(user__mobile=mobile)
+        
+    adminname = request.GET.get("adminname", None)
+    if adminname:
+        item_list = item_list.filter(admin_event__admin_user__username=adminname)
+    
+    paginator = Paginator(item_list, size)
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+    # If page is not an integer, deliver first page.
+        contacts = paginator.page(1)
+    except EmptyPage:
+    # If page is out of range (e.g. 9999), deliver last page of results.
+        contacts = paginator.page(paginator.num_pages)
+    data = []
+    for con in contacts:
+        i = {"username":con.user.username,
+             "mobile":con.user.mobile,
+             "time":con.time.strftime("%Y-%m-%d %H:%M"),
+             "init_amount":con.initAmount,
+             "charge_amount":('+' if con.transType=='0' else '-') + str(con.transAmount),
+             "reason": con.reason,
+             "remark": con.remark,
+             "admin_user":u'无' if not con.admin_event else con.admin_event.admin_user.username,
              }
         data.append(i)
     if data:

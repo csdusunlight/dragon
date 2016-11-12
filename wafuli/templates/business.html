@@ -6,7 +6,7 @@
 <meta content="挖福利为您提供互联网优惠券和免费福利领取活动信息！包括电商优惠券、O2O免费体验券、免费试用，有奖活动等。" name="description">
 <link href="{% static 'images/favicon.ico' %}" rel="shortcut icon">
 <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet">
-<link href="{% static 'css/index.css' %}" type="text/css" rel="stylesheet">
+<link href="{% static 'css/common.css' %}" type="text/css" rel="stylesheet">
 <link href="{% static 'css/page.css' %}" type="text/css" rel="stylesheet">
 <link href="{% static 'css/business.css' %}" type="text/css" rel="stylesheet">
 </head>
@@ -80,7 +80,10 @@
     <div class="right-box">
       <h3>你可能感兴趣的福利</h3>
       {%for wel in hot_wel_list%}
-      	<a href="{{wel.url}}"><img src="{{wel.pic.url}}"></a>
+      	<a target="_blank" href="{{wel.url}}">
+          <img src="{{wel.pic.url}}">
+          <p>{{wel.title}}</p>
+        </a>
       {%endfor%}
     </div>
   </div>
@@ -88,6 +91,6 @@
 </div>
 <!--底部-->
   {% include "footer.html" %}
-  <!--浮动窗口-->  
+  <!--浮动窗口-->
   {% include "outline.html" %}
 </body></html>

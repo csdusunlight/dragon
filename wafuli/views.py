@@ -14,6 +14,8 @@ from datetime import date
 from wafuli_admin.models import DayStatis, GlobalStatis, RecommendRank
 from account.models import MyUser
 from django.contrib.contenttypes.models import ContentType
+from django.db import transaction
+from wafuli.tools import update_view_count
 logger = logging.getLogger('wafuli')
 from .tools import listing
 import re
@@ -80,11 +82,14 @@ def finance(request, id=None):
         return render(request, 'finance.html',context)
     else:
         id = int(id)
+        news = None
         try:
             news = Finance.objects.get(id=id)
         except Finance.DoesNotExist:
             raise Http404(u"该页面不存在")
-        return render(request, 'detail-taskandfinance.html',{'news':news,'type':'Finance'})
+        update_view_count(news)
+        other_wel_list = Finance.objects.filter(state='1').order_by('-view_count')[0:10]
+        return render(request, 'detail-taskandfinance.html',{'news':news,'type':'Finance','other_wel_list':other_wel_list})
         
 def task(request, id=None):
     if id is None:
@@ -106,11 +111,14 @@ def task(request, id=None):
         return render(request, 'taskWelfare.html', context)
     else:
         id = int(id)
+        news = None
         try:
             news = Task.objects.get(id=id)
         except Task.DoesNotExist:
             raise Http404(u"该页面不存在")
-        return render(request, 'detail-taskandfinance.html',{'news':news,'type':'Task'})
+        update_view_count(news)
+        other_wel_list = Task.objects.filter(state='1').order_by('-view_count')[0:10]
+        return render(request, 'detail-taskandfinance.html',{'news':news,'type':'Task','other_wel_list':other_wel_list})
 def commodity(request, id):
     id = int(id)
     try:
@@ -130,31 +138,32 @@ def aboutus(request):
     ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='6'),is_hidden=False).first
     return render(request, 'aboutus.html',{'ad_list':ad_list})
 
-def experience_taskandfinance(request):
-    if not request.is_ajax():
-        logger.warning("Experience refused no-ajax request!!!")
-        raise Http404
-    code = '0'
-    url = ''
-    if not request.user.is_authenticated():
-        url = reverse('login') + '?next=' + request.META['HTTP_REFERER']
-        result = {'code':code, 'url':url}
-        return JsonResponse(result)
-    news_id = request.GET.get('id', None)
-    news_type = request.GET.get('type', None)
-    if not (news_id and news_type):
-        logger.error("news_id or news_type is missing!!!")
-        raise Http404
-    news = None
-    model = globals()[news_type]
-    news = model.objects.get(pk=news_id)
-    code = '1'
-    if news.isonMobile:
-        url = news.exp_code.url
-    else:
-        url = news.exp_url
-    result = {'code':code, 'url':url}
-    return JsonResponse(result)
+# def experience_taskandfinance(request):
+#     if not request.is_ajax():
+#         logger.warning("Experience refused no-ajax request!!!")
+#         raise Http404
+#     code = '0'
+#     url = ''
+#     if not request.user.is_authenticated():
+#         url = reverse('login') + '?next=' + request.META['HTTP_REFERER']
+#         result = {'code':code, 'url':url}
+#         return JsonResponse(result)
+#     news_id = request.GET.get('id', None)
+#     news_type = request.GET.get('type', None)
+#     if not (news_id and news_type):
+#         logger.error("news_id or news_type is missing!!!")
+#         raise Http404
+#     news = None
+#     model = globals()[news_type]
+#     news = model.objects.get(pk=news_id)
+#     code = '1'
+#     if news.isonMobile:
+#         url = news.exp_code.url
+#     else:
+#         url = news.exp_url
+#     result = {'code':code, 'url':url}
+#     return JsonResponse(result)
+from decimal import Decimal
 def expsubmit(request):
     if not request.is_ajax():
         logger.warning("Expsubmit refused no-ajax request!!!")
@@ -171,6 +180,9 @@ def expsubmit(request):
     telnum = request.POST.get('telnum', None)
     telnum = str(telnum).strip()
     remark = request.POST.get('remark', '')
+    term = request.POST.get('term', '').strip()
+    amount = request.POST.get('amount',0)
+    amount = Decimal(amount)
     if not (news_id and news_type and telnum):
         logger.error("news_id or news_type is missing!!!")
         raise Http404
@@ -181,22 +193,30 @@ def expsubmit(request):
         return JsonResponse(result)
     news = None
     model = globals()[news_type]
-    news = model.objects.get(pk=news_id)
 #     if news.state != '1':
 #         code = '4'
 #         msg = u'该项目已结束或未开始！'
 #         result = {'code':code, 'msg':msg}
 #         return JsonResponse(result)
-    if str(is_futou)=='1':
+    news = model.objects.get(pk=news_id)
+    is_futou = news.is_futou
+    info_str = "news_id:" + news_id + "| invest_account:" + telnum + "| is_futou:" + str(is_futou)
+    logger.info(info_str)
+    if is_futou:
         remark = u"复投：" + remark
-    if str(is_futou)!='1' and news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
+    try:
+        with transaction.atomic():
+            if not is_futou and news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
+                raise ValueError('This invest_account is repective in project:' + str(news.id))
+            else:
+                UserEvent.objects.create(user=request.user, event_type='1', invest_account=telnum, invest_term=term,
+                                 invest_amount=amount, content_object=news, audit_state='1',remark=remark,)
+                code = '1'
+                msg = u'提交成功，请通过用户中心查询！'
+    except Exception, e:
+        logger.info(e)
         code = '2'
         msg = u'该注册手机号已被提交过，请不要重复提交！'
-    else:
-        UserEvent.objects.create(user=request.user, event_type='1', invest_account=telnum,
-                         content_object=news, audit_state='1',remark=remark,)
-        code = '1'
-        msg = u'提交成功，请通过用户中心查询！'
     result = {'code':code, 'msg':msg}
     return JsonResponse(result)
 
@@ -527,7 +547,7 @@ def business(request, page=None):
         else:
             page_list = [1,'...'] + range(page-2, page+3) + ['...',page_num]
     page_dic['page_list'] = page_list
-    hot_wel_list = Welfare.objects.filter(is_display=True).order_by('-view_count')[0:8]
+    hot_wel_list = Welfare.objects.filter(is_display=True, state='1').order_by('-view_count')[0:8]
     content = {
         'page_dic':page_dic,
         'hot_business_list':hot_business_list,
@@ -596,9 +616,11 @@ def information(request, type=None, page=None, id=None):
         return render(request, 'information.html', context)
     elif id:
         id = int(id)
+        info = None
         try:
             info = Information.objects.get(id=id)
         except Information.DoesNotExist:
             raise Http404(u"该页面不存在")
+        update_view_count(info)
         hot_info_list = Information.objects.filter(is_display=True).order_by('-view_count')[0:6]
         return render(request, 'detail-information.html',{'info':info, 'hot_info_list':hot_info_list, 'type':'Information'})

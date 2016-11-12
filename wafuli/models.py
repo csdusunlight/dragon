@@ -10,6 +10,7 @@ from .data import *
 from django.template.defaultfilters import default
 from django.utils import timezone
 import datetime
+from django.core.urlresolvers import reverse
 class Company(models.Model):
     name = models.CharField(u"平台名称(必填)",max_length=100,unique=True)
     level = models.CharField(u"安全评级",max_length=100,blank=True)
@@ -44,6 +45,7 @@ class Base(models.Model):
         return self.title
 class News(Base):
     state = models.CharField(u"项目状态", max_length=1, choices=STATE)
+    is_futou = models.BooleanField(u'是否允许复投（重复提交同一手机号）', default= False)
     pic = models.ImageField(upload_to='photos/%Y/%m/%d', verbose_name=u"标志图片上传（最大不超过30k，越小越好）")
     isonMobile = models.BooleanField(u'是否为移动端活动', default= False)
     exp_url = models.CharField(u"活动地址", blank=True, max_length=200)
@@ -61,7 +63,7 @@ class News(Base):
             raise ValidationError({'exp_url': u'请输入活动体验地址'})
         elif self.isonMobile == True and self.exp_code == '':
             raise ValidationError({'exp_code': u'请上传手机扫描二维码'})
-        if self.pic.size > 30000:
+        if self.pic and self.pic.size > 30000:
             raise ValidationError({'pic': u'图片大小不能超过30k'})
     def is_expired(self):
         return self.state == '2'
@@ -79,13 +81,16 @@ class ZeroPrice(News):
         ordering = ["-news_priority", "-pub_date"]
 class Mark(models.Model):
     name = models.CharField(max_length=10, verbose_name=u"标签名", unique=True)
-    inviter = models.ForeignKey('self', related_name = 'child_marks', 
+    inviter = models.ForeignKey('self', related_name = 'child_marks', verbose_name=u"父标签",
                                 blank=True, null=True, on_delete=models.SET_NULL)
+    def __unicode__(self):
+        return self.name
 class Welfare(Base):
     type = models.CharField(max_length=10, choices=WELFARE_TYPE, editable=False, verbose_name=u"福利类型")
     is_display = models.BooleanField(default=True, verbose_name=u"是否在免费福利中显示")
-    marks = models.ManyToManyField(Mark, verbose_name='标签', related_name="welfare_set", blank=True)
+    marks = models.ManyToManyField(Mark, verbose_name=u'标签', related_name="welfare_set", blank=True)
     state = models.CharField(u"项目状态", max_length=1, choices=STATE)
+    startTime = models.DateTimeField(u"生效时间（粒度为小时）", default=timezone.now)
     pic = models.ImageField(upload_to='photos/%Y/%m/%d', verbose_name=u"标志图片上传（最大不超过30k，越小越好）",blank=False)
     company = models.ForeignKey(Company)
     provider = models.CharField(u"商家", max_length=10)
@@ -105,7 +110,15 @@ class Welfare(Base):
     def is_expired(self):
         return self.state == '2'
     class Meta:
-        ordering = ["-news_priority", "-pub_date"]
+        ordering = ["-news_priority", "-startTime"]
+    def is_new(self):
+        now = datetime.datetime.now()
+        days = (now-self.startTime).days
+        return days == 0 
+    def get_type(self):
+        return u"免费福利"
+    def get_type_url(self):
+        return reverse('welfare')
 class Hongbao(Welfare):
     isonMobile = models.BooleanField(u'是否为移动端活动', default= False)
     exp_code = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, verbose_name=u"上传二维码")
@@ -121,6 +134,7 @@ class Hongbao(Welfare):
 class Baoyou(Welfare):
     mprice = models.CharField(u"市场价", max_length=10)
     nprice = models.CharField(u"现价", max_length=10)
+    desc = models.CharField(u"描述", max_length=20)
     isonMobile = models.BooleanField(u'是否为移动端活动', default= False)
     exp_code = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, verbose_name=u"上传二维码")
     def clean(self):
@@ -137,7 +151,7 @@ class CouponProject(Welfare):
     amount =models.CharField(u'金额(xx元或x%)', max_length=10)
     endtime = models.DateField(u"截止日期")
     introduction = models.TextField(u"使用说明",max_length=200)
-    claim_limit = models.SmallIntegerField(u"限领次数", blank=True, default=1)
+    claim_limit = models.SmallIntegerField(u"限领次数", default=1)
     def __unicode__(self):
         return '%s:%s' % (self.get_ctype_display(), self.title)
     class Meta:
@@ -190,11 +204,14 @@ class Task(News):
     user_event = GenericRelation("UserEvent",related_query_name='task')
     def get_type(self):
         return u"体验福利"
+    def get_type_url(self):
+        return reverse('task')
     class Meta:
         verbose_name = u"体验福利"
         verbose_name_plural = u"体验福利"
         ordering = ["-news_priority", "-pub_date"]
 class Finance(News):
+    f_type = models.CharField(u"项目类别", max_length=1, choices=FINANCE_TYPE)
     filter = models.CharField(u"项目系列", max_length=2, choices=FILTER)
     scrores = models.CharField(u"补贴积分", max_length=100)
     benefit = models.CharField(u"补贴收益", max_length=100)
@@ -212,6 +229,8 @@ class Finance(News):
     user_event = GenericRelation("UserEvent",related_query_name='finance')
     def get_type(self):
         return u"理财福利"
+    def get_type_url(self):
+        return reverse('finance')
     class Meta:
         verbose_name = u"理财福利"
         verbose_name_plural = u"理财福利"
@@ -255,6 +274,8 @@ class UserEvent(models.Model):
     event_type = models.CharField(max_length=10, choices=USER_EVENT_TYPE, verbose_name=u"用户事件类型")
     invest_account = models.CharField(u"第三方注册账号/提现账号", max_length=100)
     invest_amount = models.DecimalField(u'涉及金额', blank=True, null=True,decimal_places = 2, max_digits=10)
+    invest_term = models.CharField(u"投资标期", max_length=100)
+    invest_image = models.CharField(u"投资截图", max_length=1000)
     time = models.DateTimeField(u'提交时间', default=timezone.now)
     audit_time = models.DateTimeField(u'审核时间', null=True, blank=True)
     audit_state = models.CharField(max_length=10, choices=AUDIT_STATE, verbose_name=u"审核状态")
@@ -329,6 +350,7 @@ class ExchangeRecord(models.Model):
     name = models.CharField(u'收件人姓名', max_length=20)
     tel = models.CharField(u'收件人手机号', max_length=14)
     addr = models.CharField(u'收件人地址', max_length=100)
+    postcode = models.CharField(u'邮编', max_length=10)
     message = models.CharField(u'留言', default=u"暂无", max_length=100)
     user_event = GenericRelation("UserEvent",related_query_name='exchangerecord')
     def __unicode__(self):
@@ -359,6 +381,8 @@ class Press(Base):
 class Advertisement(Base):
     pic = models.ImageField(upload_to='photos/%Y/%m/%d', blank=False,
                              verbose_name=u"banner图片上传(1920*300)，小于100k")
+    mpic = models.ImageField(upload_to='photos/%Y/%m/%d', blank=False,
+                             verbose_name=u"移动端banner图片上传(414*160)，小于30k")
     location = models.CharField(u"广告位置", max_length=2, choices=ADLOCATION)
     is_hidden = models.BooleanField(u"是否隐藏",default=False)
     navigation = models.CharField(u"banner导航文字", max_length=6)
@@ -367,8 +391,23 @@ class Advertisement(Base):
         verbose_name = u"横幅广告"
         verbose_name_plural = u"横幅广告"
     def clean(self):
-        if self.pic.size > 100000:
+        if self.pic and self.pic.size > 100000:
             raise ValidationError({'pic': u'图片大小不能超过100k'})
+        if self.mpic and self.mpic.size > 30000:
+            raise ValidationError({'pic': u'图片大小不能超过30k'})
+class MAdvert(Base):
+    pic = models.ImageField(upload_to='photos/%Y/%m/%d', blank=False,
+                             verbose_name=u"banner图片上传(1920*300)，小于100k")
+    location = models.CharField(u"广告位置", max_length=2, choices=MADLOCATION)
+    is_hidden = models.BooleanField(u"是否隐藏",default=False)
+    navigation = models.CharField(u"banner导航文字", max_length=6)
+    class Meta:
+        ordering = ["-news_priority","-pub_date"]
+        verbose_name = u"普通广告"
+        verbose_name_plural = u"普通广告"
+    def clean(self):
+        if self.pic and self.pic.size > 30000:
+            raise ValidationError({'pic': u'图片大小不能超过30k'})
 class UserWelfare(models.Model):
     user = models.ForeignKey(MyUser, related_name="submited_welfare")
     title = models.CharField(max_length=200, verbose_name=u"标题")

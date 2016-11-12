@@ -6,34 +6,36 @@
 var ismobile = true;
 {%else%}
 var ismobile = false;
+var url_openwindow = "{% url 'exp_welfare_openwindow' %}"
 {%endif%}
 $(function(){
 	var ahref = $("a.login").attr("href");
 	ahref += "?next="+this_url;
 	$("a.login").attr("href",ahref);
 	$("button.te-mo").click(function(){
-		$.ajax({
-			url:"{%url 'exp_tf' %}?type=" + type +"&id=" + id,
-			dataType:"json",
-			success:function(ret){
-				if(ret.code==0){
-					alert("请先登录！")
-					window.location.href = ret.url;
-				}
-				else if(ret.code==1){
-					if(ismobile){
+		if(ismobile){
+			$.ajax({
+				url:"{%url 'exp_welfare_erweima' %}?id=" + id + "&type=" + type,
+				dataType:"json",
+				success:function(ret){
+					if(ret.code==0){
+						alert("请先登录！")
+						window.location.href = ret.url;
+					}
+					else if(ret.code==1){
 						$('img#erweima').attr('src',ret.url);
 						$('#myReModal').modal();
 					}
-					else{
-						window.location.href=ret.url;
-					}
+				},
+				error:function(){
+					alert("请检查网络连接");
 				}
-			},
-			error:function(){
-				alert("请检查网络连接");
-			}
-		});
+			});
+		}
+		else {
+			window.open(url_openwindow + "?id=" + id + "&type=" + type);
+		}
+
 	});
 	$("button.td-tj").click(function(){
 		var telnum = $('input#telnum').val();
@@ -43,28 +45,36 @@ $(function(){
 		var re=/^1[1,2,3,4,6,5,7,8,9]\d{9}$/;
 		if(!re.test(telnum)){
 			alert("手机号格式不正确！")
+			return;
 		}
-		else{
-			$('#myModal').modal();
+		var amount = parseFloat($('input#amount').val());
+		if(isNaN(amount)){
+			alert("投资金额必须为数字！")
+			return;
 		}
+		var term = $('input#term').val();
+		if(!term){
+			alert("请输入投资标期！")
+			return;
+		}
+		$('#myModal').modal();
 	});
 	$("a#confirm").click(function(){
 		var telnum = $('input#telnum').val();
 		var remark = $('input#remark').val();
-		var is_futou = 0;
-		if($('input[name="futou"]:eq(0)').is(':checked')){
-			is_futou = 1;
-		}
+		var amount = parseFloat($('input#amount').val());
+		var term = $('input#term').val();
 		$.ajax({
-			url:"{%url 'expsubmit' %}?type=" + type +"&id=" + id + "&telnum=" + telnum 
+			url:"{%url 'expsubmit' %}?type=" + type +"&id=" + id + "&telnum=" + telnum
 					+ "&remark=" + remark,
 			type:'post',
 			data:{
-				'type':type,
-				'id':id,
-				'is_futou':is_futou,
-				'telnum':telnum,
-				'remark':remark,
+				type:type,
+				id:id,
+				term:term,
+				telnum:telnum,
+				remark:remark,
+				amount: amount
 			},
 			dataType:"json",
 			success:function(ret){
@@ -84,6 +94,7 @@ $(function(){
 	});
 });
 </script>
+
 {%endblock%}
 {%block expblock%}
   <div class="td-ti">
@@ -109,16 +120,17 @@ $(function(){
   <div class="td-msg">
   	<div class="msg-ti"><img src="{% static 'images/task-02.png' %}" class="ms-pd"/><span class="mag-pp">信息登记</span></div>
    	<div class="ma-div">注册手机号：<input type="text" placeholder="输入您的手机号，若有多个请分别提交" class="ms-input" id='telnum'/></div>
-	<div class="ma-div2">是否复投：  
-		<input type="radio" name="futou" id="radio_box"/><label for="radio_box">是</label>
-		<input type="radio" name="futou" id="radio_box" checked="checked"/><label for="radio_box">否</label>
-	</div>
-    <div class="ma-div3">备注：<input type="text" class="ms-input" id='remark'/></div>
+    <div class="ma-div">投资金额：<input type="text" placeholder="输入您的投资金额（数字格式）" class="ms-input" id='amount'/></div>
+    <div class="ma-div">投资标期：<input type="text" placeholder="输入您的投资标期" class="ms-input" id='term'/></div>
+    <div class="ma-div3">备注：<input type="text" placeholder="可不填" class="ms-input" id='remark'/></div>
     <p class="td-yy"><button class="md-trigger td-tj">提交</button></p>
     <div class="clearboth"></div>
   </div>
+
   <div class="td-msgs">
   	<div class="msg-ti"><img src="{% static 'images/task-03.png' %}" class="ms-pd"/><span class="mag-pp">奖励规则</span></div>
 	<div class="detail-html">{{news.rules|safe}}</div>
   </div>
 {%endblock%}
+
+

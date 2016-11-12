@@ -8,7 +8,7 @@
 <meta name="description" content="挖福利免费为您提供互联网优惠券和免费福利领取活动信息！" />
 <link href="{% static 'images/favicon.ico'%}" rel="shortcut icon"/>
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/welfare.css' %}" />
 
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
@@ -23,6 +23,7 @@ function pagecallback(){
   $(".tab-li.new").prepend('&lt;div class="newpost z"&gt;新&lt;/div&gt;');
 }
 var textarray=[];
+var type = "{{type}}";
 function getText(n) {
 	 if (textarray[n-1])
 		 return textarray[n-1];
@@ -31,6 +32,12 @@ function getText(n) {
 }
 $(function(){
 	$('.zero_h a').toggleClass("vo");
+	if (type!=="None"){
+    	$('.nav_'+type).toggleClass("box-shadow");
+    }
+    else {
+    	$('.nav_all').toggleClass("box-shadow");
+    }
 	$('.flexslider').flexslider({
 	       directionNav: true,
 	       pauseOnAction: false
@@ -73,25 +80,25 @@ $(function(){
 <div class="wel_nav">
   <ul class="nav_children">
     <li>
-        <a class="nav_1" href="{%url 'welfare_list' %}">
+        <a class="nav_all" href="{%url 'welfare_list' %}">
 			<img id="img1" src="{%static 'images/nav-1.png'%}" />
 			<p>全部</p>
         </a>
   </li>
     <li>
-	    <a class="nav_2" href="{%url 'welfare_list' type='hb' %}">
+	    <a class="nav_hb" href="{%url 'welfare_list' type='hb' %}">
 	        <img src="{%static 'images/nav-2.png'%}" />
 	        <p>红包</p>
 	    </a>
     </li>
     <li>
-		<a class="nav_3" href="{%url 'welfare_list' type='yhq' %}">
+		<a class="nav_yhq" href="{%url 'welfare_list' type='yhq' %}">
 			<img src="{%static 'images/nav-3.png'%}" />
 		    <p>优惠券</p>
 		</a>
     </li>
     <li>
-	    <a class="nav_4" href="{%url 'welfare_list' type='by' %}">
+	    <a class="nav_by" href="{%url 'welfare_list' type='by' %}">
 	    	<img src="{%static 'images/nav-4.png'%}" />
 	    	<p>9.9包邮</p>
     	</a>
@@ -100,29 +107,29 @@ $(function(){
 </div>
 
 <script>
-$(".nav_1").mouseover(function(){
+$(".nav_all").mouseover(function(){
 $(this).children().attr("src","{%static 'images/pic_14.png'%}");
 });
-$(".nav_1").mouseleave(function(){
+$(".nav_all").mouseleave(function(){
 $(this).children().attr("src","{%static 'images/nav-1.png'%}");
 });
-$(".nav_2").mouseover(function(){
+$(".nav_hb").mouseover(function(){
 $(this).children().attr("src","{%static 'images/pic_08.png'%}");
 });
-$(".nav_2").mouseleave(function(){
+$(".nav_hb").mouseleave(function(){
 $(this).children().attr("src","{%static 'images/nav-2.png'%}");
 
 });
-$(".nav_3").mouseover(function(){
+$(".nav_yhq").mouseover(function(){
 $(this).children().attr("src","{%static 'images/pic_03.png'%}");
 });
-$(".nav_3").mouseleave(function(){
+$(".nav_yhq").mouseleave(function(){
 $(this).children().attr("src","{%static 'images/nav-3.png'%}");
 });
-$(".nav_4").mouseover(function(){
+$(".nav_by").mouseover(function(){
 $(this).children().attr("src","{%static 'images/pic_05.png'%}");
 });
-$(".nav_4").mouseleave(function(){
+$(".nav_by").mouseleave(function(){
 $(this).children().attr("src","{%static 'images/nav-4.png'%}");
 });
 </script>
@@ -159,10 +166,10 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
       <li>
         <div class="box_children">
         <div class="box_pic">
-          <a href="{{wel.url}}"><img src="{{wel.pic.url}}"></a>
+          <a href="{{wel.url}}" target="_blank"><img src="{{wel.pic.url}}"></a>
           <div class="box_pic_bg">
           	<p style="color:#FFF; font-size:10px;">
-          	<a href="{{wel.url}}" style="color:#FF0">
+          	<a href="{{wel.url}}" target="_blank" style="color:#FF0">
           {%if wel.type == 'youhuiquan'%}
             	点击领取
           {%else%}
@@ -171,10 +178,19 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
           	</a></p>
           </div>
         </div>
-        <a href="{{wel.url}}" class="box_name">{{wel.title}}</a>
+        <a href="{{wel.url}}"  target="_blank" class="box_name">{{wel.title}}</a>
+        <span class="tag">{{wel.get_type_display}}</span>
         <div class="box_line"></div>
         <div>
-        <a class="classes">{{wel.get_type_display}}</a>
+        {%if wel.type == 'baoyou'%}
+            <div class="classes"><span class="new-price">￥{{wel.baoyou.nprice}}</span>&nbsp;<span class="old-price">￥{{wel.baoyou.mprice}}</span></div>
+        {%else%}
+          	<div class="classes">
+          	{% for mark in wel.marks.all|slice:":3" %}
+          	<span>{{mark.name}}</span>
+          	{% endfor %}
+          	</div>
+        {%endif%}
         <img src="{%static 'images/pict_60.png'%}" class="see" />
         <span class="number">{{wel.view_count}}</span>
         </div>
@@ -250,26 +266,39 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
       <img src="{%static 'images/pict_98.png'%}" />
     </div>
     <div class="other_box">
-       <div class="other_1">
-                <div class="other_pic"><a href="{{hot1.url}}"><img src="{{hot1.pic.url}}" /></a></div>
-                <a href="{{hot1.url}}" class="other_name">{{hot1.title}}</a>
-                <div class="other_line"></div>
-                <div>
-                <a class="other_classes">{{hot1.get_type_display}}</a>
-                <img src="{%static 'images/pict_60.png'%}" class="other_see" />
-                <span class="other_number">{{hot1.view_count}}</span>
-                </div>
+    {% for wel in hot_wel_list %}
+       <div class="box_children box-bottom">
+        <div class="box_pic">
+          <a href="{{wel.url}}" target="_blank"><img src="{{wel.pic.url}}"></a>
+          <div class="box_pic_bg">
+          	<p style="color:#FFF; font-size:10px;">
+          	<a href="{{wel.url}}" target="_blank" style="color:#FF0">
+          {%if wel.type == 'youhuiquan'%}
+            	点击领取
+          {%else%}
+          		点击体验
+          {%endif%}
+          	</a></p>
+          </div>
         </div>
-        <div class="other_2">
-                <div class="other_pic"><a href="{{hot2.url}}"><img src="{{hot2.pic.url}}" /></a></div>
-                <a href="{{hot2.url}}" class="other_name">{{hot2.title}}</a>
-                <div class="other_line"></div>
-                <div>
-                <a class="other_classes">{{hot2.get_type_display}}</a>
-                <img src="{%static 'images/pict_60.png'%}" class="other_see" />
-                <span class="other_number">{{hot2.view_count}}</span>
-                </div>
-         </div>
+        <a href="{{wel.url}}"  target="_blank" class="box_name">{{wel.title}}</a>
+        <span class="tag">{{wel.get_type_display}}</span>
+        <div class="box_line"></div>
+        <div>
+        {%if wel.type == 'baoyou'%}
+            <div class="classes"><span class="new-price">￥{{wel.baoyou.nprice}}</span>&nbsp;<span class="old-price">￥{{wel.baoyou.mprice}}</span></div>
+        {%else%}
+          	<div class="classes">
+          	{% for mark in wel.marks.all|slice:":3" %}
+          	<span>{{mark.name}}</span>
+          	{% endfor %}
+          	</div>
+        {%endif%}
+        <img src="{%static 'images/pict_60.png'%}" class="see" />
+        <span class="number">{{wel.view_count}}</span>
+        </div>
+      </div>
+      {%endfor%}
     </div>
   </div>
 
@@ -279,8 +308,8 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
       <img src="{%static 'images/pict_100.png'%}" />
     </div>
     <div class="subject_box">
-        <a href="{{info.url}}"><img src="{{info.pic.url}}"  /></a>
-        <a href="{{info.url}}"><h1>{{info.title}}</h1></a>
+        <a href="{{info.url}}" target="_blank"><img src="{{info.pic.url}}"  /></a>
+        <a href="{{info.url}}" target="_blank"><h1>{{info.title}}</h1></a>
         <p>{{info.summary}}</p>
       </div>
   </div>

@@ -4,7 +4,6 @@ Created on 2016年7月17日
 
 @author: lch
 '''
-
 from django.shortcuts import render, redirect
 from wafuli.models import UserEvent, AdminEvent, AuditLog, TransList, UserWelfare,\
     CouponProject, Coupon
@@ -69,7 +68,6 @@ def deliver_coupon(request):
                 for user in select_list:
                     if user:
                         user_set.add(user)
-                print select_list
                 for username in user_set:
                     try:
                         user = MyUser.objects.get(username = username)
@@ -118,11 +116,13 @@ def parse_file(request):
     else:
         try:
             res['list'] = handle_uploaded_file(file)
-        except:
+        except Exception, e:
+            logger.info(e)
             res['code'] = -3
             res['res_msg'] = u'文件格式有误！'
         else:
             res['code'] = 0
+    
     return JsonResponse(res)
 
 def handle_uploaded_file(f):
@@ -132,6 +132,8 @@ def handle_uploaded_file(f):
             destination.write(chunk)
     with open('./name', 'r') as file:
         for line in file:
+            line = line.decode('gbk')
+#             line = unicode(line, errors='ignore')
             ret.append(line.strip())
     return ret
 

@@ -248,6 +248,15 @@ def phoneImageV(request):
             result['message'] = u'该手机号码已被占用！'
             result.update(generateCap())
             return JsonResponse(result)
+    elif action=='forgot_passwd':
+        hashkey = request.GET.get('hashkey', None)
+        response = request.GET.get('response', None)
+        if not (phone and hashkey and response):
+            raise Http404
+        ret = imageV(hashkey, response)
+        if ret != 0:
+            result['message'] = u'图形验证码输入错误！'
+            return JsonResponse(result)
     stamp = str(phone)
     lasttime = request.session.get(stamp, None)
     now = int(ttime.time())

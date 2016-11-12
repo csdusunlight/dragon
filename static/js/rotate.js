@@ -56,7 +56,7 @@ $(function (){
             animateTo:2160,
             duration:8000,
             callback:function (){
-                
+
             }
         });
     };

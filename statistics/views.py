@@ -16,10 +16,11 @@ def update(request):
             news = model.objects.get(id=news_id)
             news.view_count += 1
             news.save(update_fields=['view_count',])
-            company = news.company
-            if company:
-                company.view_count += 1
-                company.save(update_fields=['view_count',])
+            if hasattr(news, 'company'):
+                company = news.company
+                if company:
+                    company.view_count += 1
+                    company.save(update_fields=['view_count',])
             result['code'] = 0
         except Exception as e:
             logger.error(e)

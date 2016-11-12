@@ -5,9 +5,9 @@ Created on 2016年8月1日
 @author: lch
 '''
 from django.shortcuts import render
-from django.http.response import Http404
+from django.http.response import Http404, HttpResponse
 from wafuli.models import Welfare, Advertisement, Press, Hongbao, Baoyou, CouponProject,\
-    Company, Coupon, Information
+    Company, Coupon, Information, Task, Finance
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
 from django.db.models import Q
@@ -16,6 +16,8 @@ from wafuli_admin.models import RecommendRank
 from account.models import MyUser
 import re
 from .tools import listing
+from django.contrib.auth.decorators import login_required
+from wafuli.tools import update_view_count
 logger = logging.getLogger('wafuli')
 import datetime
 
@@ -82,7 +84,7 @@ def welfare(request, id=None, page=None, type=None):
         page_dic['page_list'] = page_list
         ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='2'),is_hidden=False)[0:8]
         strategy_list = Press.objects.filter(type='2')[0:10]
-        hot_wel_list = Welfare.objects.filter(is_display=True).order_by('-view_count')[0:2]
+        hot_wel_list = Welfare.objects.filter(is_display=True, state='1').order_by('-view_count')[0:2]
         business_list = Company.objects.order_by('-view_count')[0:10]
         hot_info = Information.objects.filter(is_display=True).order_by('-view_count').first()
         context = {
@@ -92,9 +94,9 @@ def welfare(request, id=None, page=None, type=None):
             'strategy_list':strategy_list,
             'page_dic':page_dic,
             'ref_dic':ref_dic,
-            'hot1':hot_wel_list[0],
-            'hot2':hot_wel_list[1],
+            'hot_wel_list':hot_wel_list,
             'info':hot_info,
+            'type':type,
         }
         ranks = RecommendRank.objects.all()[0:6]
         for i in range(len(ranks)):
@@ -109,10 +111,13 @@ def welfare(request, id=None, page=None, type=None):
         return render(request, 'zeroWelfare.html', context)
     elif id:
         id = int(id)
+        wel = None
         try:
             wel = Welfare.objects.get(id=id)
         except Welfare.DoesNotExist:
             raise Http404(u"该页面不存在")
+        update_view_count(wel)
+        other_wel_list = Welfare.objects.filter(is_display=True, state='1').order_by('-view_count')[0:10]
         template = 'detail-common.html'
         if wel.type == "youhuiquan":
             template = 'detail-youhuiquan.html'
@@ -121,9 +126,9 @@ def welfare(request, id=None, page=None, type=None):
             wel = wel.hongbao
         elif wel.type == "baoyou":
             wel = wel.baoyou
-        return render(request, template,{'news':wel,'type':'Welfare'})
+        return render(request, template,{'news':wel,'type':'Welfare', 'other_wel_list':other_wel_list})
     
-def exp_welfare_common(request):
+def exp_welfare_erweima(request):
     if not request.is_ajax():
         logger.warning("Experience refused no-ajax request!!!")
         raise Http404
@@ -134,20 +139,42 @@ def exp_welfare_common(request):
         result['code'] = '0'
         return JsonResponse(result)
     wel_id = request.GET.get('id', None)
-    if not wel_id:
+    wel_type = request.GET.get('type', None)
+    if not wel_id or not wel_type:
         logger.error("wel_id is missing!!!")
         raise Http404
-    wel = Welfare.objects.get(id=wel_id)
-    if wel.type == "hongbao":
-        wel = wel.hongbao
-    elif wel.type == "baoyou":
-        wel = wel.baoyou
+    wel_id = int(wel_id)
+    wel_type = str(wel_type)
+    model = globals()[wel_type]
+    wel = model.objects.get(id=wel_id)
+    if wel_type == 'Welfare':
+        if wel.type == "hongbao":
+            wel = wel.hongbao
+        elif wel.type == "baoyou":
+            wel = wel.baoyou
     if wel.isonMobile:
         result['url'] = wel.exp_code.url
     else:
-        result['url'] = wel.exp_url
+        logger.error(str(model) + ":" + str(wel.id) + " is not onMobile wel !!!")
+        raise Http404
     result['code'] = '1'
     return JsonResponse(result)
+
+@login_required
+def exp_welfare_openwindow(request):
+    wel_id = request.GET.get('id', None)
+    wel_type = request.GET.get('type', None)
+    if not wel_id or not wel_type:
+        logger.error("wel_id or type is missing!!!")
+        raise Http404
+    wel_id = int(wel_id)
+    wel_type = str(wel_type)
+    model = globals()[wel_type]
+    wel = model.objects.get(id=wel_id)
+    update_view_count(wel)
+    url = wel.exp_url
+    js = "<script>window.location.href='"+url+"';</script>"
+    return HttpResponse(js)
 
 def exp_welfare_youhuiquan(request):
     user = request.user

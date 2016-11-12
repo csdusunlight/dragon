@@ -93,6 +93,7 @@ admin.site.register(Press,PressAdmin)
 admin.site.register(Coupon, CouponAdmin)
 admin.site.register(Message)
 admin.site.register(Advertisement, AdvertisementAdmin)
+admin.site.register(MAdvert, AdvertisementAdmin)
 admin.site.register(UserWelfare)
 admin.site.register(Activity, ActivityAdmin)
 admin.site.register(LotteryRecord)
@@ -101,6 +102,7 @@ class WelfareAdmin(admin.ModelAdmin):
     search_fields = ['title',]
     list_filter = ['news_priority', 'change_user',]
     readonly_fields = ('pub_date','change_user','url')
+    filter_horizontal = ('marks',)
     def save_model(self, request, obj, form, change):
         obj.change_user = str(request.user)
         if obj.advert is None:
@@ -121,10 +123,10 @@ class BaoyouAdmin(WelfareAdmin):
         obj.change_user = str(request.user)
         if obj.advert is None:
             obj.advert = Advertisement.objects.filter(location='7',is_hidden=False).first()
-        super(WelfareAdmin,self).save_model (request, obj, form, change)
-        if obj.url != obj.exp_url:
-            obj.url = obj.exp_url
-            obj.save(update_fields=['url',])
+        if not change:
+            obj.save()
+        obj.url = reverse('exp_welfare_openwindow') + '?id=' + str(obj.id) + "&type=Welfare"
+        obj.save()
 class CouponProjectAdmin(WelfareAdmin):
     def save_model(self, request, obj, form, change):
         if not change:

@@ -20,4 +20,7 @@ urlpatterns = [
     url(r'^parse_file/$', 'wafuli_admin.coupon.parse_file', name='parse_file'),
     url(r'^admin_coupon/$', 'wafuli_admin.coupon.admin_coupon', name='admin_coupon'),
     url(r'^admin_coupon_page/$', 'wafuli_admin.coupon.get_admin_coupon_page', name='get_admin_coupon_page'),
+    
+    url(r'^admin_charge/$', 'wafuli_admin.views.admin_charge', name='admin_charge'),
+    url(r'^chargepage/$', 'wafuli_admin.views.get_admin_charge_page', name='get_admin_charge_page'),
 ]

@@ -31,7 +31,7 @@
 <meta name="description" content="挖福利免费为您提供互联网优惠券和免费福利领取活动信息！" />
 <link href="{% static 'images/favicon.ico'%}" rel="shortcut icon"/>
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/information.css' %}" />
 
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
@@ -95,10 +95,10 @@ $(function(){
    <div class="left_box_children">
    {%for info in info_list%}
      <div class="small_box">
-      <a href="{% url 'information' id=info.id %}"><img src="{{info.pic.url}}"></a>
+      <a target="_blank" href="{% url 'information' id=info.id %}"><img src="{{info.pic.url}}"></a>
       <div class="small_box_children">
        <a href={%url 'information_list' type=info.type %}>{{info.get_type_display}}</a>
-       <a href="{% url 'information' id=info.id %}"><h1>{{info.title}}</h1></a>
+       <a target="_blank" href="{% url 'information' id=info.id %}"><h1>{{info.title}}</h1></a>
        <p>{{info.summary}}</p>
       </div>
      </div>
@@ -137,9 +137,9 @@ $(function(){
      <div class="right-top-nav">本周热点</div>
     {%for info in hot_info_list%}
       {%if forloop.counter < 4%}
-     <p><span class="circle1">{{forloop.counter}}</span><a href="{{info.url}}"><span class="text1">{{info.title}}</span></a></p>
+     <p><span class="circle1">{{forloop.counter}}</span><a target="_blank" href="{{info.url}}"><span class="text1">{{info.title}}</span></a></p>
       {%else%}
-      <p><span class="circle2">{{forloop.counter}}</span><a href="{{info.url}}"><span class="text2">{{info.title}}</span></a></p>
+      <p><span class="circle2">{{forloop.counter}}</span><a target="_blank" href="{{info.url}}"><span class="text2">{{info.title}}</span></a></p>
       {%endif%}
   {%endfor%}
    </div>
@@ -147,9 +147,9 @@ $(function(){
       <div class="right-top-nav">福利活动</div>
     {%for wel in hot_wel_list%}
       {%if forloop.counter < 4%}
-     <p><span class="circle1">{{forloop.counter}}</span><a href="{{wel.url}}"><span class="text1">{{wel.title}}</span></a></p>
+     <p><span class="circle1">{{forloop.counter}}</span><a target="_blank" href="{{wel.url}}"><span class="text1">{{wel.title}}</span></a></p>
       {%else%}
-      <p><span class="circle2">{{forloop.counter}}</span><a href="{{wel.url}}"><span class="text2">{{wel.title}}</span></a></p>
+      <p><span class="circle2">{{forloop.counter}}</span><a target="_blank" href="{{wel.url}}"><span class="text2">{{wel.title}}</span></a></p>
       {%endif%}
   {%endfor%}
    </div>
@@ -157,43 +157,6 @@ $(function(){
 
 </div>
 </div>
-<script>
-$(".nav_1").mouseover(function(){
-$(this).children().attr("src","{%static 'images/pic_14.png'%}");
-});
-$(".nav_1").mouseleave(function(){
-$(this).children().attr("src","{%static 'images/nav-1.png'%}");
-});
-$(".nav_2").mouseover(function(){
-$(this).children().attr("src","{%static 'images/pic_08.png'%}");
-});
-$(".nav_2").mouseleave(function(){
-$(this).children().attr("src","{%static 'images/nav-2.png'%}");
-
-});
-$(".nav_3").mouseover(function(){
-$(this).children().attr("src","{%static 'images/pic_03.png'%}");
-});
-$(".nav_3").mouseleave(function(){
-$(this).children().attr("src","{%static 'images/nav-3.png'%}");
-});
-$(".nav_4").mouseover(function(){
-$(this).children().attr("src","{%static 'images/pic_05.png'%}");
-});
-$(".nav_4").mouseleave(function(){
-$(this).children().attr("src","{%static 'images/nav-4.png'%}");
-});
-</script>
-
-
-<script>
-  $(function(){
-  $('.left_box_nav a').click(function() {
-    $('.left_box_nav a').removeClass('add');
-    $(this).addClass('add')
-  });
-  });
-</script>
 
 <!--底部-->
   {% include "footer.html" %}

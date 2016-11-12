@@ -7,7 +7,7 @@
 <meta name="keywords" content="登录" />
 <meta name="description" content="登录" />
 <link href="{% static 'images/favicon.ico'%}" rel="shortcut icon"/>
-<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
@@ -82,7 +82,7 @@ function check(){
 					<span class="g-lab-txt" style="margin-left:5px">记住我</span>
                 </div>
                 <div style="width:60%; float:right;">
-                	<span><a href="#" class="lo-for">忘记密码？</a></span>
+                	<span><a href="{% url 'forgot_passwd' %}" class="lo-for">忘记密码？</a></span>
                     <span>丨</span>
                     <span><a href="{% url 'register' %}" class="lo-re">快速注册</a></span>
                 </div>
