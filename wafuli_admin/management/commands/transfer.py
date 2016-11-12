@@ -19,13 +19,13 @@ from django.db.models import F
 logger = logging.getLogger("wafuli")
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        free_wels = Welfare.objects.all()
-        tasks = Task.objects.all()
-        finance = Finance.objects.all()
-        wels = list(free_wels)+list(tasks)+list(finance)
-        for wel in wels:
-            wel.seo_title = wel.seo_title + u" - 挖福利"
-            wel.save(update_fields=['seo_title']);
+#         free_wels = Welfare.objects.all()
+#         tasks = Task.objects.all()
+#         finance = Finance.objects.all()
+#         wels = list(free_wels)+list(tasks)+list(finance)
+#         for wel in wels:
+#             wel.seo_title = wel.seo_title + u" - 挖福利"
+#             wel.save(update_fields=['seo_title']);
 #         wels = Welfare.objects.update(startTime=F('pub_date'))
 #         baoyou = Baoyou.objects.all()
 #         for wel in baoyou:
@@ -44,3 +44,7 @@ class Command(BaseCommand):
 #         for obj in wei_list:
 #             obj.url = reverse('welfare', kwargs={'id': obj.pk})
 #             obj.save(update_fields=['url',])
+        users = MyUser.objects.all()
+        for user in users:
+            user.balance = 100*F('balance')
+            user.save(update_fields=['balance'])

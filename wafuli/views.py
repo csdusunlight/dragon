@@ -163,6 +163,7 @@ def aboutus(request):
 #         url = news.exp_url
 #     result = {'code':code, 'url':url}
 #     return JsonResponse(result)
+from decimal import Decimal
 def expsubmit(request):
     if not request.is_ajax():
         logger.warning("Expsubmit refused no-ajax request!!!")
@@ -179,6 +180,9 @@ def expsubmit(request):
     telnum = request.POST.get('telnum', None)
     telnum = str(telnum).strip()
     remark = request.POST.get('remark', '')
+    term = request.POST.get('term', '').strip()
+    amount = request.POST.get('amount',0)
+    amount = Decimal(amount)
     if not (news_id and news_type and telnum):
         logger.error("news_id or news_type is missing!!!")
         raise Http404
@@ -194,18 +198,19 @@ def expsubmit(request):
 #         msg = u'该项目已结束或未开始！'
 #         result = {'code':code, 'msg':msg}
 #         return JsonResponse(result)
-    if str(is_futou)=='1':
+    news = model.objects.get(pk=news_id)
+    is_futou = news.is_futou
+    info_str = "news_id:" + news_id + "| invest_account:" + telnum + "| is_futou:" + str(is_futou)
+    logger.info(info_str)
+    if is_futou:
         remark = u"复投：" + remark
     try:
         with transaction.atomic():
-            news = model.objects.get(pk=news_id)
-            info_str = "news_id:" + news_id + "| invest_account:" + telnum + "| is_futou:" + is_futou
-            logger.info(info_str)
-            if str(is_futou)!='1' and news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
+            if not is_futou and news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
                 raise ValueError('This invest_account is repective in project:' + str(news.id))
             else:
-                UserEvent.objects.create(user=request.user, event_type='1', invest_account=telnum,
-                                 content_object=news, audit_state='1',remark=remark,)
+                UserEvent.objects.create(user=request.user, event_type='1', invest_account=telnum, invest_term=term,
+                                 invest_amount=amount, content_object=news, audit_state='1',remark=remark,)
                 code = '1'
                 msg = u'提交成功，请通过用户中心查询！'
     except Exception, e:

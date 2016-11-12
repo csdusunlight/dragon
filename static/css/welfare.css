@@ -671,7 +671,7 @@ padding-left: 7px;}
   height: 40px;
   border: 1px solid rgb(204, 204, 204);
 }
-.ma-div{margin: 30px 0px 0px 256px;
+.ma-div{margin: 20px 0px 0px 256px;
   font-size: 16px;
   width: 500px;
   text-align: right;
@@ -685,7 +685,7 @@ padding-left: 7px;}
 }
 .ma-div2 label{font-weight: normal;margin-right:10px;}
 .ma-div2 #radio_box {margin-right:2px;}
-.ma-div3{margin: 15px 0px 30px 256px;
+.ma-div3{margin: 20px 0px 30px 256px;
   font-size: 16px;
   width: 500px;
   text-align: right;

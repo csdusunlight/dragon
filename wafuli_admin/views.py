@@ -310,7 +310,9 @@ def get_admin_return_page(request):
              "score":u'无' if con.audit_state!='0' or not con.score_translist.exists() else con.score_translist.first().transAmount,
              "id":con.id,
              "remark": con.remark or u'无' if con.audit_state!='2' or not con.audited_logs.exists() else con.audited_logs.first().reason,
-             }
+             "amount": con.invest_amount,
+             "term": con.invest_term,
+        }
         data.append(i)
     if data:
         res['code'] = 1
