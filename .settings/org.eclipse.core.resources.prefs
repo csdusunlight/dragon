@@ -7,6 +7,7 @@ encoding//DjangoUeditor/urls.py=utf-8
 encoding//DjangoUeditor/views.py=utf-8
 encoding//DjangoUeditor/widgets.py=utf-8
 encoding//account/forgot_passwd.py=utf-8
+encoding//account/migrations/0002_auto_20160808_1941.py=utf-8
 encoding//account/models.py=utf-8
 encoding//account/templates/account/email_template.html=UTF-8
 encoding//account/templates/account/left.html=UTF-8

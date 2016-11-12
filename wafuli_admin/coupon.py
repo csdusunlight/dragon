@@ -12,7 +12,6 @@ from django.core.urlresolvers import reverse
 from django.http.response import JsonResponse, Http404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from account.transaction import charge_money, charge_score
-from decimal import Decimal
 import logging
 from account.models import MyUser
 from wafuli.data import COUPON_TYPE
@@ -172,7 +171,7 @@ def admin_coupon(request):
         scoretranslist = None
         if type==1:
             try:
-                cash = Decimal(cash)
+                cash = int(cash)
                 score = int(score)
             except:
                 res['code'] = -2

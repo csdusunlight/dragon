@@ -8,7 +8,6 @@ from django.core.urlresolvers import reverse
 from django.http.response import JsonResponse, Http404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from account.transaction import charge_money, charge_score
-from decimal import Decimal
 import logging
 from account.models import MyUser
 from django.db.models import Q
@@ -161,7 +160,7 @@ def admin_return(request):
         scoretranslist = None
         if type==1:
             try:
-                cash = Decimal(cash)
+                cash = int(cash)
                 score = int(score)
             except:
                 res['code'] = -2
@@ -361,8 +360,8 @@ def admin_user(request):
                 res['res_msg'] = u'传入参数不足，请联系技术人员！'
                 return JsonResponse(res)
             try:
-                pcash = Decimal(pcash)
-                mcash = Decimal(mcash)
+                pcash = int(pcash)
+                mcash = int(mcash)
             except:
                 res['code'] = -2
                 res['res_msg'] = u"操作失败，输入不合法！"

@@ -7,7 +7,7 @@ Created on 2016年8月13日
 '''
 import logging
 from wafuli.models import UserEvent, ZeroPrice, Hongbao, Welfare, Baoyou, Task,\
-    Finance
+    Finance, TransList
 import time as ttime
 from django.core.management.base import BaseCommand
 from django.db.models import Sum
@@ -16,6 +16,7 @@ from django.conf import settings
 from decimal import Decimal
 from django.core.urlresolvers import reverse
 from django.db.models import F
+from wafuli_admin.models import RecommendRank, DayStatis
 logger = logging.getLogger("wafuli")
 class Command(BaseCommand):
     def handle(self, *args, **options):
@@ -47,4 +48,26 @@ class Command(BaseCommand):
         users = MyUser.objects.all()
         for user in users:
             user.balance = 100*F('balance')
-            user.save(update_fields=['balance'])
+            user.accu_income = 100*F('accu_income')
+            user.invite_income = 100*F('invite_income')
+            user.invite_account = 100*F('invite_account')
+            user.save()
+        trans = TransList.objects.all()
+        for tran in trans:
+            tran.initAmount = 100*F('initAmount')
+            tran.transAmount = 100*F('transAmount')
+            tran.save()
+        trans = DayStatis.objects.all()
+        for tran in trans:
+            tran.with_amount = 100*F('with_amount')
+            tran.ret_amount = 100*F('ret_amount')
+            tran.coupon_amount = 100*F('coupon_amount')
+            tran.save()
+        trans = RecommendRank.objects.all()
+        for tran in trans:
+            tran.award = 100*F('award')
+            tran.save()
+        trans = Task.objects.all()
+        for tran in trans:
+            tran.moneyToAdd = 100*F('moneyToAdd')
+            tran.save()

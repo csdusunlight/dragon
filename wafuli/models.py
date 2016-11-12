@@ -190,7 +190,7 @@ class Coupon(models.Model):
 class Task(News):
     amount_to_invest = models.IntegerField(u"投资金额")
     scroreToAdd = models.IntegerField(u"奖励积分")
-    moneyToAdd = models.FloatField(u"奖励现金")
+    moneyToAdd = models.IntegerField(u"奖励现金")
     provider = models.CharField(u"商家", max_length=10)
     time_limit = models.CharField(u"活动时间", max_length=24)
     rules =UEditorField(u"奖励规则", width=900, height=300, toolbars="full", 
@@ -273,7 +273,7 @@ class UserEvent(models.Model):
 #    event_level = models.PositiveIntegerField(u'事件级别（决定是否需审核）')
     event_type = models.CharField(max_length=10, choices=USER_EVENT_TYPE, verbose_name=u"用户事件类型")
     invest_account = models.CharField(u"第三方注册账号/提现账号", max_length=100)
-    invest_amount = models.DecimalField(u'涉及金额', blank=True, null=True,decimal_places = 2, max_digits=10)
+    invest_amount = models.DecimalField(u'涉及金额', max_digits=10, decimal_places=2, default=0.00)
     invest_term = models.CharField(u"投资标期", max_length=100)
     invest_image = models.CharField(u"投资截图", max_length=1000)
     time = models.DateTimeField(u'提交时间', default=timezone.now)
@@ -316,8 +316,8 @@ class AuditLog(models.Model):
 class TransList(models.Model):
     user = models.ForeignKey(MyUser, related_name="translist")
     time = models.DateTimeField(u'时间', auto_now_add=True)
-    initAmount = models.DecimalField(u'变动前数值',decimal_places = 2, max_digits=10)
-    transAmount = models.DecimalField(u'变动数值', decimal_places = 2, max_digits=10)
+    initAmount = models.IntegerField(u'变动前数值')
+    transAmount = models.IntegerField(u'变动数值')
     reason = models.CharField(max_length=20, verbose_name=u"变动原因")
     remark = models.CharField(u"备注", max_length=100, blank=True)
     transType = models.CharField(max_length=2, choices=TRANS_TYPE, verbose_name=u"变动类型")
