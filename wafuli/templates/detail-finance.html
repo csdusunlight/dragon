@@ -1,4 +1,4 @@
-{% extends "detail-common.html" %}
+{% extends "detail-base.html" %}
 {% load staticfiles %}
 {% block jsblock %}
 <script type="text/javascript">
@@ -65,8 +65,7 @@ $(function(){
 		var amount = parseFloat($('input#amount').val());
 		var term = $('input#term').val();
 		$.ajax({
-			url:"{%url 'expsubmit' %}?type=" + type +"&id=" + id + "&telnum=" + telnum
-					+ "&remark=" + remark,
+			url:"{%url 'expsubmit_finance' %}";
 			type:'post',
 			data:{
 				type:type,
