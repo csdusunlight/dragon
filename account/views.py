@@ -126,7 +126,7 @@ def register(request):
             user.save()
             logger.info('Creating User:' + mobile + ' succeed!')
             # 注册奖励2元
-            reg_award = 2
+            reg_award = 200
             trans = charge_money(user, '0', reg_award, u"注册奖励")
             if trans:
                 logger.debug('Registering Award money is successfully payed!')
