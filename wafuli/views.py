@@ -16,6 +16,7 @@ from account.models import MyUser
 from django.contrib.contenttypes.models import ContentType
 from django.db import transaction
 from wafuli.tools import update_view_count
+from .tools import saveImgAndGenerateUrl
 logger = logging.getLogger('wafuli')
 from .tools import listing
 import re
@@ -175,15 +176,12 @@ def expsubmit_finance(request):
         result = {'code':code, 'url':url}
         return JsonResponse(result)
     news_id = request.POST.get('id', None)
-    news_type = request.POST.get('type', None)
-    is_futou = request.POST.get('is_futou', '0')
-    telnum = request.POST.get('telnum', None)
-    telnum = str(telnum).strip()
+    telnum = request.POST.get('telnum', '').strip()
     remark = request.POST.get('remark', '')
     term = request.POST.get('term', '').strip()
     amount = request.POST.get('amount',0)
     amount = Decimal(amount)
-    if not (news_id and news_type and telnum):
+    if not (news_id and telnum):
         logger.error("news_id or news_type is missing!!!")
         raise Http404
     if len(telnum)>100 or len(remark)>200:
@@ -192,13 +190,12 @@ def expsubmit_finance(request):
         result = {'code':code, 'msg':msg}
         return JsonResponse(result)
     news = None
-    model = globals()[news_type]
 #     if news.state != '1':
 #         code = '4'
 #         msg = u'该项目已结束或未开始！'
 #         result = {'code':code, 'msg':msg}
 #         return JsonResponse(result)
-    news = model.objects.get(pk=news_id)
+    news = Finance.objects.get(pk=news_id)
     is_futou = news.is_futou
     info_str = "news_id:" + news_id + "| invest_account:" + telnum + "| is_futou:" + str(is_futou)
     logger.info(info_str)
@@ -224,39 +221,48 @@ def expsubmit_task(request):
     if not request.is_ajax():
         logger.warning("Expsubmit refused no-ajax request!!!")
         raise Http404
-    code = 0
-    url = ''
     if not request.user.is_authenticated():
         url = reverse('login') + '?next=' + request.META['HTTP_REFERER']
-        result = {'code':code, 'url':url}
+        result = {'code':0, 'url':url}
         return JsonResponse(result)
-    file =  request.FILES.get('imagefile')
-    with open('../name3.png', 'wb+') as destination:
-        for chunk in file.chunks():
-            destination.write(chunk)
     news_id = request.POST.get('id', None)
-    if not (news_id):
-        logger.error("news_id is missing!!!")
+    telnum = request.POST.get('telnum', '').strip()
+    remark = request.POST.get('remark', '')
+    if not (news_id and telnum):
         raise Http404
+    imgurl_list = []
+    for key in request.FILES:
+        block = request.FILES[key]
+        if block.size > 80*1024:
+            result = {'code':-1, 'msg':u"每张图片大小不能超过80k，请重新上传"}
+            return JsonResponse(result)
+    for key in request.FILES:
+        block = request.FILES[key]
+        imgurl = saveImgAndGenerateUrl(key, block)
+        imgurl_list.append(imgurl)
+    invest_image = ';'.join(imgurl_list)
     news = Task.objects.get(pk=news_id)
     is_futou = news.is_futou
-#     logger.info(info_str)
-#     if is_futou:
-#         remark = u"复投：" + remark
-#     try:
-#         with transaction.atomic():
-#             if not is_futou and news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
-#                 raise ValueError('This invest_account is repective in project:' + str(news.id))
-#             else:
-#                 UserEvent.objects.create(user=request.user, event_type='1', invest_account=telnum, invest_term=term,
-#                                  invest_amount=amount, content_object=news, audit_state='1',remark=remark,)
-#                 code = 1
-#                 msg = u'提交成功，请通过用户中心查询！'
-#     except Exception, e:
-#         logger.info(e)
-#         code = 2
-#         msg = u'该注册手机号已被提交过，请不要重复提交！'
-#     result = {'code':code, 'msg':msg}
+    info_str = "news_id:" + news_id + "| invest_account:" + telnum + "| is_futou:" + str(is_futou)
+    logger.info(info_str)
+    code = None
+    msg = ''
+    if is_futou:
+        remark = u"复投：" + remark
+    try:
+        with transaction.atomic():
+            if not is_futou and news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
+                raise ValueError('This invest_account is repective in project:' + str(news.id))
+            else:
+                UserEvent.objects.create(user=request.user, event_type='1', invest_account=telnum,
+                                 invest_image=invest_image, content_object=news, audit_state='1',remark=remark,)
+                code = 1
+                msg = u'提交成功，请通过用户中心查询！'
+    except Exception, e:
+        logger.info(e)
+        code = 2
+        msg = u'该注册手机号已被提交过，请不要重复提交！'
+    result = {'code':code, 'msg':msg}
     return JsonResponse({})
 
 def mall(request):

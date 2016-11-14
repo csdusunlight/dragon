@@ -8,7 +8,7 @@ import logging
 logger = logging.getLogger('wafuli')
 def createUrl():
     tstr = time.strftime('%Y/%m/%d/')
-    html_name = str(int(time.time()))+'.html'
+    html_name = str(int(time.time()*1000))+'.html'
     directory = os.path.join(settings.MEDIA_ROOT, 'html',  tstr).replace('\\','/')
     if not os.path.exists(directory):
         os.makedirs(directory)
@@ -28,7 +28,17 @@ def writeHtml(html,url):
         html = html.encode('utf-8')        
         html_file.write(html)
     return 0
- 
+def saveImgAndGenerateUrl(pic_name, block):
+    tstr = time.strftime('%Y/%m/%d/')
+    save_name = str(int(time.time()*1000))+pic_name
+    save_directory = os.path.join(settings.MEDIA_ROOT, 'upload',  tstr).replace('\\','/')
+    if not os.path.exists(save_directory):
+        os.makedirs(save_directory)
+    with open(os.path.join(save_directory, save_name), 'wb+') as file:
+        for chunk in block.chunks():
+            file.write(chunk)
+    url = os.path.join(settings.MEDIA_URL,'upload', tstr, save_name).replace('\\','/')
+    return url
 def weighted_random(items): 
     total = sum(w for _,w in items) 
     n = random.uniform(0, total)#在饼图扔骰子 
