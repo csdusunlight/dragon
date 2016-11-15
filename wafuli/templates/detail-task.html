@@ -1,10 +1,10 @@
 {% extends "detail-base.html" %} {% load staticfiles %} {% block jsblock %}
 <script type="text/javascript">
 	{ %	if news.isonMobile % }
-	var ismobile = true; 
+	var ismobile = true;
 	{ % else % }
 	var ismobile = false;
-	var url_openwindow = "{% url 'exp_welfare_openwindow' %}" 
+	var url_openwindow = "{% url 'exp_welfare_openwindow' %}"
 	{ % endif %	}
 	var file_list = [];
 	$(function() {
@@ -79,7 +79,7 @@
 				}
 			});
 		});
-
+		// 图片上传部分
 		var filechooser = document.getElementById("choose");
 		//    用于压缩图片的canvas
 		var canvas = document.createElement("canvas");
@@ -91,20 +91,18 @@
 		$("#upload").on("click", function() {
 				filechooser.click();
 			})
-			//    .on("touchstart", function() {
-			//      $(this).addClass("touch")
-			//    })
-			//    .on("touchend", function() {
-			//      $(this).removeClass("touch")
-			//    });
 		filechooser.onchange = function() {
+			var imgs = $(".img-li");
+	    if (imgs.length != 0) {
+						imgs.remove();
+	    }
 			if(!this.files.length) return;
 			var files = Array.prototype.slice.call(this.files);
 			if(files.length > 6) {
 				alert("最多同时只可上传6张图片");
 				return;
 			}
-			$(".img-list").clear();
+			// $(".img-list").clear();
 			files.forEach(function(file, i) {
 				if(!/\/(?:jpeg|png|gif)/i.test(file.type)) return;
 				var reader = new FileReader();
@@ -118,6 +116,8 @@
 					var img = new Image();
 					img.src = result;
 					$(li).css("background-image", "url(" + result + ")");
+					//      图片加载完毕之后进行压缩，然后上传
+  				$("#submit_btn").on("click", function() {
 					//如果图片大小小于100kb，则直接上传
 					if(result.length <= maxsize) {
 						img = null;
@@ -130,12 +130,12 @@
 					} else {
 						img.onload = callback;
 					}
-
 					function callback() {
 						var data = compress(img);
 						upload(data, file.type, $(li));
 						img = null;
 					}
+					})
 				};
 				reader.readAsDataURL(file);
 			})
@@ -199,7 +199,7 @@
 				blob:blob
 			});
 		}
-		
+
 		function submit(){
 			var xhr = new XMLHttpRequest();
 			var formdata = getFormData();
@@ -222,10 +222,11 @@
 					var imagedata = jsonData[0] || {};
 					var text = imagedata.path ? '上传成功' : '上传失败';
 					console.log(text + '：' + imagedata.path);
+					alert("上传成功")；
 					//当收到该消息时上传完毕
 				}
 			};
-			
+
 			xhr.send(formdata);
 		}
 		/**
@@ -331,9 +332,9 @@
 		<input type="file" name="picfile" id="choose" accept="image/jpeg, image/png" multiple>
 		<ul class="img-list"></ul>
 		<a id="upload">上传图片</a>
-		<span class="tips">图片格式限jpg、png及gif</span>
+		<span class="tips">图片格式限jpg和png</span>
 	</div>
-	<p class="td-yy submit"><button class="md-trigger td-tj">提交</button></p>
+	<p class="td-yy submit"><button id="submit_btn" class="md-trigger td-tj">提交</button></p>
 	<div class="clearboth"></div>
 </div>
 <!-- 体验福利改变部分 end -->
