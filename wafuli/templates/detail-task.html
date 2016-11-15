@@ -45,19 +45,10 @@
 			if(!re.test(telnum)) {
 				alert("手机号格式不正确！")
 			} else {
-				$('#myModal').modal();
+				submit();
 			}
 		});
-		$("a#confirm").click(function() {
-			var telnum = $('input#telnum').val();
-			var remark = $('input#remark').val();
-			var is_futou = 0;
-			if($('input[name="futou"]:eq(0)').is(':checked')) {
-				is_futou = 1;
-			}
-			submit();
-		});
-
+		
 		var filechooser = document.getElementById("choose");
 		//    用于压缩图片的canvas
 		var canvas = document.createElement("canvas");
@@ -82,14 +73,13 @@
 				alert("最多同时只可上传6张图片");
 				return;
 			}
-			$(".img-list").clear();
+			$(".img-list").empty();
 			files.forEach(function(file, i) {
 				if(!/\/(?:jpeg|png|gif)/i.test(file.type)) return;
 				var reader = new FileReader();
 				var li = document.createElement("li");
 				//          获取图片大小
 				var size = file.size / 1024 > 1024 ? (~~(10 * file.size / 1024 / 1024)) / 10 + "MB" : ~~(file.size / 1024) + "KB";
-				li.innerHTML = '<div class="progress"><span></span></div><div class="size">' + size + '</div>';
 				$(".img-list").append($(li));
 				reader.onload = function() {
 					var result = this.result;
@@ -111,7 +101,7 @@
 
 					function callback() {
 						var data = compress(img);
-						upload(data, file.type, $(li));
+						process(data, file.name, file.type);
 						img = null;
 					}
 				};
@@ -182,25 +172,31 @@
 			var xhr = new XMLHttpRequest();
 			var formdata = getFormData();
 			var csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+			var telnum = $('input#telnum').val();
+			if (file_list.length==0){
+				alert("请上传任务完成截图");
+				return;
+			}
 			for (file of file_list){
 				formdata.append(file.name, file.blob);
 			}
 			formdata.append('id', id);
+			formdata.append('telnum', telnum);
 			formdata.append('csrfmiddlewaretoken', csrfmiddlewaretoken);
 			xhr.open('post', '/expsubmit/task/');
 			xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 			xhr.onreadystatechange = function() {
 				if(xhr.readyState == 4 && xhr.status == 200) {
-					var jsonData = JSON.parse(xhr.responseText);
-					if(jsonData.code == 0) {
+					var ret = JSON.parse(xhr.responseText);
+					if(ret.code == 0) {
 						alert("请先登录！")
-						window.location.href = jsonData.url;
+						window.location.href = ret.url;
 						return;
+					}else if(ret.code==1){
+						alert("上传成功！");
+					}else{
+						alert(ret.msg);
 					}
-					var imagedata = jsonData[0] || {};
-					var text = imagedata.path ? '上传成功' : '上传失败';
-					console.log(text + '：' + imagedata.path);
-					//当收到该消息时上传完毕
 				}
 			};
 			
@@ -306,7 +302,7 @@
 	<div class="ma-div">注册手机号：<input type="text" placeholder="输入您的手机号，若有多个请分别提交" class="ms-input" id='telnum' /></div>
 	<div class="img-up">
 		{%csrf_token%}
-		<input type="file" name="picfile" id="choose" accept="image/jpeg, image/png" multiple>
+		<input type="file" name="picfile" id="choose" accept="image/jpeg,image/png,image/gif" multiple>
 		<ul class="img-list"></ul>
 		<a id="upload">上传图片</a>
 		<span class="tips">图片格式限jpg、png及gif</span>
