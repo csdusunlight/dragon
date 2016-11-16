@@ -279,8 +279,8 @@
 			};
 		}
     // 根据上传状态调用函数
-    $("#up").click(maskIn);
-    $("#up").click(popupIn);
+    $("#td-tj").click(maskIn);
+    $("#td-tj").click(popupIn);
     $("#confirm").click(popupOut);
 
     function popupIn() {
@@ -322,8 +322,15 @@
 		<a id="upload">上传图片</a>
 		<span class="tips">图片格式限jpg和png，最多可上传6张</span>
 	</div>
-	<p class="td-yy submit"><button class="md-trigger td-tj">提交</button></p>
-  <div class="img-mask">文件上传中</div>
+	<p class="td-yy submit"><button id="td-tj" class="md-trigger td-tj">提交</button></p>
+  <div class="img-mask">
+    <div class="loader-inner ball-triangle-path">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <p>文件上传中</p>
+  </div>
 	<div class="clearboth"></div>
 </div>
 <!-- 上传图片成功弹出窗口 -->

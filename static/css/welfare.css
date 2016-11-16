@@ -642,7 +642,7 @@ padding: 15px;}
 }
 .td-p{font-size: 14px;
 line-height: 35px;color: #898989;}
-.td-msg{width:1100px; height:auto; margin:2rem auto;border:1px solid #EBEBEB;}
+.td-msg{position: relative;width:1100px; height:auto; margin:2rem auto;border:1px solid #EBEBEB;}
 /*体验福利新加样式*/
 .img-up>input {display: none;}
 canvas{width: 100%;border: 1px solid #000000;}
@@ -720,7 +720,172 @@ canvas{width: 100%;border: 1px solid #000000;}
   color: #fff;
   text-align: center;
   line-height: 100%;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.img-mask>p {
+  position: absolute;
+  top: 50px;
+  left: 500px;
+}
+@-webkit-keyframes ball-triangle-path-1 {
+  33% {
+    -webkit-transform: translate(25px, -50px);
+    transform: translate(25px, -50px);
+  }
+  66% {
+    -webkit-transform: translate(50px, 0px);
+    transform: translate(50px, 0px);
+  }
+  100% {
+    -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+  }
+}
+
+@keyframes ball-triangle-path-1 {
+  33% {
+    -webkit-transform: translate(25px, -50px);
+    transform: translate(25px, -50px);
+  }
+  66% {
+    -webkit-transform: translate(50px, 0px);
+    transform: translate(50px, 0px);
+  }
+  100% {
+    -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+  }
+}
+
+@-webkit-keyframes ball-triangle-path-2 {
+  33% {
+    -webkit-transform: translate(25px, 50px);
+    transform: translate(25px, 50px);
+  }
+  66% {
+    -webkit-transform: translate(-25px, 50px);
+    transform: translate(-25px, 50px);
+  }
+  100% {
+    -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+  }
+}
+
+@keyframes ball-triangle-path-2 {
+  33% {
+    -webkit-transform: translate(25px, 50px);
+    transform: translate(25px, 50px);
+  }
+  66% {
+    -webkit-transform: translate(-25px, 50px);
+    transform: translate(-25px, 50px);
+  }
+  100% {
+    -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+  }
+}
+
+@-webkit-keyframes ball-triangle-path-3 {
+  33% {
+    -webkit-transform: translate(-50px, 0px);
+    transform: translate(-50px, 0px);
+  }
+  66% {
+    -webkit-transform: translate(-25px, -50px);
+    transform: translate(-25px, -50px);
+  }
+  100% {
+    -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+  }
+}
+
+@keyframes ball-triangle-path-3 {
+  33% {
+    -webkit-transform: translate(-50px, 0px);
+    transform: translate(-50px, 0px);
+  }
+  66% {
+    -webkit-transform: translate(-25px, -50px);
+    transform: translate(-25px, -50px);
+  }
+  100% {
+    -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+  }
+}
+
+.ball-triangle-path {
+  position: relative;
+  left: 600px;
+  top: 50px;
+  -webkit-transform: translate(-25px, -25px);
+  -ms-transform: translate(-25px, -25px);
+  transform: translate(-25px, -25px);
+}
+
+.ball-triangle-path> div:nth-child(1) {
+  -webkit-animation-name: ball-triangle-path-1;
+  animation-name: ball-triangle-path-1;
+  -webkit-animation-delay: 0;
+  animation-delay: 0;
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+.ball-triangle-path> div:nth-child(2) {
+  -webkit-animation-name: ball-triangle-path-2;
+  animation-name: ball-triangle-path-2;
+  -webkit-animation-delay: 0;
+  animation-delay: 0;
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+.ball-triangle-path> div:nth-child(3) {
+  -webkit-animation-name: ball-triangle-path-3;
+  animation-name: ball-triangle-path-3;
+  -webkit-animation-delay: 0;
+  animation-delay: 0;
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+.ball-triangle-path> div {
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  border: 1px solid #fff;
+}
+
+.ball-triangle-path> div:nth-of-type(1) {
+  top: 50px;
+}
+
+.ball-triangle-path> div:nth-of-type(2) {
+  left: 25px;
+}
+
+.ball-triangle-path> div:nth-of-type(3) {
+  top: 50px;
+  left: 50px;
 }
 /*体验福利新加样式 end*/
 .td-msgs{width:1100px; height:auto; margin:2rem auto;border:1px solid #EBEBEB;}
