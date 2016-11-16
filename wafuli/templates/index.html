@@ -235,20 +235,20 @@ $(function(){
               <div class="img"><img src="{% static 'images/nr2.png' %}" alt="理财福利介绍图片"></div>
               <div class="info">
                 <p>这里是介绍内容这里是介绍内容这里是介绍内容这里是容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容</p>
-                <a target="_blank" href="#">more>></a>
+                <a target="_blank" href="{%url 'task'%}?type=junior">more>></a>
               </div>
           </div>
           <ul class="ty-content">
-            <li><a  target="_blank" href="#">
+            <li><a  target="_blank" href="{{task1.url}}">
               <div class="wrapper">
-                <img src="{% static 'images/i277x148-3.jpg' %}" alt="理财福利图片">
-                <p class="information">这里是详细信息这里是详细信息这里是详细信息这里是详细信息</p>
+                <img src="{{task1.pic.url}}" alt="理财福利图片">
+                <p class="information">{{task1.desc}}</p>
               </div>
             </a></li>
-            <li><a  target="_blank" href="#">
+            <li><a  target="_blank" href="{{task2.url}}">
               <div class="wrapper">
-                <img src="{% static 'images/i277x148-3.jpg' %}" alt="理财福利图片">
-                <p class="information">这里是详细信息这里是详细信息这里是详细信息这里是详细信息</p>
+                <img src="{{task2.pic.url}}" alt="理财福利图片">
+                <p class="information">{{task2.desc}}</p>
               </div>
             </a></li>
           </ul>
@@ -259,20 +259,20 @@ $(function(){
               <div class="img"><img src="{% static 'images/nr2.png' %}" alt="理财福利介绍图片"></div>
               <div class="info">
                 <p>这里是介绍内容这里是介绍内容这里是介绍内容这里是容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容</p>
-                <a target="_blank" href="#">more>></a>
+                <a target="_blank" href="{%url 'task'%}?type=middle">more>></a>
               </div>
           </div>
           <ul class="ty-content">
-            <li><a  target="_blank" href="#">
+            <li><a  target="_blank" href="{{task3.url}}">
               <div class="wrapper">
-                <img src="{% static 'images/i277x148-3.jpg' %}" alt="理财福利图片">
-                <p class="information">这里是详细信息这里是详细信息这里是详细信息这里是详细信息</p>
+                <img src="{{task3.pic.url}}" alt="理财福利图片">
+                <p class="information">{{task3.desc}}</p>
               </div>
             </a></li>
-            <li><a  target="_blank" href="#">
+            <li><a  target="_blank" href="{{task4.url}}">
               <div class="wrapper">
-                <img src="{% static 'images/i277x148-3.jpg' %}" alt="理财福利图片">
-                <p class="information">这里是详细信息这里是详细信息这里是详细信息这里是详细信息</p>
+                <img src="{{task4.pic.url}}" alt="理财福利图片">
+                <p class="information">{{task4.desc}}</p>
               </div>
             </a></li>
           </ul>
@@ -283,40 +283,25 @@ $(function(){
               <div class="img"><img src="{% static 'images/nr2.png' %}" alt="理财福利介绍图片"></div>
               <div class="info">
                 <p>这里是介绍内容这里是介绍内容这里是介绍内容这里是容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容这里是介绍内容</p>
-                <a target="_blank" href="#">more>></a>
+                <a target="_blank" href="{%url 'task'%}?type=senior">more>></a>
               </div>
           </div>
           <ul class="ty-content">
-            <li><a  target="_blank" href="#">
+            <li><a  target="_blank" href="{{task5.url}}">
               <div class="wrapper">
-                <img src="{% static 'images/i277x148-3.jpg' %}" alt="理财福利图片">
-                <p class="information">这里是详细信息这里是详细信息这里是详细信息这里是详细信息</p>
+                <img src="{{task5.pic.url}}" alt="理财福利图片">
+                <p class="information">{{task5.desc}}</p>
               </div>
             </a></li>
-            <li><a  target="_blank" href="#">
+            <li><a  target="_blank" href="{{task6.url}}">
               <div class="wrapper">
-                <img src="{% static 'images/i277x148-3.jpg' %}" alt="理财福利图片">
-                <p class="information">这里是详细信息这里是详细信息这里是详细信息这里是详细信息</p>
+                <img src="{{task6.pic.url}}" alt="理财福利图片">
+                <p class="information">{{task6.desc}}</p>
               </div>
             </a></li>
           </ul>
         </li>
       </ul>
-
-     <!--  <ul>
-		{% for news in task_list %}
-        <li>
-          <p><img src="{{news.pic.url}}" alt=""/></p>
-          <h2><a target="_blank" href="{{news.url}}">{{news.title}}</a></h2>
-          商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 家：{{news.provider}}<br />浏 览 数 ：{{news.view_count}}<br />活动时间：{{news.time_limit}}
-          <a target="_blank" href="{{news.url}}" class="more">立即查看</a>
-          {% if news.is_new %}
-          <div class="newpost">新</div>
-          {% endif %}
-        </li>
-{% endfor %}
-      </ul> -->
-
     </div>
   <script type="text/javascript">
   $(function(){
