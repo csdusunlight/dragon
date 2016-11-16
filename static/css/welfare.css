@@ -820,6 +820,7 @@ canvas{width: 100%;border: 1px solid #000000;}
 
 .ball-triangle-path {
   position: relative;
+  width: 100px;
   left: 600px;
   top: 120px;
   -webkit-transform: translate(-25px, -25px);

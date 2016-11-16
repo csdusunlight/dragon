@@ -278,18 +278,21 @@
 				}
 			};
 		}
-    // 根据上传状态调用函数
-    $("#td-tj").click(maskIn);
-    $("#td-tj").click(popupIn);
-    $("#confirm").click(popupOut);
 
+// 根据上传状态调用函数(需要删除)
+    // $("#td-tj").click(maskIn);
+    // $("#td-tj").click(popupIn);
+// 上传成功调用函数
     function popupIn() {
         $(".popup-box").addClass("in");
+        $(".img-mask").css("display", "none");
     }
+// 上传成功弹出窗口点击确定调用函数（已写入html）
     function popupOut() {
         $(".popup-box").removeClass("in");
         $(".img-mask").css("display", "none");
     }
+// 上传中调用函数
     function maskIn() {
         $(".img-mask").css("display", "block");
     }
@@ -338,7 +341,7 @@
     <div class="popup-content">
       <h3>温馨提示</h3>
       <p>内容提交成功</p>
-      <a id="confirm" class="confirm">确认</a>
+      <a id="confirm" class="confirm" onclick="popupOut()">确认</a>
     </div>
 </div>
 <!-- 体验福利改变部分 end -->
