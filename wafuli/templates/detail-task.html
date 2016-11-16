@@ -1,9 +1,9 @@
-{% extends "detail-base.html" %} 
-{% load staticfiles %} 
+{% extends "detail-base.html" %}
+{% load staticfiles %}
 {% block jsblock %}
 <script type="text/javascript">
 	{%if news.isonMobile %}
-	var ismobile = true; 
+	var ismobile = true;
 	{% else %}
 	var ismobile = false;
 	var url_openwindow = "{% url 'exp_welfare_openwindow' %}";
@@ -48,7 +48,7 @@
 				submit();
 			}
 		});
-		
+
 		var filechooser = document.getElementById("choose");
 		//    用于压缩图片的canvas
 		var canvas = document.createElement("canvas");
@@ -167,7 +167,7 @@
 				blob:blob
 			});
 		}
-		
+
 		function submit(){
 			var xhr = new XMLHttpRequest();
 			var formdata = getFormData();
@@ -199,7 +199,7 @@
 					}
 				}
 			};
-			
+
 			xhr.send(formdata);
 		}
 		/**
@@ -278,6 +278,21 @@
 				}
 			};
 		}
+    // 根据上传状态调用函数
+    $("#up").click(maskIn);
+    $("#up").click(popupIn);
+    $("#confirm").click(popupOut);
+
+    function popupIn() {
+        $(".popup-box").addClass("in");
+    }
+    function popupOut() {
+        $(".popup-box").removeClass("in");
+        $(".img-mask").css("display", "none");
+    }
+    function maskIn() {
+        $(".img-mask").css("display", "block");
+    }
 	});
 </script>
 {%endblock%} {%block expblock%}
@@ -305,10 +320,19 @@
 		<input type="file" name="picfile" id="choose" accept="image/jpeg,image/png,image/gif" multiple>
 		<ul class="img-list"></ul>
 		<a id="upload">上传图片</a>
-		<span class="tips">图片格式限jpg、png及gif</span>
+		<span class="tips">图片格式限jpg和png，最多可上传6张</span>
 	</div>
 	<p class="td-yy submit"><button class="md-trigger td-tj">提交</button></p>
+  <div class="img-mask">文件上传中</div>
 	<div class="clearboth"></div>
+</div>
+<!-- 上传图片成功弹出窗口 -->
+<div class="popup-box">
+    <div class="popup-content">
+      <h3>温馨提示</h3>
+      <p>内容提交成功</p>
+      <a id="confirm" class="confirm">确认</a>
+    </div>
 </div>
 <!-- 体验福利改变部分 end -->
 <div class="td-msgs">
