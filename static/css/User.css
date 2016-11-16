@@ -137,6 +137,14 @@
   top: 0;
   right: 0;
 }
+.img-up.mask {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0,0,0,0.3);
+}
 /*体验福利图片改版部分——end*/
 
 .Integral { float:left; width:858px; height:auto; padding:24px 12px; border:1px solid #eeeeee; text-align:left; background:#fff;}

@@ -82,6 +82,11 @@ $(function(){
 			});
 		}
 	});
+  // 点击图片放大
+  $(".img-u img").on("click", function() {
+        $(".img-u img").toggleClass("big-img");
+        $(".img-u").toggleClass("mask");
+      })；
 });
 </script>
 </head>
