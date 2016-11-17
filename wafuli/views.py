@@ -33,7 +33,6 @@ def index(request):
             wel.left_count = wel.coupons.filter(user__isnull=True).count()
         else:
             wel.left_count = u"充足"
-    task_list = Task.objects.filter(state='1')[0:3]
     finance_list = Finance.objects.filter(state='1')[0:3]
     news_list = Activity.objects.filter(is_hidden=False)[0:2]
     exchange_list = ExchangeRecord.objects.all()[0:10]
@@ -43,12 +42,24 @@ def index(request):
                'hongbao_list': hongbao_list,
                'baoyou_list': baoyou_list, 
                'youhuiquan_list': youhuiquan_list, 
-               'task_list': task_list, 'announce_list':announce_list,
+#                'task_list': task_list, 
+               'announce_list':announce_list,
                'finance_list': finance_list,
-               'news_list': news_list,'exchange_list': exchange_list,
+               'news_list': news_list,
+               'exchange_list': exchange_list,
                'strategy_list': strategy_list,
                'info': info,
     }
+    task_list = list(Task.objects.filter(state='1',type='junior')[0:2])
+    if len(task_list)==2:
+        context.update(task1=task_list[0],task2=task_list[1])
+    task_list = list(Task.objects.filter(state='1',type='middle')[0:2])
+    if len(task_list)==2:
+        context.update(task3=task_list[0],task4=task_list[1])
+    task_list = list(Task.objects.filter(state='1',type='senior')[0:2])
+    if len(task_list)==2:
+        context.update(task5=task_list[0],task6=task_list[1])
+        
     try:
         statis = DayStatis.objects.get(date=date.today())
     except:
@@ -109,6 +120,15 @@ def task(request, id=None):
                 username = username + '****'
             exps.append({'username':username,'title':task.title})
         context.update({'exps':exps})
+        defalut_filter = request.GET.get('type','')
+        if defalut_filter=='junior':
+            context.update(defalut_filter=1)
+        elif defalut_filter=='middle':
+            context.update(defalut_filter=2)
+        elif defalut_filter=='senior':
+            context.update(defalut_filter=3)
+        else:
+            context.update(defalut_filter=0)
         return render(request, 'taskWelfare.html', context)
     else:
         id = int(id)
@@ -442,11 +462,11 @@ def get_task_page(request):
     filter = str(filter)
     state = str(state)
     if filter == '1':
-        item_list = item_list.filter(amount_to_invest=0)
+        item_list = item_list.filter(type='junior')
     elif filter == '2':
-        item_list = item_list.filter(amount_to_invest__lte=100)
+        item_list = item_list.filter(type='middle')
     elif filter == '3':
-        item_list = item_list.filter(amount_to_invest__gt=100)
+        item_list = item_list.filter(type='senior')
     item_list = item_list.filter(state=state)
     paginator = Paginator(item_list, size)
     try:

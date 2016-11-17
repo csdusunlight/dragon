@@ -74,7 +74,7 @@ class ZeroPrice(News):
     strategy=UEditorField(u"活动内容", width=900, height=600, toolbars="full", 
                          imagePath="photos/%(year)s/%(month)s/%(day)s/",
                          filePath="photos/%(year)s/%(month)s/%(day)s/", 
-                         upload_settings={"imageMaxSize":1204000},settings={},command=None,blank=True)
+                         upload_settings={"imageMaxSize":120000},settings={},command=None,blank=True)
     class Meta:
         verbose_name = u"免费福利"
         verbose_name_plural = u"免费福利"
@@ -101,7 +101,7 @@ class Welfare(Base):
     strategy=UEditorField(u"活动内容", width=900, height=600, toolbars="full", 
                          imagePath="photos/%(year)s/%(month)s/%(day)s/",
                          filePath="photos/%(year)s/%(month)s/%(day)s/", 
-                         upload_settings={"imageMaxSize":1204000},settings={},command=None,blank=True)
+                         upload_settings={"imageMaxSize":120000},settings={},command=None,blank=True)
     advert = models.ForeignKey("Advertisement",blank=True, null=True, on_delete=models.SET_NULL)
     exp_url = models.CharField(u"商家地址", blank=True, max_length=200)
     def clean(self):
@@ -188,7 +188,8 @@ class Coupon(models.Model):
         today = datetime.date.today()
         return endTime < today
 class Task(News):
-    amount_to_invest = models.IntegerField(u"投资金额")
+    type = models.CharField(max_length=10, choices=TASK_TYPE, verbose_name=u"任务类型")
+    desc = models.TextField(max_length=50, verbose_name=u"任务描述（用于首页展示）")
     scroreToAdd = models.IntegerField(u"奖励积分")
     moneyToAdd = models.IntegerField(u"奖励现金")
     provider = models.CharField(u"商家", max_length=10)
@@ -196,11 +197,11 @@ class Task(News):
     rules =UEditorField(u"奖励规则", width=900, height=300, toolbars="full", 
                          imagePath="photos/%(year)s/%(month)s/%(day)s/",
                          filePath="photos/%(year)s/%(month)s/%(day)s/", 
-                         upload_settings={"imageMaxSize":1204000},settings={},command=None,blank=True)
+                         upload_settings={"imageMaxSize":120000},settings={},command=None,blank=True)
     strategy =UEditorField(u"体验步骤", width=900, height=300, toolbars="full", 
                          imagePath="photos/%(year)s/%(month)s/%(day)s/",
                          filePath="photos/%(year)s/%(month)s/%(day)s/", 
-                         upload_settings={"imageMaxSize":1204000},settings={},command=None,blank=True)
+                         upload_settings={"imageMaxSize":120000},settings={},command=None,blank=True)
     user_event = GenericRelation("UserEvent",related_query_name='task')
     def get_type(self):
         return u"体验福利"
@@ -221,11 +222,11 @@ class Finance(News):
     rules =UEditorField(u"奖励规则", width=900, height=300, toolbars="full", 
                          imagePath="photos/%(year)s/%(month)s/%(day)s/",
                          filePath="photos/%(year)s/%(month)s/%(day)s/", 
-                         upload_settings={"imageMaxSize":1204000},settings={},command=None,blank=True)
+                         upload_settings={"imageMaxSize":120000},settings={},command=None,blank=True)
     strategy =UEditorField(u"体验步骤", width=900, height=300, toolbars="full", 
                          imagePath="photos/%(year)s/%(month)s/%(day)s/",
                          filePath="photos/%(year)s/%(month)s/%(day)s/", 
-                         upload_settings={"imageMaxSize":1204000},settings={},command=None,blank=True)
+                         upload_settings={"imageMaxSize":120000},settings={},command=None,blank=True)
     user_event = GenericRelation("UserEvent",related_query_name='finance')
     def get_type(self):
         return u"理财福利"
@@ -246,11 +247,11 @@ class Commodity(models.Model):
     rules =UEditorField(u"奖品介绍", width=900, height=300, toolbars="full", 
                          imagePath="photos/%(year)s/%(month)s/%(day)s/",
                          filePath="photos/%(year)s/%(month)s/%(day)s/", 
-                         upload_settings={"imageMaxSize":1204000},settings={},command=None,blank=True)
+                         upload_settings={"imageMaxSize":120000},settings={},command=None,blank=True)
     strategy =UEditorField(u"兑换流程", width=900, height=300, toolbars="full", 
                          imagePath="photos/%(year)s/%(month)s/%(day)s/",
                          filePath="photos/%(year)s/%(month)s/%(day)s/", 
-                         upload_settings={"imageMaxSize":1204000},settings={},command=None,blank=True)
+                         upload_settings={"imageMaxSize":120000},settings={},command=None,blank=True)
     def __unicode__(self):
         return self.name
     class Meta:
@@ -366,7 +367,7 @@ class Press(Base):
     content=UEditorField(u"内容", width=900, height=300, toolbars="full", 
                          imagePath="photos/%(year)s/%(month)s/%(day)s/",
                          filePath="photos/%(year)s/%(month)s/%(day)s/", 
-                         upload_settings={"imageMaxSize":1204000},settings={},command=None,blank=True)
+                         upload_settings={"imageMaxSize":120000},settings={},command=None,blank=True)
     #增加title、keywords、description等seo字段
     seo_title = models.CharField(max_length=200, verbose_name=u"SEO标题", blank=True)
     seo_keywords = models.CharField(max_length=200, verbose_name=u"SEO关键词", blank=True)
@@ -448,7 +449,7 @@ class Information(Base):
     content=UEditorField(u"内容", width=900, height=300, toolbars="full", 
                          imagePath="photos/%(year)s/%(month)s/%(day)s/",
                          filePath="photos/%(year)s/%(month)s/%(day)s/", 
-                         upload_settings={"imageMaxSize":1204000},settings={},command=None,blank=True)
+                         upload_settings={"imageMaxSize":120000},settings={},command=None,blank=True)
     #增加title、keywords、description等seo字段
     seo_title = models.CharField(max_length=200, verbose_name=u"SEO标题", blank=True)
     seo_keywords = models.CharField(max_length=200, verbose_name=u"SEO关键词", blank=True)
