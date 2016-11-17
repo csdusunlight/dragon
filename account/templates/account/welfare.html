@@ -83,10 +83,10 @@ $(function(){
 		}
 	});
   // 点击图片放大
-  $(".img-up img").on('click','.img-up img',function(){
+  $(".img-up img").onclick = function(){
     $(".img-up img").toggleClass("big-img");
     $(".img-up").toggleClass("mask");
-  });
+  };
 });
 </script>
 </head>
