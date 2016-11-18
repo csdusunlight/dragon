@@ -56,5 +56,5 @@ urlpatterns = [
     url(r'^information/(?:(?P<type>wahangqing|wagushi|washuju|wahuodong)/)?(?:list-page(?P<page>[0-9]*)/)?$', 'wafuli.views.information', name='information_list'),
     
     url(r'^sitemap/$', TemplateView.as_view(template_name="sitemap.html"), name='sitemap'),
-    url(r'^screenshot/$', 'wafuli.views.display_screenshot', name='screeshot'),
+    url(r'^screenshot/$', 'wafuli.views.display_screenshot', name='screenshot'),
 ]

@@ -421,6 +421,7 @@ def get_user_wel_page(request):
              "time":con.time.strftime("%Y-%m-%d %H:%M:%S"),
              "state":con.get_audit_state_display(),
              "reason":reason,
+             "id":con.id
              }
         data.append(i)
     if data:
