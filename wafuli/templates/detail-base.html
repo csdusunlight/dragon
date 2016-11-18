@@ -65,7 +65,33 @@
   {% include "outline.html" %}
 
 	{% block dialogblock %}
+  <!--//体验-->
+      <div class="modal fade" id="myReModal">
+          <div class="modal-dialog modal-mg">
+            <div class="modal-content">
+            <div>
+                <p style="color:#F08619;font-size:16px;margin:2em 0px 0em 0px;">用手机扫描二维码进行体验</p>
+                <img id='erweima' src="#" style="margin:2em 0px 3em 0px;"/>
+            </div>            
+                </div>
+              </div>
+        </div>    
 
+      <div class="modal fade" id="myModal">
+          <div class="modal-dialog modal-mg">
+            <div class="modal-content">
+             <div class="md-content">
+				<div>
+					<p style="color:#04B3FF;font-size:25px;">温馨提示</p>
+					<p style="padding: 0px 0px 30px 0px;">内容提交后不可更改,提交别人的信息会冻结账户,请谨慎确认</p>
+                    <a id="confirm" class="submit_mores">确认</a>
+                    <a id="cancel" class="submit_mores" class="close" data-dismiss="modal" aria-label="Close">取消</a>
+				</div>
+			</div>
+				</div><!-- modal-body-->
+                  
+                </div>
+       </div>
 	{% endblock %}
 </body>
 </html>

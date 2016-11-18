@@ -305,11 +305,11 @@ def get_admin_return_page(request):
              "state":con.get_audit_state_display(),
              "admin":u'无' if con.audit_state=='1' or not con.audited_logs.exists() else con.audited_logs.first().user.username,
              "time_admin":u'无' if con.audit_state=='1' or not con.audit_time else con.audit_time.strftime("%Y-%m-%d %H:%M"),
-             "amount":u'无' if con.audit_state!='0' or not con.translist.exists() else con.translist.first().transAmount,
+             "ret_amount":u'无' if con.audit_state!='0' or not con.translist.exists() else con.translist.first().transAmount,
              "score":u'无' if con.audit_state!='0' or not con.score_translist.exists() else con.score_translist.first().transAmount,
              "id":con.id,
              "remark": con.remark or u'无' if con.audit_state!='2' or not con.audited_logs.exists() else con.audited_logs.first().reason,
-             "amount": con.invest_amount,
+             "invest_amount": con.invest_amount,
              "term": con.invest_term,
         }
         data.append(i)
