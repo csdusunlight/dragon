@@ -115,6 +115,8 @@ class Welfare(Base):
         now = datetime.datetime.now()
         days = (now-self.startTime).days
         return days == 0 
+    def is_hot(self):
+        return self.view_count > 1000
     def get_type(self):
         return u"免费福利"
     def get_type_url(self):
@@ -190,8 +192,8 @@ class Coupon(models.Model):
 class Task(News):
     type = models.CharField(max_length=10, choices=TASK_TYPE, verbose_name=u"任务类型")
     desc = models.TextField(max_length=50, verbose_name=u"任务描述（用于首页展示）")
+    moneyToAdd = models.IntegerField(u"奖励福币")
     scroreToAdd = models.IntegerField(u"奖励积分")
-    moneyToAdd = models.IntegerField(u"奖励现金")
     provider = models.CharField(u"商家", max_length=10)
     time_limit = models.CharField(u"活动时间", max_length=24)
     rules =UEditorField(u"奖励规则", width=900, height=300, toolbars="full", 

@@ -65,7 +65,7 @@ $(function(){
 		var amount = parseFloat($('input#amount').val());
 		var term = $('input#term').val();
 		$.ajax({
-			url:"{%url 'expsubmit_finance' %}";
+			url:"{%url 'expsubmit_finance' %}",
 			type:'post',
 			data:{
 				type:type,

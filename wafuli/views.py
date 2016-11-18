@@ -17,6 +17,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import transaction
 from wafuli.tools import update_view_count
 from .tools import saveImgAndGenerateUrl
+from django.contrib.auth.decorators import login_required
 logger = logging.getLogger('wafuli')
 from .tools import listing
 import re
@@ -694,3 +695,18 @@ def information(request, type=None, page=None, id=None):
         update_view_count(info)
         hot_info_list = Information.objects.filter(is_display=True).order_by('-view_count')[0:6]
         return render(request, 'detail-information.html',{'info':info, 'hot_info_list':hot_info_list, 'type':'Information'})
+
+@login_required    
+def display_screenshot(request):
+    id = request.GET.get('id', None)
+    if not id:
+        raise Http404
+    log = UserEvent.objects.get(id=id)
+    if log.user.id != request.user.id:
+        raise Http404
+    url_list = log.invest_image.split(';')
+    img_list = []
+    for url in url_list:
+        name = url.split('/')[-1]
+        img_list.append({'name':name,'url':url})
+    return render(request, 'screenshot.html', {'img_list':img_list})
