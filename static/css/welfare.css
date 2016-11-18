@@ -549,7 +549,7 @@ ul,li{list-style:none;}
     background: -webkit-gradient(linear,left top,left bottom, from(#fff), to(#fff));
     border: 1px solid #eee;
     padding: 5px 0;
-    width: 110px;
+    width: 100px;
     text-align: center;
     margin-left: -1px;
     position: relative;
@@ -587,7 +587,7 @@ ul,li{list-style:none;}
     color: rgb(17, 17, 17);
     float: left;
     height: 43px;
-    width: 492px;
+    width: 420px;
     line-height: 40px;
     text-align: left;
     border-top: 1px solid #eee;
