@@ -296,7 +296,7 @@
         $(".img-mask").css("display", "block");
     }
 </script>
-{%endblock%} 
+{%endblock%}
 {%block expblock%}
 <div class="td-ti">
 	<div style="max-width:500px;max-height:175px;float:left;overflow:hidden"><img src="{{news.pic.url}}" style="padding:10px"></img>
@@ -321,7 +321,7 @@
 		{%csrf_token%}
 		<input type="file" name="picfile" id="choose" accept="image/jpeg,image/png" multiple>
 		<ul class="img-list"></ul>
-		<a id="upload">上传图片</a>
+		<a id="upload">上传截图</a>
 		<span class="tips">图片格式限jpg和png，最多可上传6张</span>
 	</div>
 	<p class="td-yy submit"><button id="td-tj" class="md-trigger td-tj">提交</button></p>
@@ -339,7 +339,7 @@
 <div class="popup-box">
     <div class="popup-content">
       <h3>温馨提示</h3>
-      <p id="hint">内容提交成功</p>
+      <p id="hint">任务完成，请耐心等待工作人员审核</p>
       <a id="confirm" class="confirm" onclick="popupOut()">确认</a>
     </div>
 </div>
