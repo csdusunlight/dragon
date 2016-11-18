@@ -99,7 +99,7 @@
 .Inlet-go p a { color:#008cd6; font-size:14px;}
 .Online { float:left; width:860px; height:auto; padding:7px 11px; background:#fff; text-align:left; border:1px solid #eee;}
 .Online strong { font-weight:400; font-size:22px; color:#008fd7; line-height:66px; float:left; border-right:1px solid #ebebeb; width:122px; margin-top:26px;}
-.Online-M { float:left; margin-left:28px; width:500px; height:auto; margin-top:3px;} 
+.Online-M { float:left; margin-left:28px; width:500px; height:auto; margin-top:3px;}
 .Online-M p { font-size:16px; color:#888888; display:block; line-height:54px; text-align:left;}
 .Online-M a { text-decoration:underline; color:#008fd7; font-size:14px; margin-left:8px;}
 .Online-R { float:right; width:204px; height:120px; background:#f7f7f7; text-align:center;}
@@ -118,7 +118,43 @@
 .Welfare-td th { font-weight:400; font-size:16px; color:#666666;  background:#f8f8f8; text-align:center; border-top:1px solid #fff;}
 .Welfare-td tr th {height:44px; line-height:44px;}
 .Welfare-td tr td { font-size:14px; color:#afafaf; height:44px; line-height:44px;}
-
+/*体验福利图片改版部分*/
+#pagedata1 tbody {
+  position: relative;
+}
+.img-up {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin-right: 4px;
+  overflow: hidden;
+}
+.img-up:hover {
+  position: absolute;
+  width: 200px;
+  max-height: 400px;
+}
+.img-up:hover img {
+  width: 90%;
+}
+.img-up img {
+  width: 100%;
+}
+.img-up .img-big {
+  position: absolute;
+  width: 200px;
+  top: 0;
+  right: 0;
+}
+.img-up.mask {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0,0,0,0.3);
+}
+/*体验福利图片改版部分——end*/
 
 .Integral { float:left; width:858px; height:auto; padding:24px 12px; border:1px solid #eeeeee; text-align:left; background:#fff;}
 .Integral span { font-size:16px; color:#888888; line-height:40px; margin-right:60px; float:left;}
@@ -210,11 +246,11 @@ a.chakan { color:#008fd7; font-size:14px;}
 .None-p { float:left; width:60px; height:60px;}
 .None-p button { width:60px; height:60px; background:url(../images/none.png) no-repeat center; border:none; float:left; outline:none;}
 .acti-jump{ font-size:12px; color:#999999 !important; display:block; width:74px; height:20px; border-radius:20px; border:1px solid #ebebeb; text-align:center; line-height:20px; margin:0 !important;}
-.Bin-img .ons img {-webkit-filter: grayscale(100%); 
--moz-filter: grayscale(100%); 
--ms-filter: grayscale(100%); 
--o-filter: grayscale(100%); 
-filter: grayscale(100%); 
+.Bin-img .ons img {-webkit-filter: grayscale(100%);
+-moz-filter: grayscale(100%);
+-ms-filter: grayscale(100%);
+-o-filter: grayscale(100%);
+filter: grayscale(100%);
 filter: gray; opacity:.5;}
 input[type="text"] {padding-left: 10px !important;padding-right: 10px !important;}
 

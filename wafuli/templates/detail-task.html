@@ -1,9 +1,9 @@
-{% extends "detail-base.html" %} 
-{% load staticfiles %} 
+{% extends "detail-base.html" %}
+{% load staticfiles %}
 {% block jsblock %}
 <script type="text/javascript">
 	{%if news.isonMobile %}
-	var ismobile = true; 
+	var ismobile = true;
 	{% else %}
 	var ismobile = false;
 	var url_openwindow = "{% url 'exp_welfare_openwindow' %}";
@@ -48,7 +48,7 @@
 				submit();
 			}
 		});
-		
+
 		var filechooser = document.getElementById("choose");
 		//    用于压缩图片的canvas
 		var canvas = document.createElement("canvas");
@@ -167,7 +167,7 @@
 				blob:blob
 			});
 		}
-		
+
 		function submit(){
 			var xhr = new XMLHttpRequest();
 			var formdata = getFormData();
@@ -185,21 +185,26 @@
 			formdata.append('csrfmiddlewaretoken', csrfmiddlewaretoken);
 			xhr.open('post', '/expsubmit/task/');
 			xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+			maskIn();
 			xhr.onreadystatechange = function() {
+		        $(".img-mask").css("display", "none");
 				if(xhr.readyState == 4 && xhr.status == 200) {
 					var ret = JSON.parse(xhr.responseText);
 					if(ret.code == 0) {
+						$(".img-mask").css("display", "none");
 						alert("请先登录！")
 						window.location.href = ret.url;
 						return;
 					}else if(ret.code==1){
-						alert("上传成功！");
+						$("#hint").text("上传成功！")
+						popupIn();
 					}else{
-						alert(ret.msg);
+						$("#hint").text(ret.msg)
+						popupIn()
 					}
 				}
 			};
-			
+
 			xhr.send(formdata);
 		}
 		/**
@@ -279,8 +284,21 @@
 			};
 		}
 	});
+// 上传成功调用函数
+    function popupIn() {
+        $(".popup-box").addClass("in");
+    }
+// 上传成功弹出窗口点击确定调用函数（已写入html）
+    function popupOut() {
+        $(".popup-box").removeClass("in");
+    }
+// 上传中调用函数
+    function maskIn() {
+        $(".img-mask").css("display", "block");
+    }
 </script>
-{%endblock%} {%block expblock%}
+{%endblock%} 
+{%block expblock%}
 <div class="td-ti">
 	<div style="max-width:500px;max-height:175px;float:left;overflow:hidden"><img src="{{news.pic.url}}" style="padding:10px"></img>
 	</div>
@@ -302,13 +320,29 @@
 	<div class="ma-div">注册手机号：<input type="text" placeholder="输入您的手机号，若有多个请分别提交" class="ms-input" id='telnum' /></div>
 	<div class="img-up">
 		{%csrf_token%}
-		<input type="file" name="picfile" id="choose" accept="image/jpeg,image/png,image/gif" multiple>
+		<input type="file" name="picfile" id="choose" accept="image/jpeg,image/png" multiple>
 		<ul class="img-list"></ul>
 		<a id="upload">上传图片</a>
-		<span class="tips">图片格式限jpg、png及gif</span>
+		<span class="tips">图片格式限jpg和png，最多可上传6张</span>
 	</div>
-	<p class="td-yy submit"><button class="md-trigger td-tj">提交</button></p>
+	<p class="td-yy submit"><button id="td-tj" class="md-trigger td-tj">提交</button></p>
+  <div class="img-mask">
+    <div class="loader-inner ball-triangle-path">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <p>文件上传中</p>
+  </div>
 	<div class="clearboth"></div>
+</div>
+<!-- 上传图片成功弹出窗口 -->
+<div class="popup-box">
+    <div class="popup-content">
+      <h3>温馨提示</h3>
+      <p id="hint">内容提交成功</p>
+      <a id="confirm" class="confirm" onclick="popupOut()">确认</a>
+    </div>
 </div>
 <!-- 体验福利改变部分 end -->
 <div class="td-msgs">

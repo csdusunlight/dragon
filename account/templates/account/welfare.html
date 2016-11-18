@@ -16,8 +16,8 @@
 
 <script type="text/javascript">
 var data = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="20%">提交手机号</th>'+
-	'<th width="20%">提交时间</th><th width="20%">状态</th><th width="20%">备注</th></tr></thead><tbody>'+
-	'[data]<tr><td>{title}</td><td>{username}</td><td>{time}</td><td>{state}</td><td>{reason}</td></tr>[/data]'
+	'<th width="20%">提交时间</th><th width="20%">状态</th><th width="20%">截图</th></tr></thead><tbody>'+
+	'[data]<tr><td>{title}</td><td>{username}</td><td>{time}</td><td>{state}</td><td><span class="img-up"><img src="{% static 'images/picin.png' %}" alt="截图上传图片" /></span><span class="img-up"><img src="{% static 'images/picin.png' %}" alt="截图上传图片" /></span></td></tr>[/data]'
 	+ '</tbody></table>';
 var data2 = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="20%">提交手机号</th>'+
 	'<th width="20%">提交时间</th><th width="20%">状态</th><th width="20%">拒绝原因</th></tr></thead><tbody>'+
@@ -33,14 +33,14 @@ function emptydisplay(obj){
 $(function(){
 	$('.back-a2').parent().toggleClass("on");
 	$("#pagedata1").ajaxPage({
-	    url:turl+0, 
+	    url:turl+0,
 	    pageId:$("#page1"),
 	    pageSize:6,
 	    run:true,
 	    content:data,
 	});
 	$("#pagedata2").ajaxPage({
-	    url:furl+0, 
+	    url:furl+0,
 	    pageId:$("#page2"),
 	    pageSize:6,
 	    run:true,
@@ -56,13 +56,13 @@ $(function(){
 			}
 			$("#page1").empty();
 			$("#pagedata1").ajaxPage({
-			    url:turl+index, 
+			    url:turl+index,
 			    pageId:$("#page1"),
 			    pageSize:6,
 			    run:true,
 			    content:pdata,
 			});
-		}						
+		}
 	});
 	$("#Swi-Top2 li").click(function(){
 		if($(this).attr("class")!="on"){
@@ -74,14 +74,19 @@ $(function(){
 			}
 			$("#page2").empty();
 			$("#pagedata2").ajaxPage({
-			    url:furl+index, 
+			    url:furl+index,
 			    pageId:$("#page2"),
 			    pageSize:6,
 			    run:true,
 			    content:pdata,
 			});
-		}						
+		}
 	});
+  // 点击图片放大
+  $(".img-up img").onclick = function(){
+    $(".img-up img").toggleClass("big-img");
+    $(".img-up").toggleClass("mask");
+  };
 });
 </script>
 </head>
@@ -149,7 +154,7 @@ $(function(){
    </div>
 <!--底部-->
   {% include "footer.html" %}
-  <!--浮动窗口-->  
+  <!--浮动窗口-->
   {% include "outline.html" %}
 </body>
 </html>

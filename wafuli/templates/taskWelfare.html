@@ -34,6 +34,7 @@ var url = "{% url 'get_task_page' %}" + "?page={page}&size={pageSize}&";
 function pagecallback(){
 	$(".tab-li.new").prepend('<div class="newpost t">新</div>');
 }
+var default_filter = {{defalut_filter}};
 var textarray=[];
 function getText(n) {
 	 if (textarray[n-1])
@@ -44,8 +45,9 @@ function getText(n) {
 
 $(function(){
    	$('.task_h a').toggleClass("vo");
+   	$("#tab li").eq(default_filter).toggleClass("cur");
 	$("#pagedata1").ajaxPage({
-	    url:url+"state=1&filter=0",
+	    url:url+"state=1&filter=" + default_filter,
 	    pageId:$("#page1"),
 	    pageSize:6,
 	    run:true,
@@ -130,8 +132,8 @@ $(function(){
                   <div class="tabList" style="float:right;">
 
                     <ul>
-                        <!-- <li class="cur">全部</li> -->
-                        <li class="cur">新手入门</li>
+                        <li>全部</li>
+                        <li>新手入门</li>
                         <li>进阶体验</li>
                         <li>高手专区</li>
                     </ul>
