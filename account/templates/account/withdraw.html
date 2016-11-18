@@ -74,7 +74,7 @@ $(function(){
                         	<h2>提现</h2>
                         </div>
                         <div class="Cash-box">
-                        	<div class="Cash-info"><span>可提现金额：</span><i>{{user.balance}}</i></div>
+                        	<div class="Cash-info"><span>可提现金额：</span><i>{{user.balance}}</i>&nbsp;&nbsp;（每100福币可兑换一元现金）</div>
 
                             	<div class="Cash-input">
                                 	<span>提现金额：</span>
@@ -92,13 +92,13 @@ $(function(){
                                     <a target="_blank" href="{%url 'account_alipay'%}#update">更换账号</a>
                                     {%endif%}
                                 </div>
-                                
+
                                 <div class="Cash-input2">
                                 	<span>验证码：</span>
                                     <input id="input_varicode" type="text" />
                                     <div class="info-con">
                                     	<div class="Yzin">
-                                    	<img width="111" height="34" src="{{ codimg_url }}" id="id_checkImg" class="imageCheckRefresh"> 
+                                    	<img width="111" height="34" src="{{ codimg_url }}" id="id_checkImg" class="imageCheckRefresh">
        									<input id="id_hashkey" name="hashkey" type="hidden" value="{{ hashkey }}">
                                     	</div>
                                     </div>
@@ -107,14 +107,14 @@ $(function(){
 
                         </div>
                     </div>
-                    
-                    
+
+
                 </div>
             </div>
         </div>
     	<!--底部-->
   {% include "footer.html" %}
-  <!--浮动窗口-->  
+  <!--浮动窗口-->
   {% include "outline.html" %}
     </div>
 
