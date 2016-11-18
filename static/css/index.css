@@ -249,81 +249,41 @@
         }
         /*反转*/
         .ty-content {
-            display: block;
             margin: 10px auto 0;
         }
 
         .ty-content li,
-        .ty-content .wrapper,
-        .ty-content li img,
-        .ty-content li p {
+        .ty-content li img {
             width: 124px;
             height: 84px;
         }
-
+        .ty-content li {
+            overflow: hidden;
+        }
+        .ty-content .wrapper {
+            width: 124px;
+            height: 168px;
+            transition: transform 0.4s ease;
+        }
+        .ty-content .wrapper:hover {
+            transform: translateY(-84px);
+        }
         .ty-content li {
             cursor: pointer;
-            -webkit-perspective: 4000px;
-            perspective: 4000px;
-            width: 124px;
-            height: 84px;
             float: left;
         }
         .ty-content>li:first-child {
             margin-right: 10px;
         }
-        .ty-content .wrapper {
-            position: relative;
-            -webkit-transform-style: preserve-3d;
-            transform-style: preserve-3d;
-            -webkit-transition: -webkit-transform .6s;
-            transition: -webkit-transform .6s;
-        }
-
         .ty-content li img {
-            top: 0;
             border-radius: 3px;
-            position: absolute;
-            -webkit-transform: translateZ(42px);
-            transform: translateZ(42px);
-            -webkit-transition: all .6s;
-            transition: all .6s;
         }
-
-        .ty-content li .information {
-            position: absolute;
-            top: 0;
-            display: block;
-            padding: 8px;
-            width: 124px;
-            height: 84px;
+        .information h4 {
             margin: 0;
-            text-align: left;
-            border-radius: 15px;
-            font-size: 12px;
-            line-height: 1.5;
-            color: #333;
-            box-sizing: border-box;
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(250, 241, 244, 1)), color-stop(100%, rgba(190, 202, 217, 0.6)));
-            box-shadow: none;
-            -webkit-transform: rotateX(-90deg) translateZ(42px);
-            transform: rotateX(-90deg) translateZ(42px);
-            -webkit-transition: all .6s;
-            transition: all .6s;
         }
-
-        .ty-content li:hover .wrapper {
-            -webkit-transform: rotateX(90deg);
-            transform: rotateX(90deg);
-        }
-
-        .ty-content li:hover img {
-            box-shadow: none;
-            border-radius: 3px;
-        }
-
-        .ty-content li:hover .information {
-            border-radius: 3px;
+        .information p {
+            margin: 0;
+            line-height: 2;
         }
 /*.index_18 ul li{width:286px;height:365px;float:left;border-right:1px solid #eee;text-align:center;line-height:27px;font-size:13px;color:#888;position:relative;}
 .index_18 ul li.s{border:none;}
