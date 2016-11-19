@@ -103,7 +103,14 @@ a { cursor:pointer;}
 .Tin-table th { font-weight:400; font-size:12px; color:#4daa84; background:#e9f8ff; height:44px;}
 .Tin-table td {border-bottom: 1px dashed #4daa84;font-size: 12px; text-align:center; height:44px; font-family:"宋体"; color:#666666;}
 .Tin-table td a { color:#666666; font-family:"宋体"}
-
+/*任务管理修改部分*/
+.img-up {
+    display: block;
+    height: 34px;
+}
+.img-up img {
+    height: 100%;
+}
 .Submit-box { float:left; width:100%; height:auto; text-align:center; padding:10px 0; min-width:190px;}
 .Submit-box input{ width:40%; height:30px; border:1px solid #1377aa; color:#fff; font-size:16px; color:#fff; padding:0 40px 0 0; box-sizing:border-box; min-width:80px; margin:0 7px; float:left;}
 .Submit-box input[type="submit"]{ background:url(../images/ico1.png) no-repeat 80% #4daa84;border:none;}

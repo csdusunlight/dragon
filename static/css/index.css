@@ -280,6 +280,9 @@
         }
         .information h4 {
             margin: 0;
+            font-size: 14px;
+            line-height: 2.2;
+            font-weight: normal;
         }
         .information p {
             margin: 0;
