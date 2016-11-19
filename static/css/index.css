@@ -70,7 +70,8 @@
 .index_11{width:1100px;height:102px;clear:both;margin-top:30px;display:inline-block;text-align:left;}
 .index_11 ul li{width:265px;height:102px;float:left;padding-right:35px;}
 .index_11 ul li.s{padding:0;}
-.index_11 ul li .lf{width:102px;height:102px;}
+.index_11 ul li .lf{width:102px;height:102px;transition: transform 0.4s ease-in-out;}
+.index_11 ul li .lf:hover{transform: rotate(360deg) scale(1.2);}
 .index_11 ul li .rt{width:145px;}
 .index_11 ul li .rt h2{line-height:42px;font-size:20px;color:#3a3a3a;}
 .index_11 ul li .rt p{margin:0;padding:0;color:#a3a3a3;line-height:25px;font-size:13px;}
