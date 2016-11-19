@@ -107,9 +107,9 @@ def get_admin_index_page(request):
         i = {"date":con.date,
              "new_reg_num":con.new_reg_num,
              "active_num":con.active_num,
-             "with_amount":con.with_amount,
+             "with_amount":con.with_amount/100.0,
              "with_num":con.with_num,
-             "ret_amount":con.ret_amount,
+             "ret_amount":con.ret_amount/100.0,
              "ret_scores":con.ret_scores,
              "ret_num":con.ret_num,
              "coupon_amount":con.coupon_amount,
@@ -160,7 +160,9 @@ def admin_finance(request):
         scoretranslist = None
         if type==1:
             try:
+                cash = float(cash)*100
                 cash = int(cash)
+                print cash
                 score = int(score)
             except:
                 res['code'] = -2
@@ -254,6 +256,7 @@ def admin_task(request):
         scoretranslist = None
         if type==1:
             try:
+                cash = float(cash)*100
                 cash = int(cash)
                 score = int(score)
             except:
@@ -392,7 +395,7 @@ def get_admin_finance_page(request):
              "state":con.get_audit_state_display(),
              "admin":u'无' if con.audit_state=='1' or not con.audited_logs.exists() else con.audited_logs.first().user.username,
              "time_admin":u'无' if con.audit_state=='1' or not con.audit_time else con.audit_time.strftime("%Y-%m-%d %H:%M"),
-             "ret_amount":u'无' if con.audit_state!='0' or not con.translist.exists() else con.translist.first().transAmount,
+             "ret_amount":u'无' if con.audit_state!='0' or not con.translist.exists() else con.translist.first().transAmount/100.0,
              "score":u'无' if con.audit_state!='0' or not con.score_translist.exists() else con.score_translist.first().transAmount,
              "id":con.id,
              "remark": con.remark or u'无' if con.audit_state!='2' or not con.audited_logs.exists() else con.audited_logs.first().reason,
@@ -486,7 +489,7 @@ def get_admin_task_page(request):
              "state":con.get_audit_state_display(),
              "admin":u'无' if con.audit_state=='1' or not con.audited_logs.exists() else con.audited_logs.first().user.username,
              "time_admin":u'无' if con.audit_state=='1' or not con.audit_time else con.audit_time.strftime("%Y-%m-%d %H:%M"),
-             "ret_amount":u'无' if con.audit_state!='0' or not con.translist.exists() else con.translist.first().transAmount,
+             "ret_amount":u'无' if con.audit_state!='0' or not con.translist.exists() else con.translist.first().transAmount/100.0,
              "score":u'无' if con.audit_state!='0' or not con.score_translist.exists() else con.score_translist.first().transAmount,
              "id":con.id,
              "remark": con.remark or u'无' if con.audit_state!='2' or not con.audited_logs.exists() else con.audited_logs.first().reason,
@@ -538,7 +541,9 @@ def admin_user(request):
                 res['res_msg'] = u'传入参数不足，请联系技术人员！'
                 return JsonResponse(res)
             try:
+                pcash = float(pcash)*100
                 pcash = int(pcash)
+                mcash = float(mcash)*100
                 mcash = int(mcash)
             except:
                 res['code'] = -2
@@ -861,7 +866,7 @@ def get_admin_with_page(request):
              "balance":obj_user.balance,
              "zhifubao_name":obj_user.zhifubao_name,
              "zhifubao":obj_user.zhifubao,
-             "amount":con.invest_amount,
+             "amount":con.invest_amount/100.0,
              "time":con.time.strftime("%Y-%m-%d %H:%M"),
              "state":con.get_audit_state_display(),
              "admin":u'无' if con.audit_state=='1' or not con.audited_logs.exists() else con.audited_logs.first().user.username,
@@ -1082,8 +1087,8 @@ def get_admin_charge_page(request):
         i = {"username":con.user.username,
              "mobile":con.user.mobile,
              "time":con.time.strftime("%Y-%m-%d %H:%M"),
-             "init_amount":con.initAmount,
-             "charge_amount":('+' if con.transType=='0' else '-') + str(con.transAmount),
+             "init_amount":con.initAmount/100.0,
+             "charge_amount":('+' if con.transType=='0' else '-') + str(con.transAmount/100.0),
              "reason": con.reason,
              "remark": con.remark,
              "admin_user":u'无' if not con.admin_event else con.admin_event.admin_user.username,

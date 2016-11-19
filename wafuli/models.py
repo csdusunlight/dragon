@@ -276,7 +276,7 @@ class UserEvent(models.Model):
 #    event_level = models.PositiveIntegerField(u'事件级别（决定是否需审核）')
     event_type = models.CharField(max_length=10, choices=USER_EVENT_TYPE, verbose_name=u"用户事件类型")
     invest_account = models.CharField(u"第三方注册账号/提现账号", max_length=100)
-    invest_amount = models.DecimalField(u'涉及金额', max_digits=10, decimal_places=2, default=0.00)
+    invest_amount = models.IntegerField(u'涉及金额', default=0)
     invest_term = models.CharField(u"投资标期", max_length=100)
     invest_image = models.CharField(u"投资截图", max_length=1000)
     time = models.DateTimeField(u'提交时间', default=timezone.now)

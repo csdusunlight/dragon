@@ -702,7 +702,7 @@ def display_screenshot(request):
     if not id:
         raise Http404
     log = UserEvent.objects.get(id=id)
-    if log.user.id != request.user.id:
+    if log.user.id != request.user.id and not request.user.is_staff:
         raise Http404
     url_list = log.invest_image.split(';')
     img_list = []

@@ -688,12 +688,12 @@ def withdraw(request):
             result['res_msg'] = u'传入参数不足！'
             return JsonResponse(result)
         try:
-            withdraw_amount = float(withdraw_amount)
+            withdraw_amount = int(withdraw_amount)
         except ValueError:
             result['code'] = -1
             result['res_msg'] = u'参数不合法！'
             return JsonResponse(result)
-        if withdraw_amount < 10 or withdraw_amount > float(user.balance)+0.01:
+        if withdraw_amount < 1000 or withdraw_amount > user.balance:
             result['code'] = -1
             result['res_msg'] = u'提现金额错误！'
             return JsonResponse(result)
@@ -922,7 +922,7 @@ def invite(request):
         acc_with_count = UserEvent.objects.filter(user__inviter=inviter, event_type='2',
                     audit_state='0').values('user__mobile').distinct().order_by().count()
         this_month_award = float(withdraw_thismonth.get('sumofwith') or 0)*settings.AWARD_RATE
-        this_month_award = ("%.2f" % this_month_award)
+        this_month_award = int(this_month_award)
         statis = {
             'left_award':inviter.invite_account,
             'accu_invite_award':inviter.invite_income,   
@@ -1017,7 +1017,7 @@ def get_user_invite_page(request):
             contacts = paginator.page(paginator.num_pages)
         for con in contacts:
             take_award = float(con.invest_amount)*settings.AWARD_RATE
-            take_award = ("%.2f" % take_award)
+            take_award = int(take_award)
             i = {
                  "mobile":con.user.mobile,
                  "time":con.audit_time.strftime("%Y-%m-%d %H:%M"),
@@ -1046,7 +1046,7 @@ def get_user_invite_page(request):
             contacts = paginator.page(paginator.num_pages)
         for con in contacts:
             take_award = float(con['sumofwith'] or 0)*settings.AWARD_RATE
-            take_award = ("%.2f" % take_award)
+            take_award = int(take_award)
             i = {
                  "month":str(con['month'])[0:7],
                  "amount":con['sumofwith'] or 0,

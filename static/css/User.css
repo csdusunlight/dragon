@@ -238,7 +238,7 @@ input[type="text"] {padding-left: 10px !important;padding-right: 10px !important
 .Cash-input { float:left; width:100%; height:auto; margin-top:20px;}
 .Cash-input strong { font-size:15px; color:#666666; line-height:36px;}
 .Cash-input span { float:left; width:108px; height:auto; font-size:15px; color:#666666; line-height:36px; text-align:right;}
-.Cash-input input[type="text"] { width:370px; height:34px; line-height:34px; float:left; border:1px solid #ebebeb;outline:none;}
+.Cash-input input[type="text"] { width:260px; height:34px; line-height:34px; float:left; border:1px solid #ebebeb;outline:none;}
 .Cash-input i { font-size:12px; color:#989898; margin-top:20px; float:left; margin-left:10px;}
 .Cash-input p { font-size:12px; color:#666666; line-height:36px; float:left;}
 .Cash-input a { font-size:12px; color:#008fd7; text-decoration:underline;}
