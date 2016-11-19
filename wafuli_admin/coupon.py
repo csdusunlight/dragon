@@ -148,7 +148,7 @@ def admin_coupon(request):
             raise Http404
         if not ( admin_user.is_authenticated() and admin_user.is_staff):
             res['code'] = -1
-            res['url'] = reverse('admin:login') + "?next=" + reverse('admin_return')
+            res['url'] = reverse('admin:login') + "?next=" + reverse('admin_coupon')
             return JsonResponse(res)
         if not admin_user.has_admin_perms('002'):
             res['code'] = -5
