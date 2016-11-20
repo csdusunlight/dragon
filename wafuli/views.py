@@ -70,7 +70,7 @@ def index(request):
     glo_statis = GlobalStatis.objects.first()
     if glo_statis:
         all_wel_num = glo_statis.all_wel_num
-        withdraw_total = glo_statis.award_total
+        withdraw_total = int(glo_statis.award_total/100.0)
         
     else:
         withdraw_total = 0
