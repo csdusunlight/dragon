@@ -171,6 +171,7 @@ def admin_coupon(request):
         scoretranslist = None
         if type==1:
             try:
+                cash = float(cash)*100
                 cash = int(cash)
                 score = int(score)
             except:

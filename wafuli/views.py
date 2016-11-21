@@ -8,7 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
 from account.transaction import charge_score
-from django.db.models import Q
+from django.db.models import F,Q
 import logging
 from datetime import date
 from wafuli_admin.models import DayStatis, GlobalStatis, RecommendRank
@@ -70,7 +70,7 @@ def index(request):
     glo_statis = GlobalStatis.objects.first()
     if glo_statis:
         all_wel_num = glo_statis.all_wel_num
-        withdraw_total = glo_statis.award_total
+        withdraw_total = int(glo_statis.award_total/100.0)
         
     else:
         withdraw_total = 0
@@ -288,6 +288,8 @@ def expsubmit_task(request):
         invest_image = ';'.join(imgurl_list)
         userlog.invest_image = invest_image
         userlog.save(update_fields=['invest_image'])
+        news.left_num = F("left_num")-1
+        news.save(update_fields=["left_num"])
     result = {'code':code, 'msg':msg}
     return JsonResponse(result)
 
@@ -487,6 +489,7 @@ def get_task_page(request):
              "view":con.view_count,
              'provider':con.provider,
              "is_new":'new' if con.is_new() else '',
+             "num":con.left_num
         }
         data.append(i)
     if data:
@@ -702,7 +705,7 @@ def display_screenshot(request):
     if not id:
         raise Http404
     log = UserEvent.objects.get(id=id)
-    if log.user.id != request.user.id:
+    if log.user.id != request.user.id and not request.user.is_staff:
         raise Http404
     url_list = log.invest_image.split(';')
     img_list = []

@@ -147,7 +147,9 @@ $(function(){
                           	<td>{{user_event.invest_account}}</td>
                           	<td>{{user_event.time|date:"Y-m-d H:i"}}</td>
                           	<td>{{user_event.get_audit_state_display}}</td>
-                          	<td><a href="#"><span class="img-up"><img src="{% static 'images/task-suoluetu.jpg' %}" alt="截图上传图片" /></span></a></td>
+                          	<td><a target="_blank" href="{% url 'screenshot' %}?id={{user_event.id}}">
+                          		<span class="img-up"><img src="{% static 'images/task-suoluetu.jpg' %}" alt="截图上传图片" /></span>
+                          	</a></td>
                           </tr>
 					{% endfor %}
                       </table>
