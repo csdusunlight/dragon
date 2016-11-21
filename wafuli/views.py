@@ -479,7 +479,14 @@ def get_task_page(request):
     # If page is out of range (e.g. 9999), deliver last page of results.
         contacts = paginator.page(paginator.num_pages)
     data = []
-    for con in contacts:        
+    for con in contacts:
+        money = con.moneyToAdd
+        score = con.scoreToAdd
+        award = ''
+        if money > 0:
+            award += str(money) + u"福币  "
+        if score > 0:
+            award += str(score) + u"积分"
         i = {"title":con.title,
              "url":con.url,
              "time":con.time_limit,
@@ -487,7 +494,8 @@ def get_task_page(request):
              "view":con.view_count,
              'provider':con.provider,
              "is_new":'new' if con.is_new() else '',
-             "num":con.left_num
+             "num":con.left_num,
+             'award':award,
         }
         data.append(i)
     if data:
