@@ -192,8 +192,9 @@ class Coupon(models.Model):
 class Task(News):
     type = models.CharField(max_length=10, choices=TASK_TYPE, verbose_name=u"任务类型")
     desc = models.TextField(max_length=50, verbose_name=u"任务描述（用于首页展示）")
+    left_num = models.IntegerField(u"剩余数量")
     moneyToAdd = models.IntegerField(u"奖励福币")
-    scroreToAdd = models.IntegerField(u"奖励积分")
+    scoreToAdd = models.IntegerField(u"奖励积分",default=0)
     provider = models.CharField(u"商家", max_length=10)
     time_limit = models.CharField(u"活动时间", max_length=24)
     rules =UEditorField(u"奖励规则", width=900, height=300, toolbars="full", 
