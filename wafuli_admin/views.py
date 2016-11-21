@@ -699,7 +699,7 @@ def get_admin_user_page(request):
              'recent_login_time':recent_login_time,
              "inviter_name":inviter_username,
              "inviter_mobile":inviter_mobile,
-             "balance":con.balance,
+             "balance":con.balance/100.0,
              "is_black":u'否' if con.is_active else u'是',
              "id":con.id,
              "opertype":u'加黑' if con.is_active else u'去黑',
