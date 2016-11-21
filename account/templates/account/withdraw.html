@@ -9,6 +9,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/style-i.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/dialog.css' %}" />
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/accounts/refresh.js' %}"></script>
 <script type="text/javascript" >
@@ -56,6 +57,20 @@ $(function(){
 			}
 		});
 	});
+    // 提现新加部分
+    function popupIn() {
+        $(".popup1").css("display","block");
+    }
+    $('.confirm_withdraw').click(function(){
+        // 调用ajax函数
+    });
+    $('.btn_x').click(function(){
+        $(this).parent().parent().hide();
+        bRotate = false;
+    });
+    $('.btn_cont button').click(function(){
+        $(this).parent().parent().parent().parent().hide();
+    });
 });
 </script>
 </head>
@@ -74,12 +89,12 @@ $(function(){
                         	<h2>提现</h2>
                         </div>
                         <div class="Cash-box">
-                        	<div class="Cash-info"><span>可提现金额：</span><i>{{user.balance}}</i>&nbsp;&nbsp;（每100福币可兑换一元现金）</div>
+                        	<div class="Cash-info"><span>可提现福币：</span><i>{{user.balance}}</i>&nbsp;&nbsp;（每100福币可兑换1元现金）</div>
 
                             	<div class="Cash-input">
-                                	<span>提现金额：</span>
+                                	<span>提现福币：</span>
                                     <input id="withdraw_amount" type="text" />
-                                    <i>（最低提现金额为10元）</i>
+                                    <i>（最低提现1000福币）</i>
                                 </div>
                                 <div class="Cash-input">
                                 	<span>提现账户：</span>
@@ -112,6 +127,20 @@ $(function(){
                 </div>
             </div>
         </div>
+        <!-- 提现弹窗部分 -->
+        <div class="popup1" style="display:none;">
+            <div class="w698_box">
+                <div class="pop_left">
+                    <h2>温馨提示</h2>
+                    <p>您好，您本次提现的金额为<font></font>元</p>
+                    <div class="btn_cont">
+                        <button>取&nbsp;&nbsp;消</button>
+                        <button class="confirm_withdraw">确&nbsp;&nbsp;定</button>
+                    </div>
+                </div>
+                <div class="btn_x"><button></button></div>
+            </div>
+          </div>
     	<!--底部-->
   {% include "footer.html" %}
   <!--浮动窗口-->
