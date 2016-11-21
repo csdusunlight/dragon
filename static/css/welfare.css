@@ -1190,7 +1190,7 @@ img{
 #colee li p span { float:right; font-size:12px; color:#d1d1d1; line-height:26px;}
 #colee li p font { color:#a0a0a0;}
 #colee { box-sizing:border-box; padding: 0 12px; margin-top:0px; float:left;}
-.newpost.t { position:absolute; left:41px; top:-10px; background:url(../images/newbox.png) no-repeat center; width:41px; height:41px; line-height:20px; box-sizing:border-box; padding-left:3px; text-align:left; color:#fff; font-size:16px;}
+.newpost.t { position:absolute; left:23px; top:0px; background:url(../images/newbox.png) no-repeat center; width:41px; height:41px; line-height:20px; box-sizing:border-box; padding-left:3px; text-align:left; color:#fff; font-size:16px;}
 .newpost.z { position:absolute; left:18px; top:0px; background:url(../images/newbox.png) no-repeat center; width:41px; height:41px; line-height:20px; box-sizing:border-box; padding-left:3px; text-align:left; color:#fff; font-size:16px;}
 .rightimg { float:right; width:100%; height:auto;}
 .rightimg img { width:100%; margin-bottom:15px;}
