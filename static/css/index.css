@@ -284,6 +284,9 @@
             font-size: 14px;
             line-height: 2.2;
             font-weight: normal;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
         .information p {
             margin: 0;
