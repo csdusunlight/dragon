@@ -502,7 +502,7 @@ border: 1px solid rgb(240, 134, 25);}
     background: -webkit-gradient(linear,left top,left bottom, from(#fff), to(#fff));
     border: 1px solid #eee;
     padding: 5px 0;
-    width: 80px;
+    width: 100px;
     text-align: center;
     margin-left: -1px;
     position: relative;

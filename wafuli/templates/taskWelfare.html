@@ -27,8 +27,8 @@ var data='[data]<li class="tab-li {is_new}">'+
 var data2='[data]<li class="tab-li">'+
 	'<p class="p-img"><a target="_blank" href="{url}"><img src="{pic}" alt="{title}" class="o-img"/></a></p>'+
 	'<h2><a target="_blank" href="{url}"  class="tli-title">{title}</a></h2>'+
-	'<p class="line-k">商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 家：{provider}<br />'+
-	'浏 览 数 ：{view}<br />活动时间：{time}</p>'+
+	'<p class="line-k">体验奖励：<span>{award}</span><br />'+
+	'剩余名额：{num}<br />体验时间：{time}</p>'+
 	'<a target="_blank" href="{url}" class="ends">立即查看</a></li>[/data]';
 var url = "{% url 'get_task_page' %}" + "?page={page}&size={pageSize}&";
 function pagecallback(){
@@ -153,15 +153,15 @@ $(function(){
 
             <!-- 代码 begin -->
 
-                <div id="tabg" style="margin-top:2rem; display: none;">
+                <div id="tabg" style="margin-top:2rem;">
                 <span class="rep-ones"> <img src="{% static 'images/shape.png' %}"/>已经结束的体验福利</span>
                   <div class="tabList" style="float:right;">
 
                     <ul>
                         <li class="curs">全部</li>
-                        <li>0投资</li>
-                        <li>投资≤100</li>
-                        <li>投资>100</li>
+                        <li>新手入门</li>
+                        <li>进阶体验</li>
+                        <li>高手专区</li>
                     </ul>
                   </div>
                   <div class="tabCon">
