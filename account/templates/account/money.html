@@ -14,11 +14,11 @@
 <script type="text/javascript" src="{% static 'js/page.js' %}"></script>
 <script type="text/javascript">
 var data1 = '<table width="100%"><thead><tr><th width="25%" height="44">项目</th>' +
-'<th width="30%">福币</th><th width="25%">获取时间</th><th width="20%">备注</th></tr></thead><tbody>'+
+'<th width="30%">福币(个)</th><th width="25%">获取时间</th><th width="20%">备注</th></tr></thead><tbody>'+
 '[data]<tr><td height="48">{item}</td><td>{amount}</td><td>{time}</td><td>{remark}</td></tr>[/data]'+
 '</tbody></table>';
 var data2 = '<table width="100%"><thead><tr><th width="25%" height="44">项目</th>' +
-'<th width="30%">福币</th><th width="25%">申请时间</th><th width="20%">提现状态</th></tr></thead><tbody>'+
+'<th width="30%">福币(个)</th><th width="25%">申请时间</th><th width="20%">提现状态</th></tr></thead><tbody>'+
 '[data]<tr><td height="48">{item}</td><td>{amount}</td><td>{time}</td>' +
 '<td>{state}</td></tr>[/data]' + '</tbody></table>';
 var url = "{% url 'get_user_money_page' %}" + "?page={page}&size={pageSize}&filter=";
