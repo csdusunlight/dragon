@@ -46,26 +46,26 @@ def index(request):
     total = {}
     dict1 = MyUser.objects.aggregate(cou=Count('id'), sumb=Sum('balance'),sums=Sum('scores'))
     total['user_num'] = dict1.get('cou')
-    total['balance'] = dict1.get('sumb')
+    total['balance'] = (dict1.get('sumb') or 0)/100.0
     total['score'] = dict1.get('sums')
 #     print TransList.objects.filter(user_event__event_type='2',user_event__audit_state='0').aggregate(cou=Count('id'),sum=Sum('transAmount'))
     dict_with = UserEvent.objects.filter(event_type='2',audit_state='0').\
             aggregate(cou=Count('user',distinct=True),sum=Sum('translist__transAmount'))
     total['with_count'] = dict_with.get('cou')
-    total['with_total'] = dict_with.get('sum')
+    total['with_total'] = (dict_with.get('sum') or 0)/100.0
     
     dict_ret = UserEvent.objects.filter(event_type='1',audit_state='0').\
             aggregate(cou=Count('user',distinct=True),sum=Sum('translist__transAmount'))
     total['ret_count'] = dict_ret.get('cou')
-    total['ret_total'] = dict_ret.get('sum')
+    total['ret_total'] = (dict_ret.get('sum') or 0)/100.0
     
     dict_coupon = UserEvent.objects.filter(event_type='4',audit_state='0').\
             aggregate(sum=Sum('translist__transAmount'))
-    total['coupon_total'] = dict_coupon.get('sum')
+    total['coupon_total'] = (dict_coupon.get('sum') or 0)/100.0
     
     dict_score = UserEvent.objects.filter(event_type='3',audit_state='0').\
             aggregate(sum=Sum('score_translist__transAmount'))
-    total['ret_count'] = dict_ret.get('cou')
+    total['ret_count'] = (dict_ret.get('cou') or 0)/100.0
     total['score_exchange_total'] = dict_score.get('sum')
     return render(request,"admin_index.html",{'num':num,'num_today':num_today,'total':total})
 
