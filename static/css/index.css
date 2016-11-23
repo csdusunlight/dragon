@@ -60,7 +60,7 @@
 #index_8{width:100%;height:211px;clear:both;text-align:center;background: url(../images/line-1.gif) repeat-x;}
 .index_9{width:1100px;height:211px;display:inline-block;text-align:left;}
 .index_10{width:1077px;height:48px;clear:both;display:inline-block;text-align:left;background: url(../images/bg-1.png) no-repeat left center;padding-left:23px;position:relative;}
-.index_10 h2{display:inline-block;float:left;width:78px;line-height:48px;font-size:14px;color:#000;font-weight:bold;}
+.index_10 h2{display:inline-block;float:left;width:78px;margin-top: 0;line-height:48px;font-size:14px;color:#000;font-weight:bold;}
 .index_10 .show-list{width:978px;height:48px;display:inline-block;float:left;overflow:hidden;}
 .index_10 .show-list .show-move{width:999%;}
 .index_10 .show-list .item{width:978px;height:48px;float:left;line-height:48px;color:#8c8c8c;font-family:"\5B8B\4F53";}
