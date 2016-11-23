@@ -62,7 +62,6 @@ def listing(con_list, num, page):
     return contacts, paginator.num_pages
 
 def update_view_count(welfare):
-    print "******************"
     try:
         welfare.view_count = F('view_count') + 1
         welfare.save(update_fields=['view_count',])

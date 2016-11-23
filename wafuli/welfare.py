@@ -123,6 +123,7 @@ def welfare(request, id=None, page=None, type=None):
             wel = wel.couponproject
         elif wel.type == "hongbao":
             wel = wel.hongbao
+            template = 'detail-hongbao.html'
         elif wel.type == "baoyou":
             wel = wel.baoyou
         return render(request, template,{'news':wel,'type':'Welfare', 'other_wel_list':other_wel_list})
