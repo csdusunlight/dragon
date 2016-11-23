@@ -45,6 +45,7 @@ class Command(BaseCommand):
 #         for obj in wei_list:
 #             obj.url = reverse('welfare', kwargs={'id': obj.pk})
 #             obj.save(update_fields=['url',])
+        print 'users'
         users = MyUser.objects.all()
         for user in users:
             user.balance = 100*F('balance')
@@ -52,22 +53,32 @@ class Command(BaseCommand):
             user.invite_income = 100*F('invite_income')
             user.invite_account = 100*F('invite_account')
             user.save()
+        print 'trans'
         trans = TransList.objects.all()
         for tran in trans:
             tran.initAmount = 100*F('initAmount')
             tran.transAmount = 100*F('transAmount')
             tran.save()
+        print 'daystati'
         trans = DayStatis.objects.all()
         for tran in trans:
             tran.with_amount = 100*F('with_amount')
             tran.ret_amount = 100*F('ret_amount')
             tran.coupon_amount = 100*F('coupon_amount')
             tran.save()
+        print 'rank'
         trans = RecommendRank.objects.all()
         for tran in trans:
             tran.award = 100*F('award')
             tran.save()
+        print 'task'
         trans = Task.objects.all()
         for tran in trans:
             tran.moneyToAdd = 100*F('moneyToAdd')
+            tran.state = '3'
             tran.save()
+        print 'event'
+        events = UserEvent.objects.filter(event_type__in=['2','5'])
+        for event in events:
+            event.invest_amount = 100*F('invest_amount')
+            event.save(update_fields=['invest_amount'])

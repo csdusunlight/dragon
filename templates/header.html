@@ -1,7 +1,7 @@
 {% load staticfiles %}
 <div id="header">
   <div class="header-main">
-    <div class="header-t">欢迎来到挖福利，全国首家综合性互联网产品体验超市！客服热线：<span>0734-8344414</span>&nbsp;&nbsp;<span class="goto-mobile">切换到触屏版</span>
+    <div class="header-t">欢迎来到挖福利，全国首家综合性互联网产品体验超市！客服热线：<span>0734-8344414</span>&nbsp;&nbsp;<a href="http://m.wafuli.cn"><span class="goto-mobile">切换到触屏版</span></a>
     	<div class="rt">
     	{% if not user.is_authenticated %}
     	<a href="{% url 'register' %}">注册</a>&nbsp; | &nbsp;<a href="{% url 'login' %}">登录</a>

@@ -27,7 +27,7 @@ var data = '<table class="mytable" id="tb1"><tr class="mytable1">'+
 '</tr>[data]<tr><td>{date}</td><td>{title}</td><td>{url}</td><td>{reason}</td>'+
 '<td class="mycheck">{result}</td></tr>[/data]</table>';
 var data2 = '<table class="mytable3" id="tb2"><tr class="mytable1">'+
-'<td>用户名</td><td>通过审核数</td><td>当前排名（月度）</td><td>奖励现金（元）</td>'+
+'<td>用户名</td><td>通过审核数</td><td>当前排名（月度）</td><td>奖励福币</td>'+
 '</tr>[data]<tr><td>{username}</td><td>{num}</td><td>{rank}</td>'+
 '<td class="mycheck">{award}</td></tr>[/data]</table>';
 var url = "{% url 'get_activity_recommend_page' %}" + "?page={page}&size={pageSize}";
