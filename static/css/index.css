@@ -184,7 +184,7 @@
             overflow: hidden;
             text-transform: uppercase;
             color: #fff;
-            text-align: center;
+            text-align: left;
             font-size: 14px;
             line-height: 1.5;
             padding:4px 10px 0;
@@ -192,6 +192,10 @@
             -webkit-transition: all 0.35s ease-in-out;
             -moz-transition: all 0.35s ease-in-out;
             transition: all 0.35s ease-in-out;
+        }
+        .li-content-img .info p span {
+            display: block;
+            text-align: center;
         }
 
         .li-content-img .info a {
