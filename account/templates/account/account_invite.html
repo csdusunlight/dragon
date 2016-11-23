@@ -22,11 +22,11 @@ var data1 = '<table width="100%"><thead><tr><th height="44">手机号</th><th>�
 '[data]<tr><td height="44">{mobile}</td><td>{time}</td><td>{is_bind}</td><td>{is_with}</td></tr>[/data]'
 + '</tbody></table>';
 var data2 = '<table width="100%"><thead><tr><th height="44">手机号</th><th>提现完成时间</th>'+
-'<th>提现金额</th><th>佣金分成</th></tr></thead><tbody>'+
+'<th>提现福币</th><th>佣金分成(福币)</th></tr></thead><tbody>'+
 '[data]<tr><td height="44">{mobile}</td><td>{time}</td><td>{amount}</td><td>{take}</td></tr>[/data]'
 + '</tbody></table>';
-var data3 = '<table width="100%"><thead><tr><th height="44">月份</th><th>好友提现金额</th>'+
-'<th>好友提现人数</th><th>佣金分成</th><th>积分奖励</th></tr></thead><tbody>'+
+var data3 = '<table width="100%"><thead><tr><th height="44">月份</th><th>好友提现福币</th>'+
+'<th>好友提现人数</th><th>佣金分成(福币)</th><th>积分奖励</th></tr></thead><tbody>'+
 '[data]<tr><td height="44">{month}</td><td>{amount}</td><td>{cou}</td><td>{take}</td><td>{score}</td></tr>[/data]'
 + '</tbody></table>';
 var url = "{% url 'get_user_invite_page' %}" + "?page={page}&size={pageSize}&filter=";
@@ -50,9 +50,9 @@ $(function(){
         clip.glue(buttonId); // 和上一句位置不可调换
         $('#'+textId).change(function(){clip.setText($('#'+textId).val())});
     })('url-content','copy');
-	
+
 	$("#pagedata").ajaxPage({
-	    url:url+0, 
+	    url:url+0,
 	    pageId:$("#page"),
 	    pageSize:6,
 	    run:true,
@@ -71,18 +71,18 @@ $(function(){
 				data = data3
 			}
 			$("#pagedata").ajaxPage({
-			    url:url+index, 
+			    url:url+index,
 			    pageId:$("#page"),
 			    pageSize:6,
 			    run:true,
 			    content:data,
 			});
-		}						
+		}
 	});
 	$("#transToBalance").click(function(){
 		if(left_award==0){
 			alert('邀请奖励结余为0');
-		} 
+		}
 		else {
 			var post_url = "{%url 'account_invite' %}";
 			$.ajax({
@@ -123,21 +123,21 @@ $(function(){
                         <div class="Recom-sin">
                         	<div class="Recom-l">
                             	<span>邀请奖励结余</span>
-                                <strong id="inviter_account">{{statis.left_award}} <font>（元）</font></strong>
+                                <strong id="inviter_account">{{statis.left_award}} <font>（个）</font></strong>
                                 <a id="transToBalance" href="#">转至余额</a>
                             </div>
                             <div class="Recom-m">
                             	<span>累计邀请奖励</span>
                                 <div class="Recom-box">
-                                    <strong class="fl">{{statis.accu_invite_award}} <font>（元）</font></strong>
+                                    <strong class="fl">{{statis.accu_invite_award}} <font>（个）</font></strong>
                                     <strong class="fr">{{statis.accu_invite_scores}} <font>（积分）</font></strong>
                                 </div>
-                                <p>说明：积分奖励实时发放到系统，现金奖励每月1日统一发放。</p>
+                                <p>说明：积分奖励实时发放到系统，福币奖励每月1日统一发放。</p>
                             </div>
                             <div class="Recom-r">
                             	<span>累积邀请人数：{{statis.acc_count}}人 </span>
                                 <span>完成提现人数：{{statis.acc_with_count}}人 </span>
-                                <span>本月待发奖励：{{statis.this_month_award}}元</span>
+                                <span>本月待发奖励：{{statis.this_month_award}}个</span>
                             </div>
                         </div>
                     </div>
@@ -184,7 +184,7 @@ $(function(){
     </div>
     	<!--底部-->
 	  {% include "footer.html" %}
-  <!--浮动窗口-->  
+  <!--浮动窗口-->
   	{% include "outline.html" %}
     </div>
 </body>

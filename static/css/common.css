@@ -3,6 +3,7 @@
 .header-main{width:1100px;height:136px;display:inline-block;text-align:left;}
 .header-t{width:1100px;height:36px;clear:both;display:inline-block;text-align:left;color:#8c8c8c;line-height:36px;font-family:"\5B8B\4F53";}
 .header-t span{color:#f08519;font-weight:bold;}
+.header-t .goto-mobile {color:inherit;font-weight:normal;cursor: pointer;}
 .header-t .rt{color:#d8d8d8;line-height:36px;font-family:"\5B8B\4F53";}
 .header-t .rt a{color:#8c8c8c;font-weight:bold;}
 .header-t .rt a:hover{color:#f08519;}
