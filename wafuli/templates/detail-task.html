@@ -298,6 +298,15 @@
     function maskIn() {
         $(".img-mask").css("display", "block");
     }
+    // 清除图片数据
+    function clearBtn() {
+        $(".img-list").empty();
+        if(file.outerHTML) {
+						file.outerHTML = file.outerHTML;
+				} else {
+						file.value = "";
+				}
+    }
 </script>
 {%endblock%}
 {%block expblock%}
@@ -324,7 +333,10 @@
 		{%csrf_token%}
 		<input type="file" name="picfile" id="choose" accept="image/jpeg,image/png" multiple>
 		<ul class="img-list"></ul>
-		<a id="upload">上传截图</a>
+		<div class="img-btn">
+				<a id="clear_img" onclick="clearBtn()">清除截图</a>
+				<a id="upload">上传截图</a>
+		</div>
 		<span class="tips">图片格式限jpg和png，最多可上传6张</span>
 	</div>
 	<p class="td-yy submit"><button id="td-tj" class="md-trigger td-tj">提交</button></p>
