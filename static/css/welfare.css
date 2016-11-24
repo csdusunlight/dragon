@@ -646,7 +646,8 @@ line-height: 35px;color: #898989;}
 /*体验福利新加样式*/
 .img-up>input {display: none;}
 canvas{width: 100%;border: 1px solid #000000;}
-#upload{display: block;margin: 10px auto;width: 200px;height: 30px;text-align: center;line-height: 30px;border: 1px solid;border-radius: 5px;cursor: pointer;}
+.img-btn {margin: 10px auto;width: 300px;}
+.img-btn a{display: inline-block;width: 40%;height: 30px;text-align: center;line-height: 30px;border: 1px solid;border-radius: 5px;cursor: pointer;}
 .touch{background-color: #ddd;}
 .img-list{width: 550px;margin: 10px auto;}
 .img-list li{position: relative;display: inline-block;width: 100px;height: 100px;margin: 5px 5px 20px 5px;border: 1px solid rgb(100,149,198);background: #fff no-repeat center;background-size: cover;}
