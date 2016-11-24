@@ -66,6 +66,7 @@
 			//      $(this).removeClass("touch")
 			//    });
 		filechooser.onchange = function() {
+			file_list = [];
 			if(!this.files.length) return;
 			var files = Array.prototype.slice.call(this.files);
 			if(files.length > 6) {
@@ -176,8 +177,8 @@
 				alert("请上传任务完成截图");
 				return;
 			}
-			for (file of file_list){
-				formdata.append(file.name, file.blob);
+			for (i in file_list){
+				formdata.append(file_list[i].name, file_list[i].blob);
 			}
 			formdata.append('id', id);
 			formdata.append('telnum', telnum);
@@ -201,9 +202,6 @@
 						$("#hint").text(ret.msg)
 						popupIn()
 					}
-				}
-				else{
-					alert("请检查网络连接");
 				}
 			};
 
