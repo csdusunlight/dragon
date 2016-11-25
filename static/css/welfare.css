@@ -452,6 +452,7 @@ padding-left: 18px;
 margin-top:2rem;
     position: relative;
 }
+.tab-li h2 {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 .tli-title{font-size: 18px;
 color: #3A3A3A;
 line-height: 35px;}
