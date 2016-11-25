@@ -319,8 +319,7 @@
         	<a class="login" href="{%url 'login' %}"  style="color:#0090D7;">登陆</a>&nbsp;</span> 挖福利体验,完成后请刷新本页,查看最新状态 {% else %} 请认真阅读下面的奖励规则和体验步骤后再点击“立即体验” {% endif %}
 		</p>
 		{% if not news.is_expired %}
-		<button class="md-trigger te-mo">立即体验</button> {% else %}
-		<span>剩余名额：<number></number></span>
+		<button class="md-trigger te-mo">立即体验</button><span>剩余名额：<number></number></span> {% else %}
 		<button class="te-moe">已结束</button> {% endif %}
 	</div>
 </div>
