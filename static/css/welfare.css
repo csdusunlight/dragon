@@ -631,6 +631,9 @@ padding: 15px;}
   padding: 3px 13px;
   font-size: 15px;
 }
+.te-mo+span {
+  line-height: 30px;
+}
 .te-moe{
   float: left;
   margin: 0rem 0rem 1rem 0rem;

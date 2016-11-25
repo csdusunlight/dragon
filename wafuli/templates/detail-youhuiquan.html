@@ -61,6 +61,7 @@ $(function(){
         </p>
         {% if not news.is_expired %}
         <button class="md-trigger te-mo">立即领取</button>
+        <span>剩余张数：<number></number></span>
         {% else %}
         <button class="te-moe">已结束</button>
         {% endif %}
