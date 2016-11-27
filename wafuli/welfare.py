@@ -121,6 +121,10 @@ def welfare(request, id=None, page=None, type=None):
         if wel.type == "youhuiquan":
             template = 'detail-youhuiquan.html'
             wel = wel.couponproject
+            if wel.ctype == '2':
+                wel.left_count = wel.coupons.filter(user__isnull=True).count()
+            else:
+                wel.left_count = u"充足"
         elif wel.type == "hongbao":
             wel = wel.hongbao
             template = 'detail-hongbao.html'
