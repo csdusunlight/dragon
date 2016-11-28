@@ -933,6 +933,7 @@ padding-left: 7px;}
   text-align: right;
   float: left;
 }
+.task-remark {float: none;margin: 20px 0px 0px 256px;}
 .clearboth{clear:both}
 .td-tj{
 /*float: left;*/
