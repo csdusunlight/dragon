@@ -288,11 +288,19 @@
 	});
 // 上传成功调用函数
     function popupIn() {
-        $(".popup-box").addClass("in");
+        $(".popup-box-01").addClass("in");
     }
 // 上传成功弹出窗口点击确定调用函数（已写入html）
     function popupOut() {
-        $(".popup-box").removeClass("in");
+        $(".popup-box-01").removeClass("in");
+    }
+// 任务提示信息弹窗调用函数
+    function popupInInfo() {
+        $(".popup-box-02").addClass("in");
+    }
+// 任务提示信息弹窗点击确定调用函数（已写入html）
+    function popupOutInfo() {
+        $(".popup-box-02").removeClass("in");
     }
 // 上传中调用函数
     function maskIn() {
@@ -317,7 +325,7 @@
         	<a class="login" href="{%url 'login' %}"  style="color:#0090D7;">登陆</a>&nbsp;</span> 挖福利体验,完成后请刷新本页,查看最新状态 {% else %} 请认真阅读下面的奖励规则和体验步骤后再点击“立即体验” {% endif %}
 		</p>
 		{% if not news.is_expired %}
-		<button class="md-trigger te-mo">立即体验</button><span>剩余名额：<number>{{news.left_num}}</number></span> {% else %}
+		<button class="md-trigger te-mo">立即领取</button><span>剩余名额：<number>{{news.left_num}}</number></span> {% else %}
 		<button class="te-moe">已结束</button> {% endif %}
 	</div>
 </div>
@@ -335,6 +343,7 @@
 		</div>
 		<span class="tips">图片格式限jpg和png，最多可上传6张</span>
 	</div>
+	<div class="ma-div3 task-remark">备注：<input type="text" placeholder="可不填" class="ms-input" id='remark'/></div>
 	<p class="td-yy submit"><button id="td-tj" class="md-trigger td-tj">提交</button></p>
   <div class="img-mask">
     <div class="loader-inner ball-triangle-path">
@@ -347,11 +356,19 @@
 	<div class="clearboth"></div>
 </div>
 <!-- 上传图片成功弹出窗口 -->
-<div class="popup-box">
+<div class="popup-box popup-box-01">
     <div class="popup-content">
       <h3>温馨提示</h3>
       <p id="hint">任务完成，请耐心等待工作人员审核</p>
       <a id="confirm" class="confirm" onclick="popupOut()">确认</a>
+    </div>
+</div>
+<!-- 领取任务提示信息 -->
+<div class="popup-box popup-box-02">
+    <div class="popup-content">
+      <h3>任务提示</h3>
+      <p id="hint">1、领取的任务必须在当日24点前完成并提交，次日无效<br />2、手机号和截图须规范且有效，否则可视为无效任务<br />3、任务被领取后请确保完成且提交，否则可能会被挖福利加入黑名单</p>
+      <a id="confirm" class="confirm" onclick="popupOutInfo()">确认领取</a>
     </div>
 </div>
 <!-- 体验福利改变部分 end -->

@@ -654,7 +654,7 @@ canvas{width: 100%;border: 1px solid #000000;}
 .img-btn a{display: inline-block;width: 40%;height: 30px;text-align: center;line-height: 30px;border: 1px solid;border-radius: 5px;cursor: pointer;}
 .img-btn a:first-child {margin-right: 20px;}
 .touch{background-color: #ddd;}
-.img-list{width: 550px;margin: 10px auto;}
+.img-list{width: 550px;margin: 20px auto 10px;}
 .img-list li{position: relative;display: inline-block;width: 100px;height: 100px;margin: 5px 5px 20px 5px;border: 1px solid rgb(100,149,198);background: #fff no-repeat center;background-size: cover;}
 .progress{position: absolute;width: 100%;height: 20px;line-height: 20px;bottom: 0;left: 0;background-color:rgba(100,149,198,.5);}
 .progress span{display: block;width: 0;height: 100%;background-color:rgb(100,149,198);text-align: center;color: #FFF;font-size: 13px;}
@@ -691,6 +691,10 @@ canvas{width: 100%;border: 1px solid #000000;}
 .popup-content p {
   padding-bottom: 30px;
 }
+.popup-box-02 .popup-content p {
+  padding-left: 130px;
+  text-align: left;
+}
 .popup-content .confirm {
   padding: 6px 30px;
   border-radius: 20px;
@@ -710,8 +714,8 @@ canvas{width: 100%;border: 1px solid #000000;}
       opacity: 0;
    }
    100% {
-      -webkit-transform: translateY(-0);
-      transform: translateY(-0);
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
       opacity: 1;
    }
 }
@@ -933,6 +937,7 @@ padding-left: 7px;}
   text-align: right;
   float: left;
 }
+.task-remark {float: none;margin: 20px 0px 0px 256px;}
 .clearboth{clear:both}
 .td-tj{
 /*float: left;*/
