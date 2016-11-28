@@ -183,8 +183,6 @@ def exp_welfare_openwindow(request):
     wel_type = str(wel_type)
     model = globals()[wel_type]
     wel = model.objects.get(id=wel_id)
-    if wel_type == "Task":
-        UserTask.objects.get_or_create(user=request.user, task=wel)
     update_view_count(wel)
     url = wel.exp_url
     js = "<script>window.location.href='"+url+"';</script>"
