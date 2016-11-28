@@ -140,6 +140,7 @@ $(function(){
                           	<th>提交时间</th>
                           	<th>状态</th>
                           	<th>任务截图</th>
+                          	<th>备注</th>
                           </tr>
                           {% for user_event in task_list %}
                           <tr>
@@ -150,6 +151,7 @@ $(function(){
                           	<td><a target="_blank" href="{% url 'screenshot' %}?id={{user_event.id}}">
                           		<span class="img-up"><img src="{% static 'images/task-suoluetu.jpg' %}" alt="截图上传图片" /></span>
                           	</a></td>
+                          	<td>{{user_event.remark}}</td>
                           </tr>
 					{% endfor %}
                       </table>
