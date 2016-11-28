@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http.response import Http404
 from wafuli.models import Welfare, Task, Finance, Commodity, Information, \
     ExchangeRecord, Press, UserEvent, Advertisement, Activity, Company,\
-    CouponProject, Baoyou, Hongbao
+    CouponProject, Baoyou, Hongbao, UserTask
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
@@ -138,7 +138,17 @@ def task(request, id=None):
         except Task.DoesNotExist:
             raise Http404(u"该页面不存在")
         other_wel_list = Task.objects.filter(state='1').order_by('-view_count')[0:10]
-        return render(request, 'detail-task.html',{'news':news,'type':'Task','other_wel_list':other_wel_list})
+        context = {'news':news,'type':'Task','other_wel_list':other_wel_list}
+        if request.user.is_authenticated():
+            try:
+                UserTask.objects.get(user=request.user,task=news)
+            except UserTask.DoesNotExist:
+                context.update(accepted=0)
+            else:
+                context.update(accepted=1)
+        else:
+            context.update(accepted=0)
+        return render(request, 'detail-task.html',context)
 def commodity(request, id):
     id = int(id)
     try:
@@ -250,6 +260,11 @@ def expsubmit_task(request):
     if not (news_id and telnum):
         raise Http404
     news = Task.objects.get(pk=news_id)
+    try:
+        record = UserTask.objects.get(user=request.user,task=news)
+    except UserTask.DoesNotExist:
+        result = {'code':3, 'msg':u"请先领取任务再提交！"}
+        return JsonResponse(result)
     is_futou = news.is_futou
     info_str = "news_id:" + news_id + "| invest_account:" + telnum + "| is_futou:" + str(is_futou)
     logger.info(info_str)
@@ -290,10 +305,7 @@ def expsubmit_task(request):
         invest_image = ';'.join(imgurl_list)
         userlog.invest_image = invest_image
         userlog.save(update_fields=['invest_image'])
-        if news.left_num <=1:
-            news.state = '2'
-        news.left_num = F("left_num")-1
-        news.save(update_fields=["left_num","state"])
+        record.delete()
     result = {'code':code, 'msg':msg}
     return JsonResponse(result)
 

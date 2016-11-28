@@ -151,3 +151,5 @@ class AdminPermission(models.Model):
     name = models.CharField('name', max_length=255)
     def __unicode__(self):
         return self.code + ',' + self.name
+
+    
