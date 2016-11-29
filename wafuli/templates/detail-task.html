@@ -49,6 +49,7 @@
 						} else if(ret.code == 1) {
 							$('img#erweima').attr('src', ret.url);
 							$('#myReModal').modal();
+							accepted = true;
 						}
 					},
 					error: function() {
@@ -57,6 +58,7 @@
 				});
 			} else {
 				window.open(url_openwindow + "?id=" + id + "&type=" + type);
+				accepted = true;
 			}
 		}
 		var filechooser = document.getElementById("choose");
