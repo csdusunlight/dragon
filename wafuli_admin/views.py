@@ -10,7 +10,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from account.transaction import charge_money, charge_score
 import logging
 from account.models import MyUser
-from django.db.models import Q
+from django.db.models import Q,F
 from wafuli_admin.models import DayStatis
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
@@ -299,6 +299,9 @@ def admin_task(request):
             event.audit_state = '2'
             log.audit_result = False
             log.reason = reason
+            task = event.content_object
+            task.left_num = F("left_num")+1
+            task.save(update_fields=['left_num'])
             res['code'] = 0
         
         
