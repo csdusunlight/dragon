@@ -343,6 +343,8 @@
 		<button class="md-trigger te-mo">立即体验</button><span>剩余名额：<number>{{news.left_num}}</number></span>
 		{% elif news.is_expired %}
 		<button class="te-moe">已结束</button>
+		{% elif news.is_forbidden %}
+		<button class="te-moe">已暂停</button>
 		{% else %}
 		<button class="md-trigger te-mo">领取任务</button><span>剩余名额：<number>{{news.left_num}}</number></span>
 		{% endif %}

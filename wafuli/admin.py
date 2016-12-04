@@ -27,6 +27,8 @@ class FinanceAdmin(NewsAdmin):
             obj.save(update_fields=['url',])
 class TaskAdmin(NewsAdmin):
     readonly_fields = ('url','pub_date','change_user')
+    list_display = ('title','is_forbidden',)
+    list_filter = ['is_forbidden',]
     def save_model(self, request, obj, form, change):
         super(TaskAdmin,self).save_model (request, obj, form, change)      
         if not change:
