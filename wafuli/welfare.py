@@ -163,7 +163,7 @@ def exp_welfare_erweima(request):
         logger.error(str(model) + ":" + str(wel.id) + " is not onMobile wel !!!")
         raise Http404
     result['code'] = '1'
-    if wel_type == "Task":
+    if wel_type == "Task" and not wel.is_forbidden:
         obj, created = UserTask.objects.get_or_create(user=request.user, task=wel)
         if created:
             if wel.left_num <=1:
@@ -186,7 +186,7 @@ def exp_welfare_openwindow(request):
     update_view_count(wel)
     url = wel.exp_url
     js = "<script>window.location.href='"+url+"';</script>"
-    if wel_type == "Task":
+    if wel_type == "Task" and not wel.is_forbidden:
         obj, created = UserTask.objects.get_or_create(user=request.user, task=wel)
         if created:
             if wel.left_num <=1:

@@ -15,10 +15,10 @@
 <script type="text/javascript" src="{% static 'js/page.js' %}"></script>
 
 <script type="text/javascript">
-var data = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="20%">提交手机号</th>'+
-	'<th width="20%">提交时间</th><th width="20%">状态</th><th width="20%">任务截图</th></tr></thead><tbody>'+
+var data = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="15%">提交手机号</th>'+
+	'<th width="20%">提交时间</th><th width="15%">状态</th><th width="10%">任务截图</th><th width="20%">备注</th></tr></thead><tbody>'+
 	'[data]<tr><td>{title}</td><td>{username}</td><td>{time}</td><td>{state}</td><td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
-	'<span class="img-up"><img src="{% static 'images/task-suoluetu.jpg' %}" alt="截图上传图片" /></span></a></td></tr>[/data]'
+	'<span class="img-up"><img src="{% static 'images/task-suoluetu.jpg' %}" alt="截图上传图片" /></span></a></td><td>{reason}</td></tr>[/data]'
 	+ '</tbody></table>';
 var data3 = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="20%">提交手机号</th>'+
 	'<th width="20%">提交时间</th><th width="20%">状态</th><th width="20%">备注</th></tr></thead><tbody>'+

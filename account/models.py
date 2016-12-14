@@ -152,4 +152,8 @@ class AdminPermission(models.Model):
     def __unicode__(self):
         return self.code + ',' + self.name
 
-    
+#app 专用
+class UserToken(models.Model):
+    token = models.CharField("token", max_length=32, primary_key=True)
+    user = models.ForeignKey(MyUser,related_name = 'tokens',)
+    expire = models.BigIntegerField(u"expire_time")

@@ -191,6 +191,7 @@ class Coupon(models.Model):
         return endTime < today
 class Task(News):
     type = models.CharField(max_length=10, choices=TASK_TYPE, verbose_name=u"任务类型")
+    is_forbidden = models.BooleanField(u"禁止用户领取（暂停任务）", default=False)
     left_num = models.IntegerField(u"剩余数量")
     moneyToAdd = models.IntegerField(u"奖励福币")
     scoreToAdd = models.IntegerField(u"奖励积分",default=0)
@@ -384,6 +385,17 @@ class Press(Base):
 class Advertisement(Base):
     pic = models.ImageField(upload_to='photos/%Y/%m/%d', blank=False,
                              verbose_name=u"banner图片上传(1920*300)，小于100k")
+    location = models.CharField(u"广告位置", max_length=2, choices=ADLOCATION)
+    is_hidden = models.BooleanField(u"是否隐藏",default=False)
+    navigation = models.CharField(u"banner导航文字", max_length=6)
+    class Meta:
+        ordering = ["-news_priority","-pub_date"]
+        verbose_name = u"横幅广告-电脑端"
+        verbose_name_plural = u"横幅广告-电脑端"
+    def clean(self):
+        if self.pic and self.pic.size > 100000:
+            raise ValidationError({'pic': u'图片大小不能超过100k'})
+class Advertisement_Mobile(Base):
     mpic = models.ImageField(upload_to='photos/%Y/%m/%d', blank=False,
                              verbose_name=u"移动端banner图片上传(414*160)，小于30k")
     location = models.CharField(u"广告位置", max_length=2, choices=ADLOCATION)
@@ -391,11 +403,9 @@ class Advertisement(Base):
     navigation = models.CharField(u"banner导航文字", max_length=6)
     class Meta:
         ordering = ["-news_priority","-pub_date"]
-        verbose_name = u"横幅广告"
-        verbose_name_plural = u"横幅广告"
+        verbose_name = u"横幅广告-移动端"
+        verbose_name_plural = u"横幅广告-移动端"
     def clean(self):
-        if self.pic and self.pic.size > 100000:
-            raise ValidationError({'pic': u'图片大小不能超过100k'})
         if self.mpic and self.mpic.size > 30000:
             raise ValidationError({'pic': u'图片大小不能超过30k'})
 class MAdvert(Base):

@@ -4,3 +4,5 @@ media/
 debug.log
 migrations/
 db.sqlite3
+settings.py
+.settings/

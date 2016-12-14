@@ -125,8 +125,8 @@ AUTH_USER_MODEL = 'account.MyUser'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 
-CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
-#CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge'
+# CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge'
 CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_dots',)
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True #False
