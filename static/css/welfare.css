@@ -417,7 +417,8 @@ margin-top: 1.5rem;}
 .ew-more.s{margin-top:15px;}
 .toplist { float:left; width:100%; height:auto; box-sizing:border-box; padding:0 12px; text-align:left;}
 .toplist li { font-size:14px; color:#888888; line-height:35px; display:block; float:left; width:100%;}
-.toplist li span { display:inline-block; width:75px; height:auto; font-size:14px; color:#888888; line-height:35px; margin-left:15px;}
+.toplist li span { display:inline-block; width:70px; height:auto; font-size:14px; color:#888888; line-height:35px; margin-left:15px;}
+.toplist li .fubi {width: 24px;height: 24px;margin-left: 2px;margin-bottom: 4px;background:url(../images/fubi.png) center center/90% auto no-repeat;vertical-align: middle;}
 .toplist li font { color:#ff0000;}
 .er-h2{font-size: 18px;
 color: rgb(17, 17, 17);
