@@ -1,6 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
-
+td {white-space:nowrap;overflow:hidden;}
 #header { border-bottom:1px solid #c1c1c1;}
 .Content { padding-top:32px; background:#fafafa; padding-bottom:50px;}
 .LeftNav { float:left; width:196px; height:auto; border:1px solid #e1e1e1; background:#fbfbfb;}
