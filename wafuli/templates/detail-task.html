@@ -333,7 +333,7 @@
 		<p class="td-p">
 			{% if not user.is_authenticated %}
 			<span><a href="{%url 'register' %}"  style="color:#0090D7;">注册</a></span>&nbsp;或&nbsp;<span>
-        	<a class="login" href="{%url 'login' %}"  style="color:#0090D7;">登陆</a>&nbsp;</span> 挖福利体验,完成后请刷新本页,查看最新状态 {% else %} 请认真阅读下面的奖励规则和体验步骤后再点击“立即体验” {% endif %}
+        	<a class="login" href="{%url 'login' %}"  style="color:#0090D7;">登录</a>&nbsp;</span> 请先注册或登录账号，完成后可刷新本页，查看最新状态 {% else %} 请认真阅读下面的奖励规则和体验步骤后再点击“立即体验” {% endif %}
 		</p>
 		{% if accepted %}
 		<button class="md-trigger te-mo">立即体验</button><span>剩余名额：<number>{{news.left_num}}</number></span>
@@ -389,7 +389,7 @@
     <div class="popup-content">
       <h3>任务提示</h3>
       <p id="hint">1、领取的任务必须在当日24点前完成并提交，次日无效；<br />2、手机号和截图需规范且有效，否则视为无效信息；<br />3、任务被领取后请确保完成且提交，否则可能会被挖福利加入黑名单。</p>
-      <a id="cancel" class="cancel confirm" onclick="popupOutInfo()">取&nbsp;&nbsp;消</a>
+      <a id="cancel" class="cancel confirm" onclick="popupOutInfo()">取&nbsp;&nbsp;&nbsp;&nbsp;消</a>
       <a id="confirm_accept" class="confirm">确认领取</a>
     </div>
 </div>
