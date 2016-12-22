@@ -16,6 +16,9 @@ class DayStatis(models.Model):
     new_wel_num = models.PositiveIntegerField(u"今日上线福利", default=0)
     lottery_people = models.PositiveIntegerField(u"今日抽奖人数", default=0)
     lottery_num = models.PositiveIntegerField(u"今日抽奖次数", default=0)
+    envelope_num = models.PositiveIntegerField(u"今日拆红包个数", default=0)
+    envelope_people = models.PositiveIntegerField(u"今日拆红包人数", default=0)
+    envelope_money = models.PositiveIntegerField(u"今日拆红包奖励", default=0)
     def __unicode__(self):
         return self.date.strftime("%Y-%m-%d")
     class Meta:

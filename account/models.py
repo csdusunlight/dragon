@@ -152,8 +152,14 @@ class AdminPermission(models.Model):
     def __unicode__(self):
         return self.code + ',' + self.name
 
-#app 专用
 class UserToken(models.Model):
     token = models.CharField("token", max_length=32, primary_key=True)
     user = models.ForeignKey(MyUser,related_name = 'tokens',)
     expire = models.BigIntegerField(u"expire_time")
+
+class User_Envelope(models.Model):
+    user = models.ForeignKey(MyUser, related_name='envelope')
+    envelope_left = models.PositiveSmallIntegerField(u"剩余红包数量",default=0)
+    envelope_used = models.PositiveSmallIntegerField(u"打开红包数量",default=0)
+    def __unicode__(self):
+        return self.user.mobile

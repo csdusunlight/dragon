@@ -16,6 +16,7 @@ from account.transaction import charge_money, charge_score
 import logging
 from account.models import MyUser
 from wafuli_admin.models import RecommendRank
+from wafuli.Christmas import produce
 # Create your views here.
 logger = logging.getLogger('wafuli')
 
@@ -84,6 +85,7 @@ def admin_recommend_return(request):
                     translist.save(update_fields=['user_event'])
                     scoretranslist.user_event = event
                     scoretranslist.save(update_fields=['user_event'])
+                    produce(event_user,3)
                     res['code'] = 0
                 else:
                     res['code'] = -4

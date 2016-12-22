@@ -47,6 +47,12 @@ class Command(BaseCommand):
         lottery_people = dict.get('cou')
         lottery_num = dict.get('cou_total')
         
+        dict = UserEvent.objects.filter(time__gte=today,event_type='8').\
+                aggregate(cou=Count('user_id',distinct=True),cou_total=Count('*'),sum=Sum('invest_amount'))
+        envelope_people = dict.get('cou')
+        envelope_num = dict.get('cou_total')
+        envelope_money = dict.get('sum') or 0
+        
         update_fields = {
                          'new_reg_num':new_reg_num,
                          'active_num':active_num,
@@ -60,6 +66,9 @@ class Command(BaseCommand):
                          'new_wel_num':new_wel_num,
                          'lottery_people':lottery_people,
                          'lottery_num':lottery_num,
+                         'envelope_people':envelope_people,
+                         'envelope_num':envelope_num,
+                         'envelope_money':envelope_money
         }
         DayStatis.objects.update_or_create(date=today, defaults=update_fields)
         
