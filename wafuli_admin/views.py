@@ -66,7 +66,7 @@ def index(request):
     
     dict_score = UserEvent.objects.filter(event_type='3',audit_state='0').\
             aggregate(sum=Sum('score_translist__transAmount'))
-    total['ret_count'] = (dict_ret.get('cou') or 0)/100.0
+    total['ret_count'] = (dict_ret.get('cou') or 0)
     total['score_exchange_total'] = dict_score.get('sum')
     return render(request,"admin_index.html",{'num':num,'num_today':num_today,'total':total})
 
