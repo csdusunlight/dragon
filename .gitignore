@@ -6,3 +6,4 @@ migrations/
 db.sqlite3
 settings.py
 .settings/
+uwsgi.ini
