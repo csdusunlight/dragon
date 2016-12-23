@@ -46,3 +46,13 @@ class Dict(models.Model):
     expire_stamp = models.IntegerField()
     def __unicode__(self):
         return self.key + ':' + self.value
+    
+class Invite_Rank(models.Model):
+    user = models.OneToOneField(MyUser,related_name="invite_rank")
+    rank = models.PositiveSmallIntegerField(u"排名", default=100)
+    num = models.PositiveIntegerField(u"好友获得红包数", default=0)
+    award = models.PositiveIntegerField(u'红包金额总数',  default=0)
+    def __unicode__(self):
+        return self.user.username +',' + str(self.num) +','+str(self.rank)
+    class Meta:
+        ordering = ['rank']
