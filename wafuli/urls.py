@@ -41,8 +41,8 @@ urlpatterns = [
     url(r'^lookup_order/$', 'wafuli.views.lookup_order', name='lookup_order'),
     url(r'^submit_order/$', 'wafuli.views.submit_order', name='submit_order'),
     
-    url(r'^freshman/introduction/$', 'wafuli.views.freshman_introduction', name='freshman_introduction'),
-    url(r'^freshman/award/$', 'wafuli.views.freshman_award', name='freshman_award'),
+    url(r'^freshman/introduction/$', TemplateView.as_view(template_name="freshman_introduction.html"), name='freshman_introduction'),
+    url(r'^freshman/award/$', TemplateView.as_view(template_name="freshman_award.html"), name='freshman_award'),
     
     url(r'^activity/recommend/$', 'wafuli.activity.recommend', name='activity_recommend'),
     url(r'^activity/recompage/$', 'wafuli.activity.get_activity_recommend_page', name='get_activity_recommend_page'),

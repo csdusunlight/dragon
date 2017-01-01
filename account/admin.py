@@ -4,6 +4,7 @@ from .forms import MyUserChangeForm, MyUserCreationForm
 from django.contrib.auth.admin import UserAdmin
 from account.models import UserSignIn, Userlogin, Access_Token, MobileCode,\
     AdminPermission, User_Envelope
+from django.contrib.admin.options import ModelAdmin
 # Register your models here.
 class MyUserAdmin(UserAdmin):
 # The forms to add and change user instances
@@ -30,6 +31,8 @@ class MyUserAdmin(UserAdmin):
     list_display = ('mobile', 'email', 'username','is_staff','date_joined')
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
     filter_horizontal = ('groups', 'user_permissions', 'admin_permissions')
+class EnvelopeAdmin(ModelAdmin):
+    search_fields = ('user__mobile',)
 # Now register the new UserAdmin...
 admin.site.register(MyUser, MyUserAdmin)
 admin.site.register(UserSignIn)
@@ -37,4 +40,4 @@ admin.site.register(Userlogin)
 admin.site.register(Access_Token)
 admin.site.register(MobileCode)
 admin.site.register(AdminPermission)
-admin.site.register(User_Envelope)
+admin.site.register(User_Envelope,EnvelopeAdmin)

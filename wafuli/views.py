@@ -606,10 +606,6 @@ def get_press_page(request):
     res["data"] = data
     return JsonResponse(res)
 
-def freshman_introduction(request):
-    return render(request, "freshman_introduction.html")
-def freshman_award(request):
-    return render(request, "freshman_award.html")
 
 def business(request, page=None):
     if not page:
