@@ -604,7 +604,7 @@ body {
 .content-center > img {
 	display: inline-block;
 	vertical-align: top;
-	width: 8rem;	
+	width: 8rem;
 	margin-right: 3rem;
 	transform-origin: top center;
 }
@@ -622,7 +622,7 @@ body {
 	margin-top: 2rem;
 	font-size: 0.8rem;
 	line-height: 2;
-	
+
 }
 /*底部样式*/
 .bottom .contain {
@@ -635,6 +635,13 @@ body {
 	font-family: "方正特粗光辉简体";
 	color: #fff;
 	animation: dragTop 1.6s ease-in;
+}
+.bottom .to-index {
+  display: block;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    color: #fff;
 }
 .cloud {
 	position: absolute;
@@ -680,7 +687,7 @@ body {
 .cloud p span {
 	font-family: "方正特粗光辉简体";
 	font-size: 0.8rem;
-} 
+}
 .cloud p .point-01 {
 	color: #df3b5b;
 }
@@ -701,7 +708,7 @@ body {
 	background: url(../images/understand-car.png);
 	background-position: center center;
 	background-size: 70% auto;
-	background-repeat: no-repeat;	
+	background-repeat: no-repeat;
 }
 .left-car {
 	left: 10%;
