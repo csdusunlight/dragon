@@ -339,7 +339,7 @@ table{border-collapse:collapse;}
 .index_36 ul li a{display:block;color:#999;}
 .index_36 ul li a:hover{color:#fff;background: url(../images/bg-7.png) no-repeat;}
 .index_28{width:298px;height:356px;float:left;display:inline;text-align:left;background: url(../images/bg-8.png) no-repeat right top;padding-left:30px;}
-.index_28 ul li{width:298px;height:35px;float:left;line-height:35px;font-size:13px;color:#ababab;}
+.index_28 ul li{width:298px;height:35px;float:left;line-height:35px;font-size:13px;color:#ababab;white-space: nowrap;text-overflow: ellipsis; overflow: hidden;}
 .index_28 ul li span.s1{color:#d8d8d8;}
 .index_28 ul li span.s2{color:#fe898f;}
 #index_32{width:1100px;height:346px;clear:both;display:inline-block;margin-top:60px;text-align:left;border:1px solid #ebebeb;}
