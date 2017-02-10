@@ -51,13 +51,13 @@ def index(request):
                'strategy_list': strategy_list,
                'info': info,
     }
-    task_list = list(Task.objects.filter(state='1',type='junior')[0:2])
+    task_list = list(Task.objects.filter(state__in=['1','2'],type='junior').order_by("state","-news_priority","-pub_date")[0:2])
     if len(task_list)==2:
         context.update(task1=task_list[0],task2=task_list[1])
-    task_list = list(Task.objects.filter(state='1',type='middle')[0:2])
+    task_list = list(Task.objects.filter(state__in=['1','2'],type='middle').order_by("state","-news_priority","-pub_date")[0:2])
     if len(task_list)==2:
         context.update(task3=task_list[0],task4=task_list[1])
-    task_list = list(Task.objects.filter(state='1',type='senior')[0:2])
+    task_list = list(Task.objects.filter(state__in=['1','2'],type='senior').order_by("state","-news_priority","-pub_date")[0:2])
     if len(task_list)==2:
         context.update(task5=task_list[0],task6=task_list[1])
         
