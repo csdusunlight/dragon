@@ -92,6 +92,14 @@ $(function(){
 		});
 	});
 });
+
+// 理财信息登记部分
+  $("#infor_register").click(function(){
+    $(".popup-box").addClass("in");
+  })
+  var popupHide = function(){
+    $(".popup-box").removeClass("in");
+  }
 </script>
 
 {%endblock%}
@@ -130,7 +138,7 @@ $(function(){
         {% else %}
         <button class="te-moe">已结束</button>
         {% endif %}
-        <a href="#">信息登记</a>
+        <button id="infor_register" href="#">信息登记</button>
       </p>
     </div>
     <div class="finance-bg">
@@ -187,4 +195,5 @@ $(function(){
         <p class="hy-p">如有疑问请联系<span><a href="#" style="color:#F08618;">在线客服</a></span>或拨打 <span style="color:#F08618;">服务热线：0734-8344414</span></p>
   </div>
   {% endblock %}
+
 
