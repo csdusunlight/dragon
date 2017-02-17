@@ -94,10 +94,10 @@ $(function(){
 });
 
     // 理财信息登记部分
-  $("#infor_register").click(function(){
-    $(".popup-box").addClass("in");
+  $("#infor_register").addEventListener('click', function() {
+      $(".popup-box").addClass("in");
     console.log("addClass");
-  })
+  });
   var popupHide = function(){
     $(".popup-box").removeClass("in");
   }
