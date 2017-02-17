@@ -349,7 +349,6 @@ table{border-collapse:collapse;}
     width: 100%;
     height: 100%;
 }
-
 .intro .intro-content {
     padding: 20px;
     background-color: #fff;
@@ -369,8 +368,6 @@ table{border-collapse:collapse;}
     line-height: 40px;
     text-align: center;
 }
-
-
 .finance-item .info {
     position: absolute;
     top: 0;
