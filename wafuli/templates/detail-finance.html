@@ -93,9 +93,15 @@ $(function(){
 	});
 });
 
-
+    // 理财信息登记部分
+  $("#infor_register").click(function(){
+    $(".popup-box").addClass("in");
+    console.log("addClass");
+  })
+  var popupHide = function(){
+    $(".popup-box").removeClass("in");
+  }
 </script>
-
 {%endblock%}
 {%block expblock%}
   <!-- <div class="td-ti">
@@ -191,12 +197,4 @@ $(function(){
   {% endblock %}
 
 
-<script>
-    // 理财信息登记部分
-  $("#infor_register").click(function(){
-    $(".popup-box").addClass("in");
-  })
-  var popupHide = function(){
-    $(".popup-box").removeClass("in");
-  }
-</script>
+
