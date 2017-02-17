@@ -152,7 +152,7 @@ $(function(){
     <div class="clearboth"></div>
   </div> -->
   <div class="popup-box popup-box-02 in">
-    <div class="td-msg popup-content">
+    <div class="td-msg popup-content finance-popup">
       <div class="ma-div">注册手机号：<input type="text" placeholder="输入您的手机号，若有多个请分别提交" class="ms-input" id="telnum"></div>
       <div class="ma-div">投资金额：<input type="text" placeholder="输入您的投资金额（数字格式）" class="ms-input" id="amount"></div>
       <div class="ma-div">投资标期：<input type="text" placeholder="输入您的投资标期" class="ms-input" id="term"></div>
@@ -170,7 +170,13 @@ $(function(){
 	   <div class="detail-html">{{news.rules|safe}}</div>
   </div>
 {%endblock%}
-  {% block hintblock %}
+  <div class="td-msgs">
+    <div class="detail-html">
+      <a class="contact" target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=34f2461e64f2fb28ac36d1eab0d303760c68cdff632c46f62bd8abda313e30dc">加入QQ群</a>
+      <a class="contact" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=122142551&site=qq&menu=yes">联系客服</a>
+    </div>
+  </div>
+  <!-- {% block hintblock %} -->
 <!--   <div class="td-msgs">
     <div class="msg-ti"><img src="{% static 'images/task-05.png' %}" class="ms-pd"/><span class="mag-pp">温馨提示</span></div>
         <p class="hy-p">1、为了让您畅快的享受福利，请您务必按照体验步骤详情操作，并在完成后返回本页面<span style="color:#ff6767">提交相关数据</span>，以便工作人员进行数据审核，发放相应福利；</p>

@@ -640,6 +640,7 @@ padding: 15px;}*/
   background: #fff;
   overflow: hidden;
   margin: 0 auto;
+  text-align: left;
 }
 
 .finance-info {
@@ -662,6 +663,11 @@ padding: 15px;}*/
   margin-left: 20px;
 }
 
+.finance-logo img {
+  width: 288px;
+  height: 192px;
+}
+
 .finance-logo span {
   height: 24px;
   display: inline-block;
@@ -678,6 +684,7 @@ padding: 15px;}*/
 }
 
 .text-box {
+  /*margin-top: 20px;*/
   position: relative;
   line-height: 20px;
   height: 40px;
@@ -711,6 +718,9 @@ padding: 15px;}*/
   background-color: #ebebeb;
   color: #333;
   border-radius: 4px;
+}
+.finance-popup input {
+  margin-left: 0;
 }
 /*理财改版add-css-end*/
 
