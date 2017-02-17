@@ -37,7 +37,6 @@ from django.db.models import Sum, Count
 from .transaction import charge_money, charge_score
 from account.tools import send_mail, get_client_ip
 from django.db import connection
-from wafuli.Christmas import produce
 @sensitive_post_parameters()
 @csrf_protect
 @never_cache
@@ -347,7 +346,6 @@ def signin(request):
             charge_score(request.user, '0', 5, u"签到奖励")
             if signed_conse_days%7 == 0:
                 charge_score(request.user, '0', 20, u"连续签到7天奖励")
-            produce(request.user,1)
             result['code'] = 0
     return JsonResponse(result)
 

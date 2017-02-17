@@ -12,7 +12,7 @@ from dircache import annotate
 from wafuli.models import Welfare, Task, Finance
 logger = logging.getLogger("wafuli")
 from django.core.management.base import BaseCommand, CommandError
-from account.models import MyUser, Userlogin, User_Envelope
+from account.models import MyUser, Userlogin
 from wafuli.models import UserEvent
 from wafuli_admin.models import DayStatis, RecommendRank, GlobalStatis,\
     Invite_Rank
@@ -97,28 +97,28 @@ class Command(BaseCommand):
             n = r.acc_num
             r.save(update_fields=['rank'])
         
-        item_list = MyUser.objects.values('id').annotate(sum=Sum('invitees__envelope__envelope_total')).filter(sum__gt=0).order_by('-sum')
-        for dic in item_list:
-            user=MyUser.objects.get(id=dic.get('id'))
-            sum = dic.get('sum') or 0
-            if sum > 0:
-                Invite_Rank.objects.update_or_create(user=user,defaults={'num':sum})
-                
-        ranks = Invite_Rank.objects.all().order_by("-num")
-        i = 1
-        n = 0
-        j = 0
-        for r in ranks:
-            if r.num == n:
-                r.rank = i
-            else:
-                i = i + j
-                r.rank = i
-                j = 0
-            j = j + 1
-            n = r.num
-            r.save(update_fields=['rank'])
-        ranks = Invite_Rank.objects.all().order_by("-num")
+#         item_list = MyUser.objects.values('id').annotate(sum=Sum('invitees__envelope__envelope_total')).filter(sum__gt=0).order_by('-sum')
+#         for dic in item_list:
+#             user=MyUser.objects.get(id=dic.get('id'))
+#             sum = dic.get('sum') or 0
+#             if sum > 0:
+#                 Invite_Rank.objects.update_or_create(user=user,defaults={'num':sum})
+#                 
+#         ranks = Invite_Rank.objects.all().order_by("-num")
+#         i = 1
+#         n = 0
+#         j = 0
+#         for r in ranks:
+#             if r.num == n:
+#                 r.rank = i
+#             else:
+#                 i = i + j
+#                 r.rank = i
+#                 j = 0
+#             j = j + 1
+#             n = r.num
+#             r.save(update_fields=['rank'])
+#         ranks = Invite_Rank.objects.all().order_by("-num")
 #         dict_with = UserEvent.objects.filter(event_type='2',audit_state='0').\
 #             aggregate(cou=Count('user',distinct=True),sum=Sum('translist__transAmount'))
         total_award = MyUser.objects.aggregate(sum=Sum('accu_income'))
