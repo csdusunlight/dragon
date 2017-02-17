@@ -434,10 +434,6 @@ table{border-collapse:collapse;}
     transform: scale(1.2);
 }
 
-
-
-
-
 .finance-item .intro {
     -webkit-transform: translateZ(0) rotateY(0);
     -moz-transform: translateZ(0) rotateY(0);
