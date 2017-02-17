@@ -96,7 +96,7 @@ $(function(){
 
 {%endblock%}
 {%block expblock%}
-  <div class="td-ti">
+  <!-- <div class="td-ti">
   	<div style="max-width:500px;max-height:175px;float:left;overflow:hidden"><img src="{{news.pic.url}}" style="padding:10px"></img></div>
     <div class="td-inimg">
     	<p class="tli-title td-tij">{{news.title}}</p>
@@ -115,8 +115,34 @@ $(function(){
         <button class="te-moe">已结束</button>
         {% endif %}
     </div>
+  </div> -->
+  <div class="finance-top">
+    <div class="finance-info">
+      <div class="finance-logo">
+        <img src="../images/business-logo.jpg" /><span>这是标签</span><span>标签</span><span>小标签</span>
+      </div>
+      <div id="text_box" class="text-box">
+        <p id="intro" class="introduction">介绍这里是产品简单介绍介绍这里是产品简单介绍介绍这里简单介绍介绍这里是产品简单介绍介绍这里是产品简单介绍介绍这里简单介绍</p>
+      </div>
+      <p class="taste-btn">
+        {% if not news.is_expired %}
+        <button class="md-trigger te-mo">立即体验</button>
+        {% else %}
+        <button class="te-moe">已结束</button>
+        {% endif %}
+        <a href="#">信息登记</a>
+      </p>
+    </div>
+    <div class="finance-bg">
+      <p><span>平台背景</span><span>民营系</span></p>
+      <p><span>注册资本</span><span>1000万</span></p>
+      <p><span>上线时间</span><span>2017-01-12</span></p>
+      <p><span>是否银行存管</span><span>是</span></p>
+      <p><span>ICP号</span><span>12345678</span></p>
+    </div>
   </div>
-  <div class="td-msg">
+
+  <!-- <div class="td-msg">
   	<div class="msg-ti"><img src="{% static 'images/task-02.png' %}" class="ms-pd"/><span class="mag-pp">信息登记</span></div>
    	<div class="ma-div">注册手机号：<input type="text" placeholder="输入您的手机号，若有多个请分别提交" class="ms-input" id='telnum'/></div>
     <div class="ma-div">投资金额：<input type="text" placeholder="输入您的投资金额（数字格式）" class="ms-input" id='amount'/></div>
@@ -124,15 +150,28 @@ $(function(){
     <div class="ma-div3">备注：<input type="text" placeholder="可不填" class="ms-input" id='remark'/></div>
     <p class="td-yy"><button class="md-trigger td-tj">提交</button></p>
     <div class="clearboth"></div>
+  </div> -->
+  <div class="popup-box popup-box-02 in">
+    <div class="td-msg popup-content">
+      <div class="ma-div">注册手机号：<input type="text" placeholder="输入您的手机号，若有多个请分别提交" class="ms-input" id="telnum"></div>
+      <div class="ma-div">投资金额：<input type="text" placeholder="输入您的投资金额（数字格式）" class="ms-input" id="amount"></div>
+      <div class="ma-div">投资标期：<input type="text" placeholder="输入您的投资标期" class="ms-input" id="term"></div>
+      <div class="ma-div3">备注：<input type="text" placeholder="可不填" class="ms-input" id="remark"></div>
+      <p class="td-yy"><button class="md-trigger td-tj">提交</button></p>
+      <div class="clearboth"></div>
+    </div>
   </div>
 
   <div class="td-msgs">
-  	 <div class="msg-ti"><img src="{% static 'images/task-03.png' %}" class="ms-pd"/><span class="mag-pp">奖励规则</span></div>
+     此处上传理财表格
+  </div>
+  <div class="td-msgs">
+  	 <div class="msg-ti"><img src="{% static 'images/task-03.png' %}" class="ms-pd"/><span class="mag-pp">注意事项</span></div>
 	   <div class="detail-html">{{news.rules|safe}}</div>
   </div>
 {%endblock%}
   {% block hintblock %}
-  <div class="td-msgs">
+<!--   <div class="td-msgs">
     <div class="msg-ti"><img src="{% static 'images/task-05.png' %}" class="ms-pd"/><span class="mag-pp">温馨提示</span></div>
         <p class="hy-p">1、为了让您畅快的享受福利，请您务必按照体验步骤详情操作，并在完成后返回本页面<span style="color:#ff6767">提交相关数据</span>，以便工作人员进行数据审核，发放相应福利；</p>
         <p class="hy-p">2、用户提交数据后，挖福利工作人员将在48小时内完成审核，并发放相应奖励至用户账户；</p>
@@ -140,6 +179,6 @@ $(function(){
         <p class="hy-p">4、投资有风险，入市需谨慎；挖福利尽最大可能的提供最优质的理财渠道、筛选有诚信的合作平台，但是挖福利不对合作平台提供任何的风险担保；</p>
         <p class="hy-p">5、挖福利对福利数据的审核具有最终解释权。</p>
         <p class="hy-p">如有疑问请联系<span><a href="#" style="color:#F08618;">在线客服</a></span>或拨打 <span style="color:#F08618;">服务热线：0734-8344414</span></p>
-  </div>
+  </div> -->
   {% endblock %}
 

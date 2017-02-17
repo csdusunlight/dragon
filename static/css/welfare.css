@@ -615,16 +615,17 @@ padding: 6px 30px;
 margin: 4rem 0rem 1rem 54px;}
 .morest:hover{background: #CACACA;}
 
-.td-ti{width:1100px;height:175px;margin:2rem auto;border: 1px solid #EBEBEB;}
+/*理财改版修改*/
+/*.td-ti{width:1100px;height:175px;margin:2rem auto;border: 1px solid #EBEBEB;}
 .td-ti img {
   width: 258px;
   height: 148px;
-}
-.td-inimg{
+}*/
+/*.td-inimg{
   float: left;
-padding: 15px;}
-.td-tij{text-align: left;}
-.te-mo{
+padding: 15px;}*/
+/*.td-tij{text-align: left;}*/
+/*.te-mo{
   float: left;
   margin: 0rem 0rem 1rem 0rem;
   background: rgb(240, 134, 25) none repeat scroll 0% 0%;
@@ -632,7 +633,87 @@ padding: 15px;}
   border-radius: 20px;
   padding: 3px 13px;
   font-size: 15px;
+}*/
+/*理财改版修改add-css*/
+.finance-top {
+  width: 1100px;
+  background: #fff;
+  overflow: hidden;
+  margin: 0 auto;
 }
+
+.finance-info {
+  padding: 14px;
+  width: 65%;
+  float: left;
+  border: 1px solid #ebebeb;
+}
+
+.finance-bg {
+  padding: 14px;
+  width: 25%;
+  float: right;
+  border: 1px solid #ebebeb;
+}
+
+.finance-bg p span:first-child {
+  display: inline-block;
+  width: 140px;
+  margin-left: 20px;
+}
+
+.finance-logo span {
+  height: 24px;
+  display: inline-block;
+  padding: 0 6px;
+  margin-top: 30px;
+  margin-right: 10px;
+  color: #ff6767;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: center;
+  border: 1px solid #fb3456;
+  border-radius: 4px;
+  vertical-align: top;
+}
+
+.text-box {
+  position: relative;
+  line-height: 20px;
+  height: 40px;
+  overflow: hidden;
+}
+
+.introduction {
+  margin: 0;
+  line-height: 20px;
+  font-size: 14px;
+}
+
+.toolong::after {
+  content: "...";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 20px;
+  padding: 0 4px 0px 10px;
+  background: -webkit-linear-gradient(left, transparent, #fff 40%);
+  background: linear-gradient(left, transparent, #fff 40%);
+}
+
+.taste-btn button,
+.contact {
+  display: inline-block;
+  border: none;
+  padding: 10px;
+  margin-right: 10px;
+  text-decoration: none;
+  background-color: #ebebeb;
+  color: #333;
+  border-radius: 4px;
+}
+/*理财改版add-css-end*/
+
 .te-mo+span {
   line-height: 30px;
 }
