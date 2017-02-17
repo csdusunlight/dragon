@@ -94,10 +94,9 @@ $(function(){
 });
 
     // 理财信息登记部分
-  $("#infor_register").addEventListener('click', function() {
+  var popupShow = function() {
       $(".popup-box").addClass("in");
-    console.log("addClass");
-  });
+  }
   var popupHide = function(){
     $(".popup-box").removeClass("in");
   }
@@ -138,7 +137,7 @@ $(function(){
         {% else %}
         <button class="te-moe">已结束</button>
         {% endif %}
-        <button id="infor_register" href="#">信息登记</button>
+        <button id="infor_register" onclick="popupShow()">信息登记</button>
       </p>
     </div>
     <div class="finance-bg">
