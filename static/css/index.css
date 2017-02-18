@@ -324,18 +324,42 @@ table{border-collapse:collapse;}
 .index_22 ul li .lf table td.s2{color:#ff0000;}
 .index_22 ul li .rt a{display:block;width:101px;height:40px;background: url(../images/bg-5.png) no-repeat;color:#fff;line-height:40px;font-size:18px;text-align:center;margin-top:18px;margin-right:21px;}*/
 .finance-container {
-    background: #52c5ff ;
-    padding: 10px;
+    width: 852px;
+    background: #52c5ff;
+    /*padding: 10px;*/
     border-radius: 8px;
+    border: 8px solid #52c5ff;
+}
+.finance-container ul {
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.item-box {
+    /*display: inline-block;*/
+    position: relative;
+    float: left;
+    width: 284px;
+    border-radius: 8px;
+    position: relative;
+
+}
+.item-box:not(.item-last):after {
+    content: "";
+    position: absolute;
+    top: 20px;
+    right: 0;
+    width: 1px;
+    height: 320px;
+    background-color: #52c5ff;
 }
 .finance-item {
-    display: inline-block;
-    position: relative;
-    width: 300px;
-    border-radius: 8px;
     -webkit-perspective: 900px;
     -moz-perspective: 900px;
     perspective: 900px;
+    height: 400px;
 }
 .finance-item .intro {
     opacity: 1;
@@ -347,17 +371,19 @@ table{border-collapse:collapse;}
 }
 .finance-item img {
     width: 100%;
-    height: 100%;
+    height: 200px;
 }
+
 .intro .intro-content {
     padding: 20px;
     background-color: #fff;
-    border-radius: 8px;
+    border-radius: 8px 8px 0 0;
 }
 .intro-content h3 {
     margin: 0;
-    line-height: 50px;
+    line-height: 30px;
     text-align: center;
+    color: #fff;
     background-color: #52c5ff;
 }
 .intro-content p {
@@ -367,7 +393,10 @@ table{border-collapse:collapse;}
     margin: 0;
     line-height: 40px;
     text-align: center;
+    color: #fff;
+    background-color: #52c5ff;
 }
+
 .finance-item .info {
     position: absolute;
     top: 0;
@@ -392,6 +421,24 @@ table{border-collapse:collapse;}
 .finance-list {
     border: 1px solid #52c5ff;
     margin-bottom: 10px;
+    padding: 0 6px;
+}
+.finance-list h3 {
+    line-height: 1;
+    padding: 0;
+    margin: 15px 0;
+    color: #333;
+}
+.finance-list p {
+    line-height: 1;
+    margin: 10px 0;
+    color: #777;
+
+}
+.finance-list div {
+    margin: 10px 0;
+    color: #777;
+    font-size: 12px;
 }
 .finance-list p *,
 .finance-list div * {
@@ -431,6 +478,10 @@ table{border-collapse:collapse;}
     transform: scale(1.2);
 }
 
+
+
+
+
 .finance-item .intro {
     -webkit-transform: translateZ(0) rotateY(0);
     -moz-transform: translateZ(0) rotateY(0);
@@ -446,7 +497,6 @@ table{border-collapse:collapse;}
     -o-transform: translateZ(-1000px) rotateY(-90deg);
     transform: translateZ(-1000px) rotateY(-90deg);
 }
-
 .finance-item:hover .intro {
     -webkit-transform: translateZ(-1000px) rotateY(90deg);
     -moz-transform: translateZ(-1000px) rotateY(90deg);
