@@ -1073,6 +1073,20 @@ margin-left: -9px;}
 .lc-h2{font-size: 18px;
 color: #393939;
 padding: 10px 0px 10px 15px;}
+/*理财福利改版*/
+.lc-h2 span {
+  height: 24px;
+  display: inline-block;
+  padding: 0 6px;
+  color: #ff6767;
+  margin-right: 10px;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: center;
+  border: 1px solid #fb3456;
+  border-radius: 4px;
+}
+/*理财福利改版————end*/
 .lo-span{width: 14%;
 height: 60px;
 float: left;
