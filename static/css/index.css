@@ -323,12 +323,22 @@ table{border-collapse:collapse;}
 .index_22 ul li .lf table td.s1{color:#008fd7;line-height:38px;font-size:20px;font-weight:bold;}
 .index_22 ul li .lf table td.s2{color:#ff0000;}
 .index_22 ul li .rt a{display:block;width:101px;height:40px;background: url(../images/bg-5.png) no-repeat;color:#fff;line-height:40px;font-size:18px;text-align:center;margin-top:18px;margin-right:21px;}*/
+.index_22:after {
+    position:absolute;
+    bottom:10px;
+    content:"";
+    width:862px;
+    height:2px;
+    background-color:#52c5ff;
+}
 .finance-container {
     width: 852px;
+    box-sizing: border-box;
+    margin: 20px 0 0 10px;
     background: #52c5ff;
     /*padding: 10px;*/
     border-radius: 8px;
-    border: 8px solid #52c5ff;
+    border: 9px solid #52c5ff;
 }
 .finance-container ul {
     padding: 0;
@@ -341,8 +351,8 @@ table{border-collapse:collapse;}
     /*display: inline-block;*/
     position: relative;
     float: left;
-    width: 284px;
-    border-radius: 8px;
+    width: 278px;
+    border-radius: 9px;
     position: relative;
 
 }
@@ -359,7 +369,7 @@ table{border-collapse:collapse;}
     -webkit-perspective: 900px;
     -moz-perspective: 900px;
     perspective: 900px;
-    height: 400px;
+    height: 390px;
 }
 .finance-item .intro {
     opacity: 1;
