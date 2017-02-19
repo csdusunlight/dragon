@@ -71,4 +71,5 @@ class Invest_Record(models.Model):
     wafuli_account = models.CharField(max_length=11)
     return_date = models.DateField(u"创建时间", default=timezone.now)
     is_futou = models.BooleanField(u"是否复投", default=False)
+    coupon = models.CharField(u"优惠券", max_length=100,blank=True)
     remark = models.CharField(u"备注", max_length=100,blank=True)
