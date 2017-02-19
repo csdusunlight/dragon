@@ -15,7 +15,7 @@ logger = logging.getLogger("wafuli")
 class Command(BaseCommand):
     def handle(self, *args, **options):
         finance_type = ContentType.objects.get_for_model(Finance)
-        events = UserEvent.objects.filter(event_type='1',content_type = finance_type)
+        events = UserEvent.objects.filter(event_type='1',content_type = finance_type,audit_state='0')
         create_list = []
         for event in events:
             user = event.user
