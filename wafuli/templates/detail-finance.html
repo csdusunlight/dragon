@@ -100,13 +100,6 @@ $(function(){
   var popupHide = function(){
     $(".popup-box").removeClass("in");
   }
-  // 介绍理财部分
-  var text_box = document.getElementById("text_box"),
-    intro = document.getElementById("intro");
-  var box_height = text_box.offsetHeight - intro.offsetHeight;
-  if(box_height<0){
-      text_box.setAttribute("class","text-box toolong");
-  }
 </script>
 {%endblock%}
 {%block expblock%}

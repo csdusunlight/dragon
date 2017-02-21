@@ -644,6 +644,7 @@ padding: 15px;}*/
 }
 
 .finance-info {
+  height: 194px;
   padding: 14px;
   width: 65%;
   float: left;
@@ -657,6 +658,7 @@ padding: 15px;}*/
 }
 
 .finance-bg {
+  height: 194px;
   padding: 14px;
   width: 25%;
   float: right;
@@ -673,7 +675,6 @@ padding: 15px;}*/
   height: 24px;
   display: inline-block;
   padding: 0 6px;
-  margin-top: 30px;
   margin-right: 10px;
   color: #ff6767;
   font-size: 14px;
@@ -686,8 +687,9 @@ padding: 15px;}*/
 
 .text-box {
   position: relative;
+  margin-top: 20px;
   line-height: 20px;
-  height: 40px;
+  height: 80px;
   overflow: hidden;
 }
 
@@ -708,10 +710,8 @@ padding: 15px;}*/
   background: linear-gradient(left, transparent, #fff 40%);
 }
 
-.taste-btn:before {
-  content: "";
-  display: block;
-  clear: both;
+.taste-btn {
+  margin-top: 20px;
 }
 
 .taste-btn button,
