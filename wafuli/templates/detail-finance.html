@@ -100,6 +100,13 @@ $(function(){
   var popupHide = function(){
     $(".popup-box").removeClass("in");
   }
+  // 介绍理财部分
+  var text_box = document.getElementById("text_box"),
+    intro = document.getElementById("intro");
+  var box_height = text_box.offsetHeight - intro.offsetHeight;
+  if(box_height<0){
+      text_box.setAttribute("class","text-box toolong");
+  }
 </script>
 {%endblock%}
 {%block expblock%}
@@ -125,20 +132,21 @@ $(function(){
   </div> -->
   <div class="finance-top">
     <div class="finance-info">
-      <div class="finance-logo">
-        <img src="../images/business-logo.jpg" /><span>这是标签</span><span>标签</span><span>小标签</span>
-      </div>
-      <div id="text_box" class="text-box">
-        <p id="intro" class="introduction">介绍这里是产品简单介绍介绍这里是产品简单介绍介绍这里简单介绍介绍这里是产品简单介绍介绍这里是产品简单介绍介绍这里简单介绍</p>
-      </div>
-      <p class="taste-btn">
-        {% if not news.is_expired %}
-        <button class="md-trigger te-mo">立即体验</button>
-        {% else %}
-        <button class="te-moe">已结束</button>
-        {% endif %}
-        <button id="infor_register" onclick="popupShow()">信息登记</button>
-      </p>
+        <img src="../images/business-logo.jpg" />
+        <p class="finance-mark">
+          <span>小标签</span><span>小标签</span><span>小标签</span>
+        </p>
+        <div id="text_box" class="text-box">
+          <p id="intro" class="introduction">介绍这里是产品简单介绍介绍这里是产品简单介绍介绍这里简单介绍介绍这里是产品简单介绍介绍这里是产品简单介绍介绍这里简单介绍</p>
+        </div>
+        <div class="taste-btn">
+          {% if not news.is_expired %}
+          <button class="md-trigger te-mo">立即体验</button>
+          {% else %}
+          <button class="te-moe">已结束</button>
+          {% endif %}
+          <button id="infor_register" onclick="popupShow()">信息登记</button>
+        </div>
     </div>
     <div class="finance-bg">
       <p><span>平台背景</span><span>民营系</span></p>
