@@ -430,6 +430,7 @@ table{border-collapse:collapse;}
     opacity: 1;
 }
 .finance-list {
+    position: relative;
     border: 1px solid #52c5ff;
     margin-bottom: 10px;
     padding: 0 6px;
@@ -481,6 +482,9 @@ table{border-collapse:collapse;}
     color: #f08519;
 }
 .to-finance {
+    position: absolute;
+    bottom: 5px;
+    right: 4px;
     height: 28px;
     line-height: 28px;
     padding: 0 12px;

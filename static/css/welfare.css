@@ -733,6 +733,14 @@ padding: 15px;}*/
   color: #fff;
   border-radius: 4px;
   transition: all 0.4s ease;
+  background-position: left center;
+  background-repeat: no-repeat;
+}
+.contact-qq {
+  background-image: url(../images/contact-qq.png);
+}
+.contact-kefu {
+  background-image: url(../images/contact-kefu.png);
 }
 .taste-btn button:hover,
 .contact:hover {
