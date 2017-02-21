@@ -655,6 +655,7 @@ padding: 15px;}*/
   float: left;
   width: 288px;
   height: 192px;
+  margin-right: 20px;
 }
 
 .finance-bg {
@@ -663,6 +664,8 @@ padding: 15px;}*/
   width: 25%;
   float: right;
   border: 1px solid #ebebeb;
+  font-size: 16px;
+  line-height: 30px
 }
 
 .finance-bg p span:first-child {
@@ -687,15 +690,15 @@ padding: 15px;}*/
 
 .text-box {
   position: relative;
-  margin-top: 20px;
-  line-height: 20px;
-  height: 80px;
+  margin-top: 16px;
+  line-height: 22px;
+  height: 88px;
   overflow: hidden;
 }
 
 .introduction {
   margin: 0;
-  line-height: 20px;
+  line-height: 22px;
   font-size: 14px;
 }
 
@@ -711,15 +714,17 @@ padding: 15px;}*/
 }
 
 .taste-btn {
-  margin-top: 20px;
+  margin-top: 16px;
 }
-
+.contact-box {
+  text-align: left;
+}
 .taste-btn button,
 .contact {
   display: inline-block;
   border: none;
-  padding: 10px;
-  margin-right: 10px;
+  padding: 10px 20px;
+  margin-right: 20px;
   text-decoration: none;
   background-color: #ebebeb;
   color: #333;
