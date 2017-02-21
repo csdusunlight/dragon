@@ -674,11 +674,14 @@ padding: 15px;}*/
   margin-left: 20px;
 }
 
+.finance-mark {
+  font-size: 24px
+}
 .finance-mark span {
   height: 24px;
   display: inline-block;
   padding: 0 6px;
-  margin-right: 10px;
+  margin-left: 10px;
   color: #ff6767;
   font-size: 14px;
   line-height: 24px;
@@ -726,9 +729,14 @@ padding: 15px;}*/
   padding: 10px 20px;
   margin-right: 20px;
   text-decoration: none;
-  background-color: #ebebeb;
-  color: #333;
+  background-color: #f08519;
+  color: #fff;
   border-radius: 4px;
+  transition: all 0.4s ease;
+}
+.taste-btn button:hover,
+.contact:hover {
+  background-color: #ea7a07;
 }
 .finance-popup div {
   margin-left: 0;
