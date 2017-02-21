@@ -788,7 +788,7 @@ canvas{width: 100%;border: 1px solid #000000;}
 }
 .popup-content {
   padding: 15px 40px 30px;
-  margin: 15% auto 0;
+  margin: 8% auto 0;
   width: 600px;
   text-align: center;
   background-color: #fff;
@@ -1056,7 +1056,7 @@ padding-left: 7px;}
 .clearboth{clear:both}
 .td-tj{
 /*float: left;*/
-margin: 1rem auto;
+margin: 1rem 50px;
 background: rgb(240, 134, 25) none repeat scroll 0% 0%;
 color: rgb(255, 255, 255);
 border-radius: 20px;

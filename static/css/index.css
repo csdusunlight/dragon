@@ -437,7 +437,7 @@ table{border-collapse:collapse;}
 .finance-list:first-child {
     margin-top: 10px;
 }
-.finance-solid {
+.intro-content .finance-solid {
     margin-left: -12px;
 }
 .finance-list h3 {
