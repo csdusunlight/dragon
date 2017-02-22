@@ -6,7 +6,7 @@
 var ismobile = true;
 {%else%}
 var ismobile = false;
-var url_openwindow = "{% url 'exp_welfare_openwindow' %}"
+var url_openwindow = "{% url 'exp_welfare_openwindow' %}";
 {%endif%}
 $(function(){
 	var ahref = $("a.login").attr("href");
