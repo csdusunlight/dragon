@@ -49,8 +49,8 @@ class News(Base):
     pic = models.ImageField(upload_to='photos/%Y/%m/%d', verbose_name=u"标志图片上传（最大不超过30k，越小越好）")
     isonMobile = models.BooleanField(u'是否只限移动端（pc端显示二维码）？', default= False)
     exp_url = models.CharField(u"活动地址", blank=True, max_length=200)
-    exp_url_pc = models.CharField(u"活动地址", blank=True, max_length=200)
-    exp_url_mobile = models.CharField(u"活动地址", blank=True, max_length=200)
+    exp_url_pc = models.CharField(u"活动地址pc", blank=True, max_length=200)
+    exp_url_mobile = models.CharField(u"活动地址mobile", blank=True, max_length=200)
     exp_code = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, verbose_name=u"上传二维码")
     advert = models.ForeignKey("Advertisement",blank=True, null=True, on_delete=models.SET_NULL)
     company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True)
@@ -109,8 +109,8 @@ class Welfare(Base):
     advert = models.ForeignKey("Advertisement",blank=True, null=True, on_delete=models.SET_NULL)
     isonMobile = models.BooleanField(u'是否为移动端活动', default= False)
     exp_url = models.CharField(u"活动地址", blank=True, max_length=200)
-    exp_url_pc = models.CharField(u"活动地址", blank=True, max_length=200)
-    exp_url_mobile = models.CharField(u"活动地址", blank=True, max_length=200)
+    exp_url_pc = models.CharField(u"活动地址pc", blank=True, max_length=200)
+    exp_url_mobile = models.CharField(u"活动地址mobile", blank=True, max_length=200)
     exp_code = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, verbose_name=u"上传二维码")
     def clean(self):
         if self.exp_url_mobile == '':

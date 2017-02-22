@@ -46,14 +46,14 @@ $(function(){
 		$(".Password-modify").css("display","none");
 	});
 	$("#pagedata1").ajaxPage({
-	    url:url+0, 
+	    url:url+0,
 	    pageId:$("#page1"),
 	    pageSize:2,
 	    run:true,
 	    content:data1,
 	});
 	$("#pagedata2").ajaxPage({
-	    url:url2, 
+	    url:url2,
 	    pageId:$("#page2"),
 	    pageSize:6,
 	    run:true,
@@ -69,13 +69,13 @@ $(function(){
 			}
 			$("#page").empty();
 			$("#pagedata1").ajaxPage({
-			    url:url+index, 
+			    url:url+index,
 			    pageId:$("#page1"),
 			    pageSize:2,
 			    run:true,
 			    content:data,
 			});
-		}					
+		}
 	});
 	$('#submit').click(function(){
 		telnum = $("#telnum").val();
@@ -111,13 +111,24 @@ $(function(){
 	$("#pagedata1").on("click", ".open", function(){
 		var is_mobile = this.getAttribute("mobile");
 		var pro_id = this.getAttribute("pro_id");
+		var url = this.getAttribute("url");
 		if (is_mobile==1){
-			alert("erweima");
+			document.getElementById("erweima").src=url;
+			$(".popup-box").addClass("in");
 		}
 		else{
 			window.open(url_openwindow + "?id=" + pro_id + "&type=CouponProject");
 		}
 	});
+
+  // 二维码部分
+  $(".popup-content ").click(function(){
+    event.stopPropagation();
+  });
+  $(".popup-box ").click(function(){
+    $(".popup-box ").removeClass("in ");
+  });
+
 });
 </script>
 </head>
@@ -168,7 +179,7 @@ $(function(){
 		                <div class="Page-in-exc-coupon-detail">
 	                    	<div class="page"  id="page2">
 	                        </div>
-	                    </div> 
+	                    </div>
                     </div>
                 </div>
             </div>
@@ -196,8 +207,15 @@ $(function(){
             </div>
         	</div>
         </div>
+        <!-- 弹出二维码部分 -->
+        <div class="popup-box">
+          <div class="popup-content ">
+            <h3>优惠券体验二维码</h3>
+            <img id="erweima" src="" />
+          </div>
+        </div>
 	  {% include "footer.html" %}
-  <!--浮动窗口-->  
+  <!--浮动窗口-->
   	{% include "outline.html" %}
     </div>
 </body>
