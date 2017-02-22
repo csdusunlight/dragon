@@ -318,3 +318,53 @@ input[type="text"] {padding-left: 10px !important;padding-right: 10px !important
 .Defa-in h2 { font-size:28px; color:#43c7bc; line-height:62px; font-weight:400;text-align:center;}
 .Defa-in2 { float:left; width:100%;  height:auto; text-align:center !important; padding:50px 0;}
 .Defa-in2 h3 { font-size:28px; color:#43c7bc; line-height:62px; font-weight:400; text-align:center;}
+/*优惠券二维码弹窗*/
+.popup-box {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+}
+
+.popup-box.in {
+  display: block;
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.popup-content {
+  padding: 15px 40px 30px;
+  margin: 8% auto 0;
+  width: 400px;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+}
+
+.popup-content h3 {
+  padding: 10px 0;
+  color: #333;
+  font-size: 25px;
+}
+
+.popup-box.in .popup-content {
+  -webkit-animation: popup 0.6s linear;
+  animation: popup 0.6s linear;
+}
+
+@-webkit-keyframes popup {
+  0% {
+    -webkit-transform: translateY(-30%);
+    webkit-transform: translateY(-30%);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+/*优惠券二维码弹窗--end*/
