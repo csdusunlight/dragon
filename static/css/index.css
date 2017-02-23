@@ -318,7 +318,7 @@ table{border-collapse:collapse;}
     margin: 20px 0 0 10px;
     background: #52c5ff;
     border-radius: 8px;
-    border: 9px solid #52c5ff;
+    border: 4px solid #52c5ff;
 }
 .finance-container ul {
     padding: 0;
@@ -330,7 +330,7 @@ table{border-collapse:collapse;}
 .item-box {
     position: relative;
     float: left;
-    width: 278px;
+    width: 33.33%;
     border-radius: 9px;
     position: relative;
 

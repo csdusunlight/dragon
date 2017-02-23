@@ -615,6 +615,27 @@ padding: 6px 30px;
 margin: 4rem 0rem 1rem 54px;}
 .morest:hover{background: #CACACA;}
 
+.td-ti{width:1100px;height:175px;margin:2rem auto;border: 1px solid #EBEBEB;}
+.td-ti img {
+  width: 258px;
+  height: 148px;
+}
+.td-inimg{
+  float: left;
+padding: 15px;}
+.td-tij{text-align: left;}
+.te-mo{
+  float: left;
+  margin: 0rem 0rem 1rem 0rem;
+  background: rgb(240, 134, 25) none repeat scroll 0% 0%;
+  color: rgb(255, 255, 255);
+  border-radius: 20px;
+  padding: 3px 13px;
+  font-size: 15px;
+}
+.te-mo+span {
+  line-height: 30px;
+}
 /*理财改版修改add-css*/
 .finance-top {
   width: 1100px;
