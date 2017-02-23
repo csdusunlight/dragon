@@ -211,6 +211,7 @@ class Task(News):
 class Finance(News):
     f_type = models.CharField(u"项目类别", max_length=1, choices=FINANCE_TYPE)
     filter = models.CharField(u"项目系列", max_length=2, choices=FILTER)
+    marks = models.ManyToManyField(Mark, verbose_name=u'标签', related_name="finance_set", blank=True)
     scrores = models.CharField(u"补贴积分", max_length=100)
     benefit = models.CharField(u"补贴收益", max_length=100)
     amount_to_invest = models.IntegerField(u"起投额度")

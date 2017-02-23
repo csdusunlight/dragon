@@ -125,10 +125,12 @@ $(function(){
   </div> -->
   <div class="finance-top">
     <div class="finance-info">
-        <img src="../images/business-logo.jpg" />
+        <img src="{{news.pic.url}}" />
         <p class="finance-mark">
-          这里是标题
-          <span>小标签</span><span>小标签</span><span>小标签</span>
+          {{news.title}}
+         {% for mark in news.marks.all|slice:":3" %}
+          	<span>{{mark.name}}</span>
+         {% endfor %}
         </p>
         <div id="text_box" class="text-box">
           <p id="intro" class="introduction">介绍这里是产品简单介绍介绍这里是产品简单介绍介绍这里简单介绍介绍这里是产品简单介绍介绍这里是产品简单介绍介绍这里简单介绍介绍这里是产品简单介绍介绍这里是产品简单介绍介绍这里简单介绍介绍这里是产品简单介绍介绍这里是产品简单介绍介绍这里简单介绍介绍这里是产品简单介绍介绍这里是产品简单介绍介绍这里简单介绍介绍这里是产品简单介绍介绍这里是产品简单介绍介绍这里简单介绍</p>

@@ -20,6 +20,7 @@ class NewsAdmin(admin.ModelAdmin):
         obj.save()
 class FinanceAdmin(NewsAdmin):
     readonly_fields = ('url','pub_date','change_user')
+    filter_horizontal = ('marks',)
     def save_model(self, request, obj, form, change):
         super(FinanceAdmin,self).save_model (request, obj, form, change)
         if not change:

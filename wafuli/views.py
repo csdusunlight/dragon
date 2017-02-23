@@ -436,7 +436,7 @@ def get_finance_page(request):
     filter = str(filter)
     state = str(state)
     if filter != '0':
-        item_list = item_list.filter(filter=filter)
+        item_list = item_list.filter(f_type=filter)
     item_list = item_list.filter(state=state)
     paginator = Paginator(item_list, size)
     try:
@@ -449,6 +449,10 @@ def get_finance_page(request):
         contacts = paginator.page(paginator.num_pages)
     data = []
     for con in contacts:
+        marks = con.marks.all();
+        str_marks = ''
+        for mark in marks:
+            str_marks += '<span>' + mark.name + '</span>'
         i = {"title":con.title,
              "interest":con.interest,
              "amount":con.amount_to_invest,
@@ -457,6 +461,7 @@ def get_finance_page(request):
              "benefit":con.benefit,
              "url":con.url,
              "is_new":'new' if con.is_new() else '',
+             "marks":str_marks
         }
         data.append(i)
     if data:
