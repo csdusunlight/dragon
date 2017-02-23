@@ -34,7 +34,9 @@ def index(request):
             wel.left_count = wel.coupons.filter(user__isnull=True).count()
         else:
             wel.left_count = u"充足"
-    finance_list = Finance.objects.filter(state='1')[0:3]
+    finance_list1 = Finance.objects.filter(state='1', f_type='1')[0:3]
+    finance_list2 = Finance.objects.filter(state='1', f_type='2')[0:3]
+    finance_list3 = Finance.objects.filter(state='1', f_type='3')[0:3]
     news_list = Activity.objects.filter(is_hidden=False)[0:2]
     exchange_list = ExchangeRecord.objects.all()[0:10]
     strategy_list = Press.objects.filter(type='2')[0:6]
@@ -45,7 +47,9 @@ def index(request):
                'youhuiquan_list': youhuiquan_list, 
 #                'task_list': task_list, 
                'announce_list':announce_list,
-               'finance_list': finance_list,
+               'finance_list1': finance_list1,
+               'finance_list2': finance_list2,
+               'finance_list3': finance_list3,
                'news_list': news_list,
                'exchange_list': exchange_list,
                'strategy_list': strategy_list,
@@ -100,8 +104,20 @@ def finance(request, id=None):
             news = Finance.objects.get(id=id)
         except Finance.DoesNotExist:
             raise Http404(u"该页面不存在")
+        scheme = news.scheme
+        table = []
+        str_rows = scheme.split('|')
+        for str_row in str_rows:
+            row = str_row.split('#')
+            table.append(row);
         other_wel_list = Finance.objects.filter(state='1').order_by('-view_count')[0:10]
-        return render(request, 'detail-finance.html',{'news':news,'type':'Finance','other_wel_list':other_wel_list})
+        context = {
+                   'news':news,
+                   'type':'Finance',
+                   'other_wel_list':other_wel_list,
+                   'table':table,
+        }
+        return render(request, 'detail-finance.html', context)
         
 def task(request, id=None):
     if id is None:

@@ -52,7 +52,7 @@ class News(Base):
     exp_url_pc = models.CharField(u"活动地址pc", blank=True, max_length=200)
     exp_url_mobile = models.CharField(u"活动地址mobile", blank=True, max_length=200)
     exp_code = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, verbose_name=u"上传二维码")
-    advert = models.ForeignKey("Advertisement",blank=True, null=True, on_delete=models.SET_NULL)
+#     advert = models.ForeignKey("Advertisement",blank=True, null=True, on_delete=models.SET_NULL)
     company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True)
     #增加title、keywords、description等seo字段
     seo_title = models.CharField(max_length=200, verbose_name=u"SEO标题", blank=True)
@@ -106,7 +106,7 @@ class Welfare(Base):
                          imagePath="photos/%(year)s/%(month)s/%(day)s/",
                          filePath="photos/%(year)s/%(month)s/%(day)s/", 
                          upload_settings={"imageMaxSize":120000},settings={},command=None,blank=True)
-    advert = models.ForeignKey("Advertisement",blank=True, null=True, on_delete=models.SET_NULL)
+#     advert = models.ForeignKey("Advertisement",blank=True, null=True, on_delete=models.SET_NULL)
     isonMobile = models.BooleanField(u'是否只限移动端（pc端显示二维码）？', default= False)
     exp_url = models.CharField(u"活动地址（已废弃）", blank=True, max_length=200)
     exp_url_pc = models.CharField(u"活动地址pc", blank=True, max_length=200)
@@ -210,18 +210,24 @@ class Task(News):
         ordering = ["-news_priority", "-pub_date"]
 class Finance(News):
     f_type = models.CharField(u"项目类别", max_length=1, choices=FINANCE_TYPE)
-    filter = models.CharField(u"项目系列", max_length=2, choices=FILTER)
+    background = models.CharField(u"平台背景", max_length=20)
+    regcap = models.CharField(u"注册资本", max_length=10)
+    onlinedate = models.CharField(u"上线时间", max_length=12)
+    depository = models.CharField(u"银行存管", max_length=10)
+    ICP = models.CharField(u"ICP号", max_length=30)
+    scheme = models.CharField(u"奖励方案",max_length=200,help_text="用‘#’分列，‘|’分行，只能包含4列，行数不限，示例：\
+        1000元#10天#投资额*2%#25%|2000元#20天#投资额*3%#30%|...")
     marks = models.ManyToManyField(Mark, verbose_name=u'标签', related_name="finance_set", blank=True)
     scrores = models.CharField(u"补贴积分", max_length=100)
     benefit = models.CharField(u"补贴收益", max_length=100)
     amount_to_invest = models.IntegerField(u"起投额度")
     investTime = models.CharField(u"标期长度", max_length=100)
     interest = models.CharField(u"官网利息",max_length=8)
-    rules =UEditorField(u"奖励规则", width=900, height=300, toolbars="full", 
+    strategy =UEditorField(u"体验步骤", width=900, height=300, toolbars="full", 
                          imagePath="photos/%(year)s/%(month)s/%(day)s/",
                          filePath="photos/%(year)s/%(month)s/%(day)s/", 
                          upload_settings={"imageMaxSize":120000},settings={},command=None,blank=True)
-    strategy =UEditorField(u"体验步骤", width=900, height=300, toolbars="full", 
+    rules =UEditorField(u"注意事项", width=900, height=300, toolbars="full", 
                          imagePath="photos/%(year)s/%(month)s/%(day)s/",
                          filePath="photos/%(year)s/%(month)s/%(day)s/", 
                          upload_settings={"imageMaxSize":120000},settings={},command=None,blank=True)
@@ -241,7 +247,7 @@ class Commodity(models.Model):
     category = models.CharField(u"商品分类", max_length=8, choices=CATEGORY)
     item = models.CharField(u"商品子类", max_length=8, choices=ITEM)
     url = models.CharField(u"本页面地址",max_length=200)
-    advert = models.ForeignKey("Advertisement",blank=True, null=True, on_delete=models.SET_NULL)
+#     advert = models.ForeignKey("Advertisement",blank=True, null=True, on_delete=models.SET_NULL)
     rules =UEditorField(u"奖品介绍", width=900, height=300, toolbars="full", 
                          imagePath="photos/%(year)s/%(month)s/%(day)s/",
                          filePath="photos/%(year)s/%(month)s/%(day)s/", 
