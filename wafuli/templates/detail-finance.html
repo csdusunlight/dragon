@@ -84,6 +84,7 @@
 			var remark = $('input#remark').val();
 			var amount = parseFloat($('input#amount').val());
 			var term = $('input#term').val();
+			$('#myModal').modal("hide");
 			$.ajax({
 				url:"{%url 'expsubmit_finance' %}",
 				type:'post',
@@ -102,7 +103,6 @@
 						window.location.href = ret.url;
 					}
 					else {
-						$('#myModal').modal("hide");
 						alert(ret.msg);
 					}
 				},
@@ -137,7 +137,7 @@
          {% endfor %}
         </p>
         <div id="text_box" class="text-box">
-          <p id="intro" class="introduction">介绍这里是产品简单介绍介绍这里是产品简单介绍介绍这里简单介绍介绍这里是产品简单介绍介绍这里是产品简单介绍介绍这里简单介绍介绍这里是产品简单介绍介绍这里是产品简单介绍介绍这里简单介绍介绍这里是产品简单介绍介绍这里是产品简单介绍介绍这里简单介绍介绍这里是产品简单介绍介绍这里是产品简单介绍介绍这里简单介绍介绍这里是产品简单介绍介绍这里是产品简单介绍介绍这里简单介绍</p>
+          <p id="intro" class="introduction">{{news.introduction}}</p>
         </div>
         <div class="taste-btn">
           {% if not news.is_expired %}
@@ -149,17 +149,17 @@
         </div>
     </div>
     <div class="finance-bg">
-      <p><span>平台背景</span><span>民营系</span></p>
-      <p><span>注册资本</span><span>1000万</span></p>
-      <p><span>上线时间</span><span>2017-01-12</span></p>
-      <p><span>是否银行存管</span><span>是</span></p>
-      <p><span>ICP号</span><span>12345678</span></p>
+    	<p><span>平台背景</span><span>{{news.background}}</span></p>
+		<p><span>注册资本</span><span>{{news.regcap}}</span></p>
+		<p><span>上线时间</span><span>{{news.onlinedate}}</span></p>
+		<p><span>是否银行存管</span><span>{{news.depository}}</span></p>
+		<p><span>ICP号</span><span>{{news.ICP}}</span></p>
     </div>
   </div>
 
   <div class="td-msgs finance-table">
       <div class="table-head">
-          <span>投资金融</span><span>投资期限</span><span>挖福利返现</span><span>综合年化收益</span>
+          <span>投资金额</span><span>投资期限</span><span>挖福利返现</span><span>综合年化收益</span>
       </div>
       {%for row in table %}
       <div class="table-list">

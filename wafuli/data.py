@@ -145,3 +145,9 @@ INFORMATION_TYPE = (
     ('washuju', u'挖数据'),
     ('wahuodong', u'挖活动'),
 )
+FILTER = (
+    ('1', u'上市系'),
+    ('2', u'国资系'),
+    ('3', u'民营系'),
+    ('4', u'其他'),
+)
