@@ -19,7 +19,7 @@
 <script type="text/javascript" src="{% static 'js/page.js' %}"></script>
 <script type="text/javascript">
 var data='[data]<li class="lc-li">'+
-	'<h2 class="lc-h2 {is_new}">{title}<span>标签</span><span>小标签</span></h2>'+
+	'<h2 class="lc-h2 {is_new}">{title}{marks}</h2>'+
 	'<span class="lo-span"><p>官网利息</p><p class="lp-p">{interest}</p></span>'+
 	'<span class="lo-spans"><p>起投金额</p><p style="color:#111;line-height:50px;">{amount}</p></span>'+
 	'<span class="lo-spans"><p>标期长度</p><p style="color:#111;line-height: 50px;">{time}</p></span>'+
@@ -27,7 +27,7 @@ var data='[data]<li class="lc-li">'+
 	'<span class="lo-spans"><p>赠送积分</p><p style="color:#FE0000;line-height: 50px;">+{scores}</p></span>'+
 	'<span style="float: right;"><a target="_blank" href="{url}" class="lo-ap">立即投资</a></span></li>[/data]';
 var data2='[data]<li class="lc-li">'+
-	'<h2 class="lc-h2">{title}</h2>'+
+	'<h2 class="lc-h2">{title}{marks}</h2>'+
 	'<span class="lo-span"><p>官网利息</p><p class="lp-p">{interest}</p></span>'+
 	'<span class="lo-spans"><p>起投金额</p><p style="color:#111;line-height:50px;">{amount}</p></span>'+
 	'<span class="lo-spans"><p>标期长度</p><p style="color:#111;line-height: 50px;">{time}</p></span>'+
@@ -130,9 +130,9 @@ $(function(){
             <div class="tabList" style="float:right;">
                 <ul>
                     <li class="cur">全部</li>
-                    <li>上市系</li>
-                    <li>国资系</li>
-                    <li>民营系</li>
+                    <li>新手投资</li>
+                    <li>稳健投资</li>
+                    <li>高收益区</li>
                 </ul>
               </div>
             <div class="tabCon">
@@ -156,9 +156,9 @@ $(function(){
             <div class="tabList" style="float:right;">
               <ul>
                   <li class="curs">全部</li>
-                  <li>上市系</li>
-                  <li>国资系</li>
-                  <li>民营系</li>
+                  <li>新手投资</li>
+                  <li>稳健投资</li>
+                  <li>高收益区</li>
               </ul>
             </div>
             <div class="tabCon">
