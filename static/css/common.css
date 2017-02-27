@@ -57,11 +57,19 @@
 .index_59 .rt a{margin-left:6px;}
 #online{width:63px;overflow:hidden;clear:both;text-align:left;position:fixed;top:30%;right:6px;z-index:1000;border:1px solid #f5f5f5;border-bottom:none;}
 #online li{position: static;width:63px;height:74px;float:left;display:inline-block;text-align:center;border-bottom:1px solid #f5f5f5;background:#fff;line-height:26px;}
-#online li a{display:block;width:63px;height:74px;color:#ccc;}
-#online li a:hover { color:#fff; background:#f08519;}
-#online li.qq img{padding-top:6px;}
+#online li a{display:block;width:63px;height:74px;background:#f08519;}
+#online li a:hover { color:#fff; }
+#online li.qq {background: url(../images/contact-kefu.png); center center/90% auto no-repeat;}
+#online li.weixin {background: url(../images/contact-qq.png); center center/90% auto no-repeat;}
+#online li.qq:hover {background-image: none;}
+#online li.weixin:hover {background-image: none;}
+.qq span,
+.weixin span {display: none;}
+.qq:hover span,
+.weixin:hover span {display: block;}
+/*#online li.qq img{padding-top:6px;}
 #online li.weixin img{padding-top:9px;}
-#online li.top img{padding-top:18px;}
+#online li.top img{padding-top:18px;}*/
 #online li.top{position:static;}
 .box_in { float:left; width:912px; height:auto; background:url(../images/newback1.png) no-repeat right; padding-right:2px; box-sizing:border-box;}
 .frcont { float:right; width:175px; height:auto; margin-top:23px;}
