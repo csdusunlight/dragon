@@ -686,16 +686,17 @@ padding: 15px;}
   font-size: 24px
 }
 .finance-mark span {
-  height: 24px;
+  height: 22px;
   display: inline-block;
   padding: 0 6px;
   margin-left: 10px;
-  color: #ff6767;
-  font-size: 14px;
-  line-height: 24px;
+  margin-top: 2px;
+  color: #fff;
+  font-size: 12px;
+  line-height: 22px;
+  background: #ff9900;
   text-align: center;
-  border: 1px solid #fb3456;
-  border-radius: 4px;
+  border-radius: 2px;
   vertical-align: top;
 }
 
@@ -1154,16 +1155,18 @@ color: #393939;
 padding: 10px 0px 10px 15px;}
 /*理财福利改版*/
 .lc-h2 span {
-  height: 24px;
+  height: 22px;
   display: inline-block;
   padding: 0 6px;
-  color: #ff6767;
+  color: #fff;
   margin-left: 10px;
-  font-size: 14px;
-  line-height: 24px;
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 22px;
+  background: #ff9900;
   text-align: center;
-  border: 1px solid #fb3456;
-  border-radius: 4px;
+  border-radius: 2px;
+  vertical-align: top;
 }
 /*理财福利改版————end*/
 .lo-span{width: 14%;
