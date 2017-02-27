@@ -11,7 +11,7 @@ from account.transaction import charge_money, charge_score
 import logging
 from account.models import MyUser
 from django.db.models import Q,F
-from wafuli_admin.models import DayStatis
+from wafuli_admin.models import DayStatis, Invest_Record
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import logout as auth_logout
@@ -203,6 +203,13 @@ def admin_finance(request):
                     if not scoretranslist:
                         logger.error(u"Charging score is failed!!!")
                         res['res_msg'] += u"积分记账失败，请检查输入合法性后再次提交！"
+                #更新投资记录表
+                Invest_Record.objects.create(invest_date=event.time,invest_company=event.content_object.company.name,
+                                             user_name=event_user.zhifubao_name,zhifubao=event_user.zhifubao,
+                                             invest_mobile=event_user.invest_account,invest_period=event.invest_term,
+                                             invest_amount=event.invest_amount,return_amount=cash,wafuli_account=event_user.mobile,
+                                             return_date=event.audit_time,remark=event.remark)    
+                
         else:
             event.audit_state = '2'
             log.audit_result = False
