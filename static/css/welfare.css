@@ -729,7 +729,7 @@ padding: 15px;}
 }
 .finance-table span{
   display: inline-block;
-  line-height: 3;
+  line-height: 50px;
 }
 .table-head span {
   font-size: 1.2rem;
