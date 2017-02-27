@@ -60,7 +60,7 @@
 #online li a{display:block;width:40px;height:40px;}
 #online li a:hover { color:#fff;}
 #online li.qq {background: url(../images/contact-kefu.png) center center/70% auto no-repeat #f08519;}
-#online li.weixin {background: url(../images/contact-qq.png) center center/70% auto no-repeat #f08519;}
+#online li.weixin {background: url(../images/contact-qq.png) center center/64% auto no-repeat #f08519;}
 #online li.top {background: #f08519;}
 #online li.qq:hover {background-image: none;}
 #online li.weixin:hover {background-image: none;}
@@ -71,7 +71,7 @@
   content: "";
   display:block;
   position: absolute;
-  bottom: 6px;
+  bottom: 8px;
   left: 12px;
   width: 18px;
   height: 18px;
@@ -85,9 +85,6 @@
 .qq:hover span,
 .weixin:hover span,
 .top:hover span {display: block;}
-/*#online li.qq img{padding-top:6px;}
-#online li.weixin img{padding-top:9px;}
-#online li.top img{padding-top:18px;}*/
 #online li.top{position:static;}
 .box_in { float:left; width:912px; height:auto; background:url(../images/newback1.png) no-repeat right; padding-right:2px; box-sizing:border-box;}
 .frcont { float:right; width:175px; height:auto; margin-top:23px;}
