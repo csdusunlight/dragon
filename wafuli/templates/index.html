@@ -11,53 +11,6 @@
 <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}" />
 <link rel="stylesheet" type="text/css" href="{% static "css/index.css" %}" />
 <link rel="stylesheet" type="text/css" href="{% static "css/dialog.css" %}" />
-<script type="text/javascript" src="{% static "js/jquery-1.11.2.min.js" %}"></script>
-<script type="text/javascript" src="{% static "js/jquery.flexslider-min.js" %}"></script>
-<script type="text/javascript" src="{% static "js/jQuery.infiniteCarousel.js" %}"></script>
-<script type="text/javascript" src="{% static "js/MSClass.js" %}"></script>
-<script type="text/javascript" src="{% static "js/define.js" %}"></script>
-<script type="text/javascript">
-var textarray=[];
-function getText(n) {
-	 if (textarray[n-1])
-		 return textarray[n-1];
-	 else
-		 return n;
-}
-$(function(){
-	$('.home a').toggleClass("vo");
-	$('.flexslider').flexslider({
-		directionNav: true,
-		pauseOnAction: false
-	});
-	$(".signin a").click(function(){
-		$.ajax({
-			url:"{%url 'signin' %}",
-			dataType:"json",
-			success:function(ret){
-				if(ret.code==0){
-					$("div.popup1").fadeIn();
-				}
-				else if((ret.code==1)){
-					$("div.popup2").fadeIn();
-				}
-				else if(ret.code==-1){
-					alert("该页面已过期，请重新登录！");
-					window.location.href = ret.url;
-				}
-			},
-			error:function(){
-				alert("请检查网络连接");
-			}
-		});
-	});
-	$('.btn_cont button').click(function(){
-    	$(this).parent().parent().parent().parent().hide();
-    });
-	$(".index_13_nav a").eq(0).mouseenter();
-	$(".index_10").infiniteCarousel();
-});
-</script>
 </head>
 <body>
 {% include "header.html" %}
@@ -331,8 +284,6 @@ $(function(){
     <div class="index_21">
     	<h2>理财福利</h2><h3>让您多些利息</h3><a href="{%url 'finance'%}" class="more">更多 &gt;</a>
         <div class="index_21_nav">
-        <a>高收益</a>
-        <a>低风险</a>
         </div>
     </div>
     <div class="index_22">
@@ -412,32 +363,20 @@ $(function(){
                   <h3>新手投资</h3>
                   <p>项目期限：90-270天</p>
                   <p>年化利率：9-12%</p>
-                  <img src="images/6.jpg" alt="img">
+                  <img src="{% static 'images/finance-new.png' %}" alt="img">
                 </div>
-                <p>适合人群：XXXX</p>
+                <p>适合人群：刘礼沂</p>
               </div>
               <div class="info">
+              {%for news in finance_list1%}
                 <div class="finance-list">
-                  <h3>项目名称</h3>
-                  <p><span class="profit">10%</span><span class="date">30天</span><span class="money">起投金额：1000</span></p>
-                  <div><span class="add-profit">补贴收益：+投资额<number>1.05%</number></span>
-                    <a href="#" class="to-finance">立即投资</a>
+                  <h3>{{news.title}}</h3>
+                  <p><span class="profit">{{news.interest}}</span><span class="date">{{news.investTime}}</span><span class="money">起投金额：{{news.amount_to_invest}}</span></p>
+                  <div><span class="add-profit"><number>补贴收益：+{{news.benefit}}</number></span>
+                    <a href="{{news.url}}" class="to-finance">查看详情</a>
                   </div>
                 </div>
-                <div class="finance-list">
-                  <h3>项目名称</h3>
-                  <p><span class="profit">10%</span><span class="date">30天</span><span class="money">起投金额：1000</span></p>
-                  <div><span class="add-profit">补贴收益：+投资额<number>1.05%</number></span>
-                    <a href="#" class="to-finance">立即投资</a>
-                  </div>
-                </div>
-                <div class="finance-list">
-                  <h3>项目名称</h3>
-                  <p><span class="profit">10%</span><span class="date">30天</span><span class="money">起投金额：1000</span></p>
-                  <div><span class="add-profit">补贴收益：+投资额<number>1.05%</number></span>
-                    <a href="#" class="to-finance">立即投资</a>
-                  </div>
-                </div>
+               {%endfor%}
               </div>
             </div>
           </li>
@@ -445,35 +384,23 @@ $(function(){
             <div class="finance-item">
               <div class="intro">
                 <div class="intro-content">
-                  <h3>新手投资</h3>
+                  <h3>稳健投资</h3>
                   <p>项目期限：90-270天</p>
                   <p>年化利率：9-12%</p>
-                  <img src="images/6.jpg" alt="img">
+                  <img class="finance-solid" src="{% static 'images/finance-solid.png' %}" alt="img">
                 </div>
-                <p>适合人群：XXXX</p>
+                <p>适合人群：苏莉萍</p>
               </div>
               <div class="info">
+                {%for news in finance_list2%}
                 <div class="finance-list">
-                  <h3>项目名称</h3>
-                  <p><span class="profit">10%</span><span class="date">30天</span><span class="money">起投金额：1000</span></p>
-                  <div><span class="add-profit">补贴收益：+投资额<number>1.05%</number></span>
-                    <a href="#" class="to-finance">立即投资</a>
+                  <h3>{{news.title}}</h3>
+                  <p><span class="profit">{{news.interest}}</span><span class="date">{{news.investTime}}</span><span class="money">起投金额：{{news.amount_to_invest}}</span></p>
+                  <div><span class="add-profit"><number>补贴收益：+{{news.benefit}}</number></span>
+                    <a href="{{news.url}}" class="to-finance">查看详情</a>
                   </div>
                 </div>
-                <div class="finance-list">
-                  <h3>项目名称</h3>
-                  <p><span class="profit">10%</span><span class="date">30天</span><span class="money">起投金额：1000</span></p>
-                  <div><span class="add-profit">补贴收益：+投资额<number>1.05%</number></span>
-                    <a href="#" class="to-finance">立即投资</a>
-                  </div>
-                </div>
-                <div class="finance-list">
-                  <h3>项目名称</h3>
-                  <p><span class="profit">10%</span><span class="date">30天</span><span class="money">起投金额：1000</span></p>
-                  <div><span class="add-profit">补贴收益：+投资额<number>1.05%</number></span>
-                    <a href="#" class="to-finance">立即投资</a>
-                  </div>
-                </div>
+               {%endfor%}
               </div>
             </div>
           </li>
@@ -481,35 +408,23 @@ $(function(){
             <div class="finance-item">
               <div class="intro">
                 <div class="intro-content">
-                  <h3>新手投资</h3>
+                  <h3>高收益区</h3>
                   <p>项目期限：90-270天</p>
                   <p>年化利率：9-12%</p>
-                  <img src="images/6.jpg" alt="img">
+                  <img src="{% static 'images/finance-profit.png' %}" alt="img">
                 </div>
-                <p>适合人群：XXXX</p>
+                <p>适合人群：蒋宗洋</p>
               </div>
               <div class="info">
+                {%for news in finance_list3%}
                 <div class="finance-list">
-                  <h3>项目名称</h3>
-                  <p><span class="profit">10%</span><span class="date">30天</span><span class="money">起投金额：1000</span></p>
-                  <div><span class="add-profit">补贴收益：+投资额<number>1.05%</number></span>
-                    <a href="#" class="to-finance">立即投资</a>
+                  <h3>{{news.title}}</h3>
+                  <p><span class="profit">{{news.interest}}</span><span class="date">{{news.investTime}}</span><span class="money">起投金额：{{news.amount_to_invest}}</span></p>
+                  <div><span class="add-profit"><number>补贴收益：+{{news.benefit}}</number></span>
+                    <a href="{{news.url}}" class="to-finance">查看详情</a>
                   </div>
                 </div>
-                <div class="finance-list">
-                  <h3>项目名称</h3>
-                  <p><span class="profit">10%</span><span class="date">30天</span><span class="money">起投金额：1000</span></p>
-                  <div><span class="add-profit">补贴收益：+投资额<number>1.05%</number></span>
-                    <a href="#" class="to-finance">立即投资</a>
-                  </div>
-                </div>
-                <div class="finance-list">
-                  <h3>项目名称</h3>
-                  <p><span class="profit">10%</span><span class="date">30天</span><span class="money">起投金额：1000</span></p>
-                  <div><span class="add-profit">补贴收益：+投资额<number>1.05%</number></span>
-                    <a href="#" class="to-finance">立即投资</a>
-                  </div>
-                </div>
+               {%endfor%}
               </div>
             </div>
           </li>
@@ -616,6 +531,7 @@ $(function(){
   {% include "footer.html" %}
   <!--浮动窗口-->
   {% include "outline.html" %}
+  
 <div class="popup1" style="display:none;">
   	<div class="w698_box">
     	<div class="pop_left">
@@ -638,5 +554,52 @@ $(function(){
         </div>
     </div>
   </div>
+ <script type="text/javascript" src="{% static "js/jquery-1.11.2.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.flexslider-min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jQuery.infiniteCarousel.js" %}"></script>
+<script type="text/javascript" src="{% static "js/MSClass.js" %}"></script>
+<script type="text/javascript" src="{% static "js/define.js" %}"></script>
+<script type="text/javascript">
+var textarray=[];
+function getText(n) {
+	 if (textarray[n-1])
+		 return textarray[n-1];
+	 else
+		 return n;
+}
+$(function(){
+	$('.home a').toggleClass("vo");
+	$('.flexslider').flexslider({
+		directionNav: true,
+		pauseOnAction: false
+	});
+	$(".signin a").click(function(){
+		$.ajax({
+			url:"{%url 'signin' %}",
+			dataType:"json",
+			success:function(ret){
+				if(ret.code==0){
+					$("div.popup1").fadeIn();
+				}
+				else if((ret.code==1)){
+					$("div.popup2").fadeIn();
+				}
+				else if(ret.code==-1){
+					alert("该页面已过期，请重新登录！");
+					window.location.href = ret.url;
+				}
+			},
+			error:function(){
+				alert("请检查网络连接");
+			}
+		});
+	});
+	$('.btn_cont button').click(function(){
+    	$(this).parent().parent().parent().parent().hide();
+    });
+	$(".index_13_nav a").eq(0).mouseenter();
+	$(".index_10").infiniteCarousel();
+});
+</script>
 </body>
 </html>

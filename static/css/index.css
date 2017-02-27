@@ -296,15 +296,6 @@
             margin: 0;
             line-height: 2;
         }
-/*.index_18 ul li{width:286px;height:365px;float:left;border-right:1px solid #eee;text-align:center;line-height:27px;font-size:13px;color:#888;position:relative;}
-.index_18 ul li.s{border:none;}
-.index_18 ul li p{margin:0;padding:0;width:137px;height:137px;line-height:137px;margin-left:80px;margin-top:26px;background: url(../images/bg-1.jpg) no-repeat;}
-.index_18 ul li p:before{content:".";margin-left:-5px;font-size:10px;visibility:hidden;}
-.index_18 ul li p:hover{background: url(../images/bg-1-hover.jpg) no-repeat;}
-.index_18 ul li p img{max-width:137px;max-height:137px;*margin-top:expression((137 - this.height )/2);vertical-align:middle;}
-.index_18 ul li h2{line-height:46px;font-size:20px;}
-.index_18 ul li h2 a{color:#3a3a3a;}
-.index_18 ul li a.more{display:block;width:89px;height:27px;text-align:center;line-height:27px;font-size:14px;color:#fff;background: url(../images/bg-7.png) no-repeat;position:absolute;bottom:26px;left:107px;}*/
 #index_20{width:1100px;height:445px;clear:both;display:inline-block;margin-top:21px;text-align:left;}
 .index_21{width:238px;height:445px;float:left;display:inline;text-align:left;background:#52c5ff url(../images/bg-4.png) no-repeat 81px 40px;position:relative;}
 .index_21 h2{line-height:27px;font-size:30px;color:#fff;position:absolute;bottom:86px;left:25px;}
@@ -313,16 +304,6 @@
 table{border-collapse:collapse;}
 .index_22{width:862px;height:445px;float:left;display:inline;text-align:left; position:relative;}
 /*理财板块改版部分*/
-/*.index_22 ul {display:none;position: absolute; float:left; width:100%; height:423px; background:#fff; margin-top:10px; border-bottom:2px solid #0090d8;}
-.index_22 ul li{width:838px;height:139px;float:left;padding-left:22px;border:1px solid #fff;}
-.index_22 ul li:hover{border-color:#52a3f4;}
-.index_22 ul li h2{line-height:60px;font-size:20px;color:#3a3a3a;}
-.index_22 ul li .lf{width:716px;}
-.index_22 ul li .lf table td{color:#000;line-height:27px;font-size:14px;}
-.index_22 ul li .lf table tr.thead td{color:#b8b8b8;line-height:38px;font-size:15px;}
-.index_22 ul li .lf table td.s1{color:#008fd7;line-height:38px;font-size:20px;font-weight:bold;}
-.index_22 ul li .lf table td.s2{color:#ff0000;}
-.index_22 ul li .rt a{display:block;width:101px;height:40px;background: url(../images/bg-5.png) no-repeat;color:#fff;line-height:40px;font-size:18px;text-align:center;margin-top:18px;margin-right:21px;}*/
 .index_22:after {
     position:absolute;
     bottom:10px;
@@ -336,9 +317,8 @@ table{border-collapse:collapse;}
     box-sizing: border-box;
     margin: 20px 0 0 10px;
     background: #52c5ff;
-    /*padding: 10px;*/
     border-radius: 8px;
-    border: 9px solid #52c5ff;
+    border: 4px solid #52c5ff;
 }
 .finance-container ul {
     padding: 0;
@@ -348,10 +328,9 @@ table{border-collapse:collapse;}
     overflow: hidden;
 }
 .item-box {
-    /*display: inline-block;*/
     position: relative;
     float: left;
-    width: 278px;
+    width: 33.33%;
     border-radius: 9px;
     position: relative;
 
@@ -380,8 +359,11 @@ table{border-collapse:collapse;}
     transform-origin: 50% 50%;
 }
 .finance-item img {
-    width: 100%;
-    height: 200px;
+    display: block;
+    height: 160px;
+    width: auto;
+    padding: 20px 0;
+    margin: 0 auto;
 }
 
 .intro .intro-content {
@@ -429,9 +411,16 @@ table{border-collapse:collapse;}
     opacity: 1;
 }
 .finance-list {
+    position: relative;
     border: 1px solid #52c5ff;
     margin-bottom: 10px;
     padding: 0 6px;
+}
+.finance-list:first-child {
+    margin-top: 10px;
+}
+.intro-content .finance-solid {
+    margin-left: -12px;
 }
 .finance-list h3 {
     line-height: 1;
@@ -474,6 +463,9 @@ table{border-collapse:collapse;}
     color: #f08519;
 }
 .to-finance {
+    position: absolute;
+    bottom: 5px;
+    right: 4px;
     height: 28px;
     line-height: 28px;
     padding: 0 12px;
@@ -484,13 +476,9 @@ table{border-collapse:collapse;}
     transition: all 0.2s ease-in;
 }
 .to-finance:hover {
-    -webkit-transform: scale(1.2);
-    transform: scale(1.2);
+    -webkit-transform: translateY(-4px);
+    transform: translateY(-4px);
 }
-
-
-
-
 
 .finance-item .intro {
     -webkit-transform: translateZ(0) rotateY(0);

@@ -615,17 +615,16 @@ padding: 6px 30px;
 margin: 4rem 0rem 1rem 54px;}
 .morest:hover{background: #CACACA;}
 
-/*理财改版修改*/
-/*.td-ti{width:1100px;height:175px;margin:2rem auto;border: 1px solid #EBEBEB;}
+.td-ti{width:1100px;height:175px;margin:2rem auto;border: 1px solid #EBEBEB;}
 .td-ti img {
   width: 258px;
   height: 148px;
-}*/
-/*.td-inimg{
+}
+.td-inimg{
   float: left;
-padding: 15px;}*/
-/*.td-tij{text-align: left;}*/
-/*.te-mo{
+padding: 15px;}
+.td-tij{text-align: left;}
+.te-mo{
   float: left;
   margin: 0rem 0rem 1rem 0rem;
   background: rgb(240, 134, 25) none repeat scroll 0% 0%;
@@ -633,7 +632,10 @@ padding: 15px;}*/
   border-radius: 20px;
   padding: 3px 13px;
   font-size: 15px;
-}*/
+}
+.te-mo+span {
+  line-height: 30px;
+}
 /*理财改版修改add-css*/
 .finance-top {
   width: 1100px;
@@ -644,17 +646,28 @@ padding: 15px;}*/
 }
 
 .finance-info {
+  height: 194px;
   padding: 14px;
-  width: 65%;
+  width: 60%;
   float: left;
   border: 1px solid #ebebeb;
 }
 
+.finance-info img {
+  float: left;
+  width: 288px;
+  height: 192px;
+  margin-right: 20px;
+}
+
 .finance-bg {
+  height: 194px;
   padding: 14px;
-  width: 25%;
+  width: 30%;
   float: right;
   border: 1px solid #ebebeb;
+  font-size: 16px;
+  line-height: 30px
 }
 
 .finance-bg p span:first-child {
@@ -662,38 +675,42 @@ padding: 15px;}*/
   width: 140px;
   margin-left: 20px;
 }
-
-.finance-logo img {
-  width: 288px;
-  height: 192px;
+.finance-bg p span:last-child {
+  display: inline-block;
+  padding: 0 20px;
+  border-radius: 15px;
+  background: #e4e4e4;
 }
 
-.finance-logo span {
-  height: 24px;
+.finance-mark {
+  font-size: 24px
+}
+.finance-mark span {
+  height: 22px;
   display: inline-block;
   padding: 0 6px;
-  margin-top: 30px;
-  margin-right: 10px;
-  color: #ff6767;
-  font-size: 14px;
-  line-height: 24px;
+  margin-left: 10px;
+  margin-top: 2px;
+  color: #fff;
+  font-size: 12px;
+  line-height: 22px;
+  background: #ff9900;
   text-align: center;
-  border: 1px solid #fb3456;
-  border-radius: 4px;
+  border-radius: 2px;
   vertical-align: top;
 }
 
 .text-box {
-  /*margin-top: 20px;*/
   position: relative;
-  line-height: 20px;
-  height: 40px;
+  margin-top: 16px;
+  line-height: 22px;
+  height: 88px;
   overflow: hidden;
 }
 
 .introduction {
   margin: 0;
-  line-height: 20px;
+  line-height: 22px;
   font-size: 14px;
 }
 
@@ -707,17 +724,79 @@ padding: 15px;}*/
   background: -webkit-linear-gradient(left, transparent, #fff 40%);
   background: linear-gradient(left, transparent, #fff 40%);
 }
+/*理财福利上传表格部分*/
+.finance-table {
+  text-align: center;
+}
+.finance-table span{
+  display: inline-block;
+  line-height: 50px;
+}
+.table-head span {
+  font-size: 1.2rem;
+  color: #333;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ebebeb;
+}
+.table-list span {
+  font-size: 1rem;
+  color: #777;
+  border-bottom: 1px solid #efefef;
+}
+.table-list:last-child  span {
+  border-bottom: none;
+}
+.table-head span:nth-child(1),
+.table-list span:nth-child(1){
+  width: 23%;
+}
+.table-head span:nth-child(2),
+.table-list span:nth-child(2){
+  width: 20%;
+}
+.table-head span:nth-child(3),
+.table-list span:nth-child(3){
+  width: 30%;
+}
+.table-head span:nth-child(4),
+.table-list span:nth-child(4){
+  width: 27%;
+}
 
+.taste-btn {
+  margin-top: 16px;
+}
+.contact-box {
+  text-align: left;
+}
 .taste-btn button,
 .contact {
   display: inline-block;
   border: none;
-  padding: 10px;
-  margin-right: 10px;
+  padding: 10px 20px;
+  margin-right: 20px;
+  font-size: 15px;
   text-decoration: none;
-  background-color: #ebebeb;
-  color: #333;
+  background-color: #f08519;
+  color: #fff;
   border-radius: 4px;
+  transition: all 0.4s ease;
+}
+.contact {
+  background-position: 4px center;
+  background-repeat: no-repeat;
+  padding-left: 30px;
+  background-size: auto 50%;
+}
+.contact-qq {
+  background-image: url(../images/contact-qq.png);
+}
+.contact-kefu {
+  background-image: url(../images/contact-kefu.png);
+}
+.taste-btn button:hover,
+.contact:hover {
+  background-color: #ea7a07;
 }
 .finance-popup div {
   margin-left: 0;
@@ -769,7 +848,7 @@ canvas{width: 100%;border: 1px solid #000000;}
 }
 .popup-content {
   padding: 15px 40px 30px;
-  margin: 15% auto 0;
+  margin: 8% auto 0;
   width: 600px;
   text-align: center;
   background-color: #fff;
@@ -1035,9 +1114,10 @@ padding-left: 7px;}
 }
 .task-remark {float: none;margin: 20px 0px 0px 256px;}
 .clearboth{clear:both}
+.finance-cancel,
 .td-tj{
 /*float: left;*/
-margin: 1rem auto;
+margin: 1rem 50px;
 background: rgb(240, 134, 25) none repeat scroll 0% 0%;
 color: rgb(255, 255, 255);
 border-radius: 20px;
@@ -1075,16 +1155,18 @@ color: #393939;
 padding: 10px 0px 10px 15px;}
 /*理财福利改版*/
 .lc-h2 span {
-  height: 24px;
+  height: 22px;
   display: inline-block;
   padding: 0 6px;
-  color: #ff6767;
+  color: #fff;
   margin-left: 10px;
-  font-size: 14px;
-  line-height: 24px;
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 22px;
+  background: #ff9900;
   text-align: center;
-  border: 1px solid #fb3456;
-  border-radius: 4px;
+  border-radius: 2px;
+  vertical-align: top;
 }
 /*理财福利改版————end*/
 .lo-span{width: 14%;

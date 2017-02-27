@@ -761,9 +761,11 @@ def get_user_coupon_page(request):
         i = {"title":project.title,
              "amount":project.amount,
              "introduction":project.introduction,
-             "url":project.exp_url,
+             "url":project.exp_code.url if project.isonMobile else "",
+             "isonMobile": 1 if project.isonMobile else 0,
              'endtime':project.endtime,
              'id':con.id,
+             "pro_id":project.id,
              'code':con.exchange_code
         }
         data.append(i)

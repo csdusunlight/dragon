@@ -184,7 +184,7 @@ def exp_welfare_openwindow(request):
     model = globals()[wel_type]
     wel = model.objects.get(id=wel_id)
     update_view_count(wel)
-    url = wel.exp_url
+    url = wel.exp_url_pc
     js = "<script>window.location.href='"+url+"';</script>"
     if wel_type == "Task" and not wel.is_forbidden:
         obj, created = UserTask.objects.get_or_create(user=request.user, task=wel)

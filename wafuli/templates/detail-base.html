@@ -30,7 +30,6 @@
 <body>
  {% include "header.html" %}
 <div id="content">
-  <div><a href="{{news.advert.url}}"><img src="{{news.advert.pic.url}}"  class="co-imgp"/></a></div>
   <p>当前位置：<span><a href="{% url 'index' %}">挖福利</a> > <a href="{{news.get_type_url}}">{{news.get_type}}</a>
    > <a href="">{{news.title}}</a></span></p>
 	{% block expblock %}
