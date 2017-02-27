@@ -61,14 +61,14 @@
 #online li a:hover { color:#fff;}
 #online li.qq {background: url(../images/contact-kefu.png) center center/90% auto no-repeat;}
 #online li.weixin {background: url(../images/contact-qq.png) center center/90% auto no-repeat;}
-
+#online li.top {background: transparent;}
 #online li.qq:hover {background-image: none;}
 #online li.weixin:hover {background-image: none;}
 .qq span,
 .weixin span,
 .top span {display: none;margin-top: 10px;font-size: 20px;}
-.top:after {
-  content: ""
+.top a:after {
+  content: "";
   display:block;
   position: absolute;
   width: 50px;
@@ -77,7 +77,7 @@
   border-right: 2px solid #fff;
   transform: rotate(45deg);
 }
-.tops:hover:after {
+.top:hover a:after {
   display: none;
 }
 .qq:hover span,
