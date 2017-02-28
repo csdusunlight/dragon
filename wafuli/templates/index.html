@@ -11,6 +11,17 @@
 <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}" />
 <link rel="stylesheet" type="text/css" href="{% static "css/index.css" %}" />
 <link rel="stylesheet" type="text/css" href="{% static "css/dialog.css" %}" />
+<script type="text/javascript" src="{% static "js/jquery-1.11.2.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.flexslider-min.js" %}"></script>
+<script>
+var textarray=[];
+function getText(n) {
+	 if (textarray[n-1])
+		 return textarray[n-1];
+	 else
+		 return n;
+}
+</script>
 </head>
 <body>
 {% include "header.html" %}
@@ -413,9 +424,6 @@
       {%endfor%}
       </ul>
     </div>
-    <script type="text/javascript">
-    new Marquee(["scroll","ulscroll"],0,1,298,356,20,0,0);
-    </script>
   </div>
 </div>
   <div id="index_32">
@@ -489,25 +497,17 @@
         </div>
     </div>
   </div>
- <script type="text/javascript" src="{% static "js/jquery-1.11.2.min.js" %}"></script>
-<script type="text/javascript" src="{% static "js/jquery.flexslider-min.js" %}"></script>
 <script type="text/javascript" src="{% static "js/jQuery.infiniteCarousel.js" %}"></script>
 <script type="text/javascript" src="{% static "js/MSClass.js" %}"></script>
 <script type="text/javascript" src="{% static "js/define.js" %}"></script>
 <script type="text/javascript">
-var textarray=[];
-function getText(n) {
-	 if (textarray[n-1])
-		 return textarray[n-1];
-	 else
-		 return n;
-}
 $(function(){
 	$('.home a').toggleClass("vo");
 	$('.flexslider').flexslider({
 		directionNav: true,
 		pauseOnAction: false
 	});
+    new Marquee(["scroll","ulscroll"],0,1,298,356,20,0,0);
 	$(".signin a").click(function(){
 		$.ajax({
 			url:"{%url 'signin' %}",
