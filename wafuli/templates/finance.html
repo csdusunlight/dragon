@@ -24,7 +24,7 @@ var data='[data]<li class="lc-li">'+
 	'<span class="lo-spans"><p>起投金额</p><p style="color:#111;line-height:50px;">{amount}</p></span>'+
 	'<span class="lo-spans"><p>标期长度</p><p style="color:#111;line-height: 50px;">{time}</p></span>'+
 	'<span class="lo-spans"><p>补贴收益</p><p style="color:#FE0000;line-height: 50px;">+{benefit}</p></span>'+
-	'<span class="lo-spans"><p>综合年化收益</p><p style="color:#FE0000;line-height: 50px;">+{scores}</p></span>'+
+	'<span class="lo-spans"><p>综合年化收益</p><p style="color:#FE0000;line-height: 50px;">{scores}</p></span>'+
 	'<span style="float: right;"><a target="_blank" href="{url}" class="lo-ap">立即投资</a></span></li>[/data]';
 var data2='[data]<li class="lc-li">'+
 	'<h2 class="lc-h2">{title}{marks}</h2>'+
@@ -32,7 +32,7 @@ var data2='[data]<li class="lc-li">'+
 	'<span class="lo-spans"><p>起投金额</p><p style="color:#111;line-height:50px;">{amount}</p></span>'+
 	'<span class="lo-spans"><p>标期长度</p><p style="color:#111;line-height: 50px;">{time}</p></span>'+
 	'<span class="lo-spans"><p>补贴收益</p><p style="color:#FE0000;line-height: 50px;">+{benefit}</p></span>'+
-	'<span class="lo-spans"><p>综合年化收益</p><p style="color:#FE0000;line-height: 50px;">+{scores}</p></span>'+
+	'<span class="lo-spans"><p>综合年化收益</p><p style="color:#FE0000;line-height: 50px;">{scores}</p></span>'+
 	'<span style="float: right;"><a target="_blank" href="{url}" class="lo-ape">查看详情</a></span></li>[/data]';
 var url = "{% url 'get_finance_page' %}" + "?page={page}&size={pageSize}&";
 function pagecallback(){
