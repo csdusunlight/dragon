@@ -291,69 +291,7 @@
           	<img src="{% static 'images/ico5.png' %}" class="ico1" />
             <img src="{% static 'images/ico6.png' %}" class="ico3" />
       </div>
-      <!-- <ul style="display: block;">
-{% for news in finance_list %}
-        <li>
-          <h2>{{news.title}}
-          {% if news.is_new %}
-          	<img src="{% static 'images/new_cont.png' %}" class="new_cont" />
-          {% endif %}
-          </h2>
 
-          <div class="lf" text-align="center">
-          <table width="100%" cellpadding="0" cellspacing="0">
-            <tr class="thead">
-              <td width=140px>官网利息</td>
-              <td width=140px>起投金额</td>
-              <td width=140px>标期长度</td>
-              <td width=140px>补贴收益</td>
-              <td width=140px>赠送积分</td>
-            </tr>
-            <tr>
-              <td class="s1">{{news.interest}}</td>
-              <td>{{news.amount_to_invest}}元</td>
-              <td>{{news.investTime}}</td>
-              <td class="s2">+{{news.benefit}}</td>
-              <td class="s2">+{{news.scrores}}</td>
-            </tr>
-          </table>
-          </div>
-          <div class="rt"><a target="_blank" href="{{news.url}}">立即投资</a></div>
-        </li>
-{% endfor %}
-      </ul> -->
-
-      <!-- <ul style="display: block;">
-		{% for news in finance_list %}
-        <li>
-          <h2>{{news.title}}
-          {% if news.is_new %}
-          	<img src="{% static 'images/new_cont.png' %}" class="new_cont" />
-          {% endif %}
-          </h2>
-
-          <div class="lf" text-align="center">
-          <table width="100%" cellpadding="0" cellspacing="0">
-            <tr class="thead">
-              <td width=140px>官网利息</td>
-              <td width=140px>起投金额</td>
-              <td width=140px>标期长度</td>
-              <td width=140px>补贴收益</td>
-              <td width=140px>赠送积分</td>
-            </tr>
-            <tr>
-              <td class="s1">{{news.interest}}</td>
-              <td>{{news.amount_to_invest}}元</td>
-              <td>{{news.investTime}}</td>
-              <td class="s2">+{{news.benefit}}</td>
-              <td class="s2">+{{news.scrores}}</td>
-            </tr>
-          </table>
-          </div>
-          <div class="rt"><a target="_blank" href="{{news.url}}">立即投资</a></div>
-        </li>
-{% endfor %}
-      </ul> -->
       <div class="finance-container">
         <ul>
           <li class="item-box">
@@ -361,11 +299,10 @@
               <div class="intro">
                 <div class="intro-content">
                   <h3>新手投资</h3>
-                  <p>项目期限：90-270天</p>
-                  <p>年化利率：9-12%</p>
+                  <p>关键词：风险低，收益合理</p>
                   <img src="{% static 'images/finance-new.png' %}" alt="img">
                 </div>
-                <p>适合人群：刘礼沂</p>
+                <p>适宜人群：初次接触网贷人群</p>
               </div>
               <div class="info">
               {%for news in finance_list1%}
@@ -385,11 +322,10 @@
               <div class="intro">
                 <div class="intro-content">
                   <h3>稳健投资</h3>
-                  <p>项目期限：90-270天</p>
-                  <p>年化利率：9-12%</p>
+                  <p>关键词：项目安全、收益靠谱</p>
                   <img class="finance-solid" src="{% static 'images/finance-solid.png' %}" alt="img">
                 </div>
-                <p>适合人群：苏莉萍</p>
+                <p>适宜人群：高净值人群</p>
               </div>
               <div class="info">
                 {%for news in finance_list2%}
@@ -409,11 +345,10 @@
               <div class="intro">
                 <div class="intro-content">
                   <h3>高收益区</h3>
-                  <p>项目期限：90-270天</p>
-                  <p>年化利率：9-12%</p>
+                  <p>关键词：风险高、收益高</p>
                   <img src="{% static 'images/finance-profit.png' %}" alt="img">
                 </div>
-                <p>适合人群：蒋宗洋</p>
+                <p>适宜人群：能接受一定投资风险</p>
               </div>
               <div class="info">
                 {%for news in finance_list3%}
@@ -531,7 +466,7 @@
   {% include "footer.html" %}
   <!--浮动窗口-->
   {% include "outline.html" %}
-  
+
 <div class="popup1" style="display:none;">
   	<div class="w698_box">
     	<div class="pop_left">
