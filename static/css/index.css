@@ -374,14 +374,15 @@ table{border-collapse:collapse;}
 }
 .intro-content h3 {
     margin: 0;
-    line-height: 30px;
+    font-size: 20px;
+    line-height: 40px;
     text-align: center;
     color: #fff;
     background-color: #52c5ff;
 }
 .intro-content p {
     text-align: center;
-    margin: 30px 0;
+    margin: 24px 0;
 }
 .intro>p {
     margin: 0;
