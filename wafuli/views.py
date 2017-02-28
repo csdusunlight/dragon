@@ -34,9 +34,9 @@ def index(request):
             wel.left_count = wel.coupons.filter(user__isnull=True).count()
         else:
             wel.left_count = u"充足"
-    finance_list1 = Finance.objects.filter(state='1', f_type='1')[0:3]
-    finance_list2 = Finance.objects.filter(state='1', f_type='2')[0:3]
-    finance_list3 = Finance.objects.filter(state='1', f_type='3')[0:3]
+    finance_list1 = Finance.objects.filter(state__in=['1','2'], f_type='1').order_by("state","-news_priority","-pub_date")[0:3]
+    finance_list2 = Finance.objects.filter(state__in=['1','2'], f_type='2').order_by("state","-news_priority","-pub_date")[0:3]
+    finance_list3 = Finance.objects.filter(state__in=['1','2'], f_type='3').order_by("state","-news_priority","-pub_date")[0:3]
     news_list = Activity.objects.filter(is_hidden=False)[0:2]
     exchange_list = ExchangeRecord.objects.all()[0:10]
     strategy_list = Press.objects.filter(type='2')[0:6]
@@ -473,7 +473,7 @@ def get_finance_page(request):
              "interest":con.interest,
              "amount":con.amount_to_invest,
              "time":con.investTime,
-             "scores":con.scrores,
+             "revenue":con.revenue,
              "benefit":con.benefit,
              "url":con.url,
              "is_new":'new' if con.is_new() else '',
