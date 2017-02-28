@@ -313,14 +313,15 @@ table{border-collapse:collapse;}
     background-color:#52c5ff;
 }
 .finance-container {
-    width: 852px;
+    width: 851px;
     box-sizing: border-box;
-    margin: 20px 0 0 10px;
+    margin: 20px 0 0 13px;
     background: #52c5ff;
     border-radius: 8px;
     border: 4px solid #52c5ff;
 }
 .finance-container ul {
+    width: 843px;
     padding: 0;
     margin: 0;
     background-color: #fff;
@@ -330,7 +331,7 @@ table{border-collapse:collapse;}
 .item-box {
     position: relative;
     float: left;
-    width: 33.33%;
+    width: 281px;
     border-radius: 9px;
     position: relative;
 
