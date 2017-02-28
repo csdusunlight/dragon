@@ -64,10 +64,10 @@
 #online li.top {background: #f08519;}
 #online li.qq:hover {background-image: none;}
 #online li.weixin:hover {background-image: none;}
-.qq span,
-.weixin span,
-.top span {display: none;margin-top: 6px;font-size: 12px;}
-.top a:after {
+#online .qq span,
+#online .weixin span,
+#online .top span {display: none;margin-top: 6px;font-size: 12px;}
+#online .top a:after {
   content: "";
   display:block;
   position: absolute;
@@ -79,12 +79,12 @@
   border-right: 3px solid #fff;
   transform: rotate(-45deg);
 }
-.top:hover a:after {
+#online .top:hover a:after {
   display: none;
 }
-.qq:hover span,
-.weixin:hover span,
-.top:hover span {display: block;}
+#online .qq:hover span,
+#online .weixin:hover span,
+#online .top:hover span {display: block;}
 #online li.top{position:static;}
 .box_in { float:left; width:912px; height:auto; background:url(../images/newback1.png) no-repeat right; padding-right:2px; box-sizing:border-box;}
 .frcont { float:right; width:175px; height:auto; margin-top:23px;}
