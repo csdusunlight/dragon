@@ -479,8 +479,13 @@ table{border-collapse:collapse;}
     transition: all 0.2s ease-in;
 }
 .to-finance:hover {
-    -webkit-transform: translateY(-4px);
     transform: translateY(-4px);
+}
+.to-finance-disabled {
+    background-color: #ddd;
+}
+.to-finance-disabled:hover {
+    transform: none;
 }
 
 .finance-item .intro {
