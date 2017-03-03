@@ -115,14 +115,11 @@ $.ajaxSetup({
             $(".Password-modify4").css("display", "none")
         })
 
-        // 审核拒绝原因弹窗
-        $("review-refuse").click(function () {
-            alert("审未通过原因");
-        })
-        // $('.Content').on('click','.review-refuse',function(){
-        //       alert('审未通过原因');
-        //   });
     })
+    // 审核拒绝原因弹窗
+      $('#content').on('click','.review-refuse',function(){
+          alert('审未通过原因');
+      });
 </script>
 </head>
 <body>

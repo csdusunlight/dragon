@@ -124,7 +124,7 @@ td {white-space:nowrap;overflow:hidden;}
   line-height: 1.2;
 }
 .review-refuse {
-  color: #ff6767;
+  color: #ff6767 !important;
   text-decoration: underline;
   cursor: pointer;
 }
