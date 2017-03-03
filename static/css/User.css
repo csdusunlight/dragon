@@ -126,6 +126,7 @@ td {white-space:nowrap;overflow:hidden;}
 .review-refuse {
   color: #ff6767;
   text-decoration: underline;
+  cursor: pointer;
 }
 /*体验福利图片改版部分*/
 #pagedata1 tbody {
