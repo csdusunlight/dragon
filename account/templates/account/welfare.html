@@ -26,7 +26,7 @@ var data3 = '<table width="100%"><thead><tr><th width="20%">项目</th><th width
 	+ '</tbody></table>';
 var data2 = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="20%">提交手机号</th>'+
 	'<th width="20%">提交时间</th><th width="20%">状态</th><th width="20%">拒绝原因</th></tr></thead><tbody>'+
-	'[data]<tr><td>{title}</td><td>{username}</td><td>{time}</td><td>{state}</td><td>{reason}</td></tr>[/data]'
+	'[data]<tr><td>{title}</td><td>{username}</td><td>{time}</td><td>{state}</td><td class="refuse-reason">{reason}</td></tr>[/data]'
 	+ '</tbody></table>';
 var turl = "{% url 'get_user_wel_page' %}" + "?tpage={page}&size={pageSize}&filter=";
 var furl = "{% url 'get_user_wel_page' %}" + "?fpage={page}&size={pageSize}&filter=";

@@ -118,6 +118,15 @@ td {white-space:nowrap;overflow:hidden;}
 .Welfare-td th { font-weight:400; font-size:16px; color:#666666;  background:#f8f8f8; text-align:center; border-top:1px solid #fff;}
 .Welfare-td tr th {height:44px; line-height:44px;}
 .Welfare-td tr td { font-size:14px; color:#afafaf; height:44px; line-height:44px;}
+/*审核拒绝提示部分*/
+.Welfare td.refuse-reason {
+  white-space: normal;
+  line-height: 1.2;
+}
+.review-refuse {
+  color: #ff6767;
+  text-decoration: underline;
+}
 /*体验福利图片改版部分*/
 #pagedata1 tbody {
   position: relative;

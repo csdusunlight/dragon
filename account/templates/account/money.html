@@ -20,7 +20,7 @@ var data1 = '<table width="100%"><thead><tr><th width="25%" height="44">项目</
 var data2 = '<table width="100%"><thead><tr><th width="25%" height="44">项目</th>' +
 '<th width="30%">福币(个)</th><th width="25%">申请时间</th><th width="20%">提现状态</th></tr></thead><tbody>'+
 '[data]<tr><td height="48">{item}</td><td>{amount}</td><td>{time}</td>' +
-'<td>{state}</td></tr>[/data]' + '</tbody></table>';
+'<td class="review-refuse">{state}</td></tr>[/data]' + '</tbody></table>';
 var url = "{% url 'get_user_money_page' %}" + "?page={page}&size={pageSize}&filter=";
 function emptydisplay(obj){
 	pic_url = "{%static 'images/picin.png' %}";
@@ -57,6 +57,11 @@ $(function(){
 			});
 		}
 	});
+
+    // 审核拒绝原因弹窗
+    $('.Content').on('click','.review-refuse',function(){
+        alert('审未通过原因');
+    });
 });
 </script>
 </head>

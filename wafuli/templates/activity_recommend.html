@@ -25,7 +25,7 @@ var data = '<table class="mytable" id="tb1"><tr class="mytable1">'+
 '<td style="width: 150px;">提交时间</td><td style="width: 250px;">活动主题</td><td style="width: 250px;">活动链接</td>'+
 '<td style="width: 220px;">推荐理由</td><td style="width: 100px;">审核结果</td>'+
 '</tr>[data]<tr><td>{date}</td><td>{title}</td><td>{url}</td><td>{reason}</td>'+
-'<td class="mycheck">{result}</td></tr>[/data]</table>';
+'<td class="review-refuse">{result}</td></tr>[/data]</table>';
 var data2 = '<table class="mytable3" id="tb2"><tr class="mytable1">'+
 '<td>用户名</td><td>通过审核数</td><td>当前排名（月度）</td><td>奖励福币</td>'+
 '</tr>[data]<tr><td>{username}</td><td>{num}</td><td>{rank}</td>'+
@@ -47,7 +47,7 @@ $.ajaxSetup({
         $("#tb1_click").click(function () {
         	$("#page").empty();
             $("#pagedata").ajaxPage({
-        	    url:url, 
+        	    url:url,
         	    pageId:$("#page"),
         	    pageSize:3,
         	    run:true,
@@ -58,7 +58,7 @@ $.ajaxSetup({
         $("#tb2_click").click(function () {
         	$("#page").empty();
         	$("#pagedata").ajaxPage({
-        	    url:url2, 
+        	    url:url2,
         	    pageId:$("#page"),
         	    pageSize:3,
         	    run:true,
@@ -114,6 +114,11 @@ $.ajaxSetup({
         $("input.close").click(function () {
             $(".Password-modify4").css("display", "none")
         })
+
+        // 审核拒绝原因弹窗
+      $('.Content').on('click','.review-refuse',function(){
+          alert('审未通过原因');
+      });
     })
 </script>
 </head>
@@ -245,7 +250,7 @@ $.ajaxSetup({
         </div>
         <!--底部-->
   {% include "footer.html" %}
-  <!--浮动窗口-->  
+  <!--浮动窗口-->
   {% include "outline.html" %}
 </body>
 </html>

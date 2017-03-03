@@ -26,7 +26,7 @@ var data3 = '<table width="100%"><thead><tr><th width="80">类型</th><th width=
 '</th><th width="130">优惠券面值</th><th width="140">提交手机号</th><th width="175">'+
 '提交时间</th><th width="100">状态</th><th>备注</th></tr></thead><tbody>'+
 '[data]<tr><td>现金券</td><td>{title}</td><td>{amount}</td><td>{account}</td>'+
-'<td>{time}</td><td>{state}</td><td>{remark}</td></tr>[/data]'+
+'<td>{time}</td><td class="review-refuse">{state}</td><td>{remark}</td></tr>[/data]'+
 '</tbody></table>';
 var url = "{% url 'get_user_coupon_page' %}" + "?page={page}&size={pageSize}&filter=";
 var url2 = "{% url 'get_user_coupon_exchange_detail' %}" + "?page={page}&size={pageSize}";
@@ -129,6 +129,10 @@ $(function(){
     $(".popup-box ").removeClass("in ");
   });
 
+  // 审核拒绝原因弹窗
+  $('.Content').on('click','.review-refuse',function(){
+      alert('审未通过原因');
+  });
 });
 </script>
 </head>
