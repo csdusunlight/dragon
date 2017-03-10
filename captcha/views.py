@@ -186,6 +186,5 @@ def imageV_notDelete(key, response):
     try:
         cap = CaptchaStore.objects.get(response=response.lower(), hashkey=key, expiration__gt=get_safe_now())
     except CaptchaStore.DoesNotExist:
-        cap.delete()
         return -1
     return 0

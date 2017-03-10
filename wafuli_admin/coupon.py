@@ -218,7 +218,7 @@ def admin_coupon(request):
         
         
         if res['code'] == 0:
-            admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='8')
+            admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='10')
             if translist:
                 translist.admin_event = admin_event
                 translist.save(update_fields=['admin_event'])
@@ -304,7 +304,7 @@ def get_admin_coupon_page(request):
         coupon = con.content_object
         i = {"username":con.user.username,
              "mobile":con.user.mobile,
-             "type":coupon.project.get_type_display(),
+             "type":coupon.project.get_ctype_display(),
              "company":coupon.project.provider,
              "project":coupon.project.title,
              "mobile_sub":con.invest_account,
