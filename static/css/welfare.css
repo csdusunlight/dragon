@@ -685,8 +685,8 @@ padding: 15px;}
 .finance-mark {
   font-size: 24px;
 }
-.finance-mark h3 {
-  font-size: 24px;
+.finance-mark b {
+  font-weight: normal;
   float: left;
   padding-bottom: 8px;
 }

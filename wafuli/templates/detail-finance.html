@@ -131,7 +131,7 @@
     <div class="finance-info">
         <img src="{{news.pic.url}}" />
         <p class="finance-mark">
-          <h3>{{news.title}}</h3>
+          <b>{{news.title}}</b>
          {% for mark in news.marks.all|slice:":3" %}
           	<span>{{mark.name}}</span>
          {% endfor %}
