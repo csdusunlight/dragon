@@ -94,8 +94,7 @@ a { cursor:pointer;}
 .Crite-box td input[type="datetime-local"]:hover { background:none;}
 .Crite-box td input[type="datetime-local"]:focus { background:none;}
 .Crite-box td input[type="text"],
-.Crite-box td input[type="date"]{ width:60%; margin-left:1%; height:28px; border:1px solid #4daa84; outline:none; padding:0 5px; box-sizing:border-box; vertical-align:middle;}
-.Crite-box td input[type="date"]{width:60%;}
+.Crite-box td input[type="date"]{ width:58%; margin-left:1%; height:28px; border:1px solid #4daa84; outline:none; padding:0 5px; box-sizing:border-box; vertical-align:middle;}
 .Crite-box td select{ width:60%; margin-left:1%; height:28px; border:1px solid #4daa84; outline:none; padding:0 5px; box-sizing:border-box; vertical-align:middle;}
 .Submit-in { float:left; width:100%; height:auto; text-align:right; padding:10px 0;}
 .Submit-in input{ width:10%; height:30px; border:1px solid #1377aa; color:#fff; font-size:16px; color:#fff; padding:0 40px 0 0; box-sizing:border-box; min-width:80px; margin:0 7px;}
