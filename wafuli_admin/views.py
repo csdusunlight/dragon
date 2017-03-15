@@ -1175,7 +1175,7 @@ def get_admin_investrecord_page(request):
     data = []
     for con in contacts:
         i = {
-             "invest_date":con.invest_date.strftime("%Y-%m-%d"),
+             "invest_date": con.invest_date.strftime("%Y-%m-%d") if con.invest_date else '',
              'invest_company':con.invest_company,
              'qq_number':con.qq_number,
              "user_name":con.user_name,
