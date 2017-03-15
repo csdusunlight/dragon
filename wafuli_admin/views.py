@@ -1142,8 +1142,8 @@ def get_admin_investrecord_page(request):
     startTime = request.GET.get("startTime", None)
     endTime = request.GET.get("endTime", None)
     if startTime and endTime:
-        s = datetime.date.strptime(startTime,'%Y-%m-%d')
-        e = datetime.date.strptime(endTime,'%Y-%m-%d')
+        s = datetime.datetime.strptime(startTime,'%Y-%m-%d')
+        e = datetime.datetime.strptime(endTime,'%Y-%m-%d')
         item_list = item_list.filter(invest_date__range=(s,e))
     amountfrom = request.GET.get("amountfrom", None)
     amountto = request.GET.get("amountto", None)
