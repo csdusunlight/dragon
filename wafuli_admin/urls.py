@@ -25,4 +25,7 @@ urlpatterns = [
     
     url(r'^admin_charge/$', 'wafuli_admin.views.admin_charge', name='admin_charge'),
     url(r'^chargepage/$', 'wafuli_admin.views.get_admin_charge_page', name='get_admin_charge_page'),
+    
+    url(r'^admin_investrecord/$', 'wafuli_admin.views.admin_investrecord', name='admin_investrecord'),
+    url(r'^investrecordpage/$', 'wafuli_admin.views.get_admin_investrecord_page', name='get_admin_investrecord_page'),
 ]

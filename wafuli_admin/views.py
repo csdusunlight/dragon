@@ -1053,7 +1053,7 @@ def get_admin_charge_page(request):
     user = request.user
     if not ( user.is_authenticated() and user.is_staff):
         res['code'] = -1
-        res['url'] = reverse('admin:login') + "?next=" + reverse('admin_finance')
+        res['url'] = reverse('admin:login') + "?next=" + reverse('admin_charge')
         return JsonResponse(res)
     page = request.GET.get("page", None)
     size = request.GET.get("size", 10)
@@ -1105,6 +1105,86 @@ def get_admin_charge_page(request):
              "reason": con.reason,
              "remark": con.remark,
              "admin_user":u'无' if not con.admin_event else con.admin_event.admin_user.username,
+             }
+        data.append(i)
+    if data:
+        res['code'] = 1
+    res["pageCount"] = paginator.num_pages
+    res["recordCount"] = item_list.count()
+    res["data"] = data
+    return JsonResponse(res)
+
+def admin_investrecord(request):
+    admin_user = request.user
+    if request.method == "GET":
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            return redirect(reverse('admin:login') + "?next=" + reverse('admin_investrecord'))
+        return render(request,"admin_investrecord.html")
+def get_admin_investrecord_page(request):
+    res={'code':0,}
+    user = request.user
+    if not ( user.is_authenticated() and user.is_staff):
+        res['code'] = -1
+        res['url'] = reverse('admin:login') + "?next=" + reverse('admin_investrecord')
+        return JsonResponse(res)
+    page = request.GET.get("page", None)
+    size = request.GET.get("size", 10)
+    try:
+        size = int(size)
+    except ValueError:
+        size = 10
+
+    if not page or size <= 0:
+        raise Http404
+    item_list = []
+
+    item_list = Invest_Record.objects.all()
+    startTime = request.GET.get("startTime", None)
+    endTime = request.GET.get("endTime", None)
+    if startTime and endTime:
+        s = datetime.date.strptime(startTime,'%Y-%m-%d')
+        e = datetime.date.strptime(endTime,'%Y-%m-%d')
+        item_list = item_list.filter(invest_date__range=(s,e))
+    amountfrom = request.GET.get("amountfrom", None)
+    amountto = request.GET.get("amountto", None)
+    if amountfrom and amountto:
+        af = request.GET.get("amountfrom", 0)
+        at = request.GET.get("amountto", 0)
+        item_list = item_list.filter(invest_amount__range=(af,at))
+    username = request.GET.get("username", None)
+    if username:
+        item_list = item_list.filter(user_name=username)
+    
+    mobile = request.GET.get("mobile", None)
+    if mobile:
+        item_list = item_list.filter(invest_mobile=mobile)
+        
+    projectname = request.GET.get("projectname", None)
+    if projectname:
+        item_list = item_list.filter(invest_company__contains=projectname)
+    
+    paginator = Paginator(item_list, size)
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+    # If page is not an integer, deliver first page.
+        contacts = paginator.page(1)
+    except EmptyPage:
+    # If page is out of range (e.g. 9999), deliver last page of results.
+        contacts = paginator.page(paginator.num_pages)
+    data = []
+    for con in contacts:
+        i = {
+             "invest_date":con.invest_date.strftime("%Y-%m-%d"),
+             'invest_company':con.invest_company,
+             'qq_number':con.qq_number,
+             "user_name":con.user_name,
+             "zhifubao":con.zhifubao,
+             "invest_mobile":con.invest_mobile,
+             'invest_period':con.invest_period,
+             'invest_amount':con.invest_amount,
+             'return_amount':con.return_amount,
+             'wafuli_account':con.wafuli_account,
              }
         data.append(i)
     if data:
