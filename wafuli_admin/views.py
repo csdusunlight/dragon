@@ -15,6 +15,7 @@ from wafuli_admin.models import DayStatis, Invest_Record
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import logout as auth_logout
+from account.varify import send_multimsg_bydhst
 # Create your views here.
 logger = logging.getLogger('wafuli')
 def index(request):
@@ -165,7 +166,6 @@ def admin_finance(request):
             try:
                 cash = float(cash)*100
                 cash = int(cash)
-                print cash
                 score = int(score)
             except:
                 res['code'] = -2
@@ -1192,4 +1192,63 @@ def get_admin_investrecord_page(request):
     res["pageCount"] = paginator.num_pages
     res["recordCount"] = item_list.count()
     res["data"] = data
+    return JsonResponse(res)
+
+def send_multiple_msg(request):
+    res={'code':0,}
+    user = request.user
+    content = request.POST.get('content')
+    if not ( user.is_authenticated() and user.is_staff):
+        res['code'] = -1
+        res['url'] = reverse('admin:login') + "?next=" + reverse('admin_investrecord')
+        return JsonResponse(res)
+    if not user.has_admin_perms('007'):
+        res['code'] = -5
+        res['res_msg'] = u'您没有操作权限！'
+        return JsonResponse(res)
+    if not content or len(content)==0:
+        res['code'] = -6
+        res['res_msg'] = u'短信内容不能为空！'
+        return JsonResponse(res)
+    item_list = Invest_Record.objects.all()
+    startTime = request.POST.get("startTime", None)
+    endTime = request.POST.get("endTime", None)
+    if startTime and endTime:
+        s = datetime.datetime.strptime(startTime,'%Y-%m-%d')
+        e = datetime.datetime.strptime(endTime,'%Y-%m-%d')
+        item_list = item_list.filter(invest_date__range=(s,e))
+    amountfrom = request.POST.get("amountfrom", None)
+    amountto = request.POST.get("amountto", None)
+    if not amountfrom is None and not amountto is None:
+        item_list = item_list.filter(invest_amount__range=(amountfrom,amountto))
+    username = request.POST.get("username", None)
+    if username:
+        item_list = item_list.filter(user_name=username)
+    
+    mobile = request.POST.get("mobile", None)
+    if mobile:
+        item_list = item_list.filter(invest_mobile=mobile)
+        
+    projectname = request.POST.get("projectname", None)
+    if projectname:
+        item_list = item_list.filter(invest_company__contains=projectname)
+    phone_set = set([])
+    for item in item_list:
+        phone = item.invest_mobile
+        if phone and len(phone)==11:
+            phone_set.add(phone)
+    if len(phone_set)>0:
+        phone_list = list(phone_set)
+        phones = ','.join(phone_list)
+        logger.info("Sending mobile messages to users:" + phones + "; content:" + content);
+        reg = send_multimsg_bydhst(phones, content)
+        if reg==0:
+            res['code'] = 0
+            res['num'] = len(phone_set)
+        else:
+            res['code'] = reg
+            res['res_msg'] = u"发送短信失败，错误码：" + str(reg)
+    else:
+        res['code'] = 0
+        res['res_msg'] = u"不存在符合条件的手机号码"
     return JsonResponse(res)

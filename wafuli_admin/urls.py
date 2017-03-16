@@ -28,4 +28,5 @@ urlpatterns = [
     
     url(r'^admin_investrecord/$', 'wafuli_admin.views.admin_investrecord', name='admin_investrecord'),
     url(r'^investrecordpage/$', 'wafuli_admin.views.get_admin_investrecord_page', name='get_admin_investrecord_page'),
+    url(r'^send_multiple_msg/$', 'wafuli_admin.views.send_multiple_msg', name='send_multiple_msg'),
 ]
