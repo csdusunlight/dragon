@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block js %}
-<script type="text/javascript"> 
+<script type="text/javascript">
 $.ajaxSetup({
     data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
 });
@@ -17,13 +17,13 @@ $(document).ready(function(){
 	$("li.home13").toggleClass("on");
 	$(".Tin-table tr:even").css("background-color","#fcfcfc");
 	$("#pagedata").ajaxPage({
-	    url:url, 
+	    url:url,
 	    pageId:$("#page"),
 	    pageSize:10,
 	    run:true,
 	    content:data,
 	});
-	
+
 	$("#search").click(function(){
 		var startTime = $("#startTime").val();
 		var endTime = $("#endTime").val();
@@ -46,14 +46,14 @@ $(document).ready(function(){
 		if(mobile){
 			newurl += "&mobile="+mobile;
 		}
-	
+
 		var projectname = $("#projectname").val();
 		if(projectname){
 			newurl += "&projectname="+adminname;
 		}
 		$("#page").empty();
 		$("#pagedata").ajaxPage({
-		    url:newurl, 
+		    url:newurl,
 		    pageId:$("#page"),
 		    pageSize:10,
 		    run:true,
@@ -61,7 +61,7 @@ $(document).ready(function(){
 		});
 	});
 });
-</script>     
+</script>
 {% endblock js %}
 {% block right %}
 <div class="Criteria">
@@ -71,39 +71,43 @@ $(document).ready(function(){
                                 	<table width="100%">
                                     	<tr>
                                         	<td>
-                                            	<i>投资日期from：</i>
-                                                <input id="startTime" type="date" />
-                                            </td>
-                                        	<td>
-                                            	<i>投资日期to：</i>
-                                                <input id="endTime" type="date" />
-                                            </td>
-                                        	<td>
-                                            	<i style="letter-spacing:4.8px;">平台名称：</i>
+                                            	<i>平台名称：</i>
                                                 <input id="projectname" type="text" />
                                             </td>
-                                        </tr>
-                                    	<tr>
+                                          <td>
+                                              <i>投资日期from：</i>
+                                                <input id="startTime" type="date" />
+                                            </td>
+                                          <td>
+                                              <i>投资日期to：</i>
+                                                <input id="endTime" type="date" />
+                                            </td>
                                         	<td>
                                             	<i>用户姓名：</i>
                                                 <input id="username" type="text" />
                                             </td>
+                                        </tr>
+                                      <tr>
                                         	<td>
-                                            	<i style="letter-spacing:2px;">用户手机号：</i>
+                                            	<i>用户手机号：</i>
                                                 <input id="mobile" type="text" />
                                             </td>
                                         	<td>
-                                            	<i style="letter-spacing:4.8px;">投资金额from：</i>
+                                            	<i>投资金额from：</i>
                                                 <input id="amountfrom" type="text" />
                                             </td>
                                             <td>
-                                            	<i style="letter-spacing:4.8px;">投资金额to：</i>
+                                            	<i>投资金额to：</i>
                                                 <input id="amountto" type="text" />
                                             </td>
                                         </tr>
+
                                     </table>
                                     <div class="Submit-in">
-                                    	<input id="search" type="button" value="搜索" />
+                                      <i style="letter-spacing:4.8px;">信息内容：</i>
+                                      <textarea name="send_msg" cols="80" rows="4"></textarea>
+                                      <input id="send_msg" type="button" value="发送" />
+                                      <input id="search" type="button" value="搜索" />
                                     </div>
                                 </form>
                             </div>
@@ -115,7 +119,7 @@ $(document).ready(function(){
 		                    <div class="Page-in-admin">
 		                    	<div class="page"  id="page">
 		                        </div>
-		                    </div> 
+		                    </div>
                         </div>
 {%endblock%}
- 
+
