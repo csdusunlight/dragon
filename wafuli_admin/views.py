@@ -1239,15 +1239,27 @@ def send_multiple_msg(request):
             phone_set.add(phone)
     if len(phone_set)>0:
         phone_list = list(phone_set)
-        phones = ','.join(phone_list)
-        logger.info("Sending mobile messages to users:" + phones + "; content:" + content);
-        reg = send_multimsg_bydhst(phones, content)
-        if reg==0:
+        length = len(phone_list)
+        times = length/500
+        treg = 0
+        tnum = 0
+        if length%500 > 0:
+            times += 1
+        for t in range(times):
+            frag_list = phone_list[t*500:t*500+500]
+            phones = ','.join(frag_list)
+            logger.info("Sending mobile messages to users:" + phones + "; content:" + content);
+            reg = send_multimsg_bydhst(phones, content)
+            if reg==0:
+                tnum += len(frag_list)
+            else:
+                treg = 1
+        if treg==0:
             res['code'] = 0
-            res['num'] = len(phone_set)
+            res['num'] = tnum
         else:
-            res['code'] = reg
-            res['res_msg'] = u"发送短信失败，错误码：" + str(reg)
+            res['code'] = -1
+            res['res_msg'] = u"发送短信失败，实际发送数量：" + str(tnum) 
     else:
         res['code'] = 0
         res['res_msg'] = u"不存在符合条件的手机号码"
