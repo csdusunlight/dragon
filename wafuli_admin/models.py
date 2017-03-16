@@ -73,3 +73,11 @@ class Invest_Record(models.Model):
     is_futou = models.BooleanField(u"是否复投", default=False)
     coupon = models.CharField(u"优惠券", max_length=100,blank=True)
     remark = models.CharField(u"备注", max_length=100,blank=True)
+
+class Message_Record(models.Model):
+    time = models.DateField(u"群发时间", default=timezone.now)
+    msgid = models.CharField(max_length=32)
+    content = models.CharField(max_length=200)
+    class Meta:
+        verbose_name_plural = u"短信群发记录"
+        verbose_name = u"短信群发记录"
