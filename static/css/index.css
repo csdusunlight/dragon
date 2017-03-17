@@ -617,6 +617,15 @@ table{border-collapse:collapse;}
 #online li.top {background: #f08519;}
 #online li.qq:hover {background-image: none;}
 #online li.weixin:hover {background-image: none;}
+/*qq客服修改*/
+.qq-detail {
+  display: none;
+  position: absolute;
+  right: 40px;
+  top: 0;
+  width: 300px;
+}
+.qq + .qq-detail {display: block;}
 .qq span,
 .weixin span,
 .top span {display: none;margin-top: 6px;font-size: 12px;}

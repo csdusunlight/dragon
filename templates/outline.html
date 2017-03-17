@@ -1,7 +1,14 @@
 {% load staticfiles %}
 
   <ul id="online">
-      <li class="qq"><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=122142551&site=qq&menu=yes""><!-- <img src="{% static 'images/icon-4.png' %}" alt="qq"/> --><span>QQ<br/>客服</span></a></li>
+      <li class="qq"><a target="_blank" href="javascript:;"><!-- <img src="{% static 'images/icon-4.png' %}" alt="qq"/> --><span>QQ<br/>客服</span></a></li>
+      <li class="qq-detail">
+        <ul>
+          <li class="qq-free"><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=122142551&site=qq&menu=yes">免费福利客服</a></li>
+          <li class="qq-task"><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=122142551&site=qq&menu=yes">体验福利客服</a></li>
+          <li class="qq-finance"><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=122142551&site=qq&menu=yes">理财福利客服</a></li>
+        </ul>
+      </li>
       <li class="weixin"><a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=34f2461e64f2fb28ac36d1eab0d303760c68cdff632c46f62bd8abda313e30dc"><!-- <img src="{% static 'images/icon-5.png' %}" alt="weixin"/> --><span>加入<br/>QQ群</span></a></li>
       <li class="top"><a href="javascript:;" onclick="$('body,html').animate({scrollTop:0},600);"><!-- <img src="{% static 'images/top.png' %}" alt="top"/> <--><span>回到<br/>顶部</span></--></a></li>
    </ul>
