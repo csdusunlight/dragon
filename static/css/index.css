@@ -626,6 +626,7 @@ table{border-collapse:collapse;}
   width: 300px;
 }
 .qq:hover + .qq-detail {display: block;}
+.qq-detail:hover {display: block;}
 .qq-detail a {display: block;}
 .qq span,
 .weixin span,
