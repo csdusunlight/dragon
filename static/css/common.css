@@ -64,6 +64,16 @@
 #online li.top {background: #f08519;}
 #online li.qq:hover {background-image: none;}
 #online li.weixin:hover {background-image: none;}
+.qq-detail {
+  display: none;
+  position: absolute;
+  right: 40px;
+  top: 0;
+  width: 120px;
+}
+.qq:hover + .qq-detail {display: block;}
+.qq-detail:hover {display: block;}
+.qq-detail a {display: block;}
 #online .qq span,
 #online .weixin span,
 #online .top span {display: none;margin-top: 6px;font-size: 12px;}
