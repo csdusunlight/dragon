@@ -623,7 +623,7 @@ table{border-collapse:collapse;}
   position: absolute;
   right: 40px;
   top: 0;
-  width: 300px;
+  width: 120px;
 }
 .qq:hover + .qq-detail {display: block;}
 .qq-detail:hover {display: block;}
