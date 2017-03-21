@@ -67,7 +67,8 @@
 				alert("手机号格式不正确！")
 				return;
 			}
-			var amount = parseFloat($('input#amount').val());
+			// var amount = parseFloat($('input#amount').val());
+      var amount = $('input#amount').val();
       var re_amount=/^\d+(\.\d+)?$/;
 			if(!re_amount.test(amount)){
 				alert("投资金额不能为空且必须为纯数字格式！")
