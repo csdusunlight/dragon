@@ -1,7 +1,7 @@
 #coding:utf-8
 from django.shortcuts import render, redirect
 from wafuli.models import UserEvent, AdminEvent, AuditLog, TransList, Company,\
-    Finance, Task, Welfare
+    Finance, Task, Welfare, Message
 import datetime
 from django.db.models import Sum, Count
 from django.core.urlresolvers import reverse
@@ -194,6 +194,14 @@ def admin_finance(request):
                     scoretranslist.user_event = event
                     scoretranslist.save(update_fields=['user_event'])
                     res['code'] = 0
+                    #更新投资记录表
+                    Invest_Record.objects.create(invest_date=event.time,invest_company=event.content_object.company.name,
+                                                 user_name=event_user.zhifubao_name,zhifubao=event_user.zhifubao,
+                                                 invest_mobile=event.invest_account,invest_period=event.invest_term,
+                                                 invest_amount=event.invest_amount,return_amount=cash/100.0,wafuli_account=event_user.mobile,
+                                                 return_date=datetime.date.today(),remark=event.remark)    
+                    msg_content = u'您提交的"' + event.content_object.title + u'"理财福利已审核通过'
+                    Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
                 else:
                     res['code'] = -4
                     res['res_msg'] = "注意，重复提交时只提交失败项目，成功的可以输入0。\n"
@@ -203,18 +211,14 @@ def admin_finance(request):
                     if not scoretranslist:
                         logger.error(u"Charging score is failed!!!")
                         res['res_msg'] += u"积分记账失败，请检查输入合法性后再次提交！"
-                #更新投资记录表
-                Invest_Record.objects.create(invest_date=event.time,invest_company=event.content_object.company.name,
-                                             user_name=event_user.zhifubao_name,zhifubao=event_user.zhifubao,
-                                             invest_mobile=event.invest_account,invest_period=event.invest_term,
-                                             invest_amount=event.invest_amount,return_amount=cash/100.0,wafuli_account=event_user.mobile,
-                                             return_date=datetime.date.today(),remark=event.remark)    
-                
         else:
             event.audit_state = '2'
             log.audit_result = False
             log.reason = reason
             res['code'] = 0
+            
+            msg_content = u'您提交的"' + event.content_object.title + u'"理财福利审核未通过，原因：' + reason
+            Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
         
         
         if res['code'] == 0:
@@ -296,6 +300,8 @@ def admin_task(request):
                     scoretranslist.user_event = event
                     scoretranslist.save(update_fields=['user_event'])
                     res['code'] = 0
+                    msg_content = u'您提交的"' + event.content_object.title + u'"体验福利已审核通过'
+                    Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
                 else:
                     res['code'] = -4
                     res['res_msg'] = "注意，重复提交时只提交失败项目，成功的可以输入0。\n"
@@ -314,6 +320,8 @@ def admin_task(request):
             task.save(update_fields=['left_num'])
             res['code'] = 0
         
+            msg_content = u'您提交的"' + event.content_object.title + u'"体验福利审核未通过，原因：' + reason
+            Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
         
         if res['code'] == 0:
             admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='1')
@@ -781,6 +789,9 @@ def admin_withdraw(request):
             if trans_withdraw:
                 trans_withdraw.admin_event = admin_event
                 trans_withdraw.save(update_fields=['admin_event'])
+            msg_content = u'您提现的' + str(event.invest_amount) + u'福币，已发放到您的支付宝账号中，请注意查收'
+            Message.objects.create(user=event.user, content=msg_content, title=u"提现审核")
+        
         elif type == 2:
             reason = request.POST.get('reason', '')
             if not reason:
@@ -796,6 +807,8 @@ def admin_withdraw(request):
                 translist.admin_event = admin_event
                 translist.save(update_fields=['user_event','admin_event'])
                 res['code'] = 0
+                msg_content = u'您提现的' + str(event.invest_amount) + u'福币未审核成功，原因：' + reason
+                Message.objects.create(user=event.user, content=msg_content, title=u"提现审核");
             else:
                 logger.critical(u"Charging cash is failed!!!")
                 res['code'] = -2
@@ -931,6 +944,8 @@ def admin_score(request):
             event.audit_state = '0'
             log.audit_result = True
             res['code'] = 0
+            msg_content = u'您已成功兑换' + event.content_object.commodity.name + u'，消耗积分' + event.invest_amount
+            Message.objects.create(user=event.user, content=msg_content, title=u"积分兑换");
         elif type == 2:
             reason = request.POST.get('reason', '')
             if not reason:
@@ -945,6 +960,8 @@ def admin_score(request):
                 scoretranslist.user_event = event
                 scoretranslist.save(update_fields=['user_event'])
                 res['code'] = 0
+                msg_content = u'您兑换的' + event.content_object.commodity.name + u'未成功，原因：' + reason
+                Message.objects.create(user=event.user, content=msg_content, title=u"积分兑换");
             else:
                 logger.critical(u"Charging score is failed!!!")
                 res['code'] = -2
