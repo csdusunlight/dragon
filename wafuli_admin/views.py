@@ -200,7 +200,7 @@ def admin_finance(request):
                                                  invest_mobile=event.invest_account,invest_period=event.invest_term,
                                                  invest_amount=event.invest_amount,return_amount=cash/100.0,wafuli_account=event_user.mobile,
                                                  return_date=datetime.date.today(),remark=event.remark)    
-                    msg_content = u'您提交的"' + event.content_object.title + u'"理财福利已审核通过'
+                    msg_content = u'您提交的"' + event.content_object.title + u'"理财福利已审核通过。'
                     Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
                 else:
                     res['code'] = -4
@@ -300,7 +300,7 @@ def admin_task(request):
                     scoretranslist.user_event = event
                     scoretranslist.save(update_fields=['user_event'])
                     res['code'] = 0
-                    msg_content = u'您提交的"' + event.content_object.title + u'"体验福利已审核通过'
+                    msg_content = u'您提交的"' + event.content_object.title + u'"体验福利已审核通过。'
                     Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
                 else:
                     res['code'] = -4
