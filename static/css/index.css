@@ -624,10 +624,11 @@ table{border-collapse:collapse;}
   right: 40px;
   top: 0;
   width: 120px;
+  background: rgba(0,0,0,0.1);
+  border-radius: 8px;
 }
 .add-qun {top: 42px;}
 .qq:hover + .qq-detail {display: block;}
-.qq-detail:hover {display: block;}
 .weixin:hover + .qq-detail {display: block;}
 .qq-detail:hover {display: block;}
 .qq-detail a {display: block;}
