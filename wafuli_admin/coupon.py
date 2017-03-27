@@ -6,7 +6,7 @@ Created on 2016年7月17日
 '''
 from django.shortcuts import render, redirect
 from wafuli.models import UserEvent, AdminEvent, AuditLog, TransList, UserWelfare,\
-    CouponProject, Coupon
+    CouponProject, Coupon, Message
 import datetime
 from django.core.urlresolvers import reverse
 from django.http.response import JsonResponse, Http404
@@ -55,6 +55,9 @@ def deliver_coupon(request):
             if select_user == '1':
                 for user in MyUser.objects.all():
                     Coupon.objects.create(user=user, project=project)
+                    msg_content = u'您收到一张优惠券：' + project.title + u'，到期日为' + \
+                        project.endtime.strftime("%Y-%m-%d") + u"，请及时使用。"
+                    Message.objects.create(user=user, content=msg_content, title=u"新的优惠券");
                     success_count += 1
             elif select_user == '2':
                 select_list_str = request.POST.get('users')
@@ -71,6 +74,9 @@ def deliver_coupon(request):
                     try:
                         user = MyUser.objects.get(username = username)
                         Coupon.objects.create(user=user, project=project)
+                        msg_content = u'您收到一张优惠券：' + project.title + u'，到期日为' + \
+                            project.endtime.strftime("%Y-%m-%d") + u"，请及时使用。"
+                        Message.objects.create(user=user, content=msg_content, title=u"新的优惠券");
                     except:
                         fail_list.append(username)
                     else:
@@ -201,6 +207,10 @@ def admin_coupon(request):
                     scoretranslist.user_event = event
                     scoretranslist.save(update_fields=['user_event'])
                     res['code'] = 0
+                    
+                    project = event.content_object.project
+                    msg_content = u'您提交的"' + project.title + u'"兑换申请已审核通过。'
+                    Message.objects.create(user=event_user, content=msg_content, title=u"优惠券兑换审核");
                 else:
                     res['code'] = -4
                     res['res_msg'] = "注意，重复提交时只提交失败项目，成功的可以输入0。\n"
@@ -215,7 +225,10 @@ def admin_coupon(request):
             log.audit_result = False
             log.reason = reason
             res['code'] = 0
-        
+            
+            project = event.content_object.project
+            msg_content = u'您提交的"' + project.title + u'"兑换申请审核未通过，原因：' + reason
+            Message.objects.create(user=event_user, content=msg_content, title=u"优惠券兑换审核");
         
         if res['code'] == 0:
             admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='10')

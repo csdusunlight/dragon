@@ -6,7 +6,8 @@ Created on 20160617
 '''
 
 from django.shortcuts import render, redirect
-from wafuli.models import UserEvent, AdminEvent, AuditLog, TransList, UserWelfare
+from wafuli.models import UserEvent, AdminEvent, AuditLog, TransList, UserWelfare,\
+    Message
 import datetime
 from django.db.models import Sum, Count
 from django.core.urlresolvers import reverse
@@ -85,6 +86,9 @@ def admin_recommend_return(request):
                     scoretranslist.user_event = event
                     scoretranslist.save(update_fields=['user_event'])
                     res['code'] = 0
+                    
+                    msg_content = u'您推荐的"' + event.content_object.title + u'"福利已审核通过。'
+                    Message.objects.create(user=event_user, content=msg_content, title=u"福利推荐审核");
                 else:
                     res['code'] = -4
                     res['res_msg'] = "注意，重复提交时只提交失败项目，成功的可以输入0。\n"
@@ -99,7 +103,9 @@ def admin_recommend_return(request):
             log.audit_result = False
             log.reason = reason
             res['code'] = 0
-        
+            
+            msg_content = u'您推荐的"' + event.content_object.title + u'"福利审核未通过，原因：' + reason
+            Message.objects.create(user=event_user, content=msg_content, title=u"福利推荐审核");
         
         if res['code'] == 0:
             admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='9')
