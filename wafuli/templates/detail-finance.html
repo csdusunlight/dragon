@@ -74,13 +74,11 @@
 				alert("投资金额不能为空且必须为纯数字格式！")
 				return;
 			}
-      amount = amout + "元";
 			var term = $('input#term').val();
 			if(!re_amount.test(term)){
 				alert("投资标期不能为空且必须为纯数字格式！")
 				return;
 			}
-      term = term + "天";
 			$('#myModal').modal();
 		});
 		$("a#confirm").click(function(){
@@ -174,8 +172,8 @@
   <div class="popup-box popup-box-02">
     <div class="td-msg popup-content finance-popup">
       <div class="ma-div">注册手机号：<input type="text" placeholder="输入您的手机号，若有多个请分别提交" class="ms-input" id="telnum"></div>
-      <div class="ma-div">投资金额（元）：<input type="text" placeholder="输入您的投资金额（仅限数字）" class="ms-input" id="amount"></div>
-      <div class="ma-div">投资标期（天）：<input type="text" placeholder="输入您的投资标期（仅限数字）" class="ms-input" id="term"></div>
+      <div class="ma-div">投资金额：<input type="text" placeholder="输入您的投资金额（仅限数字）" class="ms-input" id="amount"><span style="position: absolute;line-height: 40px;margin-left: 10px;">元</span></div>
+      <div class="ma-div">投资标期：<input type="text" placeholder="输入您的投资标期（仅限数字）" class="ms-input" id="term"><span style="position: absolute;line-height: 40px;margin-left: 10px;">天</span></div>
       <div class="ma-div3">备注：<input type="text" placeholder="可不填" class="ms-input" id="remark"></div>
       <p class="td-yy"><button class="finance-cancel" onclick="popupHide()">取消</button><button class="md-trigger td-tj">提交</button></p>
       <div class="clearboth"></div>
