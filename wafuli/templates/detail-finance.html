@@ -74,11 +74,13 @@
 				alert("投资金额不能为空且必须为纯数字格式！")
 				return;
 			}
+      amount = amout + "元";
 			var term = $('input#term').val();
 			if(!re_amount.test(term)){
 				alert("投资标期不能为空且必须为纯数字格式！")
 				return;
 			}
+      term = term + "天";
 			$('#myModal').modal();
 		});
 		$("a#confirm").click(function(){
