@@ -1,29 +1,20 @@
 {% load staticfiles %}
-{% block js %}
 <header>
 <script type="text/javascript" src="{%static 'js/jquery-1.11.2.min.js'%}"></script>
 <script type="text/javascript" src="{%static 'js/ajaxfileupload.js'%}"></script>
 </header>
 <body>
 <input id="fileupload1" name="file"  type="file"/>
-<button class="uploadbtn" id="uploadbtn1">ÉÏ´«</button>
+<button class="uploadbtn" id="uploadbtn1">ä¸Šä¼ </button>
 <script>
 	$('button.uploadbtn').click(function() {
-    		var fileElementId = null, areaId = null;
-    		if ($(this).attr("id") === 'uploadbtn1'){
-    			fileElementId = 'fileupload1';
-    			areaId = 'users';
-    		}
-    		else {
-    			fileElementId = 'fileupload2';
-    			areaId = 'codes';
-    		}
+    		var fileElementId  = 'fileupload1';
 	    	$.ajaxFileUpload({  
-	            url:parse_file_url,  
+	            url:'',  
 	            secureuri:false,  
-	            fileElementId:fileElementId,//file±êÇ©µÄid  
-	            dataType: 'json',//·µ»ØÊı¾İµÄÀàĞÍ  
-	            data:{},//Ò»Í¬ÉÏ´«µÄÊı¾İ  
+	            fileElementId:fileElementId,//fileæ ‡ç­¾çš„id  
+	            dataType: 'json',//è¿”å›æ•°æ®çš„ç±»å‹  
+	            data:{},//ä¸€åŒä¸Šä¼ çš„æ•°æ®  
 	            success: function (data, status) {
 	            	if (data.code==0){
 	            		var value = ''
