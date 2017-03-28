@@ -75,11 +75,11 @@
 .index_11 ul li .rt{width:145px;}
 .index_11 ul li .rt h2{line-height:42px;font-size:20px;color:#3a3a3a;}
 .index_11 ul li .rt p{margin:0;padding:0;color:#a3a3a3;line-height:25px;font-size:13px;}
-#index_12{width:1100px;height:385px;clear:both;display:inline-block;margin-top:28px;text-align:left;}
+#index_12{width:1100px;height:390px;clear:both;display:inline-block;margin-top:28px;text-align:left;}
 /*p.youhuiquan {line-height: 22px !important;}*/
 .shichangjia {text-decoration: line-through;}
 .xianjia {color: #ff8b52;font-size: 22px;}
-.index_13{width:238px;height:610px;float:left;display:inline;text-align:left;background:#ff8b52 url(../images/bg-2.png) no-repeat 89px 43px;position:relative;}
+.index_13{width:238px;height:390px;float:left;display:inline;text-align:left;background:#ff8b52 url(../images/bg-2.png) no-repeat 89px 43px;position:relative;}
 .index_13 h2{line-height:27px;font-size:30px;color:#fff;position:absolute;bottom:86px;left:25px;}
 .index_13 h3{line-height:27px;font-size:15px;color:#fff;position:absolute;bottom:52px;left:55px;}
 .index_13 a.more{ display: none;line-height:28px;font-size:13px;color:#fff;position:absolute;right:4px;top:358px;padding: 0;text-decoration: underline;}
@@ -96,7 +96,7 @@
 .current{background-color:#FFF;}
 .index_15{position:relative;float:left;width:862px;height:375px;display:inline;text-align:left;}
 .index_15 > ul{position: absolute;}
-.index_15 ul {display: none; float:left; width:100%; height:592px; background:#fff;  padding:20px 0 22px; margin-top:10px; border-bottom:2px solid #d74700; box-sizing:border-box;}
+.index_15 ul {display: none; float:left; width:100%; height:372px; background:#fff;  padding:20px 0 22px; margin-top:10px; border-bottom:2px solid #d74700; box-sizing:border-box;}
 .index_15 ul li{width:258px;height:319px;float:left;position:relative;padding-left:22px;text-align:center;}
 .index_15 ul li.s{padding:0;}
 .index_15 ul li h2{line-height:46px;font-size:20px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
@@ -116,7 +116,7 @@
     text-decoration: underline;
     text-align: right;
 }
-#index_16{width:1100px;height:330px;clear:both;display:inline-block;margin-top:248px;text-align:left;}
+#index_16{width:1100px;height:330px;clear:both;display:inline-block;margin-top:22px;text-align:left;}
 .index_17{width:238px;height:330px;float:left;display:inline;text-align:left;background:#00d6b3 url(../images/bg-3.png) no-repeat 84px 40px;position:relative;}
 .index_17 h2{line-height:27px;font-size:30px;color:#fff;position:absolute;bottom:86px;left:25px;}
 .index_17 h3{line-height:27px;font-size:15px;color:#fff;position:absolute;bottom:52px;left:55px;}
@@ -661,7 +661,7 @@ table{border-collapse:collapse;}
 
 .box_back { float:left; width:100%; height:auto; background:#fbfbfb; padding-bottom:20px;}
 .ico1 { position:absolute; left:0; top:0;}
-.ico2 { position:absolute; left:0; bottom:-235px;}
+.ico2 { position:absolute; left:0; bottom:-35px;}
 .ico3 { position:absolute; left:0; bottom:0;}
 .ico4 { position:absolute; left:237px; top:0;}
 .ico5 { position:absolute; left:237px; bottom:0;}
