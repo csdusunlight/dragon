@@ -6,10 +6,12 @@ Created on 2017年3月27日
 '''
 
 import xlrd
-import xlwt
+from xlwt import *
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
+from django.http.response import JsonResponse
+import traceback
 
 @csrf_exempt
 def parse_excel(request):
@@ -17,7 +19,7 @@ def parse_excel(request):
         return render(request,'upload_excel.html')
     else:
         
-        ret = []
+        ret = {'code':-1}
         file = request.FILES.get('file')
         print file.name
         with open('./test.xlsx', 'wb+') as destination:
@@ -27,25 +29,66 @@ def parse_excel(request):
         table = data.sheets()[0]
         nrows = table.nrows
         ncols = table.ncols
-        print nrows,ncols
-        for i in range(2):
+        if ncols!=5:
+            ret['msg'] = u"文件格式与模板不符，请下载最新模板填写！"
+            return ret
+        rtable = []
+        try:
+            for i in range(1,nrows):
+                temp = []
+                for j in range(ncols):
+                    cell = table.cell(i,j)
+                    if j==0:
+                        if(cell.ctype!=3):
+                            raise Exception(u"投资日期列格式错误，请修改后重新提交。")
+                        else:
+                            time = xlrd.xldate.xldate_as_datetime(cell.value, 0)
+                            temp.append(time)
+                    elif j==1:
+                        try:
+                            mobile = str(int(cell.value)).strip()
+                        except Exception,e:
+                            raise Exception(u"手机号必须是11位数字，请修改后重新提交。")
+                        if len(mobile)==11:
+                            temp.append(mobile)
+                        else:
+                            raise Exception(u"手机号必须是11位数字，请修改后重新提交。")
+                    elif j==2:
+                        term = unicode(cell.value).strip()
+                        temp.append(term)
+                    elif j==3:
+                        amount = cell.value
+                        try:
+                            if float(amount) == int(amount):
+                                amount = int(amount)
+                            else:
+                                amount = float(amount)
+                        except:
+                            raise Exception(u"投资金额必须为数字")
+                        temp.append(amount)
+                    else:
+                        remark = cell.value
+                        temp.append(remark)
+                rtable.append(temp)
+        except Exception, e:
+            traceback.print_exc()
+            ret['msg'] = unicode(e)
             
-            row =  table.row_values(i)
-            for j in range(ncols):
-                print table.cell(i,j).ctype
-        style0 = xlwt.easyxf('font: name Times New Roman, color-index red, bold on', num_format_str='#,##0.00')
-        style1 = xlwt.easyxf(num_format_str='D-MMM-YY')
-        
-        wb = xlwt.Workbook()
-        ws = wb.add_sheet('A Test Sheet')
-        
-        ws.write(0, 0, 1234.56, style0)
-        ws.write(1, 0, datetime.now(), style1)
-        ws.write(2, 0, 1)
-        ws.write(2, 1, 1)
-        ws.write(2, 2, xlwt.Formula("A3+B3"))
-        
-        wb.save('example.xls')
+#         w = Workbook()     #创建一个工作簿
+#         ws = w.add_sheet('hello') 
+#         style1 = easyxf(num_format_str='YY/MM/DD')
+#         for i in range(len(rtable)):
+#             row = rtable[i]
+#             for j in range(len(row)):
+#                 c = row[j]
+#                 if j==0:
+#                     ws.write(i,j,c,style1)
+#                 else:
+#                     ws.write(i,j,c)
+#         w.save('out.xls') 
+        return JsonResponse(ret)
+#         style0 = xlwt.easyxf('font: name Times New Roman, color-index red, bold on', num_format_str='#,##0.00')
+#         style1 = xlwt.easyxf(num_format_str='D-MMM-YY')
+
                 
-        return ret
 
