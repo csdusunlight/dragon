@@ -661,7 +661,7 @@ table{border-collapse:collapse;}
 
 .box_back { float:left; width:100%; height:auto; background:#fbfbfb; padding-bottom:20px;}
 .ico1 { position:absolute; left:0; top:0;}
-.ico2 { position:absolute; left:0; bottom:-35px;}
+.ico2 { position:absolute; left:0; bottom:-15px;}
 .ico3 { position:absolute; left:0; bottom:0;}
 .ico4 { position:absolute; left:237px; top:0;}
 .ico5 { position:absolute; left:237px; bottom:0;}
