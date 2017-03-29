@@ -165,3 +165,7 @@ class User_Envelope(models.Model):
     accu_fubi = models.PositiveIntegerField(u"累计获得福币",default=0)
     def __unicode__(self):
         return self.user.mobile
+    
+class DBlock(models.Model):
+    index = models.CharField("name",max_length=10,primary_key=True)
+    description = models.CharField("description",max_length=30)

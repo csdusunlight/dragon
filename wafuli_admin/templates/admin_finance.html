@@ -159,6 +159,16 @@ $(document).ready(function(){
 		    content:newdata,
 		});
 	});
+	$("#export").click(function(){
+		var html = '<form action="'+"{% url 'export_finance_excel' %}"+'" method="get" target="_self" id="postData_form">'+  
+        '<input id="bigData" name="bigData" type="hidden" value="jfsfks"/>'+  
+        '</form>';  
+        var iframe = document.getElementById('myIFrame');
+		    iframe.contentWindow.document.open();
+		    iframe.contentWindow.document.write(html);
+		    iframe.contentWindow.document.close();
+		document.getElementById('myIFrame').contentWindow.document.getElementById('postData_form').submit();  
+	});
 });
 </script>
 {% endblock js %}
@@ -271,5 +281,6 @@ $(document).ready(function(){
             </form>
         </div>
     </div>
+    <iframe id="myIFrame" scrolling="yes" src="abount:blank" style="display:none" frameborder=1></iframe>
     <!--end-->
 	{% endblock modal %}
