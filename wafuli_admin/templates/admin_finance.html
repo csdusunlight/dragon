@@ -111,7 +111,7 @@ $(document).ready(function(){
 	$("#search").click(function(){
 		startTime = $("#startTime").val();
 		endTime = $("#endTime").val();
-		newurl = url;
+		var newurl = url;
 		if(startTime && endTime){
 			newurl += "&startTime="+startTime;
 			newurl += "&endTime="+endTime;
@@ -160,9 +160,30 @@ $(document).ready(function(){
 		});
 	});
 	$("#export").click(function(){
-		var html = '<form action="'+"{% url 'export_finance_excel' %}"+'" method="get" target="_self" id="postData_form">'+  
-        '<input id="bigData" name="bigData" type="hidden" value="jfsfks"/>'+  
-        '</form>';  
+		var html = '<form action="'+"{% url 'export_finance_excel' %}"+'" method="get" target="_self" id="postData_form">';
+		startTime = $("#startTime").val();
+		endTime = $("#endTime").val();
+		if(startTime && endTime){
+			html += '<input name="startTime" type="hidden" value="'+ startTime + '"/>';
+			html += '<input name="endTime" type="hidden" value="'+ endTime + '"/>';
+		}
+		username = $("#username").val();
+		mobile = $("#mobile").val();
+		if(username){
+			html += '<input name="username" type="hidden" value="'+ username + '"/>';
+		}
+		if(mobile){
+			html += '<input name="mobile" type="hidden" value="'+ mobile + '"/>';
+		}
+		companyname = $("#companyname").val();
+		projectname = $("#projectname").val();
+		if(companyname){
+			html += '<input name="companyname" type="hidden" value="'+ companyname + '"/>';
+		}
+		if(projectname){
+			html += '<input name="projectname" type="hidden" value="'+ projectname + '"/>';
+		}
+		html += '</form>';  
         var iframe = document.getElementById('myIFrame');
 		    iframe.contentWindow.document.open();
 		    iframe.contentWindow.document.write(html);
@@ -232,6 +253,7 @@ $(document).ready(function(){
                                     <div class="Submit-in">
                                     	<input id="search" type="button" value="搜索" />
                                         <input id="export" type="button" value="导出" />
+                                        <input id="export" type="button" value="导入" />
                                     </div>
                                 </form>
                             </div>

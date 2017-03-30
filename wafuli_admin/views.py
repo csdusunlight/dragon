@@ -18,6 +18,7 @@ from django.contrib.auth import logout as auth_logout
 from account.varify import send_multimsg_bydhst
 from xlwt.Workbook import Workbook
 import StringIO
+from xlwt.Style import easyxf
 # Create your views here.
 logger = logging.getLogger('wafuli')
 def index(request):
@@ -433,96 +434,69 @@ def get_admin_finance_page(request):
     res["data"] = data
     return JsonResponse(res)
 def export_finance_excel(request):
-#     res={'code':0,}
-#     user = request.user
-#     if not ( user.is_authenticated() and user.is_staff):
-#         res['code'] = -1
-#         res['url'] = reverse('admin:login') + "?next=" + reverse('admin_finance')
-#         return JsonResponse(res)
-#     state = request.GET.get("state",'1')
-#     item_list = []
-# 
-#     item_list = UserEvent.objects
-#     startTime = request.GET.get("startTime", None)
-#     endTime = request.GET.get("endTime", None)
-#     startTime2 = request.GET.get("startTime2", None)
-#     endTime2 = request.GET.get("endTime2", None)
-#     if startTime and endTime:
-#         s = datetime.datetime.strptime(startTime,'%Y-%m-%dT%H:%M')
-#         e = datetime.datetime.strptime(endTime,'%Y-%m-%dT%H:%M')
-#         item_list = item_list.filter(time__range=(s,e))
-#     if startTime2 and endTime2:
-#         s = datetime.datetime.strptime(startTime2,'%Y-%m-%dT%H:%M')
-#         e = datetime.datetime.strptime(endTime2,'%Y-%m-%dT%H:%M')
-#         item_list = item_list.filter(audit_time__range=(s,e))
-#         
-#     username = request.GET.get("username", None)
-#     if username:
-#         item_list = item_list.filter(user__username=username)
-#     
-#     mobile = request.GET.get("mobile", None)
-#     if mobile:
-#         item_list = item_list.filter(user__mobile=mobile)
-#         
-#     companyname = request.GET.get("companyname", None)
-#     if companyname:
-#         item_list = item_list.filter(finance__company__name__contains=companyname)
-#         
-#     projectname = request.GET.get("projectname", None)
-#     if projectname:
-#         item_list = item_list.filter(finance__title__contains=projectname)
-#         
-#     adminname = request.GET.get("adminname", None)
-#     if adminname:
-#         item_list = item_list.filter(audited_logs__user__username=adminname)
-#     task_type = ContentType.objects.get_for_model(Finance)
-#     item_list = item_list.filter(content_type = task_type.id)
-#     item_list = item_list.filter(event_type='1', audit_state=state).select_related('user').order_by('time')
-#     data = []
-#     for con in item_list:
-#         project = con.content_object
-#         i = {"username":con.user.username,
-#              "mobile":con.user.mobile,
-#              "type":con.content_object.get_type(),
-#              "company":project.company.name if project.company else u"无",
-#              "project":project.title,
-#              "mobile_sub":con.invest_account,
-#              "remark_sub":con.remark,
-#              "time_sub":con.time.strftime("%Y-%m-%d %H:%M"),
-#              "state":con.get_audit_state_display(),
-#              "admin":u'无' if con.audit_state=='1' or not con.audited_logs.exists() else con.audited_logs.first().user.username,
-#              "time_admin":u'无' if con.audit_state=='1' or not con.audit_time else con.audit_time.strftime("%Y-%m-%d %H:%M"),
-#              "ret_amount":u'无' if con.audit_state!='0' or not con.translist.exists() else con.translist.first().transAmount/100.0,
-#              "score":u'无' if con.audit_state!='0' or not con.score_translist.exists() else con.score_translist.first().transAmount,
-#              "id":con.id,
-#              "remark": con.remark or u'无' if con.audit_state!='2' or not con.audited_logs.exists() else con.audited_logs.first().reason,
-#              "invest_amount": con.invest_amount,
-#              "term": con.invest_term,
-#         }
-#         data.append(i)
-#     if data:
-#         res['code'] = 1
-#     res["pageCount"] = paginator.num_pages
-#     res["recordCount"] = item_list.count()
-#     res["data"] = data
-#     return JsonResponse(res)
-        w = Workbook()     #创建一个工作簿
-        ws = w.add_sheet('hello')     #创建一个工作表
-        ret = [[1,2],[2,3]]
-        row = len(ret)
-        for i in range(row):
-            lis = ret[i]
-            col = len(lis)
-            for j in range(col):
-                ws.write(i,j,lis[j])
-        sio = StringIO.StringIO()  
-        w.save(sio)  
-        sio.seek(0)  
-        response = HttpResponse(sio.getvalue(), content_type='application/vnd.ms-excel')  
-        response['Content-Disposition'] = 'attachment; filename=test.xls'  
-        response.write(sio.getvalue())
-        
-        return response 
+    user = request.user
+    item_list = []
+    item_list = UserEvent.objects
+    startTime = request.GET.get("startTime", None)
+    endTime = request.GET.get("endTime", None)
+    startTime2 = request.GET.get("startTime2", None)
+    endTime2 = request.GET.get("endTime2", None)
+    if startTime and endTime:
+        s = datetime.datetime.strptime(startTime,'%Y-%m-%dT%H:%M')
+        e = datetime.datetime.strptime(endTime,'%Y-%m-%dT%H:%M')
+        item_list = item_list.filter(time__range=(s,e))
+    username = request.GET.get("username", None)
+    if username:
+        item_list = item_list.filter(user__username=username)
+    mobile = request.GET.get("mobile", None)
+    if mobile:
+        item_list = item_list.filter(user__mobile=mobile)
+         
+    companyname = request.GET.get("companyname", None)
+    if companyname:
+        item_list = item_list.filter(finance__company__name__contains=companyname)
+         
+    projectname = request.GET.get("projectname", None)
+    if projectname:
+        item_list = item_list.filter(finance__title__contains=projectname)
+         
+    task_type = ContentType.objects.get_for_model(Finance)
+    item_list = item_list.filter(content_type = task_type.id)
+    item_list = item_list.filter(event_type='1', audit_state='1').select_related('user').order_by('time')
+    data = []
+    for con in item_list:
+        project = con.content_object
+        project_name=project.title
+        mobile_sub=con.invest_account
+        time_sub=con.time
+        id=con.id
+        remark= con.remark
+        invest_amount= con.invest_amount
+        term=con.invest_term
+        data.append([id, project_name, time_sub, mobile_sub, term, invest_amount, remark])
+    w = Workbook()     #创建一个工作簿
+    ws = w.add_sheet(u'待审核记录')     #创建一个工作表
+    title_row = [u'记录ID',u'项目名称',u'投资日期', u'注册手机号' ,u'投资期限' ,u'投资金额', u'备注', u'审核结果',u'返现金额',u'拒绝原因']
+    for i in range(len(title_row)):
+        ws.write(0,i,title_row[i])
+    row = len(data)
+    style1 = easyxf(num_format_str='YY/MM/DD')
+    for i in range(row):
+        lis = data[i]
+        col = len(lis)
+        for j in range(col):
+            if j==2:
+                ws.write(i+1,j,lis[j],style1)
+            else:
+                ws.write(i+1,j,lis[j])
+    sio = StringIO.StringIO()  
+    w.save(sio)
+    sio.seek(0)  
+    response = HttpResponse(sio.getvalue(), content_type='application/vnd.ms-excel')  
+    response['Content-Disposition'] = 'attachment; filename=待审核记录.xls'  
+    response.write(sio.getvalue())
+    
+    return response 
 
 def get_admin_task_page(request):
     res={'code':0,}
