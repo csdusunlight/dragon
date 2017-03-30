@@ -16,7 +16,7 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import logout as auth_logout
 from account.varify import send_multimsg_bydhst
-from xlwt.Workbook import Workbook
+from xlwt import Workbook
 import StringIO
 from xlwt.Style import easyxf
 # Create your views here.
