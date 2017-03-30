@@ -31,6 +31,6 @@ urlpatterns = [
     url(r'^send_multiple_msg/$', 'wafuli_admin.views.send_multiple_msg', name='send_multiple_msg'),
     
     url(r'^parse_excel/$', 'wafuli_admin.channel.parse_excel', name='parse_excel'),
-    url(r'^import/$', 'wafuli_admin.views.upload_finance_excel', name='import_finance_excel'),
+    url(r'^import/$', 'wafuli_admin.views.import_finance_excel', name='import_finance_excel'),
     url(r'^export/$', 'wafuli_admin.views.export_finance_excel', name='export_finance_excel'),
 ]
