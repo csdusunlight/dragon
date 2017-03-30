@@ -87,7 +87,7 @@ h5 {margin: 0;}
 	border-radius: 5px;
 	cursor: pointer;
 }
-#upload:hover {
+.upload-box-btn:hover {
 	background: #f08519;
 	color: #fff;
 }
