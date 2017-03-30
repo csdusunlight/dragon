@@ -530,34 +530,22 @@ def import_finance_excel(request):
                     id = int(cell.value)
                     temp.append(id)
                 elif j==7:
-                    result = cell.value
-                    if result.strip() == u"是":
+                    result = cell.value.strip()
+                    if result == u"是":
                         temp.append(True)
-                    elif result.strip() == u"否":
+                    elif result == u"否":
                         temp.append(False)
                     else:
                         raise Exception(u"审核结果必须为是或否。")
-                    
-                elif j==2:
-                    term = unicode(cell.value).strip()
-                    temp.append(term)
-                elif j==3:
-                    amount = cell.value
-                    try:
-                        if float(amount) == int(amount):
-                            amount = int(amount)
-                        else:
-                            amount = float(amount)
-                    except:
-                        raise Exception(u"投资金额必须为数字")
-                    temp.append(amount)
+                elif j==8:
+                    if cell.value:
+                        return_amount = float(cell.value)
+                        temp.append(return_amount)
+                elif j==9:
+                    reason = cell.value
+                    temp.append(reason)
                 else:
-                    remark = cell.value
-                    temp.append(remark)
-            if duplic:
-                duplic = False
-            else:
-                rtable.append(temp)
+                    continue;
     except Exception, e:
         traceback.print_exc()
         ret['msg'] = unicode(e)
