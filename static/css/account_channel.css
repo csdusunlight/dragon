@@ -1,0 +1,363 @@
+h5 {margin: 0;}
+.container-box{
+	position: relative;
+	width: 880px;
+	margin: 20px auto 0;
+	text-align: left;
+	/*border: 1px solid#e4e4e4;*/
+}
+.header {
+	padding: 10px 20px;
+	overflow: hidden;
+	border: 1px solid #e4e4e4;
+}
+.header h3 {
+	float: left;
+	font-size: 24px;
+}
+.header input {
+	float: right;
+	width: 160px;
+	height: 30px;
+	line-height: 30px;
+	border: 1px solid #e4e4e4;
+	border-radius: 4px;
+	background: #e4e4e4;
+	cursor: pointer;
+}
+.header input:hover {
+	background: #f08519;
+	border: none;
+	color: #fff;
+}
+
+.content {
+	margin-top: 50px;
+	/*margin-left: 200px;*/
+}
+.content h5 {
+	font-size: 16px;
+	margin: 20px 0 10px;
+}
+.content select {
+	width: 200px;
+	height: 30px;
+}
+.content>input {
+	width: 100px;
+	height: 30px;
+	border: 1px solid #777;
+	border-radius: 4px;
+	background: #fff;
+	cursor: pointer;
+}
+.content>input:hover {
+	background: #f08519;
+	border: none;
+	color: #fff;
+}
+.content p {
+	margin: 0;
+}
+.upload-box {
+	width: 600px;
+	padding: 50px;
+	margin-top: 20px;
+	border: 1px dashed #e4e4e4;
+	text-align: center;
+}
+.upload-box input[type="file"] {
+	width: 200px;
+	height: 30px;
+	border: 1px solid red;
+	background-color: none;
+}
+#upload {
+	display: block;
+	width: 200px;;
+	margin: 30px auto 10px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	border: 1px solid;
+	border-radius: 5px;
+	cursor: pointer;
+}
+#upload:hover {
+	background: #f08519;
+	color: #fff;
+}
+#choose {
+	display: none;
+}
+
+/*表格部分*/
+table {
+	text-align: center;
+	border-collapse:collapse;
+}
+
+table td {
+	white-space: normal;
+	line-height: 1.2 !important;
+}
+.Page-in {position: static;}
+.popup-content .Welfare-td {
+	height: auto;
+	float: none;
+}
+.popup-content .Welfare-td th {
+	border-top: none;
+}
+/*等待上传动画*/
+.img-mask {
+   display: none; 
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  text-align: center;
+  line-height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.img-mask>p {
+  position: absolute;
+  top: 200px;
+  left: 300px;
+  font-size: 16px;
+}
+@-webkit-keyframes ball-triangle-path-1 {
+  33% {
+    -webkit-transform: translate(25px, -50px);
+    transform: translate(25px, -50px);
+  }
+  66% {
+    -webkit-transform: translate(50px, 0px);
+    transform: translate(50px, 0px);
+  }
+  100% {
+    -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+  }
+}
+
+@keyframes ball-triangle-path-1 {
+  33% {
+    -webkit-transform: translate(25px, -50px);
+    transform: translate(25px, -50px);
+  }
+  66% {
+    -webkit-transform: translate(50px, 0px);
+    transform: translate(50px, 0px);
+  }
+  100% {
+    -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+  }
+}
+
+@-webkit-keyframes ball-triangle-path-2 {
+  33% {
+    -webkit-transform: translate(25px, 50px);
+    transform: translate(25px, 50px);
+  }
+  66% {
+    -webkit-transform: translate(-25px, 50px);
+    transform: translate(-25px, 50px);
+  }
+  100% {
+    -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+  }
+}
+
+@keyframes ball-triangle-path-2 {
+  33% {
+    -webkit-transform: translate(25px, 50px);
+    transform: translate(25px, 50px);
+  }
+  66% {
+    -webkit-transform: translate(-25px, 50px);
+    transform: translate(-25px, 50px);
+  }
+  100% {
+    -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+  }
+}
+
+@-webkit-keyframes ball-triangle-path-3 {
+  33% {
+    -webkit-transform: translate(-50px, 0px);
+    transform: translate(-50px, 0px);
+  }
+  66% {
+    -webkit-transform: translate(-25px, -50px);
+    transform: translate(-25px, -50px);
+  }
+  100% {
+    -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+  }
+}
+
+@keyframes ball-triangle-path-3 {
+  33% {
+    -webkit-transform: translate(-50px, 0px);
+    transform: translate(-50px, 0px);
+  }
+  66% {
+    -webkit-transform: translate(-25px, -50px);
+    transform: translate(-25px, -50px);
+  }
+  100% {
+    -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+  }
+}
+
+.ball-triangle-path {
+  position: relative;
+  width: 100px;
+  left: 400px;
+  top: 200px;
+  -webkit-transform: translate(-25px, -25px);
+  -ms-transform: translate(-25px, -25px);
+  transform: translate(-25px, -25px);
+}
+
+.ball-triangle-path> div:nth-child(1) {
+  -webkit-animation-name: ball-triangle-path-1;
+  animation-name: ball-triangle-path-1;
+  -webkit-animation-delay: 0;
+  animation-delay: 0;
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+.ball-triangle-path> div:nth-child(2) {
+  -webkit-animation-name: ball-triangle-path-2;
+  animation-name: ball-triangle-path-2;
+  -webkit-animation-delay: 0;
+  animation-delay: 0;
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+.ball-triangle-path> div:nth-child(3) {
+  -webkit-animation-name: ball-triangle-path-3;
+  animation-name: ball-triangle-path-3;
+  -webkit-animation-delay: 0;
+  animation-delay: 0;
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+.ball-triangle-path> div {
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  border: 1px solid #fff;
+}
+
+.ball-triangle-path> div:nth-of-type(1) {
+  top: 50px;
+}
+
+.ball-triangle-path> div:nth-of-type(2) {
+  left: 25px;
+}
+
+.ball-triangle-path> div:nth-of-type(3) {
+  top: 50px;
+  left: 50px;
+}
+
+/*弹窗部分*/
+.popup-box {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+}
+.popup-box.in {
+  display: block;
+  opacity: 1;
+  background-color: rgba(0,0,0,0.3);
+}
+.popup-content {
+  padding: 15px 40px 30px;
+  margin: 8% auto 0;
+  width: 600px;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 5px 15px rgba(0,0,0,.5);
+}
+.popup-box-03 .popup-content {
+	width: 880px;
+	height: 500px;
+	margin-top: 4%;
+	overflow-y: scroll;
+}
+.popup-box-03 h3 {
+	text-align: left;
+}
+.popup-content h3 {
+  padding: 20px 0;
+  color:#04B3FF;
+  font-size:25px;
+}
+.popup-content p {
+  margin-top: 10px;
+  line-height: 1.6;
+  font-size: 16px;
+}
+.popup-content .table-btn {
+	display: inline-block;
+	padding: 6px 30px;
+	margin-top: 10px;
+	border-radius: 20px;
+	color: rgb(255, 255, 255);
+	background: rgb(240, 134, 25) none repeat scroll 0% 0%;
+	line-height: 1;
+	cursor: pointer;
+}
+.popup-box-02 .table-btn {
+  	margin: 10px 2.5rem 0rem 48px;
+}
+.popup-box.in .popup-content{
+  -webkit-animation: popup 0.4s linear;
+  animation: popup 0.4s linear;
+}
+@-webkit-keyframes popup {
+   0% {
+      -webkit-transform: translateY(-15%);
+      webkit-transform: translateY(-15%);
+      opacity: 0;
+   }
+   100% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+      opacity: 1;
+   }
+}
