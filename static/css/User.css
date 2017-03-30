@@ -10,7 +10,7 @@ td {white-space:nowrap;overflow:hidden;}
 .LeftNav li:hover a{ background-image:url(../images/sin-picon-v.png); color:#fff;}
 .LeftNav .on{ background:#f08519;}
 .LeftNav .on a{ background-image:url(../images/sin-picon-v.png); color:#fff;}
-.back-a1，.back-a14 { background-position:27px 15px !important;}
+.back-a1,.back-a14 { background-position:27px 15px !important;}
 .back-a2 { background-position:27px -30px !important;}
 .back-a3 { background-position:27px -75px !important;}
 .back-a4 { background-position:27px -120px !important;}
