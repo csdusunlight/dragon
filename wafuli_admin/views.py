@@ -550,8 +550,14 @@ def import_finance_excel(request):
         traceback.print_exc()
         ret['msg'] = unicode(e)
     
-    finance = Finance.objects.first()
-    print rtable,mobile_list
+    
+    for row in rtable:
+        id = row[0]
+        result = row[1]
+        amount = int(row[2]*100)
+        reason = row[3]
+        event = UserEvent.objects.get(id=id)
+#         event.audit_time = 
     ####开始去重
     temp = UserEvent.objects.filter(event_type='1').exclude(audit_state='2').values('invest_account')
     db_mobile_list = map(lambda x: str(x['invest_account']), temp)
