@@ -1,5 +1,6 @@
 h5 {margin: 0;}
 .container-box{
+  float: right;
 	position: relative;
 	width: 880px;
 	margin: 20px auto 0;
@@ -111,7 +112,7 @@ table td {
 }
 /*等待上传动画*/
 .img-mask {
-   display: none; 
+   display: none;
   position: absolute;
   top: 0;
   left: 0;

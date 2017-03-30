@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>渠道数据提交</title>
 		<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/User.css' %}" />
@@ -15,7 +15,11 @@
 
 	<body>
 	<!--头部-->
-    	{% include "header.html" %}
+  {% include "header.html" %}
+  <!--内容-->
+	<div class="Content">
+  <div class="w1100">
+    {% include "account/left.html" %}
 		<div class="container-box">
 			<div class="header">
 				<h3>上传表格数据</h3>
@@ -282,6 +286,13 @@
 			    </div>
 			</div>
 		</div>
+	</div>
+	</div>
+		<!--底部-->
+  {% include "footer.html" %}
+  <!--浮动窗口-->
+  {% include "outline.html" %}
+
 		<script type="text/javascript">
 			$('.back-a14').parent().toggleClass("on");
 			var filechooser = document.getElementById("choose");
@@ -298,10 +309,10 @@
 				} else {
 					if(aa[aa.length - 1] == 'xls' || aa[aa.length - 1] == 'xlsx') {
 						var fileSize = document.getElementById("choose").files[0].size;
-						if(fileSize > 1024 * 1024 * 1) {							
+						if(fileSize > 1024 * 1024 * 1) {
 							alert("文件大小不能超过1M，为：" + fileSize / (1024 * 1024) + "M");
 							return false;
-						} else {							
+						} else {
 							hint.innerHTML = filechooser.files[0].name;
 						}
 					} else {
@@ -315,7 +326,7 @@
 					$(this).toggleClass("on").siblings().removeClass("on")
 				}
 			});
-			
+
 			// 上传中调用函数
 		    function maskIn() {
 		        $(".img-mask").css("display", "block");
@@ -328,7 +339,7 @@
 		    function popupOutSubmit() {
 		        $(".popup-box-01").removeClass("in");
 		    }
-		    
+
 		    // 数据异常调用函数
 		    function popupInMistake() {
 		        $(".popup-box-02").addClass("in");
@@ -337,7 +348,7 @@
 		    function popupOutMistake() {
 		        $(".popup-box-02").removeClass("in");
 		    }
-		    
+
 		    // 查看详情调用函数
 		    function popupInDetail() {
 		    	$(".popup-box-02").removeClass("in");
@@ -347,7 +358,7 @@
 		    function popupOutDetail() {
 		        $(".popup-box-03").removeClass("in");
 		    }
-		    
+
 		</script>
 	</body>
 
