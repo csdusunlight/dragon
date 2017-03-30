@@ -18,275 +18,275 @@
   {% include "header.html" %}
   <!--内容-->
 	<div class="Content">
-  <div class="w1100">
-    {% include "account/left.html" %}
-		<div class="container-box">
-			<div class="header">
-				<h3>上传表格数据</h3>
-				<input type="button" value="下载表格模版" />
-			</div>
-			<div class="content">
-				<h5>选择项目名称</h5>
-				<select>
-					<option value="渠道项目01">渠道项目01</option>
-					<option value="渠道项目02">渠道项目02</option>
-					<option value="渠道项目03">渠道项目03</option>
-				</select>
-				<input type="button" name="" id="" value="导出审核数据" />
+	  <div class="w1100">
+	    {% include "account/left.html" %}
+			<div class="container-box">
+				<div class="content">
+					<div class="header">
+						<h3>上传表格数据</h3>
+						<input type="button" value="下载表格模版" />
+					</div>
+					<h5>选择项目名称</h5>
+					<select>
+						<option value="渠道项目01">渠道项目01</option>
+						<option value="渠道项目02">渠道项目02</option>
+						<option value="渠道项目03">渠道项目03</option>
+					</select>
+					<input type="button" name="" id="" value="导出审核数据" />
 
-				<h5>导入文件</h5>
-				<p>上传文件尺寸需小于1M，若导入数据超过上传限制大小，建议拆分为多个文件再逐个导入</p>
-				<div class="upload-box">
-					<b>支持小于1M的表格文件格式（.xls 和 .xlsx）</b>
-					<form id="form" name="form" method="post" action="" enctype="multipart/form-data">
-						<input name="userfile" id="choose" type="file" />
-						<a id="upload">选择表格</a>
-						<p>已选择表格：<span id="hint" class="hint">未选择任何文件</span></p>
-						</from>
+					<h5>导入文件</h5>
+					<p>上传文件尺寸需小于1M，若导入数据超过上传限制大小，建议拆分为多个文件再逐个导入</p>
+					<div class="upload-box">
+						<b>支持小于1M的表格文件格式（.xls 和 .xlsx）</b>
+						<form id="form" name="form" method="post" action="" enctype="multipart/form-data">
+							<input name="userfile" id="choose" type="file" />
+							<a class="upload-box-btn" id="upload">选择表格</a><a class="upload-box-btn" id="submit">提交数据</a>
+							<p>已选择表格：<span id="hint" class="hint">未选择任何文件</span></p>
+							</from>
+					</div>
+					<div class="img-mask">
+					    <div class="loader-inner ball-triangle-path">
+					      <div></div>
+					      <div></div>
+					      <div></div>
+					    </div>
+					    <p>文件上传中</p>
+					</div>
 				</div>
-				<div class="img-mask">
-				    <div class="loader-inner ball-triangle-path">
-				      <div></div>
-				      <div></div>
-				      <div></div>
+
+				<!--表格展示部分-->
+				<div class="Welfare">
+					<div class="Welfare-T">
+						<strong>理财福利</strong>
+						<ul class="Welfare-li" id="Swi-Top">
+							<li class="on">全部</li>
+							<li>已通过</li>
+							<li>审核中</li>
+							<li>已拒绝</li>
+						</ul>
+					</div>
+					<div class="Welfare-td">
+						<div id="pagedata2">
+							<table width="100%">
+								<thead>
+									<tr>
+										<th width="12%">项目</th>
+										<th width="10%">投资日期</th>
+										<th width="12%">提交手机号</th>
+										<th width="8%">投资期限</th>
+										<th width="10%">投资金额</th>
+										<th width="12%">备注</th>
+										<th width="10%">审核结果</th>
+										<th width="8%">返现金额</th>
+										<th width="18%">拒绝原因</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<!--十条-->
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<!--二十条-->
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<!--三十条-->
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<!--四十条-->
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<!--五十条-->
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<!--六十条-->
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<!--七十条-->
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<!--八十条-->
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<!--九十条-->
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									<!--一百条-->
+								</tbody>
+							</table>
+						</div>
+						<div class="Page-in">
+							<div class="page" id="page2"><span class="disable">&lt; 上一页</span><span class="on">1</span>
+								<a href="javascript:;" class="a_href" data-i="2">2</a>
+								<a href="javascript:;" class="a_href" data-i="3">3</a>
+								<a href="javascript:;" class="a_href" data-i="4">4</a>
+								<a href="javascript:;" class="a_href" data-i="5">5</a>
+								<a href="javascript:;" class="a_href" data-i="6">6</a>
+								<a href="javascript:;" class="a_href" data-i="7">7</a><span class="dot">...</span>
+								<a href="javascript:;" class="a_last">21</a>
+								<a href="javascript:;" class="a_next">下一页 &gt;</a><span class="href"><label for="pageText">到第</label><input autocomplete="off" type="text" class="a_text" value="1"><label for="pageText">页</label><input type="button" value="转到" class="a_button"></span></div>
+						</div>
+					</div>
+				</div>
+				<div class="popup-box popup-box-01">
+				    <div class="popup-content">
+				      <h3>表格提交成功</h3>
+				      <p id="hint">等待审核中</p>
+				      <a id="confirm_submit" class="confirm_submit table-btn" onclick="popupOutSubmit()">确&nbsp;&nbsp;&nbsp;&nbsp;认</a>
 				    </div>
-				    <p>文件上传中</p>
 				</div>
-			</div>
-
-			<!--表格展示部分-->
-			<div class="Welfare">
-				<div class="Welfare-T">
-					<strong>理财福利</strong>
-					<ul class="Welfare-li" id="Swi-Top">
-						<li class="on">全部</li>
-						<li>已通过</li>
-						<li>审核中</li>
-						<li>已拒绝</li>
-					</ul>
+				<div class="popup-box popup-box-02">
+				    <div class="popup-content">
+				      <p>提交数据：100项</p>
+				      <p>表格重复数据：100项</p>
+				      <p>已存在的数据：100项</p>
+				      <p>有效提交：100项</p>
+				      <p style="text-align: left;padding-left: 38px;">注：<br/>
+				      	已存在的数据：挖福利数据库中已存在，其他用户或自己之前提交过的数据<br />
+				      	表格重复数据：提交的表格中的重复项
+				      </p>
+				      <a id="upload_again" class="upload-again table-btn" onclick="popupOutMistake()">重新上传</a>
+				      <a id="look_detail" class="look-detail table-btn" onclick="popupInDetail()">查看详情</a>
+				    </div>
 				</div>
-				<div class="Welfare-td">
-					<div id="pagedata2">
-						<table width="100%">
-							<thead>
-								<tr>
-									<th width="12%">项目</th>
-									<th width="10%">投资日期</th>
-									<th width="12%">提交手机号</th>
-									<th width="8%">投资期限</th>
-									<th width="10%">投资金额</th>
-									<th width="12%">备注</th>
-									<th width="10%">审核结果</th>
-									<th width="8%">返现金额</th>
-									<th width="18%">拒绝原因</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<!--十条-->
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<!--二十条-->
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<!--三十条-->
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<!--四十条-->
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<!--五十条-->
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<!--六十条-->
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<!--七十条-->
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<!--八十条-->
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<!--九十条-->
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								<!--一百条-->
-							</tbody>
-						</table>
-					</div>
-					<div class="Page-in">
-						<div class="page" id="page2"><span class="disable">&lt; 上一页</span><span class="on">1</span>
-							<a href="javascript:;" class="a_href" data-i="2">2</a>
-							<a href="javascript:;" class="a_href" data-i="3">3</a>
-							<a href="javascript:;" class="a_href" data-i="4">4</a>
-							<a href="javascript:;" class="a_href" data-i="5">5</a>
-							<a href="javascript:;" class="a_href" data-i="6">6</a>
-							<a href="javascript:;" class="a_href" data-i="7">7</a><span class="dot">...</span>
-							<a href="javascript:;" class="a_last">21</a>
-							<a href="javascript:;" class="a_next">下一页 &gt;</a><span class="href"><label for="pageText">到第</label><input autocomplete="off" type="text" class="a_text" value="1"><label for="pageText">页</label><input type="button" value="转到" class="a_button"></span></div>
-					</div>
-				</div>
-			</div>
-			<div class="popup-box popup-box-01">
-			    <div class="popup-content">
-			      <h3>表格提交成功</h3>
-			      <p id="hint">等待审核中</p>
-			      <a id="confirm_submit" class="confirm_submit table-btn" onclick="popupOutSubmit()">确&nbsp;&nbsp;&nbsp;&nbsp;认</a>
-			    </div>
-			</div>
-			<div class="popup-box popup-box-02">
-			    <div class="popup-content">
-			      <p>提交数据：100项</p>
-			      <p>表格重复数据：100项</p>
-			      <p>已存在的数据：100项</p>
-			      <p>有效提交：100项</p>
-			      <p style="text-align: left;padding-left: 38px;">注：<br/>
-			      	已存在的数据：挖福利数据库中已存在，其他用户或自己之前提交过的数据<br />
-			      	表格重复数据：提交的表格中的重复项
-			      </p>
-			      <a id="upload_again" class="upload-again table-btn" onclick="popupOutMistake()">重新上传</a>
-			      <a id="look_detail" class="look-detail table-btn" onclick="popupInDetail()">查看详情</a>
-			    </div>
-			</div>
-			<div class="popup-box popup-box-03">
-			    <div class="popup-content">
-			        <h3>重复数据：</h3>
-			        <div class="Welfare-td">
-						<div id="pagedata2">
-							<table width="100%">
-								<thead>
-									<tr>
-										<th width="12%">项目</th>
-										<th width="10%">投资日期</th>
-										<th width="12%">提交手机号</th>
-										<th width="8%">投资期限</th>
-										<th width="10%">投资金额</th>
-										<th width="12%">备注</th>
-										<th width="10%">审核结果</th>
-										<th width="8%">返现金额</th>
-										<th width="18%">拒绝原因</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								</tbody>
-							</table>
+				<div class="popup-box popup-box-03">
+				    <div class="popup-content">
+				        <h3>重复数据：</h3>
+				        <div class="Welfare-td">
+							<div id="pagedata2">
+								<table width="100%">
+									<thead>
+										<tr>
+											<th width="12%">项目</th>
+											<th width="10%">投资日期</th>
+											<th width="12%">提交手机号</th>
+											<th width="8%">投资期限</th>
+											<th width="10%">投资金额</th>
+											<th width="12%">备注</th>
+											<th width="10%">审核结果</th>
+											<th width="8%">返现金额</th>
+											<th width="18%">拒绝原因</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+										<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+										<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
-					</div>
-			      <h3>已存在数据：</h3>
-			      <div class="Welfare-td">
-						<div id="pagedata2">
-							<table width="100%">
-								<thead>
-									<tr>
-										<th width="12%">项目</th>
-										<th width="10%">投资日期</th>
-										<th width="12%">提交手机号</th>
-										<th width="8%">投资期限</th>
-										<th width="10%">投资金额</th>
-										<th width="12%">备注</th>
-										<th width="10%">审核结果</th>
-										<th width="8%">返现金额</th>
-										<th width="18%">拒绝原因</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-								</tbody>
-							</table>
+				      <h3>已存在数据：</h3>
+				      <div class="Welfare-td">
+							<div id="pagedata2">
+								<table width="100%">
+									<thead>
+										<tr>
+											<th width="12%">项目</th>
+											<th width="10%">投资日期</th>
+											<th width="12%">提交手机号</th>
+											<th width="8%">投资期限</th>
+											<th width="10%">投资金额</th>
+											<th width="12%">备注</th>
+											<th width="10%">审核结果</th>
+											<th width="8%">返现金额</th>
+											<th width="18%">拒绝原因</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+										<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+										<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
-					</div>
-					<p style="text-align: left;">注：该页面刷新后将不再显示，有需要的用户请截图保存</p>
-			      <a id="confirm_detail" class="confirm-detail table-btn" onclick="popupOutDetail()">确&nbsp;&nbsp;&nbsp;&nbsp;定</a>
-			    </div>
+						<p style="text-align: left;">注：该页面刷新后将不再显示，有需要的用户请截图保存</p>
+				      <a id="confirm_detail" class="confirm-detail table-btn" onclick="popupOutDetail()">确&nbsp;&nbsp;&nbsp;&nbsp;定</a>
+				    </div>
+				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 		<!--底部-->
   {% include "footer.html" %}

@@ -3,9 +3,12 @@ h5 {margin: 0;}
   float: right;
 	position: relative;
 	width: 880px;
-	margin: 20px auto 0;
+	margin: 0 auto 0;
 	text-align: left;
-	/*border: 1px solid#e4e4e4;*/
+}
+.w1100 {
+  width: 1100px;
+  margin: 0 auto;
 }
 .header {
 	padding: 10px 20px;
@@ -33,8 +36,8 @@ h5 {margin: 0;}
 }
 
 .content {
-	margin-top: 50px;
-	/*margin-left: 200px;*/
+  border: 1px solid #e4e4e4;
+  padding: 20px;
 }
 .content h5 {
 	font-size: 16px;
@@ -73,10 +76,10 @@ h5 {margin: 0;}
 	border: 1px solid red;
 	background-color: none;
 }
-#upload {
-	display: block;
+.upload-box-btn {
+	display: inline-block;
 	width: 200px;;
-	margin: 30px auto 10px;
+	margin: 30px 10px 10px;
 	height: 40px;
 	text-align: center;
 	line-height: 40px;
@@ -84,7 +87,7 @@ h5 {margin: 0;}
 	border-radius: 5px;
 	cursor: pointer;
 }
-#upload:hover {
+.upload-box-btn:hover {
 	background: #f08519;
 	color: #fff;
 }
@@ -101,6 +104,9 @@ table {
 table td {
 	white-space: normal;
 	line-height: 1.2 !important;
+}
+.Welfare-td {
+  height: auto;
 }
 .Page-in {position: static;}
 .popup-content .Welfare-td {

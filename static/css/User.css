@@ -22,7 +22,7 @@ td {white-space:nowrap;overflow:hidden;}
 .back-a10 { background-position:27px -390px !important;}
 .back-a11 { background-position:27px -435px !important;}
 .back-a12 { background-position:27px -480px !important;}
-.back-a13 { background-position:27px -525px !important;}
+.back-a13,.back-a14 { background-position:27px -525px !important;}
 .RightCont { float:right; width:882px; height:auto;}
 .Sign-vi { float:left; width:100%; height:auto; border:1px solid #eeeeee; background:#fff; border-top:3px solid #f08519 !important; }
 .Sign-Time { float:left; width:100%; height:auto; border-bottom:1px solid #eee; text-align:left;}
