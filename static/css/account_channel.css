@@ -3,7 +3,7 @@ h5 {margin: 0;}
   float: right;
 	position: relative;
 	width: 880px;
-	margin: 20px auto 0;
+	margin: 0 auto 0;
 	text-align: left;
 }
 .w1100 {
@@ -36,7 +36,6 @@ h5 {margin: 0;}
 }
 
 .content {
-	margin-top: 50px;
   border: 1px solid #e4e4e4;
   padding: 20px;
 }
