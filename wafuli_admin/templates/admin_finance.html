@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+{%load staticfiles%}
 {% block js %}
+<script type="text/javascript" src="{%static 'js/ajaxfileupload.js'%}"></script>
 <script type="text/javascript">
 $.ajaxSetup({
     data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
@@ -190,19 +192,20 @@ $(document).ready(function(){
 		    iframe.contentWindow.document.close();
 		document.getElementById('myIFrame').contentWindow.document.getElementById('postData_form').submit();  
 	});
-	$('button.uploadbtn').click(function() {
+	$('#import').click(function() {
 		var fileElementId  = 'fileupload1';
     	$.ajaxFileUpload({  
-            url:'',  
+            url:"{% url 'import_finance_excel'%}",  
             secureuri:false,  
             fileElementId:fileElementId,//file标签的id  
             dataType: 'json',//返回数据的类型  
             data:{},//一同上传的数据  
             success: function (data, status) {
             	if (data.code==0){
+            		alert("导入成功！ 数量：" + data.num);
             	}
             	else {
-            		alert(data.msg);
+            		alert(data.msg + " 成功数量："+data.num);
             	}
             },  
             error: function (data, status, e) {  
@@ -276,7 +279,7 @@ $(document).ready(function(){
                                     </div>
                                     <div>
                                     <input id="fileupload1" name="file"  type="file"/>
-										<button class="uploadbtn" id="uploadbtn1">上传</button>
+									<input id="import" type="button" value="导入" />
                                     </div>
                                 </form>
                             </div>

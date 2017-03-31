@@ -507,7 +507,6 @@ def export_finance_excel(request):
 def import_finance_excel(request):
     ret = {'code':-1}
     file = request.FILES.get('file')
-    print file.name
     with open('./out.xls', 'wb+') as destination:
         for chunk in file.chunks():
             destination.write(chunk)
@@ -517,7 +516,7 @@ def import_finance_excel(request):
     ncols = table.ncols
     if ncols!=10:
         ret['msg'] = u"文件格式与模板不符，请在导出的待审核记录表中更新后将文件导入！"
-        return ret
+        return JsonResponse(ret)
     rtable = []
     mobile_list = []
     try:
@@ -532,49 +531,80 @@ def import_finance_excel(request):
                 elif j==7:
                     result = cell.value.strip()
                     if result == u"是":
+                        result = True
                         temp.append(True)
                     elif result == u"否":
+                        result = False
                         temp.append(False)
                     else:
                         raise Exception(u"审核结果必须为是或否。")
                 elif j==8:
+                    return_amount = 0
                     if cell.value:
                         return_amount = float(cell.value)
-                        temp.append(return_amount)
+                    elif result:
+                        raise Exception(u"审核结果为是时，返现金额不能为空或零。")
+                    temp.append(return_amount)
                 elif j==9:
                     reason = cell.value
                     temp.append(reason)
                 else:
                     continue;
+            rtable.append(temp)
     except Exception, e:
         traceback.print_exc()
         ret['msg'] = unicode(e)
-    
-    
-    for row in rtable:
-        id = row[0]
-        result = row[1]
-        amount = int(row[2]*100)
-        reason = row[3]
-        event = UserEvent.objects.get(id=id)
-#         event.audit_time = 
-    ####开始去重
-    temp = UserEvent.objects.filter(event_type='1').exclude(audit_state='2').values('invest_account')
-    db_mobile_list = map(lambda x: str(x['invest_account']), temp)
-    userevent_list = []
-    duplicate_mobile_list = []
-    for i in range(len(mobile_list)):
-        mob = mobile_list[i]
-        if mob in db_mobile_list:
-            duplicate_mobile_list.append(mob)
-        else:
-            item = rtable[i]
-            obj = UserEvent(user=request.user, event_type='1',invest_account=mob,
-                            invest_amount=item[3],invest_term=item[2],time=item[0],
-                            audit_state='1',remark=item[4],content_object=finance)
-            userevent_list.append(obj)
-    UserEvent.objects.bulk_create(userevent_list)
-    print len(userevent_list), len(rtable), nrows-1
+        ret['num'] = 0
+        return JsonResponse(ret)
+    admin_user = request.user
+    suc_num = 0
+    try:
+        for row in rtable:
+            id = row[0]
+            result = row[1]
+            reason = row[3]
+            event = UserEvent.objects.get(id=id)
+            if event.audit_state != '1' or event.translist.exists():
+                continue
+            log = AuditLog(user=admin_user,item=event)
+            event_user = event.user
+            translist = None
+            if result:
+                amount = int(row[2]*100)
+                log.audit_result = True
+                translist = charge_money(event_user, '0', amount, u'福利返现')
+                if translist:
+                    event.audit_state = '0'
+                    translist.user_event = event
+                    translist.save(update_fields=['user_event'])
+                    Invest_Record.objects.create(invest_date=event.time,invest_company=event.content_object.company.name,
+                                                     user_name=event_user.zhifubao_name,zhifubao=event_user.zhifubao,
+                                                     invest_mobile=event.invest_account,invest_period=event.invest_term,
+                                                     invest_amount=event.invest_amount,return_amount=amount/100.0,wafuli_account=event_user.mobile,
+                                                     return_date=datetime.date.today(),remark=event.remark)    
+                else:
+                    logger.error(u"Charging cash is failed!!!")
+                    logger.error("UserEvent:" + str(id) + u" 现金记账失败，请检查原因！！！！")
+                    continue
+            else:
+                event.audit_state = '2'
+                log.audit_result = False
+                log.reason = reason
+            admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='1')
+            if translist:
+                translist.admin_event = admin_event
+                translist.save(update_fields=['admin_event'])
+            log.admin_item = admin_event
+            log.save()
+            event.audit_time = log.time
+            event.save(update_fields=['audit_state','audit_time'])
+            suc_num += 1
+        ret['code'] = 0
+    except Exception as e:
+        traceback.print_exc()
+        ret['code'] = 1
+        ret['msg'] = unicode(e)
+    ret['num'] = suc_num
     return JsonResponse(ret)
 def get_admin_task_page(request):
     res={'code':0,}
