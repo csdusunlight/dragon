@@ -215,7 +215,11 @@ $(document).ready(function(){
 	});
 
   var filechooser = document.getElementById("fileupload1");
-  var hint = document.getElementById("hint");
+  var choose_file = document.getElementById("input_clone");
+  var choose_file = document.getElementById("hint");
+  choose_file.onclick = function() {
+          filechooser.click();
+        }
   filechooser.onchange =  function() {
               hint.innerHTML = filechooser.files[0].name;
   }
@@ -285,7 +289,7 @@ $(document).ready(function(){
                                     </div>
                                     <div class="leading-in">
                                       <input id="fileupload1" name="file"  type="file"/>
-                                      <a class="input-clone">选择文件</a>
+                                      <a id="input_clone" class="input-clone">选择文件</a>
                                       <p class="hint-box">已选择表格：<b id="hint" class="hint">未选择任何文件</b></p>
   									                  <input id="import" type="button" value="导入" />
                                     </div>

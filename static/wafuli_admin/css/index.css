@@ -115,6 +115,9 @@ a { cursor:pointer;}
     box-sizing:border-box;
     min-width:80px;
 }
+.leading-in {
+    position: relative;
+}
 .input-clone {
     position: absolute;
     left: 0;
