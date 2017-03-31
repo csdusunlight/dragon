@@ -108,15 +108,19 @@ a { cursor:pointer;}
     display: inline-block;
     width:10%;
     height:30px;
+    background-color: #4daa84;
     border:1px solid #1377aa;
     color:#fff;
     font-size:16px;
-    padding:0 40px 0 0;
     box-sizing:border-box;
     min-width:80px;
 }
 .input-clone {
     position: absolute;
+    left: 0;
+    bottom: 0;
+    text-align: center;
+    line-height: 30px;
 }
 .hint-box {
     display: inline-block;
