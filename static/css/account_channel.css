@@ -1,5 +1,8 @@
 h5 {margin: 0;}
-.w1100 {width: 1100px;}
+.w1100 {
+  width: 1100px;
+  margin: 0 auto;
+}
 .container-box{
   position: relative;
   width: 880px;
