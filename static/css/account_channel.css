@@ -1,120 +1,120 @@
 h5 {margin: 0;}
 .container-box{
+  position: relative;
+  width: 880px;
   float: right;
-	position: relative;
-	width: 880px;
-	margin: 0 auto 0;
-	text-align: left;
-}
-.w1100 {
-  width: 1100px;
-  margin: 0 auto;
+  margin: 20px auto 0;
+  text-align: left;
 }
 .header {
-	padding: 10px 20px;
-	overflow: hidden;
-	border: 1px solid #e4e4e4;
+  height: 44px;
+  padding-left: 20px;
+  overflow: hidden;
+  border: 1px solid #e4e4e4;
 }
 .header h3 {
-	float: left;
-	font-size: 24px;
+  float: left;
+  font-size: 24px;
+  line-height: 44px;
 }
-.header input {
-	float: right;
-	width: 160px;
-	height: 30px;
-	line-height: 30px;
-	border: 1px solid #e4e4e4;
-	border-radius: 4px;
-	background: #e4e4e4;
-	cursor: pointer;
+.header select {
+  display: inline-block;
+  width: 200px;
+  height: 30px;
+  margin-top: 8px;
+  margin-left: 10px;
 }
-.header input:hover {
-	background: #f08519;
-	border: none;
-	color: #fff;
+.tab-head {
+  float: right;
+  height: 44px;
+  border-left: 1px solid #e4e4e4;
+}
+.tab-head li {
+  display: inline-block;
+  width: 80px;
+  line-height: 44px;
+  text-align: center;
+}
+.tab-head li.on {
+  background: #f08519;
+  color: #fff;
 }
 
 .content {
+  padding: 16px;
   border: 1px solid #e4e4e4;
-  padding: 20px;
-}
-.content h5 {
-	font-size: 16px;
-	margin: 20px 0 10px;
-}
-.content select {
-	width: 200px;
-	height: 30px;
-}
-.content>input {
-	width: 100px;
-	height: 30px;
-	border: 1px solid #777;
-	border-radius: 4px;
-	background: #fff;
-	cursor: pointer;
-}
-.content>input:hover {
-	background: #f08519;
-	border: none;
-	color: #fff;
-}
-.content p {
-	margin: 0;
+  border-top: none;
 }
 .upload-box {
-	width: 600px;
-	padding: 50px;
-	margin-top: 20px;
-	border: 1px dashed #e4e4e4;
-	text-align: center;
+  width: 600px;
+  padding: 20px;
+  margin-top: 20px;
+  border: 1px dashed #e4e4e4;
+  text-align: center;
 }
-.upload-box input[type="file"] {
-	width: 200px;
-	height: 30px;
-	border: 1px solid red;
-	background-color: none;
+.download-templete {
+  float: right;
+  width: 100px;
+  height: 30px;
+  border: 1px solid #777;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
 }
-.upload-box-btn {
-	display: inline-block;
-	width: 200px;;
-	margin: 30px 10px 10px;
-	height: 40px;
-	text-align: center;
-	line-height: 40px;
-	border: 1px solid;
-	border-radius: 5px;
-	cursor: pointer;
+.download-templete:hover {
+  background: #f08519;
+  border: none;
+  color: #fff;
 }
-.upload-box-btn:hover {
-	background: #f08519;
-	color: #fff;
+.upload-box b {
+  display: block;
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+.upload-box-btn,
+.export-btn {
+  display: inline-block;
+  width: 160px;;
+  margin: 10px 10px 10px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  border: 1px solid;
+  border-radius: 5px;
+  background: #fff;
+  cursor: pointer;
+}
+.upload-box-btn:hover,
+.export-btn:hover {
+  background: #f08519;
+  color: #fff;
 }
 #choose {
-	display: none;
+  display: none;
+}
+.content h6 {
+  margin : 20px 0 0;
+  font-size: 16px;
+  font-weight: normal;
 }
 
 /*表格部分*/
 table {
-	text-align: center;
-	border-collapse:collapse;
+  text-align: center;
+  border-collapse:collapse;
 }
 
 table td {
-	white-space: normal;
-	line-height: 1.2 !important;
-}
-.Welfare-td {
-  height: auto;
+  white-space: normal;
+  line-height: 1.2 !important;
 }
 .Page-in {position: static;}
 .popup-content .Welfare-td {
-	height: auto;
-	float: none;
+  height: auto;
+  float: none;
 }
 .popup-content .Welfare-td th {
-	border-top: none;
+  border-top: none;
 }
 /*等待上传动画*/
 .img-mask {
@@ -321,13 +321,13 @@ table td {
   box-shadow: 0 5px 15px rgba(0,0,0,.5);
 }
 .popup-box-03 .popup-content {
-	width: 880px;
-	height: 500px;
-	margin-top: 4%;
-	overflow-y: scroll;
+  width: 880px;
+  height: 500px;
+  margin-top: 4%;
+  overflow-y: scroll;
 }
 .popup-box-03 h3 {
-	text-align: left;
+  text-align: left;
 }
 .popup-content h3 {
   padding: 20px 0;
@@ -340,17 +340,17 @@ table td {
   font-size: 16px;
 }
 .popup-content .table-btn {
-	display: inline-block;
-	padding: 6px 30px;
-	margin-top: 10px;
-	border-radius: 20px;
-	color: rgb(255, 255, 255);
-	background: rgb(240, 134, 25) none repeat scroll 0% 0%;
-	line-height: 1;
-	cursor: pointer;
+  display: inline-block;
+  padding: 6px 30px;
+  margin-top: 10px;
+  border-radius: 20px;
+  color: rgb(255, 255, 255);
+  background: rgb(240, 134, 25) none repeat scroll 0% 0%;
+  line-height: 1;
+  cursor: pointer;
 }
 .popup-box-02 .table-btn {
-  	margin: 10px 2.5rem 0rem 48px;
+    margin: 10px 2.5rem 0rem 48px;
 }
 .popup-box.in .popup-content{
   -webkit-animation: popup 0.4s linear;
