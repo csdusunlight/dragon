@@ -21,7 +21,7 @@
 	  <div class="w1100">
 	    {% include "account/left.html" %}
 			<div class="container-box">
-				<div class="content">
+				<div class="content-box">
 					<div class="header">
 						<h3>选择项目名称</h3>
 						<select>
@@ -337,6 +337,29 @@
 					}
 				}
 			}
+
+			//			选项卡切换
+			var tabs=document.getElementById("tab_head").getElementsByTagName("li");
+			var contents = $('.content');
+
+			for(var i=0;i<contents.length;i++){
+				tabs[i].onclick = function(){
+					change(this);
+				}
+
+			}
+			function change(obj){
+				for(var i=0;i<tabs.length;i++){
+					if(tabs[i]==obj){
+						tabs[i].className="on";
+						contents[i].style.display = "block";
+					}else{
+						tabs[i].className="";
+						contents[i].style.display = "none";
+					}
+				}
+			}
+
 			$("#Swi-Top li").click(function(){
 				if($(this).attr("class")!="on"){
 					$(this).toggleClass("on").siblings().removeClass("on")
