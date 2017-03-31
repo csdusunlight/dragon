@@ -902,8 +902,8 @@ def get_user_message_page(request):
         i = {"title":con.title,
              'content':con.content,
              'id':con.id,
-             'code':con.time.strftime("%Y-%m-%d"),
-             'state':"on" if con.is_read else ""
+             'time':con.time.strftime("%Y-%m-%d"),
+             'state':"on" if con.is_read else "",
         }
         data.append(i)
     if data:
