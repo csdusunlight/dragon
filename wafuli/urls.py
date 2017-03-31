@@ -57,4 +57,6 @@ urlpatterns = [
     
     url(r'^sitemap/$', TemplateView.as_view(template_name="sitemap.html"), name='sitemap'),
     url(r'^screenshot/$', 'wafuli.views.display_screenshot', name='screenshot'),
+    
+    url(r'^APP_download/$', TemplateView.as_view(template_name="download_app.html"), name='APP_download'),
 ]
