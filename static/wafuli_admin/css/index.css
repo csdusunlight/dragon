@@ -180,9 +180,11 @@ a { cursor:pointer;}
 .Balance-in textarea { width:406px; height:80px; line-height:20px; resize:none; box-sizing:border-box; outline:none; border:1px solid #cdcdcd}
 
 
-.Points { position:fixed; width:100%; height:100%; background:url(../images/back-in.png); display:none;}
-.Blacklist { position:fixed; width:100%; height:100%; background:url(../images/back-in.png); display:none;}
-.Blacklist-none { position:fixed; width:100%; height:100%; background:url(../images/back-in.png); display:none;}
+.Points,
+.Blacklist,
+.Blacklist-none,
+.Channel,
+.Channel-none { position:fixed; width:100%; height:100%; background:rgba(0,0,0,0.3); display:none;}
 /*#item_1555{width: 100px;}*/
 
 /*优惠券发放页面样式*/

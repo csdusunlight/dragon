@@ -6,13 +6,13 @@ $.ajaxSetup({
 });
 var data = '<table width="100%"><tr><th>用户名</th><th>手机号</th><th>邮箱</th><th>支付宝</th>'+
 	'<th>支付宝姓名</th><th>注册时间</th><th>最近登录时间</th><th>推荐人用户名</th><th>推荐人手机号</th>'+
-	'<th>账户余额</th><th width="5%">是否为黑名单</th><th>账户操作</th>'+
+	'<th>账户余额</th><th width="5%">是否为黑名单</th><th>账户操作</th><th>渠道管理</th>'+
 	'</tr>[data]<tr><td>{username}</td><td>{mobile}</td><td>{email}</td>'+
 	'<td>{zhifubao}</td><td>{zhifubao_name}</td><td>{time}</td><td>{recent_login_time}</td>'+
 	'<td>{inviter_name}</td><td>{inviter_mobile}</td><td>{balance}</td><td id="is_black_{id}">{is_black}</td>'+
 	'<td id="item_{id}"><a class="btn1-x" onclick="addcash({id})">余额</a> │ '+
 	'<a class="btn2-x" onclick="addscore({id})">积分</a> │ <a id="black_{id}" onclick="addblack({id})" class="btn3-x">{opertype}</a>'+
-	'</td></tr>[/data]</table>';
+	'</td><td><a onclick="addChannel()">添加</a> │ <a onclick="cancelChannel()">取消</a></td></tr>[/data]</table>';
 var url = "{% url 'get_admin_user_page' %}" + "?page={page}&size={pageSize}";
 var selected_id = 0;
 function addcash(id){
@@ -33,11 +33,19 @@ function addblack(id){
 		$(".Blacklist-none").css("display","block");
 	}
 }
+// 渠道 添加 取消 弹窗调用函数
+function addChannel(){
+  $(".Points").css("display","block");
+}
+function cancelChannel(){
+  $(".Points").css("display","block");
+}
+
 $(document).ready(function(){
 	$("li.home2").toggleClass("on");
 	$(".Tin-table-box tr:even").css("background-color","#fcfcfc");
 	$("#pagedata").ajaxPage({
-	    url:url+"&state=0", 
+	    url:url+"&state=0",
 	    pageId:$("#page"),
 	    pageSize:10,
 	    run:true,
@@ -234,7 +242,7 @@ $(document).ready(function(){
 		var newdata = data;
 		$("#page").empty();
 		$("#pagedata").ajaxPage({
-		    url:newurl, 
+		    url:newurl,
 		    pageId:$("#page"),
 		    pageSize:10,
 		    run:true,
@@ -242,7 +250,7 @@ $(document).ready(function(){
 		});
 	});
 });
-</script>     
+</script>
 {% endblock js %}
 
 {% block right %}
@@ -290,9 +298,9 @@ $(document).ready(function(){
                                         <tr>
                                         	<td>
                                             	<i>黑&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单：</i>
-                                                <select name="selectAge" id="state">   
-											        <option value="0">全部</option>   
-											        <option value="1">是</option>   
+                                                <select name="selectAge" id="state">
+											        <option value="0">全部</option>
+											        <option value="1">是</option>
 											        <option value="2">否</option>
 											    </select>
                                             </td>
@@ -306,7 +314,7 @@ $(document).ready(function(){
                                         	<td></td>
                                         </tr>
                                     </table>
-                                    
+
                                 </form>
                             </div>
                         </div>
@@ -316,7 +324,7 @@ $(document).ready(function(){
 		                    <div class="Page-in-admin">
 		                    	<div class="page"  id="page">
 		                        </div>
-		                    </div> 
+		                    </div>
                         </div>
 {%endblock%}
 {% block modal %}
@@ -382,6 +390,34 @@ $(document).ready(function(){
         	<h3>黑名单操作</h3>
             <button class="none-x"></button>
             <h5> 确认取消加黑？</h5>
+            <form class="Audit-in">
+                <div class="Finnow-Sub" style="margin-top:0">
+                <input type="submit" value="确认" onclick="return false;"/>
+                <input type="button" value="取消" class="none-x-s" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--确认添加渠道-->
+    <div class="Channel">
+      <div class="w570-box">
+          <h3>添加渠道操作</h3>
+            <button class="none-x"></button>
+            <h5> QQ帐号/QQ昵称：<input type="text" value="请输入要添加的用户名"></h5>
+            <form class="Audit-in">
+                <div class="Finnow-Sub" style="margin-top:0">
+                <input type="submit" value="确认" onclick="return false;"/>
+                <input type="button" value="取消" class="none-x-s" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--取消添加渠道-->
+    <div class="Channel-none">
+      <div class="w570-box">
+          <h3>取消渠道操作</h3>
+            <button class="none-x"></button>
+            <h5> 是否取消该用户的渠道资格？</h5>
             <form class="Audit-in">
                 <div class="Finnow-Sub" style="margin-top:0">
                 <input type="submit" value="确认" onclick="return false;"/>
