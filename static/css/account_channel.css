@@ -75,6 +75,12 @@ h5 {margin: 0;}
   margin-top: 50px;
   margin-bottom: 30px;
 }
+.table-choosed {
+  text-align: left;
+  margin-left: 130px;
+  padding-left: 30px;
+  background: url(../images/table-bg.png) left center no-repeat;
+}
 .upload-box-btn,
 .export-btn {
   display: inline-block;

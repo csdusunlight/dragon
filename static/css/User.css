@@ -10,7 +10,7 @@ td {white-space:nowrap;overflow:hidden;}
 .LeftNav li:hover a{ background-image:url(../images/sin-picon-v.png); color:#fff;}
 .LeftNav .on{ background:#f08519;}
 .LeftNav .on a{ background-image:url(../images/sin-picon-v.png); color:#fff;}
-.back-a1,.back-a14 { background-position:27px 15px !important;}
+.back-a1 { background-position:27px 15px !important;}
 .back-a2 { background-position:27px -30px !important;}
 .back-a3 { background-position:27px -75px !important;}
 .back-a4 { background-position:27px -120px !important;}
@@ -23,6 +23,11 @@ td {white-space:nowrap;overflow:hidden;}
 .back-a11 { background-position:27px -435px !important;}
 .back-a12 { background-position:27px -480px !important;}
 .back-a13 { background-position:27px -525px !important;}
+.LeftNav li .back-a14 { background-image:url(../images/channel-bg.png);}
+.LeftNav li:hover .back-a14{ background-image:url(../images/channel-bg02.png); color:#fff;}
+.LeftNav .on .back-a14 {
+  background: url(url(../images/channel-bg02.png); color:#fff);
+}
 .RightCont { float:right; width:882px; height:auto;}
 .Sign-vi { float:left; width:100%; height:auto; border:1px solid #eeeeee; background:#fff; border-top:3px solid #f08519 !important; }
 .Sign-Time { float:left; width:100%; height:auto; border-bottom:1px solid #eee; text-align:left;}
