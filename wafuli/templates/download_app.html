@@ -9,6 +9,8 @@
 		<link rel="stylesheet" type="text/css" href="{% static 'css/download_app.css' %}" />
 	</head>
 	<body>
+		<!--头部-->
+  	{% include "header.html" %}
 		<div class="container-box">
 			<div class="content-box">
 				<div class="left-phone">
@@ -29,7 +31,7 @@
 				<p>扫码下载挖福利安卓apk</p>
 			</div>
 		</div>
-  <!--浮动窗口-->  
+  <!--浮动窗口-->
 		<script src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 		<script type="text/javascript">
 			$(".apk-btn").click(function() {
