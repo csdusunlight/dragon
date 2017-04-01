@@ -109,11 +109,12 @@ a { cursor:pointer;}
     width:10%;
     height:30px;
     background-color: #4daa84;
-    border:1px solid #1377aa;
+    border:none;
     color:#fff;
     font-size:16px;
     box-sizing:border-box;
     min-width:80px;
+    vertical-align:bottom;
 }
 .leading-in {
     position: relative;
@@ -124,6 +125,9 @@ a { cursor:pointer;}
     bottom: 0;
     text-align: center;
     line-height: 30px;
+}
+#import {
+    margin-left: 20px;
 }
 .hint-box {
     display: inline-block;
@@ -223,10 +227,6 @@ a { cursor:pointer;}
 #users+label {
         display: block;
         margin-top: 10px;
-}
-#fileupload1 {
-        margin-top: 20px;
-        border: 1px solid #4daa84;
 }
 #uploadbtn1 {
         background-color: #4daa84;
