@@ -32,9 +32,9 @@ h5 {margin: 0;}
   float: right;
   height: 44px;
   font-size: 0;
-  border-left: 1px solid #e4e4e4;
 }
 .tab-head li {
+  border-left: 1px solid #e4e4e4;
   display: inline-block;
   width: 80px;
   line-height: 44px;
@@ -43,6 +43,7 @@ h5 {margin: 0;}
 .tab-head li:hover {
   background: #f08519;
   color: #fff;
+  cursor: pointer;
 }
 .tab-head li.on {
   background: #f08519;

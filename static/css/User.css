@@ -26,7 +26,7 @@ td {white-space:nowrap;overflow:hidden;}
 .LeftNav li .back-a14 { background:url(../images/channel-bg.png) 26px center no-repeat;}
 .LeftNav li:hover .back-a14{ background-image:url(../images/channel-bg02.png); color:#fff;}
 .LeftNav .on .back-a14 {
-  background-image: : url(../images/channel-bg02.png); color:#fff);
+  background-image: url(../images/channel-bg02.png); color:#fff);
 }
 .RightCont { float:right; width:882px; height:auto;}
 .Sign-vi { float:left; width:100%; height:auto; border:1px solid #eeeeee; background:#fff; border-top:3px solid #f08519 !important; }
