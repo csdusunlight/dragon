@@ -31,6 +31,7 @@ h5 {margin: 0;}
 .tab-head {
   float: right;
   height: 44px;
+  font-size: 0;
   border-left: 1px solid #e4e4e4;
 }
 .tab-head li {
@@ -38,6 +39,10 @@ h5 {margin: 0;}
   width: 80px;
   line-height: 44px;
   text-align: center;
+}
+.tab-head li:hover {
+  background: #f08519;
+  color: #fff;
 }
 .tab-head li.on {
   background: #f08519;
@@ -77,8 +82,8 @@ h5 {margin: 0;}
 }
 .table-choosed {
   text-align: left;
-  margin-left: 130px;
-  padding-left: 30px;
+  margin:0 0 0 130px;
+  padding: 20px 50px;
   background: url(../images/table-bg.png) left center no-repeat;
 }
 .upload-box-btn,
