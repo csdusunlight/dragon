@@ -52,6 +52,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField('active', default=True,
         help_text=('Designates whether this user should be treated as '
                     'active. Unselect this instead of deleting accounts.'))
+#     is_channel = models.BooleanField(u'是否渠道用户', default = False)
     date_joined = models.DateTimeField('date joined', default=timezone.now)
     accu_income = models.IntegerField(u'累计收益', default = 0)
     accu_scores = models.IntegerField(u'累计获得积分', default = 0)
@@ -104,11 +105,14 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         return self.admin_permissions.filter(code=code).exists()
     def __unicode__(self): 
         return self.mobile
-    
-# class InviteDetail(MyUser):
-#     inviter = models.ForeignKey(MyUser, related_name="user_inviter_ditail")
-#     invitee = models.OneToOneField(MyUser, related_name="user_invitee_ditail")
-#     message_num = models.IntegerField()
+    def is_channel(self):
+        return hasattr(self, 'channel')
+class Channel(models.Model):
+    user = models.OneToOneField(MyUser, primary_key=True)
+    qq_number = models.CharField(u"QQ号", max_length=20)
+    join_time = models.DateTimeField(u"加入渠道时间", default=timezone.now)
+    def __unicode__(self): 
+        return self.user.mobile
 class Userlogin(models.Model):
     user = models.ForeignKey(MyUser, related_name="user_login_history")
     time = models.DateTimeField(u'登录时间', default = timezone.now)
