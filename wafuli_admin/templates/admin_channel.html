@@ -5,9 +5,9 @@ $.ajaxSetup({
     data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
 });
 var data = '<table width="100%"><tr><th>QQ号/QQ昵称</th><th>手机号</th><th>支付宝帐号</th><th>支付宝姓名</th>'+
-	'<th>添加为渠道时间</th><th>最近登陆时间</th><th>账户余额</th>'+
-	'</tr>[data]<tr><td>2495534565</td><td>14533345678</td><td>394857948544</td>'+
-	'<td>佚名</td><td>2016-08-12 23:16</td><td>2017-04-01 23:16</td><td>88888</td></tr>[/data]</table>';
+	'<th>添加为渠道时间</th><th>账户余额</th>'+
+	'</tr>[data]<tr><td>{qq}</td><td>{mobile}</td><td>{zhifubao}</td>'+
+	'<td>{zhifubao_name}</td><td>{join_time}</td><td>{balance}</td></tr>[/data]</table>';
 
 var url = "{% url 'get_admin_channel_page' %}" + "?page={page}&size={pageSize}";
 var send_msg_para = {};
@@ -24,8 +24,21 @@ $(document).ready(function(){
 	});
 
 	$("#search").click(function(){
-		send_msg_para={};
-
+		var startTime = $("#startTime").val();
+		var endTime = $("#endTime").val();
+		var newurl = url;
+		if(startTime && endTime){
+			newurl += "&startTime="+startTime;
+			newurl += "&endTime="+endTime;
+		}
+		var qq_number = $("#qq_number").val();
+		var mobile = $("#mobile").val();
+		if(qq_number){
+			newurl += "&qq="+qq_number;
+		}
+		if(mobile){
+			newurl += "&mobile="+mobile;
+		}
 		$("#page").empty();
 		$("#pagedata").ajaxPage({
 		    url:newurl,
@@ -33,31 +46,6 @@ $(document).ready(function(){
 		    pageSize:10,
 		    run:true,
 		    content:data,
-		});
-	});
-	$("#send_msg").click(function(){
-		var content = $("#msg_content").val();
-		if (!content){
-			alert("内容为空");
-			return;
-		}
-		send_msg_para.content = content;
-		$.ajax({
-			url:"{%url 'send_multiple_msg' %}",
-			dataType:"json",
-			type:"POST",
-			data:send_msg_para,
-			success:function(ret){
-				if(ret.code==0){
-					alert("发送成功，短信数量：" +ret.num);
-				}
-				else {
-					alert(ret.res_msg);
-				}
-			},
-			error:function(){
-				alert("请检查网络连接");
-			}
 		});
 	});
 });
@@ -71,26 +59,22 @@ $(document).ready(function(){
                                 	<table width="100%">
                                     	<tr>
                                         	<td>
-                                            	<i>支付宝帐号：</i>
-                                                <input id="zhifubao" type="text" />
+                                            	<i>添加为渠道时间开始时间：</i>
+                                                <input id="startTime" type="datetime-local" />
                                             </td>
                                         	<td>
-                                            	<i>支付宝姓名</i>
-                                                <input id="zhifubao_name" type="text" />
+                                            	<i>添加为渠道时间结束时间：</i>
+                                                <input id="endTime" type="datetime-local" />
                                             </td>
                                         </tr>
                                       <tr>
                                         	<td>
                                             	<i>QQ帐号/QQ昵称：</i>
-                                                <input id="qq_name" type="text" />
+                                                <input id="qq_number" type="text" />
                                             </td>
                                         	<td>
                                               <i>用户手机号：</i>
-                                                <input id="user_mobile" type="text" />
-                                            </td>
-                                          <td>
-                                            	<i>添加为渠道时间</i>
-                                                <input id="channel_date" type="text" />
+                                                <input id="mobile" type="text" />
                                             </td>
                                         </tr>
 

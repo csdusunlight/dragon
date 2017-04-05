@@ -9,7 +9,7 @@ from django.http.response import JsonResponse, Http404, HttpResponse
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from account.transaction import charge_money, charge_score
 import logging
-from account.models import MyUser
+from account.models import MyUser, Channel
 from django.db.models import Q,F
 from wafuli_admin.models import DayStatis, Invest_Record
 from django.conf import settings
@@ -810,6 +810,15 @@ def admin_user(request):
             obj_user.save(update_fields=['is_active'])
             admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=obj_user, event_type='6', remark=u"去黑")
             res['code'] = 0
+        elif type == 5:
+            qq_number = request.POST.get('qq_number', 0)
+            Channel.objects.create(user=obj_user, qq_number=qq_number)
+            admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=obj_user, event_type='6', remark=u"新增渠道")
+            res['code'] = 0
+        elif type == 6:
+            obj_user.channel.delete()
+            admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=obj_user, event_type='6', remark=u"取消渠道")
+            res['code'] = 0
         return JsonResponse(res)
             
 def get_admin_user_page(request):
@@ -899,6 +908,7 @@ def get_admin_user_page(request):
              "is_black":u'否' if con.is_active else u'是',
              "id":con.id,
              "opertype":u'加黑' if con.is_active else u'去黑',
+             "opertype_channel":u'撤销渠道' if con.is_channel() else u'赋予渠道权限',
              }
         data.append(i)
     if data:

@@ -2,8 +2,7 @@ from django.contrib import admin
 from .models import MyUser
 from .forms import MyUserChangeForm, MyUserCreationForm
 from django.contrib.auth.admin import UserAdmin
-from account.models import UserSignIn, Userlogin, Access_Token, MobileCode,\
-    AdminPermission, DBlock
+from account.models import *
 from django.contrib.admin.options import ModelAdmin
 # Register your models here.
 class MyUserAdmin(UserAdmin):
@@ -35,10 +34,12 @@ class EnvelopeAdmin(ModelAdmin):
     search_fields = ('user__mobile',)
 # Now register the new UserAdmin...
 admin.site.register(MyUser, MyUserAdmin)
+admin.site.register(Channel)
 admin.site.register(UserSignIn)
 admin.site.register(Userlogin)
 admin.site.register(Access_Token)
 admin.site.register(MobileCode)
 admin.site.register(AdminPermission)
 admin.site.register(DBlock)
+
 # admin.site.register(User_Envelope,EnvelopeAdmin)

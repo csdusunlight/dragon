@@ -12,7 +12,7 @@ var data = '<table width="100%"><tr><th>用户名</th><th>手机号</th><th>邮�
 	'<td>{inviter_name}</td><td>{inviter_mobile}</td><td>{balance}</td><td id="is_black_{id}">{is_black}</td>'+
 	'<td id="item_{id}"><a class="btn1-x" onclick="addcash({id})">余额</a>│'+
 	'<a class="btn2-x" onclick="addscore({id})">积分</a>│<a id="black_{id}" onclick="addblack({id})" class="btn3-x">{opertype}</a>'+
-	'</td><td><a onclick="addChannel()">添加</a> │ <a onclick="cancelChannel()">取消</a></td></tr>[/data]</table>';
+	'</td><td><a id="channel_{id}" onclick="addChannel({id})">{opertype_channel}</a></td></tr>[/data]</table>';
 var url = "{% url 'get_admin_user_page' %}" + "?page={page}&size={pageSize}";
 var selected_id = 0;
 function addcash(id){
@@ -33,12 +33,15 @@ function addblack(id){
 		$(".Blacklist-none").css("display","block");
 	}
 }
-// 渠道 添加 取消 弹窗调用函数
-function addChannel(){
-  $(".Channel").css("display","block");
-}
-function cancelChannel(){
-  $(".Channel-none").css("display","block");
+function addChannel(id){
+	selected_id = id;
+	var opertype=$("a#channel_"+id).html();
+	if(opertype == "赋予渠道权限"){
+		$(".Channel").css("display","block");
+	}
+	else {
+		$(".Channel-none").css("display","block");
+	}
 }
 
 $(document).ready(function(){
@@ -205,37 +208,105 @@ $(document).ready(function(){
 		$("td#is_black_"+selected_id).html("否");
 		$(".Blacklist-none").css("display","none");
 	});
+	$('.Channel input[type="submit"]').click(function(){
+		var id = selected_id;
+		if (!id){
+			return;
+		}
+		var qq_number = $("input#qq").val();
+		$.ajax({
+			url:"{%url 'admin_user' %}",
+			dataType:"json",
+			type:"POST",
+			data:{
+				'id':id,
+				'type':5,
+				'qq_number':qq_number
+			},
+			success:function(ret){
+				if(ret.code==0){
+					alert("操作成功！");
+				}
+				else if(ret.code==-1){
+					alert("该页面已过期，请重新登录！");
+					window.location.href = ret.url;
+				}
+				else {
+					alert(ret.res_msg);
+				}
+			},
+			error:function(){
+				alert("请检查网络连接");
+			}
+		});
+		$("a#channel_"+selected_id).html("撤销渠道");
+		$("td#is_channel_"+selected_id).html("是");
+		$(".Channel").css("display","none");
+	});
+	$('.Channel-none input[type="submit"]').click(function(){
+		var id = selected_id;
+		if (!id){
+			return;
+		}
+		$.ajax({
+			url:"{%url 'admin_user' %}",
+			dataType:"json",
+			type:"POST",
+			data:{
+				'id':id,
+				'type':6,
+			},
+			success:function(ret){
+				if(ret.code==0){
+					alert("操作成功！");
+				}
+				else if(ret.code==-1){
+					alert("该页面已过期，请重新登录！");
+					window.location.href = ret.url;
+				}
+				else {
+					alert(ret.res_msg);
+				}
+			},
+			error:function(){
+				alert("请检查网络连接");
+			}
+		});
+		$("a#channel_"+selected_id).html("赋予渠道权限");
+		$("td#is_channel_"+selected_id).html("否");
+		$(".Channel-none").css("display","none");
+	});
 	$("#search").click(function(){
-		startTime = $("#startTime").val();
-		endTime = $("#endTime").val();
-		newurl = url;
+		var startTime = $("#startTime").val();
+		var endTime = $("#endTime").val();
+		var newurl = url;
 		if(startTime && endTime){
 			newurl += "&startTime="+startTime;
 			newurl += "&endTime="+endTime;
 		}
-		startTime2 = $("#startTime2").val();
-		endTime2 = $("#endTime2").val();
+		var startTime2 = $("#startTime2").val();
+		var endTime2 = $("#endTime2").val();
 		if(startTime2 && endTime2){
 			newurl += "&startTime2="+startTime2;
 			newurl += "&endTime2="+endTime2;
 		}
-		username = $("#username").val();
-		mobile = $("#mobile").val();
+		var username = $("#username").val();
+		var mobile = $("#mobile").val();
 		if(username){
 			newurl += "&username="+username;
 		}
 		if(mobile){
 			newurl += "&mobile="+mobile;
 		}
-		inviter_name = $("#inviter_name").val();
-		inviter_mobile = $("#inviter_mobile").val();
+		var inviter_name = $("#inviter_name").val();
+		var inviter_mobile = $("#inviter_mobile").val();
 		if(inviter_name){
 			newurl += "&inviter_name="+inviter_name;
 		}
 		if(inviter_mobile){
 			newurl += "&inviter_mobile="+inviter_mobile;
 		}
-		state = $("#state").val();
+		var state = $("#state").val();
 		if(state){
 			newurl += "&state="+state;
 		}
@@ -403,7 +474,7 @@ $(document).ready(function(){
       <div class="w570-box">
           <h3>添加渠道操作</h3>
             <button class="none-x"></button>
-            <h5> QQ帐号/QQ昵称：<input type="text" placeholder="请输入要添加的用户名"></h5>
+            <h5> QQ帐号/QQ昵称：<input id="qq" type="text" placeholder="请输入要添加的QQ号"></h5>
             <form class="Audit-in">
                 <div class="Finnow-Sub" style="margin-top:0">
                 <input type="submit" value="确认" onclick="return false;"/>
