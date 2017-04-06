@@ -139,7 +139,7 @@
 				      <p>表格重复数据：<span class="data-repeat">100</span>项</p>
 				      <p>已存在的数据：<span class="data-exist">100</span>项</p>
 				      <p>有效提交：<span class="data-valid">100</span>项</p>
-				      <p>已提交手机号：<br /><span class="submit-phonenumber">15933827345,15933827345,15933827345,15933827345,15933827345,15933827345,15933827345</span></p>
+				      <p style="text-align: left;padding-left: 38px;">已提交手机号：<br /><span class="submit-phonenumber">15933827345，15933827345，15933827345，15933827345，15933827345，15933827345，15933827345</span></p>
 				      <p style="text-align: left;padding-left: 38px;">注：<br/>
 				      	已存在的数据：挖福利数据库中已存在，其他用户或自己之前提交过的数据<br />
 				      	表格重复数据：提交的表格中的重复项
@@ -246,6 +246,7 @@
 	    			alert("请先选择上传文件");
 	    			return;
 	    		}
+	    		maskIn();
 		    	$.ajaxFileUpload({
 		            url:'',
 		            secureuri:false,
@@ -253,17 +254,18 @@
 		            dataType: 'json',//返回数据的类型
 		            data:{fid:1},//一同上传的数据
 		            success: function (data, status) {
+		            	$(".img-mask").css("display", "none");
 		            	if (data.code==0){
 		            		alert(data.dupstr);
 		            	}
 		            	else {
-		            		alert(data.msg);
 		            		popupInSubmit();
+		            		alert(data.msg);
 		            	}
 		            },
 		            error: function (data, status, e) {
-		                alert(e);
 		                popupInMistake();
+		                alert(e);
 		            }
 		        });
 	    	});
