@@ -24,7 +24,6 @@ def channel(request):
         ret = {'code':-1}
         file = request.FILES.get('userfile')
         filename = os.path.join(STATIC_DIR, 'excel', request.user.mobile + '.xls').replace('\\','/')
-        print filename
         with open(filename, 'wb+') as destination:
             for chunk in file.chunks():
                 destination.write(chunk)
@@ -86,9 +85,9 @@ def channel(request):
         except Exception, e:
             traceback.print_exc()
             ret['msg'] = unicode(e)
-        
-        finance = Finance.objects.first()
-        print rtable,mobile_list
+            return JsonResponse(ret)
+        fid = int(fid)
+        finance = Finance.objects.get(id=fid)
         ####开始去重
         with transaction.atomic():
             db_key = DBlock.objects.select_for_update().get(index='event_key')
@@ -107,7 +106,6 @@ def channel(request):
                                     audit_state='1',remark=item[4],content_object=finance)
                     userevent_list.append(obj)
             UserEvent.objects.bulk_create(userevent_list)
-        print len(userevent_list), len(rtable), nrows-1
         succ_num = len(userevent_list)
         duplic_num1 = nrows - len(rtable)- 1
         duplic_num2 = duplic_num1 - succ_num
@@ -115,4 +113,5 @@ def channel(request):
         ret.update(code=0,sun=succ_num, dup1=duplic_num1, dup2=duplic_num2, dupstr=duplic_mobile_list_str)
         return JsonResponse(ret)
     else:
-        return render(request, 'account/account_channel.html')
+        flist = list(Finance.objects.filter(state='1', level__in=['channel','all']))
+        return render(request, 'account/account_channel.html', {'flist':flist})

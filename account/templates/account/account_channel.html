@@ -25,10 +25,11 @@
 				<div class="content-box">
 					<div class="header">
 						<h3>选择项目名称</h3>
-						<select>
-							<option value="渠道项目01">渠道项目01</option>
-							<option value="渠道项目02">渠道项目02</option>
-							<option value="渠道项目03">渠道项目03</option>
+						<select id="project_select">
+							<option value="0">--</option>
+							{% for x in flist %}
+							    <option value="{{x.id}}">{{x.title}}</option>
+							{%endfor%}
 						</select>
 						<ul id="tab_head" class="tab-head">
 							<li class="on">导入数据</li>
@@ -245,14 +246,22 @@
 	    			alert("请先选择上传文件");
 	    			return;
 	    		}
+	    		var fid=$("select#project_select").val();
+	    		if (fid=="0"){
+	    			alert("请先选择项目");
+	    			return;
+	    		}
 		    	$.ajaxFileUpload({  
 		            url:'',  
 		            secureuri:false,  
 		            fileElementId:fileElementId,//file标签的id  
 		            dataType: 'json',//返回数据的类型  
-		            data:{fid:1},//一同上传的数据  
+		            data:{fid:fid},//一同上传的数据  
 		            success: function (data, status) {
 		            	if (data.code==0){
+		            		alert(data.num);
+		            		alert(data.num);
+		            		alert(data.num);
 		            		alert(data.dupstr);
 		            	}
 		            	else {

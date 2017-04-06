@@ -34,9 +34,10 @@ def index(request):
             wel.left_count = wel.coupons.filter(user__isnull=True).count()
         else:
             wel.left_count = u"充足"
-    finance_list1 = Finance.objects.filter(state__in=['1','2'], f_type='1').order_by("state","-news_priority","-pub_date")[0:3]
-    finance_list2 = Finance.objects.filter(state__in=['1','2'], f_type='2').order_by("state","-news_priority","-pub_date")[0:3]
-    finance_list3 = Finance.objects.filter(state__in=['1','2'], f_type='3').order_by("state","-news_priority","-pub_date")[0:3]
+    query_set = Finance.objects.filter(state__in=['1','2'], level__in=['all','normal']).order_by("state","-news_priority","-pub_date")
+    finance_list1 = query_set.filter(f_type='1')[0:3]
+    finance_list2 = query_set.filter(f_type='2')[0:3]
+    finance_list3 = query_set.filter(f_type='3')[0:3]
     news_list = Activity.objects.filter(is_hidden=False)[0:2]
     exchange_list = ExchangeRecord.objects.all()[0:10]
     strategy_list = Press.objects.filter(type='2')[0:6]
@@ -110,7 +111,7 @@ def finance(request, id=None):
         for str_row in str_rows:
             row = str_row.split('#')
             table.append(row);
-        other_wel_list = Finance.objects.filter(state='1').order_by('-view_count')[0:10]
+        other_wel_list = Finance.objects.filter(state='1', level__in=['normal','all']).order_by('-view_count')[0:10]
         context = {
                    'news':news,
                    'type':'Finance',
@@ -448,7 +449,7 @@ def get_finance_page(request):
         size = 6
     if not page or size <= 0:
         raise Http404
-    item_list = Finance.objects.all()
+    item_list = Finance.objects.filter(level__in=['normal','all'])
     filter = str(filter)
     state = str(state)
     if filter != '0':

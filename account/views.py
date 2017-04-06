@@ -294,7 +294,7 @@ def account(request):
     task_list = UserEvent.objects.filter(user=request.user, content_type = task_type)[0:3]
     finance_list = UserEvent.objects.filter(user=request.user, content_type = finance_type)[0:3]
     recomm_list1 = Task.objects.order_by("-view_count")[0:4]
-    recomm_list2 = Finance.objects.order_by("-view_count")[0:4]
+    recomm_list2 = Finance.objects.filter(level__in=['all','normal']).order_by("-view_count")[0:4]
     recomm_list = list(recomm_list1) + list(recomm_list2)
     recomm_list.sort(key=lambda x:x.view_count, reverse=True)
     signin_last = UserSignIn.objects.filter(user=request.user).first()
