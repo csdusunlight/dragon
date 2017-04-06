@@ -92,7 +92,6 @@ def parse_excel(request):
             ret['msg'] = unicode(e)
         
         finance = Finance.objects.first()
-        print rtable,mobile_list
         ####开始去重
         with transaction.atomic():
             db_key = DBlock.objects.select_for_update().get(index='event_key')
@@ -111,7 +110,6 @@ def parse_excel(request):
                                     audit_state='1',remark=item[4],content_object=finance)
                     userevent_list.append(obj)
             UserEvent.objects.bulk_create(userevent_list)
-        print len(userevent_list), len(rtable), nrows-1
 #         for item in rtable:
             
 #         w = Workbook()     #创建一个工作簿
