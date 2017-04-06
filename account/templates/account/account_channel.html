@@ -130,7 +130,7 @@
 				    <div class="popup-content">
 				      <h3>表格提交成功</h3>
 				      <p id="hint">等待审核中</p>
-				      <a id="confirm_submit" class="confirm_submit table-btn" onclick="popupOutSubmit()">确&nbsp;&nbsp;&nbsp;&nbsp;认</a>
+				      <a id="confirm_submit" class="confirm_submit table-btn" onclick="popupOutSubmit()">确&nbsp;&nbsp;&nbsp;&nbsp;定</a>
 				    </div>
 				</div>
 				<div class="popup-box popup-box-02">
@@ -144,11 +144,11 @@
 				      	已存在的数据：挖福利数据库中已存在，其他用户或自己之前提交过的数据<br />
 				      	表格重复数据：提交的表格中的重复项
 				      </p>
-				      <a id="upload_again" class="upload-again table-btn" onclick="popupOutMistake()">重新上传</a>
-				      <a id="look_detail" class="look-detail table-btn" onclick="popupInDetail()">查看详情</a>
+				      <a id="upload_again" class="upload-again table-btn" onclick="popupOutMistake()">确&nbsp;&nbsp;&nbsp;&nbsp;定</a>
+				      <!-- <a id="look_detail" class="look-detail table-btn" onclick="popupInDetail()">确定</a> -->
 				    </div>
 				</div>
-				<div class="popup-box popup-box-03">
+<!-- 				<div class="popup-box popup-box-03">
 				    <div class="popup-content">
 				        <h3>重复数据：</h3>
 				        <div class="Welfare-td">
@@ -203,7 +203,7 @@
 						<p style="text-align: left;">注：该页面刷新后将不再显示，有需要的用户请截图保存</p>
 				      <a id="confirm_detail" class="confirm-detail table-btn" onclick="popupOutDetail()">确&nbsp;&nbsp;&nbsp;&nbsp;定</a>
 				    </div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>
@@ -258,10 +258,12 @@
 		            	}
 		            	else {
 		            		alert(data.msg);
+		            		popupInSubmit();
 		            	}
 		            },
 		            error: function (data, status, e) {
 		                alert(e);
+		                popupInMistake();
 		            }
 		        });
 	    	});
@@ -316,15 +318,15 @@
 		        $(".popup-box-02").removeClass("in");
 		    }
 
-		    // 查看详情调用函数
-		    function popupInDetail() {
-		    	$(".popup-box-02").removeClass("in");
-		        $(".popup-box-03").addClass("in");
-		    }
-			// 详情确认
-		    function popupOutDetail() {
-		        $(".popup-box-03").removeClass("in");
-		    }
+		 //    // 查看详情调用函数
+		 //    function popupInDetail() {
+		 //    	$(".popup-box-02").removeClass("in");
+		 //        $(".popup-box-03").addClass("in");
+		 //    }
+			// // 详情确认
+		 //    function popupOutDetail() {
+		 //        $(".popup-box-03").removeClass("in");
+		 //    }
 
 		</script>
 	</body>
