@@ -431,6 +431,77 @@ def get_user_wel_page(request):
     res["data"] = data
     return JsonResponse(res)
 
+def get_channel_result_page(request):
+    if not request.is_ajax():
+        raise Http404
+    res={'code':0,}
+    if not request.user.is_authenticated():
+        res['code'] = -1
+        res['url'] = reverse('login') + "?next=" + reverse('account_channel')
+        return JsonResponse(res)
+    page = request.GET.get("page", None)
+    size = request.GET.get("size", 10)
+    filter = request.GET.get("filter",0)
+    try:
+        size = int(size)
+    except ValueError:
+        size = 10
+    try:
+        filter = int(filter)
+    except ValueError:
+        filter = 0
+    if not page or size <= 0 or filter < 0 or filter > 3:
+        raise Http404
+    item_list = []
+    etype = ContentType.objects.get_for_model(Finance)
+    item_list = UserEvent.objects.filter(user=request.user, content_type = etype)
+    if filter == 1:
+        item_list = item_list.filter(audit_state='0')
+    elif filter == 2:
+        item_list = item_list.filter(audit_state='1')
+    elif filter == 3:
+        item_list = item_list.filter(audit_state='2')
+    paginator = Paginator(item_list, size)
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+    # If page is not an integer, deliver first page.
+        contacts = paginator.page(1)
+    except EmptyPage:
+    # If page is out of range (e.g. 9999), deliver last page of results.
+        contacts = paginator.page(paginator.num_pages)
+    data = []
+    
+    for con in contacts:
+        reason = ''
+        if con.audit_state == '2':
+            log = con.audited_logs.first()
+            if log:
+                reason = log.reason
+        return_amount = ''
+        if con.audit_state == '0':
+            trans = con.translist.first()
+            if trans:
+                return_amount = trans.transAmount
+        i = {"project":con.content_object.title,
+             "mobile":con.invest_account,
+             "invest_time":con.time.strftime("%Y-%m-%d"),
+             "audit_result":con.get_audit_state_display(),
+             "refuse_reason": reason,
+             "id":con.id,
+             'remark':con.remark,
+             'invest_term':con.invest_term,
+             'invest_amount':con.invest_amount,
+             'return_amount':return_amount,
+             }
+        data.append(i)
+    if data:
+        res['code'] = 1
+    res["pageCount"] = paginator.num_pages
+    res["recordCount"] = item_list.count()
+    res["data"] = data
+    return JsonResponse(res)
+
 @login_required
 def score(request):
     return render(request, 'account/score.html', {})

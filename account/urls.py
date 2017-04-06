@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^get_nums$', 'account.views.get_nums', name='get_nums'),
     url(r'^welfare/$', 'account.views.welfare', name='account_welfare'),
     url(r'^welpage/$', 'account.views.get_user_wel_page', name='get_user_wel_page'),
+    url(r'^channelwelpage/$', 'account.views.get_channel_result_page', name='get_channel_result_page'),
     url(r'^score/$', 'account.views.score', name='account_score'),
     url(r'^scorepage/$', 'account.views.get_user_score_page', name='get_user_score_page'),
     url(r'^money/$', 'account.views.money', name='account_money'),
