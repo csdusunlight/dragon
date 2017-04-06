@@ -43,7 +43,7 @@
 							<b>支持小于1M的表格文件格式（.xls 和 .xlsx）</b>
 							<form id="form" name="form" method="post" action="" enctype="multipart/form-data">
 								<input name="userfile" id="choose" type="file" /><br/>
-								<p class="table-choosed">已选择表格：<span id="hint" class="hint">未选择任何文件</span></p>
+								<p class="table-choosed">已选择表格：<span id="hint" class="hint">未选择任何文件</span></p><br />
 								<a class="upload-box-btn" id="upload">导入表格</a><a class="upload-box-btn" id="uploadsubmit">提交表格</a>
 							</from>
 						</div>
@@ -110,7 +110,7 @@
 									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
 									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
 									<tr><td>美易理财二期</td><td>2017-03-28</td><td>15244659898</td><td>30天</td><td>1000000</td><td>这里是备注</td><td>审核通过</td><td>300</td><td>莉萍说拒绝原因十个字</td></tr>
-							
+
 								</tbody>
 							</table>
 						</div>
@@ -131,24 +131,25 @@
 				    <div class="popup-content">
 				      <h3>表格提交成功</h3>
 				      <p id="hint">等待审核中</p>
-				      <a id="confirm_submit" class="confirm_submit table-btn" onclick="popupOutSubmit()">确&nbsp;&nbsp;&nbsp;&nbsp;认</a>
+				      <a id="confirm_submit" class="confirm_submit table-btn" onclick="popupOutSubmit()">确&nbsp;&nbsp;&nbsp;&nbsp;定</a>
 				    </div>
 				</div>
 				<div class="popup-box popup-box-02">
 				    <div class="popup-content">
-				      <p>提交数据：100项</p>
-				      <p>表格重复数据：100项</p>
-				      <p>已存在的数据：100项</p>
-				      <p>有效提交：100项</p>
+				      <p>提交数据：<span class="data-submit">100</span>项</p>
+				      <p>表格重复数据：<span class="data-repeat">100</span>项</p>
+				      <p>已存在的数据：<span class="data-exist">100</span>项</p>
+				      <p>有效提交：<span class="data-valid">100</span>项</p>
+				      <p style="text-align: left;padding-left: 38px;">已提交手机号：<br /><span class="submit-phonenumber">15933827345，15933827345，15933827345，15933827345，15933827345，15933827345，15933827345</span></p>
 				      <p style="text-align: left;padding-left: 38px;">注：<br/>
 				      	已存在的数据：挖福利数据库中已存在，其他用户或自己之前提交过的数据<br />
 				      	表格重复数据：提交的表格中的重复项
 				      </p>
-				      <a id="upload_again" class="upload-again table-btn" onclick="popupOutMistake()">重新上传</a>
-				      <a id="look_detail" class="look-detail table-btn" onclick="popupInDetail()">查看详情</a>
+				      <a id="upload_again" class="upload-again table-btn" onclick="popupOutMistake()">确&nbsp;&nbsp;&nbsp;&nbsp;定</a>
+				      <!-- <a id="look_detail" class="look-detail table-btn" onclick="popupInDetail()">确定</a> -->
 				    </div>
 				</div>
-				<div class="popup-box popup-box-03">
+<!-- 				<div class="popup-box popup-box-03">
 				    <div class="popup-content">
 				        <h3>重复数据：</h3>
 				        <div class="Welfare-td">
@@ -203,7 +204,7 @@
 						<p style="text-align: left;">注：该页面刷新后将不再显示，有需要的用户请截图保存</p>
 				      <a id="confirm_detail" class="confirm-detail table-btn" onclick="popupOutDetail()">确&nbsp;&nbsp;&nbsp;&nbsp;定</a>
 				    </div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>
@@ -246,11 +247,13 @@
 	    			alert("请先选择上传文件");
 	    			return;
 	    		}
+<<<<<<< HEAD
 	    		var fid=$("select#project_select").val();
 	    		if (fid=="0"){
 	    			alert("请先选择项目");
 	    			return;
 	    		}
+	    		maskIn();
 		    	$.ajaxFileUpload({  
 		            url:'',  
 		            secureuri:false,  
@@ -258,6 +261,7 @@
 		            dataType: 'json',//返回数据的类型  
 		            data:{fid:fid},//一同上传的数据  
 		            success: function (data, status) {
+		            	$(".img-mask").css("display", "none");
 		            	if (data.code==0){
 		            		alert(data.num);
 		            		alert(data.num);
@@ -265,12 +269,14 @@
 		            		alert(data.dupstr);
 		            	}
 		            	else {
+		            		popupInSubmit();
 		            		alert(data.msg);
 		            	}
-		            },  
-		            error: function (data, status, e) {  
-		                alert(e);  
-		            }  
+		            },
+		            error: function (data, status, e) {
+		                popupInMistake();
+		                alert(e);
+		            }
 		        });
 	    	});
 
@@ -324,15 +330,15 @@
 		        $(".popup-box-02").removeClass("in");
 		    }
 
-		    // 查看详情调用函数
-		    function popupInDetail() {
-		    	$(".popup-box-02").removeClass("in");
-		        $(".popup-box-03").addClass("in");
-		    }
-			// 详情确认
-		    function popupOutDetail() {
-		        $(".popup-box-03").removeClass("in");
-		    }
+		 //    // 查看详情调用函数
+		 //    function popupInDetail() {
+		 //    	$(".popup-box-02").removeClass("in");
+		 //        $(".popup-box-03").addClass("in");
+		 //    }
+			// // 详情确认
+		 //    function popupOutDetail() {
+		 //        $(".popup-box-03").removeClass("in");
+		 //    }
 
 		</script>
 	</body>

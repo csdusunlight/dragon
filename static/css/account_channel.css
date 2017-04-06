@@ -51,6 +51,7 @@ h5 {margin: 0;}
 }
 
 .content {
+  position: relative;
   padding: 16px;
   border: 1px solid #e4e4e4;
   border-top: none;
@@ -335,6 +336,11 @@ table td {
   text-align: center;
   background-color: #fff;
   box-shadow: 0 5px 15px rgba(0,0,0,.5);
+}
+.popup-box-02 .popup-content {
+  max-height: 500px;
+  margin-top: 4%;
+  overflow-y: scroll;
 }
 .popup-box-03 .popup-content {
   width: 880px;
