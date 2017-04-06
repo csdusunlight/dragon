@@ -28,11 +28,11 @@ def parse_excel(request):
         fid = request.POST.get('fid')
         ret = {'code':-1}
         file = request.FILES.get('file')
-        print file.name
-        with open('./test.xlsx', 'wb+') as destination:
+        filename = './' + str(request.user.mobile) + '.xls'
+        with open(filename, 'wb+') as destination:
             for chunk in file.chunks():
                 destination.write(chunk)
-        data = xlrd.open_workbook('test.xlsx')
+        data = xlrd.open_workbook(filename)
         table = data.sheets()[0]
         nrows = table.nrows
         ncols = table.ncols
