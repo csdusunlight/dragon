@@ -4,13 +4,17 @@
 $.ajaxSetup({
     data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
 });
-var data = '<table width="100%"><tr><th>QQ号/QQ昵称</th><th>手机号</th><th>支付宝帐号</th><th>支付宝姓名</th>'+
+var data = '<table width="100%"><tr><th>渠道等级</th><th>QQ号/QQ昵称</th><th>手机号</th><th>支付宝帐号</th><th>支付宝姓名</th>'+
 	'<th>添加为渠道时间</th><th>账户余额</th>'+
-	'</tr>[data]<tr><td>{qq}</td><td>{mobile}</td><td>{zhifubao}</td>'+
+	'</tr>[data]<tr><td>01 | <a onclick="changeChannel()">修改</a></td><td>{qq}</td><td>{mobile}</td><td>{zhifubao}</td>'+
 	'<td>{zhifubao_name}</td><td>{join_time}</td><td>{balance}</td></tr>[/data]</table>';
 
 var url = "{% url 'get_admin_channel_page' %}" + "?page={page}&size={pageSize}";
 var send_msg_para = {};
+
+function changeChannel(){
+  $(".changeChannel").css("display","block");
+}
 
 $(document).ready(function(){
 	$("li.home14").toggleClass("on");
@@ -22,6 +26,13 @@ $(document).ready(function(){
 	    run:true,
 	    content:data,
 	});
+
+  $(".none-x").click(function(){
+    $(this).parent().parent().css("display","none");<!--隐藏-->
+  })
+  $(".none-x-s").click(function(){
+    $(this).parent().parent().parent().parent().css("display","none");<!--隐藏-->
+  })
 
 	$("#search").click(function(){
 		var startTime = $("#startTime").val();
@@ -95,5 +106,20 @@ $(document).ready(function(){
 		                        </div>
 		                    </div>
                         </div>
+
+              <!--确认添加渠道-->
+              <div class="changeChannel">
+                <div class="w570-box">
+                    <h3>修改渠道等级操作</h3>
+                      <button class="none-x"></button>
+                      <h5> 渠道用户等级：<input id="rank" type="text" placeholder="请输入渠道用户等级"></h5>
+                      <form class="Audit-in">
+                          <div class="Finnow-Sub" style="margin-top:0">
+                          <input type="submit" value="确认" onclick="return false;"/>
+                          <input type="button" value="取消" class="none-x-s" />
+                          </div>
+                      </form>
+                  </div>
+              </div>
 {%endblock%}
 
