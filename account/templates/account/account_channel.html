@@ -191,20 +191,20 @@
 		            success: function (data, status) {
 		            	$(".img-mask").css("display", "none");
 		            	if (data.code==0){
-		            		alert(data.num);
-		            		alert(data.num);
-		            		alert(data.num);
-		            		alert(data.dupstr);
+		            		// alert(data.num);
+		            		// alert(data.num);
+		            		// alert(data.num);
+		            		// alert(data.dupstr);
 
-		    						// $(".data-submit").text(data.num);
-		    						// $(".data-repeat").text(data.num);
-		    						// $(".data-exist").text(data.num);
-		    						// $(".data-valid").text(data.num);
-		    						// $(".submit-phonenumber").text(data.dupstr);
+		    						$(".data-submit").text(data.anum);
+		    						$(".data-repeat").text(data.dup1);
+		    						$(".data-exist").text(data.dup2);
+		    						$(".data-valid").text(data.sun);
+		    						$(".submit-phonenumber").text(data.dupstr);
 		                popupInMistake();
 		            	}
 		            	else {
-		            		alert(data.msg);
+		            		// alert(data.msg);
 		            		popupInSubmit();
 		            	}
 		            },
