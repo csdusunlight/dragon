@@ -109,6 +109,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         return hasattr(self, 'channel')
 class Channel(models.Model):
     user = models.OneToOneField(MyUser, primary_key=True)
+    level = models.CharField(u"渠道等级",max_length=10)
     qq_number = models.CharField(u"QQ号", max_length=20)
     join_time = models.DateTimeField(u"加入渠道时间", default=timezone.now)
     def __unicode__(self): 

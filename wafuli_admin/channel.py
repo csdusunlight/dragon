@@ -187,7 +187,8 @@ def get_admin_channel_page(request):
              'recent_login_time':recent_login_time,
              "balance":con.user.balance/100.0,
              "id":con.user.id,
-             "qq":con.qq_number
+             "qq":con.qq_number,
+             'level':con.level
              }
         data.append(i)
     if data:

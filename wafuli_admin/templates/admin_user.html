@@ -214,6 +214,11 @@ $(document).ready(function(){
 			return;
 		}
 		var qq_number = $("input#qq").val();
+		var level = $("input#level").val();
+		if (!level){
+			alert("请输入渠道等级");
+			return;
+		}
 		$.ajax({
 			url:"{%url 'admin_user' %}",
 			dataType:"json",
@@ -221,7 +226,8 @@ $(document).ready(function(){
 			data:{
 				'id':id,
 				'type':5,
-				'qq_number':qq_number
+				'qq_number':qq_number,
+				'level':level
 			},
 			success:function(ret){
 				if(ret.code==0){
@@ -475,7 +481,7 @@ $(document).ready(function(){
           <h3>添加渠道操作</h3>
             <button class="none-x"></button>
             <h5> QQ帐号/QQ昵称：<input id="qq" type="text" placeholder="请输入要添加的QQ号"></h5>
-            <h5> 渠道用户等级：<input id="rank" type="text" placeholder="请输入渠道用户等级"></h5>
+            <h5> 渠道用户等级：<input id="level" type="text" placeholder="请输入渠道用户等级"></h5>
             <form class="Audit-in">
                 <div class="Finnow-Sub" style="margin-top:0">
                 <input type="submit" value="确认" onclick="return false;"/>

@@ -477,10 +477,11 @@ def export_finance_excel(request):
         remark= con.remark
         invest_amount= con.invest_amount
         term=con.invest_term
-        data.append([id, project_name, time_sub, mobile_sub, term, invest_amount, remark])
+        user_type = u"普通用户" if not con.user.is_channel() else u"渠道："+ con.user.channel.level
+        data.append([id, project_name, time_sub, user_type, mobile_sub, term, invest_amount, remark])
     w = Workbook()     #创建一个工作簿
     ws = w.add_sheet(u'待审核记录')     #创建一个工作表
-    title_row = [u'记录ID',u'项目名称',u'投资日期', u'注册手机号' ,u'投资期限' ,u'投资金额', u'备注', u'审核结果',u'返现金额',u'拒绝原因']
+    title_row = [u'记录ID',u'项目名称',u'投资日期', u'用户类型', u'注册手机号' ,u'投资期限' ,u'投资金额', u'备注', u'审核结果',u'返现金额',u'拒绝原因']
     for i in range(len(title_row)):
         ws.write(0,i,title_row[i])
     row = len(data)
@@ -798,7 +799,7 @@ def admin_user(request):
                 res['code'] = 0
             else:
                 res['code'] = -4
-                res['res_msg'] = "积分记账失败，请检查输入合法性后再次提交！"
+                res['res_msg'] = u"积分记账失败，请检查输入合法性后再次提交！"
         elif type == 3:
             obj_user.is_active = False
             obj_user.save(update_fields=['is_active'])
@@ -811,14 +812,25 @@ def admin_user(request):
             admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=obj_user, event_type='6', remark=u"去黑")
             res['code'] = 0
         elif type == 5:
-            qq_number = request.POST.get('qq_number', 0)
-            Channel.objects.create(user=obj_user, qq_number=qq_number)
+            qq_number = request.POST.get('qq_number', '')
+            level = request.POST.get('level',u'无')
+            Channel.objects.create(user=obj_user, qq_number=qq_number, level=level)
             admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=obj_user, event_type='6', remark=u"新增渠道")
             res['code'] = 0
         elif type == 6:
             obj_user.channel.delete()
             admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=obj_user, event_type='6', remark=u"取消渠道")
             res['code'] = 0
+        elif type == 7:
+            level = request.POST.get('level')
+            if level:
+                obj_user.channel.level=level
+                obj_user.channel.save(update_fields=['level'])
+                admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=obj_user, event_type='6', remark=u"修改渠道等级")
+                res['code'] = 0
+            else:
+                res['code'] = -6
+                res['res_msg'] = u"没有channel"
         return JsonResponse(res)
             
 def get_admin_user_page(request):

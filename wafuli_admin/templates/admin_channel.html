@@ -6,16 +6,16 @@ $.ajaxSetup({
 });
 var data = '<table width="100%"><tr><th>渠道等级</th><th>QQ号/QQ昵称</th><th>手机号</th><th>支付宝帐号</th><th>支付宝姓名</th>'+
 	'<th>添加为渠道时间</th><th>账户余额</th>'+
-	'</tr>[data]<tr><td>01 | <a onclick="changeChannel()">修改</a></td><td>{qq}</td><td>{mobile}</td><td>{zhifubao}</td>'+
+	'</tr>[data]<tr><td><span id="level_span_{id}">{level}</span> | <a onclick="changeChannel({id})">修改</a></td><td>{qq}</td><td>{mobile}</td><td>{zhifubao}</td>'+
 	'<td>{zhifubao_name}</td><td>{join_time}</td><td>{balance}</td></tr>[/data]</table>';
 
 var url = "{% url 'get_admin_channel_page' %}" + "?page={page}&size={pageSize}";
 var send_msg_para = {};
-
-function changeChannel(){
+var selected_id;
+function changeChannel(id){
   $(".changeChannel").css("display","block");
+  selected_id = id;
 }
-
 $(document).ready(function(){
 	$("li.home14").toggleClass("on");
 	$(".Tin-table tr:even").css("background-color","#fcfcfc");
@@ -59,6 +59,38 @@ $(document).ready(function(){
 		    content:data,
 		});
 	});
+  $("input#modify").click(function(){
+	  var level = $("input#level").val();
+	  if (!level){
+		  return;
+	  }
+	  $.ajax({
+		url:"{%url 'admin_user' %}",
+		dataType:"json",
+		type:"POST",
+		data:{
+			'id':selected_id,
+			'level':level,
+			'type':7,
+		},
+		success:function(ret){
+			if(ret.code==0){
+				$("#level_span_" + selected_id).text(level);
+			}
+			else if(ret.code==-1){
+				alert("该页面已过期，请重新登录！");
+				window.location.href = ret.url;
+			}
+			else {
+				alert(ret.res_msg);
+			}
+		},
+		error:function(){
+			alert("请检查网络连接");
+		}
+	});
+	 $(".changeChannel").css("display","none");
+  });
 });
 </script>
 {% endblock js %}
@@ -112,10 +144,10 @@ $(document).ready(function(){
                 <div class="w570-box">
                     <h3>修改渠道等级操作</h3>
                       <button class="none-x"></button>
-                      <h5> 渠道用户等级：<input id="rank" type="text" placeholder="请输入渠道用户等级"></h5>
+                      <h5> 渠道用户等级：<input id="level" type="text" placeholder="请输入渠道用户等级"></h5>
                       <form class="Audit-in">
                           <div class="Finnow-Sub" style="margin-top:0">
-                          <input type="submit" value="确认" onclick="return false;"/>
+                          <input id="modify" type="submit" value="确认" onclick="return false;"/>
                           <input type="button" value="取消" class="none-x-s" />
                           </div>
                       </form>
