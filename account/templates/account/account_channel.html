@@ -201,11 +201,13 @@
 		    						$(".data-exist").text(data.dup2);
 		    						$(".data-valid").text(data.sun);
 		    						$(".submit-phonenumber").text(data.dupstr);
+		    						if (data.anum == data.sun) {
+		    								$(".data-repeat").hide();
+		    						}
 		                popupInMistake();
 		            	}
 		            	else {
-		            		// alert(data.msg);
-		            		popupInSubmit();
+		            		alert(data.msg);
 		            	}
 		            },
 		            error: function (data, status, e) {
