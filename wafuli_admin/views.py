@@ -508,6 +508,7 @@ def export_finance_excel(request):
 def import_finance_excel(request):
     ret = {'code':-1}
     file = request.FILES.get('file')
+    print file.name
     with open('./out.xls', 'wb+') as destination:
         for chunk in file.chunks():
             destination.write(chunk)
@@ -515,7 +516,7 @@ def import_finance_excel(request):
     table = data.sheets()[0]
     nrows = table.nrows
     ncols = table.ncols
-    if ncols!=10:
+    if ncols!=11:
         ret['msg'] = u"文件格式与模板不符，请在导出的待审核记录表中更新后将文件导入！"
         return JsonResponse(ret)
     rtable = []
@@ -529,7 +530,7 @@ def import_finance_excel(request):
                 if j==0:
                     id = int(cell.value)
                     temp.append(id)
-                elif j==7:
+                elif j==8:
                     result = cell.value.strip()
                     if result == u"是":
                         result = True
@@ -539,14 +540,14 @@ def import_finance_excel(request):
                         temp.append(False)
                     else:
                         raise Exception(u"审核结果必须为是或否。")
-                elif j==8:
+                elif j==9:
                     return_amount = 0
                     if cell.value:
                         return_amount = float(cell.value)
                     elif result:
                         raise Exception(u"审核结果为是时，返现金额不能为空或零。")
                     temp.append(return_amount)
-                elif j==9:
+                elif j==10:
                     reason = cell.value
                     temp.append(reason)
                 else:

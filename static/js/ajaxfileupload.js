@@ -28,9 +28,9 @@ jQuery.extend({
             }
         }        var oldElement = jQuery('#' + fileElementId); //得到页面中的<input type='file' />对象
         var newElement = jQuery(oldElement).clone(); //克隆页面中的<input type='file' />对象
-        jQuery(oldElement).attr('id', fileId); //修改原对象的id
-        jQuery(oldElement).before(newElement); //在原对象前插入克隆对象
-        jQuery(oldElement).appendTo(form); //把原对象插入到动态form的结尾处
+        jQuery(newElement).attr('id', fileId); //修改新对象的id
+  //      jQuery(oldElement).before(newElement); //在对象前插入克隆对象
+        jQuery(newElement).appendTo(form); //把新对象插入到动态form的结尾处
         //set attributes
         jQuery(form).css('position', 'absolute'); //给动态form添加样式，使其浮动起来，
         jQuery(form).css('top', '-1200px');
