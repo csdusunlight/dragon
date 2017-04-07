@@ -87,16 +87,16 @@
 						<div class="tabCon">
 		                  <div class="curs">
 		                  	<ul id="pagedata">
-		
+
 		                    </ul>
 		                  </div>
 			            </div>
-			
+
 			            <div class="changes-p">
 							<div class="page"  id="page">
 			                </div>
 			            </div>
-					
+
 					</div>
 				</div>
 				<div class="popup-box popup-box-01">
@@ -182,12 +182,12 @@
 	    			return;
 	    		}
 	    		maskIn();
-		    	$.ajaxFileUpload({  
-		            url:'',  
-		            secureuri:false,  
-		            fileElementId:fileElementId,//file标签的id  
-		            dataType: 'json',//返回数据的类型  
-		            data:{fid:fid},//一同上传的数据  
+		    	$.ajaxFileUpload({
+		            url:'',
+		            secureuri:false,
+		            fileElementId:fileElementId,//file标签的id
+		            dataType: 'json',//返回数据的类型
+		            data:{fid:fid},//一同上传的数据
 		            success: function (data, status) {
 		            	$(".img-mask").css("display", "none");
 		            	if (data.code==0){
@@ -195,14 +195,20 @@
 		            		alert(data.num);
 		            		alert(data.num);
 		            		alert(data.dupstr);
+
+		    						// $(".data-submit").text(data.num);
+		    						// $(".data-repeat").text(data.num);
+		    						// $(".data-exist").text(data.num);
+		    						// $(".data-valid").text(data.num);
+		    						// $(".submit-phonenumber").text(data.dupstr);
+		                popupInMistake();
 		            	}
 		            	else {
-		            		popupInSubmit();
 		            		alert(data.msg);
+		            		popupInSubmit();
 		            	}
 		            },
 		            error: function (data, status, e) {
-		                popupInMistake();
 		                alert(e);
 		            }
 		        });
