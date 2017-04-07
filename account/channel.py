@@ -34,7 +34,7 @@ def channel(request):
         ncols = table.ncols
         if ncols!=5:
             ret['msg'] = u"文件格式与模板不符，请下载最新模板填写！"
-            return ret
+            return JsonResponse(ret)
         rtable = []
         mobile_list = []
         try:
@@ -93,7 +93,7 @@ def channel(request):
         with transaction.atomic():
             db_key = DBlock.objects.select_for_update().get(index='event_key')
             temp = UserEvent.objects.filter(event_type='1').exclude(audit_state='2').values('invest_account')
-            db_mobile_list = map(lambda x: str(x['invest_account']), temp)
+            db_mobile_list = map(lambda x: x['invest_account'], temp)
             userevent_list = []
             duplicate_mobile_list = []
             for i in range(len(mobile_list)):
@@ -109,7 +109,7 @@ def channel(request):
             UserEvent.objects.bulk_create(userevent_list)
         succ_num = len(userevent_list)
         duplic_num1 = nrows - len(rtable)- 1
-        duplic_num2 = duplic_num1 - succ_num
+        duplic_num2 = len(rtable) - succ_num
         duplic_mobile_list_str = ','.join(duplicate_mobile_list)
         ret.update(code=0,sun=succ_num, dup1=duplic_num1, dup2=duplic_num2, anum=nrows-1, dupstr=duplic_mobile_list_str)
         return JsonResponse(ret)

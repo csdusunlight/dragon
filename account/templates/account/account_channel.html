@@ -12,6 +12,9 @@
 		<script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 		<script type="text/javascript" src="{%static 'js/ajaxfileupload.js'%}"></script>
 		<script type="text/javascript" src="{% static 'js/page.js' %}"></script>
+		<script>
+		
+		</script>
 	</head>
 
 	<body>
@@ -42,9 +45,9 @@
 							<a class="download-templete" href="/static/download/template.xls">下载表格模版</a>
 							<b>支持小于1M的表格文件格式（.xls 和 .xlsx）</b>
 							<form id="form" name="form" method="post" action="" enctype="multipart/form-data">
-								<input name="userfile" id="choose" type="file" /><br/>
+								<input name="userfile" id="choose" type="file" onchange="filechange(this)"/><br/>
 								<p class="table-choosed">已选择表格：<span id="hint" class="hint">未选择任何文件</span></p><br />
-								<a class="upload-box-btn" id="upload">导入表格</a><a class="upload-box-btn" id="uploadsubmit">提交表格</a>
+								<a class="upload-box-btn" id="upload">选择表格</a><a class="upload-box-btn" id="uploadsubmit" >提交表格</a>
 							</from>
 
 							<div class="img-mask">
@@ -146,25 +149,26 @@
 			    run:true,
 			    content:data,
 			});
-			var filechooser = document.getElementById("choose");
+//			var filechooser = document.getElementById("choose");
 			var upload = document.getElementById("upload");
 			var hint = document.getElementById("hint");
 			upload.onclick = function() {
-					filechooser.click();
+				document.getElementById("choose").click();
 				}
-			filechooser.onchange =  function() {
-				var aa = document.getElementById("choose").value.toLowerCase().split('.');
+			function filechange(that) {
+				var aa = that.value.toLowerCase().split('.');
+				alert(document.getElementById('choose').value);
 				if(document.form.userfile.value == "") {
 					alert('文件不能为空！');
 					return false;
 				} else {
 					if(aa[aa.length - 1] == 'xls' || aa[aa.length - 1] == 'xlsx') {
-						var fileSize = document.getElementById("choose").files[0].size;
+						var fileSize = that.files[0].size;
 						if(fileSize > 1024 * 1024 * 1) {
 							alert("文件大小不能超过1M");
 							return false;
 						} else {
-							hint.innerHTML = filechooser.files[0].name;
+							hint.innerHTML = that.files[0].name;
 						}
 					} else {
 						alert('请选择excel格式文件');
@@ -174,16 +178,17 @@
 			}
 			$('a#uploadsubmit').click(function() {
 	    		var fileElementId  = 'choose';
-	    		if(document.form.userfile.value == ""){
+	    		if(!document.getElementById(fileElementId).value){
 	    			alert("请先选择上传文件");
 	    			return;
 	    		}
+	    		alert(document.getElementById('choose').value);
 	    		var fid=$("select#project_select").val();
 	    		if (fid=="0"){
 	    			alert("请先选择项目");
 	    			return;
 	    		}
-	    		maskIn();
+	    	//	maskIn();
 		    	$.ajaxFileUpload({
 		            url:'',
 		            secureuri:false,
