@@ -57,6 +57,7 @@ h5 {margin: 0;}
   border-top: none;
 }
 .upload-box {
+  position: relative;
   width: 600px;
   padding: 20px;
   margin-top: 20px;
@@ -148,8 +149,8 @@ table td {
 }
 .img-mask>p {
   position: absolute;
-  top: 200px;
-  left: 300px;
+  top: 130px;
+  left: 200px;
   font-size: 16px;
 }
 @-webkit-keyframes ball-triangle-path-1 {
@@ -245,8 +246,8 @@ table td {
 .ball-triangle-path {
   position: relative;
   width: 100px;
-  left: 400px;
-  top: 200px;
+  left: 330px;
+  top: 140px;
   -webkit-transform: translate(-25px, -25px);
   -ms-transform: translate(-25px, -25px);
   transform: translate(-25px, -25px);
