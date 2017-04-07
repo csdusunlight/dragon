@@ -184,7 +184,8 @@ a { cursor:pointer;}
 .Blacklist,
 .Blacklist-none,
 .Channel,
-.Channel-none { position:fixed; width:100%; height:100%; background:rgba(0,0,0,0.3); display:none;}
+.Channel-none,
+.changeChannel { position:fixed; width:100%; height:100%; background:rgba(0,0,0,0.3); display:none;}
 /*#item_1555{width: 100px;}*/
 
 /*优惠券发放页面样式*/
