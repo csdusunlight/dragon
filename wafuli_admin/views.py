@@ -1142,7 +1142,7 @@ def admin_score(request):
             event.audit_state = '0'
             log.audit_result = True
             res['code'] = 0
-            msg_content = u'您已成功兑换' + event.content_object.commodity.name + u'，消耗积分' + event.invest_amount
+            msg_content = u'您已成功兑换' + event.content_object.commodity.name + u'，消耗积分' + str(event.invest_amount)
             Message.objects.create(user=event.user, content=msg_content, title=u"积分兑换");
         elif type == 2:
             reason = request.POST.get('reason', '')
