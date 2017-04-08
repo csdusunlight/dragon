@@ -13,7 +13,7 @@
 		<script type="text/javascript" src="{%static 'js/ajaxfileupload.js'%}"></script>
 		<script type="text/javascript" src="{% static 'js/page.js' %}"></script>
 		<script>
-		
+
 		</script>
 	</head>
 
@@ -114,7 +114,7 @@
 				<div class="popup-box popup-box-02">
 				    <div class="popup-content">
 				      <p>提交数据：<span class="data-submit">100</span>项</p>
-				      <p>表格重复数据：<span class="data-repeat">100</span>项</p>
+				      <p class="repeat-list">表格重复数据：<span class="data-repeat">100</span>项</p>
 				      <p>已存在的数据：<span class="data-exist">100</span>项</p>
 				      <p>有效提交：<span class="data-valid">100</span>项</p>
 				      <p style="text-align: left;padding-left: 38px;">已提交手机号：<br /><span class="submit-phonenumber">15933827345，15933827345，15933827345，15933827345，15933827345，15933827345，15933827345</span></p>
@@ -204,6 +204,7 @@
 		            		// alert(data.num);
 		            		// alert(data.num);
 		            		// alert(data.dupstr);
+		            		console.log("yes")
 
 		    						$(".data-submit").text(data.anum);
 		    						$(".data-repeat").text(data.dup1);
@@ -211,7 +212,7 @@
 		    						$(".data-valid").text(data.sun);
 		    						$(".submit-phonenumber").text(data.dupstr);
 		    						if (data.anum == data.sun) {
-		    								$(".data-repeat").hide();
+		    								$(".repeat-list").hide();
 		    						}
 		                popupInMistake();
 		            	}
