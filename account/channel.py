@@ -23,7 +23,7 @@ def channel(request):
         fid = request.POST.get('fid')
         ret = {'code':-1}
         file = request.FILES.get('userfile')
-        print file.name
+#         print file.name
         filename = os.path.join(STATIC_DIR, 'excel', request.user.mobile + '.xls').replace('\\','/')
         with open(filename, 'wb+') as destination:
             for chunk in file.chunks():

@@ -508,7 +508,7 @@ def export_finance_excel(request):
 def import_finance_excel(request):
     ret = {'code':-1}
     file = request.FILES.get('file')
-    print file.name
+#     print file.name
     with open('./out.xls', 'wb+') as destination:
         for chunk in file.chunks():
             destination.write(chunk)
