@@ -51,4 +51,5 @@ urlpatterns = [
     url(r'^forgot_validate_telcode/$', 'account.forgot_passwd.validate_telcode', name='forgot-validate-telcode'),
     
     url(r'^channel/$', 'account.channel.channel', name='account_channel'),
+    url(r'^export/$', 'account.channel.export_audit_result', name='export_audit_result'),
 ]

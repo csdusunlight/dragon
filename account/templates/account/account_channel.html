@@ -70,7 +70,7 @@
 
 					</div>
 					<div class="content-out content" style="display: none;">
-						<input class="export-btn" type="button" name="" id="" value="导出审核数据" />
+						<input class="export-btn" type="button" name="" id="export" value="导出审核数据" />
 						<h6>注意事项：</h6>
 						<p>1、请按项目名称导出数据<br />
 						   2、数据自动导出成Excel表格</p>
@@ -117,7 +117,7 @@
 				      <p class="repeat-list">表格重复数据：<span class="data-repeat">100</span>项</p>
 				      <p>已存在的数据：<span class="data-exist">100</span>项</p>
 				      <p>有效提交：<span class="data-valid">100</span>项</p>
-				      <p style="text-align: left;padding-left: 38px;">已提交手机号：<br /><span class="submit-phonenumber">15933827345，15933827345，15933827345，15933827345，15933827345，15933827345，15933827345</span></p>
+				      <p style="text-align: left;padding-left: 38px;">已存在的数据：<br /><span class="submit-phonenumber">15933827345，15933827345，15933827345，15933827345，15933827345，15933827345，15933827345</span></p>
 				      <p style="text-align: left;padding-left: 38px;">注：<br/>
 				      	已存在的数据：挖福利数据库中已存在，其他用户或自己之前提交过的数据<br />
 				      	表格重复数据：提交的表格中的重复项
@@ -129,6 +129,7 @@
 			</div>
 		</div>
 	</div>
+	<iframe id="myIFrame" scrolling="yes" src="abount:blank" style="display:none" frameborder=1></iframe>
 		<!--底部-->
   {% include "footer.html" %}
   <!--浮动窗口-->
@@ -190,7 +191,7 @@
 	    			alert("请先选择项目");
 	    			return;
 	    		}
-	    	//	maskIn();
+	    		maskIn();
 		    	$.ajaxFileUpload({
 		            url:'',
 		            secureuri:false,
@@ -290,6 +291,20 @@
 		    function popupOutMistake() {
 		        $(".popup-box-02").removeClass("in");
 		    }
+		    $("#export").click(function(){
+		    	var fid=$("select#project_select").val();
+	    		if (fid=="0"){
+	    			alert("请先选择项目");
+	    			return;
+	    		}
+				var html = '<form action="'+"{% url 'export_audit_result' %}"+'" method="get" target="_self" id="postData_form">';
+				html += '<input name="fid" type="hidden" value="'+ fid + '"/></form>';
+		        var iframe = document.getElementById('myIFrame');
+				    iframe.contentWindow.document.open();
+				    iframe.contentWindow.document.write(html);
+				    iframe.contentWindow.document.close();
+				document.getElementById('myIFrame').contentWindow.document.getElementById('postData_form').submit();
+			});
 
 		 //    // 查看详情调用函数
 		 //    function popupInDetail() {

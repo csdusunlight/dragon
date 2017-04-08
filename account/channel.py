@@ -5,7 +5,7 @@ Created on 2017年3月30日
 @author: lch
 '''
 from django.shortcuts import render
-from django.http.response import JsonResponse
+from django.http.response import JsonResponse, HttpResponse
 from wafuli.models import UserEvent, Finance
 from account.models import DBlock
 from django.db import transaction
@@ -15,6 +15,9 @@ import os
 from dragon.settings import STATIC_DIR
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+import StringIO
+from xlwt.Style import easyxf
+from xlwt.Workbook import Workbook
 
 @login_required
 @csrf_exempt
@@ -110,9 +113,51 @@ def channel(request):
         succ_num = len(userevent_list)
         duplic_num1 = nrows - len(rtable)- 1
         duplic_num2 = len(rtable) - succ_num
-        duplic_mobile_list_str = ','.join(duplicate_mobile_list)
+        duplic_mobile_list_str = u'，'.join(duplicate_mobile_list)
         ret.update(code=0,sun=succ_num, dup1=duplic_num1, dup2=duplic_num2, anum=nrows-1, dupstr=duplic_mobile_list_str)
         return JsonResponse(ret)
     else:
         flist = list(Finance.objects.filter(state='1', level__in=['channel','all']))
         return render(request, 'account/account_channel.html', {'flist':flist})
+
+def export_audit_result(request):
+    user = request.user
+    fid = request.GET.get("fid")
+    finance = Finance.objects.get(id=fid)
+    item_list = UserEvent.objects.filter(user=user, finance=finance).order_by("-time")
+    data = []
+    for con in item_list:
+        project_name=finance.title
+        mobile_sub=con.invest_account
+        time_sub=con.time
+        id=con.id
+        remark= con.remark
+        invest_amount= con.invest_amount
+        term=con.invest_term
+        result = con.get_audit_state_display(),
+        return_amount = '' if con.audit_state!='0' or not con.translist.exists() else str(con.translist.first().transAmount/100.0),
+        reason = '' if con.audit_state!='2' or not con.audited_logs.exists() else con.audited_logs.first().reason,
+        data.append([id, project_name, time_sub, mobile_sub, term, invest_amount, remark, result, return_amount, reason])
+    w = Workbook()     #创建一个工作簿
+    ws = w.add_sheet(u'待审核记录')     #创建一个工作表
+    title_row = [u'记录ID',u'项目名称',u'投资日期', u'注册手机号' ,u'投资期限' ,u'投资金额', u'备注', u'审核结果',u'返现金额',u'拒绝原因']
+    for i in range(len(title_row)):
+        ws.write(0,i,title_row[i])
+    row = len(data)
+    style1 = easyxf(num_format_str='YY/MM/DD')
+    for i in range(row):
+        lis = data[i]
+        col = len(lis)
+        for j in range(col):
+            if j==2:
+                ws.write(i+1,j,lis[j],style1)
+            else:
+                ws.write(i+1,j,lis[j])
+    sio = StringIO.StringIO()  
+    w.save(sio)
+    sio.seek(0)  
+    response = HttpResponse(sio.getvalue(), content_type='application/vnd.ms-excel')  
+    response['Content-Disposition'] = 'attachment; filename=审核结果.xls'  
+    response.write(sio.getvalue())
+    
+    return response 
