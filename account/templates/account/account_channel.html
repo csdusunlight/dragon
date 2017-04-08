@@ -114,17 +114,17 @@
 				</div>
 				<div class="popup-box popup-box-02">
 				    <div class="popup-content">
-				      <p>提交数据：<span class="data-submit">100</span>项</p>
-				      <p class="repeat-list">表格重复数据：<span class="data-repeat">100</span>项</p>
-				      <p>已存在的数据：<span class="data-exist">100</span>项</p>
-				      <p>有效提交：<span class="data-valid">100</span>项</p>
-				      <p style="text-align: left;padding-left: 38px;">已提交手机号：<br /><span class="submit-phonenumber">15933827345，15933827345，15933827345，15933827345，15933827345，15933827345，15933827345</span></p>
+				    	<h3>数据提交成功</h3>
+				      <p>提交数据：<span class="data-submit"></span>项</p>
+				      <p class="repeat-list">表格重复数据：<span class="data-repeat"></span>项</p>
+				      <p>已存在的数据：<span class="data-exist"></span>项</p>
+				      <p>有效提交：<span class="data-valid"></span>项</p>
+				      <p style="text-align: left;padding-left: 38px;">重复手机号：<br /><span class="submit-phonenumber"></span></p>
 				      <p style="text-align: left;padding-left: 38px;">注：<br/>
 				      	已存在的数据：挖福利数据库中已存在，其他用户或自己之前提交过的数据<br />
 				      	表格重复数据：提交的表格中的重复项
 				      </p>
 				      <a id="upload_again" class="upload-again table-btn" onclick="popupOutMistake()">确&nbsp;&nbsp;&nbsp;&nbsp;定</a>
-				      <!-- <a id="look_detail" class="look-detail table-btn" onclick="popupInDetail()">确定</a> -->
 				    </div>
 				</div>
 			</div>
@@ -137,7 +137,7 @@
 
 		<script type="text/javascript">
 			var data = '<table width="100%"><tr><th width="12%">项目</th><th>投资日期</th><th>提交手机号</th><th>投资期限</th>'+
-				'<th>投资金额</th><th width="15%">备注</th><th>审核结果</th><th>返现金额</th><th width="12%">拒绝原因</th>'+
+				'<th>投资金额</th><th width="15%">备注</th><th>审核结果</th><th>返现福币</th><th width="12%">拒绝原因</th>'+
 				'</tr>[data]<tr><td>{project}</td><td>{invest_time}</td><td>{mobile}</td>'+
 				'<td>{invest_term}</td><td>{invest_amount}</td><td>{remark}</td><td>{audit_result}</td>'+
 				'<td>{return_amount}</td><td>{refuse_reason}</td></tr>[/data]</table>';
@@ -201,10 +201,6 @@
 		            success: function (data, status) {
 		            	$(".img-mask").css("display", "none");
 		            	if (data.code==0){
-		            		// alert(data.num);
-		            		// alert(data.num);
-		            		// alert(data.num);
-		            		// alert(data.dupstr);
 		            		console.log("yes")
 
 		    						$(".data-submit").text(data.anum);
@@ -212,9 +208,9 @@
 		    						$(".data-exist").text(data.dup2);
 		    						$(".data-valid").text(data.sun);
 		    						$(".submit-phonenumber").text(data.dupstr);
-		    						if (data.anum == data.sun) {
-		    								$(".repeat-list").hide();
-		    						}
+		    						// if (data.anum == data.sun) {
+		    						// 		$(".repeat-list").hide();
+		    						// }
 		                popupInMistake();
 		            	}
 		            	else {
@@ -291,16 +287,6 @@
 		    function popupOutMistake() {
 		        $(".popup-box-02").removeClass("in");
 		    }
-
-		 //    // 查看详情调用函数
-		 //    function popupInDetail() {
-		 //    	$(".popup-box-02").removeClass("in");
-		 //        $(".popup-box-03").addClass("in");
-		 //    }
-			// // 详情确认
-		 //    function popupOutDetail() {
-		 //        $(".popup-box-03").removeClass("in");
-		 //    }
 
 		</script>
 	</body>
