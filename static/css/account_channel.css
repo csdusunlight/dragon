@@ -68,6 +68,7 @@ h5 {margin: 0;}
   float: right;
   width: 100px;
   height: 30px;
+  line-height: 30px;
   border: 1px solid #777;
   border-radius: 4px;
   background: #fff;
