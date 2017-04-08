@@ -81,6 +81,7 @@ jQuery.extend({
                     } else
                         jQuery.handleError(s, xml, status);
                 } catch (e) {
+                	console.log(e.message);
                     status = "error";
                     jQuery.handleError(s, xml, status, e);
                 }                // The request was completed
@@ -132,8 +133,9 @@ jQuery.extend({
 		  if ( type == "json" ){
 		   // 因为json数据会被<pre>标签包着，所以有问题，现在添加以下代码，
 		   // update by hzy
-		   var reg = /<pre.+?>(.+)<\/pre>/g; 
+		   var reg = /<pre>(.+)<\/pre>/g; 
 		   var result = data.match(reg);
+		   
 		   result = RegExp.$1;
 		   // update end
 		   data = $.parseJSON(result);

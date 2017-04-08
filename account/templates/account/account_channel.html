@@ -153,11 +153,13 @@
 			var upload = document.getElementById("upload");
 			var hint = document.getElementById("hint");
 			upload.onclick = function() {
+				var temp = document.getElementById("choose");
+				alert(temp);
 				document.getElementById("choose").click();
 				}
 			function filechange(that) {
 				var aa = that.value.toLowerCase().split('.');
-				alert(document.getElementById('choose').value);
+		//		alert(document.getElementById('choose').value);
 				if(document.form.userfile.value == "") {
 					alert('文件不能为空！');
 					return false;
@@ -182,7 +184,7 @@
 	    			alert("请先选择上传文件");
 	    			return;
 	    		}
-	    		alert(document.getElementById('choose').value);
+	   // 		alert(document.getElementById('choose').value);
 	    		var fid=$("select#project_select").val();
 	    		if (fid=="0"){
 	    			alert("请先选择项目");

@@ -92,7 +92,7 @@ def channel(request):
         ####开始去重
         with transaction.atomic():
             db_key = DBlock.objects.select_for_update().get(index='event_key')
-            temp = UserEvent.objects.filter(event_type='1').exclude(audit_state='2').values('invest_account')
+            temp = UserEvent.objects.filter(event_type='1',finance=finance).exclude(audit_state='2').values('invest_account')
             db_mobile_list = map(lambda x: x['invest_account'], temp)
             userevent_list = []
             duplicate_mobile_list = []
