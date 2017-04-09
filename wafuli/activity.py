@@ -102,6 +102,8 @@ def get_activity_recommend_page(request):
              "reason":wel.reason,
              "date":wel.date.strftime("%Y-%m-%d %H:%M"),
              "result":con.get_audit_state_display(),
+             "state_int":con.audit_state,
+             'refuse_reason':'' if con.audit_state!='2' else con.audited_logs.first().reason,
              }
         data.append(i)
     if data:

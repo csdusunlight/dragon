@@ -722,16 +722,23 @@ def get_user_money_page(request):
     data = []
     for con in contacts:      
         state = ''
+        reason = ''
+        state_int=''
         if filter ==1:
             event = con.user_event
             if event:
                 state = event.get_audit_state_display()
+                state_int = event.audit_state
+                if state_int=='2':
+                    reason = event.audited_logs.first().reason
 
         i = {"item":con.reason,
              "amount":con.transAmount,
              "time":con.time.strftime("%Y-%m-%d %H:%M:%S"),
              "remark":con.remark,
              "state":state,
+             "state_int":state_int,
+             "reason":reason,
              }
         data.append(i)
     if data:
@@ -877,7 +884,9 @@ def get_user_coupon_exchange_detail(request):
              "amount":coupon.project.amount,
              "account":con.invest_account,
              "state":con.get_audit_state_display(),
+             "state_int":con.audit_state,
              'remark':con.remark,
+             'reason':'' if con.audit_state!='2' else con.audited_logs.first().reason,
              'time':con.time.strftime("%Y-%m-%d %H:%M:%S"),
              'type':coupon.project.get_ctype_display()
         }
