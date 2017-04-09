@@ -18,9 +18,11 @@
 	   	<li>
 	   		<a href="{% url 'account_message' %}" class="back-a13">消息中心</a>
 	   	</li>
+	   	{%if user.is_channel%}
 	   	<li>
 	   		<a href="{% url 'account_channel' %}" class="back-a14">渠道数据提交</a>
 	   	</li>
+	   	{%endif%}
 	   </ul>
 </div>
 <script>

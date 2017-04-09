@@ -5,7 +5,7 @@ Created on 2017年3月30日
 @author: lch
 '''
 from django.shortcuts import render
-from django.http.response import JsonResponse, HttpResponse
+from django.http.response import JsonResponse, HttpResponse, Http404
 from wafuli.models import UserEvent, Finance
 from account.models import DBlock
 from django.db import transaction
@@ -22,6 +22,8 @@ from xlwt.Workbook import Workbook
 @login_required
 @csrf_exempt
 def channel(request):
+    if not request.user.is_channel():
+        raise Http404
     if request.method == 'POST':
         fid = request.POST.get('fid')
         ret = {'code':-1}
@@ -93,12 +95,12 @@ def channel(request):
         fid = int(fid)
         finance = Finance.objects.get(id=fid)
         ####开始去重
+        userevent_list = []
+        duplicate_mobile_list = []
         with transaction.atomic():
             db_key = DBlock.objects.select_for_update().get(index='event_key')
             temp = UserEvent.objects.filter(event_type='1',finance=finance).exclude(audit_state='2').values('invest_account')
             db_mobile_list = map(lambda x: x['invest_account'], temp)
-            userevent_list = []
-            duplicate_mobile_list = []
             for i in range(len(mobile_list)):
                 mob = mobile_list[i]
                 if mob in db_mobile_list:
