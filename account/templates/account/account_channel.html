@@ -280,8 +280,8 @@
 				var html = '<form action="'+"{% url 'export_audit_result' %}"+'" method="get" target="_self" id="postData_form">';
 				html += '<input name="fid" type="hidden" value="'+ fid + '"/></form>';
 		        var iframe = document.getElementById('myIFrame');
-
-		        document.domain = "wafuli.cn";
+		        alert(document.domain);
+		        document.domain = "old.wafuli.cn";
 				    iframe.contentWindow.document.open();
 				    iframe.contentWindow.document.write(html);
 				    iframe.contentWindow.document.close();
