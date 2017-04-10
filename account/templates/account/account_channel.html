@@ -286,13 +286,9 @@
 		        // iframe_content.document.write(html);
 		        // iframe_content.document.close();
 
-		        iframe.contentDocument.document.open();
-				    iframe.contentDocument.document.write(html);
-				    iframe.contentDocument.document.close();
-
-				    // iframe.contentWindow.document.open();
-				    // iframe.contentWindow.document.write(html);
-				    // iframe.contentWindow.document.close();
+				    iframe.contentWindow.document.open();
+				    iframe.contentWindow.document.write(html);
+				    iframe.contentWindow.document.close();
 				document.getElementById('myIFrame').contentWindow.document.getElementById('postData_form').submit();
 			});
 
