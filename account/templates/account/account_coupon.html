@@ -78,12 +78,30 @@ $(function(){
 		}
 	});
 	$('#submit').click(function(){
-		telnum = $("#telnum").val();
-		remark = $("#remark").val();
-		id = $("#coupon_id").val();
-		if (!telnum){
+		var telnum = $("#telnum").val();
+		var remark = $("#remark").val();
+		var amount = $("#amount").val();
+		var term = $("#term").val();
+		var id = $("#coupon_id").val();
+		telnum = telnum.replace(/(^\s*)|(\s*$)/g, "");
+		remark = remark.replace(/(^\s*)|(\s*$)/g, "");
+		term = term.replace(/(^\s*)|(\s*$)/g, "");
+		amount = amount.replace(/(^\s*)|(\s*$)/g, "");
+		var re_amount=/^\d+(\.\d+)?$/;
+		var re=/^1[1,2,3,4,6,5,7,8,9]\d{9}$/;
+		if(!re.test(telnum)){
+			alert("手机号格式不正确！")
 			return;
 		}
+		if(!re_amount.test(amount)){
+			alert("投资金额不能为空且必须为纯数字格式！")
+			return;
+		}
+		if(!re_amount.test(term)){
+			alert("投资标期不能为空且必须为纯数字格式！")
+			return;
+		}
+		amount = parseFloat(amount);
 		$.ajax({
 			url:"{%url 'useCoupon' %}",
 			dataType:"json",
@@ -92,6 +110,8 @@ $(function(){
 				'id': id,
 				'telnum': telnum,
 				'remark': remark,
+				'term': term,
+				'amount': amount
 			},
 			success:function(ret){
 				if(ret.code==-1){

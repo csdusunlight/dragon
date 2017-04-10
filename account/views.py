@@ -907,10 +907,13 @@ def useCoupon(request):
         return JsonResponse(res)
     coupon_id = request.POST.get('id', None)
     telnum = request.POST.get('telnum', None)
+    invest_amount = request.POST.get('amount', None)
+    invest_term = request.POST.get('term', None)
     remark = request.POST.get('remark', '')
-    if coupon_id is None or telnum is None:
-        logger.error("Coupon ID or telnum is missing!!!")
+    if coupon_id is None or telnum is None or invest_amount is None:
+        logger.error("Coupon ID or telnum or amount is missing!!!")
         raise Http404
+    invest_amount = int(float(invest_amount))
     coupon = Coupon.objects.get(pk=coupon_id)
     code=''
     msg=''
@@ -929,8 +932,8 @@ def useCoupon(request):
                 code = '2'
                 msg = u'该账号已领取奖励，请不要重复提交！'
     if code!='2':
-        UserEvent.objects.create(user=user, event_type='4', invest_account=telnum,
-                     content_object=coupon, audit_state='1',remark=remark,)
+        UserEvent.objects.create(user=user, event_type='4', invest_account=telnum, invest_amount=invest_amount,
+                     invest_term=invest_term, content_object=coupon, audit_state='1',remark=remark,)
         code = '1'
         msg = u'提交成功，请查看兑换记录！'
         coupon.is_used = True

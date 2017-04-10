@@ -253,7 +253,7 @@ def expsubmit_finance(request):
                 raise ValueError('This invest_account is repective in project:' + str(news.id))
             else:
                 UserEvent.objects.create(user=request.user, event_type='1', invest_account=telnum, invest_term=term,
-                                 invest_amount=amount, content_object=news, audit_state='1',remark=remark,)
+                                 invest_amount=int(amount), content_object=news, audit_state='1',remark=remark,)
                 code = '1'
                 msg = u'提交成功，请通过用户中心查询！'
     except Exception, e:
