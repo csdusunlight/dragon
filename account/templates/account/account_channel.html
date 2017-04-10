@@ -282,9 +282,9 @@
 		        var iframe = document.getElementById('myIFrame');
 
 		        var iframe_content = (iframe.contentWindow || iframe.contentDocument);
-		        iframe_content.open();
-		        iframe_content.write(html);
-		        iframe_content.close();
+		        iframe_content.document.open();
+		        iframe_content.document.write(html);
+		        iframe_content.document.close();
 				    // iframe.contentWindow.document.open();
 				    // iframe.contentWindow.document.write(html);
 				    // iframe.contentWindow.document.close();
