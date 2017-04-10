@@ -344,15 +344,6 @@ table td {
   margin-top: 4%;
   overflow-y: scroll;
 }
-/*.popup-box-03 .popup-content {
-  width: 880px;
-  height: 500px;
-  margin-top: 4%;
-  overflow-y: scroll;
-}
-.popup-box-03 h3 {
-  text-align: left;
-}*/
 .popup-content h3 {
   padding: 20px 0;
   color:#04B3FF;
@@ -373,9 +364,6 @@ table td {
   line-height: 1;
   cursor: pointer;
 }
-/*.popup-box-02 .table-btn {
-    margin: 10px 2.5rem 0rem 48px;
-}*/
 .popup-box.in .popup-content{
   -webkit-animation: popup 0.4s linear;
   animation: popup 0.4s linear;

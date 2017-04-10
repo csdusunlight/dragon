@@ -106,13 +106,6 @@
 
 					</div>
 				</div>
-<!-- 				<div class="popup-box popup-box-01">
-				    <div class="popup-content">
-				      <h3>表格提交成功</h3>
-				      <p id="hint">等待审核中</p>
-				      <a id="confirm_submit" class="confirm_submit table-btn" onclick="popupOutSubmit()">确&nbsp;&nbsp;&nbsp;&nbsp;定</a>
-				    </div>
-				</div> -->
 				<div class="popup-box popup-box-02">
 				    <div class="popup-content">
 				    	<h3>数据提交成功</h3>
@@ -210,9 +203,6 @@
 		    						$(".data-exist").text(data.dup2);
 		    						$(".data-valid").text(data.sun);
 		    						$(".submit-phonenumber").text(data.dupstr);
-		    						// if (data.anum == data.sun) {
-		    						// 		$(".repeat-list").hide();
-		    						// }
 		                popupInMistake();
 		            	}
 		            	else {
@@ -272,14 +262,6 @@
 		    function maskIn() {
 		        $(".img-mask").css("display", "block");
 		    }
-		    // 提交成功
-		    // function popupInSubmit() {
-		    //     $(".popup-box-01").addClass("in");
-		    // }
-			// 提交成功确定
-		    // function popupOutSubmit() {
-		    //     $(".popup-box-01").removeClass("in");
-		    // }
 
 		    // 数据异常调用函数
 		    function popupInMistake() {
