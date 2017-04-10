@@ -281,10 +281,15 @@
 				html += '<input name="fid" type="hidden" value="'+ fid + '"/></form>';
 		        var iframe = document.getElementById('myIFrame');
 
-		        var iframe_content = (iframe.contentWindow || iframe.contentDocument);
-		        iframe_content.document.open();
-		        iframe_content.document.write(html);
-		        iframe_content.document.close();
+		        // var iframe_content = (iframe.contentWindow || iframe.contentDocument);
+		        // iframe_content.document.open();
+		        // iframe_content.document.write(html);
+		        // iframe_content.document.close();
+
+		        iframe.contentDocument.document.open();
+				    iframe.contentDocument.document.write(html);
+				    iframe.contentDocument.document.close();
+
 				    // iframe.contentWindow.document.open();
 				    // iframe.contentWindow.document.write(html);
 				    // iframe.contentWindow.document.close();
