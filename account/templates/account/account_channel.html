@@ -280,9 +280,14 @@
 				var html = '<form action="'+"{% url 'export_audit_result' %}"+'" method="get" target="_self" id="postData_form">';
 				html += '<input name="fid" type="hidden" value="'+ fid + '"/></form>';
 		        var iframe = document.getElementById('myIFrame');
-				    iframe.contentWindow.document.open();
-				    iframe.contentWindow.document.write(html);
-				    iframe.contentWindow.document.close();
+
+		        var iframe_content = (iframe.contentWindow || iframe.contentDocument);
+		        iframe_content.open();
+		        iframe_content.write(html);
+		        iframe_content.close();
+				    // iframe.contentWindow.document.open();
+				    // iframe.contentWindow.document.write(html);
+				    // iframe.contentWindow.document.close();
 				document.getElementById('myIFrame').contentWindow.document.getElementById('postData_form').submit();
 			});
 
