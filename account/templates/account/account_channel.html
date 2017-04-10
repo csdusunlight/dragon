@@ -281,11 +281,7 @@
 				html += '<input name="fid" type="hidden" value="'+ fid + '"/></form>';
 		        var iframe = document.getElementById('myIFrame');
 
-		        // var iframe_content = (iframe.contentWindow || iframe.contentDocument);
-		        // iframe_content.document.open();
-		        // iframe_content.document.write(html);
-		        // iframe_content.document.close();
-
+		        document.domain = "wafuli.cn";
 				    iframe.contentWindow.document.open();
 				    iframe.contentWindow.document.write(html);
 				    iframe.contentWindow.document.close();
