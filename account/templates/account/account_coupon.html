@@ -214,19 +214,21 @@ $(function(){
                 	<h2>优惠券兑换</h2>
                     	<div class="Input-in">
                         	<span>投资账号（手机号）：</span>
-                            <input id="telnum" type="text" />
+                            <input id="telnum" type="text" placeholder="输入您的手机号 />
                         </div>
                       <div class="Input-in">
                           <span>投资金额：</span>
-                            <input id="amount" type="text" />
+                            <input id="amount" type="text" placeholder="输入您的投资金额（仅限数字）" />
+                            <span style="position: absolute;width:0;margin-left: 10px;">元</span></div>
                         </div>
-                      <div class="Input-in">
+                      <div class="Input-in" style="width: auto;">
                           <span>投资标期：</span>
-                            <input id="term" type="text" />
+                            <input id="term" type="text" placeholder="输入您的投资标期（仅限数字）" />
+                            <span style="position: absolute;width:0;margin-left: 10px;">天</span></div>
                         </div>
-                    	<div class="Input-in">
+                    	<div class="Input-in" style="width: auto;">
                         	<span>备注：</span>
-                            <input id="remark" type="text" />
+                            <input id="remark" type="text" placeholder="可不填" />
                         </div>
 						<input id="coupon_id" type="hidden" />
                         <div class="Submit-box">
