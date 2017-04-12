@@ -116,6 +116,7 @@ def welfare(request, id=None, page=None, type=None):
             wel = Welfare.objects.get(id=id)
         except Welfare.DoesNotExist:
             raise Http404(u"该页面不存在")
+        update_view_count(wel)
         other_wel_list = Welfare.objects.filter(is_display=True, state='1').order_by('-view_count')[0:10]
         template = 'detail-common.html'
         if wel.type == "youhuiquan":
@@ -151,7 +152,7 @@ def exp_welfare_erweima(request):
     wel_type = str(wel_type)
     model = globals()[wel_type]
     wel = model.objects.get(id=wel_id)
-    update_view_count(wel)
+#     update_view_count(wel)
     if wel_type == 'Welfare':
         if wel.type == "hongbao":
             wel = wel.hongbao
@@ -183,7 +184,7 @@ def exp_welfare_openwindow(request):
     wel_type = str(wel_type)
     model = globals()[wel_type]
     wel = model.objects.get(id=wel_id)
-    update_view_count(wel)
+#     update_view_count(wel)
     url = wel.exp_url_pc
     js = "<script>window.location.href='"+url+"';</script>"
     if wel_type == "Task" and not wel.is_forbidden:
