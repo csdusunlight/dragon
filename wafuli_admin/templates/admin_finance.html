@@ -8,7 +8,7 @@ $.ajaxSetup({
 });
 var data = '<table width="100%"><tr><th>用户名</th><th>用户类型</th><th>手机号</th>'+
 	'<th>项目名称</th><th>提交手机号</th><th>投资金额</th><th>投资标期</th><th>提交时间</th><th>处理状态</th>'+
-	'<th>操作</th><th>备注</th></tr>[data]<tr><td>{username}</td><td>用户类型</td><td>{mobile}</td>'+
+	'<th>操作</th><th>备注</th></tr>[data]<tr><td>{username}</td><td>{usertype}</td><td>{mobile}</td>'+
 	'<td>{project}</td><td>{mobile_sub}</td><td>{invest_amount}</td><td>{term}</td>'+
 	'<td>{time_sub}</td><td>{state}</td>'+
 	'<td id="item_{id}"><a class="fyin" onclick="pass({id})">返现'+
@@ -16,7 +16,7 @@ var data = '<table width="100%"><tr><th>用户名</th><th>用户类型</th><th>�
 var data2 = '<table width="100%"><tr><th>用户名</th><th>用户类型</th><th>手机号</th>'+
 	'<th>项目名称</th><th>提交手机号</th><th>投资金额</th><th>投资标期</th><th>提交时间</th><th>处理状态</th>'+
 	'<th>审核人</th><th>审核时间</th><th width="6%">返现金额</th><th width="6%">返现积分</th>'+
-	'<th>备注</th></tr>[data]<tr><td>{username}</td><td>用户类型</td><td>{mobile}</td>'+
+	'<th>备注</th></tr>[data]<tr><td>{username}</td><td>{usertype}</td><td>{mobile}</td>'+
 	'<td>{project}</td><td>{mobile_sub}</td><td>{invest_amount}</td><td>{term}</td>'+
 	'<td>{time_sub}</td><td>{state}</td><td>{admin}</td><td>{time_admin}</td>'+
 	'<td>{ret_amount}</td><td>{score}</td><td>{remark}</td></tr>[/data]</table>';
@@ -148,6 +148,16 @@ $(document).ready(function(){
 		if(state){
 			newurl += "&state="+state;
 		}
+		var usertype = $("#usertype").val();
+		if(usertype){
+			newurl += "&usertype="+usertype;
+		}
+		if(usertype=='2'){
+			var chalevel = $("#chalevel").val();
+			if(chalevel){
+				newurl += "&chalevel="+chalevel;
+			}
+		}
 		var newdata = data;
 		if(state!='1'){
 			newdata = data2;
@@ -184,6 +194,16 @@ $(document).ready(function(){
 		}
 		if(projectname){
 			html += '<input name="projectname" type="hidden" value="'+ projectname + '"/>';
+		}
+		var usertype = $("#usertype").val();
+		if(usertype){
+			html += '<input name="usertype" type="hidden" value="'+ usertype + '"/>';
+		}
+		if(usertype=='2'){
+			var chalevel = $("#chalevel").val();
+			if(chalevel){
+				html += '<input name="chalevel" type="hidden" value="'+ chalevel + '"/>';
+			}
 		}
 		html += '</form>';
         var iframe = document.getElementById('myIFrame');
@@ -268,7 +288,15 @@ $(document).ready(function(){
                                             </td>
                                           <td>
                                               <i style="letter-spacing:4.8px;">用户类型</i>
-                                                <input id="usertype" type="text" />
+                                                <select name="selectAge" id="usertype">
+											        <option value="0">全部</option>
+											        <option value="1">普通用户</option>
+											        <option value="2">渠道用户</option>
+											    </select>
+                                            </td>
+                                            <td>
+                                            	<i style="letter-spacing:4.8px;">渠道级别：</i>
+                                                <input id="chalevel" type="text" />
                                             </td>
                                         </tr>
                                         <tr>

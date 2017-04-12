@@ -12,7 +12,7 @@ class MyUserAdmin(UserAdmin):
     # The fields to be used in displaying the User model.
     fieldsets = (
         (None, {'fields': ('email', 'mobile','username','password')}),
-        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser',
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','is_channel',
                                        'groups', 'user_permissions', 'admin_permissions')}),
         ('Important dates', {'fields': ('last_login_time', 'date_joined', 'invite_code')}),
         ('others', {'fields': ('accu_income','accu_scores','balance','scores','invite_account','invite_income',
@@ -28,7 +28,7 @@ class MyUserAdmin(UserAdmin):
     search_fields = ('mobile','email','username')
     ordering = ('mobile',)
     list_display = ('mobile', 'email', 'username','is_staff','date_joined')
-    list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
+    list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups','is_channel')
     filter_horizontal = ('groups', 'user_permissions', 'admin_permissions')
 class EnvelopeAdmin(ModelAdmin):
     search_fields = ('user__mobile',)

@@ -53,7 +53,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField('active', default=True,
         help_text=('Designates whether this user should be treated as '
                     'active. Unselect this instead of deleting accounts.'))
-#     is_channel = models.BooleanField(u'是否渠道用户', default = False)
+    is_channel = models.BooleanField(u'是否渠道用户', default = False)
     date_joined = models.DateTimeField('date joined', default=timezone.now)
     accu_income = models.IntegerField(u'累计收益', default = 0)
     accu_scores = models.IntegerField(u'累计获得积分', default = 0)
@@ -106,8 +106,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         return self.admin_permissions.filter(code=code).exists()
     def __unicode__(self): 
         return self.mobile
-    def is_channel(self):
-        return hasattr(self, 'channel')
+
 class Channel(models.Model):
     user = models.OneToOneField(MyUser, primary_key=True)
     level = models.CharField(u"渠道等级",max_length=10)

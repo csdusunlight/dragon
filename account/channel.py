@@ -18,11 +18,13 @@ from django.views.decorators.csrf import csrf_exempt
 import StringIO
 from xlwt.Style import easyxf
 from xlwt.Workbook import Workbook
+import logging
+logger = logging.getLogger("wafuli")
 
 @login_required
 @csrf_exempt
 def channel(request):
-    if not request.user.is_channel():
+    if not request.user.is_channel:
         raise Http404
     if request.method == 'POST':
         fid = request.POST.get('fid')
@@ -69,7 +71,10 @@ def channel(request):
                         else:
                             mobile_list.append(mobile)
                     elif j==2:
-                        term = unicode(cell.value).strip()
+                        try:
+                            term = str(int(float(cell.value)))
+                        except Exception,e:
+                            raise Exception(u"投资标期必须为数字，请修改后重新提交。")
                         temp.append(term)
                     elif j==3:
                         amount = cell.value
@@ -89,7 +94,8 @@ def channel(request):
                 else:
                     rtable.append(temp)
         except Exception, e:
-            traceback.print_exc()
+            logger.info(unicode(e))
+#             traceback.print_exc()
             ret['msg'] = unicode(e)
             return JsonResponse(ret)
         fid = int(fid)

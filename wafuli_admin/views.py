@@ -384,7 +384,18 @@ def get_admin_finance_page(request):
     mobile = request.GET.get("mobile", None)
     if mobile:
         item_list = item_list.filter(user__mobile=mobile)
-        
+    
+    usertype = request.GET.get("usertype",0)
+    usertype= int(usertype)
+    if usertype == 1:
+        item_list = item_list.filter(user__is_channel=False)
+    elif usertype == 2:
+        item_list = item_list.filter(user__is_channel=True)
+        chalevel = request.GET.get("chalevel","")
+        print chalevel
+        if chalevel:
+            item_list = item_list.filter(user__channel__level=chalevel)
+            
     companyname = request.GET.get("companyname", None)
     if companyname:
         item_list = item_list.filter(finance__company__name__contains=companyname)
@@ -396,6 +407,7 @@ def get_admin_finance_page(request):
     adminname = request.GET.get("adminname", None)
     if adminname:
         item_list = item_list.filter(audited_logs__user__username=adminname)
+        
     task_type = ContentType.objects.get_for_model(Finance)
     item_list = item_list.filter(content_type = task_type.id)
     item_list = item_list.filter(event_type='1', audit_state=state).select_related('user').order_by('time')
@@ -414,6 +426,7 @@ def get_admin_finance_page(request):
         project = con.content_object
         i = {"username":con.user.username,
              "mobile":con.user.mobile,
+             "usertype":u"普通用户" if not con.user.is_channel else u"渠道："+ con.user.channel.level,
              "type":con.content_object.get_type(),
              "company":project.company.name if project.company else u"无",
              "project":project.title,
@@ -455,7 +468,16 @@ def export_finance_excel(request):
     mobile = request.GET.get("mobile", None)
     if mobile:
         item_list = item_list.filter(user__mobile=mobile)
-         
+    usertype = request.GET.get("usertype",0)
+    usertype= int(usertype)
+    if usertype == 1:
+        item_list = item_list.filter(user__is_channel=False)
+    elif usertype == 2:
+        item_list = item_list.filter(user__is_channel=True)
+        chalevel = request.GET.get("chalevel","")
+        print usertype,chalevel
+        if chalevel:
+            item_list = item_list.filter(user__channel__level=chalevel) 
     companyname = request.GET.get("companyname", None)
     if companyname:
         item_list = item_list.filter(finance__company__name__contains=companyname)
@@ -477,7 +499,7 @@ def export_finance_excel(request):
         remark= con.remark
         invest_amount= con.invest_amount
         term=con.invest_term
-        user_type = u"普通用户" if not con.user.is_channel() else u"渠道："+ con.user.channel.level
+        user_type = u"普通用户" if not con.user.is_channel else u"渠道："+ con.user.channel.level
         data.append([id, project_name, time_sub, user_type, mobile_sub, term, invest_amount, remark])
     w = Workbook()     #创建一个工作簿
     ws = w.add_sheet(u'待审核记录')     #创建一个工作表
@@ -816,10 +838,14 @@ def admin_user(request):
             qq_number = request.POST.get('qq_number', '')
             level = request.POST.get('level',u'无')
             Channel.objects.create(user=obj_user, qq_number=qq_number, level=level)
+            obj_user.is_channel = True
+            obj_user.save(update_fields=['is_channel'])
             admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=obj_user, event_type='6', remark=u"新增渠道")
             res['code'] = 0
         elif type == 6:
             obj_user.channel.delete()
+            obj_user.is_channel = False
+            obj_user.save(update_fields=['is_channel'])
             admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=obj_user, event_type='6', remark=u"取消渠道")
             res['code'] = 0
         elif type == 7:
@@ -921,7 +947,7 @@ def get_admin_user_page(request):
              "is_black":u'否' if con.is_active else u'是',
              "id":con.id,
              "opertype":u'加黑' if con.is_active else u'去黑',
-             "opertype_channel":u'撤销渠道' if con.is_channel() else u'赋予渠道权限',
+             "opertype_channel":u'撤销渠道' if con.is_channel else u'赋予渠道权限',
              }
         data.append(i)
     if data:
