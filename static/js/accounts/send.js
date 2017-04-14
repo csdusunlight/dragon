@@ -108,12 +108,12 @@ $(function() {
 		}
 		else{
 			// if(is_net_code($("#x_yanzhengma"))){}
-			else{
+			// else{
 			phoneNum = $("input[name='mobile']").val();
 			actionType = 'register';
 			actionurl = get_code_url;
 			sendTelVerifyCodeImageV(phoneNum, actionType, actionurl);
-		}
+		// }
 		}
 
 	});
