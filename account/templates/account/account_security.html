@@ -41,7 +41,7 @@ $(function(){
 	$(".None-p button").click(function(){
 		$(".Password-modify").css("display","none");
 		$(".Password-modify2").css("display","none");
-		$(".Password-modify3").css("display","none");
+		// $(".Password-modify3").css("display","none");
 		$(".Password-modify4").css("display","none");
 	});
 	$(".login-modify").click(function(){
@@ -50,29 +50,29 @@ $(function(){
 	$("#acti2").click(function(){
 		$(".Password-modify2").css("display","block");
 	});
-	$("#acti1").click(function(){
-		var post_url = "{%url 'active_email' %}";
-		$.ajax({
-			url: post_url,
-			dataType:"json",
-			type:'GET',
-			success:function(ret){
-				if(ret.code==1){
-					alert("请重新登录！")
-					window.location.href = ret.url;
-				}
-				else if(ret.code==2){
-					alert("发送验证邮件失败，邮箱地址不存在！");
-				}
-				else if(ret.code==0){
-					$(".Password-modify3").css("display","block");
-				}
-			},
-			error:function(){
-				alert("请检查网络连接");
-			}
-		});
-	});
+	// $("#acti1").click(function(){
+	// 	var post_url = "{%url 'active_email' %}";
+	// 	$.ajax({
+	// 		url: post_url,
+	// 		dataType:"json",
+	// 		type:'GET',
+	// 		success:function(ret){
+	// 			if(ret.code==1){
+	// 				alert("请重新登录！")
+	// 				window.location.href = ret.url;
+	// 			}
+	// 			else if(ret.code==2){
+	// 				alert("发送验证邮件失败，邮箱地址不存在！");
+	// 			}
+	// 			else if(ret.code==0){
+	// 				$(".Password-modify3").css("display","block");
+	// 			}
+	// 		},
+	// 		error:function(){
+	// 			alert("请检查网络连接");
+	// 		}
+	// 	});
+	// });
 	$(".Pay-modify").click(function(){
 		$(".Password-modify4").css("display","block")
 	});
@@ -235,11 +235,11 @@ $(function(){
                             </div>
                         </div>
                         <div class="bin-more-info">
-                        	<script type="text/javascript">
+<!--                         	<script type="text/javascript">
 							$(document).ready(function(){
 							  $(".bin-more-info li:odd").css("border-right","none")
 							});
-							</script>
+							</script> -->
                         	<ul>
                             	<li>
                                 	<div class="bing-top-li">
@@ -251,7 +251,7 @@ $(function(){
                                     </div>
                                     <div class="Bing-note"><p>您在申请体现时须通过手机获取验证码</p></div>
                                 </li>
-                            	<li>
+                            	<!-- <li>
                             		{% if user.is_email_authenticated %}
                             		<div class="bing-top-li">
                                     	<div class="Bin-img"><div class="Bin-mi"><img src="{% static 'images/pic5.png' %}" /></div></div>
@@ -270,8 +270,8 @@ $(function(){
                                     </div>
                                     {% endif %}
                                     <div class="Bing-note"><p>您可以通过邮箱找回密码</p></div>
-                                </li>
-                                <li>
+                                </li> -->
+                                <li style="border-right: none; border-bottom: 1px solid #ebebeb">
                                 	<div class="bing-top-li">
                                     	<div class="Bin-img"><div class="Bin-mi"><img src="{% static 'images/pic6.png' %}" /></div></div>
                                         <div class="Bin-right">
@@ -304,8 +304,8 @@ $(function(){
                             </ul>
                         </div>
                     </div>
-                    
-                    
+
+
                 </div>
             </div>
         </div>
@@ -315,7 +315,7 @@ $(function(){
         	<div class="Passbox">
             	<div class="Passinfo">
                 	<h2>登录密码修改</h2>
-                	
+
                     	<div class="Input-in">
                         	<span>初始密码：</span>
                             <input id="initial_password" type="text" />
@@ -358,11 +358,11 @@ $(function(){
                         	<span>再次确认新支付密码：</span>
                             <input id="new_password_again2" type="text" />
                         </div>
-                     
+
                         <div class="Submit-box">
                         	<input id="submit2" type="submit"  value="提  交" />
                         </div>
-					
+
                 </div>
                 <div class="None-p">
             	<button></button>
@@ -370,7 +370,7 @@ $(function(){
             </div>
         </div>
         <!--支付密码设置弹窗-->
-        <div class="Password-modify3" style="display:none;">
+        <!-- <div class="Password-modify3" style="display:none;">
         	<div class="Passbox">
             	<div class="Passinfo" style="height:200px;">
                 	<h2>温馨提示</h2>
@@ -380,7 +380,7 @@ $(function(){
             	<button></button>
             </div>
             </div>
-        </div>
+        </div> -->
         <div class="Password-modify4" style="display:none;">
         	<div class="Passbox">
             	<div class="Passinfo">
@@ -408,7 +408,7 @@ $(function(){
         </div>
 <!--底部-->
   {% include "footer.html" %}
-  <!--浮动窗口-->  
+  <!--浮动窗口-->
   {% include "outline.html" %}
     </div>
 
