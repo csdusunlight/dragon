@@ -29,9 +29,9 @@ $(function() {
 					 //        key.attr("value", new_cptch_key);
 					 //        img.attr("src", new_cptch_image);
 						// }
-						else if (action=='change_zhifubao'){
+						// else if (action=='change_zhifubao'){
 
-						}
+						// }
 					}
 				},
 				error : function() {
