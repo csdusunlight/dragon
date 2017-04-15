@@ -71,12 +71,35 @@
 	background-repeat: no-repeat;
 }
 .register-icon {position: absolute;}
-.register-phone {top: 4px; left: 8px;}
-.register-password {top: 4px; left: 8px;}
-.register-recommend {top: 14px; left: 8px;}
+.register-phone {width: 12px; top: 10px; left: 16px;}
+.register-password {width: 20px; top: 12px; left: 12px;}
+.register-recommend {width: 20px; top: 38px; left: 13px;}
 .re-d{
 	position: relative;
 	margin-bottom:1.5rem;}
+.recommend-id {position:relative;}
+.recommend-id:after {
+	content:"";
+	position:absolute;
+	display:block;
+	width:10px;
+	height:10px;
+	border-top: 2px solid #008fd7;
+	border-right: 2px solid #008fd7;
+	transform:rotate(135deg);
+	top:-2px;
+	left:200px;
+}
+.recommend-id.recommend-box:after {
+	transform:rotate(135deg);
+	top:4px;
+}
+.recommend-box {
+	display: none;
+}
+.recommend-box.input-toggle {
+	display: block;
+}
 .re-ti{
 	font-size:16px;line-height: 10px;}
 .re-form{
@@ -94,10 +117,11 @@
 .re-huo{
 	width: 100px;
 	margin-left: -100px;
+	color: #fff;
 	background: rgb(245, 245, 245) none repeat scroll 0% 0%;
 	background-color: #008fd7;
 	border: 1px solid rgb(231, 231, 231);
-	height: 44px;
+	height: 46px;
 	border-radius: 0px 7px 7px 0px;
 	outline:none;
 }
