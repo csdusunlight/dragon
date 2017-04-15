@@ -70,10 +70,12 @@
 	background-position: left center;
 	background-repeat: no-repeat;
 }
-.register-phone {background-image: url(../images/register-phone.png);}
-.register-password {background-image: url(../images/register-lock.png;);}
-.register-recommend {background-image: url(../images/register-recommend.png;);}
+.register-icon {position: absolute;}
+.register-phone {top: 4px; left: 8px;}
+.register-password {top: 4px; left: 8px;}
+.register-recommend {top: 14px; left: 8px;}
 .re-d{
+	position: relative;
 	margin-bottom:1.5rem;}
 .re-ti{
 	font-size:16px;line-height: 10px;}

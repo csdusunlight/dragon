@@ -64,19 +64,21 @@ $(function(){
        		  <span class="tips" id="divyzm"></span>
             </div> -->
             <div class="re-d">
-            <!-- <p class="re-ti re-dti">手机号</p> -->
-            <input type="text" class="re-input register-phone" name="mobile" placeholder="请输入您的手机号" /><span class="tips" id="divphone"></span>
+              <!-- <p class="re-ti re-dti">手机号</p> -->
+              <img class="register-icon register-phone" src="{% static 'images/register-phone.png' %}" />
+              <input type="text" class="re-input" name="mobile" placeholder="请输入您的手机号" /><span class="tips" id="divphone"></span>
             </div>
             <div class="re-d">
-            <!-- <p class="re-ti re-dti">手机验证码</p> -->
-            <!-- <input type="text" class="re-input" name="code" placeholder="请输入手机验证码" /> -->
-            <button id="action-send-code-imagvalidate" class="re-huo">获取手机验证码</button>
-            <span class="tips" id="divcode"></span>
+              <!-- <p class="re-ti re-dti">手机验证码</p> -->
+              <input type="text" class="re-input" name="code" placeholder="请输入手机验证码" />
+              <button id="action-send-code-imagvalidate" class="re-huo">获取手机验证码</button>
+              <span class="tips" id="divcode"></span>
             </div>
             <div class="re-d">
-            <p class="re-ti re-dti">登录密码<span style="color:#DF2B2A;font-size:14px;">（6-16位，至少包含数字、字母和特殊符号中的两种）</span></p>
-           <input type="password" class="re-input register-password" name="password1" placeholder="登录密码，6-16位，至少包含数字、字母和特殊符号中的两种" />
-           <span class="tips" id="divpd"></span>
+              <!-- <p class="re-ti re-dti">登录密码<span style="color:#DF2B2A;font-size:14px;">（6-16位，至少包含数字、字母和特殊符号中的两种）</span></p> -->
+              <img class="register-icon register-lock" src="{% static 'images/register-lock.png' %}" />
+              <input type="password" class="re-input register-password" name="password1" placeholder="登录密码，6-16位，至少包含数字、字母和特殊符号中的两种" />
+              <span class="tips" id="divpd"></span>
             </div>
             <!-- <div class="re-d">
             <p class="re-ti re-dti" id="txtPassWord2">确认密码</p>
@@ -86,6 +88,7 @@ $(function(){
             <div class="re-d">
             <p id="recommend_id" class="re-ti re-dti">推荐人ID<span style="color:#DF2B2A;font-size:14px;">（可不填写）</span></p>
               <div id="recommend_box">
+                <img class="register-icon register-recommend" src="{% static 'images/register-phone.png' %}" />
                 <input type="text" name="invite" class="re-input register-recommend" value="{{icode}}"  placeholder="请输入邀请人ID" />
                 <span class="tips" id="divinvite"></span>
               </div>
