@@ -11,8 +11,8 @@ $(function() {
 				data : {
 					'phone' : phoneNum,
 					'action' : action,
-					'hashkey': $("#id_hashkey").val(),
-					'response': $("#x_yanzhengma").val(),
+					// 'hashkey': $("#id_hashkey").val(),
+					// 'response': $("#x_yanzhengma").val(),
 					},
 				dataType : 'json',
 				timeout : 3000,
@@ -29,9 +29,9 @@ $(function() {
 					 //        key.attr("value", new_cptch_key);
 					 //        img.attr("src", new_cptch_image);
 						// }
-						// else if (action=='change_zhifubao'){
+						if (action=='change_zhifubao'){
 
-						// }
+						}
 					}
 				},
 				error : function() {
