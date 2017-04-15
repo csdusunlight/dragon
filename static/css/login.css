@@ -70,9 +70,9 @@
 	background-position: left center;
 	background-repeat: no-repeat;
 }
-.register-phone {background-image: ../images/register-phone.png;}
-.register-password {background-image: ../images/register-lock.png;}
-.register-recommend {background-image: ../images/register-recommend.png;}
+.register-phone {background-image: url(../images/register-phone.png);}
+.register-password {background-image: url(../images/register-lock.png;);}
+.register-recommend {background-image: url(../images/register-recommend.png;);}
 .re-d{
 	margin-bottom:1.5rem;}
 .re-ti{
