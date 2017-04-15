@@ -39,7 +39,7 @@ function getText(n) {
       {% if user.is_authenticated %}
         <div class="Icon"><img src="{% static "images/Icon.png" %}" alt=""/></div>
         <div class="usename">尊敬的：</div>
-        <div class="usename_1"><a href="{%url 'account_index'%}">{{user.username}}</a></div>
+        <div class="usename_1"><a href="{%url 'account_index'%}">{{user.mobile}}</a></div>
         <div class="welcome">欢迎来到挖福利</div>
         <div class="index_30">推荐好友送现金，<a href="{% url 'account_invite' %}">立即推荐</a></div>
         <div class="signin"><a>每日签到</a></div>
