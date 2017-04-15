@@ -40,7 +40,7 @@ $(function(){
 	});
 
   $("#recommend_id").click(function(){
-    $("#recommend_box").toggleClass("input-toggle");
+    $("#recommend_container").toggleClass("recommend-container");
   });
 });
   </script>
@@ -89,8 +89,8 @@ $(function(){
             <input type="password" class="re-input" name="password2"/>
             <span class="tips" id="divspd"></span>
             </div> -->
-            <div class="re-d">
-            <p id="recommend_id" class="re-ti re-dti">推荐人ID<span style="color:#DF2B2A;font-size:14px;">（选填）</span></p>
+            <div id="recommend_container" class="re-d">
+            <p id="recommend_id" class="re-ti re-dti recommend-id">推荐人ID<span style="color:#DF2B2A;font-size:14px;">（选填）</span></p>
               <div id="recommend_box" class="recommend-box">
                 <img class="register-icon register-recommend" src="{% static 'images/register-recommend.png' %}" />
                 <input type="text" name="invite" class="re-input" value="{{icode}}"  placeholder="请输入邀请人ID" />
