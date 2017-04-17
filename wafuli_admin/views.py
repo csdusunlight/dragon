@@ -424,7 +424,7 @@ def get_admin_finance_page(request):
     data = []
     for con in contacts:
         project = con.content_object
-        i = {"username":con.user.username,
+        i = {"username":con.user.username if not con.user.is_channel else con.user.channel.qq_number,
              "mobile":con.user.mobile,
              "usertype":u"普通用户" if not con.user.is_channel else u"渠道："+ con.user.channel.level,
              "type":con.content_object.get_type(),
