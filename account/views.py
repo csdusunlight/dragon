@@ -91,25 +91,27 @@ def register(request):
         if not request.is_ajax():
             raise Http404
         result = {}
-        username = request.POST.get('username', None)
         telcode = request.POST.get('code', None)
         mobile = request.POST.get('mobile', None)
-        email = request.POST.get('email', None)
         password = request.POST.get('password', None)
         invite_code = request.POST.get('invite', None)
-        if not (telcode and mobile and email and password and username):
+        if not (telcode and mobile and password):
             result['code'] = '3'
-            result['res_msg'] = u'传入参数不足！'
+            result['msg'] = u'传入参数不足！'
+            return JsonResponse(result)
+        if MyUser.objects.filter(mobile=mobile).exists():
+            result['code'] = '1'
+            result['msg'] = u'该手机号码已被注册，请直接登录！'
             return JsonResponse(result)
         ret = verifymobilecode(mobile,telcode)
         if ret != 0:
             result['code'] = '2'
             if ret == -1:
-                result['res_msg'] = u'请先获取手机验证码'
+                result['msg'] = u'请先获取手机验证码'
             elif ret == 1:
-                result['res_msg'] = u'手机验证码输入错误！'
+                result['msg'] = u'手机验证码输入错误！'
             elif ret == 2:
-                result['res_msg'] = u'手机验证码已过期，请重新获取'
+                result['msg'] = u'手机验证码已过期，请重新获取'
             return JsonResponse(result)
         inviter = None
         if invite_code:
@@ -117,11 +119,11 @@ def register(request):
                 inviter = MyUser.objects.get(invite_code=invite_code)
             except MyUser.DoesNotExist:
                 result['code'] = '2'
-                result['res_msg'] = u'该邀请码不存在，请检查'
+                result['msg'] = u'该邀请码不存在，请检查'
                 return JsonResponse(result)
         try:
-            user = MyUser(email=email, mobile=mobile,
-                    username=username, inviter=inviter)
+            username = 'w' + str(mobile)
+            user = MyUser(mobile=mobile, username=username, inviter=inviter)
             user.set_password(password)
             user.save()
             logger.info('Creating User:' + mobile + ' succeed!')
@@ -135,7 +137,7 @@ def register(request):
         except Exception,e:
             logger.error(e)
             result['code'] = '4'
-            result['res_msg'] = u'创建用户失败！'
+            result['msg'] = u'创建用户失败！'
         else:
             result['code'] = '0'
             # 邀请人奖励10积分
@@ -148,7 +150,6 @@ def register(request):
                     inviter.save(update_fields=['invite_scores'])
                 else:
                     logger.debug('Inviting Award scores is failed to pay!!!')
-            result['code'] = '0'
             try:
                 userl = authenticate(username=username, password=password)
                 auth_login(request, userl)
@@ -158,11 +159,18 @@ def register(request):
                 pass
         return JsonResponse(result)
     else:
+        mobile = request.GET.get('mobile','')
+        icode = request.GET.get('icode','')
         hashkey = CaptchaStore.generate_key()
         codimg_url = captcha_image_url(hashkey)
         icode = request.GET.get('icode','')
-        return render(request,'registration/register.html',
-                  {'hashkey':hashkey, 'codimg_url':codimg_url, 'icode':icode})
+        context = {
+            'hashkey':hashkey, 
+            'codimg_url':codimg_url, 
+            'icode':icode,
+            'mobile':mobile,
+        }
+        return render(request,'registration/register.html', context)
 @login_required
 def get_nums(request):
     coupon_num = Coupon.objects.filter(user=request.user, is_used=False).count()
@@ -234,15 +242,15 @@ def phoneImageV(request):
     result = {'code':'0', 'message':'hi!'}
     phone = request.GET.get('phone', None)
     if action=='register':
-        hashkey = request.GET.get('hashkey', None)
-        response = request.GET.get('response', None)
-        if not (phone and hashkey and response):
-            raise Http404
-        ret = imageV(hashkey, response)
-        if ret != 0:
-            result['message'] = u'图形验证码输入错误！'
-            result.update(generateCap())
-            return JsonResponse(result)
+#         hashkey = request.GET.get('hashkey', None)
+#         response = request.GET.get('response', None)
+#        if not (phone and hashkey and response):
+#             raise Http404
+#         ret = imageV(hashkey, response)
+#         if ret != 0:
+#             result['message'] = u'图形验证码输入错误！'
+#             result.update(generateCap())
+#             return JsonResponse(result)
         users = MyUser.objects.filter(mobile=phone)
         if users.exists():
             result['message'] = u'该手机号码已被占用！'

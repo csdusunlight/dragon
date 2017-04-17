@@ -499,11 +499,12 @@ def export_finance_excel(request):
         remark= con.remark
         invest_amount= con.invest_amount
         term=con.invest_term
+        user_mobile = con.user.mobile
         user_type = u"普通用户" if not con.user.is_channel else u"渠道："+ con.user.channel.level
-        data.append([id, project_name, time_sub, user_type, mobile_sub, term, invest_amount, remark])
+        data.append([id, project_name, time_sub, user_mobile,user_type, mobile_sub, term, invest_amount, remark])
     w = Workbook()     #创建一个工作簿
     ws = w.add_sheet(u'待审核记录')     #创建一个工作表
-    title_row = [u'记录ID',u'项目名称',u'投资日期', u'用户类型', u'注册手机号' ,u'投资期限' ,u'投资金额', u'备注', u'审核结果',u'返现金额',u'拒绝原因']
+    title_row = [u'记录ID',u'项目名称',u'投资日期', u'挖福利账号', u'用户类型', u'注册手机号' ,u'投资期限' ,u'投资金额', u'备注', u'审核结果',u'返现金额',u'拒绝原因']
     for i in range(len(title_row)):
         ws.write(0,i,title_row[i])
     row = len(data)
@@ -538,7 +539,7 @@ def import_finance_excel(request):
     table = data.sheets()[0]
     nrows = table.nrows
     ncols = table.ncols
-    if ncols!=11:
+    if ncols!=12:
         ret['msg'] = u"文件格式与模板不符，请在导出的待审核记录表中更新后将文件导入！"
         return JsonResponse(ret)
     rtable = []
@@ -552,7 +553,7 @@ def import_finance_excel(request):
                 if j==0:
                     id = int(cell.value)
                     temp.append(id)
-                elif j==8:
+                elif j==9:
                     result = cell.value.strip()
                     if result == u"是":
                         result = True
@@ -562,14 +563,14 @@ def import_finance_excel(request):
                         temp.append(False)
                     else:
                         raise Exception(u"审核结果必须为是或否。")
-                elif j==9:
+                elif j==10:
                     return_amount = 0
                     if cell.value:
                         return_amount = float(cell.value)
                     elif result:
                         raise Exception(u"审核结果为是时，返现金额不能为空或零。")
                     temp.append(return_amount)
-                elif j==10:
+                elif j==11:
                     reason = cell.value
                     temp.append(reason)
                 else:

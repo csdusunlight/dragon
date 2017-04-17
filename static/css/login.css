@@ -1,4 +1,4 @@
-.bgd{ 
+.bgd{
 	background-image:url(../images/login_banner.jpg);
 	width:100%;
 	height:480px;}
@@ -60,15 +60,46 @@
 	float:left;
 	text-align:left;}
 .re-input{
-	padding-left: 15px;
+	padding-left: 40px;
 	width: 340px;
-	height: 35px;
+	height: 44px;
 	border-radius: 7px;
-	border: 1px solid #E7E7E7;
+	border: 1px solid #cecece;
 	outline:none;
-	background: #fff;}
+	background-color: #fff;
+	background-position: left center;
+	background-repeat: no-repeat;
+}
+.register-icon {position: absolute;}
+.register-phone {width: 12px; top: 10px; left: 16px;}
+.register-lock {width: 20px; top: 12px; left: 12px;}
+.register-recommend {width: 20px; top: 38px; left: 13px;}
 .re-d{
+	position: relative;
 	margin-bottom:1.5rem;}
+.recommend-id {position:relative;}
+.recommend-id:after {
+	content:"";
+	position:absolute;
+	display:block;
+	width:10px;
+	height:10px;
+	border-top: 2px solid #008fd7;
+	border-right: 2px solid #008fd7;
+	transform:rotate(135deg);
+	top:-2px;
+	left:200px;
+}
+.recommend-container .recommend-id:after {
+	transform:rotate(-45deg);
+	top:4px;
+}
+.recommend-box {
+	display: none;
+}
+.recommend-container .recommend-box {
+	display: block;
+}
 .re-ti{
 	font-size:16px;line-height: 10px;}
 .re-form{
@@ -84,11 +115,13 @@
 	text-align: left;
 }
 .re-huo{
-
-	margin-left: -89px;
+	width: 100px;
+	margin-left: -100px;
+	color: #fff;
 	background: rgb(245, 245, 245) none repeat scroll 0% 0%;
+	background-color: #008fd7;
 	border: 1px solid rgb(231, 231, 231);
-	height: 37px;
+	height: 46px;
 	border-radius: 0px 7px 7px 0px;
 	outline:none;
 }
@@ -195,7 +228,7 @@ float: left;}
 }
 .tips_true,.tips_false{
 	padding-left: 5px;
-	
+
 }
 .tips_true{
 	color: green;

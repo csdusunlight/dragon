@@ -2,7 +2,7 @@ $(function() {
 	var telpig = true;//事件点击通道
 	var emailpig = true;//事件点击通道
 	/*****************************发送验证码：手机**************************************/
-	
+
 	var sendTelVerifyCodeImageV = function(phoneNum, action, actionurl) {
 		if(telpig){
 			$.ajax({
@@ -11,26 +11,26 @@ $(function() {
 				data : {
 					'phone' : phoneNum,
 					'action' : action,
-					'hashkey': $("#id_hashkey").val(),
-					'response': $("#x_yanzhengma").val(),
+					// 'hashkey': $("#id_hashkey").val(),
+					// 'response': $("#x_yanzhengma").val(),
 					},
 				dataType : 'json',
 				timeout : 3000,
 				success : function(data) {
 					if (data.code == '1') {
-						alert('验证码发送成功！');						
-					} else {								
+						alert('验证码发送成功！');
+					} else {
 						alert(data.message);
-						if (action=='register'){
-							var new_cptch_key = data['key'];
-					        var new_cptch_image = data['image_url'];
-					        key = $("#id_hashkey");
-					        img = $("#id_checkImg");
-					        key.attr("value", new_cptch_key);
-					        img.attr("src", new_cptch_image);
-						}
-						else if (action=='change_zhifubao'){
-							
+						// if (action=='register'){
+						// 	var new_cptch_key = data['key'];
+					 //        var new_cptch_image = data['image_url'];
+					 //        key = $("#id_hashkey");
+					 //        img = $("#id_checkImg");
+					 //        key.attr("value", new_cptch_key);
+					 //        img.attr("src", new_cptch_image);
+						// }
+						if (action=='change_zhifubao'){
+
 						}
 					}
 				},
@@ -53,7 +53,7 @@ $(function() {
 				dataType : 'json',
 				timeout : 3000,
 				success : function(data) {
-					if (data.code == '1') {						
+					if (data.code == '1') {
 						alert('验证码发送成功！');
 						send_sms_event_mail = setInterval(control_sendmail,1000);
 					} else {
@@ -66,7 +66,7 @@ $(function() {
 			});
 		}
 	};
-	
+
 
 /*****************************时间动态切换***********************************/
 	/**
@@ -79,7 +79,7 @@ $(function() {
 		if (send_sms_time == 0) {
 			send_sms_time = 180;
 			$('#action-send-code').html('获取验证码');
-			clearInterval(send_sms_event); 
+			clearInterval(send_sms_event);
 			telpig = true;
 			return;
 		}
@@ -103,19 +103,19 @@ $(function() {
 	/**
 	 * 绑定点击方法：手机发送验证码校验图片验证
 	 */
-	$('#action-send-code-imagvalidate').bind('click',function() {	
-		if(is_tel($("input[name='mobile']"))){			
+	$('#action-send-code-imagvalidate').bind('click',function() {
+		if(is_tel($("input[name='mobile']"))){
 		}
-		else{		
-			if(is_net_code($("#x_yanzhengma"))){}
-			else{
+		else{
+			// if(is_net_code($("#x_yanzhengma"))){}
+			// else{
 			phoneNum = $("input[name='mobile']").val();
 			actionType = 'register';
-			actionurl = get_code_url;			
+			actionurl = get_code_url;
 			sendTelVerifyCodeImageV(phoneNum, actionType, actionurl);
+		// }
 		}
-		}
-		
+
 	});
 	$('#yanzhengma_button').bind('click',function() {
 		actionType = "change_zhifubao";

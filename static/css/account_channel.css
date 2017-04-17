@@ -50,6 +50,156 @@ h5 {margin: 0;}
   color: #fff;
 }
 
+/*增加逐条提交部分修改*/
+.submit-way {
+  height: 44px;
+  font-size: 0;
+}
+.submit-way li {
+  border: 1px solid #e4e4e4;
+  display: inline-block;
+  width: 80px;
+  line-height: 44px;
+  text-align: center;
+}
+.submit-way li:first-child {
+  border-right: none;
+}
+.submit-way li:hover {
+  background: #00bfd7;
+  color: #fff;
+  cursor: pointer;
+}
+.submit-way li.submit-on {
+  background: #00bfd7;
+  color: #fff;
+}
+.by-item {
+  width: 600px;
+  padding: 20px;
+  margin-top: 20px;
+  border: 1px dashed #e4e4e4;
+  text-align: center;
+}
+.submit-content {
+  position: relative;
+  box-sizing: content-box;
+  width: 845px;
+  padding: 20px 0;
+  padding-bottom: 80px;
+    margin-top: 20px;
+    border: 1px dashed #e4e4e4;
+}
+.item-01 {width: 150px;}
+.item-02 {width: 150px;}
+.item-03 {width: 130px;}
+.item-04 {width: 130px;}
+.item-05 {width: 130px;}
+.item-06 {width: 100px;}
+.item-07 {width: 55px;}
+.add-data-btn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  cursor: pointer;
+}
+.submit-head {
+  color: #fff;
+  background: #008fd7;
+  line-height: 40px;
+  overflow: hidden;
+}
+.submit-item-box {
+  padding: 15px 0;
+  overflow: hidden;
+  border-bottom: 1px dashed #e4e4e4;
+}
+.submit-head li,
+.submit-item {
+  box-sizing: border-box;
+  float: left;
+  padding: 0 4px;
+  text-align: center;
+}
+.delete-item {
+  float: right;
+  line-height: 30px;
+  text-align: center;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.submit-item input, .submit-item select {
+  width: 100%;
+  height: 30px;
+}
+.submit-item .height-add01 {
+  height: 35px;
+}
+.submit-item .height-add02 {
+  height: 32px;
+}
+/*弹窗部分*/
+.popup-box {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+}
+.popup-box.in {
+  display: block;
+  opacity: 1;
+  background-color: rgba(0,0,0,0.3);
+}
+.popup-content {
+  padding: 15px 40px 30px;
+  margin: 8% auto 0;
+  width: 600px;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 5px 15px rgba(0,0,0,.5);
+}
+.popup-content h3 {
+  padding: 20px 0;
+  color:#04B3FF;
+  font-size:25px;
+}
+.popup-content p {
+  padding-bottom: 30px;
+}
+.popup-box-02 .popup-content p {
+  font-size: 16px;
+}
+.popup-content>a:nth-of-type(1) {
+  margin-right:20px;
+}
+.popup-content .confirm {
+  padding: 6px 30px;
+  border-radius: 20px;
+  color: rgb(255, 255, 255);
+  background: rgb(240, 134, 25) none repeat scroll 0% 0%;
+  cursor: pointer;
+}
+.popup-box.in .popup-content{
+  -webkit-animation: popup 0.3s linear;
+  animation: popup 0.3s linear;
+}
+@-webkit-keyframes popup {
+   0% {
+      -webkit-transform: translateY(-15%);
+      webkit-transform: translateY(-15%);
+      opacity: 0;
+   }
+   100% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+      opacity: 1;
+   }
+}
+/*增加逐条提交部分修改---end*/
+
 .content {
   position: relative;
   padding: 16px;
