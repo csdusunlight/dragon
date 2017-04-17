@@ -74,14 +74,49 @@
   							5、上传文件大小需小于1M，若导入数据超过上传大小，建议拆分为多个文件再逐个导入<br />
   							6、暂不支持IE浏览器</p>
             </div>
-            <div class="submit-content by-item">
-              <div class="ma-div">投资时间<input type="date" placeholder="输入您的手机号，若有多个请分别提交" class="ms-input" id="time"></div>
-              <div class="ma-div">注册手机号：<input type="text" placeholder="输入您的手机号，若有多个请分别提交" class="ms-input" id="telnum"></div>
-              <div class="ma-div">投资金额：<input type="text" placeholder="输入您的投资金额（仅限数字）" class="ms-input" id="amount"><span style="position: absolute;line-height: 40px;margin-left: 10px;">元</span></div>
-              <div class="ma-div">投资标期：<input type="text" placeholder="输入您的投资标期（仅限数字）" class="ms-input" id="term"><span style="position: absolute;line-height: 40px;margin-left: 10px;">天</span></div>
-              <div class="ma-div">备注：<input type="text" placeholder="可不填" class="ms-input" id="remark"></div>
-              <p class="td-yy"><button class="md-trigger td-tj">提交</button></p>
-
+            <div class="submit-content by-item" id="submit_content">
+              <img id="add_data_btn" class="add-data-btn" src="{% static 'images/add-data-btn.png' %}" />
+              <div id="submit_data_container" class="submit-data-container">
+                        <ul class="submit-head"><li class="item-01">项目名称</li><li class="item-02">投资时间</li><li class="item-03">注册手机号</li><li class="item-04">投资金额（元）</li><li class="item-05">投资标期（天）</li><li class="item-06">备注</li></ul>
+                        <ul class="submit-item-box">
+                          <li class="submit-item item-01">
+                            <select class="project_select height-add01">
+                              <option value="0">提交项目01</option>
+                              <option value="0">提交项目02</option>
+                              <option value="0">提交项目03</option>
+                            </select>
+                          </li>
+                          <li class="submit-item item-02"><input type="date" class="height-add02 time" id="time"><li>
+                          <li class="submit-item item-03"><input type="text" class="telnum" id="telnum"><li>
+                          <li class="submit-item item-04"><input type="text" class="amount" id="amount"><li>
+                          <li class="submit-item item-05"><input type="text" class="term" id="term"><li>
+                          <li class="submit-item item-06"><input type="text" class="remark" id="remark"><li>
+                          <li class="delete-item item-07">删除</li>
+                        </ul>
+                        <ul class="submit-item-box">
+                          <li class="submit-item item-01">
+                            <select class="project_select height-add01">
+                              <option value="0">提交项目01</option>
+                              <option value="0">提交项目02</option>
+                              <option value="0">提交项目03</option>
+                            </select>
+                          </li>
+                          <li class="submit-item item-02"><input type="date" class="height-add02 time" id="time"><li>
+                          <li class="submit-item item-03"><input type="text" class="telnum" id="telnum"><li>
+                          <li class="submit-item item-04"><input type="text" class="amount" id="amount"><li>
+                          <li class="submit-item item-05"><input type="text" class="term" id="term"><li>
+                          <li class="submit-item item-06"><input type="text" class="remark" id="remark"><li>
+                          <li class="delete-item item-07">删除</li>
+                        </ul>
+                    </div>
+                    <div class="popup-box popup-box-02">
+                  <div class="popup-content">
+                    <h3>删除提示</h3>
+                    <p id="hint">确定删除该条数据？</p>
+                    <a id="cancel" class="cancel confirm" onclick="popupOutInfo()">取&nbsp;&nbsp;&nbsp;&nbsp;消</a>
+                    <a id="confirm_delete" class="confirm">确认删除</a>
+                  </div>
+              </div>
             </div>
 					</div>
 					<div class="content-out content" style="display: none;">
@@ -271,6 +306,44 @@
 					}
 				}
 			}
+      // 单项提交部分
+      var add_data_btn = document.getElementById('add_data_btn');
+        var remove_data_btn = document.getElementById('remove_data_btn');
+        var submit_data_container = document.getElementById('submit_data_container');
+      var that;
+        add_data_btn.onclick = function(){
+          addData();
+        }
+      $(".submit-content").on("click", ".delete-item", function(){
+        that = this;
+        popupInInfo();
+        return that;
+      })
+      $("#confirm_delete").click(function(){
+        that.parentNode.remove();
+        popupOutInfo();
+      })
+
+      function addData() {
+        var ul = document.createElement('ul');
+        ul.className = 'submit-item-box';
+        ul.innerHTML = '<li class="submit-item item-01"><select class="project_select height-add01">'+
+                '<option value="0">提交项目01</option><option value="0">提交项目02</option><option value="0">提交项目03</option></select></li>'+
+                '<li class="submit-item item-02"><input type="date" class="height-add02 time"><li>'+
+                '<li class="submit-item item-03"><input type="text" class="telnum"><li>'+
+                '<li class="submit-item item-04"><input type="text" class="amount"><li>'+
+                '<li class="submit-item item-05"><input type="text" class="term"><li>'+
+                '<li class="submit-item item-06"><input type="text" class="remark"><li>'+
+                '<li class="delete-item item-07">删除</li>';
+        submit_data_container.appendChild(ul);
+      }
+      function popupInInfo() {
+          $(".popup-box-02").addClass("in");
+      }
+      function popupOutInfo() {
+          $(".popup-box-02").removeClass("in");
+      }
+      // 单项提交部分----end
 
 			$("#Swi-Top li").click(function(){
 				if($(this).attr("class")!="on"){
