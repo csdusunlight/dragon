@@ -66,12 +66,12 @@ h5 {margin: 0;}
   border-right: none;
 }
 .submit-way li:hover {
-  background: #00bfd7;
+  background: #008fd7;
   color: #fff;
   cursor: pointer;
 }
 .submit-way li.submit-on {
-  background: #00bfd7;
+  background: #008fd7;
   color: #fff;
 }
 .by-item {
@@ -87,8 +87,8 @@ h5 {margin: 0;}
   width: 845px;
   padding: 20px 0;
   padding-bottom: 80px;
-    margin-top: 20px;
-    border: 1px dashed #e4e4e4;
+  margin-top: 20px;
+  border: 1px dashed #e4e4e4;
 }
 .item-01 {width: 150px;}
 .item-02 {width: 150px;}
@@ -106,8 +106,10 @@ h5 {margin: 0;}
 .submit-head {
   color: #fff;
   background: #008fd7;
-  line-height: 40px;
   overflow: hidden;
+}
+.submit-head li {
+  line-height: 40px;
 }
 .submit-item-box {
   padding: 15px 0;
@@ -129,49 +131,12 @@ h5 {margin: 0;}
   cursor: pointer;
 }
 .submit-item input, .submit-item select {
+  box-sizing:border-box;
   width: 100%;
   height: 30px;
 }
-.submit-item .height-add01 {
-  height: 35px;
-}
-.submit-item .height-add02 {
-  height: 32px;
-}
 /*弹窗部分*/
-/*.popup-box {
-  display: none;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  opacity: 0;
-}
-.popup-box.in {
-  display: block;
-  opacity: 1;
-  background-color: rgba(0,0,0,0.3);
-}
-.popup-content {
-  padding: 15px 40px 30px;
-  margin: 8% auto 0;
-  width: 600px;
-  text-align: center;
-  background-color: #fff;
-  box-shadow: 0 5px 15px rgba(0,0,0,.5);
-}
-.popup-content h3 {
-  padding: 20px 0;
-  color:#04B3FF;
-  font-size:25px;
-}
-.popup-content p {
-  padding-bottom: 30px;
-}
-.popup-box-03 .popup-content p {
-  font-size: 16px;
-}
+
 .popup-content>a:nth-of-type(1) {
   margin-right:20px;
 }
@@ -182,22 +147,7 @@ h5 {margin: 0;}
   background: rgb(240, 134, 25) none repeat scroll 0% 0%;
   cursor: pointer;
 }
-.popup-box.in .popup-content{
-  -webkit-animation: popup 0.3s linear;
-  animation: popup 0.3s linear;
-}
-@-webkit-keyframes popup {
-   0% {
-      -webkit-transform: translateY(-15%);
-      webkit-transform: translateY(-15%);
-      opacity: 0;
-   }
-   100% {
-      -webkit-transform: translateY(0);
-      transform: translateY(0);
-      opacity: 1;
-   }
-}*/
+
 /*增加逐条提交部分修改---end*/
 
 .content {
