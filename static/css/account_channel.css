@@ -50,6 +50,43 @@ h5 {margin: 0;}
   color: #fff;
 }
 
+/*增加逐条提交部分修改*/
+.submit-way {
+  /*float: right;*/
+  height: 44px;
+  font-size: 0;
+}
+.submit-way li {
+  border-right: 1px solid #e4e4e4;
+  display: inline-block;
+  width: 80px;
+  line-height: 44px;
+  text-align: center;
+}
+.submit-way li:hover {
+  background: #00bfd7;
+  color: #fff;
+  cursor: pointer;
+}
+.submit-way li.submit-on {
+  background: #00bfd7;
+  color: #fff;
+}
+
+.ma-div {
+  margin: 20px 0px 0px 256px;
+  font-size: 16px;
+  width: 500px;
+  text-align: right;
+}
+.ms-input {
+  width: 330px;
+  padding-left: 15px;
+  height: 40px;
+  border: 1px solid rgb(204, 204, 204);
+}
+/*增加逐条提交部分修改---end*/
+
 .content {
   position: relative;
   padding: 16px;

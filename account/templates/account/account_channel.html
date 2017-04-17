@@ -41,7 +41,7 @@
 					</div>
 
 					<div class="content-in content">
-            <ul id="submit_way">
+            <ul id="submit_way" class="submit-way">
               <li>表格提交</li>
               <li>逐条提交</li>
             </ul>
@@ -75,7 +75,12 @@
   							6、暂不支持IE浏览器</p>
             </div>
             <div class="submit-content">
-              单条提交部分
+              <div class="ma-div">投资时间<input type="date" placeholder="输入您的手机号，若有多个请分别提交" class="ms-input" id="time"></div>
+              <div class="ma-div">注册手机号：<input type="text" placeholder="输入您的手机号，若有多个请分别提交" class="ms-input" id="telnum"></div>
+              <div class="ma-div">投资金额：<input type="text" placeholder="输入您的投资金额（仅限数字）" class="ms-input" id="amount"><span style="position: absolute;line-height: 40px;margin-left: 10px;">元</span></div>
+              <div class="ma-div">投资标期：<input type="text" placeholder="输入您的投资标期（仅限数字）" class="ms-input" id="term"><span style="position: absolute;line-height: 40px;margin-left: 10px;">天</span></div>
+              <div class="ma-div3">备注：<input type="text" placeholder="可不填" class="ms-input" id="remark"></div>
+              <p class="td-yy"><button class="md-trigger td-tj">提交</button></p>
 
             </div>
 					</div>
@@ -261,7 +266,7 @@
 						submitWay[i].className="submit-on";
 						submitContent[i].style.display = "block";
 					}else{
-						tabs[i].className="";
+						submitWay[i].className="";
 						submitContent[i].style.display = "none";
 					}
 				}
