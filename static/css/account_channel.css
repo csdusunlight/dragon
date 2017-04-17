@@ -139,7 +139,7 @@ h5 {margin: 0;}
   height: 32px;
 }
 /*弹窗部分*/
-.popup-box {
+/*.popup-box {
   display: none;
   position: fixed;
   top: 0;
@@ -169,7 +169,7 @@ h5 {margin: 0;}
 .popup-content p {
   padding-bottom: 30px;
 }
-.popup-box-02 .popup-content p {
+.popup-box-03 .popup-content p {
   font-size: 16px;
 }
 .popup-content>a:nth-of-type(1) {
@@ -197,7 +197,7 @@ h5 {margin: 0;}
       transform: translateY(0);
       opacity: 1;
    }
-}
+}*/
 /*增加逐条提交部分修改---end*/
 
 .content {
