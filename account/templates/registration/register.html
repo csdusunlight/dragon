@@ -42,6 +42,16 @@ $(function(){
   $("#recommend_id").click(function(){
     $("#recommend_container").toggleClass("recommend-container");
   });
+  var psssword = document.getElementById('password_eye');
+  $("#password_eye").click(function(e) {
+    if (psssword.type == "password") {
+        $("password_input").type ="text";
+        this.addClass('show')
+    } else {
+        $("password_input").type ="password";
+        this.removeClass('show');
+    }
+  });
 });
   </script>
 </head>
@@ -50,45 +60,21 @@ $(function(){
 	<div class="heg">
     <div class="contant">
     	<div class="co-left" style="width:45%;margin-left: 6.85em;">
-
-            <!--<form  name="myform">-->
-        	<!-- <div class="re-d">
-            <p class="re-ti">用户名<span style="color:#DF2B2A;font-size:14px;">（6-16位字符，支持数字及字母，不能纯数字）</span></p>
-            <input type="text" class="re-input" name="username" /><span class="tips" id="divname"></span>
-            </div> -->
-            <!-- <div class="re-d">
-            <p class="re-ti re-dti">E-mail<span style="color:#DF2B2A;font-size:14px;">（用于密码找回）</span></p>
-            <input type="text" class="re-input" name="email" required/><span class="tips" id="divmail"></span>
-            </div> -->
-            <!-- <div class="re-d">
-            <p class="re-ti re-dti">验证码<span style="color:#DF2B2A;font-size:14px;">（请填写右侧字母）</span></p>
-            <input type="text" class="re-input" id="x_yanzhengma" name="x_yanzhengma"/>
-            <img width="87" height="32" src="{{ codimg_url }}" id="id_checkImg" class="imageCheckRefresh yzm-img">
-       		  <input id="id_hashkey" name="hashkey" type="hidden" value="{{ hashkey }}">
-       		  <span class="tips" id="divyzm"></span>
-            </div> -->
             <div class="re-d">
-              <!-- <p class="re-ti re-dti">手机号</p> -->
               <img class="register-icon register-phone" src="{% static 'images/register-phone.png' %}" />
               <input type="text" class="re-input" name="mobile" placeholder="请输入您的手机号" /><span class="tips" id="divphone"></span>
             </div>
             <div class="re-d">
-              <!-- <p class="re-ti re-dti">手机验证码</p> -->
               <input type="text" class="re-input" name="code" placeholder="请输入手机验证码" />
               <button id="action-send-code-imagvalidate" class="re-huo">获取手机验证码</button>
               <span class="tips" id="divcode"></span>
             </div>
-            <div class="re-d">
-              <!-- <p class="re-ti re-dti">登录密码<span style="color:#DF2B2A;font-size:14px;">（6-16位，至少包含数字、字母和特殊符号中的两种）</span></p> -->
+            <div class="re-d" style="position: relative;">
               <img class="register-icon register-lock" src="{% static 'images/register-lock.png' %}" />
-              <input type="password" class="re-input" name="password1" placeholder="登录密码，6-16位，至少包含数字、字母和特殊符号中的两种" />
+              <input type="password" id="password_input" class="re-input" name="password1" placeholder="登录密码，6-16位，至少包含数字、字母和特殊符号中的两种" />
               <span class="tips" id="divpd"></span>
+              <a id="password_eye" class="password-eye"></a>
             </div>
-            <!-- <div class="re-d">
-            <p class="re-ti re-dti" id="txtPassWord2">确认密码</p>
-            <input type="password" class="re-input" name="password2"/>
-            <span class="tips" id="divspd"></span>
-            </div> -->
             <div id="recommend_container" class="re-d">
             <p id="recommend_id" class="re-ti re-dti recommend-id">推荐人ID<span style="color:#DF2B2A;font-size:14px;">（选填）</span></p>
               <div id="recommend_box" class="recommend-box">

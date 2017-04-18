@@ -100,6 +100,17 @@
 .recommend-container .recommend-box {
 	display: block;
 }
+.password-eye {
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	left: 300px;
+	top: 10px;
+	background: url("../images/password-eye.png") center center/100% auto no-repeat;
+}
+.password-eye.show {
+	background-image: url("../images/password-eye-show.png");
+}
 .re-ti{
 	font-size:16px;line-height: 10px;}
 .re-form{
