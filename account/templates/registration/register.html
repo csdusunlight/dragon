@@ -42,16 +42,17 @@ $(function(){
   $("#recommend_id").click(function(){
     $("#recommend_container").toggleClass("recommend-container");
   });
-  var psssword = document.getElementById('password_eye');
-  $("#password_eye").click(function(e) {
-    if (psssword.type == "password") {
-        $("password_input").type ="text";
-        this.addClass('show')
-    } else {
-        $("password_input").type ="password";
-        this.removeClass('show');
+  var password_input = document.getElementById('password_input');
+  var passwordEye = document.getElementById('password_eye');
+  passwordEye.onclick = function (){
+    if (password_input.type == "password") {
+      password_input.type = "text";
+      passwordEye.setAttribute("class", "password-eye show")
+    } else{
+      password_input.type = "password";
+      passwordEye.setAttribute("class", "password-eye")
     }
-  });
+  }
 });
   </script>
 </head>
@@ -76,7 +77,7 @@ $(function(){
               <a id="password_eye" class="password-eye"></a>
             </div>
             <div id="recommend_container" class="re-d">
-            <p id="recommend_id" class="re-ti re-dti recommend-id">推荐人ID<span style="color:#DF2B2A;font-size:14px;">（选填）</span></p>
+            <p id="recommend_id" class="re-ti re-dti recommend-id">推荐人ID<span style="color:#008fd7;font-size:14px;">（选填）</span></p>
               <div id="recommend_box" class="recommend-box">
                 <img class="register-icon register-recommend" src="{% static 'images/register-recommend.png' %}" />
                 <input type="text" name="invite" class="re-input" value="{{icode}}"  placeholder="请输入邀请人ID" />

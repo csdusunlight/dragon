@@ -23,8 +23,8 @@ $(function(){
 		varicode = $("#input_varicode").val();
 		amount = $("#withdraw_amount").val();
 		amount = parseInt(amount,0)
-		if (isNaN(amount) || amount<1000){
-			alert("提现福币数量必须为大于1000的整数！");
+		if (isNaN(amount) || (amount%1000 != 0)){
+			alert("提现福币数量必须为1000的整数倍！");
 			return;
 		}
 		if (!varicode){
