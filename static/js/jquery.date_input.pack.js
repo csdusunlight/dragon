@@ -173,10 +173,10 @@ DateInput = (function($) {
 		},
 		setPosition: function() {
 			var offset = this.input.offset();
-			this.rootLayers.css({
-				top: offset.top + this.input.outerHeight(),
-				left: offset.left
-			});
+			// this.rootLayers.css({
+			// 	top: offset.top + this.input.outerHeight(),
+			// 	left: offset.left
+			// });
 			if (this.ieframe) {
 				this.ieframe.css({
 					width: this.dateSelector.outerWidth(),
