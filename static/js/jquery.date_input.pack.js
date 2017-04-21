@@ -20,24 +20,24 @@ DateInput = (function($) {
 			this.monthNameSpan = $(".month_name", monthNav);
 			$(".prev", monthNav).click(this.bindToObj(function() {
 				this.moveMonthBy( - 1);
-				cancelBubble();
+				stopEvent();
 				// event.stopPropagation();
 			}));
 			$(".next", monthNav).click(this.bindToObj(function() {
 				this.moveMonthBy(1);
-				cancelBubble();
+				stopEvent();
 				// event.stopPropagation();
 			}));
 			var yearNav = $('<p class="year_nav">' + '<span class="button prev" title="[Ctrl+Page-Up]">&#171;</span>' + ' <span class="year_name"></span> ' + '<span class="button next" title="[Ctrl+Page-Down]">&#187;</span>' + '</p>');
 			this.yearNameSpan = $(".year_name", yearNav);
 			$(".prev", yearNav).click(this.bindToObj(function() {
 				this.moveMonthBy( - 12);
-				cancelBubble();
+				stopEvent();
 				// event.stopPropagation();
 			}));
 			$(".next", yearNav).click(this.bindToObj(function() {
 				this.moveMonthBy(12);
-				cancelBubble();
+				stopEvent();
 				// event.stopPropagation();
 			}));
 			var nav = $('<div class="nav"></div>').append(monthNav, yearNav);
@@ -264,16 +264,17 @@ DateInput = (function($) {
 			return newDays
 		},
 		// 阻止事件冒泡
-		cancelBubble: function cancelBubble() {
-		    var e=getEvent();
-		    if(window.event){
-		        //e.returnValue=false;//阻止自身行为
-		        e.cancelBubble=true;//阻止冒泡
-		    }else if(e.preventDefault){
-		        //e.preventDefault();//阻止自身行为
-		        e.stopPropagation();//阻止冒泡
-		    }
-		}
+		stopEvent: function stopEvent(event){ //阻止冒泡事件
+	    //取消事件冒泡
+	    var e=arguments.callee.caller.arguments[0]||event; //若省略此句，下面的e改为event，IE运行可以，但是其他浏览器就不兼容
+	    if (e && e.stopPropagation) {
+	    // this code is for Mozilla and Opera
+	    e.stopPropagation();
+	    } else if (window.event) {
+	    // this code is for IE
+	     window.event.cancelBubble = true;
+	    }
+	  }
 	};
 	$.fn.date_input = function(opts) {
 		return this.each(function() {
