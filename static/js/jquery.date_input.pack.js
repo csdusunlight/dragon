@@ -18,25 +18,22 @@ DateInput = (function($) {
 		build: function() {
 			var monthNav = $('<p class="month_nav">' + '<span class="button prev" title="[Page-Up]">&#171;</span>' + ' <span class="month_name"></span> ' + '<span class="button next" title="[Page-Down]">&#187;</span>' + '</p>');
 			this.monthNameSpan = $(".month_name", monthNav);
-			$(".prev", monthNav).click(this.bindToObj(function() {
+			$(".prev", monthNav).click(this.bindToObj(function(event) {
 				this.moveMonthBy( - 1);
-				event=event?event:window.event;
 				event.stopPropagation();
 			}));
-			$(".next", monthNav).click(this.bindToObj(function() {
-				event=event?event:window.event;
+			$(".next", monthNav).click(this.bindToObj(function(event) {
+				this.moveMonthBy(1);
 				event.stopPropagation();
 			}));
 			var yearNav = $('<p class="year_nav">' + '<span class="button prev" title="[Ctrl+Page-Up]">&#171;</span>' + ' <span class="year_name"></span> ' + '<span class="button next" title="[Ctrl+Page-Down]">&#187;</span>' + '</p>');
 			this.yearNameSpan = $(".year_name", yearNav);
-			$(".prev", yearNav).click(this.bindToObj(function() {
+			$(".prev", yearNav).click(this.bindToObj(function(event) {
 				this.moveMonthBy( - 12);
-				event=event?event:window.event;
 				event.stopPropagation();
 			}));
-			$(".next", yearNav).click(this.bindToObj(function() {
+			$(".next", yearNav).click(this.bindToObj(function(event) {
 				this.moveMonthBy(12);
-				event=event?event:window.event;
 				event.stopPropagation();
 			}));
 			var nav = $('<div class="nav"></div>').append(monthNav, yearNav);
