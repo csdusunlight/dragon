@@ -77,7 +77,7 @@
   							5、上传文件大小需小于1M，若导入数据超过上传大小，建议拆分为多个文件再逐个导入<br />
   							6、暂不支持IE浏览器</p>
             </div>
-            <div class="submit-content by-item" id="submit_content">
+            <div class="submit-content by-item" id="submit_content" style="display: none">
               <img id="add_data_btn" class="add-data-btn" src="{% static 'images/add-data-btn.png' %}" />
               <div id="submit_data_container" class="submit-data-container">
                         <ul class="submit-head"><li class="item-01">项目名称</li><li class="item-02">投资时间</li><li class="item-03">注册手机号</li><li class="item-04">投资金额（元）</li><li class="item-05">投资标期（天）</li><li class="item-06">备注</li></ul>
@@ -105,7 +105,7 @@
 
                     <a id="upload_byitem" class="upload-byitem">提交数据</a>
 
-                    <div class="popup-box popup-box-03">
+                    <div class="popup-box popup-box-01">
                       <div class="popup-content">
                         <h3>删除提示</h3>
                         <p id="hint">确定删除该条数据？</p>
