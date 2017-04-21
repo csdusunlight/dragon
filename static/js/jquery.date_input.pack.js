@@ -20,24 +20,29 @@ DateInput = (function($) {
 			this.monthNameSpan = $(".month_name", monthNav);
 			$(".prev", monthNav).click(this.bindToObj(function() {
 				this.moveMonthBy( - 1);
-				oCancelBubble();
+				// 阻止事件冒泡
+		    var oEvent = arguments.callee.caller.arguments[0] || event;
+		    oEvent.cancelBubble = true;
 				// event.stopPropagation();
 			}));
 			$(".next", monthNav).click(this.bindToObj(function() {
 				this.moveMonthBy(1);
-				oCancelBubble();
+				var oEvent = arguments.callee.caller.arguments[0] || event;
+		    oEvent.cancelBubble = true;
 				// event.stopPropagation();
 			}));
 			var yearNav = $('<p class="year_nav">' + '<span class="button prev" title="[Ctrl+Page-Up]">&#171;</span>' + ' <span class="year_name"></span> ' + '<span class="button next" title="[Ctrl+Page-Down]">&#187;</span>' + '</p>');
 			this.yearNameSpan = $(".year_name", yearNav);
 			$(".prev", yearNav).click(this.bindToObj(function() {
 				this.moveMonthBy( - 12);
-				oCancelBubble();
+				var oEvent = arguments.callee.caller.arguments[0] || event;
+		    oEvent.cancelBubble = true;
 				// event.stopPropagation();
 			}));
 			$(".next", yearNav).click(this.bindToObj(function() {
 				this.moveMonthBy(12);
-				oCancelBubble();
+				var oEvent = arguments.callee.caller.arguments[0] || event;
+		    oEvent.cancelBubble = true;
 				// event.stopPropagation();
 			}));
 			var nav = $('<div class="nav"></div>').append(monthNav, yearNav);
@@ -262,12 +267,7 @@ DateInput = (function($) {
 				newDays[i] = days[(i + this.start_of_week) % 7]
 			};
 			return newDays
-		},
-		// 阻止事件冒泡
-    oCancelBubble: function () {
-	    var oEvent = arguments.callee.caller.arguments[0] || event;
-	    oEvent.cancelBubble = true;
-    }
+		}
 
 	};
 	$.fn.date_input = function(opts) {
