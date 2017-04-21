@@ -264,7 +264,7 @@ DateInput = (function($) {
 			return newDays
 		},
 		// 阻止事件冒泡
-		stopEvent: function stopEvent(event){ //阻止冒泡事件
+		stopEvent: function (event){ //阻止冒泡事件
 	    //取消事件冒泡
 	    var e=arguments.callee.caller.arguments[0]||event; //若省略此句，下面的e改为event，IE运行可以，但是其他浏览器就不兼容
 	    if (e && e.stopPropagation) {
