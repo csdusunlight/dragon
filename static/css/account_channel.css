@@ -82,71 +82,119 @@ h5 {margin: 0;}
   text-align: center;
 }
 .submit-content {
-  position: relative;
-  box-sizing: content-box;
-  width: 845px;
-  padding: 20px 0;
-  padding-bottom: 80px;
-  margin-top: 20px;
-  border: 1px dashed #e4e4e4;
-}
-.item-01 {width: 150px;}
-.item-02 {width: 150px;}
-.item-03 {width: 130px;}
-.item-04 {width: 130px;}
-.item-05 {width: 130px;}
-.item-06 {width: 100px;}
-.item-07 {width: 55px;}
-.add-data-btn {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  cursor: pointer;
-}
-.submit-head {
-  color: #fff;
-  background: #008fd7;
-  overflow: hidden;
-}
-.submit-head li {
-  line-height: 40px;
-}
-.submit-item-box {
-  padding: 15px 0;
-  overflow: hidden;
-  border-bottom: 1px dashed #e4e4e4;
-}
-.submit-head li,
-.submit-item {
-  box-sizing: border-box;
-  float: left;
-  padding: 0 4px;
-  text-align: center;
-}
-.delete-item {
-  float: right;
-  line-height: 30px;
-  text-align: center;
-  text-decoration: underline;
-  cursor: pointer;
-}
-.submit-item input, .submit-item select {
-  box-sizing:border-box;
-  width: 100%;
-  height: 30px;
-}
-/*弹窗部分*/
+        position: relative;
+        box-sizing: content-box;
+        width: 845px;
+        padding: 10px 0;
+        margin-top: 20px;
+        border: 1px dashed #e4e4e4;
+      }
 
-.popup-content>a:nth-of-type(1) {
-  margin-right:20px;
-}
-.popup-content .confirm {
-  padding: 6px 30px;
-  border-radius: 20px;
-  color: rgb(255, 255, 255);
-  background: rgb(240, 134, 25) none repeat scroll 0% 0%;
-  cursor: pointer;
-}
+      .item-01 {
+        width: 150px;
+      }
+
+      .item-02 {
+        width: 150px;
+      }
+
+      .item-03 {
+        width: 130px;
+      }
+
+      .item-04 {
+        width: 130px;
+      }
+
+      .item-05 {
+        width: 130px;
+      }
+
+      .item-06 {
+        width: 100px;
+      }
+
+      .item-07 {
+        width: 55px;
+      }
+
+      .add-data-btn {
+        position: absolute;
+        right: 10px;
+        bottom: 20px;
+        width: 40px;
+        cursor: pointer;
+      }
+
+      .submit-head {
+        color: #fff;
+        background: #008fd7;
+        line-height: 40px;
+        overflow: hidden;
+      }
+
+      .submit-item-box {
+        padding: 15px 0;
+        border-bottom: 1px dashed #e4e4e4;
+      }
+      .submit-item-box:after {
+        content: " ";
+        display: table;
+        clear: both;
+      }
+
+      .submit-head li,
+      .submit-item {
+        box-sizing: border-box;
+        float: left;
+        padding: 0 4px;
+        text-align: center;
+      }
+
+      .delete-item {
+        float: right;
+        line-height: 30px;
+        text-align: center;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      .submit-item input,
+      .submit-item select {
+        width: 100%;
+        height: 30px;
+        border: 1px solid #c1c1c1;
+      }
+
+      .submit-item .height-add01 {
+        height: 35px;
+      }
+
+      .submit-item .height-add02 {
+        height: 32px;
+      }
+
+      .upload-byitem {
+        display: block;
+        width: 160px;
+        margin: 10px auto 10px;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        border: 1px solid;
+        border-radius: 5px;
+        background: #fff;
+        cursor: pointer;
+      }
+
+      .upload-byitem:hover {
+        background: #008fd7;
+        color: #fff;
+      }
+      .promit {
+        border-color: #ff6767;
+      }
+
 
 /*增加逐条提交部分修改---end*/
 
@@ -463,6 +511,18 @@ table td {
   color: rgb(255, 255, 255);
   background: rgb(240, 134, 25) none repeat scroll 0% 0%;
   line-height: 1;
+  cursor: pointer;
+}
+
+.popup-content>a:nth-of-type(1) {
+  margin-right: 20px;
+}
+
+.popup-content .confirm {
+  padding: 6px 30px;
+  border-radius: 20px;
+  color: rgb(255, 255, 255);
+  background: rgb(240, 134, 25) none repeat scroll 0% 0%;
   cursor: pointer;
 }
 .popup-box.in .popup-content{

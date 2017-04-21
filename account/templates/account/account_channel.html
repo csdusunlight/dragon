@@ -80,45 +80,45 @@
                         <ul class="submit-head"><li class="item-01">项目名称</li><li class="item-02">投资时间</li><li class="item-03">注册手机号</li><li class="item-04">投资金额（元）</li><li class="item-05">投资标期（天）</li><li class="item-06">备注</li></ul>
                         <ul class="submit-item-box">
                           <li class="submit-item item-01">
-                            <select class="project_select height-add01">
+                            <select class="project_select height-add01" placeholder="选择项目">
                               <option value="0">提交项目01</option>
                               <option value="0">提交项目02</option>
                               <option value="0">提交项目03</option>
                             </select>
                           </li>
-                          <li class="submit-item item-02"><input type="date" class="height-add02 time" id="time"><li>
-                          <li class="submit-item item-03"><input type="text" class="telnum" id="telnum"><li>
-                          <li class="submit-item item-04"><input type="text" class="amount" id="amount"><li>
-                          <li class="submit-item item-05"><input type="text" class="term" id="term"><li>
-                          <li class="submit-item item-06"><input type="text" class="remark" id="remark"><li>
-                          <li class="delete-item item-07">删除</li>
-                        </ul>
-                        <ul class="submit-item-box">
-                          <li class="submit-item item-01">
-                            <select class="project_select height-add01">
-                              <option value="0">提交项目01</option>
-                              <option value="0">提交项目02</option>
-                              <option value="0">提交项目03</option>
-                            </select>
+                          <li class="submit-item item-02"><input type="text" class="height-add02 time date_picker" id="date_picker" placeholder="选择日期">
                           </li>
-                          <li class="submit-item item-02"><input type="date" class="height-add02 time" id="time"><li>
-                          <li class="submit-item item-03"><input type="text" class="telnum" id="telnum"><li>
-                          <li class="submit-item item-04"><input type="text" class="amount" id="amount"><li>
-                          <li class="submit-item item-05"><input type="text" class="term" id="term"><li>
-                          <li class="submit-item item-06"><input type="text" class="remark" id="remark"><li>
+                          <li class="submit-item item-03"><input type="text" class="telnum" id="telnum" placeholder="填写正确的手机号码">
+                          </li>
+                          <li class="submit-item item-04"><input type="text" class="amount" id="amount" placeholder="填写金额，仅限数字">
+                          </li>
+                          <li class="submit-item item-05"><input type="text" class="term" id="term" placeholder="填写标期，仅限数字">
+                          </li>
+                          <li class="submit-item item-06"><input type="text" class="remark" id="remark" placeholder="可不填">
+                          </li>
                           <li class="delete-item item-07">删除</li>
                         </ul>
                     </div>
+
+                    <a id="upload_byitem" class="upload-byitem">提交数据</a>
+
                     <div class="popup-box popup-box-03">
-                  <div class="popup-content">
-                    <h3>删除提示</h3>
-                    <p id="hint">确定删除该条数据？</p>
-                    <a id="cancel" class="cancel confirm" onclick="popupOutInfo()">取&nbsp;&nbsp;&nbsp;&nbsp;消</a>
-                    <a id="confirm_delete" class="confirm">确认删除</a>
-                  </div>
+                      <div class="popup-content">
+                        <h3>删除提示</h3>
+                        <p id="hint">确定删除该条数据？</p>
+                        <a id="cancel" class="cancel confirm" onclick="popupOutInfo()">取&nbsp;&nbsp;&nbsp;&nbsp;消</a>
+                        <a id="confirm_delete" class="confirm">确认删除</a>
+                      </div>
+                    </div>
+                    <div class="popup-box popup-box-03">
+                      <div class="popup-content">
+                        <h3>温馨提示</h3>
+                        <p class="hint-msg"></p>
+                        <a id="cancel" class="cancel confirm" onclick="popupOutError()">确&nbsp;&nbsp;&nbsp;&nbsp;定</a>
+                      </div>
+                    </div>
               </div>
-            </div>
-					</div>
+  					</div>
 					<div class="content-out content" style="display: none;">
 						<input class="export-btn" type="button" name="" id="export" value="导出审核数据" />
 						<h6>注意事项：</h6>
@@ -306,43 +306,124 @@
 					}
 				}
 			}
-      // 单项提交部分
+      // 单项提交部分-------start
+      $(".submit-content").on("focus", ".date_picker",function(){
+        $('.date_picker').date_input();
+      })
+
       var add_data_btn = document.getElementById('add_data_btn');
-        var remove_data_btn = document.getElementById('remove_data_btn');
-        var submit_data_container = document.getElementById('submit_data_container');
+      var remove_data_btn = document.getElementById('remove_data_btn');
+      var submit_data_container = document.getElementById('submit_data_container');
       var that;
-        add_data_btn.onclick = function(){
+      add_data_btn.onclick = function() {
           addData();
-        }
-      $(".submit-content").on("click", ".delete-item", function(){
+      }
+      $(".submit-content").on("click", ".delete-item", function() {
         that = this;
         popupInInfo();
         return that;
       })
-      $("#confirm_delete").click(function(){
-        that.parentNode.remove();
+      $("#confirm_delete").click(function() {
+        that.parentNode.parentNode.removeChild(that.parentNode);
         popupOutInfo();
       })
 
       function addData() {
         var ul = document.createElement('ul');
         ul.className = 'submit-item-box';
-        ul.innerHTML = '<li class="submit-item item-01"><select class="project_select height-add01">'+
-                '<option value="0">提交项目01</option><option value="0">提交项目02</option><option value="0">提交项目03</option></select></li>'+
-                '<li class="submit-item item-02"><input type="date" class="height-add02 time"><li>'+
-                '<li class="submit-item item-03"><input type="text" class="telnum"><li>'+
-                '<li class="submit-item item-04"><input type="text" class="amount"><li>'+
-                '<li class="submit-item item-05"><input type="text" class="term"><li>'+
-                '<li class="submit-item item-06"><input type="text" class="remark"><li>'+
-                '<li class="delete-item item-07">删除</li>';
+        ul.innerHTML = '<li class="submit-item item-01"><select class="project_select height-add01">' +
+          '<option value="0">提交项目01</option><option value="0">提交项目02</option><option value="0">提交项目03</option></select></li>' +
+          '<li class="submit-item item-02"><input type="text" class="height-add02 time date_picker"></li>' +
+          '<li class="submit-item item-03"><input type="text" class="telnum"></li>' +
+          '<li class="submit-item item-04"><input type="text" class="amount"></li>' +
+          '<li class="submit-item item-05"><input type="text" class="term"></li>' +
+          '<li class="submit-item item-06"><input type="text" class="remark"></li>' +
+          '<li class="delete-item item-07">删除</li>';
         submit_data_container.appendChild(ul);
       }
+      // 删除提示信息弹窗调用函数
       function popupInInfo() {
-          $(".popup-box-03").addClass("in");
+        $(".popup-box-01").addClass("in");
       }
+      // 取消删除信息弹窗点击确定调用函数（已写入html）
       function popupOutInfo() {
-          $(".popup-box-03").removeClass("in");
+        $(".popup-box-01").removeClass("in");
       }
+      function popupInError() {
+            $(".popup-box-03").addClass("in");
+        }
+      // 再次提交调用函数
+        function popupOutError() {
+            $(".popup-box-03").removeClass("in");
+        }
+      //      点击提交按钮
+      var Data = new Array;
+      var promptNumber = 0;
+      var promptStr = "温馨提示：";
+      $("#upload_byitem").on("click", function() {
+        $(".submit-item-box").each(function(index,domEle){
+          var project_select01 = $(this).find(".project_select"),
+            time01 = $(this).find(".time"),
+            telnum01 = $(this).find(".telnum"),
+            amount01 = $(this).find(".amount"),
+            term01 = $(this).find(".term"),
+            remark01 = $(this).find(".remark");
+
+          var project_select = $(this).find(".project_select option:selected").text(),
+            time = time01.val(),
+            telnum = telnum01.val(),
+            amount = amount01.val(),
+            term = term01.val(),
+            remark = remark01.val(),
+            data_list = [project_select, time, telnum, amount, term, remark];
+
+          var re=/^1[1,2,3,4,6,5,7,8,9]\d{9}$/, //验证手机号
+                re_amount=/^\d+(\.\d+)?$/;  //验证数字格式
+
+          if(project_select == ""){
+            promptNumber++;
+            project_select01.css("border-color","#ff6767");
+          }
+          if(time == "" ){
+            promptNumber++;
+            time01.css("border-color","#ff6767");
+          }else{
+            time01.css("border-color","#c1c1c1");
+          }
+          if(!re.test(telnum)){
+            promptNumber++;
+            telnum01.css("border-color","#ff6767");
+          }else{
+                telnum01.css("border-color","#c1c1c1");
+              }
+          if(!re_amount.test(amount)){
+            promptNumber++;
+            amount01.css("border-color","#ff6767");
+          }
+          else{
+                amount01.css("border-color","#c1c1c1");
+              }
+          if(!re_amount.test(term)){
+            promptNumber++;
+            term01.css("border-color","#ff6767");
+          }
+          else{
+                term01.css("border-color","#c1c1c1");
+              }
+          Data.push(data_list);
+        })
+        if(promptNumber == 0 ) {
+          console.log(Data);
+          $(".hint-msg").text("提交成功！");
+          popupInError();
+          Data = [];
+        }else {
+          Data = [];
+          $(".hint-msg").html('共有<span class="error-num">'+ promptNumber +'</span>项填写格式不正确，请检查后按照规范重新填写后提交！');
+          promptNumber = 0;
+          popupInError();
+        }
+      });
       // 单项提交部分----end
 
 			$("#Swi-Top li").click(function(){
