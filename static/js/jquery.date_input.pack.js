@@ -101,7 +101,7 @@ DateInput = (function($) {
 		},
 		changeInput: function(dateString) {
 			this.input.val(dateString).change();
-			this.hide()
+			// this.hide()
 		},
 		show: function() {
 			this.rootLayers.css("display", "block");
@@ -268,4 +268,3 @@ DateInput = (function($) {
 	};
 	return DateInput
 })(jQuery);
-//download by www.sucaijiayuan.com
