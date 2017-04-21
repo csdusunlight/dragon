@@ -267,7 +267,7 @@ DateInput = (function($) {
     oCancelBubble: function () {
 	    var oEvent = arguments.callee.caller.arguments[0] || event;
 	    oEvent.cancelBubble = true;
-    };
+    }
 
 	};
 	$.fn.date_input = function(opts) {
