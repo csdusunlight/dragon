@@ -28,13 +28,13 @@
   }
   .bottom-nav .bottom-nav-item {
     display: inline-block;
-    font-size: 16px;
+    font-size: 14px;
     height: 30px;
     line-height: 30px;
   }
   .link-phone {
     padding-left: 24px;
-    background: url(images/link-phone-icon.png)  left center/auto 24px no-repeat;
+    background: url(/static/images/link-phone-icon.png)  left center/auto 24px no-repeat;
   }
   .apk-container {
     position: absolute;
@@ -52,7 +52,7 @@
     content: "";
     position: absolute;
     top: 250px;
-    left: 100px;
+    left: 110px;
     width: 20px;
     height: 20px;
     background-color:#fff ;
@@ -167,12 +167,12 @@ $(function(){
   <span class="bottom-nav-item down-app-hover">下载APP</span> &nbsp;|&nbsp;
   <div class="apk-container">
     <p>下载APP更有惊喜等着你</p>
-    <img src="images/app-download-erweima.png" alt="apk二维码" />
+    <img src="{% static 'images/app-download-erweima.png' %}" alt="apk二维码" />
   </div>
   <a class="bottom-nav-item" href="{% url 'aboutus' %}">关于我们</a> &nbsp;|&nbsp;
   <a class="bottom-nav-item" href="{% url 'freshman_introduction' %}">了解挖福利</a> &nbsp;|&nbsp;
   <span class="link-phone bottom-nav-item">0731-85586375</span>
 </div>
-<div style="margin-top:1rem;">Copyright&nbsp; &copy; 2015-2024&nbsp; 挖福利 版权所有 备案号：湘ICP备15015815号-2</div>
+<div>Copyright&nbsp; &copy; 2015-2024&nbsp; 挖福利 版权所有 备案号：湘ICP备15015815号-2</div>
 </body>
 </html>
