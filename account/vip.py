@@ -16,9 +16,13 @@ VIP_BONUS = {
 }
 VIP_AMOUNT = {0:0, 1:10000, 2:100000, 3:1000000, 4:5000000, 5:10000000,}
 def get_vip_bonus(user, amount, type):
+    if user.is_channel:
+        return amount
     level = user.level
     return int(amount*VIP_BONUS[level][type])
 def vip_judge(user, with_amount):
+    if user.is_channel:
+        return
     level = user.level
     total = user.with_total
     ntotal = user.with_total + with_amount

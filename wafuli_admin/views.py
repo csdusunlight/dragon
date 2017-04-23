@@ -845,7 +845,8 @@ def admin_user(request):
             level = request.POST.get('level',u'无')
             Channel.objects.create(user=obj_user, qq_number=qq_number, level=level)
             obj_user.is_channel = True
-            obj_user.save(update_fields=['is_channel'])
+            obj_user.inviter_id = 1 
+            obj_user.save(update_fields=['is_channel','inviter'])
             admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=obj_user, event_type='6', remark=u"新增渠道")
             res['code'] = 0
         elif type == 6:
