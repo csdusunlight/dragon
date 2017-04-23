@@ -62,7 +62,7 @@ def index(request):
     total['with_count'] = dict_with.get('cou')
     total['with_total'] = (dict_with.get('sum') or 0)/100.0
     
-    dict_ret = UserEvent.objects.filter(event_type='1',audit_state='0').\
+    dict_ret = UserEvent.objects.filter(event_type__in=['1','4','5','6','7'],audit_state='0').\
             aggregate(cou=Count('user',distinct=True),sum=Sum('translist__transAmount'))
     total['ret_count'] = dict_ret.get('cou')
     total['ret_total'] = (dict_ret.get('sum') or 0)/100.0
