@@ -14,6 +14,66 @@
 <script type="text/javascript" src="{% static 'js/accounts/user-validate.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/accounts/refresh.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/accounts/send.js' %}"></script>
+<style>
+  .bottom-nav {
+    position: relative;
+    width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .bottom-nav a, .bottom-nav .down-app-hover {
+    cursor: pointer;
+    color: #666;
+    text-decoration: none;
+  }
+  .bottom-nav .bottom-nav-item {
+    display: inline-block;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+  }
+  .link-phone {
+    padding-left: 24px;
+    background: url(/static/images/link-phone-icon.png)  left center/auto 24px no-repeat;
+  }
+  .apk-container {
+    position: absolute;
+    top: -270px;
+    left: 280px;
+    width: 200px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #e4e4e4;
+    border-radius: 8px;
+    opacity: 0;
+    -webkit-transition: opacity 0.4s ease-in;
+    transition: opacity 0.4s ease-in;
+  }
+  .apk-container:after {
+    content: "";
+    position: absolute;
+    top: 250px;
+    left: 110px;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-top: 1px solid #e4e4e4;
+    border-right: 1px solid #e4e4e4;
+    -webkit-transform: rotate(135deg);
+    transform: rotate(135deg);
+  }
+  .apk-container p{
+    text-align: center;
+    color: #666;
+    margin: 8px 0;
+  }
+  .apk-container img {
+    width: 100%;
+  }
+  .down-app-hover:hover + .apk-container {
+    opacity: 1;
+  }
+</style>
 <script type="text/javascript">
 	var coderefresh_url = "{% url 'captcha-refresh' %}";
 	var phoneimageV_url = "{% url 'phoneImageV' %}";
@@ -38,55 +98,51 @@ $(function(){
 			$(this).parent().find(".g-checkbox").css("background-position","0 -18px")
 		}
 	});
+
+  $("#recommend_id").click(function(){
+    $("#recommend_container").toggleClass("recommend-container");
+  });
+  var password_input = document.getElementById('password_input');
+  var passwordEye = document.getElementById('password_eye');
+  passwordEye.onclick = function (){
+    if (password_input.type == "password") {
+      password_input.type = "text";
+      passwordEye.setAttribute("class", "password-eye show")
+    } else{
+      password_input.type = "password";
+      passwordEye.setAttribute("class", "password-eye")
+    }
+  }
 });
   </script>
 </head>
 <body>
 {% include "header.html" %}
-	<div class="heg">
+	<div>
     <div class="contant">
     	<div class="co-left" style="width:45%;margin-left: 6.85em;">
-
-            <!--<form  name="myform">-->
-        	<!-- <div class="re-d">
-            <p class="re-ti">用户名<span style="color:#DF2B2A;font-size:14px;">（6-16位字符，支持数字及字母，不能纯数字）</span></p>
-            <input type="text" class="re-input" name="username" /><span class="tips" id="divname"></span>
-            </div> -->
-            <!-- <div class="re-d">
-            <p class="re-ti re-dti">E-mail<span style="color:#DF2B2A;font-size:14px;">（用于密码找回）</span></p>
-            <input type="text" class="re-input" name="email" required/><span class="tips" id="divmail"></span>
-            </div> -->
-            <!-- <div class="re-d">
-            <p class="re-ti re-dti">验证码<span style="color:#DF2B2A;font-size:14px;">（请填写右侧字母）</span></p>
-            <input type="text" class="re-input" id="x_yanzhengma" name="x_yanzhengma"/>
-            <img width="87" height="32" src="{{ codimg_url }}" id="id_checkImg" class="imageCheckRefresh yzm-img">
-       		  <input id="id_hashkey" name="hashkey" type="hidden" value="{{ hashkey }}">
-       		  <span class="tips" id="divyzm"></span>
-            </div> -->
             <div class="re-d">
-            <p class="re-ti re-dti">手机号</p>
-            <input type="text" class="re-input" name="mobile"/><span class="tips" id="divphone"></span>
+              <img class="register-icon register-phone" src="{% static 'images/register-phone.png' %}" />
+              <input type="text" class="re-input" name="mobile" placeholder="请输入您的手机号" /><span class="tips" id="divphone"></span>
             </div>
             <div class="re-d">
-            <p class="re-ti re-dti">手机验证码</p>
-            <input type="text" class="re-input" name="code"/>
-            <button id="action-send-code-imagvalidate" class="re-huo">获取手机验证码</button>
-            <span class="tips" id="divcode"></span>
+              <input type="text" class="re-input" name="code" placeholder="请输入手机验证码" />
+              <button id="action-send-code-imagvalidate" class="re-huo">获取手机验证码</button>
+              <span class="tips" id="divcode"></span>
             </div>
-            <div class="re-d">
-            <p class="re-ti re-dti">登录密码<span style="color:#DF2B2A;font-size:14px;">（6-16位，至少包含数字、字母和特殊符号中的两种）</span></p>
-           <input type="password" class="re-input" name="password1" />
-           <span class="tips" id="divpd"></span>
+            <div class="re-d" style="position: relative;">
+              <img class="register-icon register-lock" src="{% static 'images/register-lock.png' %}" />
+              <input type="password" id="password_input" class="re-input" name="password1" placeholder="登录密码，6-16位，至少包含数字、字母和特殊符号中的两种" />
+              <span class="tips" id="divpd"></span>
+              <a id="password_eye" class="password-eye"></a>
             </div>
-            <!-- <div class="re-d">
-            <p class="re-ti re-dti" id="txtPassWord2">确认密码</p>
-            <input type="password" class="re-input" name="password2"/>
-            <span class="tips" id="divspd"></span>
-            </div> -->
-            <div class="re-d">
-            <p class="re-ti re-dti">推荐人ID<span style="color:#DF2B2A;font-size:14px;">（可不填写）</span></p>
-            <input type="text" name="invite" class="re-input" value="{{icode}}"/>
-            <span class="tips" id="divinvite"></span>
+            <div id="recommend_container" class="re-d">
+            <p id="recommend_id" class="re-ti re-dti recommend-id">推荐人ID<span style="color:#008fd7;font-size:14px;">（选填）</span></p>
+              <div id="recommend_box" class="recommend-box">
+                <img class="register-icon register-recommend" src="{% static 'images/register-recommend.png' %}" />
+                <input type="text" name="invite" class="re-input" value="{{icode}}"  placeholder="请输入邀请人ID" />
+                <span class="tips" id="divinvite"></span>
+              </div>
             </div>
             <div class="re-d">
 					<span class="moni-checked allvert rel">
@@ -102,12 +158,22 @@ $(function(){
         </div>
         <div class="co-left" style="text-align:left;width:45%">
        		<div class="re-pad"><p style="font-size:16px;color:#111;">已有账号？<span><a href="{%url 'login'%}" class="ljdl">立即登录</a></span></p></div>
-            <a href="{%url 'account_invite'%}"><div class="re-ret"><img src="{% static 'images/re-img.png' %}" style="margin:3rem;"/></div></a>
+            <a href="{%url 'account_invite'%}"><div class="re-ret"><img src="{% static 'images/register-bg.png' %}" style="margin:3rem;"/></div></a>
         </div>
     </div>
 
 </div>
 <div style="clear:both"></div>
-<div style="margin-top:1rem;">Copyright&nbsp; &copy; 2015-2024&nbsp; 挖福利 版权所有 备案号：湘ICP备15015815号-2</div>
+<div class="bottom-nav">
+  <span class="bottom-nav-item down-app-hover">下载APP</span> &nbsp;|&nbsp;
+  <div class="apk-container">
+    <p>下载APP更有惊喜等着你</p>
+    <img src="{% static 'images/app-download-erweima.png' %}" alt="apk二维码" />
+  </div>
+  <a class="bottom-nav-item" href="{% url 'aboutus' %}">关于我们</a> &nbsp;|&nbsp;
+  <a class="bottom-nav-item" href="{% url 'freshman_introduction' %}">了解挖福利</a> &nbsp;|&nbsp;
+  <span class="link-phone bottom-nav-item">0731-85586375</span>
+</div>
+<div>Copyright&nbsp; &copy; 2015-2024&nbsp; 挖福利 版权所有 备案号：湘ICP备15015815号-2</div>
 </body>
 </html>
