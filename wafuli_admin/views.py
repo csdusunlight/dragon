@@ -23,6 +23,7 @@ import traceback
 import xlrd
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from account.vip import vip_judge, get_vip_bonus
 # Create your views here.
 logger = logging.getLogger('wafuli')
 def index(request):
@@ -62,7 +63,7 @@ def index(request):
     total['with_count'] = dict_with.get('cou')
     total['with_total'] = (dict_with.get('sum') or 0)/100.0
     
-    dict_ret = UserEvent.objects.filter(event_type='1',audit_state='0').\
+    dict_ret = UserEvent.objects.filter(event_type__in=['1','4','5','6','7'],audit_state='0').\
             aggregate(cou=Count('user',distinct=True),sum=Sum('translist__transAmount'))
     total['ret_count'] = dict_ret.get('cou')
     total['ret_total'] = (dict_ret.get('sum') or 0)/100.0
@@ -192,6 +193,8 @@ def admin_finance(request):
                 res['res_msg'] = u"操作失败，返现重复！"
             else:
                 log.audit_result = True
+                if event.content_object.is_vip_bonus:
+                    cash = get_vip_bonus(event_user, cash, 'finance')
                 translist = charge_money(event_user, '0', cash, u'福利返现')
                 scoretranslist = charge_score(event_user, '0', score, u'福利返现（积分）')
                 if translist and scoretranslist:
@@ -298,6 +301,8 @@ def admin_task(request):
                 res['res_msg'] = u"操作失败，返现重复！"
             else:
                 log.audit_result = True
+                if event.content_object.is_vip_bonus:
+                    cash = get_vip_bonus(event_user, cash, 'task')
                 translist = charge_money(event_user, '0', cash, u'福利返现')
                 scoretranslist = charge_score(event_user, '0', score, u'福利返现（积分）')
                 if translist and scoretranslist:
@@ -840,7 +845,8 @@ def admin_user(request):
             level = request.POST.get('level',u'无')
             Channel.objects.create(user=obj_user, qq_number=qq_number, level=level)
             obj_user.is_channel = True
-            obj_user.save(update_fields=['is_channel'])
+            obj_user.inviter_id = 1 
+            obj_user.save(update_fields=['is_channel','inviter'])
             admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=obj_user, event_type='6', remark=u"新增渠道")
             res['code'] = 0
         elif type == 6:
@@ -1012,6 +1018,8 @@ def admin_withdraw(request):
                         logger.debug('Inviting Award scores is failed to pay!!!')
             trans_withdraw = event.translist.first()
             if trans_withdraw:
+                amount = trans_withdraw.transAmount
+                vip_judge(event.user, amount)
                 trans_withdraw.admin_event = admin_event
                 trans_withdraw.save(update_fields=['admin_event'])
             msg_content = u'您提现的' + str(event.invest_amount) + u'福币，已发放到您的支付宝账号中，请注意查收'
@@ -1026,7 +1034,7 @@ def admin_withdraw(request):
             event.audit_state = '2'
             log.reason = reason
             log.audit_result = False
-            translist = charge_money(event.user, '0', event.invest_amount, u'冲账')
+            translist = charge_money(event.user, '0', event.invest_amount, u'冲账', reverse=True)
             if translist:
                 translist.user_event = event
                 translist.admin_event = admin_event
