@@ -36,5 +36,5 @@ def vip_judge(user, with_amount):
                 charge_money(user, '0', VIP_BONUS[key]['money'], u'VIP升级奖励')
                 msg_content = u'恭喜您的会员等级提升为VIP' + str(key) + u'！'
                 Message.objects.create(user=user, content=msg_content, title=u"会员升级")
-    user.save()
+    user.save(update_fields=['level', 'with_total'])
     
