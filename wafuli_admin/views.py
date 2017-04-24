@@ -499,7 +499,7 @@ def export_finance_excel(request):
         remark= con.remark
         invest_amount= con.invest_amount
         term=con.invest_term
-        user_mobile = con.user.mobile
+        user_mobile = con.user.mobile if not con.user.is_channel else con.user.channel.qq_number
         user_type = u"普通用户" if not con.user.is_channel else u"渠道："+ con.user.channel.level
         data.append([id, project_name, time_sub, user_mobile,user_type, mobile_sub, term, invest_amount, remark])
     w = Workbook()     #创建一个工作簿
