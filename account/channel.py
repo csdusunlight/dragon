@@ -128,6 +128,18 @@ def channel(request):
         flist = list(Finance.objects.filter(state='1', level__in=['channel','all']))
         return render(request, 'account/account_channel.html', {'flist':flist})
 
+@login_required
+def submit_itembyitem(request):
+    ret = {}
+    data = request.POST.get('data','')
+    if not data:
+        ret['code'] = 1
+        ret['msg'] = u'参数缺失'
+        return JsonResponse(ret)
+    table = data.split('$')
+    for row in table:
+        temp = row.split('|')
+        print temp
 def export_audit_result(request):
     user = request.user
     fid = request.GET.get("fid")

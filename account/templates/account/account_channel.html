@@ -84,9 +84,10 @@
                         <ul class="submit-item-box">
                           <li class="submit-item item-01">
                             <select class="project_select height-add01" placeholder="选择项目">
-                              <option value="0">提交项目01</option>
-                              <option value="0">提交项目02</option>
-                              <option value="0">提交项目03</option>
+                              <option value="0">--</option>
+								{% for x in flist %}
+								    <option value="{{x.id}}">{{x.title}}</option>
+								{%endfor%}
                             </select>
                           </li>
                           <li class="submit-item item-02"><input type="text" class="height-add02 time date_picker" id="date_picker" placeholder="选择日期">
@@ -190,6 +191,9 @@
 				'<td>{return_amount}</td><td>{refuse_reason}</td></tr>[/data]</table>';
 			var url = "{% url 'get_channel_result_page' %}" + "?page={page}&size={pageSize}";
 			$('.back-a14').parent().toggleClass("on");
+			$.ajaxSetup({
+			    data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+			});
 			$("#pagedata").ajaxPage({
 			    url:url,
 			    pageId:$("#page"),
@@ -335,7 +339,8 @@
         var ul = document.createElement('ul');
         ul.className = 'submit-item-box';
         ul.innerHTML = '<li class="submit-item item-01"><select class="project_select height-add01">' +
-          '<option value="0">提交项目01</option><option value="0">提交项目02</option><option value="0">提交项目03</option></select></li>' +
+        	$('#project_select').html() +
+          '</select></li>' +
           '<li class="submit-item item-02"><input type="text" class="height-add02 time date_picker"></li>' +
           '<li class="submit-item item-03"><input type="text" class="telnum"></li>' +
           '<li class="submit-item item-04"><input type="text" class="amount"></li>' +
@@ -372,7 +377,7 @@
             term01 = $(this).find(".term"),
             remark01 = $(this).find(".remark");
 
-          var project_select = $(this).find(".project_select option:selected").text(),
+          var project_select = $(this).find(".project_select option:selected").val(),
             time = time01.val(),
             telnum = telnum01.val(),
             amount = amount01.val(),
@@ -383,7 +388,7 @@
           var re=/^1[1,2,3,4,6,5,7,8,9]\d{9}$/, //验证手机号
                 re_amount=/^\d+(\.\d+)?$/;  //验证数字格式
 
-          if(project_select == ""){
+          if(project_select == "0"){
             promptNumber++;
             project_select01.css("border-color","#ff6767");
           }
@@ -413,12 +418,30 @@
           else{
                 term01.css("border-color","#c1c1c1");
               }
-          Data.push(data_list);
+          Data.push(data_list.join('|'));
         })
         if(promptNumber == 0 ) {
-          console.log(Data);
-          $(".hint-msg").text("提交成功！");
-          popupInError();
+	       var data = Data.join('$');
+		   $.ajax({
+	  			url:"{%url 'submit_itembyitem' %}",
+	  			dataType:"json",
+	  			type:"POST",
+	  			data : {
+	  				'data':data
+	  			},
+	  			success:function(ret){
+	  				if(ret.code==0){
+	  					$(".hint-msg").text("提交成功！");
+	  				}
+	  				else{
+	  					$(".hint-msg").text(ret.msg);
+	  				}
+	  				popupInError();
+	  			},
+	  			error:function(){
+	  				alert("请检查网络连接");
+	  			}
+	  	  });
           Data = [];
         }else {
           Data = [];

@@ -52,4 +52,6 @@ urlpatterns = [
     
     url(r'^channel/$', 'account.channel.channel', name='account_channel'),
     url(r'^export/$', 'account.channel.export_audit_result', name='export_audit_result'),
+    
+    url(r'^submit_itembyitem/$', 'account.channel.submit_itembyitem', name='submit_itembyitem'),
 ]
