@@ -43,7 +43,7 @@ function getText(n) {
         <div class="welcome">欢迎来到挖福利</div>
         <div class="index_30">推荐好友送现金，<a href="{% url 'account_invite' %}">立即推荐</a></div>
         <div class="signin"><a>每日签到</a></div>
-        <div class="lottery"><a href="{% url 'activity_lottery' %}">积分抽奖</a></div>
+        <div class="lottery"><a href="{% url 'account_index' %}">个人中心</a></div>
       {%else%}
       	<div class="index_29"><a href="{% url 'register' %}">注册领现金</a></div>
         <div class="index_30">若已有账号，请<a href="{% url 'login' %}">登录</a></div>

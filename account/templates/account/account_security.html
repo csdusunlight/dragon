@@ -235,11 +235,11 @@ $(function(){
                             </div>
                         </div>
                         <div class="bin-more-info">
-                        	<script type="text/javascript">
-							$(document).ready(function(){
-							  $(".bin-more-info li:odd").css("border-right","none")
-							});
-							</script>
+<!--               <script type="text/javascript">
+  							$(document).ready(function(){
+  							  $(".bin-more-info li:odd").css("border-right","none")
+  							});
+							</script> -->
                         	<ul>
                             	<li>
                                 	<div class="bing-top-li">
@@ -251,7 +251,7 @@ $(function(){
                                     </div>
                                     <div class="Bing-note"><p>您在申请体现时须通过手机获取验证码</p></div>
                                 </li>
-                            	<li>
+                            	<li style="display: none;">
                             		{% if user.is_email_authenticated %}
                             		<div class="bing-top-li">
                                     	<div class="Bin-img"><div class="Bin-mi"><img src="{% static 'images/pic5.png' %}" /></div></div>
@@ -271,7 +271,7 @@ $(function(){
                                     {% endif %}
                                     <div class="Bing-note"><p>您可以通过邮箱找回密码</p></div>
                                 </li>
-                                <li>
+                                <li style="border-right: none;">
                                 	<div class="bing-top-li">
                                     	<div class="Bin-img"><div class="Bin-mi"><img src="{% static 'images/pic6.png' %}" /></div></div>
                                         <div class="Bin-right">
