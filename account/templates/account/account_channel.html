@@ -429,6 +429,7 @@
           Data.push(data_list.join('|'));
         })
         if(promptNumber == 0 ) {
+          console.log(Data);
 	       var data = Data.join('$');
 		   $.ajax({
 	  			url:"{%url 'submit_itembyitem' %}",
@@ -440,7 +441,6 @@
 	  			success:function(ret){
 	  				if(ret.code==0){
 	  					$(".hint-msg").text("提交成功：" + ret.suc_num + "条数据");
-              console.log(Data);
 	  				}
 	  				else{
 	  					$(".hint-msg").text(ret.msg);
