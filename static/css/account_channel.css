@@ -86,6 +86,7 @@ h5 {margin: 0;}
         box-sizing: content-box;
         width: 845px;
         padding: 10px 0;
+        padding-bottom: 120px;
         margin-top: 20px;
         border: 1px dashed #e4e4e4;
       }
@@ -121,7 +122,7 @@ h5 {margin: 0;}
       .add-data-btn {
         position: absolute;
         right: 10px;
-        bottom: 20px;
+        bottom: 134px;
         width: 40px;
         cursor: pointer;
       }
@@ -195,7 +196,11 @@ h5 {margin: 0;}
       .promit {
         border-color: #ff6767;
       }
-
+      .attention-item {
+        position: absolute;
+        bottom: 0;
+        text-align: left;
+      }
 
 /*增加逐条提交部分修改---end*/
 
@@ -260,10 +265,14 @@ h5 {margin: 0;}
 #choose {
   display: none;
 }
-.content h6 {
+.submit-content h6 {
   margin : 20px 0 0;
   font-size: 16px;
   font-weight: normal;
+}
+.submit-content h6,
+.submit-content p {
+  padding-left: 10px;
 }
 
 /*表格部分*/
