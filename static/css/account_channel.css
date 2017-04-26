@@ -122,7 +122,7 @@ h5 {margin: 0;}
       .add-data-btn {
         position: absolute;
         right: 10px;
-        bottom: 134px;
+        bottom: 154px;
         width: 40px;
         cursor: pointer;
       }
@@ -239,7 +239,6 @@ h5 {margin: 0;}
 .upload-box-btn,
 .export-btn {
   display: inline-block;
-  float: right;
   width: 160px;;
   margin: 10px 10px 10px;
   height: 40px;
@@ -250,6 +249,9 @@ h5 {margin: 0;}
   background: #fff;
   cursor: pointer;
 }
+.export-btn {
+  float: right;
+}
 .upload-box-btn:hover,
 .export-btn:hover {
   background: #f08519;
@@ -258,6 +260,7 @@ h5 {margin: 0;}
 #choose {
   display: none;
 }
+.content-out h6,
 .submit-content h6 {
   margin : 20px 0 0;
   font-size: 16px;
