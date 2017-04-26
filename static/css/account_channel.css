@@ -16,12 +16,12 @@ h5 {margin: 0;}
   overflow: hidden;
   border: 1px solid #e4e4e4;
 }
-.header h3 {
+.project-select-head {
   float: left;
   font-size: 24px;
   line-height: 44px;
 }
-.header select {
+.project-select-common {
   display: inline-block;
   width: 200px;
   height: 30px;
@@ -261,8 +261,7 @@ h5 {margin: 0;}
   font-size: 16px;
   font-weight: normal;
 }
-.submit-content h6,
-.submit-content p {
+.attention {
   padding-left: 10px;
 }
 
