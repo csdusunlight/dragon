@@ -32,7 +32,7 @@
 					<div class="header">
 						<!-- <h3>选择项目名称</h3>
 						<select id="project_select">
-							<option value="0">--</option>
+							<option value="0">-</option>
 							{% for x in flist %}
 							    <option value="{{x.id}}">{{x.title}}</option>
 							{%endfor%}
@@ -52,54 +52,53 @@
             <div class="submit-content by-item" id="submit_content" style="padding-bottom: 120px;">
               <img id="add_data_btn" class="add-data-btn" src="{% static 'images/add-data-btn.png' %}" />
               <div id="submit_data_container" class="submit-data-container">
-                        <ul class="submit-head"><li class="item-01">项目名称</li><li class="item-02">投资时间</li><li class="item-03">注册手机号</li><li class="item-04">投资金额（元）</li><li class="item-05">投资标期（天）</li><li class="item-06">备注</li></ul>
-                        <ul class="submit-item-box">
-                          <li class="submit-item item-01">
-                            <select class="project_select height-add01" placeholder="选择项目">
-                              <option value="0">--</option>
-								{% for x in flist %}
-								    <option value="{{x.id}}">{{x.title}}</option>
-								{%endfor%}
-                            </select>
-                          </li>
-                          <li class="submit-item item-02"><input type="text" class="height-add02 time date_picker" id="date_picker" placeholder="选择日期">
-                          </li>
-                          <li class="submit-item item-03"><input type="text" maxlength=11 class="telnum" id="telnum" placeholder="填写正确的手机号">
-                          </li>
-                          <li class="submit-item item-04"><input type="text" class="amount" id="amount" placeholder="仅限纯数字">
-                          </li>
-                          <li class="submit-item item-05"><input type="text" class="term" id="term" placeholder="仅限纯数字">
-                          </li>
-                          <li class="submit-item item-06"><input type="text" class="remark" id="remark" placeholder="选填">
-                          </li>
-                          <li class="delete-item item-07">删除</li>
-                        </ul>
-                    </div>
-
-                    <a id="upload_byitem" class="upload-byitem">提交数据</a>
-                    <div class="attention">
-                      <h6>注意事项：</h6>
-                      <p>1、投资金额、投资标期只能为纯数字<br />
-                         2、点击右边的“+”号，可连续添加多条数据，再一并提交<br />
-                        3、删除按钮可删除该条数据</p>
-                    </div>
-                    <div class="popup-box popup-box-01">
-                      <div class="popup-content">
-                        <h3>删除提示</h3>
-                        <p id="hint">确定删除该条数据？</p>
-                        <a id="cancel" class="cancel confirm" onclick="popupOutInfo()">取&nbsp;&nbsp;&nbsp;&nbsp;消</a>
-                        <a id="confirm_delete" class="confirm">确认删除</a>
-                      </div>
-                    </div>
-                    <div class="popup-box popup-box-03">
-                      <div class="popup-content">
-                        <h3>温馨提示</h3>
-                        <p class="hint-msg"></p>
-                        <a id="cancel" class="cancel confirm" onclick="popupOutError()">确&nbsp;&nbsp;&nbsp;&nbsp;定</a>
-                      </div>
-                    </div>
+                  <ul class="submit-head"><li class="item-01">项目名称</li><li class="item-02">投资时间</li><li class="item-03">注册手机号</li><li class="item-04">投资金额（元）</li><li class="item-05">投资标期（天）</li><li class="item-06">备注</li></ul>
+                  <ul class="submit-item-box">
+                    <li class="submit-item item-01">
+                      <select class="project_select height-add01" placeholder="选择项目">
+                        <option value="0">--</option>
+        								{% for x in flist %}
+        								    <option value="{{x.id}}">{{x.title}}</option>
+        								{%endfor%}
+                      </select>
+                    </li>
+                    <li class="submit-item item-02"><input type="text" class="height-add02 time date_picker" id="date_picker" placeholder="选择日期">
+                    </li>
+                    <li class="submit-item item-03"><input type="text" maxlength=11 class="telnum" id="telnum" placeholder="填写正确的手机号">
+                    </li>
+                    <li class="submit-item item-04"><input type="text" class="amount" id="amount" placeholder="仅限纯数字">
+                    </li>
+                    <li class="submit-item item-05"><input type="text" class="term" id="term" placeholder="仅限纯数字">
+                    </li>
+                    <li class="submit-item item-06"><input type="text" class="remark" id="remark" placeholder="选填">
+                    </li>
+                    <li class="delete-item item-07">删除</li>
+                  </ul>
               </div>
-  					</div>
+
+              <a id="upload_byitem" class="upload-byitem">提交数据</a>
+              <div class="attention">
+                <h6>注意事项：</h6>
+                <p>1、投资金额、投资标期只能为纯数字<br />
+                   2、点击右边的“+”号，可连续添加多条数据，再一并提交<br />
+                  3、删除按钮可删除该条数据</p>
+              </div>
+              <div class="popup-box popup-box-01">
+                <div class="popup-content">
+                  <h3>删除提示</h3>
+                  <p id="hint">确定删除该条数据？</p>
+                  <a id="cancel" class="cancel confirm" onclick="popupOutInfo()">取&nbsp;&nbsp;&nbsp;&nbsp;消</a>
+                  <a id="confirm_delete" class="confirm">确认删除</a>
+                </div>
+              </div>
+              <div class="popup-box popup-box-03">
+                <div class="popup-content">
+                  <h3>温馨提示</h3>
+                  <p class="hint-msg"></p>
+                  <a id="cancel" class="cancel confirm" onclick="popupOutError()">确&nbsp;&nbsp;&nbsp;&nbsp;定</a>
+                </div>
+              </div>
+  					</div>   <!-- submit-content________end -->
             <div class="submit-content" style="display: none">
               <h3 class="project-select-head">选择项目名称</h3>
               <select id="project_select" class="project-select-common">
@@ -137,8 +136,8 @@
                   5、上传文件大小需小于1M，若导入数据超过上传大小，建议拆分为多个文件再逐个导入<br />
                   6、暂不支持IE浏览器</p>
               </div>
-            </div>
-          </div>
+            </div>    <!-- submit-content_________end -->
+          </div>    <!-- content_________end -->
 					<div class="content-out content" style="display: none;">
             <h3 class="project-select-head">选择项目名称</h3>
             <select id="project_select_out" class="project-select-common">
@@ -152,8 +151,8 @@
 						<p>1、请按项目名称导出数据<br />
 						   2、数据自动导出成Excel表格<br />
 						   3、暂不支持IE浏览器</p>
-					</div>
-				</div>
+					</div>   <!-- content_________end -->
+				</div>    <!-- content-box_________end -->
 
 				<!--表格展示部分-->
 				<div class="Welfare">
