@@ -64,7 +64,7 @@
                           </li>
                           <li class="submit-item item-02"><input type="text" class="height-add02 time date_picker" id="date_picker" placeholder="选择日期">
                           </li>
-                          <li class="submit-item item-03"><input type="text" class="telnum" id="telnum" placeholder="填写正确的手机号">
+                          <li class="submit-item item-03"><input type="text" maxlength=11 class="telnum" id="telnum" placeholder="填写正确的手机号">
                           </li>
                           <li class="submit-item item-04"><input type="text" class="amount" id="amount" placeholder="仅限纯数字">
                           </li>
@@ -348,7 +348,7 @@
         	$('#project_select').html() +
           '</select></li>' +
           '<li class="submit-item item-02"><input type="text" class="height-add02 time date_picker"></li>' +
-          '<li class="submit-item item-03"><input type="text" class="telnum"></li>' +
+          '<li class="submit-item item-03"><input type="text" maxlength=11 class="telnum"></li>' +
           '<li class="submit-item item-04"><input type="text" class="amount"></li>' +
           '<li class="submit-item item-05"><input type="text" class="term"></li>' +
           '<li class="submit-item item-06"><input type="text" class="remark"></li>' +
@@ -396,34 +396,36 @@
 
           if(project_select == "0"){
             promptNumber++;
-            project_select01.css("border-color","#ff6767");
+            project_select01.css("border","2px solid #ff6767");
+          }else{
+            project_select01.css("border","1px solid #c1c1c1");
           }
           if(time == "" ){
             promptNumber++;
-            time01.css("border-color","#ff6767");
+            time01.css("border","2px solid #ff6767");
           }else{
-            time01.css("border-color","#c1c1c1");
+            time01.css("border","1px solid #c1c1c1");
           }
           if(!re.test(telnum)){
             promptNumber++;
-            telnum01.css("border-color","#ff6767");
+            telnum01.css("border","2px solid #ff6767");
           }else{
-                telnum01.css("border-color","#c1c1c1");
+                telnum01.css("border","1px solid #c1c1c1");
               }
           if(!re_amount.test(amount)){
             promptNumber++;
-            amount01.css("border-color","#ff6767");
+            amount01.css("border","2px solid #ff6767");
           }
           else{
-                amount01.css("border-color","#c1c1c1");
+                amount01.css("border","1px solid #c1c1c1");
               }
           if(!re_amount.test(term)){
             promptNumber++;
-            term01.css("border-color","#ff6767");
+            term01.css("border","2px solid #ff6767");
           }
           else{
-                term01.css("border-color","#c1c1c1");
-              }
+            term01.css("border","1px solid #c1c1c1");
+          }
           Data.push(data_list.join('|'));
         })
         if(promptNumber == 0 ) {
@@ -438,6 +440,7 @@
 	  			success:function(ret){
 	  				if(ret.code==0){
 	  					$(".hint-msg").text("提交成功：" + ret.suc_num + "条数据");
+              console.log(Data);
 	  				}
 	  				else{
 	  					$(".hint-msg").text(ret.msg);
