@@ -19,6 +19,7 @@ import StringIO
 from xlwt.Style import easyxf
 from xlwt.Workbook import Workbook
 import logging
+import datetime
 logger = logging.getLogger("wafuli")
 
 @login_required
@@ -137,9 +138,30 @@ def submit_itembyitem(request):
         ret['msg'] = u'参数缺失'
         return JsonResponse(ret)
     table = data.split('$')
+    suc_num = 0
     for row in table:
         temp = row.split('|')
-        print temp
+        news = Finance.objects.get(id=temp[0])
+        time = datetime.datetime.strptime(temp[1],'%Y-%m-%d')
+        telnum = temp[2]
+        amount = temp[3]
+        term = temp[4]
+        remark = temp[5]
+        is_futou = news.is_futou
+        if is_futou:
+            remark = u"复投：" + remark
+        try:
+            with transaction.atomic():
+                if not is_futou and news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
+                    raise ValueError('This invest_account is repective in project:' + str(news.id))
+                else:
+                    UserEvent.objects.create(user=request.user, event_type='1', invest_account=telnum, invest_term=term,
+                                     invest_amount=int(amount), content_object=news, audit_state='1',remark=remark,)
+                    suc_num += 1
+        except Exception, e:
+            logger.info(e)
+    result = {'code':0, 'suc_num':suc_num}
+    return JsonResponse(result)
 def export_audit_result(request):
     user = request.user
     fid = request.GET.get("fid")

@@ -431,7 +431,7 @@
 	  			},
 	  			success:function(ret){
 	  				if(ret.code==0){
-	  					$(".hint-msg").text("提交成功！");
+	  					$(".hint-msg").text("提交成功：" + ret.suc_num + "条数据");
 	  				}
 	  				else{
 	  					$(".hint-msg").text(ret.msg);
