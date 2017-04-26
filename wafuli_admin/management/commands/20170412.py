@@ -21,5 +21,5 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         channels = Channel.objects.all()
         for channel in channels:
-            channel.user.is_channel = True
+            channel.user.inviter_id = 1
             channel.user.save()
