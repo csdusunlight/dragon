@@ -19,7 +19,7 @@ h5 {margin: 0;}
 .project-select-head {
   float: left;
   padding-left: 10px;
-  font-size: 24px;
+  font-size: 14px;
   line-height: 44px;
 }
 .project-select-common {
@@ -205,8 +205,9 @@ h5 {margin: 0;}
 .upload-box {
   position: relative;
   width: 600px;
-  padding: 20px;
+  padding: 10px;
   margin-top: 20px;
+  margin-left: 10px;
   border: 1px dashed #e4e4e4;
   text-align: center;
 }
@@ -227,8 +228,7 @@ h5 {margin: 0;}
 }
 .upload-box b {
   display: block;
-  margin-top: 50px;
-  margin-bottom: 30px;
+  margin-top: 40px;
 }
 .table-choosed {
   display: inline-block;
