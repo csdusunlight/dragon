@@ -70,15 +70,15 @@ def deliver_coupon(request):
                 for user in select_list:
                     if user:
                         user_set.add(user)
-                for username in user_set:
+                for mobile in user_set:
                     try:
-                        user = MyUser.objects.get(username = username)
+                        user = MyUser.objects.get(mobile = mobile)
                         Coupon.objects.create(user=user, project=project)
                         msg_content = u'您收到一张优惠券：' + project.title + u'，到期日为' + \
                             project.endtime.strftime("%Y-%m-%d") + u"，请及时使用。"
                         Message.objects.create(user=user, content=msg_content, title=u"新的优惠券");
                     except:
-                        fail_list.append(username)
+                        fail_list.append(mobile)
                     else:
                         success_count += 1
         elif coupon_type == '2':
