@@ -687,7 +687,6 @@ table{border-collapse:collapse;}
 /*会员等级制度*/
 .user-logo {
   position: relative;
-  float: left;
   margin-right: 16px;
 }
 .vip-logo {
