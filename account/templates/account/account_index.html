@@ -143,10 +143,6 @@ $(function(){
                            <div class="Sign-Rt">
                            	<span>尊敬的{{user.mobile}}， </span><span id='hello'></span>
                             <div class="Sign-pic">
-                              <div class="user-logo">
-                                <img src="images/head.png"/>
-                                <img id="Vip_logo" class="vip-logo" src="images/vip5.png" />
-                              </div>
                               <p class="vip-right"><span id="Vip_next_hint" class="Vip-next-hint">再提现<span id="fubi_need" class="fubi-need">90000</span>福币，即可升级为<span id="Vip_next" class="Vip-next">Vip2</span>，享受更多特权，<a href="#">查看更多特权>></a></span></p>
                              	<!-- <i><img src="{% static 'images/pic1.png' %}" /></i>
                                 	<i class="xin-i"></i>
@@ -155,6 +151,10 @@ $(function(){
                              	<i class="ons"><img src="{% static 'images/pic3.png' %}" /></i>
                                  <i class="xin-i"></i>
                              	<i class="ons"><img src="{% static 'images/pic4.png' %}" /></i> -->
+                            </div>
+                            <div id="vip_rank" class="vip-rank">
+                              <span id="progress" class="progress"></span>
+                              <span class="fubi-num"><span id="fubi_get2" class="fubi-get">500</span>/10000000</span>
                             </div>
                            </div>
                        </div>
