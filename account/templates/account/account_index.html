@@ -24,6 +24,65 @@ $(function(){
 	else if (hour < 19){$("#hello").text("傍晚好！");}
 	else if (hour < 22){$("#hello").text("晚上好！");}
 	else {$("#hello").text("夜里好！");}
+  // 会员等级制度
+  var progress = document.getElementById("progress");
+  var fubi_get2 = document.getElementById("fubi_get2"),
+    Vip_logo = document.getElementById("Vip_logo"),
+    Vip_next = document.getElementById("Vip_next"),
+    Vip_next_hint = document.getElementById("Vip_next_hint");
+  var fubi_num = 30842;  //提现金额
+  var percent = 0;
+  var num;
+  if (fubi_num >= 100000 ) {
+    num = 5;
+  } else if(fubi_num >= 50000  && fubi_num< 100000) {
+    num = 4;
+  } else if(fubi_num >= 10000  && fubi_num< 50000) {
+    num = 3;
+  } else if(fubi_num >= 1000  && fubi_num< 10000) {
+    num = 2;
+  } else if(fubi_num >= 100  && fubi_num< 1000) {
+    num = 1;
+  } else {
+    num = 0;
+  }
+
+  percent = parseInt(fubi_num/1000);
+  progress.style.width = percent + "%";
+  fubi_get2.innerText = fubi_num*100;
+  switch(num)
+  {
+  case 0:
+    fubi_need.innerText = (100 - fubi_num)*100;
+    Vip_next.innerHTML = "Vip1";
+    Vip_logo.style.display = "none";
+    break;
+  case 1:
+    fubi_need.innerText = (1000 - fubi_num)*100;
+    Vip_next.innerHTML = "Vip2";
+    Vip_logo.setAttribute("src","{% static 'images/vip1.png' %}");
+    break;
+  case 2:
+    fubi_need.innerText = (10000 - fubi_num)*100;
+    Vip_next.innerHTML = "Vip3";
+    Vip_logo.setAttribute("src","{% static 'images/vip2.png' %}");
+    break;
+  case 3:
+    fubi_need.innerText = (50000 - fubi_num)*100;
+    Vip_next.innerHTML = "Vip4";
+    Vip_logo.setAttribute("src","{% static 'images/vip3.png' %}");
+    break;
+  case 4:
+    fubi_need.innerText = (100000 - fubi_num)*100;
+    Vip_next.innerHTML = "Vip5";
+    Vip_logo.setAttribute("src","{% static 'images/vip4.png' %}");
+    break;
+  case 5:
+    Vip_next_hint.innerHTML = "恭喜您，您已经达到最高Vip等级！";
+    Vip_logo.setAttribute("src","{% static 'images/vip5.png' %}");
+    break;
+  }
+  // 会员等级制度---------end
 	$(".Sign-on.on").click(function(){
 		var obj = $(this)
 		$.ajax({
@@ -76,19 +135,27 @@ $(function(){
                    <div class="Sign-Info">
                    	<div class="Sign-InfoCont">
                        	<div class="HeadInfo">
-                           	<div class="Head-img"><img src="{% static 'images/headinfo.png' %}" /></div>
-                           </div>
+                           	<div class="Head-img user-logo">
+                              <img src="{% static 'images/headinfo.png' %}" />
+                              <img id="Vip_logo" class="vip-logo" src="{% static 'images/vip1.png' %}" />
+                            </div>
+                            </div>
                            <div class="Sign-Rt">
                            	<span>尊敬的{{user.mobile}}， </span><span id='hello'></span>
-                               <div class="Sign-pic">
-                               	<i><img src="{% static 'images/pic1.png' %}" /></i>
-                                  	<i class="xin-i"></i>
-                               	<i><img src="{% static 'images/pic2.png' %}" /></i>
-                                   <i class="xin-i"></i>
-                               	<i class="ons"><img src="{% static 'images/pic3.png' %}" /></i>
-                                   <i class="xin-i"></i>
-                               	<i class="ons"><img src="{% static 'images/pic4.png' %}" /></i>
-                               </div>
+                            <div class="Sign-pic">
+                              <div class="user-logo">
+                                <img src="images/head.png"/>
+                                <img id="Vip_logo" class="vip-logo" src="images/vip5.png" />
+                              </div>
+                              <p class="vip-right"><span id="Vip_next_hint" class="Vip-next-hint">再提现<span id="fubi_need" class="fubi-need">90000</span>福币，即可升级为<span id="Vip_next" class="Vip-next">Vip2</span>，享受更多特权，<a href="#">查看更多特权>></a></span></p>
+                             	<!-- <i><img src="{% static 'images/pic1.png' %}" /></i>
+                                	<i class="xin-i"></i>
+                             	<i><img src="{% static 'images/pic2.png' %}" /></i>
+                                 <i class="xin-i"></i>
+                             	<i class="ons"><img src="{% static 'images/pic3.png' %}" /></i>
+                                 <i class="xin-i"></i>
+                             	<i class="ons"><img src="{% static 'images/pic4.png' %}" /></i> -->
+                            </div>
                            </div>
                        </div>
                        <div class="Sign-ping">

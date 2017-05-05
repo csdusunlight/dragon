@@ -378,7 +378,7 @@ input[type="text"] {padding-left: 10px !important;padding-right: 10px !important
 @-webkit-keyframes popup {
   0% {
     -webkit-transform: translateY(-30%);
-    webkit-transform: translateY(-30%);
+    transform: translateY(-30%);
     opacity: 0;
   }
   100% {
@@ -388,3 +388,111 @@ input[type="text"] {padding-left: 10px !important;padding-right: 10px !important
   }
 }
 /*优惠券二维码弹窗--end*/
+
+/*会员等级制度*/
+.vip-head {
+  padding: 20px;
+  border: 1px solid #ebebeb;
+  overflow: hidden;
+}
+.user-logo {
+  position: relative;
+  float: left;
+  margin-right: 16px;
+}
+.vip-logo {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 20px;
+  height: 20px;
+}
+.vip-right {
+  margin: 0;
+  text-align: left;
+  font-size: 14px;
+}
+.vip-rank {
+  position: relative;
+  width: 430px;
+  height: 18px;
+  margin-top: 18px;
+  background: #e4e4e4;
+  border-radius: 9px;
+  overflow: hidden;
+  z-index: 10;
+}
+.fubi-num {
+  position: absolute;
+  left: 150px;
+  width: 130px;
+  color: #fff;
+  text-shadow: 0px 0px 2px #ebb749;
+  text-align: center;
+  line-height: 18px;
+}
+.vip-rank .progress {
+  position: absolute;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: -webkit-linear-gradient(top, #ffdc82, #f4ba1b);
+  background: linear-gradient(top, #ffdc82, #f4ba1b);
+  border-radius: 9px;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+  -webkit-animation: rank 0.6s ease-in;
+  animation: rank 0.6s ease-in;
+}
+
+
+
+.vip-intro {
+  margin-top: 10px;
+  border: 1px solid #ebebeb;
+}
+.intro-head {
+  height: 50px;
+  padding: 0 20px;
+  overflow: hidden;
+  border-bottom: 1px solid #cccccc;
+}
+.intro-head h3 {
+  float: left;
+  font-size: 22px;
+  line-height: 50px;
+  color: #f08519;
+}
+.intro-head a {
+  margin-top: 16px;
+  font-size: 16px;
+  color: #898989;
+  float: right;
+  cursor: pointer;
+}
+.intro-content {
+  padding: 30px 0 20px;
+}
+.intro-content p {
+  margin-left: 20px;
+  text-align: left;
+}
+@-webkit-keyframes rank{
+  0%{
+    -webkit-transform: translateX(-100%);
+  }
+
+  100%{
+    -webkit-transform: translateX(0);
+  }
+}
+@keyframes rank{
+  0%{
+    transform: translateX(-100%);
+  }
+
+  100%{
+    transform: translateX(0);
+  }
+}
+/*会员等级制度----end*/
