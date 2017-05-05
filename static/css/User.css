@@ -37,9 +37,9 @@ td {white-space:nowrap;overflow:hidden;}
 .HeadInfo { float:left; width:86px; height:86px; padding:4px; border-radius:200px; border:1px solid #f5f5f5; background:#fff; text-align:center; box-shadow:0px 2px 1px 0px #f1f1f1;}
 .Head-img { width:86px; height:86px; border-radius:200px; background:#f5f5f5; display:table-cell; vertical-align:middle;}
 .Head-img img { margin:auto; display:block;}
-.Sign-Rt { float:left; width:auto; height:auto; margin-left:16px;}
-.Sign-Rt span { font-size:16px; color:#000000; line-height:50px;}
-.Sign-pic { display:block; width:auto}
+.Sign-Rt { float:left; width:auto; height:auto; margin-left:16px; color:#000;}
+.Sign-Rt span { font-size:16px;}
+.Sign-pic { display:block; width:auto; margin-top: 10px;}
 .Sign-pic i {display:table-cell; vertical-align:middle; width:27px; height:27px; background:#e1e1e1; border-radius:200px; margin-left:12px;}
 .Sign-pic i img { margin:auto; display:block;}
 .Sign-pic .ons { background:#008fd7 !important;}

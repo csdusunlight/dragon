@@ -37,7 +37,11 @@ function getText(n) {
     <div class="index-banner-main">
       <div class="index_31">
       {% if user.is_authenticated %}
-        <div class="Icon"><img src="{% static "images/Icon.png" %}" alt=""/></div>
+        <!-- <div class="Icon"><img src="{% static "images/Icon.png" %}" alt=""/></div> -->
+        <div class="Icon user-logo">
+          <img src="{% static 'images/Icon.png' %}" />
+          <img id="Vip_logo" class="vip-logo" src="{% static 'images/vip1.png' %}" />
+        </div>
         <div class="usename">尊敬的：</div>
         <div class="usename_1"><a href="{%url 'account_index'%}">{{user.mobile}}</a></div>
         <div class="welcome">欢迎来到挖福利</div>
@@ -159,16 +163,6 @@ function getText(n) {
 {% endfor %}
       <a href="{% url 'welfare_list' type='yhq' %}" class="more-content">更多优惠>></a>
       </ul>
-<!--        <img src="{% static 'images/fenge.png' %}" class="LINE" />
-       <img src="{% static 'images/pic_28.png' %}" class="Tag" />
-       <div class="story">
-	        <a href="{{info.url}}"><img src="{{info.pic.url}}" /></a>
-	        <div class="text">
-	        	<a href="{{info.url}}"><h1>{{info.title}}</h1></a>
-	            <p>{{info.summary}}</p>
-	        </div>
-	        <div class="more"><a href="{% url 'information_list' %}">更多精彩>></a></div>
-        </div> -->
     </div>
 
 
@@ -534,6 +528,48 @@ $(function(){
     });
 	$(".index_13_nav a").eq(0).mouseenter();
 	$(".index_10").infiniteCarousel();
+
+  // 会员等级制度
+  var Vip_logo = document.getElementById("Vip_logo");
+  var fubi_num = 30842;  //提现金额
+  var percent = 0;
+  var num;
+  if (fubi_num >= 100000 ) {
+    num = 5;
+  } else if(fubi_num >= 50000  && fubi_num< 100000) {
+    num = 4;
+  } else if(fubi_num >= 10000  && fubi_num< 50000) {
+    num = 3;
+  } else if(fubi_num >= 1000  && fubi_num< 10000) {
+    num = 2;
+  } else if(fubi_num >= 100  && fubi_num< 1000) {
+    num = 1;
+  } else {
+    num = 0;
+  }
+
+  switch(num)
+  {
+  case 0:
+    Vip_logo.style.display = "none";
+    break;
+  case 1:
+    Vip_logo.setAttribute("src","{% static 'images/vip1.png' %}");
+    break;
+  case 2:
+    Vip_logo.setAttribute("src","{% static 'images/vip2.png' %}");
+    break;
+  case 3:
+    Vip_logo.setAttribute("src","{% static 'images/vip3.png' %}");
+    break;
+  case 4:
+    Vip_logo.setAttribute("src","{% static 'images/vip4.png' %}");
+    break;
+  case 5:
+    Vip_logo.setAttribute("src","{% static 'images/vip5.png' %}");
+    break;
+  }
+  // 会员等级制度---------end
 });
 </script>
 </body>
