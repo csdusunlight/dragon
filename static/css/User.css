@@ -15,7 +15,7 @@ td {white-space:nowrap;overflow:hidden;}
 .back-a3 { background-position:27px -75px !important;}
 .back-a4 { background-position:27px -120px !important;}
 .back-a5 { background-position:27px -165px !important;}
-.back-a6 { background-position:27px -210px !important;}
+.back-a6, .back-a15 { background-position:27px -210px !important;}
 .back-a7 { background-position:27px -255px !important;}
 .back-a8 { background-position:27px -300px !important;}
 .back-a9 { background-position:27px -345px !important;}
