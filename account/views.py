@@ -1154,3 +1154,6 @@ def get_user_invite_page(request):
         res["recordCount"] = withdraw_list.count()
     res["data"] = data
     return JsonResponse(res)
+
+def vip(request):
+    return render(request, 'account/account_vip.html')
