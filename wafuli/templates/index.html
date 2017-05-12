@@ -40,9 +40,17 @@ function getText(n) {
         <!-- <div class="Icon"><img src="{% static "images/Icon.png" %}" alt=""/></div> -->
         <div class="Icon user-logo">
           <img src="{% static 'images/Icon.png' %}" />
-          {%if user.level > 0 %}
-          <img id="Vip_logo" class="vip-logo" src="{% static 'images/vip{{user.level}}.png' %}" />
-          {%endif%}
+          {% if user.level = 1 %}
+              <img id="Vip_logo" class="vip-logo" src="{% static 'images/vip1.png' %}" />
+          {% elif user.level = 2 %}
+              <img id="Vip_logo" class="vip-logo" src="{% static 'images/vip2.png' %}" />
+          {% elif user.level = 3 %}
+              <img id="Vip_logo" class="vip-logo" src="{% static 'images/vip3.png' %}" />
+          {% elif user.level = 4 %}
+              <img id="Vip_logo" class="vip-logo" src="{% static 'images/vip4.png' %}" />
+          {% elif user.level = 5 %}
+              <img id="Vip_logo" class="vip-logo" src="{% static 'images/vip5.png' %}" />
+          {% endif %}
         </div>
         <div class="usename">尊敬的：</div>
         <div class="usename_1"><a href="{%url 'account_index'%}">{{user.mobile}}</a></div>

@@ -26,20 +26,6 @@ var progress = document.getElementById("progress");
   var fubi_num = {{user.with_total}}; //提现福币
   var percent = 0;
   var level = {{user.level}};
-  // var num;
-  // if (fubi_num >= 10000000 ) {
-  //   num = 5;
-  // } else if(fubi_num >= 5000000  && fubi_num< 10000000) {
-  //   num = 4;
-  // } else if(fubi_num >= 1000000  && fubi_num< 5000000) {
-  //   num = 3;
-  // } else if(fubi_num >= 100000  && fubi_num< 1000000) {
-  //   num = 2;
-  // } else if(fubi_num >= 10000  && fubi_num< 100000) {
-  //   num = 1;
-  // } else {
-  //   num = 0;
-  // }
 
   percent = parseInt(fubi_num/100000);
   progress.style.width = percent + "%";
