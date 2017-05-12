@@ -40,7 +40,9 @@ function getText(n) {
         <!-- <div class="Icon"><img src="{% static "images/Icon.png" %}" alt=""/></div> -->
         <div class="Icon user-logo">
           <img src="{% static 'images/Icon.png' %}" />
-          <img id="Vip_logo" class="vip-logo" src="{% static 'images/vip3.png' %}" />
+          {%if user.level > 0 %}
+          <img id="Vip_logo" class="vip-logo" src="{% static 'images/vip{{user.level}}.png' %}" />
+          {%endif%}
         </div>
         <div class="usename">尊敬的：</div>
         <div class="usename_1"><a href="{%url 'account_index'%}">{{user.mobile}}</a></div>
@@ -530,46 +532,31 @@ $(function(){
 	$(".index_10").infiniteCarousel();
 
   // 会员等级制度
-  var Vip_logo = document.getElementById("Vip_logo");
-  // var fubi_num = 30842;  //提现金额
-  var level = {{user.level}};
-  var percent = 0;
-  // var num;
-  // if (fubi_num >= 100000 ) {
-  //   num = 5;
-  // } else if(fubi_num >= 50000  && fubi_num< 100000) {
-  //   num = 4;
-  // } else if(fubi_num >= 10000  && fubi_num< 50000) {
-  //   num = 3;
-  // } else if(fubi_num >= 1000  && fubi_num< 10000) {
-  //   num = 2;
-  // } else if(fubi_num >= 100  && fubi_num< 1000) {
-  //   num = 1;
-  // } else {
-  //   num = 0;
-  // }
+  // var Vip_logo = document.getElementById("Vip_logo");
+  // var level = {{user.level}};
+  // var percent = 0;
 
-  switch(level) {
-    case 0:
-      Vip_logo.style.display = "none";
-      console.log("00000");
-      break;
-    case 1:
-      Vip_logo.setAttribute("src","{% static 'images/vip1.png' %}");
-      break;
-    case 2:
-      Vip_logo.setAttribute("src","{% static 'images/vip2.png' %}");
-      break;
-    case 3:
-      Vip_logo.setAttribute("src","{% static 'images/vip3.png' %}");
-      break;
-    case 4:
-      Vip_logo.setAttribute("src","{% static 'images/vip4.png' %}");
-      break;
-    case 5:
-      Vip_logo.setAttribute("src","{% static 'images/vip5.png' %}");
-      break;
-  }
+  // switch(level) {
+  //   case 0:
+  //     Vip_logo.style.display = "none";
+  //     console.log("00000");
+  //     break;
+  //   case 1:
+  //     Vip_logo.setAttribute("src","{% static 'images/vip1.png' %}");
+  //     break;
+  //   case 2:
+  //     Vip_logo.setAttribute("src","{% static 'images/vip2.png' %}");
+  //     break;
+  //   case 3:
+  //     Vip_logo.setAttribute("src","{% static 'images/vip3.png' %}");
+  //     break;
+  //   case 4:
+  //     Vip_logo.setAttribute("src","{% static 'images/vip4.png' %}");
+  //     break;
+  //   case 5:
+  //     Vip_logo.setAttribute("src","{% static 'images/vip5.png' %}");
+  //     break;
+  // }
   // 会员等级制度---------end
 });
 </script>
