@@ -40,7 +40,7 @@ function getText(n) {
         <!-- <div class="Icon"><img src="{% static "images/Icon.png" %}" alt=""/></div> -->
         <div class="Icon user-logo">
           <img src="{% static 'images/Icon.png' %}" />
-          <img id="Vip_logo" class="vip-logo" src="{% static 'images/vip1.png' %}" />
+          <img id="Vip_logo" class="vip-logo" src="{% static 'images/vip3.png' %}" />
         </div>
         <div class="usename">尊敬的：</div>
         <div class="usename_1"><a href="{%url 'account_index'%}">{{user.mobile}}</a></div>
@@ -549,26 +549,26 @@ $(function(){
   //   num = 0;
   // }
 
-  switch(level)
-  {
-  case 0:
-    Vip_logo.style.display = "none";
-    break;
-  case 1:
-    Vip_logo.setAttribute("src","{% static 'images/vip1.png' %}");
-    break;
-  case 2:
-    Vip_logo.setAttribute("src","{% static 'images/vip2.png' %}");
-    break;
-  case 3:
-    Vip_logo.setAttribute("src","{% static 'images/vip3.png' %}");
-    break;
-  case 4:
-    Vip_logo.setAttribute("src","{% static 'images/vip4.png' %}");
-    break;
-  case 5:
-    Vip_logo.setAttribute("src","{% static 'images/vip5.png' %}");
-    break;
+  switch(level) {
+    case 0:
+      Vip_logo.style.display = "none";
+      console.log("00000");
+      break;
+    case 1:
+      Vip_logo.setAttribute("src","{% static 'images/vip1.png' %}");
+      break;
+    case 2:
+      Vip_logo.setAttribute("src","{% static 'images/vip2.png' %}");
+      break;
+    case 3:
+      Vip_logo.setAttribute("src","{% static 'images/vip3.png' %}");
+      break;
+    case 4:
+      Vip_logo.setAttribute("src","{% static 'images/vip4.png' %}");
+      break;
+    case 5:
+      Vip_logo.setAttribute("src","{% static 'images/vip5.png' %}");
+      break;
   }
   // 会员等级制度---------end
 });
