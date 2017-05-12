@@ -531,24 +531,25 @@ $(function(){
 
   // 会员等级制度
   var Vip_logo = document.getElementById("Vip_logo");
-  var fubi_num = 30842;  //提现金额
+  // var fubi_num = 30842;  //提现金额
+  var level = {{user.level}};
   var percent = 0;
-  var num;
-  if (fubi_num >= 100000 ) {
-    num = 5;
-  } else if(fubi_num >= 50000  && fubi_num< 100000) {
-    num = 4;
-  } else if(fubi_num >= 10000  && fubi_num< 50000) {
-    num = 3;
-  } else if(fubi_num >= 1000  && fubi_num< 10000) {
-    num = 2;
-  } else if(fubi_num >= 100  && fubi_num< 1000) {
-    num = 1;
-  } else {
-    num = 0;
-  }
+  // var num;
+  // if (fubi_num >= 100000 ) {
+  //   num = 5;
+  // } else if(fubi_num >= 50000  && fubi_num< 100000) {
+  //   num = 4;
+  // } else if(fubi_num >= 10000  && fubi_num< 50000) {
+  //   num = 3;
+  // } else if(fubi_num >= 1000  && fubi_num< 10000) {
+  //   num = 2;
+  // } else if(fubi_num >= 100  && fubi_num< 1000) {
+  //   num = 1;
+  // } else {
+  //   num = 0;
+  // }
 
-  switch(num)
+  switch(level)
   {
   case 0:
     Vip_logo.style.display = "none";
