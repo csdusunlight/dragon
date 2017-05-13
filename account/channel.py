@@ -115,7 +115,7 @@ def channel(request):
                 else:
                     item = rtable[i]
                     obj = UserEvent(user=request.user, event_type='1',invest_account=mob,
-                                    invest_amount=item[3],invest_term=item[2],time=item[0],
+                                    invest_amount=item[3],invest_term=item[2],invest_time=item[0],
                                     audit_state='1',remark=item[4],content_object=finance)
                     userevent_list.append(obj)
             UserEvent.objects.bulk_create(userevent_list)
@@ -143,7 +143,6 @@ def submit_itembyitem(request):
         temp = row.split('|')
         news = Finance.objects.get(id=temp[0])
         time = datetime.datetime.strptime(temp[1],'%Y-%m-%d')
-        print time
         telnum = temp[2]
         amount = temp[3]
         term = temp[4]
@@ -156,7 +155,7 @@ def submit_itembyitem(request):
                 if not is_futou and news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
                     raise ValueError('This invest_account is repective in project:' + str(news.id))
                 else:
-                    UserEvent.objects.create(user=request.user, time=time, event_type='1', invest_account=telnum, invest_term=term,
+                    UserEvent.objects.create(user=request.user, invest_time=time, event_type='1', invest_account=telnum, invest_term=term,
                                      invest_amount=int(amount), content_object=news, audit_state='1',remark=remark,)
                     suc_num += 1
         except Exception, e:

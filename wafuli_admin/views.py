@@ -438,6 +438,7 @@ def get_admin_finance_page(request):
              "mobile_sub":con.invest_account,
              "remark_sub":con.remark,
              "time_sub":con.time.strftime("%Y-%m-%d %H:%M"),
+             "invest_time":con.invest_time.strftime("%Y-%m-%d %H:%M"),
              "state":con.get_audit_state_display(),
              "admin":u'无' if con.audit_state=='1' or not con.audited_logs.exists() else con.audited_logs.first().user.username,
              "time_admin":u'无' if con.audit_state=='1' or not con.audit_time else con.audit_time.strftime("%Y-%m-%d %H:%M"),
