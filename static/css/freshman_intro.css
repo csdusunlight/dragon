@@ -643,6 +643,20 @@ body {
     margin-top: 1rem;
     color: #fff;
 }
+.bottom .to-index,
+.top .to-index {
+  display: block;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10rem;
+  color: #fff;
+}
+.top .to-index {
+  position: absolute;
+  top: -80px;
+  left: 40px;
+  margin-top: 0;
+}
 .cloud {
 	position: absolute;
 	height: 311px;
