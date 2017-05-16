@@ -7,7 +7,7 @@ Created on 2016年8月29日
 import logging
 from wafuli.models import Welfare, UserTask, Coupon, CouponProject
 from django.core.management.base import BaseCommand
-from account.models import MyUser
+from account.models import MyUser, UserToken
 from django.db.models import F
 import datetime
 import time
@@ -29,5 +29,7 @@ class Command(BaseCommand):
                 project.coupons.all().delete()
             else:
                 project.coupons.filter(is_used=False).delete()
+                
+        UserToken.objects.filter(expire<time.time()*1000).delete()
         end_time = time.time()
         logger.info("******Day-task is finished, time:%s*********",end_time-begin_time)

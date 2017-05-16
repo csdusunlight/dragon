@@ -115,7 +115,7 @@ def channel(request):
                 else:
                     item = rtable[i]
                     obj = UserEvent(user=request.user, event_type='1',invest_account=mob,
-                                    invest_amount=item[3],invest_term=item[2],time=item[0],
+                                    invest_amount=item[3],invest_term=item[2],invest_time=item[0],
                                     audit_state='1',remark=item[4],content_object=finance)
                     userevent_list.append(obj)
             UserEvent.objects.bulk_create(userevent_list)

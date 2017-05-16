@@ -21,6 +21,10 @@ class NewsAdmin(admin.ModelAdmin):
 class FinanceAdmin(NewsAdmin):
     readonly_fields = ('url','pub_date','change_user')
     filter_horizontal = ('marks',)
+#     def formfield_for_foreignkey(self, db_field, request, **kwargs): 
+#         if db_field.name == "company": 
+#             kwargs["queryset"] = Company.objects.order_by("pinyin") 
+#         return super(FinanceAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
     def save_model(self, request, obj, form, change):
         super(FinanceAdmin,self).save_model (request, obj, form, change)
         if not change:
@@ -79,6 +83,7 @@ class TransListAdmin(admin.ModelAdmin):
     search_fields = ['user__mobile',]
 class CouponAdmin(admin.ModelAdmin):
     list_display = ('project','user', 'exchange_code','is_used',)
+    search_fields = ['user__mobile',]
 class AdvertisementAdmin(admin.ModelAdmin):
     list_filter = ('location',)
 admin.site.register(Finance,FinanceAdmin)

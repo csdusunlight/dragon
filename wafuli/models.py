@@ -13,6 +13,7 @@ import datetime
 from django.core.urlresolvers import reverse
 class Company(models.Model):
     name = models.CharField(u"平台名称(必填)",max_length=100,unique=True)
+    pinyin = models.CharField(u"平台名称拼音（排序用）",max_length=100,default='')
     level = models.CharField(u"安全评级",max_length=100,blank=True)
     site = models.CharField(u"网站地址",max_length=100,blank=True)
     capital = models.CharField(u"注册资金",max_length=100,blank=True)
@@ -24,6 +25,7 @@ class Company(models.Model):
     logo = models.FileField(u"网站logo（210*100）", upload_to='logo/%Y/%m/%d',default='')
     view_count = models.IntegerField(u"热门度（点击总量，系统自动更新）", default=0)
     class Meta:
+        ordering = ['pinyin']
         verbose_name_plural = u"商家"
         verbose_name = u"商家"
     def __unicode__(self):
