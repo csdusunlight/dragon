@@ -415,8 +415,11 @@ def get_admin_finance_page(request):
         
     task_type = ContentType.objects.get_for_model(Finance)
     item_list = item_list.filter(content_type = task_type.id)
-    item_list = item_list.filter(event_type='1', audit_state=state).select_related('user').order_by('time')
-    
+    item_list = item_list.filter(event_type='1', audit_state=state).select_related('user')
+    if state=='1':
+        item_list=item_list.order_by('time')
+    else:
+        item_list=item_list.order_by('audit_time')
     paginator = Paginator(item_list, size)
     try:
         contacts = paginator.page(page)
