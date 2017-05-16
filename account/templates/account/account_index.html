@@ -55,27 +55,27 @@ $(function(){
   {
   case 0:
     fubi_need.innerText = 10000 - fubi_num;
-    Vip_next.innerHTML = "Vip1";
+    Vip_next.innerHTML = "VIP1";
     Vip_logo.style.display = "none";
     break;
   case 1:
     fubi_need.innerText = 100000 - fubi_num;
-    Vip_next.innerHTML = "Vip2";
+    Vip_next.innerHTML = "VIP2";
     Vip_logo.setAttribute("src","{% static 'images/vip1.png' %}");
     break;
   case 2:
     fubi_need.innerText = 1000000 - fubi_num;
-    Vip_next.innerHTML = "Vip3";
+    Vip_next.innerHTML = "VIP3";
     Vip_logo.setAttribute("src","{% static 'images/vip2.png' %}");
     break;
   case 3:
     fubi_need.innerText = 5000000 - fubi_num;
-    Vip_next.innerHTML = "Vip4";
+    Vip_next.innerHTML = "VIP4";
     Vip_logo.setAttribute("src","{% static 'images/vip3.png' %}");
     break;
   case 4:
     fubi_need.innerText = 10000000 - fubi_num;
-    Vip_next.innerHTML = "Vip5";
+    Vip_next.innerHTML = "VIP5";
     Vip_logo.setAttribute("src","{% static 'images/vip4.png' %}");
     break;
   case 5:
@@ -137,7 +137,7 @@ $(function(){
                    	<div class="Sign-InfoCont">
                        	<div class="HeadInfo">
                            	<div class="Head-img user-logo">
-                              <img src="{% static 'images/headinfo.png' %}" />
+                              <img style="margin-top: 15px" src="{% static 'images/headinfo.png' %}" />
                               <img id="Vip_logo" class="vip-logo" src="{% static 'images/vip1.png' %}" />
                             </div>
                             </div>
