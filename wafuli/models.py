@@ -284,6 +284,7 @@ class UserEvent(models.Model):
     invest_amount = models.IntegerField(u'涉及金额', default=0)
     invest_term = models.CharField(u"投资标期", max_length=100)
     invest_image = models.CharField(u"投资截图", max_length=1000)
+    invest_time = models.DateTimeField(u'投资时间', default=timezone.now)
     time = models.DateTimeField(u'提交时间', default=timezone.now)
     audit_time = models.DateTimeField(u'审核时间', null=True, blank=True)
     audit_state = models.CharField(max_length=10, choices=AUDIT_STATE, verbose_name=u"审核状态")

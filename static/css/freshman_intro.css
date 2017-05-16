@@ -648,13 +648,14 @@ body {
   display: block;
   font-size: 1rem;
   cursor: pointer;
-  margin-top: 1rem;
+  margin-top: 10rem;
   color: #fff;
 }
 .top .to-index {
-  position: relative;
-  top: 0;
+  position: absolute;
+  top: -80px;
   left: 40px;
+  margin-top: 0;
 }
 .cloud {
 	position: absolute;

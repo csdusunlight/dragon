@@ -23,27 +23,14 @@ var progress = document.getElementById("progress");
     Vip_logo = document.getElementById("Vip_logo"),
     Vip_next = document.getElementById("Vip_next"),
     Vip_next_hint = document.getElementById("Vip_next_hint");
-  var fubi_num = {{user.with_total}}; //提现金额
+  var fubi_num = {{user.with_total}}; //提现福币
   var percent = 0;
-  var num;
-  if (fubi_num >= 10000000 ) {
-    num = 5;
-  } else if(fubi_num >= 5000000  && fubi_num< 10000000) {
-    num = 4;
-  } else if(fubi_num >= 1000000  && fubi_num< 5000000) {
-    num = 3;
-  } else if(fubi_num >= 100000  && fubi_num< 1000000) {
-    num = 2;
-  } else if(fubi_num >= 10000  && fubi_num< 100000) {
-    num = 1;
-  } else {
-    num = 0;
-  }
+  var level = {{user.level}};
 
   percent = parseInt(fubi_num/100000);
   progress.style.width = percent + "%";
   fubi_get.innerText = fubi_get2.innerText = fubi_num;
-  switch(num) {
+  switch(level) {
     case 0:
       tast_add.innerText = "0%";
       finance_add.innerText = "0%";
