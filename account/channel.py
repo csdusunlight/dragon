@@ -147,12 +147,9 @@ def submit_itembyitem(request):
         amount = temp[3]
         term = temp[4]
         remark = temp[5]
-        is_futou = news.is_futou
-        if is_futou:
-            remark = u"复投：" + remark
         try:
             with transaction.atomic():
-                if not is_futou and news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
+                if news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
                     raise ValueError('This invest_account is repective in project:' + str(news.id))
                 else:
                     UserEvent.objects.create(user=request.user, invest_time=time, event_type='1', invest_account=telnum, invest_term=term,
