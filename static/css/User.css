@@ -430,7 +430,7 @@ input[type="text"] {padding-left: 10px !important;padding-right: 10px !important
   /*text-shadow: 0px 0px 2px #ebb749;*/
   text-align: center;
   line-height: 18px;
-  font-size: 16px;
+  font-size: 12px !important;
 }
 .vip-rank .progress {
   position: absolute;
