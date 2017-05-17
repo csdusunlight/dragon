@@ -288,7 +288,7 @@ def get_admin_coupon_page(request):
 
     mobile_sub = request.GET.get("mobile_sub", None)
     if mobile_sub:
-        item_list = item_list.filter(con__invest_account=mobile_sub)
+        item_list = item_list.filter(invest_account=mobile_sub)
 
     companyname = request.GET.get("companyname", None)
     if companyname:
