@@ -294,14 +294,16 @@ input[type="text"] {padding-left: 10px !important;padding-right: 10px !important
 .Swi-Bot>.on { display:block;}
 .Swi-info { float:left; width:100%; height:355px;}
 .Swi-info ul { float:left; width:100%; height:auto; border-bottom:1px solid #ebebeb;}
-.Swi-info li {box-sizing: border-box; width:280px; height:168px; float:left; background:url(../images/coupon-bg-jiaxi.png) center center/100% auto no-repeat; text-align:center; padding:10px; margin-top:20px; margin-left:10px;}
+.Swi-info li {box-sizing: border-box; width:280px; height:168px; float:left; background:url(../images/coupon-bg-xianjin.png) center center/100% auto no-repeat; text-align:center; padding:10px; margin-top:20px; margin-left:10px;}
+.Swi-info li.jiaxi {background-image: url(../images/coupon-bg-jiaxi.png);}
+.Swi-info li.shiyong {background-image: url(../images/coupon-bg-shiyong.png);}
 .Swi-info li strong { font-size:28px; color:#fff; line-height:36px;}
 .Swi-info li strong font { font-weight:400;}
 .Swi-info li span { font-size:14px; color:#fff; line-height:30px;}
-.Swi-info li p { font-size:12px; color:#fff; line-height:25px; display:block; width:100%; text-align:left;}
-.Swi-info li .coupon-use-intro { line-height: 50px; overflow: hidden; }
-.Swi-info li .coupon-use-intro2 { line-height: 25px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
-.Swi-info li a { font-size:12px; color:#008fd7; height:26px; line-height:26px; text-align:center; width:60px; display:inline-block; background:#fff; margin:4px 20px;}
+.Swi-info li p { font-size:12px; color:#fff; line-height:25px; display:block; width:100%;}
+.Swi-info li .coupon-use-intro { height: 50px; overflow: hidden; text-align: left; cursor: pointer;}
+.Swi-info li .coupon-use-intro2 { height: 25px; overflow: hidden; text-align: left; white-space: nowrap; text-overflow: ellipsis; cursor: pointer;}
+.Swi-info li a { font-size:12px; color:#008fd7; height:26px; line-height:26px; text-align:center; width:60px; display:inline-block; background:#fff; margin:8px 20px 0; border-radius: 4px;}
 /*.bul { background:#008fd7 !important;}*/
 .Bot-info { border:1px solid #eee; background:#fff; width:100%; height:421px; float:left; margin-top:20px;position: relative;}
 .Bot-info h2 {    font-size: 18px; color: #f08519;  line-height: 44px; text-indent: 12px;  border-bottom: 1px solid #ebebeb;  float: left; width: 100%;  text-align: left;   font-weight: bold;}

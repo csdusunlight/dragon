@@ -67,6 +67,11 @@ $(function(){
 			if (index==2){
 				data = data2
 			}
+      if (index==1){
+        $(".Swi-Top li").addClass('jiaxi').removeClass('shiyong');
+      } else if (index==2) {
+        $(".Swi-Top li").addClass('shiyong').removeClass('jiaxi');
+      }
 			$("#page").empty();
 			$("#pagedata1").ajaxPage({
 			    url:url+index,
