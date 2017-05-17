@@ -493,7 +493,7 @@ def get_channel_result_page(request):
                 return_amount = trans.transAmount
         i = {"project":con.content_object.title,
              "mobile":con.invest_account,
-             "invest_time":con.time.strftime("%Y-%m-%d"),
+             "invest_time":con.invest_time.strftime("%Y-%m-%d"),
              "audit_result":con.get_audit_state_display(),
              "refuse_reason": reason,
              "id":con.id,
