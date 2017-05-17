@@ -294,11 +294,11 @@ input[type="text"] {padding-left: 10px !important;padding-right: 10px !important
 .Swi-Bot>.on { display:block;}
 .Swi-info { float:left; width:100%; height:355px;}
 .Swi-info ul { float:left; width:100%; height:auto; border-bottom:1px solid #ebebeb;}
-.Swi-info li { width:403px; height:228px; float:left; background:#fefade; text-align:center; padding:10px; margin-top:20px; margin-bottom:20px; margin-left:12px;}
+.Swi-info li {box-sizing: border-box; width:280px; height:168px; float:left; background:url(../images/coupon-bg-jiaxi.png) center center/100% auto no-repeat; text-align:center; padding:10px; margin-top:20px; margin-left:10px;}
 .Swi-info li strong { display:block; font-size:28px; color:#57564b; line-height:36px;}
 .Swi-info li strong font { font-weight:400;}
 .Swi-info li span { display:block; font-size:14px; color:#57564b; line-height:30px;}
-.Swi-info li p { font-size:12px; color:#8c8a7a; line-height:25px; display:block; width:100%; height:120px; text-align:left; margin-top:5px;}
+.Swi-info li p { font-size:12px; color:#8c8a7a; line-height:25px; display:block; width:100%; text-align:left; margin-top:5px;}
 .Swi-info li a { font-size:14px; color:#ffffff; height:28px; line-height:28px; text-align:center; width:84px; display:inline-block; background:#c1c1c1; margin:4px 9px;}
 .bul { background:#008fd7 !important;}
 .Bot-info { border:1px solid #eee; background:#fff; width:100%; height:421px; float:left; margin-top:20px;position: relative;}
