@@ -62,16 +62,16 @@ def index(request):
             aggregate(cou=Count('user',distinct=True),sum=Sum('translist__transAmount'))
     total['with_count'] = dict_with.get('cou')
     total['with_total'] = (dict_with.get('sum') or 0)/100.0
-    
+
     dict_ret = UserEvent.objects.filter(event_type__in=['1','4','5','6','7'],audit_state='0').\
             aggregate(cou=Count('user',distinct=True),sum=Sum('translist__transAmount'))
     total['ret_count'] = dict_ret.get('cou')
     total['ret_total'] = (dict_ret.get('sum') or 0)/100.0
-    
+
     dict_coupon = UserEvent.objects.filter(event_type='4',audit_state='0').\
             aggregate(sum=Sum('translist__transAmount'))
     total['coupon_total'] = (dict_coupon.get('sum') or 0)/100.0
-    
+
     dict_score = UserEvent.objects.filter(event_type='3',audit_state='0').\
             aggregate(sum=Sum('score_translist__transAmount'))
     total['ret_count'] = (dict_ret.get('cou') or 0)
@@ -101,7 +101,7 @@ def get_admin_index_page(request):
         s = datetime.datetime.strptime(startTime,'%Y-%m-%d')
         e = datetime.datetime.strptime(endTime,'%Y-%m-%d')
         item_list = item_list.filter(date__range=(s,e))
-    
+
     paginator = Paginator(item_list, size)
     try:
         contacts = paginator.page(page)
@@ -154,7 +154,7 @@ def admin_finance(request):
         if not admin_user.has_admin_perms('002'):
             res['code'] = -5
             res['res_msg'] = u'您没有操作权限！'
-            return JsonResponse(res) 
+            return JsonResponse(res)
         event_id = request.POST.get('id', None)
         cash = request.POST.get('cash', None)
         score = request.POST.get('score', None)
@@ -209,7 +209,7 @@ def admin_finance(request):
                                                  user_name=event_user.zhifubao_name,zhifubao=event_user.zhifubao,
                                                  invest_mobile=event.invest_account,invest_period=event.invest_term,
                                                  invest_amount=event.invest_amount,return_amount=cash/100.0,wafuli_account=event_user.mobile,
-                                                 return_date=datetime.date.today(),remark=event.remark)    
+                                                 return_date=datetime.date.today(),remark=event.remark)
                     msg_content = u'您提交的"' + event.content_object.title + u'"理财福利已审核通过。'
                     Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
                 else:
@@ -226,11 +226,11 @@ def admin_finance(request):
             log.audit_result = False
             log.reason = reason
             res['code'] = 0
-            
+
             msg_content = u'您提交的"' + event.content_object.title + u'"理财福利审核未通过，原因：' + reason
             Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
-        
-        
+
+
         if res['code'] == 0:
             admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='1')
             if translist:
@@ -262,7 +262,7 @@ def admin_task(request):
         if not admin_user.has_admin_perms('002'):
             res['code'] = -5
             res['res_msg'] = u'您没有操作权限！'
-            return JsonResponse(res) 
+            return JsonResponse(res)
         event_id = request.POST.get('id', None)
         cash = request.POST.get('cash', None)
         score = request.POST.get('score', None)
@@ -331,10 +331,10 @@ def admin_task(request):
             task.left_num = F("left_num")+1
             task.save(update_fields=['left_num'])
             res['code'] = 0
-        
+
             msg_content = u'您提交的"' + event.content_object.title + u'"体验福利审核未通过，原因：' + reason
             Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
-        
+
         if res['code'] == 0:
             admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='1')
             if translist:
@@ -348,7 +348,7 @@ def admin_task(request):
             event.audit_time = log.time
             event.save(update_fields=['audit_state','audit_time'])
         return JsonResponse(res)
-    
+
 def get_admin_finance_page(request):
     res={'code':0,}
     user = request.user
@@ -381,15 +381,19 @@ def get_admin_finance_page(request):
         s = datetime.datetime.strptime(startTime2,'%Y-%m-%dT%H:%M')
         e = datetime.datetime.strptime(endTime2,'%Y-%m-%dT%H:%M')
         item_list = item_list.filter(audit_time__range=(s,e))
-        
+
     username = request.GET.get("username", None)
     if username:
         item_list = item_list.filter(user__username=username)
-    
+
     mobile = request.GET.get("mobile", None)
     if mobile:
         item_list = item_list.filter(user__mobile=mobile)
-    
+
+    mobile_sub = request.GET.get("mobile_sub", None)
+    if mobile_sub:
+        item_list = item_list.filter(invest_account=mobile_sub)
+
     usertype = request.GET.get("usertype",0)
     usertype= int(usertype)
     if usertype == 1:
@@ -400,19 +404,19 @@ def get_admin_finance_page(request):
         print chalevel
         if chalevel:
             item_list = item_list.filter(user__channel__level=chalevel)
-            
+
     companyname = request.GET.get("companyname", None)
     if companyname:
         item_list = item_list.filter(finance__company__name__contains=companyname)
-        
+
     projectname = request.GET.get("projectname", None)
     if projectname:
         item_list = item_list.filter(finance__title__contains=projectname)
-        
+
     adminname = request.GET.get("adminname", None)
     if adminname:
         item_list = item_list.filter(audited_logs__user__username=adminname)
-        
+
     task_type = ContentType.objects.get_for_model(Finance)
     item_list = item_list.filter(content_type = task_type.id)
     item_list = item_list.filter(event_type='1', audit_state=state).select_related('user')
@@ -486,15 +490,15 @@ def export_finance_excel(request):
         chalevel = request.GET.get("chalevel","")
         print usertype,chalevel
         if chalevel:
-            item_list = item_list.filter(user__channel__level=chalevel) 
+            item_list = item_list.filter(user__channel__level=chalevel)
     companyname = request.GET.get("companyname", None)
     if companyname:
         item_list = item_list.filter(finance__company__name__contains=companyname)
-         
+
     projectname = request.GET.get("projectname", None)
     if projectname:
         item_list = item_list.filter(finance__title__contains=projectname)
-         
+
     task_type = ContentType.objects.get_for_model(Finance)
     item_list = item_list.filter(content_type = task_type.id)
     item_list = item_list.filter(event_type='1', audit_state='1').select_related('user').order_by('time')
@@ -526,14 +530,14 @@ def export_finance_excel(request):
                 ws.write(i+1,j,lis[j],style1)
             else:
                 ws.write(i+1,j,lis[j])
-    sio = StringIO.StringIO()  
+    sio = StringIO.StringIO()
     w.save(sio)
-    sio.seek(0)  
-    response = HttpResponse(sio.getvalue(), content_type='application/vnd.ms-excel')  
-    response['Content-Disposition'] = 'attachment; filename=待审核记录.xls'  
+    sio.seek(0)
+    response = HttpResponse(sio.getvalue(), content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=待审核记录.xls'
     response.write(sio.getvalue())
-    
-    return response 
+
+    return response
 
 @login_required
 @csrf_exempt
@@ -616,7 +620,7 @@ def import_finance_excel(request):
                                                      user_name=event_user.zhifubao_name,zhifubao=event_user.zhifubao,
                                                      invest_mobile=event.invest_account,invest_period=event.invest_term,
                                                      invest_amount=event.invest_amount,return_amount=amount/100.0,wafuli_account=event_user.mobile,
-                                                     return_date=datetime.date.today(),remark=event.remark)    
+                                                     return_date=datetime.date.today(),remark=event.remark)
                 else:
                     logger.error(u"Charging cash is failed!!!")
                     logger.error("UserEvent:" + str(id) + u" 现金记账失败，请检查原因！！！！")
@@ -673,30 +677,30 @@ def get_admin_task_page(request):
         s = datetime.datetime.strptime(startTime2,'%Y-%m-%dT%H:%M')
         e = datetime.datetime.strptime(endTime2,'%Y-%m-%dT%H:%M')
         item_list = item_list.filter(audit_time__range=(s,e))
-        
+
     username = request.GET.get("username", None)
     if username:
         item_list = item_list.filter(user__username=username)
-    
+
     mobile = request.GET.get("mobile", None)
     if mobile:
         item_list = item_list.filter(user__mobile=mobile)
-        
+
     companyname = request.GET.get("companyname", None)
     if companyname:
         item_list = item_list.filter(task__company__name__contains=companyname)
-        
+
     projectname = request.GET.get("projectname", None)
     if projectname:
         item_list = item_list.filter(task__title__contains=projectname)
-        
+
     adminname = request.GET.get("adminname", None)
     if adminname:
         item_list = item_list.filter(audited_logs__user__username=adminname)
     task_type = ContentType.objects.get_for_model(Task)
     item_list = item_list.filter(content_type = task_type.id)
     item_list = item_list.filter(event_type='1', audit_state=state).select_related('user').order_by('time')
-    
+
     paginator = Paginator(item_list, size)
     try:
         contacts = paginator.page(page)
@@ -758,7 +762,7 @@ def admin_user(request):
 #             res['code'] = -2
 #             res['res_msg'] = u'传入参数不足，请联系技术人员！'
 #             return JsonResponse(res)
-        obj_user = MyUser.objects.get(id=user_id) 
+        obj_user = MyUser.objects.get(id=user_id)
         if type==1:
             pcash = request.POST.get('pcash', 0)
             mcash = request.POST.get('mcash', 0)
@@ -820,7 +824,7 @@ def admin_user(request):
                 res['code'] = -2
                 res['res_msg'] = u"操作失败，输入不合法！"
                 return JsonResponse(res)
-            
+
             scoretranslist = None
             if pscore > 0:
                 scoretranslist = charge_score(obj_user, '0', pscore, reason)
@@ -850,7 +854,7 @@ def admin_user(request):
             level = request.POST.get('level',u'无')
             Channel.objects.create(user=obj_user, qq_number=qq_number, level=level)
             obj_user.is_channel = True
-            obj_user.inviter_id = 1 
+            obj_user.inviter_id = 1
             obj_user.save(update_fields=['is_channel','inviter'])
             admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=obj_user, event_type='6', remark=u"新增渠道")
             res['code'] = 0
@@ -871,7 +875,7 @@ def admin_user(request):
                 res['code'] = -6
                 res['res_msg'] = u"没有channel"
         return JsonResponse(res)
-            
+
 def get_admin_user_page(request):
     res={'code':0,}
     user = request.user
@@ -882,7 +886,7 @@ def get_admin_user_page(request):
     page = request.GET.get("page", None)
     size = request.GET.get("size", 10)
     state = request.GET.get("state",'0')
-    
+
     try:
         size = int(size)
     except ValueError:
@@ -905,23 +909,23 @@ def get_admin_user_page(request):
         s = datetime.datetime.strptime(startTime2,'%Y-%m-%dT%H:%M')
         e = datetime.datetime.strptime(endTime2,'%Y-%m-%dT%H:%M')
         item_list = item_list.filter(this_login_time__range=(s,e))
-        
+
     username = request.GET.get("username", None)
     if username:
         item_list = item_list.filter(username=username)
-    
+
     mobile = request.GET.get("mobile", None)
     if mobile:
         item_list = item_list.filter(mobile=mobile)
-        
+
     inviter_name = request.GET.get("inviter_name", None)
     if inviter_name:
         item_list = item_list.filter(inviter__username=inviter_name)
-        
+
     inviter_mobile = request.GET.get("inviter_mobile", None)
     if inviter_mobile:
         item_list = item_list.filter(inviter__mobile=inviter_mobile)
-        
+
     if state=='1':
         item_list = item_list.filter(is_active=False)
     elif state=='2':
@@ -1029,7 +1033,7 @@ def admin_withdraw(request):
                 trans_withdraw.save(update_fields=['admin_event'])
             msg_content = u'您提现的' + str(event.invest_amount) + u'福币，已发放到您的支付宝账号中，请注意查收'
             Message.objects.create(user=event.user, content=msg_content, title=u"提现审核")
-        
+
         elif type == 2:
             reason = request.POST.get('reason', '')
             if not reason:
@@ -1057,7 +1061,7 @@ def admin_withdraw(request):
         event.audit_time = log.time
         event.save(update_fields=['audit_state','audit_time'])
         return JsonResponse(res)
-            
+
 def get_admin_with_page(request):
     res={'code':0,}
     user = request.user
@@ -1068,7 +1072,7 @@ def get_admin_with_page(request):
     page = request.GET.get("page", None)
     size = request.GET.get("size", 10)
     state = request.GET.get("state",'1')
-    
+
     try:
         size = int(size)
     except ValueError:
@@ -1091,28 +1095,28 @@ def get_admin_with_page(request):
         s = datetime.datetime.strptime(startTime2,'%Y-%m-%dT%H:%M')
         e = datetime.datetime.strptime(endTime2,'%Y-%m-%dT%H:%M')
         item_list = item_list.filter(audit_time__range=(s,e))
-        
+
     username = request.GET.get("username", None)
     if username:
         item_list = item_list.filter(user__username=username)
-    
+
     mobile = request.GET.get("mobile", None)
     if mobile:
         item_list = item_list.filter(user__mobile=mobile)
-        
+
     zhifubao = request.GET.get("zhifubao", None)
     if zhifubao:
         item_list = item_list.filter(user__zhifubao=zhifubao)
-        
+
     zhifubao_name = request.GET.get("zhifubao_name", None)
     if zhifubao_name:
         item_list = item_list.filter(user__zhifubao_name=zhifubao_name)
-        
+
     adminname = request.GET.get("adminname", None)
     if adminname:
         item_list = item_list.filter(audited_logs__user__username=adminname)
     item_list = item_list.filter(event_type='2', audit_state=state).select_related('user').order_by('time')
-    
+
     paginator = Paginator(item_list, size)
     try:
         contacts = paginator.page(page)
@@ -1221,7 +1225,7 @@ def get_admin_score_page(request):
     page = request.GET.get("page", None)
     size = request.GET.get("size", 10)
     state = request.GET.get("state",'1')
-    
+
     try:
         size = int(size)
     except ValueError:
@@ -1243,19 +1247,19 @@ def get_admin_score_page(request):
         s = datetime.datetime.strptime(startTime2,'%Y-%m-%dT%H:%M')
         e = datetime.datetime.strptime(endTime2,'%Y-%m-%dT%H:%M')
         item_list = item_list.filter(audit_time__range=(s,e))
-        
+
     username = request.GET.get("username", None)
     if username:
         item_list = item_list.filter(user__username=username)
-    
+
     mobile = request.GET.get("mobile", None)
     if mobile:
         item_list = item_list.filter(user__mobile=mobile)
-        
+
     commodityname = request.GET.get("commodityname", None)
     if commodityname:
         item_list = item_list.filter(exchangerecord__commodity__name__contains=commodityname)
-        
+
     adminname = request.GET.get("adminname", None)
     if adminname:
         item_list = item_list.filter(audited_logs__user__username=adminname)
@@ -1302,7 +1306,7 @@ def admin_charge(request):
         if not ( admin_user.is_authenticated() and admin_user.is_staff):
             return redirect(reverse('admin:login') + "?next=" + reverse('admin_charge'))
         return render(request,"admin_charge.html")
-    
+
 def get_admin_charge_page(request):
     res={'code':0,}
     user = request.user
@@ -1328,19 +1332,19 @@ def get_admin_charge_page(request):
         s = datetime.datetime.strptime(startTime,'%Y-%m-%dT%H:%M')
         e = datetime.datetime.strptime(endTime,'%Y-%m-%dT%H:%M')
         item_list = item_list.filter(time__range=(s,e))
-        
+
     username = request.GET.get("username", None)
     if username:
         item_list = item_list.filter(user__username=username)
-    
+
     mobile = request.GET.get("mobile", None)
     if mobile:
         item_list = item_list.filter(user__mobile=mobile)
-        
+
     adminname = request.GET.get("adminname", None)
     if adminname:
         item_list = item_list.filter(admin_event__admin_user__username=adminname)
-    
+
     paginator = Paginator(item_list, size)
     try:
         contacts = paginator.page(page)
@@ -1409,15 +1413,15 @@ def get_admin_investrecord_page(request):
     username = request.GET.get("username", None)
     if username:
         item_list = item_list.filter(user_name=username)
-    
+
     mobile = request.GET.get("mobile", None)
     if mobile:
         item_list = item_list.filter(invest_mobile=mobile)
-        
+
     projectname = request.GET.get("projectname", None)
     if projectname:
         item_list = item_list.filter(invest_company__contains=projectname)
-    
+
     paginator = Paginator(item_list, size)
     try:
         contacts = paginator.page(page)
@@ -1479,11 +1483,11 @@ def send_multiple_msg(request):
     username = request.POST.get("username", None)
     if username:
         item_list = item_list.filter(user_name=username)
-    
+
     mobile = request.POST.get("mobile", None)
     if mobile:
         item_list = item_list.filter(invest_mobile=mobile)
-        
+
     projectname = request.POST.get("projectname", None)
     if projectname:
         item_list = item_list.filter(invest_company__contains=projectname)
@@ -1514,7 +1518,7 @@ def send_multiple_msg(request):
             res['num'] = tnum
         else:
             res['code'] = -1
-            res['res_msg'] = u"发送短信失败，实际发送数量：" + str(tnum) 
+            res['res_msg'] = u"发送短信失败，实际发送数量：" + str(tnum)
     else:
         res['code'] = 0
         res['res_msg'] = u"不存在符合条件的手机号码"
