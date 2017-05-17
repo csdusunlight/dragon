@@ -6,16 +6,22 @@ Created on 2016年7月17日
 '''
 from django.shortcuts import render, redirect
 from wafuli.models import UserEvent, AdminEvent, AuditLog, TransList, UserWelfare,\
-    CouponProject, Coupon, Message
+    CouponProject, Coupon, Message, Finance
 import datetime
 from django.core.urlresolvers import reverse
-from django.http.response import JsonResponse, Http404
+from django.http.response import JsonResponse, Http404, HttpResponse
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from account.transaction import charge_money, charge_score
 import logging
 from account.models import MyUser
 from wafuli.data import COUPON_TYPE
 from django.views.decorators.csrf import csrf_exempt
+from xlwt import Workbook
+import StringIO
+from xlwt.Style import easyxf
+import traceback
+import xlrd
+from django.contrib.contenttypes.models import ContentType
 # Create your views here.
 logger = logging.getLogger('wafuli')
 
@@ -345,3 +351,92 @@ def get_admin_coupon_page(request):
     res["recordCount"] = item_list.count()
     res["data"] = data
     return JsonResponse(res)
+
+def export_coupon_excel(request):
+    user = request.user
+    item_list = UserEvent.objects
+    startTime = request.GET.get("startTime", None)
+    endTime = request.GET.get("endTime", None)
+    startTime2 = request.GET.get("startTime2", None)
+    endTime2 = request.GET.get("endTime2", None)
+    state = request.GET.get("state",'1')
+    projecttype = request.GET.get("projecttype",'0')
+    if startTime and endTime:
+        s = datetime.datetime.strptime(startTime,'%Y-%m-%dT%H:%M')
+        e = datetime.datetime.strptime(endTime,'%Y-%m-%dT%H:%M')
+        item_list = item_list.filter(time__range=(s,e))
+    if startTime2 and endTime2:
+        s = datetime.datetime.strptime(startTime2,'%Y-%m-%dT%H:%M')
+        e = datetime.datetime.strptime(endTime2,'%Y-%m-%dT%H:%M')
+        item_list = item_list.filter(audit_time__range=(s,e))
+
+    username = request.GET.get("username", None)
+    if username:
+        item_list = item_list.filter(user__username=username)
+
+    mobile = request.GET.get("mobile", None)
+    if mobile:
+        item_list = item_list.filter(user__mobile=mobile)
+
+    mobile_sub = request.GET.get("mobile_sub", None)
+    if mobile_sub:
+        item_list = item_list.filter(invest_account=mobile_sub)
+
+    companyname = request.GET.get("companyname", None)
+    if companyname:
+        item_list = item_list.filter(coupon__project__provider__contains=companyname)
+
+    projectname = request.GET.get("projectname", None)
+    if projectname:
+        item_list = item_list.filter(coupon__project__title__contains=projectname)
+
+    adminname = request.GET.get("adminname", None)
+    if adminname:
+        item_list = item_list.filter(audited_logs__user__username=adminname)
+    if projecttype=='1':
+        item_list = item_list.filter(coupon__type = '0')
+    if projecttype=='2':
+        item_list = item_list.filter(coupon__type = '1')
+    item_list = item_list.filter(event_type='4', audit_state=state).select_related('user').order_by('time')
+         
+    data = []
+    for con in item_list:
+        coupon = con.content_object
+        id=str(con.id)
+        user_type = u"普通用户" if not con.user.is_channel else u"渠道："+ con.user.channel.level
+        user_mobile = con.user.mobile if not con.user.is_channel else con.user.channel.qq_number
+        time_sub=con.time.strftime("%Y-%m-%d %H:%M")
+        company=coupon.project.provider
+        zhifubao=con.user.zhifubao
+        mobile_sub=con.invest_account
+        term=con.invest_term
+        invest_amount= con.invest_amount
+        remark= con.remark
+        result = con.audit_state
+        return_amount=u"无" if con.audit_state!='0' or not con.translist.exists() else str(con.translist.first().transAmount),
+        reason='' if con.audit_state!='2' or not con.audited_logs.exists() else con.audited_logs.first().reason,
+        data.append([id,user_type,user_mobile, time_sub,company, zhifubao,mobile_sub, term,invest_amount, remark, result, return_amount, reason])
+    w = Workbook()     #创建一个工作簿
+    ws = w.add_sheet(u'待审核记录')     #创建一个工作表
+    title_row = [u'记录ID',u'用户类型',u'挖福利账号',u'提交时间',u'项目名称',u'支付宝', u'注册手机号' ,u'投资期限' ,u'投资金额', u'备注', u'审核结果',u'返现金额',u'拒绝原因']
+    for i in range(len(title_row)):
+        ws.write(0,i,title_row[i])
+    row = len(data)
+    style1 = easyxf(num_format_str='YY/MM/DD')
+    for i in range(row):
+        lis = data[i]
+        col = len(lis)
+        for j in range(col):
+            if j==3:
+                ws.write(i+1,j,lis[j],style1)
+            else:
+                ws.write(i+1,j,lis[j])
+    sio = StringIO.StringIO()  
+    w.save(sio)
+    sio.seek(0)  
+    response = HttpResponse(sio.getvalue(), content_type='application/vnd.ms-excel')  
+    response['Content-Disposition'] = 'attachment; filename=优惠券待审核记录.xls'  
+    response.write(sio.getvalue())
+    
+    return response 
+
