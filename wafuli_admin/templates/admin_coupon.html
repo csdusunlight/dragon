@@ -124,12 +124,17 @@ $(document).ready(function(){
 		}
 		username = $("#username").val();
 		mobile = $("#mobile").val();
+    	mobile_sub = $("#mobile_sub").val();
+
 		if(username){
 			newurl += "&username="+username;
 		}
 		if(mobile){
 			newurl += "&mobile="+mobile;
 		}
+	    if(mobile_sub){
+	      newurl += "&mobile_sub="+mobile_sub;
+	    }
 		companyname = $("#companyname").val();
 		projectname = $("#projectname").val();
 		if(companyname){
@@ -162,6 +167,59 @@ $(document).ready(function(){
 		    run:true,
 		    content:newdata,
 		});
+	});
+	$("#export").click(function(){
+		var html = '<form action="'+"{% url 'export_coupon_excel' %}"+'" method="get" target="_self" id="postData_form">';
+		startTime = $("#startTime").val();
+		endTime = $("#endTime").val();
+		if(startTime && endTime){
+			html += '<input name="startTime" type="hidden" value="'+ startTime + '"/>';
+			html += '<input name="endTime" type="hidden" value="'+ endTime + '"/>';
+		}
+		startTime2 = $("#startTime2").val();
+		endTime2 = $("#endTime2").val();
+		if(startTime2 && endTime2){
+			html += '<input name="startTime" type="hidden" value="'+ startTime2 + '"/>';
+			html += '<input name="endTime" type="hidden" value="'+ endTime2 + '"/>';
+		}
+		username = $("#username").val();
+		mobile = $("#mobile").val();
+		mobile_sub = $("#mobile_sub").val();
+		if(username){
+			html += '<input name="username" type="hidden" value="'+ username + '"/>';
+		}
+		if(mobile){
+			html += '<input name="mobile" type="hidden" value="'+ mobile + '"/>';
+		}
+		if(mobile_sub){
+			html += '<input name="mobile" type="hidden" value="'+ mobile_sub + '"/>';
+		}
+		companyname = $("#companyname").val();
+		projectname = $("#projectname").val();
+		if(companyname){
+			html += '<input name="companyname" type="hidden" value="'+ companyname + '"/>';
+		}
+		if(projectname){
+			html += '<input name="projectname" type="hidden" value="'+ projectname + '"/>';
+		}
+		adminname = $("#adminname").val();
+		state = $("#state").val();
+		projecttype = $("#projecttype").val();
+		if(adminname){
+			html += '<input name="adminname" type="hidden" value="'+ adminname + '"/>';
+		}
+		if(state){
+			html += '<input name="state" type="hidden" value="'+ state + '"/>';
+		}
+		if(projecttype){
+			html += '<input name="projecttype" type="hidden" value="'+ projecttype + '"/>';
+		}
+		html += '</form>';
+        var iframe = document.getElementById('myIFrame');
+		    iframe.contentWindow.document.open();
+		    iframe.contentWindow.document.write(html);
+		    iframe.contentWindow.document.close();
+		document.getElementById('myIFrame').contentWindow.document.getElementById('postData_form').submit();
 	});
 });
 </script>
@@ -202,6 +260,10 @@ $(document).ready(function(){
                                         	<td>
                                             	<i style="letter-spacing:4.8px;">公司名称：</i>
                                                 <input id="companyname" type="text" />
+                                            </td>
+                                          <td>
+                                              <i style="letter-spacing:4.8px;">提交手机号</i>
+                                                <input id="mobile_sub" type="text" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -283,5 +345,6 @@ $(document).ready(function(){
             </form>
         </div>
     </div>
+    <iframe id="myIFrame" scrolling="yes" src="abount:blank" style="display:none" frameborder=1></iframe>
     <!--end-->
 	{% endblock modal %}

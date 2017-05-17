@@ -126,12 +126,17 @@ $(document).ready(function(){
 		}
 		username = $("#username").val();
 		mobile = $("#mobile").val();
+    mobile_sub = $("#mobile_sub").val();
+
 		if(username){
 			newurl += "&username="+username;
 		}
 		if(mobile){
 			newurl += "&mobile="+mobile;
 		}
+    if(mobile_sub){
+      newurl += "&mobile_sub="+mobile_sub;
+    }
 		companyname = $("#companyname").val();
 		projectname = $("#projectname").val();
 		if(companyname){
@@ -300,6 +305,10 @@ $(document).ready(function(){
                                             </td>
                                         </tr>
                                         <tr>
+                                          <td>
+                                              <i style="letter-spacing:4.8px;">提交手机号</i>
+                                                <input id="mobile_sub" type="text" />
+                                            </td>
                                         	<td>
                                             	<i style="letter-spacing:4.8px;">项目名称：</i>
                                                 <input id="projectname" type="text" />
