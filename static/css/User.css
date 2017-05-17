@@ -298,10 +298,11 @@ input[type="text"] {padding-left: 10px !important;padding-right: 10px !important
 .Swi-info li strong { font-size:28px; color:#fff; line-height:36px;}
 .Swi-info li strong font { font-weight:400;}
 .Swi-info li span { font-size:14px; color:#fff; line-height:30px;}
-.Swi-info li p { font-size:12px; color:#8c8a7a; line-height:25px; display:block; width:100%; text-align:left; margin-top:5px;}
+.Swi-info li p { font-size:12px; color:#fff; line-height:25px; display:block; width:100%; text-align:left;}
 .Swi-info li .coupon-use-intro { line-height: 50px; overflow: hidden; }
-.Swi-info li a { font-size:14px; color:#ffffff; height:28px; line-height:28px; text-align:center; width:84px; display:inline-block; background:#c1c1c1; margin:4px 9px;}
-.bul { background:#008fd7 !important;}
+.Swi-info li .coupon-use-intro2 { line-height: 25px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
+.Swi-info li a { font-size:12px; color:#008fd7; height:26px; line-height:26px; text-align:center; width:60px; display:inline-block; background:#fff; margin:4px 20px;}
+/*.bul { background:#008fd7 !important;}*/
 .Bot-info { border:1px solid #eee; background:#fff; width:100%; height:421px; float:left; margin-top:20px;position: relative;}
 .Bot-info h2 {    font-size: 18px; color: #f08519;  line-height: 44px; text-indent: 12px;  border-bottom: 1px solid #ebebeb;  float: left; width: 100%;  text-align: left;   font-weight: bold;}
 .Bot-info th { font-weight:400; font-size:16px; color:#666666; text-align:center; background:#f8f8f8; height:43px;}
