@@ -6,16 +6,22 @@ Created on 2016年7月17日
 '''
 from django.shortcuts import render, redirect
 from wafuli.models import UserEvent, AdminEvent, AuditLog, TransList, UserWelfare,\
-    CouponProject, Coupon, Message
+    CouponProject, Coupon, Message, Finance
 import datetime
 from django.core.urlresolvers import reverse
-from django.http.response import JsonResponse, Http404
+from django.http.response import JsonResponse, Http404, HttpResponse
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from account.transaction import charge_money, charge_score
 import logging
 from account.models import MyUser
 from wafuli.data import COUPON_TYPE
 from django.views.decorators.csrf import csrf_exempt
+from xlwt import Workbook
+import StringIO
+from xlwt.Style import easyxf
+import traceback
+import xlrd
+from django.contrib.contenttypes.models import ContentType
 # Create your views here.
 logger = logging.getLogger('wafuli')
 
@@ -341,3 +347,79 @@ def get_admin_coupon_page(request):
     res["recordCount"] = item_list.count()
     res["data"] = data
     return JsonResponse(res)
+
+def export_finance_excel(request):
+    user = request.user
+    item_list = []
+    item_list = UserEvent.objects
+    startTime = request.GET.get("startTime", None)
+    endTime = request.GET.get("endTime", None)
+    startTime2 = request.GET.get("startTime2", None)
+    endTime2 = request.GET.get("endTime2", None)
+    if startTime and endTime:
+        s = datetime.datetime.strptime(startTime,'%Y-%m-%dT%H:%M')
+        e = datetime.datetime.strptime(endTime,'%Y-%m-%dT%H:%M')
+        item_list = item_list.filter(time__range=(s,e))
+    username = request.GET.get("username", None)
+    if username:
+        item_list = item_list.filter(user__username=username)
+    mobile = request.GET.get("mobile", None)
+    if mobile:
+        item_list = item_list.filter(user__mobile=mobile)
+    usertype = request.GET.get("usertype",0)
+    usertype= int(usertype)
+    if usertype == 1:
+        item_list = item_list.filter(user__is_channel=False)
+    elif usertype == 2:
+        item_list = item_list.filter(user__is_channel=True)
+        chalevel = request.GET.get("chalevel","")
+        print usertype,chalevel
+        if chalevel:
+            item_list = item_list.filter(user__channel__level=chalevel) 
+    companyname = request.GET.get("companyname", None)
+    if companyname:
+        item_list = item_list.filter(finance__company__name__contains=companyname)
+         
+    projectname = request.GET.get("projectname", None)
+    if projectname:
+        item_list = item_list.filter(finance__title__contains=projectname)
+         
+    task_type = ContentType.objects.get_for_model(Finance)
+    item_list = item_list.filter(content_type = task_type.id)
+    item_list = item_list.filter(event_type='1', audit_state='1').select_related('user').order_by('time')
+    data = []
+    for con in item_list:
+        project = con.content_object
+        project_name=project.title
+        mobile_sub=con.invest_account
+        invest_time=con.invest_time
+        id=con.id
+        remark= con.remark
+        invest_amount= con.invest_amount
+        term=con.invest_term
+        user_mobile = con.user.mobile if not con.user.is_channel else con.user.channel.qq_number
+        user_type = u"普通用户" if not con.user.is_channel else u"渠道："+ con.user.channel.level
+        data.append([id, project_name, invest_time, user_mobile,user_type, mobile_sub, term, invest_amount, remark])
+    w = Workbook()     #创建一个工作簿
+    ws = w.add_sheet(u'待审核记录')     #创建一个工作表
+    title_row = [u'记录ID',u'项目名称',u'投资日期', u'挖福利账号', u'用户类型', u'注册手机号' ,u'投资期限' ,u'投资金额', u'备注', u'审核结果',u'返现金额',u'拒绝原因']
+    for i in range(len(title_row)):
+        ws.write(0,i,title_row[i])
+    row = len(data)
+    style1 = easyxf(num_format_str='YY/MM/DD')
+    for i in range(row):
+        lis = data[i]
+        col = len(lis)
+        for j in range(col):
+            if j==2:
+                ws.write(i+1,j,lis[j],style1)
+            else:
+                ws.write(i+1,j,lis[j])
+    sio = StringIO.StringIO()  
+    w.save(sio)
+    sio.seek(0)  
+    response = HttpResponse(sio.getvalue(), content_type='application/vnd.ms-excel')  
+    response['Content-Disposition'] = 'attachment; filename=待审核记录.xls'  
+    response.write(sio.getvalue())
+    
+    return response 

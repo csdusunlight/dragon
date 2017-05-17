@@ -503,14 +503,14 @@ def export_finance_excel(request):
         project = con.content_object
         project_name=project.title
         mobile_sub=con.invest_account
-        time_sub=con.time
+        invest_time=con.invest_time
         id=con.id
         remark= con.remark
         invest_amount= con.invest_amount
         term=con.invest_term
         user_mobile = con.user.mobile if not con.user.is_channel else con.user.channel.qq_number
         user_type = u"普通用户" if not con.user.is_channel else u"渠道："+ con.user.channel.level
-        data.append([id, project_name, time_sub, user_mobile,user_type, mobile_sub, term, invest_amount, remark])
+        data.append([id, project_name, invest_time, user_mobile,user_type, mobile_sub, term, invest_amount, remark])
     w = Workbook()     #创建一个工作簿
     ws = w.add_sheet(u'待审核记录')     #创建一个工作表
     title_row = [u'记录ID',u'项目名称',u'投资日期', u'挖福利账号', u'用户类型', u'注册手机号' ,u'投资期限' ,u'投资金额', u'备注', u'审核结果',u'返现金额',u'拒绝原因']
