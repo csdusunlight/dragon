@@ -97,7 +97,7 @@ def deliver_coupon(request):
                 success_count += 1
         result.update({'succ_num':success_count, 'fail_list':fail_list})
         return JsonResponse(result)
-        
+
 def get_project_list(request):
     if not request.is_ajax():
         raise Http404
@@ -127,7 +127,7 @@ def parse_file(request):
             res['res_msg'] = u'文件格式有误！'
         else:
             res['code'] = 0
-    
+
     return JsonResponse(res)
 
 def handle_uploaded_file(f):
@@ -207,7 +207,7 @@ def admin_coupon(request):
                     scoretranslist.user_event = event
                     scoretranslist.save(update_fields=['user_event'])
                     res['code'] = 0
-                    
+
                     project = event.content_object.project
                     msg_content = u'您提交的"' + project.title + u'"兑换申请已审核通过。'
                     Message.objects.create(user=event_user, content=msg_content, title=u"优惠券兑换审核");
@@ -225,11 +225,11 @@ def admin_coupon(request):
             log.audit_result = False
             log.reason = reason
             res['code'] = 0
-            
+
             project = event.content_object.project
             msg_content = u'您提交的"' + project.title + u'"兑换申请审核未通过，原因：' + reason
             Message.objects.create(user=event_user, content=msg_content, title=u"优惠券兑换审核");
-        
+
         if res['code'] == 0:
             admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='10')
             if translist:
@@ -243,7 +243,7 @@ def admin_coupon(request):
             event.audit_time = log.time
             event.save(update_fields=['audit_state','audit_time'])
         return JsonResponse(res)
-            
+
 def get_admin_coupon_page(request):
     res={'code':0,}
     user = request.user
@@ -277,23 +277,27 @@ def get_admin_coupon_page(request):
         s = datetime.datetime.strptime(startTime2,'%Y-%m-%dT%H:%M')
         e = datetime.datetime.strptime(endTime2,'%Y-%m-%dT%H:%M')
         item_list = item_list.filter(audit_time__range=(s,e))
-        
+
     username = request.GET.get("username", None)
     if username:
         item_list = item_list.filter(user__username=username)
-    
+
     mobile = request.GET.get("mobile", None)
     if mobile:
         item_list = item_list.filter(user__mobile=mobile)
-        
+
+    mobile_sub = request.GET.get("mobile_sub", None)
+    if mobile_sub:
+        item_list = item_list.filter(coupon__user_event__invest_account=mobile_sub)
+
     companyname = request.GET.get("companyname", None)
     if companyname:
         item_list = item_list.filter(coupon__project__provider__contains=companyname)
-        
+
     projectname = request.GET.get("projectname", None)
     if projectname:
         item_list = item_list.filter(coupon__project__title__contains=projectname)
-        
+
     adminname = request.GET.get("adminname", None)
     if adminname:
         item_list = item_list.filter(audited_logs__user__username=adminname)
@@ -302,7 +306,7 @@ def get_admin_coupon_page(request):
     if projecttype=='2':
         item_list = item_list.filter(coupon__type = '1')
     item_list = item_list.filter(event_type='4', audit_state=state).select_related('user').order_by('time')
-    
+
     paginator = Paginator(item_list, size)
     try:
         contacts = paginator.page(page)
