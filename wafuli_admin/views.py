@@ -471,6 +471,7 @@ def export_finance_excel(request):
     endTime = request.GET.get("endTime", None)
     startTime2 = request.GET.get("startTime2", None)
     endTime2 = request.GET.get("endTime2", None)
+    state = request.GET.get("state",'1')
     if startTime and endTime:
         s = datetime.datetime.strptime(startTime,'%Y-%m-%dT%H:%M')
         e = datetime.datetime.strptime(endTime,'%Y-%m-%dT%H:%M')
@@ -498,10 +499,12 @@ def export_finance_excel(request):
     projectname = request.GET.get("projectname", None)
     if projectname:
         item_list = item_list.filter(finance__title__contains=projectname)
-
+    adminname = request.GET.get("adminname", None)
+    if adminname:
+        item_list = item_list.filter(audited_logs__user__username=adminname)
     task_type = ContentType.objects.get_for_model(Finance)
     item_list = item_list.filter(content_type = task_type.id)
-    item_list = item_list.filter(event_type='1', audit_state='1').select_related('user').order_by('time')
+    item_list = item_list.filter(event_type='1', audit_state=state).select_related('user').order_by('time')
     data = []
     for con in item_list:
         project = con.content_object
@@ -514,10 +517,23 @@ def export_finance_excel(request):
         term=con.invest_term
         user_mobile = con.user.mobile if not con.user.is_channel else con.user.channel.qq_number
         user_type = u"普通用户" if not con.user.is_channel else u"渠道："+ con.user.channel.level
-        data.append([id, project_name, invest_time, user_mobile,user_type, mobile_sub, term, invest_amount, remark])
+        result = ''
+        return_amount = ''
+        reason = ''
+        if con.audit_state=='0':
+            result = u'是'
+            if con.translist.exists():
+                return_amount = str(con.translist.first().transAmount)
+        elif con.audit_state=='2':
+            result = u'否'
+            if con.audited_logs.exists():
+                reason = con.audited_logs.first().reason
+        data.append([id, project_name, invest_time, user_mobile,user_type, mobile_sub, term, 
+                     invest_amount, remark, result, return_amount, reason])
     w = Workbook()     #创建一个工作簿
     ws = w.add_sheet(u'待审核记录')     #创建一个工作表
-    title_row = [u'记录ID',u'项目名称',u'投资日期', u'挖福利账号', u'用户类型', u'注册手机号' ,u'投资期限' ,u'投资金额', u'备注', u'审核结果',u'返现金额',u'拒绝原因']
+    title_row = [u'记录ID',u'项目名称',u'投资日期', u'挖福利账号', u'用户类型', u'注册手机号' ,u'投资期限' ,u'投资金额', u'备注', 
+                 u'审核通过',u'返现金额',u'拒绝原因']
     for i in range(len(title_row)):
         ws.write(0,i,title_row[i])
     row = len(data)
