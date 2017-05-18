@@ -6,12 +6,26 @@ $.ajaxSetup({
 });
 var data = '<table width="100%"><tr><th>选择</th><th>投资日期</th><th>平台</th><th>QQ</th><th>姓名</th>'+
 	'<th>支付宝</th><th>投资手机号</th><th>投资周期</th><th>投资金额</th><th>返现金额</th><th>挖福利账号</th>'+
-	'</tr>[data]<tr><td><input class="choose" type="checkbox" name="item"></td><td>{invest_date}</td><td>{invest_company}</td><td>{qq_number}</td>'+
+	'</tr>[data]<tr><td><input class="choose" type="checkbox" checked name="item"></td><td>{invest_date}</td><td>{invest_company}</td><td>{qq_number}</td>'+
 	'<td>{user_name}</td><td>{zhifubao}</td><td class="phonenumber">{invest_mobile}</td>'+
 	'<td>{invest_period}</td><td>{invest_amount}</td><td>{return_amount}</td><td>{wafuli_account}</td></tr>[/data]</table>';
 
 var url = "{% url 'get_admin_investrecord_page' %}" + "?page={page}&size={pageSize}";
 var send_msg_para = {};
+//按钮选择函数
+var choose = document.getElementsByName("item");
+var phones =[],
+  phone,
+  content;
+function btnCheckboxSel(index) {
+  for(var i = 0; i < choose.length; i++) {
+    if(index == 2) {
+      choose[i].checked = !choose[i].checked;
+    } else {
+      choose[i].checked = index;
+    }
+  }
+}
 
 $(document).ready(function(){
 	$("li.home13").toggleClass("on");
@@ -68,20 +82,6 @@ $(document).ready(function(){
 		    content:data,
 		});
 	});
-  //按钮选择函数
-  var choose = document.getElementsByName("item");
-  var phones =[],
-    phone,
-    content;
-  function btnCheckboxSel(index) {
-    for(var i = 0; i < choose.length; i++) {
-      if(index == 2) {
-        choose[i].checked = !choose[i].checked;
-      } else {
-        choose[i].checked = index;
-      }
-    }
-  }
 
 	$("#send_msg").click(function(){
     // 手机号获取
