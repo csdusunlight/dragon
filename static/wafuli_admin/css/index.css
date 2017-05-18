@@ -102,7 +102,7 @@ a { cursor:pointer;}
 .Submit-in input[type="button"]{ background:url(../images/ico2.png) no-repeat 80% #4daa84;border: none;}
 .Submit-in .choose-btn {
     width: 30px;
-    background-image: none;
+    background: #4daa84 !important;
     padding-right: 0;
     border-radius: 8px;
 }
