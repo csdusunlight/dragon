@@ -288,7 +288,7 @@ input[type="text"] {padding-left: 10px !important;padding-right: 10px !important
 .Swi-Top li { float:left; width:93px; height:44px; line-height:44px; text-align:center; font-size:15px; color:#666666; position:relative; border-right:1px solid #eee; cursor:pointer;}
 .Swi-Top li:hover { color:#fff; background:#f08519;}
 .Swi-Top .on { color:#fff; background:#f08519;}
-.Swi-Top span { position:absolute; right:-7px; top:-7px; border-radius:200px; background:#f64f41; color:#fff; width:20px; height:20px; text-align:center; line-height:20px; z-index:}
+.Swi-Top span { position:absolute; right:-7px; top:-7px; border-radius:200px; background:#f64f41; color:#fff; width:20px; height:20px; text-align:center; line-height:20px; z-index: 10;}
 .Swi-Bot{ float:left; width:100%; height:auto;position: relative;}
 .Swi-Bot>li { float:left; width:100%; height:auto; display:none;}
 .Swi-Bot>.on { display:block;}

@@ -160,6 +160,11 @@ $(function(){
 	  var reason = $(this).attr('reason');
       alert(reason);
   });
+
+  //文字提示
+  $('.Swi-info').on("mouseover", ".coupon-use-intro",  function() {
+    this.title = this.innerHTML;
+  });
 });
 </script>
 </head>
