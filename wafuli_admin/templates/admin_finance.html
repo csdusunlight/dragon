@@ -200,6 +200,14 @@ $(document).ready(function(){
 		if(projectname){
 			html += '<input name="projectname" type="hidden" value="'+ projectname + '"/>';
 		}
+		adminname = $("#adminname").val();
+		state = $("#state").val();
+		if(adminname){
+			html += '<input name="adminname" type="hidden" value="'+ adminname + '"/>';
+		}
+		if(state){
+			html += '<input name="state" type="hidden" value="'+ state + '"/>';
+		}
 		var usertype = $("#usertype").val();
 		if(usertype){
 			html += '<input name="usertype" type="hidden" value="'+ usertype + '"/>';

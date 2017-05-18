@@ -418,7 +418,7 @@ def export_coupon_excel(request):
         data.append([id,user_type,user_mobile, time_sub,company, zhifubao,mobile_sub, term,invest_amount, remark, result, return_amount, reason])
     w = Workbook()     #创建一个工作簿
     ws = w.add_sheet(u'待审核记录')     #创建一个工作表
-    title_row = [u'记录ID',u'用户类型',u'挖福利账号',u'提交时间',u'项目名称',u'支付宝', u'注册手机号' ,u'投资期限' ,u'投资金额', u'备注', u'审核结果',u'返现金额',u'拒绝原因']
+    title_row = [u'记录ID',u'用户类型',u'挖福利账号',u'提交时间',u'项目名称',u'支付宝', u'注册手机号' ,u'投资期限' ,u'投资金额', u'备注', u'审核结果（0通过，1待审核，2拒绝）',u'返现金额',u'拒绝原因']
     for i in range(len(title_row)):
         ws.write(0,i,title_row[i])
     row = len(data)
