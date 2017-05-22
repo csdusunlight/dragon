@@ -168,8 +168,7 @@ def admin_finance(request):
         event = UserEvent.objects.get(id=event_id)
         event_user = event.user
 
-        project_id = event.content_object   #jzy
-        project = Finance.objects.get(id=project_id)  # jzy
+        project = event.content_object   #jzy
         project_title = project.title   # jzy
 
         log = AuditLog(user=admin_user,item=event)
@@ -282,8 +281,7 @@ def admin_task(request):
         event = UserEvent.objects.get(id=event_id)
         event_user = event.user
 
-        project_id = event.content_object   #jzy
-        project = Finance.objects.get(id=project_id)  # jzy
+        project = event.content_object   #jzy
         project_title = project.title   # jzy
 
         log = AuditLog(user=admin_user,item=event)
