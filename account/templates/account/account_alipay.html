@@ -56,6 +56,13 @@ $(function(){
 		account = $("#zhifubao").val();
 		name = $("#zhifubao_name").val();
 		code = $("#yanzhengma").val();
+
+    var re_account=/[^\u4E00-\u9FA5]/g;
+    if(!re_account.test(account)){
+      alert("支付宝姓名必须为验证姓名")
+      return;
+    }
+
 		if (!account || !name || !code){
 			alert("不能为空");
 			return;
@@ -157,14 +164,14 @@ $(function(){
                         </div>
                     </div>
                     {% endif %}
-                    
+
                 </div>
             </div>
         </div>
 
 <!--底部-->
   {% include "footer.html" %}
-  <!--浮动窗口-->  
+  <!--浮动窗口-->
   {% include "outline.html" %}
     </div>
 </body>
