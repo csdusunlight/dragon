@@ -91,15 +91,25 @@
 	    data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
 	});
 $(function(){
-	$(".g-checkbox,.g-lab-txt").click(function(){
-		if($(this).parent().find("input").attr("checked")!="checked"){
-			$(this).parent().find("input").prop("checked",true);
-			$(this).parent().find(".g-checkbox").css("background-position","0 0");
-		}else{
-			$(this).parent().find("input").prop("checked",false);
-			$(this).parent().find(".g-checkbox").css("background-position","0 -18px")
-		}
-	});
+	// $(".g-checkbox,.g-lab-txt").click(function(){
+	// 	if($(this).parent().find("input").attr("checked")!="checked"){
+	// 		$(this).parent().find("input").prop("checked",true);
+	// 		$(this).parent().find(".g-checkbox").css("background-position","0 0");
+	// 	}else{
+	// 		$(this).parent().find("input").prop("checked",false);
+	// 		$(this).parent().find(".g-checkbox").css("background-position","0 -18px")
+	// 	}
+	// });
+  $(".g-checkbox,.g-lab-txt").click(function() {
+    $("#agreeChk").click();
+    if(document.getElementById("agreeChk").checked) {
+      $(this).parent().find(".g-checkbox").css("background-position", "0 0");
+      console.log("勾选");
+    } else {
+      $(this).parent().find(".g-checkbox").css("background-position", "0 -18px")
+      console.log("取消勾选");
+    }
+  });
 
   $("#recommend_id").click(function(){
     $("#recommend_container").toggleClass("recommend-container");
