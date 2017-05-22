@@ -280,6 +280,10 @@ def admin_task(request):
             return JsonResponse(res)
         event = UserEvent.objects.get(id=event_id)
         event_user = event.user
+
+        project = Finance.objects.get(id=event_id)  # jzy
+        project_title = event.title   # jzy
+
         log = AuditLog(user=admin_user,item=event)
         translist = None
         scoretranslist = None
@@ -308,7 +312,8 @@ def admin_task(request):
                 log.audit_result = True
                 if event.content_object.is_vip_bonus:
                     cash = get_vip_bonus(event_user, cash, 'task')
-                translist = charge_money(event_user, '0', cash, u'福利返现')
+                # translist = charge_money(event_user, '0', cash, u'福利返现')
+                translist = charge_money(event_user, '0', cash, project_title)  #jzy
                 scoretranslist = charge_score(event_user, '0', score, u'福利返现（积分）')
                 if translist and scoretranslist:
                     event.audit_state = '0'
