@@ -92,11 +92,11 @@
 	});
 $(function(){
 	$(".g-checkbox,.g-lab-txt").click(function(){
-		if($(this).parent().find("input").attr("checked")!="checked"){
-			$(this).parent().find("input").attr("checked",true);
+		if($(this).parent().find("input").prop("checked")!="checked"){
+			$(this).parent().find("input").prop("checked",true);
 			$(this).parent().find(".g-checkbox").css("background-position","0 0");
 		}else{
-			$(this).parent().find("input").attr("checked",false);
+			$(this).parent().find("input").prop("checked",false);
 			$(this).parent().find(".g-checkbox").css("background-position","0 -18px")
 		}
 	});
