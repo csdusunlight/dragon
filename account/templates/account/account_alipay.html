@@ -22,8 +22,15 @@ $.ajaxSetup({
 $(function(){
 	$('.back-a6').parent().toggleClass("on");
 	$("#submit").click(function(){
-		account = $("#zhifubao").val();
+		var account = $("#zhifubao").val();
 		name = $("#zhifubao_name").val();
+
+    var re_account=/^[\u2E80-\u9FFF]+$/;
+    if(!re_account.test(account)){
+      alert("请输入正确的支付宝绑定的真实姓名")
+      return;
+    }
+
 		if (!account || !name){
 			alert("不能为空");
 			return;
@@ -53,13 +60,13 @@ $(function(){
 		});
 	});
 	$("#submit2").click(function(){
-		account = $("#zhifubao").val();
+		var account = $("#zhifubao").val();
 		name = $("#zhifubao_name").val();
 		code = $("#yanzhengma").val();
 
-    var re_account=/[^\u4E00-\u9FA5]/g;
+    var re_account=/^[\u2E80-\u9FFF]+$/;
     if(!re_account.test(account)){
-      alert("支付宝姓名必须为验证姓名")
+      alert("请输入正确的支付宝绑定的真实姓名")
       return;
     }
 
@@ -124,17 +131,18 @@ $(function(){
                         	<h6>更换支付宝账号：</h6>
                             	<div class="Inout-box">
                                 	<span>支付宝姓名：</span>
-                                    <input id='zhifubao_name' maxlength="15" type="text" />
+                                    <input id='zhifubao_name' maxlength="15" type="text" placeholder="请输入支付宝绑定的真实姓名" />
                                 </div>
                             	<div class="Inout-box">
                                 	<span>支付宝帐号：</span>
-                                    <input id='zhifubao' maxlength="35" type="text" />
+                                    <input id='zhifubao' maxlength="35" type="text" placeholder="请输入真实的支付宝账户" />
                                 </div>
                             	<div class="Inout-yz">
                                 	<span>验证码：</span>
                                     <input id="yanzhengma" type="text" maxlength="6"/>
                                     <input id="yanzhengma_button" type="button" value="获取手机验证码" />
                                 </div>
+                                <p style="float: left;width: 100%;margin-top: 10px;margin-left: 96px;">注意：支付宝姓名和账号不正确者，将不予提现</p>
                                 <input id="submit2" type="submit" value="确  定" />
                         </div>
                     </div>
@@ -153,12 +161,13 @@ $(function(){
 
                             	<div class="Inout-box">
                                 	<span>支付宝姓名：</span>
-                                    <input id='zhifubao_name' maxlength="15" type="text" />
+                                    <input id='zhifubao_name' maxlength="15" type="text" placeholder="请输入支付宝绑定的真实姓名" />
                                 </div>
                             	<div class="Inout-box">
                                 	<span>支付宝帐号：</span>
-                                    <input id='zhifubao' maxlength="35" type="text" />
+                                    <input id='zhifubao' maxlength="35" type="text" placeholder="请输入真实的支付宝账户" />
                                 </div>
+                              <p style="float: left;width: 100%;margin-top: 10px;margin-left: 96px;">注意：支付宝姓名和账号不正确者，将不予提现</p>
                                 <input id="submit" type="submit" value="确  定" />
 
                         </div>
