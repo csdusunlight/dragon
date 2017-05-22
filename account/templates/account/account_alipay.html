@@ -22,11 +22,11 @@ $.ajaxSetup({
 $(function(){
 	$('.back-a6').parent().toggleClass("on");
 	$("#submit").click(function(){
-		var account = $("#zhifubao").val();
+		account = $("#zhifubao").val();
 		name = $("#zhifubao_name").val();
 
     var re_account=/^[\u2E80-\u9FFF]+$/;
-    if(!re_account.test(account)){
+    if(!re_account.test(name)){
       alert("请输入正确的支付宝绑定的真实姓名")
       return;
     }
@@ -60,12 +60,12 @@ $(function(){
 		});
 	});
 	$("#submit2").click(function(){
-		var account = $("#zhifubao").val();
+		account = $("#zhifubao").val();
 		name = $("#zhifubao_name").val();
 		code = $("#yanzhengma").val();
 
     var re_account=/^[\u2E80-\u9FFF]+$/;
-    if(!re_account.test(account)){
+    if(!re_account.test(name)){
       alert("请输入正确的支付宝绑定的真实姓名")
       return;
     }
