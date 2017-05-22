@@ -167,6 +167,10 @@ def admin_finance(request):
             return JsonResponse(res)
         event = UserEvent.objects.get(id=event_id)
         event_user = event.user
+
+        project = Finance.objects.get(id=event_id)  # jzy
+        project_title = event.title   # jzy
+
         log = AuditLog(user=admin_user,item=event)
         translist = None
         scoretranslist = None
@@ -195,7 +199,8 @@ def admin_finance(request):
                 log.audit_result = True
                 if event.content_object.is_vip_bonus:
                     cash = get_vip_bonus(event_user, cash, 'finance')
-                translist = charge_money(event_user, '0', cash, u'福利返现')
+                # translist = charge_money(event_user, '0', cash, u'福利返现')
+                translist = charge_money(event_user, '0', cash, project_title)  #jzy
                 scoretranslist = charge_score(event_user, '0', score, u'福利返现（积分）')
                 if translist and scoretranslist:
                     event.audit_state = '0'
@@ -528,11 +533,11 @@ def export_finance_excel(request):
             result = u'否'
             if con.audited_logs.exists():
                 reason = con.audited_logs.first().reason
-        data.append([id, project_name, invest_time, user_mobile,user_type, mobile_sub, term, 
+        data.append([id, project_name, invest_time, user_mobile,user_type, mobile_sub, term,
                      invest_amount, remark, result, return_amount, reason])
     w = Workbook()     #创建一个工作簿
     ws = w.add_sheet(u'待审核记录')     #创建一个工作表
-    title_row = [u'记录ID',u'项目名称',u'投资日期', u'挖福利账号', u'用户类型', u'注册手机号' ,u'投资期限' ,u'投资金额', u'备注', 
+    title_row = [u'记录ID',u'项目名称',u'投资日期', u'挖福利账号', u'用户类型', u'注册手机号' ,u'投资期限' ,u'投资金额', u'备注',
                  u'审核通过',u'返现金额',u'拒绝原因']
     for i in range(len(title_row)):
         ws.write(0,i,title_row[i])
