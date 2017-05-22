@@ -169,7 +169,7 @@ def admin_finance(request):
         event_user = event.user
 
         project = Finance.objects.get(id=event_id)  # jzy
-        project_title = event.title   # jzy
+        project_title = project.title   # jzy
 
         log = AuditLog(user=admin_user,item=event)
         translist = None
@@ -282,7 +282,7 @@ def admin_task(request):
         event_user = event.user
 
         project = Finance.objects.get(id=event_id)  # jzy
-        project_title = event.title   # jzy
+        project_title = project.title   # jzy
 
         log = AuditLog(user=admin_user,item=event)
         translist = None
