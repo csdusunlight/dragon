@@ -8,18 +8,20 @@ from account.transaction import charge_money
 from wafuli.models import Message
 VIP_BONUS = {
     0:{'finance':1, 'task':1, 'money':0,},
-    1:{'finance':1.01, 'task':1.050, 'money':500,},
-    2:{'finance':1.02, 'task':1.15, 'money':3000,},
-    3:{'finance':1.03, 'task':1.16, 'money':20000,},
-    4:{'finance':1.04, 'task':1.18, 'money':80000,},
-    5:{'finance':1.05, 'task':1.20, 'money':120000,},
+    1:{'finance':0.01, 'task':0.10, 'money':500,},
+    2:{'finance':0.02, 'task':0.15, 'money':3000,},
+    3:{'finance':0.03, 'task':0.16, 'money':20000,},
+    4:{'finance':0.04, 'task':0.18, 'money':80000,},
+    5:{'finance':0.05, 'task':0.20, 'money':120000,},
 }
 VIP_AMOUNT = {0:0, 1:10000, 2:100000, 3:1000000, 4:5000000, 5:10000000,}
 def get_vip_bonus(user, amount, type):
     if user.is_channel:
-        return amount
-    level = user.level
-    return int(amount*VIP_BONUS[level][type])
+        return
+    else:
+        level = user.level
+        cash = amount*VIP_BONUS[level][type]
+        translist = charge_money(user, '0', cash, u'vip奖励')
 def vip_judge(user, with_amount):
     if user.is_channel:
         return
