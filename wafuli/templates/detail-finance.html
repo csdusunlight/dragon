@@ -119,29 +119,28 @@
         intro = document.getElementById("intro");
     var box_height = text_box.offsetHeight - intro.offsetHeight;
     if(box_height<0){
-        // text_box.setAttribute("class","text-box toolong");
-        // intro.title = intro.innerHTML;
+        var oTitle = null;
+        var sTitle = null;
 
-      var oTitle = null;
-      var sTitle = null;
-      // var aA = document.getElementsByTagName('a');
-          intro.onmouseover = function(ev) {
-            this.title = this.innerHTML;
-            sTitle = this.title;
-            this.title = '';
-            oTitle = document.createElement('div');
-            oTitle.className = 'titleShow';
-            oTitle.innerHTML = sTitle;
-            document.body.appendChild(oTitle);
-          };
-          intro.onmousemove = function(ev) {
-            var ev = ev || window.event;
-            oTitle.style.left = ev.clientX + 10 + 'px'; //获取鼠标所在x座标并增加10个像素,下同
-            oTitle.style.top = ev.clientY + 10 + 'px';
-          }
-          intro.onmouseout = function() {
-            document.body.removeChild(oTitle);
-          }
+        text_box.setAttribute("class","text-box toolong");
+
+        intro.onmouseover = function(ev) {
+          this.title = this.innerHTML;
+          sTitle = this.title;
+          this.title = '';
+          oTitle = document.createElement('div');
+          oTitle.className = 'titleShow';
+          oTitle.innerHTML = sTitle;
+          document.body.appendChild(oTitle);
+        };
+        intro.onmousemove = function(ev) {
+          var ev = ev || window.event;
+          oTitle.style.left = ev.clientX + 10 + 'px'; //获取鼠标所在x座标并增加10个像素,下同
+          oTitle.style.top = ev.clientY + 10 + 'px';
+        }
+        intro.onmouseout = function() {
+          document.body.removeChild(oTitle);
+        }
     }
 
 	});
