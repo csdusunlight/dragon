@@ -22,6 +22,7 @@ from xlwt.Style import easyxf
 import traceback
 import xlrd
 from django.contrib.contenttypes.models import ContentType
+from account.vip import get_vip_bonus
 # Create your views here.
 logger = logging.getLogger('wafuli')
 
@@ -205,6 +206,9 @@ def admin_coupon(request):
             else:
                 log.audit_result = True
                 translist = charge_money(event_user, '0', cash, u'优惠券兑换')
+                project = event.content_object.project
+                if project.is_vip_bonus:
+                    get_vip_bonus(event_user, cash, 'finance')
                 scoretranslist = charge_score(event_user, '0', score, u'优惠券兑换')
                 if translist and scoretranslist:
                     event.audit_state = '0'
@@ -213,8 +217,6 @@ def admin_coupon(request):
                     scoretranslist.user_event = event
                     scoretranslist.save(update_fields=['user_event'])
                     res['code'] = 0
-
-                    project = event.content_object.project
                     msg_content = u'您提交的"' + project.title + u'"兑换申请已审核通过。'
                     Message.objects.create(user=event_user, content=msg_content, title=u"优惠券兑换审核");
                 else:
@@ -339,7 +341,7 @@ def get_admin_coupon_page(request):
              "amount":coupon.project.amount,
              "invest_amount":con.invest_amount,
              "invest_term":con.invest_term,
-             "return_amount":u"无" if con.audit_state!='0' or not con.translist.exists() else con.translist.first().transAmount,
+             "return_amount":u"无" if con.audit_state!='0' or not con.translist.exists() else con.translist.first().transAmount/100,
              "score":u'无' if con.audit_state!='0' or not con.score_translist.exists() else con.score_translist.first().transAmount,
              "id":con.id,
              "remark": con.remark or u'无' if con.audit_state!='2' or not con.audited_logs.exists() else con.audited_logs.first().reason,

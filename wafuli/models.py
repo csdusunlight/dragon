@@ -149,6 +149,7 @@ class Baoyou(Welfare):
 class CouponProject(Welfare):
     ctype = models.CharField(max_length=1, choices=COUPON_TYPE, verbose_name=u"优惠券类型")
     amount =models.CharField(u'金额(xx元或x%)', max_length=10)
+    is_vip_bonus = models.BooleanField(u'适用VIP奖励', default=True)
     endtime = models.DateField(u"截止日期")
     introduction = models.TextField(u"使用说明",max_length=200)
     claim_limit = models.SmallIntegerField(u"限领次数", default=1)

@@ -197,10 +197,11 @@ def admin_finance(request):
                 res['res_msg'] = u"操作失败，返现重复！"
             else:
                 log.audit_result = True
-                if event.content_object.is_vip_bonus:
-                    cash = get_vip_bonus(event_user, cash, 'finance')
+                
                 # translist = charge_money(event_user, '0', cash, u'福利返现')
                 translist = charge_money(event_user, '0', cash, project_title)  #jzy
+                if event.content_object.is_vip_bonus:
+                    get_vip_bonus(event_user, cash, 'finance')
                 scoretranslist = charge_score(event_user, '0', score, u'福利返现（积分）')
                 if translist and scoretranslist:
                     event.audit_state = '0'
@@ -310,10 +311,10 @@ def admin_task(request):
                 res['res_msg'] = u"操作失败，返现重复！"
             else:
                 log.audit_result = True
-                if event.content_object.is_vip_bonus:
-                    cash = get_vip_bonus(event_user, cash, 'task')
                 # translist = charge_money(event_user, '0', cash, u'福利返现')
                 translist = charge_money(event_user, '0', cash, project_title)  #jzy
+                if event.content_object.is_vip_bonus:
+                    get_vip_bonus(event_user, cash, 'task')
                 scoretranslist = charge_score(event_user, '0', score, u'福利返现（积分）')
                 if translist and scoretranslist:
                     event.audit_state = '0'
