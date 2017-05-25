@@ -1421,7 +1421,7 @@ img{
 #content .others .hy-p {display:inline-block;width:45%;text-decoration:underline;}
 /*mouseover-show-box*/
 .titleShow {
-  max-width: 500px;
+  max-width: 350px;
   position: absolute;
   font: 14px/1.5 "微软雅黑";
   color: #fff;
@@ -1430,4 +1430,5 @@ img{
   padding: 6px;
   background: #222 url(http://ww2.sinaimg.cn/mw690/70f52a24gw1e9w0u9cti1j205a04djri.jpg) 0 0 repeat;
   word-break: break-word;
+  text-align: left;
 }
