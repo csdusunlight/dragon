@@ -308,9 +308,9 @@ def get_admin_coupon_page(request):
     if adminname:
         item_list = item_list.filter(audited_logs__user__username=adminname)
     if projecttype=='1':
-        item_list = item_list.filter(coupon__type = '0')
+        item_list = item_list.filter(coupon__project__ctype = '0')
     if projecttype=='2':
-        item_list = item_list.filter(coupon__type = '1')
+        item_list = item_list.filter(coupon__project__ctype = '1')
     item_list = item_list.filter(event_type='4', audit_state=state).select_related('user').order_by('time')
 
     paginator = Paginator(item_list, size)
@@ -394,9 +394,9 @@ def export_coupon_excel(request):
     if adminname:
         item_list = item_list.filter(audited_logs__user__username=adminname)
     if projecttype=='1':
-        item_list = item_list.filter(coupon__type = '0')
+        item_list = item_list.filter(coupon__project__ctype = '0')
     if projecttype=='2':
-        item_list = item_list.filter(coupon__type = '1')
+        item_list = item_list.filter(coupon__project__ctype = '1')
     item_list = item_list.filter(event_type='4', audit_state=state).select_related('user').order_by('time')
          
     data = []
@@ -413,8 +413,8 @@ def export_coupon_excel(request):
         invest_amount= con.invest_amount
         remark= con.remark
         result = con.audit_state
-        return_amount=u"无" if con.audit_state!='0' or not con.translist.exists() else str(con.translist.first().transAmount),
-        reason='' if con.audit_state!='2' or not con.audited_logs.exists() else con.audited_logs.first().reason,
+        return_amount=u"无" if con.audit_state!='0' or not con.translist.exists() else con.translist.first().transAmount/100
+        reason='' if con.audit_state!='2' or not con.audited_logs.exists() else con.audited_logs.first().reason
         data.append([id,user_type,user_mobile, time_sub,company, zhifubao,mobile_sub, term,invest_amount, remark, result, return_amount, reason])
     w = Workbook()     #创建一个工作簿
     ws = w.add_sheet(u'待审核记录')     #创建一个工作表
