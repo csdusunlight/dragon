@@ -24,6 +24,7 @@ import xlrd
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from account.vip import vip_judge, get_vip_bonus
+import json
 # Create your views here.
 logger = logging.getLogger('wafuli')
 def index(request):
@@ -1483,7 +1484,6 @@ def get_admin_investrecord_page(request):
 def send_multiple_msg(request):
     res={'code':0,}
     user = request.user
-    content = request.POST.get('content')
     if not ( user.is_authenticated() and user.is_staff):
         res['code'] = -1
         res['url'] = reverse('admin:login') + "?next=" + reverse('admin_investrecord')
@@ -1492,39 +1492,42 @@ def send_multiple_msg(request):
         res['code'] = -5
         res['res_msg'] = u'您没有操作权限！'
         return JsonResponse(res)
+    content = request.POST.get('content')
     if not content or len(content)==0:
         res['code'] = -6
         res['res_msg'] = u'短信内容不能为空！'
         return JsonResponse(res)
-    item_list = Invest_Record.objects.all()
-    startTime = request.POST.get("startTime", None)
-    endTime = request.POST.get("endTime", None)
-    if startTime and endTime:
-        s = datetime.datetime.strptime(startTime,'%Y-%m-%d')
-        e = datetime.datetime.strptime(endTime,'%Y-%m-%d')
-        item_list = item_list.filter(invest_date__range=(s,e))
-    amountfrom = request.POST.get("amountfrom", None)
-    amountto = request.POST.get("amountto", None)
-    if not amountfrom is None and not amountto is None:
-        item_list = item_list.filter(invest_amount__range=(amountfrom,amountto))
-    username = request.POST.get("username", None)
-    if username:
-        item_list = item_list.filter(user_name=username)
-
-    mobile = request.POST.get("mobile", None)
-    if mobile:
-        item_list = item_list.filter(invest_mobile=mobile)
-
-    projectname = request.POST.get("projectname", None)
-    if projectname:
-        item_list = item_list.filter(invest_company__contains=projectname)
-    phone_set = set([])
-    for item in item_list:
-        phone = item.invest_mobile
-        if phone and len(phone)==11:
-            phone_set.add(phone)
-    if len(phone_set)>0:
-        phone_list = list(phone_set)
+    phones = request.POST.get('phones')
+    phone_list = json.loads(phones)
+#     item_list = Invest_Record.objects.all()
+#     startTime = request.POST.get("startTime", None)
+#     endTime = request.POST.get("endTime", None)
+#     if startTime and endTime:
+#         s = datetime.datetime.strptime(startTime,'%Y-%m-%d')
+#         e = datetime.datetime.strptime(endTime,'%Y-%m-%d')
+#         item_list = item_list.filter(invest_date__range=(s,e))
+#     amountfrom = request.POST.get("amountfrom", None)
+#     amountto = request.POST.get("amountto", None)
+#     if not amountfrom is None and not amountto is None:
+#         item_list = item_list.filter(invest_amount__range=(amountfrom,amountto))
+#     username = request.POST.get("username", None)
+#     if username:
+#         item_list = item_list.filter(user_name=username)
+# 
+#     mobile = request.POST.get("mobile", None)
+#     if mobile:
+#         item_list = item_list.filter(invest_mobile=mobile)
+# 
+#     projectname = request.POST.get("projectname", None)
+#     if projectname:
+#         item_list = item_list.filter(invest_company__contains=projectname)
+#     phone_set = set(phone_list)
+#     for item in phone_list:
+#         phone = item.invest_mobile
+#         if phone and len(phone)==11:
+#             phone_set.add(phone)
+    if len(phone_list)>0:
+        phone_list = list(set(phone_list))
         length = len(phone_list)
         times = length/500
         treg = 0
@@ -1548,5 +1551,5 @@ def send_multiple_msg(request):
             res['res_msg'] = u"发送短信失败，实际发送数量：" + str(tnum)
     else:
         res['code'] = 0
-        res['res_msg'] = u"不存在符合条件的手机号码"
+        res['res_msg'] = u"没有选中任何手机号码"
     return JsonResponse(res)
