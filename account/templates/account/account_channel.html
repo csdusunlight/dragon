@@ -484,6 +484,7 @@
           for (var i = 0;i<Data.length;i++) {
             Data2[i] = Data[i].join('|');
           }
+          var repeat_num = re_num;
           var data = Data2.join('&');
           console.log(data);
 		   $.ajax({
@@ -495,8 +496,8 @@
 	  			},
 	  			success:function(ret){
 	  				if(ret.code==0){
-	  					$(".data-item-submit").text(re_num + ret.exist_num + ret.suc_num);
-              $(".data-item-repeat").text(re_num);
+	  					$(".data-item-submit").text(repeat_num + ret.exist_num + ret.suc_num);
+              $(".data-item-repeat").text(repeat_num);
               $(".data-item-exist").text(ret.exist_num);
               $(".data-item-valid").text(ret.suc_num);
               popupInItem();
