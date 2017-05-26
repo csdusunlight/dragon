@@ -139,6 +139,7 @@ def submit_itembyitem(request):
         return JsonResponse(ret)
     table = data.split('$')
     suc_num = 0
+    exist_num = 0
     for row in table:
         temp = row.split('|')
         news = Finance.objects.get(id=temp[0])
@@ -150,6 +151,7 @@ def submit_itembyitem(request):
         try:
             with transaction.atomic():
                 if news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
+                    exist_num += 1
                     raise ValueError('This invest_account is repective in project:' + str(news.id))
                 else:
                     UserEvent.objects.create(user=request.user, invest_time=time, event_type='1', invest_account=telnum, invest_term=term,
@@ -157,7 +159,7 @@ def submit_itembyitem(request):
                     suc_num += 1
         except Exception, e:
             logger.info(e)
-    result = {'code':0, 'suc_num':suc_num}
+    result = {'code':0, 'suc_num':suc_num, 'exist_num':exist_num}
     return JsonResponse(result)
 def export_audit_result(request):
     user = request.user
@@ -192,11 +194,11 @@ def export_audit_result(request):
                 ws.write(i+1,j,lis[j],style1)
             else:
                 ws.write(i+1,j,lis[j])
-    sio = StringIO.StringIO()  
+    sio = StringIO.StringIO()
     w.save(sio)
-    sio.seek(0)  
-    response = HttpResponse(sio.getvalue(), content_type='application/vnd.ms-excel')  
-    response['Content-Disposition'] = 'attachment; filename=审核结果.xls'  
+    sio.seek(0)
+    response = HttpResponse(sio.getvalue(), content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=审核结果.xls'
     response.write(sio.getvalue())
-    
-    return response 
+
+    return response
