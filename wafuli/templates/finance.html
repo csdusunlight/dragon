@@ -62,7 +62,7 @@ $(function(){
 	    run:true,
 	    content:data2,
 	});
- 	$("#tab li.safe").click(function(){
+ 	$("#tab li").click(function(){
 		if($(this).attr("class")!="cur"){
 			$(this).toggleClass("cur").siblings().removeClass("cur")
 			var index = $(this).index();
@@ -129,11 +129,10 @@ $(function(){
             <span class="rep-ones"> <img src="{% static 'images/shape.png' %}"/>正在进行的理财福利</span>
             <div class="tabList" style="float:right;">
                 <ul>
-                    <li class="safe cur">全部</li>
-                    <li class="safe">新手投资</li>
-                    <li class="safe">稳健投资</li>
-                    <li class="safe">高收益区</li>
-                    <li>高风险区</li>
+                    <li class="cur">全部</li>
+                    <li>新手投资</li>
+                    <li>稳健投资</li>
+                    <li>高收益区</li>
                 </ul>
               </div>
             <div class="tabCon">
