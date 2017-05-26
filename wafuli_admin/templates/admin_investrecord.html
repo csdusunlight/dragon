@@ -39,39 +39,39 @@ $(document).ready(function(){
 	});
 
 	$("#search").click(function(){
-		send_msg_para={};
+//		send_msg_para={};
 		var startTime = $("#startTime").val();
 		var endTime = $("#endTime").val();
 		var newurl = url;
 		if(startTime && endTime){
 			newurl += "&startTime="+startTime;
 			newurl += "&endTime="+endTime;
-			send_msg_para.startTime = startTime;
-			send_msg_para.endTime=endTime;
+//			send_msg_para.startTime = startTime;
+//			send_msg_para.endTime=endTime;
 		}
 		var amountfrom = $("#amountfrom").val();
 		var amountto = $("#amountto").val();
 		if(amountfrom && amountto){
 			newurl += "&amountfrom="+amountfrom;
 			newurl += "&amountto="+amountto;
-			send_msg_para.amountfrom=amountfrom;
-			send_msg_para.amountto=amountto;
+//			send_msg_para.amountfrom=amountfrom;
+//			send_msg_para.amountto=amountto;
 		}
 		var username = $("#username").val();
 		var mobile = $("#mobile").val();
 		if(username){
 			newurl += "&username="+username;
-			send_msg_para.username=username;
+//			send_msg_para.username=username;
 		}
 		if(mobile){
 			newurl += "&mobile="+mobile;
-			send_msg_para.mobile=mobile;
+//			send_msg_para.mobile=mobile;
 		}
 
 		var projectname = $("#projectname").val();
 		if(projectname){
 			newurl += "&projectname="+adminname;
-			send_msg_para.projectname=projectname;
+//			send_msg_para.projectname=projectname;
 		}
 		$("#page").empty();
 		$("#pagedata").ajaxPage({
@@ -92,7 +92,8 @@ $(document).ready(function(){
         phones.push(content);
       }
     }
-    console.log(phones);
+    var jsonString = JSON.stringify(phones);
+    console.log(jsonString);
     phones = [];
     // 手机号获取-----end
 
@@ -102,6 +103,7 @@ $(document).ready(function(){
 			return;
 		}
 		send_msg_para.content = content;
+		send_msg_para.phones = jsonString;
 		$.ajax({
 			url:"{%url 'send_multiple_msg' %}",
 			dataType:"json",
