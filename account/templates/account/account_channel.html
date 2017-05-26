@@ -406,6 +406,7 @@
       var promptNumber = 0;
       var promptStr = "温馨提示：";
       var re_num = 0;   //重复提交条数
+      var repeat_num = 0;   //存储重复提交条数
       $("#upload_byitem").on("click", function() {
         $(".submit-item-box").each(function(index,domEle){
           var project_select01 = $(this).find(".project_select"),
@@ -484,7 +485,7 @@
           for (var i = 0;i<Data.length;i++) {
             Data2[i] = Data[i].join('|');
           }
-          var repeat_num = re_num;
+          repeat_num = re_num;
           var data = Data2.join('&');
           console.log(data);
 		   $.ajax({
