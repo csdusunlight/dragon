@@ -103,7 +103,9 @@
                     <h3>数据提交成功</h3>
                     <p>提交数据：<span class="data-item-submit"></span>项</p>
                     <p class="repeat-list">提交重复数据：<span class="data-item-repeat"></span>项</p>
+                    <p>重复手机号：<span class="data-item-repeat-phone"></span></p>
                     <p>已存在的数据：<span class="data-item-exist"></span>项</p>
+                    <p>已存在手机号：<span class="data-item-exist-phone"></span></p>
                     <p>有效提交：<span class="data-item-valid"></span>项</p>
                     <p style="text-align: left;padding-left: 38px;">注：<br/>
                       已存在的数据：挖福利数据库中已存在，其他用户或自己之前提交过的数据<br />
@@ -407,6 +409,7 @@
       var promptStr = "温馨提示：";
       var re_num = 0;   //重复提交条数
       var repeat_num = 0;   //存储重复提交条数
+      var re_phone = "";
       $("#upload_byitem").on("click", function() {
         $(".submit-item-box").each(function(index,domEle){
           var project_select01 = $(this).find(".project_select"),
@@ -473,6 +476,7 @@
             Data.push(data_list);
           }else {
             re_num++;
+            re_phone = re_phone + String(data_list[2]) + ", ";
           }
           //    数据去重-----------end
           // Data.push(data_list.join('|'));
@@ -488,6 +492,7 @@
           }
           repeat_num = re_num;
           var data = Data2.join('$');
+          console.log(re_phone);
           console.log(data);
 		   $.ajax({
 	  			url:"{%url 'submit_itembyitem' %}",
@@ -500,7 +505,9 @@
 	  				if(ret.code==0){
 	  					$(".data-item-submit").text(repeat_num + ret.exist_num + ret.suc_num);
               $(".data-item-repeat").text(repeat_num);
+              $(".data-item-repeat-phone").text(repeat_phone);
               $(".data-item-exist").text(ret.exist_num);
+              $(".data-item-exist-phone").text(ret.exist_phone);
               $(".data-item-valid").text(ret.suc_num);
               popupInItem();
 	  				}
@@ -515,6 +522,7 @@
 	  	  });
           Data = [];
           re_num = 0;
+          re_phone = "";
         }else {
           Data = [];
           $(".hint-msg").html('共有<span class="error-num">'+ promptNumber +'</span>项填写格式不正确，请检查后按照规范重新填写后提交！');
