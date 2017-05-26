@@ -638,8 +638,9 @@ def import_finance_excel(request):
             if result:
                 amount = int(row[2]*100)
                 log.audit_result = True
-                amount = get_vip_bonus(event_user, amount, 'finance')
                 translist = charge_money(event_user, '0', amount, u'福利返现')
+                if event.content_object.is_vip_bonus:
+                    get_vip_bonus(event_user, amount, 'finance')
                 if translist:
                     event.audit_state = '0'
                     translist.user_event = event
