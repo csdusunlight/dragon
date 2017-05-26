@@ -409,7 +409,8 @@
       var promptStr = "温馨提示：";
       var re_num = 0;   //重复提交条数
       var repeat_num = 0;   //存储重复提交条数
-      var re_phone = "";
+      var re_phone = "";   //重复手机号
+      var repeat_phone = "";  //存储重复手机号
       $("#upload_byitem").on("click", function() {
         $(".submit-item-box").each(function(index,domEle){
           var project_select01 = $(this).find(".project_select"),
@@ -491,6 +492,7 @@
             Data2.push(Data[i].join('|'));
           }
           repeat_num = re_num;
+          repeat_phone = re_phone;
           var data = Data2.join('$');
           console.log(re_phone);
           console.log(data);
@@ -505,7 +507,7 @@
 	  				if(ret.code==0){
 	  					$(".data-item-submit").text(repeat_num + ret.exist_num + ret.suc_num);
               $(".data-item-repeat").text(repeat_num);
-              $(".data-item-repeat-phone").text(re_phone);
+              $(".data-item-repeat-phone").text(repeat_phone);
               $(".data-item-exist").text(ret.exist_num);
               $(".data-item-exist-phone").text(ret.exist_phone);
               $(".data-item-valid").text(ret.suc_num);
