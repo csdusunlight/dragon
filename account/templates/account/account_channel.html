@@ -483,10 +483,10 @@
           console.log(re_num);
           console.log(Data);
           for (var i = 0;i<Data.length;i++) {
-            Data2[i] = Data[i].join('|');
+            Data2.push(Data[i].join('|'));
           }
           repeat_num = re_num;
-          var data = Data2.join('&');
+          var data = Data2.join('$');
           console.log(data);
 		   $.ajax({
 	  			url:"{%url 'submit_itembyitem' %}",
