@@ -139,8 +139,8 @@ def submit_itembyitem(request):
         return JsonResponse(ret)
     table = data.split('$')
     suc_num = 0
-    exist_num = 0
-    exist_phone = ""
+    exist_num = 0   #jzy
+    exist_phone = ""   #jzy
     for row in table:
         temp = row.split('|')
         news = Finance.objects.get(id=temp[0])
@@ -152,8 +152,8 @@ def submit_itembyitem(request):
         try:
             with transaction.atomic():
                 if news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
-                    exist_num += 1
-                    exist_phone = exist_phone + telnum + ", "
+                    exist_num += 1   #jzy
+                    exist_phone = exist_phone + telnum + ", "   #jzy
                     raise ValueError('This invest_account is repective in project:' + str(news.id))
                 else:
                     UserEvent.objects.create(user=request.user, invest_time=time, event_type='1', invest_account=telnum, invest_term=term,
@@ -161,7 +161,7 @@ def submit_itembyitem(request):
                     suc_num += 1
         except Exception, e:
             logger.info(e)
-    result = {'code':0, 'suc_num':suc_num, 'exist_num':exist_num, 'exist_phone':exist_phone}
+    result = {'code':0, 'suc_num':suc_num, 'exist_num':exist_num, 'exist_phone':exist_phone}   #jzy
     return JsonResponse(result)
 def export_audit_result(request):
     user = request.user
