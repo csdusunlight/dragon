@@ -7,7 +7,7 @@ Created on 2017年4月23日
 from account.transaction import charge_money
 from wafuli.models import Message
 VIP_BONUS = {
-    0:{'finance':1, 'task':1, 'money':0,},
+    0:{'finance':0, 'task':0, 'money':0,},
     1:{'finance':0.01, 'task':0.10, 'money':500,},
     2:{'finance':0.02, 'task':0.15, 'money':3000,},
     3:{'finance':0.03, 'task':0.16, 'money':20000,},

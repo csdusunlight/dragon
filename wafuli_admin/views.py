@@ -1373,6 +1373,10 @@ def get_admin_charge_page(request):
     adminname = request.GET.get("adminname", None)
     if adminname:
         item_list = item_list.filter(admin_event__admin_user__username=adminname)
+        
+    charge_reason = request.GET.get("charge_reason", None)
+    if charge_reason:
+        item_list = item_list.filter(reason__contains=charge_reason)
 
     paginator = Paginator(item_list, size)
     try:
