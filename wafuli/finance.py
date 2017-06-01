@@ -68,16 +68,16 @@ def get_finance_page(request):
     project_type = str(project_type)
     project_status = str(project_status)
 
-    if company_name != '0':  #全部
-        for item in company_item
-            item = unicode(item, "utf-8")
-        item_list = item_list.filter(company__in=company_item)
-    if company_background != '0':    #不限
-        company_background = unicode(company_background, "utf-8")
-        item_list = item_list.filter(background=company_background)
-    if invest_account != '0':    #不限
-        invest_account = unicode(invest_account, "utf-8")
-        item_list = item_list.filter(marks__name=invest_account)
+    # if company_name != '0':  #全部
+    #     for item in company_item
+    #         item = unicode(item, "utf-8")
+    #     item_list = item_list.filter(company__in=company_item)
+    # if company_background != '0':    #不限
+    #     company_background = unicode(company_background, "utf-8")
+    #     item_list = item_list.filter(background=company_background)
+    # if invest_account != '0':    #不限
+    #     invest_account = unicode(invest_account, "utf-8")
+    #     item_list = item_list.filter(marks__name=invest_account)
     if project_type != '0':
         item_list = item_list.filter(f_type=project_type)
     if project_status == '0':
