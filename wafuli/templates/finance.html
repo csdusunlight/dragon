@@ -152,20 +152,20 @@ $(function(){
     newurl=url + "&company_name=" + company_name + "&company_background=" + company_background + "&invest_account=" + invest_account + "&project_type=" + project_type + "&project_status=" + project_status;
     console.log(newurl)
 
+  	$("#pagedata1").ajaxPage({
+  	    url:newurl,
+  	    pageId:$("#page1"),
+  	    pageSize:8,
+  	    run:true,
+  	    content:data,
+  	    complete:pagecallback,
+  	});
+    $(".more-box").click(function(){
+      $(this).toggleClass("more");
+      $(".filter-box-company").toggleClass("more");
+    })
   })
 
-  $(".more-box").click(function(){
-    $(this).toggleClass("more");
-    $(".filter-box-company").toggleClass("more");
-  })
-	$("#pagedata1").ajaxPage({
-	    url:newurl,
-	    pageId:$("#page1"),
-	    pageSize:8,
-	    run:true,
-	    content:data,
-	    complete:pagecallback,
-	});
 
  	// $("#tab li").click(function(){
 		// if($(this).attr("class")!="cur"){
@@ -308,9 +308,6 @@ $(function(){
           </li>
           <li>
             <a href="javascript:void(0);">稳健投资</a>
-          </li>
-          <li>
-            <a href="javascript:void(0);">高息高返</a>
           </li>
         </ul>
       </div>
