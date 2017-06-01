@@ -51,6 +51,10 @@ $(document).ready(function(){
 		if(adminname){
 			newurl += "&adminname="+adminname;
 		}
+		charge_reason = $("#charge_reason").val();
+		if(charge_reason){
+			newurl += "&charge_reason="+charge_reason;
+		}
 		$("#page").empty();
 		$("#pagedata").ajaxPage({
 		    url:newurl, 
@@ -93,6 +97,10 @@ $(document).ready(function(){
                                         	<td>
                                             	<i>处&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;理&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人：</i>
                                                 <input id="adminname" type="text" />
+                                            </td>
+                                            <td>
+                                            	<i>变动原因：</i>
+                                                <input id="charge_reason" type="text" />
                                             </td>
                                         </tr>
                                     </table>

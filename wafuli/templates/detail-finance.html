@@ -90,6 +90,7 @@
 			$.ajax({
 				url:"{%url 'expsubmit_finance' %}",
 				type:'post',
+				async:false,
 				data:{
 					type:type,
 					id:id,
