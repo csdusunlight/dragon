@@ -62,22 +62,23 @@ $(function(){
    	// $('.finan_h a').toggleClass("vo");
 
   var newurl = url;
-  var index = 0,
+  var index = "0",
     index_text;
-  var company_name = "全部",
-    company_background = "不限",
-    invest_account = 0,
-    project_type = 0,
-    project_status = 0;
+  var company_name = "0",
+    company_background = "0",
+    invest_account = "0",
+    project_type = "0",
+    project_status = "0";
 
   $(".fiter-item-container li").click(function() {
     var parent = $(this).parent(".filter-item");
     if($(parent).hasClass("company-name")) {
       index = $(this).index();
       var text_item_box = [];
-      if($(this).index() == 0) {
+      if($(this).index() == "0") {
         $(this).addClass("on").siblings().removeClass("on");
         text_item_box.push($(this).children().text());
+        company_name = "0";
       } else {
         $(".company-name li:first").removeClass("on");
         $(this).toggleClass("on");
@@ -91,9 +92,9 @@ $(function(){
           text_item_box = [];
           text_item_box.push($(".company-name li:first").children().text());
         }
+        var text_item = $(this).children().text();
+        company_name = text_item_box.join('$');
       }
-      var text_item = $(this).children().text();
-      company_name = text_item_box.join('$');
     }
 
     if($(parent).hasClass("company-background")) {
@@ -110,7 +111,7 @@ $(function(){
           index_text = "上市系";
           break;
         default:
-          index_text = "不限";
+          index_text = "0";
           break;
       }
       var text_item = $(this).children().text();
@@ -128,7 +129,7 @@ $(function(){
           index_text = "复投";
           break;
         default:
-          index_text = "不限";
+          index_text = "0";
           break;
       }
       var text_item = $(this).children().text();
@@ -160,7 +161,7 @@ $(function(){
 	$("#pagedata1").ajaxPage({
 	    url:newurl,
 	    pageId:$("#page1"),
-	    pageSize:5,
+	    pageSize:8,
 	    run:true,
 	    content:data,
 	    complete:pagecallback,

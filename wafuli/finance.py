@@ -45,8 +45,8 @@ def finance(request, id=None):
 def get_finance_page(request):
     res={'code':0,}
     page = request.GET.get("page", None)
-    size = request.GET.get("size", 5)
-    company_name = request.GET.get("company_name", "全部")
+    size = request.GET.get("size", 8)
+    company_name = request.GET.get("company_name", 0)
     company_background = request.GET.get("company_background", 0)
     invest_account = request.GET.get("invest_account", 0)
     project_type = request.GET.get("project_type", 0)
@@ -56,7 +56,7 @@ def get_finance_page(request):
     try:
         size = int(size)
     except ValueError:
-        size = 6
+        size = 9
     if not page or size <= 0:
         raise Http404
     item_list = Finance.objects.filter(level__in=['normal','all'])
@@ -68,11 +68,11 @@ def get_finance_page(request):
     project_type = str(project_type)
     project_status = str(project_status)
 
-    if company_name != '\u5168\u90e8\u000d\u000a':  #全部
+    if company_name != '0':  #全部
         item_list = item_list.filter(company__in=company_item)
-    if company_background != '\u4e0d\u9650\u000d\u000a':    #不限
+    if company_background != '0':    #不限
         item_list = item_list.filter(background=company_background)
-    if invest_account != '\u4e0d\u9650\u000d\u000a':    #不限
+    if invest_account != '0':    #不限
         item_list = item_list.filter(marks__name=invest_account)
     if project_type != '0':
         item_list = item_list.filter(f_type__in=["1","2"])
