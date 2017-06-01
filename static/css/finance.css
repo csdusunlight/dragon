@@ -127,7 +127,7 @@ a {
 }
 /*item-container*/
 .item-container {
-	margin-top: 30px;
+	margin: 30px auto 0;
 	width: 1112px;
 	overflow: hidden;
 }
@@ -145,6 +145,7 @@ a {
 .item-content>p {
 	position: relative;
 	margin-left: 10px;
+	text-align: left;
 }
 .item-name span {
 	display: inline-block;

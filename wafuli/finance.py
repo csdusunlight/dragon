@@ -68,18 +68,18 @@ def get_finance_page(request):
     project_type = str(project_type)
     project_status = str(project_status)
 
-    # if company_name != '全部':
-    #     item_list = item_list.filter(company__in=company_item)
-    # if company_background != '不限':
-    #     item_list = item_list.filter(background=company_background)
-    # if invest_account != '不限':
-    #     item_list = item_list.filter(marks__name=invest_account)
-    # if project_type != '0':
-    #     item_list = item_list.filter(f_type__in=["1","2"])
-    # if project_status == '0':
-    #     item_list = item_list.filter(state__in=["1","2"])
-    # if project_status != '0':
-    #     item_list = item_list.filter(state=project_status)
+    if company_name != '\u5168\u90e8\u000d\u000a':  #全部
+        item_list = item_list.filter(company__in=company_item)
+    if company_background != '\u4e0d\u9650\u000d\u000a':    #不限
+        item_list = item_list.filter(background=company_background)
+    if invest_account != '\u4e0d\u9650\u000d\u000a':    #不限
+        item_list = item_list.filter(marks__name=invest_account)
+    if project_type != '0':
+        item_list = item_list.filter(f_type__in=["1","2"])
+    if project_status == '0':
+        item_list = item_list.filter(state__in=["1","2"])
+    if project_status != '0':
+        item_list = item_list.filter(state=project_status)
 
     paginator = Paginator(item_list, size)
     try:
