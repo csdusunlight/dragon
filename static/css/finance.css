@@ -20,6 +20,7 @@ a {
 	width: 1112px;
 	color: #2d2d2d;
 	border: 1px solid #e4e4e4;
+	margin: 30px auto 0;
 }
 .fiter-title {
 	padding: 0 20px;
@@ -48,7 +49,7 @@ a {
 	border-radius: 4px;
 	text-align: center;
 	color: #a5a5a5;
-	
+
 }
 .fiter-content {
 	padding: 14px;
@@ -62,6 +63,7 @@ a {
 }
 .filter-box-company .filter-item {
 	width: 76%;
+	text-align: left;
 }
 .filter-box-company .more-box  {
 	float: right;
@@ -135,7 +137,7 @@ a {
 	margin-right: 20px;
 	margin-bottom: 20px;
 	border: 1px solid #e4e4e4;
-	
+
 }
 .item-content:nth-child(4n) {
 	margin-right: 0;
@@ -189,4 +191,4 @@ a {
 .item-year span {
 	color: #fe5450;
 }
- 
+
