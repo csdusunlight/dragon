@@ -42,11 +42,11 @@ def index(request):
     exchange_list = ExchangeRecord.objects.all()[0:10]
     strategy_list = Press.objects.filter(type='2')[0:6]
     info = Information.objects.filter(is_display=True).first()
-    context = {'ad_list':ad_list, 
+    context = {'ad_list':ad_list,
                'hongbao_list': hongbao_list,
-               'baoyou_list': baoyou_list, 
-               'youhuiquan_list': youhuiquan_list, 
-#                'task_list': task_list, 
+               'baoyou_list': baoyou_list,
+               'youhuiquan_list': youhuiquan_list,
+#                'task_list': task_list,
                'announce_list':announce_list,
                'finance_list1': finance_list1,
                'finance_list2': finance_list2,
@@ -65,7 +65,7 @@ def index(request):
     task_list = list(Task.objects.filter(state__in=['1','2'],type='senior').order_by("state","-news_priority","-pub_date")[0:2])
     if len(task_list)==2:
         context.update(task5=task_list[0],task6=task_list[1])
-        
+
     try:
         statis = DayStatis.objects.get(date=date.today())
     except:
@@ -76,7 +76,7 @@ def index(request):
     if glo_statis:
         all_wel_num = glo_statis.all_wel_num
         withdraw_total = int(glo_statis.award_total/100.0)
-        
+
     else:
         withdraw_total = 0
         all_wel_num = 0
@@ -120,7 +120,7 @@ def finance(request, id=None):
                    'table':table,
         }
         return render(request, 'detail-finance.html', context)
-        
+
 def task(request, id=None):
     if id is None:
         ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='3'),is_hidden=False)[0:8]
@@ -355,7 +355,7 @@ def get_commodity_page(request):
     # If page is out of range (e.g. 9999), deliver last page of results.
         contacts = paginator.page(paginator.num_pages)
     data = []
-    for con in contacts:        
+    for con in contacts:
         i = {"name":con.name,
              "price":con.price,
              "url":con.url,
@@ -377,7 +377,7 @@ def lookup_order(request):
     if not request.user.is_authenticated():
         result['code'] = -1
         result['url'] = reverse('login') + "?next=" + reverse('account_score')
-        return JsonResponse(result)   
+        return JsonResponse(result)
     id = request.GET.get("id", None)
     if not id:
         return Http404
@@ -387,7 +387,7 @@ def lookup_order(request):
         return Http404
     try:
         record = ExchangeRecord.objects.get(tranlist_id=id)
-    except ExchangeRecord.DoesNotExist: 
+    except ExchangeRecord.DoesNotExist:
         result['code'] = 1
     except Exception as e:
         logger.error(e.reason)
@@ -406,7 +406,7 @@ def submit_order(request):
     if not request.user.is_authenticated():
         result['code'] = -1
         result['url'] = reverse('login') + "?next=" + reverse('account_score')
-        return JsonResponse(result)   
+        return JsonResponse(result)
     name = request.GET.get("name", '')
     tel = request.GET.get("tel", '')
     addr = request.GET.get("addr", '')
@@ -569,7 +569,7 @@ def get_wel_page(request):
     # If page is out of range (e.g. 9999), deliver last page of results.
         contacts = paginator.page(paginator.num_pages)
     data = []
-    for con in contacts:        
+    for con in contacts:
         i = {"title":con.title,
              "url":con.url,
              "time":con.time_limit,
@@ -610,7 +610,7 @@ def get_press_page(request):
     # If page is out of range (e.g. 9999), deliver last page of results.
         contacts = paginator.page(paginator.num_pages)
     data = []
-    for con in contacts:        
+    for con in contacts:
         i = {"title":con.title,
              "url":con.url,
              "time":con.pub_date.strftime("%Y-%m-%d"),
@@ -738,7 +738,7 @@ def information(request, type=None, page=None, id=None):
         hot_info_list = Information.objects.filter(is_display=True).order_by('-view_count')[0:6]
         return render(request, 'detail-information.html',{'info':info, 'hot_info_list':hot_info_list, 'type':'Information'})
 
-@login_required    
+@login_required
 def display_screenshot(request):
     id = request.GET.get('id', None)
     if not id:
