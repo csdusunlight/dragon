@@ -71,7 +71,7 @@ def get_finance_page(request):
     if company_name != '0':  #全部
         item_list = item_list.filter(company__in=company_item)
     if company_background != '0':    #不限
-        item_list = item_list.filter(background__contains=company_background)
+        item_list = item_list.filter(background=company_background)
     if invest_account != '0':    #不限
         item_list = item_list.filter(marks__name=invest_account)
     if project_type == '0':

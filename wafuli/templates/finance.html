@@ -70,6 +70,16 @@ $(function(){
     project_type = "0",
     project_status = "0";
 
+
+  $("#pagedata1").ajaxPage({
+      url:url,
+      pageId:$("#page1"),
+      pageSize:8,
+      run:true,
+      content:data,
+      complete:pagecallback,
+  });
+
   $(".fiter-item-container li").click(function() {
     var parent = $(this).parent(".filter-item");
     if($(parent).hasClass("company-name")) {
