@@ -42,7 +42,7 @@ def finance(request, id=None):
         }
         return render(request, 'detail-finance.html', context)
 
-def finance_add(request, id=None):
+def add_finance(request, id=None):
     if id is None:
         ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='4'),is_hidden=False)[0:8]
         context = {'ad_list':ad_list}
