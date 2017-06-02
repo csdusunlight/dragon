@@ -46,9 +46,9 @@ def get_finance_page(request):
     res={'code':0,}
     page = request.GET.get("page", None)
     size = request.GET.get("size", 8)
-    company_name = request.GET.get("company_name", 0)
-    company_background = request.GET.get("company_background", 0)
-    invest_account = request.GET.get("invest_account", 0)
+    company_name = request.GET.get("company_name", u'全部')
+    company_background = request.GET.get("company_background", u'不限')
+    invest_account = request.GET.get("invest_account", u'不限')
     project_type = request.GET.get("project_type", 0)
     project_status = request.GET.get("project_status", 0)
 
@@ -68,16 +68,16 @@ def get_finance_page(request):
     project_type = str(project_type)
     project_status = str(project_status)
 
-    if company_name != u'全部':  #全部
+    if company_name != u'全部':
         item_list = item_list.filter(company__in=company_item)
-    # if company_background != u'不限':  #全部
-    #     item_list = item_list.filter(background=company_background)
-    if company_background == '1':
-        item_list = item_list.filter(background__contains=u'民营系')
-    if company_background == '2':
-        item_list = item_list.filter(background__contains=u'国资系')
-    if company_background == '3':
-        item_list = item_list.filter(background__contains=u'上市系')
+    if company_background != u'不限':
+        item_list = item_list.filter(background=company_background)
+    # if company_background == '1':
+    #     item_list = item_list.filter(background__contains=u'民营系')
+    # if company_background == '2':
+    #     item_list = item_list.filter(background__contains=u'国资系')
+    # if company_background == '3':
+    #     item_list = item_list.filter(background__contains=u'上市系')
     if invest_account != u'不限':
         item_list = item_list.filter(marks__name=invest_account)
     if project_type == '0':
