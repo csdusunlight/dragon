@@ -61,16 +61,16 @@ def get_finance_page(request):
         raise Http404
     item_list = Finance.objects.filter(level__in=['normal','all'])
 
-    company_name = str(company_name)
+    # company_name = str(company_name)
     company_item = company_name.split('$')
-    company_background = str(company_background)
-    invest_account = str(invest_account)
+    # company_background = str(company_background)
+    # invest_account = str(invest_account)
     project_type = str(project_type)
     project_status = str(project_status)
 
-    if company_name != '0':  #全部
+    if company_name != u'全部':  #全部
         item_list = item_list.filter(company__in=company_item)
-    # if company_background != '0':  #全部
+    # if company_background != u'不限':  #全部
     #     item_list = item_list.filter(background=company_background)
     if company_background == '1':
         item_list = item_list.filter(background__contains=u'民营系')
@@ -78,7 +78,7 @@ def get_finance_page(request):
         item_list = item_list.filter(background__contains=u'国资系')
     if company_background == '3':
         item_list = item_list.filter(background__contains=u'上市系')
-    if invest_account != '0':
+    if invest_account != u'不限':
         item_list = item_list.filter(marks__name=invest_account)
     if project_type == '0':
         item_list = item_list.filter(f_type__in=["1","2"])

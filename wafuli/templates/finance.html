@@ -64,9 +64,9 @@ $(function(){
   var newurl = url;
   var index = "0",
     index_text;
-  var company_name = "0",
-    company_background = "0",
-    invest_account = "0",
+  var company_name = "全部",
+    company_background = "不限",
+    invest_account = "不限",
     project_type = "0",
     project_status = "0";
 
@@ -85,10 +85,10 @@ $(function(){
     if($(parent).hasClass("company-name")) {
       index = $(this).index();
       var text_item_box = [];
-      if($(this).index() == "0") {
+      if($(this).index() == 0) {
         $(this).addClass("on").siblings().removeClass("on");
         text_item_box.push($(this).children().text());
-        company_name = "0";
+        company_name = "全部";
       } else {
         $(".company-name li:first").removeClass("on");
         $(this).toggleClass("on");
@@ -139,7 +139,7 @@ $(function(){
           index_text = "复投";
           break;
         default:
-          index_text = "0";
+          index_text = "不限";
           break;
       }
       var text_item = $(this).children().text();
