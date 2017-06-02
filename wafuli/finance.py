@@ -66,7 +66,7 @@ def get_finance_page(request):
     project_status = str(project_status)
 
     if company_name != u'全部':
-        item_list = item_list.filter(company__contains__in=company_name)
+        item_list = item_list.filter(company__contains=company_name)
     if company_background != u'不限':
         item_list = item_list.filter(background__contains=company_background)
     # if company_background == '1':
