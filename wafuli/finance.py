@@ -68,7 +68,7 @@ def add_finance(request, id=None):
                    'other_wel_list':other_wel_list,
                    'table':table,
         }
-        return render(request, 'detail-finance-add.html', context)
+        return render(request, 'detail-finance.html', context)
 
 def get_finance_page(request):
     res={'code':0,}

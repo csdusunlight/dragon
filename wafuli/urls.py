@@ -22,7 +22,6 @@ urlpatterns = [
     url(r'^finance/$', 'wafuli.finance.finance', name='finance'),     #jzy
     url(r'^finance/(?P<id>[0-9]*)/$', 'wafuli.finance.finance', name='finance_detail'),   #jzy
     url(r'^add_finance/$', 'wafuli.finance.add_finance', name='add_finance'),     #jzy
-    url(r'^add_finance/(?P<id>[0-9]*)/$', 'wafuli.finance.add_finance', name='add_finance_detail'),   #jzy
     url(r'^task/$', 'wafuli.views.task', name='task'),
     url(r'^task/(?P<id>[0-9]*)/$', 'wafuli.views.task', name='task_detail'),
     url(r'^welfare/(?:(?P<id>[0-9]*)/)?$', 'wafuli.welfare.welfare', name='welfare'),
