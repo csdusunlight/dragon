@@ -83,66 +83,70 @@ $(function(){
   $(".fiter-item-container li").click(function() {
     var parent = $(this).parent(".filter-item");
     if($(parent).hasClass("company-name")) {
-      index = $(this).index();
-      var text_item_box = [];
-      if($(this).index() == 0) {
-        $(this).addClass("on").siblings().removeClass("on");
-        text_item_box.push($(this).children().text());
-        company_name = "全部";
-      } else {
-        $(".company-name li:first").removeClass("on");
-        $(this).toggleClass("on");
+      // index = $(this).index();
+      // var text_item_box = [];
+      // if($(this).index() == 0) {
+      //   $(this).addClass("on").siblings().removeClass("on");
+      //   text_item_box.push($(this).children().text());
+      //   company_name = "全部";
+      // } else {
+      //   $(".company-name li:first").removeClass("on");
+      //   $(this).toggleClass("on");
 
-        var item_choose = $(".company-name li.item.on");
-        for(var i = 0; i < item_choose.length; i++) {
-          text_item = $(item_choose[i]).children().text();
-          text_item_box.push(text_item);
-        }
-        if($(".company-name li.item.on").length == 0) {
-          $(".company-name li:first").addClass("on");
-          text_item_box = [];
-          text_item_box.push($(".company-name li:first").children().text());
-        }
-        company_name = text_item_box.join('$');
-      }
+      //   var item_choose = $(".company-name li.item.on");
+      //   for(var i = 0; i < item_choose.length; i++) {
+      //     text_item = $(item_choose[i]).children().text();
+      //     text_item_box.push(text_item);
+      //   }
+      //   if($(".company-name li.item.on").length == 0) {
+      //     $(".company-name li:first").addClass("on");
+      //     text_item_box = [];
+      //     text_item_box.push($(".company-name li:first").children().text());
+      //   }
+      //   company_name = text_item_box.join('$');
+      // }
+      $(this).addClass("on").siblings().removeClass("on");
+      index = $(this).index();
+      index_text = $(this).children().text();
+      company_name = text_item;
     }
 
     if($(parent).hasClass("company-background")) {
       $(this).addClass("on").siblings().removeClass("on");
       index = $(this).index();
-      switch (index){
-        case 1:
-          index_text = "民营系";
-          break;
-        case 2:
-          index_text = "国资系";
-          break;
-        case 3:
-          index_text = "上市系";
-          break;
-        default:
-          index_text = "不限";
-          break;
-      }
-      var text_item = $(this).children().text();
+      // switch (index){
+      //   case 1:
+      //     index_text = "民营系";
+      //     break;
+      //   case 2:
+      //     index_text = "国资系";
+      //     break;
+      //   case 3:
+      //     index_text = "上市系";
+      //     break;
+      //   default:
+      //     index_text = "不限";
+      //     break;
+      // }
+      index_text = $(this).children().text();
       company_background = index_text;
     }
 
     if($(parent).hasClass("invest-count")) {
       $(this).addClass("on").siblings().removeClass("on");
       index = $(this).index();
-      switch (index){
-        case 1:
-          index_text = "首投";
-          break;
-        case 2:
-          index_text = "复投";
-          break;
-        default:
-          index_text = "不限";
-          break;
-      }
-      var text_item = $(this).children().text();
+      // switch (index){
+      //   case 1:
+      //     index_text = "首投";
+      //     break;
+      //   case 2:
+      //     index_text = "复投";
+      //     break;
+      //   default:
+      //     index_text = "不限";
+      //     break;
+      // }
+      index_text = $(this).children().text();
       invest_account = index_text;
     }
 

@@ -61,12 +61,12 @@ def get_finance_page(request):
         raise Http404
     item_list = Finance.objects.filter(level__in=['normal','all'])
 
-    company_item = company_name.split('$')
+    # company_item = company_name.split('$')
     project_type = str(project_type)
     project_status = str(project_status)
 
     if company_name != u'全部':
-        item_list = item_list.filter(company__contains__in=company_item)
+        item_list = item_list.filter(company__contains__in=company_name)
     if company_background != u'不限':
         item_list = item_list.filter(background__contains=company_background)
     # if company_background == '1':
