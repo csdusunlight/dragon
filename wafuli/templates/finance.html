@@ -95,7 +95,7 @@ $(function(){
 
         var item_choose = $(".company-name li.item.on");
         for(var i = 0; i < item_choose.length; i++) {
-          text_item = tounicode($(item_choose[i]).children().text());
+          text_item = $(item_choose[i]).children().text();
           text_item_box.push(text_item);
         }
         if($(".company-name li.item.on").length == 0) {
@@ -112,13 +112,13 @@ $(function(){
       index = $(this).index();
       switch (index){
         case 1:
-          index_text = tounicode("民营系");
+          index_text = "民营系";
           break;
         case 2:
-          index_text = tounicode("国资系");
+          index_text = "国资系";
           break;
         case 3:
-          index_text = tounicode("上市系");
+          index_text = "上市系";
           break;
         default:
           index_text = "0";
@@ -133,10 +133,10 @@ $(function(){
       index = $(this).index();
       switch (index){
         case 1:
-          index_text = tounicode("首投");
+          index_text = "首投";
           break;
         case 2:
-          index_text = tounicode("复投");
+          index_text = "复投";
           break;
         default:
           index_text = "0";
