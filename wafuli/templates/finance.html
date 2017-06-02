@@ -112,13 +112,13 @@ $(function(){
       index = $(this).index();
       switch (index){
         case 1:
-          index_text = "民营系";
+          index_text = "1";
           break;
         case 2:
-          index_text = "国资系";
+          index_text = "2";
           break;
         case 3:
-          index_text = "上市系";
+          index_text = "3";
           break;
         default:
           index_text = "0";
@@ -170,10 +170,10 @@ $(function(){
   	    content:data,
   	    complete:pagecallback,
   	});
-    $(".more-box").click(function(){
-      $(this).toggleClass("more");
-      $(".filter-box-company").toggleClass("more");
-    })
+  })
+  $(".more-box").click(function(){
+    $(this).toggleClass("more");
+    $(".filter-box-company").toggleClass("more");
   })
 
 
