@@ -82,52 +82,16 @@ $(function(){
 
   $(".fiter-item-container li").click(function() {
     var parent = $(this).parent(".filter-item");
-    if($(parent).hasClass("company-name")) {
-      // index = $(this).index();
-      // var text_item_box = [];
-      // if($(this).index() == 0) {
-      //   $(this).addClass("on").siblings().removeClass("on");
-      //   text_item_box.push($(this).children().text());
-      //   company_name = "全部";
-      // } else {
-      //   $(".company-name li:first").removeClass("on");
-      //   $(this).toggleClass("on");
-
-      //   var item_choose = $(".company-name li.item.on");
-      //   for(var i = 0; i < item_choose.length; i++) {
-      //     text_item = $(item_choose[i]).children().text();
-      //     text_item_box.push(text_item);
-      //   }
-      //   if($(".company-name li.item.on").length == 0) {
-      //     $(".company-name li:first").addClass("on");
-      //     text_item_box = [];
-      //     text_item_box.push($(".company-name li:first").children().text());
-      //   }
-      //   company_name = text_item_box.join('$');
-      // }
-      $(this).addClass("on").siblings().removeClass("on");
-      index = $(this).index();
-      index_text = $(this).children().text();
-      company_name = index_text;
-    }
+    // if($(parent).hasClass("company-name")) {
+    //   $(this).addClass("on").siblings().removeClass("on");
+    //   index = $(this).index();
+    //   index_text = $(this).children().text();
+    //   company_name = index_text;
+    // }
 
     if($(parent).hasClass("company-background")) {
       $(this).addClass("on").siblings().removeClass("on");
       index = $(this).index();
-      // switch (index){
-      //   case 1:
-      //     index_text = "民营系";
-      //     break;
-      //   case 2:
-      //     index_text = "国资系";
-      //     break;
-      //   case 3:
-      //     index_text = "上市系";
-      //     break;
-      //   default:
-      //     index_text = "不限";
-      //     break;
-      // }
       index_text = $(this).children().text();
       company_background = index_text;
     }
@@ -135,17 +99,6 @@ $(function(){
     if($(parent).hasClass("invest-count")) {
       $(this).addClass("on").siblings().removeClass("on");
       index = $(this).index();
-      // switch (index){
-      //   case 1:
-      //     index_text = "首投";
-      //     break;
-      //   case 2:
-      //     index_text = "复投";
-      //     break;
-      //   default:
-      //     index_text = "不限";
-      //     break;
-      // }
       index_text = $(this).children().text();
       invest_account = index_text;
     }
@@ -174,28 +127,12 @@ $(function(){
   	    content:data,
   	    complete:pagecallback,
   	});
-  })
-  $(".more-box").click(function(){
-    $(this).toggleClass("more");
-    $(".filter-box-company").toggleClass("more");
-  })
+  // })
+  // $(".more-box").click(function(){
+  //   $(this).toggleClass("more");
+  //   $(".filter-box-company").toggleClass("more");
+  // })
 
-
- 	// $("#tab li").click(function(){
-		// if($(this).attr("class")!="cur"){
-		// 	$(this).toggleClass("cur").siblings().removeClass("cur")
-		// 	var index = $(this).index();
-		// 	$("#page1").empty();
-		// 	$("#pagedata1").ajaxPage({
-		// 	    url:url+"state=1&filter="+index,
-		// 	    pageId:$("#page1"),
-		// 	    pageSize:5,
-		// 	    run:true,
-		// 	    content:data,
-		// 	    complete:pagecallback,
-		// 	});
-		// }
- 	// });
 
     $('.flexslider').flexslider({
            directionNav: true,
@@ -234,7 +171,7 @@ function tounicode(data) {
       <h2>筛选平台</h2>
       <p>若您想要更稳健的理财项目<a href="#">请点这里</a></p>
     </div>
-    <div class="fiter-content">
+    <!-- <div class="fiter-content">
       <div class="filter-box-company">
         <div class="filter-box-name">
           平台名称：
@@ -300,7 +237,7 @@ function tounicode(data) {
             <a href="javascript:void(0);">上市系</a>
           </li>
         </ul>
-      </div>
+      </div> -->
 
       <div class="filter-box-company">
         <div class="filter-box-name">
