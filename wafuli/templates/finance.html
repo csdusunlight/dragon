@@ -29,7 +29,7 @@
 // 	'<span style="float: right;"><a target="_blank" href="{url}" class="lo-ap">立即投资</a></span></li>[/data]';
 
   var data='[data]<div class="item-content">'+
-  '<img src="{{pic_url}}" alt="商家logo" />'+
+  '<img src="{{img_url}}" alt="商家logo" />'+
   '<p class="item-name">{title}{marks}</p>'+
   '<p class="item-interest">官网利息<span>{interest}</span></p>'+
   '<p class="item-invest">起投金额<span>{amount}</span></p>'+
@@ -85,14 +85,14 @@ $(function(){
 
         var item_choose = $(".company-name li.item.on");
         for(var i = 0; i < item_choose.length; i++) {
-          text_item_box.push($(item_choose[i]).children().text());
+          text_item = tounicode($(item_choose[i]).children().text());
+          text_item_box.push(text_item);
         }
         if($(".company-name li.item.on").length == 0) {
           $(".company-name li:first").addClass("on");
           text_item_box = [];
           text_item_box.push($(".company-name li:first").children().text());
         }
-        var text_item = $(this).children().text();
         company_name = text_item_box.join('$');
       }
     }
@@ -102,13 +102,13 @@ $(function(){
       index = $(this).index();
       switch (index){
         case 1:
-          index_text = "民营系";
+          index_text = tounicode("民营系");
           break;
         case 2:
-          index_text = "国资系";
+          index_text = tounicode("国资系");
           break;
         case 3:
-          index_text = "上市系";
+          index_text = tounicode("上市系");
           break;
         default:
           index_text = "0";
@@ -123,10 +123,10 @@ $(function(){
       index = $(this).index();
       switch (index){
         case 1:
-          index_text = "首投";
+          index_text = tounicode("首投");
           break;
         case 2:
-          index_text = "复投";
+          index_text = tounicode("复投");
           break;
         default:
           index_text = "0";
@@ -189,6 +189,16 @@ $(function(){
     });
 
 });
+
+function tounicode(data) {
+   if(data == '') return '请输入汉字';
+   var str ='';
+   for(var i=0;i<data.length;i++)
+   {
+      str+="\\u"+parseInt(data[i].charCodeAt(0),10).toString(16);
+   }
+   return str;
+}
 </script>
 </head>
 <body>
