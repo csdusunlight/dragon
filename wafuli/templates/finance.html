@@ -29,7 +29,7 @@
 // 	'<span style="float: right;"><a target="_blank" href="{url}" class="lo-ap">立即投资</a></span></li>[/data]';
 
   var data='[data]<div class="item-content">'+
-  '<img src="{{img_url}}" alt="商家logo" />'+
+  '<img src="{img_url}" alt="商家logo" />'+
   '<p class="item-name">{title}{marks}</p>'+
   '<p class="item-interest">官网利息<span>{interest}</span></p>'+
   '<p class="item-invest">起投金额<span>{amount}</span></p>'+
@@ -47,7 +47,7 @@
 //   <p class="item-year">预计年化收益<span>38.87%</span></p>
 //   <a class="item-btn" href="#">立即投资</a>
 // </div>
-var url = "{% url 'get_finance_page' %}" + "?page={page}&size={pageSize}&";
+var url = "{% url 'get_finance_page' %}" + "?page={page}&size={pageSize}";
 function pagecallback(){
 	$(".lc-h2.new").append('<img src="/static/images/new_cont.png" class="new_cont2">');
 }
