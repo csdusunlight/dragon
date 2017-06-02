@@ -61,10 +61,7 @@ def get_finance_page(request):
         raise Http404
     item_list = Finance.objects.filter(level__in=['normal','all'])
 
-    # company_name = str(company_name)
     company_item = company_name.split('$')
-    # company_background = str(company_background)
-    # invest_account = str(invest_account)
     project_type = str(project_type)
     project_status = str(project_status)
 
