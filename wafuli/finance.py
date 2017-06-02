@@ -42,6 +42,34 @@ def finance(request, id=None):
         }
         return render(request, 'detail-finance.html', context)
 
+def finance_add(request, id=None):
+    if id is None:
+        ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='4'),is_hidden=False)[0:8]
+        context = {'ad_list':ad_list}
+        return render(request, 'finance-add.html',context)
+    else:
+        id = int(id)
+        news = None
+        try:
+            news = Finance.objects.get(id=id)
+        except Finance.DoesNotExist:
+            raise Http404(u"该页面不存在")
+        update_view_count(news)
+        scheme = news.scheme
+        table = []
+        str_rows = scheme.split('|')
+        for str_row in str_rows:
+            row = str_row.split('#')
+            table.append(row);
+        other_wel_list = Finance.objects.filter(state='1', level__in=['normal','all']).order_by('-view_count')[0:10]
+        context = {
+                   'news':news,
+                   'type':'Finance',
+                   'other_wel_list':other_wel_list,
+                   'table':table,
+        }
+        return render(request, 'detail-finance-add.html', context)
+
 def get_finance_page(request):
     res={'code':0,}
     page = request.GET.get("page", None)

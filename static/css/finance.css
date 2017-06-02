@@ -129,6 +129,7 @@ a {
 .item-container {
 	margin: 30px auto 0;
 	width: 1112px;
+	height: 844px;
 	overflow: hidden;
 }
 .item-content {
@@ -193,3 +194,9 @@ a {
 	color: #fe5450;
 }
 
+/*样式覆盖*/
+.changes-p {
+	width: 1112px;
+	margin: 0 auto;
+	border: 1px solid #eee;
+}
