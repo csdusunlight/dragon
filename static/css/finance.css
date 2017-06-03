@@ -198,6 +198,9 @@ a {
 }
 
 /*样式覆盖*/
+#index-banner {
+	overflow: hidden;
+}
 #index-banner,
 .flexslider,
 .slides li {
