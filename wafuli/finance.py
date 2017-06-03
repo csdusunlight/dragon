@@ -12,8 +12,8 @@ from django.contrib.auth.decorators import login_required
 logger = logging.getLogger('wafuli')
 from .tools import listing
 import re
-from itertools import chain
-
+# from itertools import chain
+from .tools import chain
 
 def finance(request, id=None):
     if id is None:
@@ -105,11 +105,10 @@ def get_finance_page(request):
     if project_type != '0':
         item_list = item_list.filter(f_type=project_type)
     if project_status == '0':
-        item_list = item_list.filter(state__in=["1","2"])
-        # item_list = item_list.filter(state="1")
-        # item_list2 = item_list.filter(state="2")[:2]
-        # item_list.extend(item_list2)
-        # item_list = chain(item_list1,item_list2)
+        # item_list = item_list.filter(state__in=["1","2"])
+        item_list = item_list.filter(state="1")
+        item_list2 = item_list.filter(state="2")
+        item_list = chain(item_list1,item_list2)
     if project_status == '1':
         item_list = item_list.filter(state="1")
     if project_status == '2':
