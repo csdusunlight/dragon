@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 logger = logging.getLogger('wafuli')
 from .tools import listing
 import re
-from itertools import chain
+from .tools import chain
 
 def finance(request, id=None):
     if id is None:
