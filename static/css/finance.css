@@ -199,7 +199,8 @@ a {
 
 /*样式覆盖*/
 #index-banner,
-.flexslider {
+.flexslider,
+.slides li {
 	height: 88px;
 }
 .changes-p {
