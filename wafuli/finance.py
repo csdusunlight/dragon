@@ -127,9 +127,9 @@ def get_finance_page(request):
     data = []
     for con in contacts:
         if con.state == "1"
-            btn = "<a class="item-add-btn" href="{url}">立即投资</a>"
+            btn = '<a class="item-add-btn" href="' + con.url + '">立即投资</a>'
         if con.state == "2"
-            btn = "<a class="item-add-btn gray" href="{url}">已结束</a>"
+            btn = '<a class="item-add-btn gray" href="' + con.url + '">已结束</a>'
 
         marks = con.marks.all();
         str_marks = ''
