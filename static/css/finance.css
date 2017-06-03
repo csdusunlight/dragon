@@ -226,7 +226,7 @@ a {
 	margin: 0 auto;
 }
 .item-add-content {
-	padding: 24px 30px;
+	padding: 0 30px;
 	margin-top: 20px;
 	border: 1px solid #e4e4e4;
 }
@@ -238,6 +238,7 @@ a {
 	display: inline-block;
 	width: 144px;
 	height: 96px;
+	margin-left: -90px;
 }
 .item-add-box>p {
 	display: inline-block;
@@ -251,6 +252,7 @@ a {
 	display: block;
 }
 .item-add-name {
+	font-size: 18px;
 	text-align: left;
 }
 .item-add-btn {
