@@ -113,9 +113,9 @@ def get_finance_page(request):
         item_list = item_list.filter(state="1")
     if project_status == '2':
         item_list = item_list.filter(state="2")
-        # now = datetime.now()
-        # date = now-timedelta(days=3)
-        # item_list = item_list.filter(pub_date__gte=date)
+        now = datetime.now()
+        date = now-timedelta(days=3)
+        item_list = item_list.filter(pub_date__gte=date)
 
     paginator = Paginator(item_list, size)
     try:
