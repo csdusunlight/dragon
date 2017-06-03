@@ -104,10 +104,10 @@ def get_finance_page(request):
     if project_type != '0':
         item_list = item_list.filter(f_type=project_type)
     if project_status == '0':
-        item_list = item_list.filter(state__in=["1","2"])
-        # item_list1 = item_list.filter(state="1")
-        # item_list2 = item_list.filter(state="2")[:3]
-        # item_list = item_list1 +　item_list2
+        # item_list = item_list.filter(state__in=["1","2"])
+        item_list1 = item_list.filter(state="1")
+        item_list2 = item_list.filter(state="2")[:3]
+        item_list = item_list1 |　item_list2
     if project_status == '1':
         item_list = item_list.filter(state="1")
     if project_status == '2':
