@@ -140,8 +140,7 @@ def get_finance_page(request):
              "img_url":con.pic.url,
              "is_new":'new' if con.is_new() else '',
              "marks":str_marks,
-             "end":'end' if con.state=='2' else '',
-             "btn_text":'立即投资' if con.state=='1' else '已结束'
+             "end":'end' if con.state=='2' else ''
         }
         data.append(i)
     if data:

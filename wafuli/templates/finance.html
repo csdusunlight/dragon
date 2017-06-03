@@ -28,12 +28,12 @@
   '<p class="item-date">标期长度<span>{time}</span></p>'+
   '<p class="item-profit">补贴收益<span>+{benefit}</span></p>'+
   '<p class="item-year">预计年化收益<span>{revenue}</span></p>'+
-  '<a class="item-btn {end}" href="{url}">{btn_text}</a>'+
+  '<a class="item-btn {end}" href="{url}">立即投资</a>'+
   '</div>[/data]';
 var url = "{% url 'get_finance_page' %}" + "?page={page}&size={pageSize}";
 function pagecallback(){
 	$(".lc-h2.new").append('<img src="/static/images/new_cont.png" class="new_cont2">');
-  $(".end").text("sdfgd");
+  $(".end").text("已结束");
 }
 var textarray=[];
 function getText(n) {
@@ -41,6 +41,9 @@ function getText(n) {
 		 return textarray[n-1];
 	 else
 		 return n;
+}
+function emptydisplay(obj){
+  obj.html('抱歉，没有找到符合条件的项目！');
 }
 $(function(){
    	// $('.finan_h a').toggleClass("vo");
