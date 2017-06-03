@@ -12,7 +12,8 @@ from django.contrib.auth.decorators import login_required
 logger = logging.getLogger('wafuli')
 from .tools import listing
 import re
-from .tools import chain
+from itertools import chain
+ from datetime import datetime, timedelta
 
 def finance(request, id=None):
     if id is None:
@@ -105,13 +106,16 @@ def get_finance_page(request):
         item_list = item_list.filter(f_type=project_type)
     if project_status == '0':
         # item_list = item_list.filter(state__in=["1","2"])
-        item_list1 = item_list.filter(state="1")
-        item_list2 = item_list.filter(state="2")
-        item_list = chain(item_list1,item_list2)
+        listnow = item_list.filter(state="1")
+        itemend = item_list.filter(state="2")
+        item_list = chain(listnow,itemend)
     if project_status == '1':
         item_list = item_list.filter(state="1")
     if project_status == '2':
-        item_list = item_list.filter(state="2")[:3]
+        item_list = item_list.filter(state="2")
+        now = datetime.now()
+        date = now-timedelta(days=3)
+        item_list = item_list.filter(pub_date__gte=date)
 
     paginator = Paginator(item_list, size)
     try:
