@@ -29,11 +29,6 @@
   '<p class="item-profit"><span>+{benefit}</span>补贴收益</p>'+
   '<p class="item-year"><span>{revenue}</span>预计年化收益</p>'+
   '<a class="item-add-btn {end}" href="{url}">立即投资</a>'+
-  // {% if state=="1" %}
-  // '<a class="item-add-btn" href="{url}">立即投资</a>'+
-  // {% else %}
-  // '<a class="item-add-btn gray" href="{url}">已结束</a>'+
-  // {% endif %}
   '</div></div>[/data]';
 
 var url = "{% url 'get_finance_page' %}" + "?page={page}&size={pageSize}";
@@ -119,6 +114,8 @@ $(function(){
            directionNav: true,
            pauseOnAction: false
     });
+
+    $('.end').text("已结束");
 
 });
 
