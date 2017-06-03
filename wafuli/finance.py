@@ -75,7 +75,6 @@ def get_finance_page(request):
     res={'code':0,}
     page = request.GET.get("page", None)
     size = request.GET.get("size", 8)
-    # company_name = request.GET.get("company_name", u'全部')
     company_background = request.GET.get("company_background", u'不限')
     invest_account = request.GET.get("invest_account", u'不限')
     project_type = request.GET.get("project_type", 0)
@@ -94,8 +93,6 @@ def get_finance_page(request):
     project_type = str(project_type)
     project_status = str(project_status)
 
-    # if company_name != u'全部':
-    #     item_list = item_list.filter(company__contains=company_name)
     if company_background != u'不限':
         item_list = item_list.filter(background__contains=company_background)
     if invest_account != u'不限':
@@ -113,9 +110,9 @@ def get_finance_page(request):
         item_list = item_list.filter(state="1")
     if project_status == '2':
         item_list = item_list.filter(state="2")
-        now = datetime.now()
-        date = now-timedelta(days=100)
-        item_list = item_list.filter(pub_date__gte=date)
+        # now = datetime.now()
+        # date = now-timedelta(days=100)
+        # item_list = item_list.filter(pub_date__gte=date)
 
     paginator = Paginator(item_list, size)
     try:

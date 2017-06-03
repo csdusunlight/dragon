@@ -47,7 +47,7 @@ function emptydisplay(obj){
   obj.html('<p style="margin-top:20px;">抱歉，没有找到符合条件的项目！</p>');
 }
 $(function(){
-   	// $('.finan_h a').toggleClass("vo");
+   	$('.finan_h a').toggleClass("vo");
 
   var newurl = url;
   var index = "0",
@@ -69,12 +69,6 @@ $(function(){
 
   $(".fiter-item-container li").click(function() {
     var parent = $(this).parent(".filter-item");
-    // if($(parent).hasClass("company-name")) {
-    //   $(this).addClass("on").siblings().removeClass("on");
-    //   index = $(this).index();
-    //   index_text = $(this).children().text();
-    //   company_name = index_text;
-    // }
 
     if($(parent).hasClass("company-background")) {
       $(this).addClass("on").siblings().removeClass("on");
@@ -108,10 +102,6 @@ $(function(){
   	    complete:pagecallback,
   	});
   })
-  // $(".more-box").click(function(){
-  //   $(this).toggleClass("more");
-  //   $(".filter-box-company").toggleClass("more");
-  // })
 
 
     $('.flexslider').flexslider({

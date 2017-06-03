@@ -46,7 +46,7 @@ function emptydisplay(obj){
   obj.html('<p style="margin-top:20px;">抱歉，没有找到符合条件的项目！</p>');
 }
 $(function(){
-   	// $('.finan_h a').toggleClass("vo");
+   	$('.finan_h a').toggleClass("vo");
 
   var newurl = url;
   var index = "0",
@@ -69,12 +69,6 @@ $(function(){
 
   $(".fiter-item-container li").click(function() {
     var parent = $(this).parent(".filter-item");
-    // if($(parent).hasClass("company-name")) {
-    //   $(this).addClass("on").siblings().removeClass("on");
-    //   index = $(this).index();
-    //   index_text = $(this).children().text();
-    //   company_name = index_text;
-    // }
 
     if($(parent).hasClass("company-background")) {
       $(this).addClass("on").siblings().removeClass("on");
@@ -115,10 +109,6 @@ $(function(){
   	    complete:pagecallback,
   	});
   })
-  // $(".more-box").click(function(){
-  //   $(this).toggleClass("more");
-  //   $(".filter-box-company").toggleClass("more");
-  // })
 
 
     $('.flexslider').flexslider({
@@ -159,53 +149,6 @@ function tounicode(data) {
       <p>若您想要更高收益的理财项目<a href="{% url 'add_finance' %}">请点这里</a></p>
     </div>
     <div class="fiter-content">
-      <!-- <div class="filter-box-company">
-        <div class="filter-box-name">
-          平台名称：
-        </div>
-        <ul class="filter-item company-name">
-          <li class="on">
-            <a href="javascript:void(0);">全部</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">美易理财</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">德鸿金融</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">星火钱包</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">拍拍贷</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">一号钱庄</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">金融工厂</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">银豆网</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">绿能宝</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">小诺理财</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">银豆网</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">绿能宝</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">小诺理财</a>
-          </li>
-        </ul>
-        <div class="more-box">【<a class="more-company">展开全部平台</a>】</div>
-      </div> -->
       <div class="filter-box-company">
         <div class="filter-box-name">
           平台背景：

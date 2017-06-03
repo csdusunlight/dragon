@@ -198,6 +198,10 @@ a {
 }
 
 /*样式覆盖*/
+#index-banner,
+.flexslider {
+	height: 88px;
+}
 .changes-p {
 	width: 1112px;
 	margin: 0 auto;
@@ -244,6 +248,9 @@ a {
 }
 .item-add-box>p span {
 	display: block;
+}
+.item-add-name {
+	text-align: left;
 }
 .item-add-btn {
 	box-sizing: border-box;
