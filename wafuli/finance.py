@@ -141,6 +141,7 @@ def get_finance_page(request):
              "is_new":'new' if con.is_new() else '',
              "marks":str_marks,
              "end":'end' if con.state=='2' else '',
+             "btn_text":'立即投资' if con.state=='2' else '已结束'
         }
         data.append(i)
     if data:
