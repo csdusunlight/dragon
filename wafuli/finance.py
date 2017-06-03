@@ -126,6 +126,11 @@ def get_finance_page(request):
         contacts = paginator.page(paginator.num_pages)
     data = []
     for con in contacts:
+        if con.state == "1"
+            btn = "<a class="item-add-btn" href="{url}">立即投资</a>"
+        if con.state == "2"
+            btn = "<a class="item-add-btn gray" href="{url}">已结束</a>"
+
         marks = con.marks.all();
         str_marks = ''
         for mark in marks:
@@ -140,7 +145,7 @@ def get_finance_page(request):
              "img_url":con.pic.url,
              "is_new":'new' if con.is_new() else '',
              "marks":str_marks,
-             "state":con.state
+             "btn":btn
         }
         data.append(i)
     if data:
