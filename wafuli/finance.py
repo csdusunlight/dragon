@@ -132,7 +132,8 @@ def get_finance_page(request):
              "url":con.url,
              "img_url":con.pic.url,
              "is_new":'new' if con.is_new() else '',
-             "marks":str_marks
+             "marks":str_marks,
+             "state":con.state
         }
         data.append(i)
     if data:

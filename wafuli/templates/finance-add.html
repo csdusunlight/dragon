@@ -20,15 +20,20 @@
 <script type="text/javascript" src="{% static 'js/page.js' %}"></script>
 <script type="text/javascript">
 
-  var data='[data]<div class="item-content">'+
-  '<img src="{img_url}" alt="商家logo" />'+
-  '<p class="item-name">{title}{marks}</p>'+
-  '<p class="item-interest">官网利息<span>{interest}</span></p>'+
-  '<p class="item-invest">起投金额<span>{amount}</span></p>'+
-  '<p class="item-date">标期长度<span>{time}</span></p>'+
-  '<p class="item-profit">补贴收益<span>+{benefit}</span></p>'+
-  '<p class="item-year">预计年化收益<span>{revenue}</span></p>'+
-  '<a class="item-btn" href="{url}">立即投资</a></div>[/data]';
+  var data='[data]<div class="item-add-content">'+
+  '<p class="item-add-name">{title}{marks}</p>'+
+  '<div class="item-add-box"><img src="{img_url}" alt="商家logo" />'+
+  '<p class="item-interest"><span>{interest}</span>官网利息</p>'+
+  '<p class="item-invest"><span>{amount}</span>起投金额</p>'+
+  '<p class="item-date"><span>{time}</span>标期长度</p>'+
+  '<p class="item-profit"><span>+{benefit}</span>补贴收益</p>'+
+  '<p class="item-year"><span>{revenue}</span>预计年化收益</p>'+
+  '{% if {state}=1 %}'+
+  '<a class="item-add-btn" href="{url}">立即投资</a>'+
+  '{% else %}'+
+  '<a class="item-add-btn" href="{url}">已结束</a>'+
+  '{% endif %}'+
+  '</div></div>[/data]';
 
 var url = "{% url 'get_finance_page' %}" + "?page={page}&size={pageSize}";
 function pagecallback(){
@@ -204,7 +209,7 @@ function tounicode(data) {
 
   </div>  <!--fiter-item-container-end-->
 
-  <div id="pagedata1" class="item-container">
+  <div id="pagedata1" class="item-add-container">
 
   </div>
   <div class="changes-p">
