@@ -180,16 +180,35 @@ a.chakan { color:#008fd7; font-size:14px;}
 .Binding-Top { float:left; width:100%; height:auto;position:relative;}
 .Binding-Top h2 { font-size:18px; color:#f08519; line-height:44px; text-indent:12px; border-bottom:1px solid #ebebeb; float:left; width:100%; text-align:left; font-weight:bold;}
 .Binding-Box { float:left; width:auto; height:auto; padding:20px 12px;}
-.Bin-info { float:left; width:378px; height:200px; border:1px solid #eeeeee;}
+.Bin-info { float:left; width:378px; height:200px;}
 .Bin-info p { font-size:15px; color:#666666; line-height:40px; display:block; height:auto; padding-left:50px; font-weight:bold; text-align:left;}
 .Bin-info p a { font-size:13px; color:#f08519; margin-left:10px; font-weight:400;}
+/*银行卡绑定*/
+.bank-head span,
+.bank-detail span {
+  display: inline-block;
+  width: 200px;
+  line-height: 40px;
+  color: #777;
+  text-align: center;
+  border: 1px solid #eee;
+}
+.bank-detail span {
+  border-top: none;
+}
+.bank-delete {
+  text-decoration: underline;
+  cursor: pointer;
+}
+/*银行卡绑定--------end*/
 .bing-name { margin-top:55px;}
 .update { float:left; width:870px; height:auto; padding-left:12px; text-align:left;}
 .update h6 { font-size:16px; color:#f08519; line-height:66px; display:block;}
 .update form { float:left; width:100%; height:auto;}
 .Inout-box { float:left; width:100%; height:auto; margin-top:26px;}
 .Inout-box span { width:96px; height:auto; float:left; text-align:right; line-height:37px; font-size:15px; color:#666666;}
-.Inout-box input[type="text"]{ width:370px; height:35px; border:1px solid #ebebeb; text-indent:5px; font-size:15px; line-height:35px; outline:none; float:left;}
+.Inout-box input[type="text"],
+.Inout-box select{ width:370px; height:35px; border:1px solid #ebebeb; text-indent:5px; font-size:15px; line-height:35px; outline:none; float:left;}
 .Inout-yz { float:left; width:100%; height:auto; margin-top:26px;}
 .Inout-yz span { width:96px; height:auto; float:left; text-align:right; line-height:37px; font-size:15px; color:#666666;}
 .Inout-yz input[type="text"]{ width:258px; height:35px; border:1px solid #ebebeb; text-indent:5px; font-size:15px; line-height:35px; outline:none; float:left;}
