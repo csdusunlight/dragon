@@ -17,7 +17,7 @@ from datetime import datetime, timedelta
 
 def finance(request, id=None):
     if id is None:
-        ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='4'),is_hidden=False)[0:8]
+        ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='4'),is_hidden=False)[0:1]
         context = {'ad_list':ad_list}
         return render(request, 'finance.html',context)
     else:
@@ -45,7 +45,7 @@ def finance(request, id=None):
 
 def add_finance(request, id=None):
     if id is None:
-        ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='4'),is_hidden=False)[0:8]
+        ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='4'),is_hidden=False)[1:2]
         context = {'ad_list':ad_list}
         return render(request, 'finance-add.html',context)
     else:

@@ -23,7 +23,16 @@ $(function(){
 	$('.back-a6').parent().toggleClass("on");
 	$("#submit").click(function(){
 		account = $("#bank_card").val();
-		name = $("#card_name").val();
+    name = $("#card_name").val();
+    bank_sub = $("#bank_sub").val();
+    code = $("#yanzhengma").val();
+
+    var value = $("#bank_choose option:selected").val();
+    if(value == 0) {
+      alert("请选择开户行")
+    } else {
+     bank_name = $("#bank_choose option:selected").text();
+    }
 
     var re_account=/^[\u2E80-\u9FFF]+$/;
     if(!re_account.test(name)){
@@ -42,7 +51,10 @@ $(function(){
 			type:'GET',
 			data : {
 				'account': account,
-				'name': name,
+        'name': name,
+        'code':code,
+        'bank_sub':bank_sub,
+        'bank_name':bank_name,
 			},
 			success:function(ret){
 				if(ret.code==1){
@@ -62,7 +74,15 @@ $(function(){
 	$("#submit2").click(function(){
 		account = $("#bank_card").val();
 		name = $("#card_name").val();
+    bank_sub = $("#bank_sub").val();
 		code = $("#yanzhengma").val();
+
+    var value = $("#bank_choose option:selected").val();
+    if(value == 0) {
+      alert("请选择开户行")
+    } else {
+     bank_name = $("#bank_choose option:selected").text();
+    }
 
     var re_account=/^[\u2E80-\u9FFF]+$/;
     if(!re_account.test(name)){
@@ -83,6 +103,8 @@ $(function(){
 				'account': account,
 				'name': name,
 				'code':code,
+        'bank_sub':bank_sub,
+        'bank_name':bank_name,
 			},
 			success:function(ret){
 				if(ret.code==1){
@@ -134,26 +156,27 @@ $(function(){
                             	<div class="Inout-box">
                                   <span>请选择银行：</span>
                                     <!-- <input id='bank_choose' maxlength="15" type="text" placeholder="请选择相应的银行卡" /> -->
-                                    <select id='bank_choose'  placeholder="请选择相应的银行卡">
-                                      <option value ="volvo">中国工商银行</option>
-                                      <option value ="saab">中国农业银行</option>
-                                      <option value="opel">中国银行</option>
-                                      <option value="audi">中国建设银行</option>
-                                      <option value="audi">交通银行</option>
-                                      <option value="audi">中国邮政储蓄银行</option>
-                                      <option value="audi">中信银行</option>
-                                      <option value="audi">中国光大银行</option>
-                                      <option value="audi">华夏银行</option>
-                                      <option value="audi">中国民生银行</option>
-                                      <option value="audi">广发银行</option>
-                                      <option value="audi">平安银行</option>
-                                      <option value="audi">招商银行</option>
-                                      <option value="audi">兴业银行</option>
+                                    <select id='bank_choose'>
+                                      <option value ="0">请选择相应的开户行</option>
+                                      <option value ="中国工商银行">中国工商银行</option>
+                                      <option value ="中国农业银行">中国农业银行</option>
+                                      <option value="中国银行">中国银行</option>
+                                      <option value="中国建设银行">中国建设银行</option>
+                                      <option value="交通银行">交通银行</option>
+                                      <option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
+                                      <option value="中信银行">中信银行</option>
+                                      <option value="中国光大银行">中国光大银行</option>
+                                      <option value="华夏银行">华夏银行</option>
+                                      <option value="中国民生银行">中国民生银行</option>
+                                      <option value="广发银行">广发银行</option>
+                                      <option value="平安银行">平安银行</option>
+                                      <option value="招商银行">招商银行</option>
+                                      <option value="兴业银行">兴业银行</option>
                                     </select>
                                 </div>
                               <div class="Inout-box">
                                   <span>请填写支行：</span>
-                                    <input id='bank_detail' maxlength="15" type="text" placeholder="请输入银行卡支行" />
+                                    <input id='bank_sub' maxlength="15" type="text" placeholder="请输入银行卡支行" />
                                 </div>
                               <div class="Inout-box">
                                   <span>持卡人姓名：</span>
@@ -189,25 +212,26 @@ $(function(){
                                   <span>请选择银行：</span>
                                     <!-- <input id='bank_choose' maxlength="15" type="text" placeholder="请选择相应的银行卡" /> -->
                                     <select id='bank_choose'  placeholder="请选择相应的银行卡">
-                                      <option value ="volvo">中国工商银行</option>
-                                      <option value ="saab">中国农业银行</option>
-                                      <option value="opel">中国银行</option>
-                                      <option value="audi">中国建设银行</option>
-                                      <option value="audi">交通银行</option>
-                                      <option value="audi">中国邮政储蓄银行</option>
-                                      <option value="audi">中信银行</option>
-                                      <option value="audi">中国光大银行</option>
-                                      <option value="audi">华夏银行</option>
-                                      <option value="audi">中国民生银行</option>
-                                      <option value="audi">广发银行</option>
-                                      <option value="audi">平安银行</option>
-                                      <option value="audi">招商银行</option>
-                                      <option value="audi">兴业银行</option>
+                                      <option value ="0">请选择相应的开户行</option>
+                                      <option value ="1">中国工商银行</option>
+                                      <option value ="2">中国农业银行</option>
+                                      <option value="3">中国银行</option>
+                                      <option value="4">中国建设银行</option>
+                                      <option value="5">交通银行</option>
+                                      <option value="6">中国邮政储蓄银行</option>
+                                      <option value="7">中信银行</option>
+                                      <option value="8">中国光大银行</option>
+                                      <option value="9">华夏银行</option>
+                                      <option value="10">中国民生银行</option>
+                                      <option value="11">广发银行</option>
+                                      <option value="12">平安银行</option>
+                                      <option value="13">招商银行</option>
+                                      <option value="14">兴业银行</option>
                                     </select>
                                 </div>
                               <div class="Inout-box">
                                   <span>请填写支行：</span>
-                                    <input id='bank_detail' maxlength="15" type="text" placeholder="请输入银行卡支行" />
+                                    <input id='bank_sub' maxlength="15" type="text" placeholder="请输入银行卡支行" />
                                 </div>
                             	<div class="Inout-box">
                                 	<span>持卡人姓名：</span>
