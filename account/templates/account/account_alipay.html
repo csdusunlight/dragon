@@ -22,12 +22,12 @@ $.ajaxSetup({
 $(function(){
 	$('.back-a6').parent().toggleClass("on");
 	$("#submit").click(function(){
-		account = $("#zhifubao").val();
-		name = $("#zhifubao_name").val();
+		account = $("#bank_card").val();
+		name = $("#card_name").val();
 
     var re_account=/^[\u2E80-\u9FFF]+$/;
     if(!re_account.test(name)){
-      alert("请输入正确的支付宝绑定的真实姓名")
+      alert("请输入正确的银行卡绑定的真实姓名")
       return;
     }
 
@@ -50,7 +50,7 @@ $(function(){
 					window.location.href = ret.url;
 				}
 				else if(ret.code==0){
-					alert("绑定支付宝账号成功！");
+					alert("绑定银行卡号成功！");
 					window.location.href = this_url;
 				}
 			},
@@ -60,13 +60,13 @@ $(function(){
 		});
 	});
 	$("#submit2").click(function(){
-		account = $("#zhifubao").val();
-		name = $("#zhifubao_name").val();
+		account = $("#bank_card").val();
+		name = $("#card_name").val();
 		code = $("#yanzhengma").val();
 
     var re_account=/^[\u2E80-\u9FFF]+$/;
     if(!re_account.test(name)){
-      alert("请输入正确的支付宝绑定的真实姓名")
+      alert("请输入正确的银行卡绑定的真实姓名")
       return;
     }
 
@@ -90,7 +90,7 @@ $(function(){
 					window.location.href = ret.url;
 				}
 				else if(ret.code==0){
-					alert("更改支付宝账号成功！");
+					alert("更改银行卡号成功！");
 					window.location.href = this_url;
 				}
 				else {
@@ -119,37 +119,65 @@ $(function(){
                 	{% if user.zhifubao %}
                 	<div class="binding">
                     	<div class="Binding-Top">
-                        	<h2>支付宝绑定</h2>
+                        	<h2>银行卡绑定</h2>
                         </div>
                         <div class="Binding-Box">
                         	<div class="Bin-info">
-                            	<p class="bing-name">支付宝姓名：{{user.zhifubao_name}}</p>
-                                <p><span>支付宝帐号：{{user.zhifubao}}</span><a href="#update">修改</a></p>
-                            </div>
+<!--                             	<p class="bing-name">银行卡姓名：{{user.zhifubao_name}}</p>
+                                <p><span>支付宝帐号：{{user.zhifubao}}</span><a href="#update">修改</a></p> -->
+                            <table>
+                              <tr><th>持卡人</th><th>开户银行</th><th>银行卡号</th><th>操作</th></tr>
+                              <tr><td>周某某</td><td>中国邮政储蓄银行</td><td>6222333344445555</td><td>删除</td></tr>
+                            </table>
+                          </div>
                         </div>
                         <div class="update" id="update">
-                        	<h6>更换支付宝账号：</h6>
+                        	<h6>更换银行卡号：</h6>
                             	<div class="Inout-box">
-                                	<span>支付宝姓名：</span>
-                                    <input id='zhifubao_name' maxlength="15" type="text" placeholder="请输入支付宝绑定的真实姓名" />
+                                  <span>请选择银行：</span>
+                                    <!-- <input id='bank_choose' maxlength="15" type="text" placeholder="请选择相应的银行卡" /> -->
+                                    <select id='bank_choose'  placeholder="请选择相应的银行卡">
+                                      <option value ="volvo">中国工商银行</option>
+                                      <option value ="saab">中国农业银行</option>
+                                      <option value="opel">中国银行</option>
+                                      <option value="audi">中国建设银行</option>
+                                      <option value="audi">交通银行</option>
+                                      <option value="audi">中国邮政储蓄银行</option>
+                                      <option value="audi">中信银行</option>
+                                      <option value="audi">中国光大银行</option>
+                                      <option value="audi">华夏银行</option>
+                                      <option value="audi">中国民生银行</option>
+                                      <option value="audi">广发银行</option>
+                                      <option value="audi">平安银行</option>
+                                      <option value="audi">招商银行</option>
+                                      <option value="audi">兴业银行</option>
+                                    </select>
                                 </div>
-                            	<div class="Inout-box">
-                                	<span>支付宝帐号：</span>
-                                    <input id='zhifubao' maxlength="35" type="text" placeholder="请输入真实的支付宝账户" />
+                              <div class="Inout-box">
+                                  <span>请填写支行：</span>
+                                    <input id='bank_detail' maxlength="15" type="text" placeholder="请输入银行卡支行" />
+                                </div>
+                              <div class="Inout-box">
+                                  <span>持卡人姓名：</span>
+                                    <input id='card_name' maxlength="15" type="text" placeholder="请输入银行卡绑定的真实姓名" />
+                                </div>
+                              <div class="Inout-box">
+                                  <span>请输入卡号：</span>
+                                    <input id='bank_card' maxlength="35" type="text" placeholder="请输入真实的银行卡帐号" />
                                 </div>
                             	<div class="Inout-yz">
                                 	<span>验证码：</span>
                                     <input id="yanzhengma" type="text" maxlength="6"/>
                                     <input id="yanzhengma_button" type="button" value="获取手机验证码" />
                                 </div>
-                                <p style="float: left;width: 100%;margin-top: 10px;margin-left: 96px;">温馨提示：支付宝姓名和账号不正确者，将不予提现</p>
+                                <p style="float: left;width: 100%;margin-top: 10px;margin-left: 96px;">温馨提示：银行卡信息不正确者，将不予提现</p>
                                 <input id="submit2" type="submit" value="确  定" />
                         </div>
                     </div>
                 	{% else %}
                 	<div class="binding">
                     	<div class="Binding-Top">
-                        	<h2>支付宝绑定</h2>
+                        	<h2>银行卡绑定</h2>
                         </div>
                         <div class="Binding-Box">
                         	<div class="Bin-info">
@@ -157,15 +185,39 @@ $(function(){
                             </div>
                         </div>
                         <div class="update" id="update">
-                        	<h6>绑定新的支付宝：</h6>
+                        	<h6>绑定新的银行卡：</h6>
 
-                            	<div class="Inout-box">
-                                	<span>支付宝姓名：</span>
-                                    <input id='zhifubao_name' maxlength="15" type="text" placeholder="请输入支付宝绑定的真实姓名" />
+                              <div class="Inout-box">
+                                  <span>请选择银行：</span>
+                                    <!-- <input id='bank_choose' maxlength="15" type="text" placeholder="请选择相应的银行卡" /> -->
+                                    <select id='bank_choose'  placeholder="请选择相应的银行卡">
+                                      <option value ="volvo">中国工商银行</option>
+                                      <option value ="saab">中国农业银行</option>
+                                      <option value="opel">中国银行</option>
+                                      <option value="audi">中国建设银行</option>
+                                      <option value="audi">交通银行</option>
+                                      <option value="audi">中国邮政储蓄银行</option>
+                                      <option value="audi">中信银行</option>
+                                      <option value="audi">中国光大银行</option>
+                                      <option value="audi">华夏银行</option>
+                                      <option value="audi">中国民生银行</option>
+                                      <option value="audi">广发银行</option>
+                                      <option value="audi">平安银行</option>
+                                      <option value="audi">招商银行</option>
+                                      <option value="audi">兴业银行</option>
+                                    </select>
+                                </div>
+                              <div class="Inout-box">
+                                  <span>请填写支行：</span>
+                                    <input id='bank_detail' maxlength="15" type="text" placeholder="请输入银行卡支行" />
                                 </div>
                             	<div class="Inout-box">
-                                	<span>支付宝帐号：</span>
-                                    <input id='zhifubao' maxlength="35" type="text" placeholder="请输入真实的支付宝账户" />
+                                	<span>持卡人姓名：</span>
+                                    <input id='card_name' maxlength="15" type="text" placeholder="请输入银行卡绑定的真实姓名" />
+                                </div>
+                            	<div class="Inout-box">
+                                	<span>请输入卡号：</span>
+                                    <input id='bank_card' maxlength="35" type="text" placeholder="请输入真实的银行卡帐号" />
                                 </div>
                               <p style="float: left;width: 100%;margin-top: 10px;margin-left: 96px;">温馨提示：支付宝姓名和账号不正确者，将不予提现</p>
                                 <input id="submit" type="submit" value="确  定" />
