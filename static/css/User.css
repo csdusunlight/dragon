@@ -180,7 +180,7 @@ a.chakan { color:#008fd7; font-size:14px;}
 .Binding-Top { float:left; width:100%; height:auto;position:relative;}
 .Binding-Top h2 { font-size:18px; color:#f08519; line-height:44px; text-indent:12px; border-bottom:1px solid #ebebeb; float:left; width:100%; text-align:left; font-weight:bold;}
 .Binding-Box { float:left; width:auto; height:auto; padding:20px 12px;}
-.Bin-info { float:left; width:378px; height:200px;}
+.Bin-info { float:left; height:200px;}
 .Bin-info p { font-size:15px; color:#666666; line-height:40px; display:block; height:auto; padding-left:50px; font-weight:bold; text-align:left;}
 .Bin-info p a { font-size:13px; color:#f08519; margin-left:10px; font-weight:400;}
 /*银行卡绑定*/
