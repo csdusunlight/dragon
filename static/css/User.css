@@ -524,3 +524,80 @@ input[type="text"] {padding-left: 10px !important;padding-right: 10px !important
   }
 }
 /*会员等级制度----end*/
+/*弹窗部分*/
+.popup-box {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  z-index: 2;
+}
+.popup-box.in {
+  display: block;
+  opacity: 1;
+  background-color: rgba(0,0,0,0.3);
+}
+.popup-content {
+  padding: 15px 40px 30px;
+  margin: 8% auto 0;
+  width: 600px;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 5px 15px rgba(0,0,0,.5);
+}
+.popup-box-02 .popup-content {
+  max-height: 500px;
+  margin-top: 4%;
+  overflow-y: scroll;
+}
+.popup-content h3 {
+  padding: 20px 0;
+  color:#04B3FF;
+  font-size:25px;
+}
+.popup-content p {
+  margin-top: 10px;
+  line-height: 1.6;
+  font-size: 16px;
+}
+.popup-content .table-btn {
+  display: inline-block;
+  padding: 6px 30px;
+  margin-top: 10px;
+  border-radius: 20px;
+  color: rgb(255, 255, 255);
+  background: rgb(240, 134, 25) none repeat scroll 0% 0%;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.popup-content>a:nth-of-type(1) {
+  margin-right: 20px;
+}
+
+.popup-content .confirm {
+  padding: 6px 30px;
+  border-radius: 20px;
+  color: rgb(255, 255, 255);
+  background: rgb(240, 134, 25) none repeat scroll 0% 0%;
+  cursor: pointer;
+}
+.popup-box.in .popup-content{
+  -webkit-animation: popup 0.4s linear;
+  animation: popup 0.4s linear;
+}
+@-webkit-keyframes popup {
+   0% {
+      -webkit-transform: translateY(-15%);
+      webkit-transform: translateY(-15%);
+      opacity: 0;
+   }
+   100% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+      opacity: 1;
+   }
+}
