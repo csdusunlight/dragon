@@ -87,7 +87,7 @@ def get_finance_page(request):
         size = 9
     if not page or size <= 0:
         raise Http404
-    item_list = Finance.objects.filter(level__in=['normal','all'])
+    # item_list = Finance.objects.filter(level__in=['normal','all'])
 
     # company_item = company_name.split('$')
     project_type = str(project_type)
