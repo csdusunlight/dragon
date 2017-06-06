@@ -285,15 +285,16 @@ a {
 	right: 0;
 	background-color: #000;
 	opacity: 0.4;
+	z-index: 10;
 }
 .finance-add-mask>img {
 	display: block;
-	margin: 200px auto 30px;
+	margin: 200px auto 50px;
 }
 .finance-add-mask>a {
 	padding: 6px 30px;
   border-radius: 20px;
-  background: rgb(240, 134, 25) none repeat scroll 0% 0%;
+  background: #f08519;
   cursor: pointer;
 	font-size: 20px;
 	color: #fff;
