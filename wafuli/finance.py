@@ -92,13 +92,9 @@ def get_finance_page(request):
     # company_item = company_name.split('$')
     project_type = str(project_type)
     project_status = str(project_status)
-
-    if request.user.is_authenticated():
-        user = request.user
-        if user.is_channel:
-            item_list = Finance.objects.filter(state__in=["1","2"])
-        else:
-            item_list = Finance.objects.filter(state__in=["1","2"], level__in=['normal','all'])
+    user = request.user
+    if user.is_authenticated() and user.is_channel:
+        item_list = Finance.objects.filter(state__in=["1","2"])
     else:
         item_list = Finance.objects.filter(state__in=["1","2"], level__in=['normal','all'])
 
@@ -108,17 +104,12 @@ def get_finance_page(request):
         item_list = item_list.filter(marks__name=invest_account)
     if project_type == '0':
         item_list = item_list.filter(f_type__in=["1","2"])
-    if project_type != '0':
+    else:
         item_list = item_list.filter(f_type=project_type)
     if project_status == '0':
         item_list = item_list.filter(state__in=["1","2"]).order_by("state")
-        # listnow = item_list.filter(state="1")
-        # itemend = item_list.filter(state="2")
-        # item_list = chain(listnow,itemend)
-    if project_status == '1':
-        item_list = item_list.filter(state="1")
-    if project_status == '2':
-        item_list = item_list.filter(state="2")
+    else:
+        item_list = item_list.filter(state=project_status)
         # now = datetime.now()
         # date = now-timedelta(days=100)
         # item_list = item_list.filter(pub_date__gte=date)
