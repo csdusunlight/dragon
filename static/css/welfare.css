@@ -663,7 +663,7 @@ padding: 15px;}
 .finance-bg {
   height: 194px;
   padding: 14px;
-  width: 30%;
+  max-width: 34%;
   float: right;
   border: 1px solid #ebebeb;
   font-size: 16px;
