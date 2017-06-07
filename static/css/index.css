@@ -359,7 +359,7 @@ table{border-collapse:collapse;}
     -o-transform-origin: 50% 50%;
     transform-origin: 50% 50%;
 }
-.finance-item img {
+.finance-item .intro-content img {
     display: block;
     height: 160px;
     width: auto;
