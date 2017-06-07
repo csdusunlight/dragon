@@ -524,6 +524,31 @@ table{border-collapse:collapse;}
     -moz-transition: all 0.35s ease 0.35s;
     transition: all 0.35s ease 0.35s;
 }
+
+.finance-risk {
+    padding: 0 16px;
+    height: 345px;
+    text-align: center;
+}
+.finance-risk h3 {
+    font-size: 20px;
+    color: #777;
+}
+.finance-risk p {
+    margin-top: 60px;
+    text-align: left;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #777;
+}
+.finance-risk a {
+    display: inline-block;
+    margin-top: 80px;
+    font-size: 14px;
+    position: static;
+    padding: 4px 30px;
+    border-radius: 8px;
+}
 /*理财板块改版部分——————end*/
 #index_23{width:1100px;height:377px;clear:both;display:inline-block;margin-top:20px;text-align:left; position:relative;}
 .index_26{width:238px;height:377px;float:left;display:inline;text-align:left;background:#f6d00f url(../images/bg-6.png) no-repeat 80px 46px;position:relative;}

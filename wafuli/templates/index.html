@@ -366,18 +366,11 @@ function getText(n) {
                 <p>适宜人群：能接受一定投资风险</p>
               </div>
               <div class="info">
-                <a href="{% url 'add_finance' %}">
-                  <img src="{% static 'images/index-finance-risk.jpg' %}" alt="高收益链接图片" />
-                </a>
-                <!-- {%for news in finance_list3%}
-                <div class="finance-list">
-                  <h3>{{news.title}}</h3>
-                  <p><span class="profit">{{news.interest}}</span><span class="date">{{news.investTime}}</span><span class="money">起投金额：{{news.amount_to_invest}}</span></p>
-                  <div><span class="add-profit"><number>补贴收益：+{{news.benefit}}</number></span>
-                    <a href="{{news.url}}" class="to-finance">查看详情</a>
-                  </div>
+                <div class="finance-list finance-risk">
+                  <h3>高收益项目</h3>
+                  <p>高收益项目拥有着比其他项目更高的收益，但更高的收益往往伴随着更高的风险哦。</p>
+                  <a href="{% url 'add_finance' %}" class="to-finance">立即投资</a>
                 </div>
-               {%endfor%} -->
               </div>
             </div>
           </li>
