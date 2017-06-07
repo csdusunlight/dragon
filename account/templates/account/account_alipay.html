@@ -22,26 +22,30 @@ $.ajaxSetup({
 $(function(){
 	$('.back-a6').parent().toggleClass("on");
 	$("#submit").click(function(){
-		account = $("#bank_card").val();
-    name = $("#card_name").val();
-    bank_sub = $("#bank_sub").val();
+		subbranch = $("#subbranch").val();
+    real_name = $("#real_name").val();
+    card_number = $("#card_number").val();
     code = $("#yanzhengma").val();
 
-    var value = $("#bank_choose option:selected").val();
+    var value = $("#bank option:selected").val();
     if(value == 0) {
-      alert("请选择开户行")
-    } else {
-     bank_name = $("#bank_choose option:selected").text();
-    }
-
-    var re_account=/^[\u2E80-\u9FFF]+$/;
-    if(!re_account.test(name)){
-      alert("请输入正确的银行卡绑定的真实姓名")
+      alert("请选择开户行");
       return;
+    } else {
+     bank = $("#bank option:selected").text();
     }
 
-		if (!account || !name){
-			alert("不能为空");
+    var re_account=/^[\u2E80-\u9FFF]+$/;  //验证中文
+    var re_number=/^[0-9]*$/;  //验证数字
+    var re_card = /^\d{16}|\d{19}$/;  //验证银行卡号
+
+    // if(!re_account.test(name)){
+    //   alert("请输入正确的银行卡绑定的真实姓名")
+    //   return;
+    // }
+
+		if (!subbranch || !real_name || !card_number !code){
+			alert("填写不能为空");
 			return;
 		}
 		var post_url = "{%url 'bind_zhifubao' %}";
@@ -50,11 +54,11 @@ $(function(){
 			dataType:"json",
 			type:'GET',
 			data : {
-				'account': account,
-        'name': name,
+				'bank': bank,
+        'subbranch': subbranch,
+        'real_name':real_name,
+        'card_number':card_number,
         'code':code,
-        'bank_sub':bank_sub,
-        'bank_name':bank_name,
 			},
 			success:function(ret){
 				if(ret.code==1){
@@ -72,39 +76,39 @@ $(function(){
 		});
 	});
 	$("#submit2").click(function(){
-		account = $("#bank_card").val();
-		name = $("#card_name").val();
-    bank_sub = $("#bank_sub").val();
+    subbranch = $("#subbranch").val();
+    real_name = $("#real_name").val();
+    card_number = $("#card_number").val();
 		code = $("#yanzhengma").val();
 
-    var value = $("#bank_choose option:selected").val();
+    var value = $("#bank option:selected").val();
     if(value == 0) {
       alert("请选择开户行")
     } else {
-     bank_name = $("#bank_choose option:selected").text();
+     bank = $("#bank option:selected").text();
     }
 
     var re_account=/^[\u2E80-\u9FFF]+$/;
-    if(!re_account.test(name)){
-      alert("请输入正确的银行卡绑定的真实姓名")
+    // if(!re_account.test(name)){
+    //   alert("请输入正确的银行卡绑定的真实姓名")
+    //   return;
+    // }
+
+		if (!subbranch || !real_name || !card_number !code){
+      alert("填写不能为空");
       return;
     }
-
-		if (!account || !name || !code){
-			alert("不能为空");
-			return;
-		}
 		var post_url = "{%url 'bind_zhifubao' %}";
 		$.ajax({
 			url: post_url,
 			dataType:"json",
 			type:'POST',
 			data : {
-				'account': account,
-				'name': name,
+				'bank': bank,
+				'subbranch': subbranch,
+        'real_name':real_name,
+        'card_number':card_number,
 				'code':code,
-        'bank_sub':bank_sub,
-        'bank_name':bank_name,
 			},
 			success:function(ret){
 				if(ret.code==1){
@@ -173,7 +177,7 @@ $(function(){
                             	<div class="Inout-box">
                                   <span>请选择银行：</span>
                                     <!-- <input id='bank_choose' maxlength="15" type="text" placeholder="请选择相应的银行卡" /> -->
-                                    <select id='bank_choose'>
+                                    <select id='bank'>
                                       <option value ="0">请选择相应的开户行</option>
                                       <option value ="中国工商银行">中国工商银行</option>
                                       <option value ="中国农业银行">中国农业银行</option>
@@ -193,15 +197,15 @@ $(function(){
                                 </div>
                               <div class="Inout-box">
                                   <span>请填写支行：</span>
-                                    <input id='bank_sub' maxlength="15" type="text" placeholder="请输入银行卡支行" />
+                                    <input id='subbranch' maxlength="15" type="text" placeholder="请输入银行卡支行" />
                                 </div>
                               <div class="Inout-box">
                                   <span>持卡人姓名：</span>
-                                    <input id='card_name' maxlength="15" type="text" placeholder="请输入银行卡绑定的真实姓名" />
+                                    <input id='real_name' maxlength="15" type="text" placeholder="请输入银行卡绑定的真实姓名" />
                                 </div>
                               <div class="Inout-box">
                                   <span>请输入卡号：</span>
-                                    <input id='bank_card' maxlength="35" type="text" placeholder="请输入真实的银行卡帐号" />
+                                    <input id='card_number' maxlength="35" type="text" placeholder="请输入真实的银行卡帐号" />
                                 </div>
                             	<div class="Inout-yz">
                                 	<span>验证码：</span>
@@ -228,7 +232,7 @@ $(function(){
                               <div class="Inout-box">
                                   <span>请选择银行：</span>
                                     <!-- <input id='bank_choose' maxlength="15" type="text" placeholder="请选择相应的银行卡" /> -->
-                                    <select id='bank_choose'  placeholder="请选择相应的银行卡">
+                                    <select id='bank'  placeholder="请选择相应的银行卡">
                                       <option value ="0">请选择相应的开户行</option>
                                       <option value ="1">中国工商银行</option>
                                       <option value ="2">中国农业银行</option>
@@ -248,15 +252,15 @@ $(function(){
                                 </div>
                               <div class="Inout-box">
                                   <span>请填写支行：</span>
-                                    <input id='bank_sub' maxlength="15" type="text" placeholder="请输入银行卡支行" />
+                                    <input id='subbranch' maxlength="15" type="text" placeholder="请输入银行卡支行" />
                                 </div>
                             	<div class="Inout-box">
                                 	<span>持卡人姓名：</span>
-                                    <input id='card_name' maxlength="15" type="text" placeholder="请输入银行卡绑定的真实姓名" />
+                                    <input id='real_name' maxlength="15" type="text" placeholder="请输入银行卡绑定的真实姓名" />
                                 </div>
                             	<div class="Inout-box">
                                 	<span>请输入卡号：</span>
-                                    <input id='bank_card' maxlength="35" type="text" placeholder="请输入真实的银行卡帐号" />
+                                    <input id='card_number' maxlength="35" type="text" placeholder="请输入真实的银行卡帐号" />
                                 </div>
                               <p style="float: left;width: 100%;margin-top: 10px;margin-left: 96px;">温馨提示：支付宝姓名和账号不正确者，将不予提现</p>
                                 <input id="submit" type="submit" value="确  定" />
