@@ -366,7 +366,10 @@ function getText(n) {
                 <p>适宜人群：能接受一定投资风险</p>
               </div>
               <div class="info">
-                {%for news in finance_list3%}
+                <a href="{% url 'add_finance' %}">
+                  <img src="{% static 'images/index-finance-risk.jpg' %}" alt="高收益链接图片" />
+                </a>
+                <!-- {%for news in finance_list3%}
                 <div class="finance-list">
                   <h3>{{news.title}}</h3>
                   <p><span class="profit">{{news.interest}}</span><span class="date">{{news.investTime}}</span><span class="money">起投金额：{{news.amount_to_invest}}</span></p>
@@ -374,7 +377,7 @@ function getText(n) {
                     <a href="{{news.url}}" class="to-finance">查看详情</a>
                   </div>
                 </div>
-               {%endfor%}
+               {%endfor%} -->
               </div>
             </div>
           </li>
