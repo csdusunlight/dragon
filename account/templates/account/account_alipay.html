@@ -128,31 +128,8 @@ $(function(){
 			}
 		});
 	});
-  $("#confirm_delete").click(function(){    //点击接触绑定银行卡
-    $.ajax({
-      url: ,
-      dataType:"json",
-      type:'POST',
-      data : {
-      },
-      success:function(ret){
-        popupOutInfo();
-        if(ret.code==1){
-          alert("请重新登录！")
-          window.location.href = ret.url;
-        }
-        else if(ret.code==0){
-          alert("解除绑定成功");
-          window.location.href = this_url;
-        }
-        else {
-          alert(ret.res_msg);
-        }
-      },
-      error:function(){
-        alert("请检查网络连接");
-      }
-    });
+  $("#confirm_delete").click(function(){    //点击解除绑定银行卡
+    console.log("点击解除绑定银行卡");
   });
 
 });
