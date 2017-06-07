@@ -19,14 +19,6 @@
 <script type="text/javascript" src="{% static 'js/MSClass.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/page.js' %}"></script>
 <script type="text/javascript">
-// var data='[data]<li class="lc-li">'+
-// 	'<h2 class="lc-h2 {is_new}">{title}{marks}</h2>'+
-// 	'<span class="lo-span"><p>官网利息</p><p class="lp-p">{interest}</p></span>'+
-// 	'<span class="lo-spans"><p>起投金额</p><p style="color:#111;line-height:50px;">{amount}</p></span>'+
-// 	'<span class="lo-spans"><p>标期长度</p><p style="color:#111;line-height: 50px;">{time}</p></span>'+
-// 	'<span class="lo-spans"><p>补贴收益</p><p style="color:#FE0000;line-height: 50px;">+{benefit}</p></span>'+
-// 	'<span class="lo-spans"><p>预计年化收益</p><p style="color:#FE0000;line-height: 50px;">{revenue}</p></span>'+
-// 	'<span style="float: right;"><a target="_blank" href="{url}" class="lo-ap">立即投资</a></span></li>[/data]';
 
   var data='[data]<div class="item-content">'+
   '<img src="{img_url}" alt="商家logo" />'+
@@ -36,20 +28,12 @@
   '<p class="item-date">标期长度<span>{time}</span></p>'+
   '<p class="item-profit">补贴收益<span>+{benefit}</span></p>'+
   '<p class="item-year">预计年化收益<span>{revenue}</span></p>'+
-  '<a class="item-btn" href="{url}">立即投资</a></div>[/data]';
-// <div class="item-content">
-//   <img src="images/company-logo01.jpg" alt="商家logo" />
-//   <p class="item-name">美易理财二期<span class="mark">首投</span><span class="mark">高收益</span><span class="mark">国资系</span></p>
-//   <p class="item-interest">官网利息<span>20%</span></p>
-//   <p class="item-invest">起投金额<span>20%</span></p>
-//   <p class="item-date">标期长度<span>30天</span></p>
-//   <p class="item-profit">补贴收益<span>+1000福币</span></p>
-//   <p class="item-year">预计年化收益<span>38.87%</span></p>
-//   <a class="item-btn" href="#">立即投资</a>
-// </div>
+  '<a class="item-btn {end}" href="{url}">立即投资</a>'+
+  '</div>[/data]';
 var url = "{% url 'get_finance_page' %}" + "?page={page}&size={pageSize}";
 function pagecallback(){
 	$(".lc-h2.new").append('<img src="/static/images/new_cont.png" class="new_cont2">');
+  $(".end").text("已结束");
 }
 var textarray=[];
 function getText(n) {
@@ -58,8 +42,11 @@ function getText(n) {
 	 else
 		 return n;
 }
+function emptydisplay(obj){
+  obj.html('<p style="margin-top:20px;">抱歉，没有找到符合条件的项目！</p>');
+}
 $(function(){
-   	// $('.finan_h a').toggleClass("vo");
+   	$('.finan_h a').toggleClass("vo");
 
   var newurl = url;
   var index = "0",
@@ -74,7 +61,7 @@ $(function(){
   $("#pagedata1").ajaxPage({
       url:url + "&company_name=全部" + "&company_background=不限" + "&invest_account=不限" + "&project_type=0" + "&project_status=0",
       pageId:$("#page1"),
-      pageSize:8,
+      pageSize:12,
       run:true,
       content:data,
       complete:pagecallback,
@@ -82,12 +69,6 @@ $(function(){
 
   $(".fiter-item-container li").click(function() {
     var parent = $(this).parent(".filter-item");
-    // if($(parent).hasClass("company-name")) {
-    //   $(this).addClass("on").siblings().removeClass("on");
-    //   index = $(this).index();
-    //   index_text = $(this).children().text();
-    //   company_name = index_text;
-    // }
 
     if($(parent).hasClass("company-background")) {
       $(this).addClass("on").siblings().removeClass("on");
@@ -122,16 +103,12 @@ $(function(){
   	$("#pagedata1").ajaxPage({
   	    url:newurl,
   	    pageId:$("#page1"),
-  	    pageSize:8,
+  	    pageSize:12,
   	    run:true,
   	    content:data,
   	    complete:pagecallback,
   	});
   })
-  // $(".more-box").click(function(){
-  //   $(this).toggleClass("more");
-  //   $(".filter-box-company").toggleClass("more");
-  // })
 
 
     $('.flexslider').flexslider({
@@ -172,53 +149,6 @@ function tounicode(data) {
       <p>若您想要更高收益的理财项目<a href="{% url 'add_finance' %}">请点这里</a></p>
     </div>
     <div class="fiter-content">
-      <!-- <div class="filter-box-company">
-        <div class="filter-box-name">
-          平台名称：
-        </div>
-        <ul class="filter-item company-name">
-          <li class="on">
-            <a href="javascript:void(0);">全部</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">美易理财</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">德鸿金融</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">星火钱包</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">拍拍贷</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">一号钱庄</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">金融工厂</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">银豆网</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">绿能宝</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">小诺理财</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">银豆网</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">绿能宝</a>
-          </li>
-          <li class="item">
-            <a href="javascript:void(0);">小诺理财</a>
-          </li>
-        </ul>
-        <div class="more-box">【<a class="more-company">展开全部平台</a>】</div>
-      </div> -->
       <div class="filter-box-company">
         <div class="filter-box-name">
           平台背景：
