@@ -24,9 +24,13 @@ def finance(request, id=None):
         id = int(id)
         news = None
         try:
-            news = Finance.objects.get(id=id,state__in["1","2"])
+            news = Finance.objects.get(id=id)
         except Finance.DoesNotExist:
             raise Http404(u"该页面不存在")
+        try:
+            news.state in ["1", "2"]
+        except Finance.DoesNotExist:
+            raise Http404(u"该项目不存在")
         update_view_count(news)
         scheme = news.scheme
         table = []
