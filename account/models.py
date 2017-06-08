@@ -121,7 +121,7 @@ class BankCard(models.Model):
     card_number = models.CharField(u"银行卡号",max_length=20)
     real_name = models.CharField(u'实名', max_length=10)
     bank = models.CharField(u'开户银行', max_length=10, choices=BANK)
-    real_name = models.CharField(u'开户支行', max_length=50)
+    subbranch = models.CharField(u'开户支行', max_length=50)
     def __unicode__(self):
         return self.user.mobile + self.get_bank_display() + self.real_name
 class Userlogin(models.Model):
