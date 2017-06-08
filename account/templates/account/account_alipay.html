@@ -55,7 +55,7 @@ $(function(){
 			alert("填写项不能为空");
 			return;
 		}
-		var post_url = "{%url 'bind_zhifubao' %}";
+		var post_url = "{%url 'bind_bankcard' %}";
 		$.ajax({
 			url: post_url,
 			dataType:"json",
@@ -114,7 +114,7 @@ $(function(){
       alert("填写项不能为空");
       return;
     }
-		var post_url = "{%url 'bind_zhifubao' %}";
+		var post_url = "{%url 'bind_bankcard' %}";
 		$.ajax({
 			url: post_url,
 			dataType:"json",
@@ -230,7 +230,7 @@ $(function(){
                                     <input id="yanzhengma" type="text" maxlength="6"/>
                                     <input id="yanzhengma_button" type="button" value="获取手机验证码" />
                                 </div> -->
-                                <p style="float: left;width: 100%;margin-top: 10px;margin-left: 96px;">温馨提示：银行卡信息不正确者，将不予提现</p>
+                                <p style="float: left;width: 100%;margin-top: 10px;margin-left: 96px;">温馨提示：银行卡信息若有误，将提现失败</p>
                                 <input id="submit2" type="submit" value="确  定" />
                         </div>
                     </div>

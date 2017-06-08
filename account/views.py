@@ -26,7 +26,7 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from django.contrib.contenttypes.models import ContentType
-from account.models import UserSignIn, EmailActCode
+from account.models import UserSignIn, EmailActCode, BankCard
 from datetime import date, timedelta, datetime
 import time as ttime
 from django.core.urlresolvers import reverse
@@ -649,18 +649,20 @@ def active_email(request):
         except Exception, e:
             logger.error(str(e))
             raise Http404
-def bind_zhifubao(request):
+def bind_bankcard(request):
     result={'code':-1, 'url':''}
     if not request.is_ajax():
         raise Http404
     user = request.user
     if not user.is_authenticated():
         result['code'] = 1
-        result['url'] = reverse('login') + "?next=" + reverse('bind_zhifubao')
+        result['url'] = reverse('login') + "?next=" + reverse('bind_bankcard')
         return JsonResponse(result)
     if request.method == 'POST':
-        zhifubao = request.POST.get("account", '')
-        zhifubao_name = request.POST.get("name", '')
+        card_number = request.GET.get("card_number", '')
+        real_name = request.GET.get("real_name", '')
+        bank = request.GET.get("bank", '')
+        subbranch = request.GET.get("subbranch",'')
         telcode = request.POST.get("code", '')
         ret = verifymobilecode(user.mobile,telcode)
         if ret != 0:
@@ -672,18 +674,23 @@ def bind_zhifubao(request):
             elif ret == 2:
                 result['res_msg'] = u'手机验证码已过期，请重新获取'
             return JsonResponse(result)
-        user.zhifubao = zhifubao
-        user.zhifubao_name = zhifubao_name
-        user.save(update_fields=["zhifubao","zhifubao_name",])
+        card = user.user_bankcard.first()
+        card.card_number = card_number
+        card.real_name = real_name
+        card.bank = bank
+        card.subbranch = subbranch
+        card.save()
         result['code'] = 0
     elif request.method == 'GET':
-        if user.zhifubao:
+        if user.user_bankcard.exists():
             raise Http404
-        zhifubao = request.GET.get("account", '')
-        zhifubao_name = request.GET.get("name", '')
-        user.zhifubao = zhifubao
-        user.zhifubao_name = zhifubao_name
-        user.save(update_fields=["zhifubao","zhifubao_name",])
+        card_number = request.GET.get("card_number", '')
+        real_name = request.GET.get("real_name", '')
+        bank = request.GET.get("bank", '')
+        subbranch = request.GET.get("subbranch",'')
+        if card_number and real_name and bank:
+            user.user_bankcard.create(user=user, card_number=card_number, real_name=real_name,
+                                       bank=bank, subbranch=subbranch)
         result['code'] = 0
     return JsonResponse(result)
 
