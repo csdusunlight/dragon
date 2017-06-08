@@ -25,7 +25,6 @@ $(function(){
 		subbranch = $("#subbranch").val();
     real_name = $("#real_name").val();
     card_number = $("#card_number").val();
-    code = $("#yanzhengma").val();
 
     var value = $("#bank option:selected").val();
     if(value == 0) {
@@ -52,7 +51,7 @@ $(function(){
       return;
     }
 
-		if (!subbranch || !real_name || !card_number || !code){
+		if (!subbranch || !real_name || !card_number){
 			alert("填写项不能为空");
 			return;
 		}
@@ -66,7 +65,6 @@ $(function(){
         'subbranch': subbranch,
         'real_name':real_name,
         'card_number':card_number,
-        'code':code,
 			},
 			success:function(ret){
 				if(ret.code==1){
@@ -87,7 +85,6 @@ $(function(){
     subbranch = $("#subbranch").val();
     real_name = $("#real_name").val();
     card_number = $("#card_number").val();
-		code = $("#yanzhengma").val();
 
     var value = $("#bank option:selected").val();
     if(value == 0) {
@@ -96,13 +93,24 @@ $(function(){
      bank = $("#bank option:selected").text();
     }
 
-    var re_account=/^[\u2E80-\u9FFF]+$/;
-    // if(!re_account.test(name)){
-    //   alert("请输入正确的银行卡绑定的真实姓名")
-    //   return;
-    // }
+    var re_account=/^[\u2E80-\u9FFF]+$/;  //验证中文
+    var re_number=/^[0-9]*$/;  //验证数字
+    var re_card = /^\d{16}|\d{19}$/;  //验证银行卡号
 
-		if (!subbranch || !real_name || !card_number || !code){
+    if(!re_account.test(subbranch)){
+      alert("请输入正确的银行卡支行名称")
+      return;
+    }
+    if(!re_account.test(real_name)){
+      alert("请输入正确的银行卡绑定的真实姓名")
+      return;
+    }
+    if(!re_card.test(card_number)){
+      alert("请输入正确格式的银行卡号码")
+      return;
+    }
+
+		if (!subbranch || !real_name || !card_number){
       alert("填写项不能为空");
       return;
     }
@@ -116,7 +124,6 @@ $(function(){
 				'subbranch': subbranch,
         'real_name':real_name,
         'card_number':card_number,
-				'code':code,
 			},
 			success:function(ret){
 				if(ret.code==1){
@@ -218,11 +225,11 @@ $(function(){
                                   <span>请输入卡号：</span>
                                     <input id='card_number' maxlength="35" type="text" placeholder="请输入真实的银行卡帐号" />
                                 </div>
-                            	<div class="Inout-yz">
+<!--                             	<div class="Inout-yz">
                                 	<span>验证码：</span>
                                     <input id="yanzhengma" type="text" maxlength="6"/>
                                     <input id="yanzhengma_button" type="button" value="获取手机验证码" />
-                                </div>
+                                </div> -->
                                 <p style="float: left;width: 100%;margin-top: 10px;margin-left: 96px;">温馨提示：银行卡信息不正确者，将不予提现</p>
                                 <input id="submit2" type="submit" value="确  定" />
                         </div>
