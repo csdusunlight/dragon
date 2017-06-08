@@ -24,7 +24,7 @@ def finance(request, id=None):
         id = int(id)
         news = None
         try:
-            news = Finance.objects.get(id=id)
+            news = Finance.objects.get(id=id,state__in["1","2"])
         except Finance.DoesNotExist:
             raise Http404(u"该页面不存在")
         update_view_count(news)
@@ -41,9 +41,7 @@ def finance(request, id=None):
                    'other_wel_list':other_wel_list,
                    'table':table,
         }
-        this_project = Finance.objects.get(pk=id)
-        if this_project.state != 3
-            return render(request, 'detail-finance.html', context)
+        return render(request, 'detail-finance.html', context)
 
 def add_finance(request, id=None):
     if id is None:
