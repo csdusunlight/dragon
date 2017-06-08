@@ -130,7 +130,6 @@ a {
 	margin: 30px auto 0;
 	width: 1112px;
 	/*height: 844px;*/
-	overflow: hidden;
 }
 .item-content {
 	float: left;
@@ -145,6 +144,7 @@ a {
 }
 .item-content>p {
 	position: relative;
+	height: 24px;
 	margin-left: 10px;
 	text-align: left;
 }
@@ -184,7 +184,7 @@ a {
 .item-content .item-btn.gray {
 	background-color: #c4c5c2;
 }
-.item-interest span {
+.item-year span {
 	font-size: 20px;
 	color: #f3ab6c;
 }
@@ -193,7 +193,7 @@ a {
 	color: #111;
 }
 .item-profit span,
-.item-year span {
+.item-interest span {
 	color: #fe5450;
 }
 
