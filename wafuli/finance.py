@@ -41,7 +41,9 @@ def finance(request, id=None):
                    'other_wel_list':other_wel_list,
                    'table':table,
         }
-        return render(request, 'detail-finance.html', context)
+        this_project = Finance.objects.get(pk=id)
+        if this_project.state in ["1", "2"]
+            return render(request, 'detail-finance.html', context)
 
 def add_finance(request, id=None):
     if id is None:
