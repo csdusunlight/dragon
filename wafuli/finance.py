@@ -3,21 +3,14 @@ from django.shortcuts import render
 from django.http.response import Http404
 from wafuli.models import Finance, Advertisement
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.core.urlresolvers import reverse
 from django.http import JsonResponse
-from django.db.models import F,Q
 import logging
 from wafuli.tools import update_view_count
-from django.contrib.auth.decorators import login_required
 logger = logging.getLogger('wafuli')
-from .tools import listing
-import re
-from itertools import chain
-from datetime import datetime, timedelta
 
 def finance(request, id=None):
     if id is None:
-        ad_list = Advertisement.objects.filter(location__in=['0','4'],is_hidden=False)[0:8]
+        ad_list = Advertisement.objects.filter(location__in=['0','4'],is_hidden=False)[1:2]
         context = {'ad_list':ad_list}
         return render(request, 'finance.html',context)
     else:
@@ -27,6 +20,8 @@ def finance(request, id=None):
             news = Finance.objects.get(id=id)
         except Finance.DoesNotExist:
             raise Http404(u"该页面不存在")
+        if not news.state in ["1", "2"]:
+            raise Http404(u"该项目不存在")
         update_view_count(news)
         scheme = news.scheme
         table = []
@@ -45,7 +40,7 @@ def finance(request, id=None):
 
 def add_finance(request, id=None):
     if id is None:
-        ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='4'),is_hidden=False)[0:8]
+        ad_list = Advertisement.objects.filter(location__in=['0','4'],is_hidden=False)[0:1]
         context = {'ad_list':ad_list}
         return render(request, 'finance-add.html',context)
     else:
@@ -87,11 +82,16 @@ def get_finance_page(request):
         size = 9
     if not page or size <= 0:
         raise Http404
-    item_list = Finance.objects.filter(level__in=['normal','all'])
+    item_list = Finance.objects.filter(state__in=["1","2"], level__in=['normal','all'])
 
     # company_item = company_name.split('$')
     project_type = str(project_type)
     project_status = str(project_status)
+    user = request.user
+    # if user.is_authenticated() and user.is_channel:
+    #     item_list = Finance.objects.filter(state__in=["1","2"])
+    # else:
+    #     item_list = Finance.objects.filter(state__in=["1","2"], level__in=['normal','all'])
 
     if company_background != u'不限':
         item_list = item_list.filter(background__contains=company_background)
@@ -99,17 +99,12 @@ def get_finance_page(request):
         item_list = item_list.filter(marks__name=invest_account)
     if project_type == '0':
         item_list = item_list.filter(f_type__in=["1","2"])
-    if project_type != '0':
+    else:
         item_list = item_list.filter(f_type=project_type)
     if project_status == '0':
-        item_list = item_list.filter(state__in=["1","2"])
-        # listnow = item_list.filter(state="1")
-        # itemend = item_list.filter(state="2")
-        # item_list = chain(listnow,itemend)
-    if project_status == '1':
-        item_list = item_list.filter(state="1")
-    if project_status == '2':
-        item_list = item_list.filter(state="2")
+        item_list = item_list.filter(state__in=["1","2"]).order_by("state")
+    else:
+        item_list = item_list.filter(state=project_status)
         # now = datetime.now()
         # date = now-timedelta(days=100)
         # item_list = item_list.filter(pub_date__gte=date)
