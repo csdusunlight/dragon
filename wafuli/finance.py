@@ -87,16 +87,16 @@ def get_finance_page(request):
         size = 9
     if not page or size <= 0:
         raise Http404
-    item_list = Finance.objects.all()
+    item_list = Finance.objects.filter(state__in=["1","2"], level__in=['normal','all'])
 
     # company_item = company_name.split('$')
     project_type = str(project_type)
     project_status = str(project_status)
     user = request.user
-    if user.is_authenticated() and user.is_channel:
-        item_list = Finance.objects.filter(state__in=["1","2"])
-    else:
-        item_list = Finance.objects.filter(state__in=["1","2"], level__in=['normal','all'])
+    # if user.is_authenticated() and user.is_channel:
+    #     item_list = Finance.objects.filter(state__in=["1","2"])
+    # else:
+    #     item_list = Finance.objects.filter(state__in=["1","2"], level__in=['normal','all'])
 
     if company_background != u'不限':
         item_list = item_list.filter(background__contains=company_background)
