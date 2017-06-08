@@ -42,7 +42,7 @@ def finance(request, id=None):
                    'table':table,
         }
         this_project = Finance.objects.get(pk=id)
-        if this_project.state in ["1", "2"]
+        if this_project.state != 3
             return render(request, 'detail-finance.html', context)
 
 def add_finance(request, id=None):
