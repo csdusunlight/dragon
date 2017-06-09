@@ -574,15 +574,15 @@ def security(request):
 @login_required
 def alipay(request):
     user = request.user
-    havebank = 0
-    if user.user_bankcard:
-        havebank = 1
-        bankcard = user.user_bankcard
-        return render(request, 'account/account_alipay.html', {"bankcard":bankcard,"havebank":havebank})
-    else:
-        havebank = 0
-        return render(request, 'account/account_alipay.html', {"havebank":havebank})
-    # render(request, 'account/account_alipay.html', {})
+    # havebank = 0
+    bankcard = user.user_bankcard.first()
+    # if user.user_bankcard:
+    #     havebank = 1
+    #     return render(request, 'account/account_alipay.html', {"bankcard":bankcard,"havebank":havebank})
+    # else:
+    #     havebank = 0
+    #     return render(request, 'account/account_alipay.html', {"havebank":havebank})
+    render(request, 'account/account_alipay.html', {"bankcard":bankcard})
 
 def password_change(request):
     if not request.is_ajax():
