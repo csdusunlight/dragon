@@ -580,7 +580,7 @@ def alipay(request):
     #     return render(request, 'account/account_alipay.html', {"bankcard":bankcard,"is_bankcard":is_bankcard})
     # else:
     #     return render(request, 'account/account_alipay.html', {"is_bankcard":is_bankcard})
-    render(request, 'account/account_alipay.html', {})
+    return render(request, 'account/account_alipay.html', {})
 
 def password_change(request):
     if not request.is_ajax():
