@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect
 from django.http.response import Http404
 from .models import MyUser, Userlogin,MobileCode
-from captcha.models import CaptchaStore  
+from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
 from captcha.views import imageV, generateCap
 from account.varify import verifymobilecode, sendmsg_bydhst
@@ -56,9 +56,9 @@ def login(request, template_name='registration/login.html',
             # Ensure the user-originating redirection url is safe.
             if not is_safe_url(url=redirect_to, host=request.get_host()):
                 redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
-            
+
             # Okay, security check complete. Log the user in.
-            user = form.get_user()           
+            user = form.get_user()
             auth_login(request, user)
             # anything you can add here
             user.last_login_time = user.this_login_time
@@ -165,8 +165,8 @@ def register(request):
         codimg_url = captcha_image_url(hashkey)
         icode = request.GET.get('icode','')
         context = {
-            'hashkey':hashkey, 
-            'codimg_url':codimg_url, 
+            'hashkey':hashkey,
+            'codimg_url':codimg_url,
             'icode':icode,
             'mobile':mobile,
         }
@@ -185,7 +185,7 @@ def verifyemail(request):
         users = MyUser.objects.filter(email=emailv)
         if not users.exists():
             code = '1'
-    
+
     result = {'code':code,}
     return JsonResponse(result)
 def verifymobile(request):
@@ -195,7 +195,7 @@ def verifymobile(request):
     if mobilev:
         users = MyUser.objects.filter(mobile=mobilev)
         if not users.exists():
-            code = '1'    
+            code = '1'
     result = {'code':code,}
     return JsonResponse(result)
 def verifyusername(request):
@@ -231,7 +231,7 @@ def callbackby189(request):
         except:
             code = '1'
         else:
-            code = '0'        
+            code = '0'
     result = {'res_code':code,}
     return JsonResponse(result)
 
@@ -323,21 +323,21 @@ def account(request):
     for coupon in coupons:
         if coupon.is_to_expired():
             coupon_to_expired += 1
-    return render(request, 'account/account_index.html', 
-                    {    
+    return render(request, 'account/account_index.html',
+                    {
                         'task_list':task_list, 'finance_list':finance_list,
                          'recomm_list':recomm_list[0:4], 'coupon_not_used':coupon_not_used,
                         'isSigned':isSigned, 'signed_conse_days':signed_conse_days,
                         'coupon_to_expired':coupon_to_expired,
                     }
-                                                          
+
                   )
 
 def signin(request):
-    
+
     if not request.is_ajax():
         raise Http404
-    
+
     result={'code':-1, 'url':''}
     if not request.user.is_authenticated():
         result['code'] = -1
@@ -417,7 +417,7 @@ def get_user_wel_page(request):
     # If page is out of range (e.g. 9999), deliver last page of results.
         contacts = paginator.page(paginator.num_pages)
     data = []
-    
+
     for con in contacts:
         reason = con.remark
         if filter == 3:
@@ -479,7 +479,7 @@ def get_channel_result_page(request):
     # If page is out of range (e.g. 9999), deliver last page of results.
         contacts = paginator.page(paginator.num_pages)
     data = []
-    
+
     for con in contacts:
         reason = ''
         if con.audit_state == '2':
@@ -523,7 +523,7 @@ def get_user_score_page(request):
     page = request.GET.get("page", None)
     size = request.GET.get("size", 10)
     filter = request.GET.get("filter",0)
-    
+
     try:
         size = int(size)
     except ValueError:
@@ -551,7 +551,7 @@ def get_user_score_page(request):
     # If page is out of range (e.g. 9999), deliver last page of results.
         contacts = paginator.page(paginator.num_pages)
     data = []
-    for con in contacts:        
+    for con in contacts:
         i = {"item":con.reason,
              "amount":con.transAmount,
              "time":con.time.strftime("%Y-%m-%d %H:%M:%S"),
@@ -573,7 +573,13 @@ def security(request):
     return render(request, 'account/account_security.html', {})
 @login_required
 def alipay(request):
-    return render(request, 'account/account_alipay.html', {})
+    user = request.user
+    is_bankcard = user.user_bankcard.exists()
+    if is_bankcard:
+        bankcard = user.user_bankcard
+        return render(request, 'account/account_alipay.html', {"bankcard":bankcard,"is_bankcard",is_bankcard})
+    else:
+        return render(request, 'account/account_alipay.html', {"is_bankcard",is_bankcard})
 
 def password_change(request):
     if not request.is_ajax():
@@ -582,7 +588,7 @@ def password_change(request):
     if not request.user.is_authenticated():
         result['code'] = 1
         result['url'] = reverse('login') + "?next=" + reverse('account_security')
-        return JsonResponse(result)   
+        return JsonResponse(result)
     init_password = request.POST.get("initp", '')
     new_password = request.POST.get("newp", '')
     if not (init_password and new_password):
@@ -735,7 +741,7 @@ def get_user_money_page(request):
     # If page is out of range (e.g. 9999), deliver last page of results.
         contacts = paginator.page(paginator.num_pages)
     data = []
-    for con in contacts:      
+    for con in contacts:
         state = ''
         reason = ''
         state_int=''
@@ -811,7 +817,7 @@ def withdraw(request):
                 result['code'] = -2
                 result['res_msg'] = u'提现失败！'
         return JsonResponse(result)
-            
+
 
 @login_required
 def coupon(request):
@@ -849,7 +855,7 @@ def get_user_coupon_page(request):
     # If page is out of range (e.g. 9999), deliver last page of results.
         contacts = paginator.page(paginator.num_pages)
     data = []
-    for con in contacts:  
+    for con in contacts:
         project = con.project
         i = {"title":project.title,
              "amount":project.amount,
@@ -996,7 +1002,7 @@ def get_user_message_page(request):
     # If page is out of range (e.g. 9999), deliver last page of results.
         contacts = paginator.page(paginator.num_pages)
     data = []
-    for con in contacts:        
+    for con in contacts:
         i = {"title":con.title,
              'content':con.content,
              'id':con.id,
@@ -1025,12 +1031,12 @@ def invite(request):
         this_month_award = int(this_month_award)
         statis = {
             'left_award':inviter.invite_account,
-            'accu_invite_award':inviter.invite_income,   
-            'accu_invite_scores':inviter.invite_scores,   
+            'accu_invite_award':inviter.invite_income,
+            'accu_invite_scores':inviter.invite_scores,
             'acc_count':acc_count,
             'acc_with_count':acc_with_count,
-            'this_month_award':this_month_award, 
-        }     
+            'this_month_award':this_month_award,
+        }
         return render(request,'account/account_invite.html', {'statis':statis})
     elif request.method == 'POST':
         result = {'code':-1, 'res_msg':''}
@@ -1052,7 +1058,7 @@ def invite(request):
                 result['res_msg'] = u'操作失败，请联系客服！'
         print result
         return JsonResponse(result)
-    
+
 def get_user_invite_page(request):
     if not request.is_ajax():
         raise Http404
@@ -1135,7 +1141,7 @@ def get_user_invite_page(request):
                 audit_state='0',).extra(select=select)\
                 .values('month').annotate(cou=Count('user',distinct=True),sumofwith=Sum('invest_amount')).order_by('-month',)
         paginator = Paginator(withdraw_list, size)
-        
+
         try:
             contacts = paginator.page(page)
         except PageNotAnInteger:
