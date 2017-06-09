@@ -27,6 +27,10 @@ $(function(){
     card_number = $("#card_number").val();
 
     var value = $("#bank option:selected").val();
+		if (!subbranch || !real_name || !card_number){
+			alert("填写项不能为空");
+			return;
+		}
     if(value == 0) {
       alert("请选择开户行");
       return;
@@ -51,10 +55,6 @@ $(function(){
       return;
     }
 
-		if (!subbranch || !real_name || !card_number){
-			alert("填写项不能为空");
-			return;
-		}
 		var post_url = "{%url 'bind_bankcard' %}";
 		$.ajax({
 			url: post_url,
@@ -85,6 +85,7 @@ $(function(){
     subbranch = $("#subbranch").val();
     real_name = $("#real_name").val();
     card_number = $("#card_number").val();
+    code = $("#yanzhengma").val();
 
     var value = $("#bank option:selected").val();
     if(value == 0) {
@@ -110,7 +111,7 @@ $(function(){
       return;
     }
 
-		if (!subbranch || !real_name || !card_number){
+		if (!subbranch || !real_name || !card_number || !code){
       alert("填写项不能为空");
       return;
     }
@@ -124,6 +125,7 @@ $(function(){
 				'subbranch': subbranch,
         'real_name':real_name,
         'card_number':card_number,
+        'code':code,
 			},
 			success:function(ret){
 				if(ret.code==1){
@@ -169,7 +171,7 @@ $(function(){
         	<div class="w1100">
             	{% include "account/left.html" %}
                 <div class="RightCont">
-                	{% if user.zhifubao %}
+                	{% if card %}
                 	<div class="binding">
                     	<div class="Binding-Top">
                         	<h2>银行卡绑定</h2>
@@ -178,8 +180,8 @@ $(function(){
                         	<div class="Bin-info">
 <!--                             	<p class="bing-name">银行卡姓名：{{user.zhifubao_name}}</p>
                                 <p><span>支付宝帐号：{{user.zhifubao}}</span><a href="#update">修改</a></p> -->
-                            <div class="bank-head"><span>持卡人</span><span>开户银行</span><span>银行卡号</span><span>操作</span></div>
-                            <div class="bank-detail"><span>周某某</span><span>中国邮政储蓄银行</span><span>6222333344445555</span><span class="bank-delete" onclick="popupInInfo()">解除绑定</span></div>
+                            <div class="bank-head"><span>持卡人</span><span>开户银行</span><span>银行卡号</span></div>
+                            <div class="bank-detail"><span>{{card.real_name}}</span><span>{{card.bank}}</span><span>{{card.card_number}}</span><!-- <span class="bank-delete" onclick="popupInInfo()">解除绑定</span> --></div>
                           </div>
                         </div>
                         <div class="popup-box popup-box-01">
@@ -225,11 +227,11 @@ $(function(){
                                   <span>请输入卡号：</span>
                                     <input id='card_number' maxlength="35" type="text" placeholder="请输入真实的银行卡帐号" />
                                 </div>
-<!--                             	<div class="Inout-yz">
+                            	<div class="Inout-yz">
                                 	<span>验证码：</span>
                                     <input id="yanzhengma" type="text" maxlength="6"/>
                                     <input id="yanzhengma_button" type="button" value="获取手机验证码" />
-                                </div> -->
+                                </div>
                                 <p style="float: left;width: 100%;margin-top: 10px;margin-left: 96px;">温馨提示：银行卡信息若有误，将提现失败</p>
                                 <input id="submit2" type="submit" value="确  定" />
                         </div>
