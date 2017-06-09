@@ -976,16 +976,20 @@ def get_admin_user_page(request):
         if inviter:
             inviter_username = inviter.username
             inviter_mobile = inviter.mobile
+        card = con.user_bankcard
+        if card:
+            card_number = card.card_number
+            real_name = card.real_name
         recent_login_time = u'无'
         if con.this_login_time:
             recent_login_time = con.this_login_time.strftime("%Y-%m-%d %H:%M")
         i = {"username":con.username,
              "mobile":con.mobile,
              "email":con.email,
-             # "card_number":con.user_bankcard.card_number,
-             # "real_name":con.user_bankcard.real_name,
-             "zhifubao":con.zhifubao,
-             "zhifubao_name":con.zhifubao_name,
+             "card_number":card_number,
+             "real_name":real_name,
+             # "zhifubao":con.zhifubao,
+             # "zhifubao_name":con.zhifubao_name,
              "time":con.date_joined.strftime("%Y-%m-%d %H:%M"),
              'recent_login_time':recent_login_time,
              "inviter_name":inviter_username,
