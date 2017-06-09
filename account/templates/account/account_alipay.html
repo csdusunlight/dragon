@@ -27,6 +27,10 @@ $(function(){
     card_number = $("#card_number").val();
 
     var value = $("#bank option:selected").val();
+		if (!subbranch || !real_name || !card_number){
+			alert("填写项不能为空");
+			return;
+		}
     if(value == 0) {
       alert("请选择开户行");
       return;
@@ -51,10 +55,6 @@ $(function(){
       return;
     }
 
-		if (!subbranch || !real_name || !card_number){
-			alert("填写项不能为空");
-			return;
-		}
 		var post_url = "{%url 'bind_bankcard' %}";
 		$.ajax({
 			url: post_url,
@@ -181,7 +181,7 @@ $(function(){
 <!--                             	<p class="bing-name">银行卡姓名：{{user.zhifubao_name}}</p>
                                 <p><span>支付宝帐号：{{user.zhifubao}}</span><a href="#update">修改</a></p> -->
                             <div class="bank-head"><span>持卡人</span><span>开户银行</span><span>银行卡号</span></div>
-                            <div class="bank-detail"><span>{{user.user_bankcard.real_name}}</span><span>{{user.user_bankcard.bank}}</span><span>{{user.user_bankcard.card_number}}</span><!-- <span class="bank-delete" onclick="popupInInfo()">解除绑定</span> --></div>
+                            <div class="bank-detail"><span>{{user.user_bankcard}}</span><span>{{user.user_bankcard.bank}}</span><span>{{user.user_bankcard.card_number}}</span><!-- <span class="bank-delete" onclick="popupInInfo()">解除绑定</span> --></div>
                           </div>
                         </div>
                         <div class="popup-box popup-box-01">
