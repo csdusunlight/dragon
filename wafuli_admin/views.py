@@ -979,10 +979,11 @@ def get_admin_user_page(request):
 
         card_number = u'无'
         real_name = u'无'
-        card = con.user_bankcard
-        if card:
+        if con.user_bankcard.exists():
+            card = con.user_bankcard.first()
             card_number = card.card_number
             real_name = card.real_name
+
         recent_login_time = u'无'
         if con.this_login_time:
             recent_login_time = con.this_login_time.strftime("%Y-%m-%d %H:%M")
