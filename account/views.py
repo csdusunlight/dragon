@@ -574,8 +574,11 @@ def security(request):
 @login_required
 def alipay(request):
     user = request.user
-    # havebank = 0
-    bankcard = user.user_bankcard.first()
+    if user.user_bankcard.exists():
+        bankcard = user.user_bankcard.first()
+    else:
+        bankcard = None
+
     # if user.user_bankcard:
     #     havebank = 1
     #     return render(request, 'account/account_alipay.html', {"bankcard":bankcard,"havebank":havebank})
