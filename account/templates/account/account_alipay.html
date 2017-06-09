@@ -171,7 +171,7 @@ $(function(){
         	<div class="w1100">
             	{% include "account/left.html" %}
                 <div class="RightCont">
-                	{% if is_bankcard %}
+                	{% if user.user_bankcard %}
                 	<div class="binding">
                     	<div class="Binding-Top">
                         	<h2>银行卡绑定</h2>
@@ -181,7 +181,7 @@ $(function(){
 <!--                             	<p class="bing-name">银行卡姓名：{{user.zhifubao_name}}</p>
                                 <p><span>支付宝帐号：{{user.zhifubao}}</span><a href="#update">修改</a></p> -->
                             <div class="bank-head"><span>持卡人</span><span>开户银行</span><span>银行卡号</span></div>
-                            <div class="bank-detail"><span>{{bankcard.real_name}}</span><span>{{bankcard.bank}}</span><span>{{bankcard.card_number}}</span><!-- <span class="bank-delete" onclick="popupInInfo()">解除绑定</span> --></div>
+                            <div class="bank-detail"><span>{{user.user_bankcard.real_name}}</span><span>{{user.user_bankcard.bank}}</span><span>{{user.user_bankcard.card_number}}</span><!-- <span class="bank-delete" onclick="popupInInfo()">解除绑定</span> --></div>
                           </div>
                         </div>
                         <div class="popup-box popup-box-01">
