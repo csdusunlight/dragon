@@ -198,7 +198,7 @@ def admin_finance(request):
                 res['res_msg'] = u"操作失败，返现重复！"
             else:
                 log.audit_result = True
-                
+
                 # translist = charge_money(event_user, '0', cash, u'福利返现')
                 translist = charge_money(event_user, '0', cash, project_title)  #jzy
                 if event.content_object.is_vip_bonus:
@@ -982,8 +982,9 @@ def get_admin_user_page(request):
         i = {"username":con.username,
              "mobile":con.mobile,
              "email":con.email,
-             "zhifubao":con.zhifubao,
-             "zhifubao_name":con.zhifubao_name,
+             "card":con.user_bankcard,
+             # "zhifubao":con.zhifubao,
+             # "zhifubao_name":con.zhifubao_name,
              "time":con.date_joined.strftime("%Y-%m-%d %H:%M"),
              'recent_login_time':recent_login_time,
              "inviter_name":inviter_username,
@@ -1373,7 +1374,7 @@ def get_admin_charge_page(request):
     adminname = request.GET.get("adminname", None)
     if adminname:
         item_list = item_list.filter(admin_event__admin_user__username=adminname)
-        
+
     charge_reason = request.GET.get("charge_reason", None)
     if charge_reason:
         item_list = item_list.filter(reason__contains=charge_reason)
@@ -1518,11 +1519,11 @@ def send_multiple_msg(request):
 #     username = request.POST.get("username", None)
 #     if username:
 #         item_list = item_list.filter(user_name=username)
-# 
+#
 #     mobile = request.POST.get("mobile", None)
 #     if mobile:
 #         item_list = item_list.filter(invest_mobile=mobile)
-# 
+#
 #     projectname = request.POST.get("projectname", None)
 #     if projectname:
 #         item_list = item_list.filter(invest_company__contains=projectname)
