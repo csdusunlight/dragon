@@ -976,6 +976,9 @@ def get_admin_user_page(request):
         if inviter:
             inviter_username = inviter.username
             inviter_mobile = inviter.mobile
+
+        card_number = u'无'
+        real_name = u'无'
         card = con.user_bankcard
         if card:
             card_number = card.card_number
