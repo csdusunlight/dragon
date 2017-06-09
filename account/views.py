@@ -578,12 +578,11 @@ def alipay(request):
 
     if user.user_bankcard.exists():
         havebank = 1
-        bankcard = user.user_bankcard.first()
-        return render(request, 'account/account_alipay.html', {"bankcard":bankcard,"havebank":havebank})
+        card = user.user_bankcard.first()
+        return render(request, 'account/account_alipay.html', {"card":card,"havebank":havebank})
     else:
         havebank = 0
         return render(request, 'account/account_alipay.html', {"havebank":havebank})
-    # render(request, 'account/account_alipay.html', {"bankcard":bankcard})
 
 def password_change(request):
     if not request.is_ajax():
