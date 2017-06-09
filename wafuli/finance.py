@@ -21,7 +21,7 @@ def finance(request, id=None):
         except Finance.DoesNotExist:
             raise Http404(u"该页面不存在")
         if not news.state in ["1", "2"]:
-            raise Http404(u"该项目不存在")
+            raise Http404(u"该项目已下线")
         update_view_count(news)
         scheme = news.scheme
         table = []
@@ -50,6 +50,8 @@ def add_finance(request, id=None):
             news = Finance.objects.get(id=id)
         except Finance.DoesNotExist:
             raise Http404(u"该页面不存在")
+        if not news.state in ["1", "2"]:
+            raise Http404(u"该项目已下线")
         update_view_count(news)
         scheme = news.scheme
         table = []
