@@ -770,8 +770,11 @@ def withdraw(request):
     if request.method == 'GET':
         hashkey = CaptchaStore.generate_key()
         codimg_url = captcha_image_url(hashkey)
+
+        user = request.user
+        card = user.user_bankcard.first()
         return render(request,'account/withdraw.html',
-                  {'hashkey':hashkey, 'codimg_url':codimg_url})
+                  {'hashkey':hashkey, 'codimg_url':codimg_url, "card":card})
     elif request.method == 'POST':
         user = request.user
         result = {'code':-1, 'res_msg':''}
@@ -792,10 +795,16 @@ def withdraw(request):
             result['code'] = -1
             result['res_msg'] = u'提现金额错误！'
             return JsonResponse(result)
-        if not user.zhifubao or not user.zhifubao_name:
+        # if not user.zhifubao or not user.zhifubao_name:
+        #     result['code'] = -1
+        #     result['res_msg'] = u'请先绑定支付宝！'
+        #     return JsonResponse(result)
+        card = user.user_bankcard.first()
+        if not card:
             result['code'] = -1
-            result['res_msg'] = u'请先绑定支付宝！'
+            result['res_msg'] = u'请先绑定银行卡！'
             return JsonResponse(result)
+
         ret = imageV(hashkey, varicode)
         if ret != 0:
             result['code'] = 2
@@ -804,7 +813,7 @@ def withdraw(request):
         else:
             translist = charge_money(user, '1', withdraw_amount, u'提现')
             if translist:
-                event = UserEvent.objects.create(user=user, event_type='2', invest_account=user.zhifubao,
+                event = UserEvent.objects.create(user=user, event_type='2', invest_account=card.card_number,
                             invest_amount=withdraw_amount, audit_state='1')
                 translist.user_event = event
                 translist.save(update_fields=['user_event'])
@@ -1098,7 +1107,7 @@ def get_user_invite_page(request):
             i = {
                  "mobile":mobile,
                  "time":con.date_joined.strftime("%Y-%m-%d %H:%M"),
-                 "is_bind":u'是' if con.zhifubao else u'否',
+                 "is_bind":u'是' if con.user_bankcard else u'否',
                  "is_with":u'是' if reg else u'否',
              }
             data.append(i)
