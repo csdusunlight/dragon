@@ -40,7 +40,7 @@ $(function(){
 
     var re_account=/^[\u2E80-\u9FFF]+$/;  //验证中文
     var re_number=/^[0-9]*$/;  //验证数字
-    var re_card = /^\d{16}|\d{19}$/;  //验证银行卡号
+    var re_card = /^[\d\s]+$/;  //验证银行卡号
 
     if(!re_account.test(subbranch)){
       alert("请输入正确的银行卡支行名称")
@@ -48,10 +48,6 @@ $(function(){
     }
     if(!re_account.test(real_name)){
       alert("请输入正确的银行卡绑定的真实姓名")
-      return;
-    }
-    if(!re_card.test(card_number)){
-      alert("请输入正确格式的银行卡号码")
       return;
     }
 
@@ -96,7 +92,7 @@ $(function(){
 
     var re_account=/^[\u2E80-\u9FFF]+$/;  //验证中文
     var re_number=/^[0-9]*$/;  //验证数字
-    var re_card = /^\d{16}|\d{19}$/;  //验证银行卡号
+    var re_card = /^[\d\s]+$/;  //验证银行卡号
 
     if(!re_account.test(subbranch)){
       alert("请输入正确的银行卡支行名称")
@@ -106,10 +102,10 @@ $(function(){
       alert("请输入正确的银行卡绑定的真实姓名")
       return;
     }
-    if(!re_card.test(card_number)){
-      alert("请输入正确格式的银行卡号码")
-      return;
-    }
+    // if(!re_card.test(card_number)){
+    //   alert("请输入正确格式的银行卡号码")
+    //   return;
+    // }
 
 		if (!subbranch || !real_name || !card_number || !code){
       alert("填写项不能为空");
@@ -181,7 +177,42 @@ $(function(){
 <!--                             	<p class="bing-name">银行卡姓名：{{user.zhifubao_name}}</p>
                                 <p><span>支付宝帐号：{{user.zhifubao}}</span><a href="#update">修改</a></p> -->
                             <div class="bank-head"><span>持卡人</span><span>开户银行</span><span>银行卡号</span></div>
-                            <div class="bank-detail"><span>{{card.real_name}}</span><span>{{card.bank}}</span><span>{{card.card_number}}</span><!-- <span class="bank-delete" onclick="popupInInfo()">解除绑定</span> --></div>
+                            <div class="bank-detail">
+                              <span>{{card.real_name}}</span>
+                              <span>
+                                {% if card.bank = "中国工商银行" %}
+                                    <img src="{% static 'images/gongshang.png' %}" />
+                                {% elif card.bank = "中国农业银行" %}
+                                    <img src="{% static 'images/nongye.png' %}" />
+                                {% elif card.bank = "中国银行" %}
+                                    <img src="{% static 'images/zhongguo.png' %}" />
+                                {% elif card.bank = "中国建设银行" %}
+                                    <img src="{% static 'images/jianshe.png' %}" />
+                                {% elif card.bank = "交通银行" %}
+                                    <img src="{% static 'images/jiaotong.png' %}" />
+                                {% elif card.bank = "中国邮政储蓄银行" %}
+                                    <img src="{% static 'images/youzheng.png' %}" />
+                                {% elif card.bank = "中信银行" %}
+                                    <img src="{% static 'images/zhongxin.png' %}" />
+                                {% elif card.bank = "中国光大银行" %}
+                                    <img src="{% static 'images/guangda.png' %}" />
+                                {% elif card.bank = "华夏银行" %}
+                                    <img src="{% static 'images/huaxia.png' %}" />
+                                {% elif card.bank = "中国民生银行" %}
+                                    <img src="{% static 'images/minsheng.png' %}" />
+                                {% elif card.bank = "广发银行" %}
+                                    <img src="{% static 'images/guangfa.png' %}" />
+                                {% elif card.bank = "平安银行" %}
+                                    <img src="{% static 'images/pingan.png' %}" />
+                                {% elif card.bank = "招商银行" %}
+                                    <img src="{% static 'images/zhaoshang.png' %}" />
+                                {% elif card.bank = "兴业银行" %}
+                                    <img src="{% static 'images/xingye.png' %}" />
+                                {% endif %}
+                                <b>{{card.bank}}</b>
+                              </span>
+                              <span>{{card.card_number}}</span>
+                            </div>
                           </div>
                         </div>
                         <div class="popup-box popup-box-01">
@@ -225,7 +256,7 @@ $(function(){
                                 </div>
                               <div class="Inout-box">
                                   <span>请输入卡号：</span>
-                                    <input id='card_number' maxlength="35" type="text" placeholder="请输入真实的银行卡帐号" />
+                                    <input id='card_number' maxlength="35" type="text" placeholder="请输入真实的银行卡帐号" onkeyup="this.value =this.value.replace(/\s/g,'').replace(/[^\d]/g,'').replace(/(\d{4})(?=\d)/g,'$1 ');" />
                                 </div>
                             	<div class="Inout-yz">
                                 	<span>验证码：</span>
@@ -280,7 +311,7 @@ $(function(){
                                 </div>
                             	<div class="Inout-box">
                                 	<span>请输入卡号：</span>
-                                    <input id='card_number' maxlength="35" type="text" placeholder="请输入真实的银行卡帐号" />
+                                    <input id='card_number' maxlength="35" type="text" placeholder="请输入真实的银行卡帐号" onkeyup="this.value =this.value.replace(/\s/g,'').replace(/[^\d]/g,'').replace(/(\d{4})(?=\d)/g,'$1 ');" />
                                 </div>
                               <p style="float: left;width: 100%;margin-top: 10px;margin-left: 96px;">温馨提示：支付宝姓名和账号不正确者，将不予提现</p>
                                 <input id="submit" type="submit" value="确  定" />

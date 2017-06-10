@@ -602,3 +602,13 @@ input[type="text"] {padding-left: 10px !important;padding-right: 10px !important
       opacity: 1;
    }
 }
+
+.bank-detail img {
+  display: inline-block;
+  height: 41px;
+  vertical-align: bottom;
+}
+.bank-detail span b {
+  display: inline-block;
+  margin-left: 4px;
+}
