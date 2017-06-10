@@ -20,7 +20,7 @@ from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
-                
+
 def get_admin_channel_page(request):
     res={'code':0,}
     user = request.user
@@ -31,7 +31,7 @@ def get_admin_channel_page(request):
     page = request.GET.get("page", None)
     size = request.GET.get("size", 10)
     state = request.GET.get("state",'0')
-    
+
     try:
         size = int(size)
     except ValueError:
@@ -48,15 +48,15 @@ def get_admin_channel_page(request):
         s = datetime.datetime.strptime(startTime,'%Y-%m-%dT%H:%M')
         e = datetime.datetime.strptime(endTime,'%Y-%m-%dT%H:%M')
         item_list = item_list.filter(join_time__range=(s,e))
-        
+
     qq_number = request.GET.get("qq", None)
     if qq_number:
         item_list = item_list.filter(qq_number=qq_number)
-    
+
     mobile = request.GET.get("mobile", None)
     if mobile:
         item_list = item_list.filter(user__mobile=mobile)
-        
+
     paginator = Paginator(item_list, size)
     try:
         contacts = paginator.page(page)
@@ -68,13 +68,14 @@ def get_admin_channel_page(request):
         contacts = paginator.page(paginator.num_pages)
     data = []
     for con in contacts:
+        card = con.user.user_bankcard.first()
         recent_login_time = u'无'
         if con.user.this_login_time:
             recent_login_time = con.user.this_login_time.strftime("%Y-%m-%d %H:%M")
         i = {"username":con.user.username,
              "mobile":con.user.mobile,
-             "zhifubao":con.user.zhifubao,
-             "zhifubao_name":con.user.zhifubao_name,
+             "card_number":card.card_number,
+             "real_name":card.real_name,
              "join_time":con.join_time.strftime("%Y-%m-%d %H:%M"),
              'recent_login_time':recent_login_time,
              "balance":con.user.balance/100.0,

@@ -103,12 +103,12 @@ $(function(){
                                 </div>
                                 <div class="Cash-input">
                                 	<span>提现账户：</span>
-                                	{%if not user.zhifubao %}
+                                	{%if not card %}
                                     <p>您还未绑定任何银行卡号，请 <a target="_blank" href="{%url 'account_alipay'%}#update">绑定</a>
                                   		，然后刷新本页面
                                     </p>
                                     {%else%}
-                                    <strong>{{user.zhifubao_name}}（{{user.zhifubao}}）</strong>
+                                    <strong>{{card.real_name}}（{{card.card_number}}）</strong>
                                     <a target="_blank" href="{%url 'account_alipay'%}#update">更换账号</a>
                                     {%endif%}
                                 </div>

@@ -1143,13 +1143,13 @@ def get_admin_with_page(request):
     if mobile:
         item_list = item_list.filter(user__mobile=mobile)
 
-    zhifubao = request.GET.get("zhifubao", None)
-    if zhifubao:
-        item_list = item_list.filter(user__zhifubao=zhifubao)
+    card_number = request.GET.get("card_number", None)
+    if card_number:
+        item_list = item_list.filter(user__user_bankcard__card_number=card_number)
 
-    zhifubao_name = request.GET.get("zhifubao_name", None)
-    if zhifubao_name:
-        item_list = item_list.filter(user__zhifubao_name=zhifubao_name)
+    real_name = request.GET.get("real_name", None)
+    if real_name:
+        item_list = item_list.filter(user__user_bankcard__real_name=real_name)
 
     adminname = request.GET.get("adminname", None)
     if adminname:
@@ -1168,11 +1168,12 @@ def get_admin_with_page(request):
     data = []
     for con in contacts:
         obj_user = con.user
+        card = obj_user.user_bankcard.first()
         i = {"username":obj_user.username,
              "mobile":obj_user.mobile,
              "balance":obj_user.balance/100.0,
-             "zhifubao_name":obj_user.zhifubao_name,
-             "zhifubao":obj_user.zhifubao,
+             "real_name":card.real_name,
+             "card_number":card.card_number,
              "amount":con.invest_amount/100.0,
              "time":con.time.strftime("%Y-%m-%d %H:%M"),
              "state":con.get_audit_state_display(),
