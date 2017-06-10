@@ -37,6 +37,7 @@ from django.db.models import Sum, Count
 from .transaction import charge_money, charge_score
 from account.tools import send_mail, get_client_ip
 from django.db import connection
+from wafuli.data import BANK
 @sensitive_post_parameters()
 @csrf_protect
 @never_cache
@@ -575,7 +576,8 @@ def security(request):
 def alipay(request):
     user = request.user
     card = user.user_bankcard.first()
-    return render(request, 'account/account_alipay.html', {"card":card})
+    banks = BANK
+    return render(request, 'account/account_alipay.html', {"card":card, 'banks':banks})
 
 def password_change(request):
     if not request.is_ajax():
@@ -690,6 +692,7 @@ def bind_bankcard(request):
         real_name = request.GET.get("real_name", '')
         bank = request.GET.get("bank", '')
         subbranch = request.GET.get("subbranch",'')
+        print 'bank' + bank
         if card_number and real_name and bank:
             user.user_bankcard.create(user=user, card_number=card_number, real_name=real_name,
                                        bank=bank, subbranch=subbranch)

@@ -26,16 +26,14 @@ $(function(){
     real_name = $("#real_name").val();
     card_number = $("#card_number").val();
 
-    var value = $("#bank option:selected").val();
+    var bank = $("#bank option:selected").val();
 		if (!subbranch || !real_name || !card_number){
 			alert("填写项不能为空");
 			return;
 		}
-    if(value == 0) {
+    if(bank == 0) {
       alert("请选择开户行");
       return;
-    } else {
-     bank = $("#bank option:selected").text();
     }
 
     var re_account=/^[\u2E80-\u9FFF]+$/;  //验证中文
@@ -83,12 +81,12 @@ $(function(){
     card_number = $("#card_number").val();
     code = $("#yanzhengma").val();
 
-    var value = $("#bank option:selected").val();
-    if(value == 0) {
-      alert("请选择开户行")
-    } else {
-     bank = $("#bank option:selected").text();
-    }
+    var bank = $("#bank option:selected").val();
+    alert(bank);
+    if(bank == 0) {
+      alert("请选择开户行");
+      return;
+    } 
 
     var re_account=/^[\u2E80-\u9FFF]+$/;  //验证中文
     var re_number=/^[0-9]*$/;  //验证数字
@@ -119,9 +117,9 @@ $(function(){
 			data : {
 				'bank': bank,
 				'subbranch': subbranch,
-        'real_name':real_name,
-        'card_number':card_number,
-        'code':code,
+		        'real_name':real_name,
+		        'card_number':card_number,
+		        'code':code,
 			},
 			success:function(ret){
 				if(ret.code==1){
@@ -180,36 +178,9 @@ $(function(){
                             <div class="bank-detail">
                               <span>{{card.real_name}}</span>
                               <span>
-                                {% if card.bank = "中国工商银行" %}
-                                    <img src="{% static 'images/gongshang.png' %}" />
-                                {% elif card.bank = "中国农业银行" %}
-                                    <img src="{% static 'images/nongye.png' %}" />
-                                {% elif card.bank = "中国银行" %}
-                                    <img src="{% static 'images/zhongguo.png' %}" />
-                                {% elif card.bank = "中国建设银行" %}
-                                    <img src="{% static 'images/jianshe.png' %}" />
-                                {% elif card.bank = "交通银行" %}
-                                    <img src="{% static 'images/jiaotong.png' %}" />
-                                {% elif card.bank = "中国邮政储蓄银行" %}
-                                    <img src="{% static 'images/youzheng.png' %}" />
-                                {% elif card.bank = "中信银行" %}
-                                    <img src="{% static 'images/zhongxin.png' %}" />
-                                {% elif card.bank = "中国光大银行" %}
-                                    <img src="{% static 'images/guangda.png' %}" />
-                                {% elif card.bank = "华夏银行" %}
-                                    <img src="{% static 'images/huaxia.png' %}" />
-                                {% elif card.bank = "中国民生银行" %}
-                                    <img src="{% static 'images/minsheng.png' %}" />
-                                {% elif card.bank = "广发银行" %}
-                                    <img src="{% static 'images/guangfa.png' %}" />
-                                {% elif card.bank = "平安银行" %}
-                                    <img src="{% static 'images/pingan.png' %}" />
-                                {% elif card.bank = "招商银行" %}
-                                    <img src="{% static 'images/zhaoshang.png' %}" />
-                                {% elif card.bank = "兴业银行" %}
-                                    <img src="{% static 'images/xingye.png' %}" />
-                                {% endif %}
-                                <b>{{card.bank}}</b>
+                              <img src="/static/images/{{card.bank}}.png" />
+                               
+                                <b>{{card.get_bank_display}}</b>
                               </span>
                               <span>{{card.card_number}}</span>
                             </div>
@@ -230,20 +201,9 @@ $(function(){
                                     <!-- <input id='bank_choose' maxlength="15" type="text" placeholder="请选择相应的银行卡" /> -->
                                     <select id='bank'>
                                       <option value ="0">请选择相应的开户行</option>
-                                      <option value ="中国工商银行">中国工商银行</option>
-                                      <option value ="中国农业银行">中国农业银行</option>
-                                      <option value="中国银行">中国银行</option>
-                                      <option value="中国建设银行">中国建设银行</option>
-                                      <option value="交通银行">交通银行</option>
-                                      <option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
-                                      <option value="中信银行">中信银行</option>
-                                      <option value="中国光大银行">中国光大银行</option>
-                                      <option value="华夏银行">华夏银行</option>
-                                      <option value="中国民生银行">中国民生银行</option>
-                                      <option value="广发银行">广发银行</option>
-                                      <option value="平安银行">平安银行</option>
-                                      <option value="招商银行">招商银行</option>
-                                      <option value="兴业银行">兴业银行</option>
+                                    {% for x in banks %}
+							    		<option value="{{x.0}}">{{x.1}}</option>
+									{%endfor%}
                                     </select>
                                 </div>
                               <div class="Inout-box">
@@ -283,22 +243,12 @@ $(function(){
                               <div class="Inout-box">
                                   <span>请选择银行：</span>
                                     <!-- <input id='bank_choose' maxlength="15" type="text" placeholder="请选择相应的银行卡" /> -->
-                                    <select id='bank'  placeholder="请选择相应的银行卡">
-                                      <option value ="0">请选择相应的开户行</option>
-                                      <option value ="1">中国工商银行</option>
-                                      <option value ="2">中国农业银行</option>
-                                      <option value="3">中国银行</option>
-                                      <option value="4">中国建设银行</option>
-                                      <option value="5">交通银行</option>
-                                      <option value="6">中国邮政储蓄银行</option>
-                                      <option value="7">中信银行</option>
-                                      <option value="8">中国光大银行</option>
-                                      <option value="9">华夏银行</option>
-                                      <option value="10">中国民生银行</option>
-                                      <option value="11">广发银行</option>
-                                      <option value="12">平安银行</option>
-                                      <option value="13">招商银行</option>
-                                      <option value="14">兴业银行</option>
+                                    <select id='bank'>
+                                    <option value ="0">请选择相应的开户行</option>
+                                    {% for x in banks %}
+							    		<option value="{{x.0}}">{{x.1}}</option>
+									{%endfor%}
+                                     
                                     </select>
                                 </div>
                               <div class="Inout-box">
