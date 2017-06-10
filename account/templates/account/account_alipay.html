@@ -96,7 +96,7 @@ $(function(){
 
     var re_account=/^[\u2E80-\u9FFF]+$/;  //验证中文
     var re_number=/^[0-9]*$/;  //验证数字
-    var re_card = /^\d{16}|\d{19}$/;  //验证银行卡号
+    var re_card = /^[\d\s]+$/;  //验证银行卡号
 
     if(!re_account.test(subbranch)){
       alert("请输入正确的银行卡支行名称")
