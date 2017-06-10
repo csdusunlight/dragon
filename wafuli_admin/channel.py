@@ -68,7 +68,12 @@ def get_admin_channel_page(request):
         contacts = paginator.page(paginator.num_pages)
     data = []
     for con in contacts:
-        card = con.user.user_bankcard.first()
+        card_number = u'无'
+        real_name = u'无'
+        if con.user.user_bankcard.exists():
+            card = con.user.user_bankcard.first()
+            card_number = card.card_number
+            real_name = card.real_name
         recent_login_time = u'无'
         if con.user.this_login_time:
             recent_login_time = con.user.this_login_time.strftime("%Y-%m-%d %H:%M")
