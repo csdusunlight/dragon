@@ -488,6 +488,10 @@ def export_finance_excel(request):
         s = datetime.datetime.strptime(startTime,'%Y-%m-%dT%H:%M')
         e = datetime.datetime.strptime(endTime,'%Y-%m-%dT%H:%M')
         item_list = item_list.filter(time__range=(s,e))
+    if startTime2 and endTime2:
+        s = datetime.datetime.strptime(startTime2,'%Y-%m-%dT%H:%M')
+        e = datetime.datetime.strptime(endTime2,'%Y-%m-%dT%H:%M')
+        item_list = item_list.filter(audit_time__range=(s,e))
     username = request.GET.get("username", None)
     if username:
         item_list = item_list.filter(user__username=username)
