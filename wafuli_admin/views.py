@@ -1168,7 +1168,13 @@ def get_admin_with_page(request):
     data = []
     for con in contacts:
         obj_user = con.user
-        card = obj_user.user_bankcard.first()
+
+        card_number = u'无'
+        real_name = u'无'
+        if obj_user.user_bankcard.exists():
+            card = obj_user.user_bankcard.first()
+            card_number = card.card_number
+            real_name = card.real_name
         i = {"username":obj_user.username,
              "mobile":obj_user.mobile,
              "balance":obj_user.balance/100.0,
