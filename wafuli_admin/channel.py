@@ -79,8 +79,8 @@ def get_admin_channel_page(request):
             recent_login_time = con.user.this_login_time.strftime("%Y-%m-%d %H:%M")
         i = {"username":con.user.username,
              "mobile":con.user.mobile,
-             "card_number":card.card_number,
-             "real_name":card.real_name,
+             "card_number":card_number,
+             "real_name":real_name,
              "join_time":con.join_time.strftime("%Y-%m-%d %H:%M"),
              'recent_login_time':recent_login_time,
              "balance":con.user.balance/100.0,
