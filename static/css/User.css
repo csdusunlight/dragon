@@ -193,7 +193,11 @@ a.chakan { color:#008fd7; font-size:14px;}
   text-align: center;
   border: 1px solid #eee;
 }
+.bank-detail {
+  font-size: 0;
+}
 .bank-detail span {
+  font-size: 12px;
   border-top: none;
 }
 .bank-delete {
@@ -202,7 +206,7 @@ a.chakan { color:#008fd7; font-size:14px;}
 }
 /*银行卡绑定--------end*/
 .bing-name { margin-top:55px;}
-.update { float:left; width:870px; height:auto; padding-left:12px; text-align:left;margin-top: 50px;}
+.update { float:left; width:870px; height:auto; padding-left:12px; text-align:left;}
 .update h6 { font-size:16px; color:#f08519; line-height:66px; display:block;}
 .update form { float:left; width:100%; height:auto;}
 .Inout-box { float:left; width:100%; height:auto; margin-top:26px;}
@@ -605,8 +609,9 @@ input[type="text"] {padding-left: 10px !important;padding-right: 10px !important
 
 .bank-detail img {
   display: inline-block;
-  height: 41px;
-  vertical-align: bottom;
+  height: 30px;
+  margin-top: -4px;
+  vertical-align: middle;
 }
 .bank-detail span b {
   display: inline-block;

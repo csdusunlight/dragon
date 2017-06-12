@@ -86,7 +86,7 @@ $(function(){
     if(bank == 0) {
       alert("请选择开户行");
       return;
-    } 
+    }
 
     var re_account=/^[\u2E80-\u9FFF]+$/;  //验证中文
     var re_number=/^[0-9]*$/;  //验证数字
@@ -179,7 +179,7 @@ $(function(){
                               <span>{{card.real_name}}</span>
                               <span>
                               <img src="/static/images/{{card.bank}}.png" />
-                               
+
                                 <b>{{card.get_bank_display}}</b>
                               </span>
                               <span>{{card.card_number}}</span>
@@ -238,8 +238,6 @@ $(function(){
                             </div>
                         </div>
                         <div class="update" id="update">
-                        	<h6>绑定新的银行卡：</h6>
-
                               <div class="Inout-box">
                                   <span>请选择银行：</span>
                                     <!-- <input id='bank_choose' maxlength="15" type="text" placeholder="请选择相应的银行卡" /> -->
@@ -248,7 +246,7 @@ $(function(){
                                     {% for x in banks %}
 							    		<option value="{{x.0}}">{{x.1}}</option>
 									{%endfor%}
-                                     
+
                                     </select>
                                 </div>
                               <div class="Inout-box">
