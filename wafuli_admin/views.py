@@ -168,6 +168,7 @@ def admin_finance(request):
             return JsonResponse(res)
         event = UserEvent.objects.get(id=event_id)
         event_user = event.user
+        card = event_user.user_bankcard.first()
 
         project = event.content_object   #jzy
         project_title = project.title   # jzy
@@ -213,7 +214,7 @@ def admin_finance(request):
                     res['code'] = 0
                     #更新投资记录表
                     Invest_Record.objects.create(invest_date=event.time,invest_company=event.content_object.company.name,
-                                                 user_name=event_user.zhifubao_name,zhifubao=event_user.zhifubao,
+                                                 user_name=card.real_name,card_number=card.card_number,
                                                  invest_mobile=event.invest_account,invest_period=event.invest_term,
                                                  invest_amount=event.invest_amount,return_amount=cash/100.0,wafuli_account=event_user.mobile,
                                                  return_date=datetime.date.today(),remark=event.remark)
@@ -1487,12 +1488,15 @@ def get_admin_investrecord_page(request):
         contacts = paginator.page(paginator.num_pages)
     data = []
     for con in contacts:
+        card_number = u'无'
+        if con.card_number:
+            card_number = con.card_number
         i = {
              "invest_date": con.invest_date.strftime("%Y-%m-%d") if con.invest_date else '',
              'invest_company':con.invest_company,
              'qq_number':con.qq_number,
              "user_name":con.user_name,
-             "zhifubao":con.zhifubao,
+             "card_number":card_number,
              "invest_mobile":con.invest_mobile,
              'invest_period':con.invest_period,
              'invest_amount':con.invest_amount,
