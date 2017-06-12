@@ -5,7 +5,7 @@ Created on 20160608
 @author: lch
 '''
 import logging
-from wafuli.models import Hongbao
+from wafuli.models import Hongbao, Company
 import urllib2
 from StringIO import StringIO
 from bs4 import BeautifulSoup
@@ -187,10 +187,10 @@ def load_gzh():
     return contents
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        company = Company.objects.get(name=u"免费福利")
         contents = load_gzh()
         for con in contents:
-            wel = Hongbao.objects.create(type='hongbao',title=con['title'],state='1',company_id=1,strategy=con['content'],
-                                         pic = con['pic_download'])
+            wel = Hongbao.objects.create(type='hongbao',title=con['title'],state='1',company=company,strategy=con['content'], pic = con['pic_download'])
             wel.url = reverse('welfare', kwargs={'id': wel.id})
             wel.save(update_fields=['url'])
 #             Hongbao.objects.create(welfare_ptr_id=wel.id)
