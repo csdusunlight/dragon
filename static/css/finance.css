@@ -5,6 +5,9 @@ ul,li,h1,h2,h3,h4,h5,h6 {
 div,p,a {
 	font-size: 14px;
 }
+.header-t .rt a {
+	font-size: 12px;
+}
 div {
 	box-sizing: border-box;
 }
