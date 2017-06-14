@@ -3,12 +3,12 @@ from django.shortcuts import render
 from django.http.response import Http404
 from wafuli.models import Welfare, Task, Finance, Commodity, Information, \
     ExchangeRecord, Press, UserEvent, Advertisement, Activity, Company,\
-    CouponProject, Baoyou, Hongbao
+    CouponProject, Baoyou, Hongbao, UserTask
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
 from account.transaction import charge_score
-from django.db.models import Q
+from django.db.models import F,Q
 import logging
 from datetime import date
 from wafuli_admin.models import DayStatis, GlobalStatis, RecommendRank
@@ -16,6 +16,8 @@ from account.models import MyUser
 from django.contrib.contenttypes.models import ContentType
 from django.db import transaction
 from wafuli.tools import update_view_count
+from .tools import saveImgAndGenerateUrl
+from django.contrib.auth.decorators import login_required
 logger = logging.getLogger('wafuli')
 from .tools import listing
 import re
@@ -32,8 +34,10 @@ def index(request):
             wel.left_count = wel.coupons.filter(user__isnull=True).count()
         else:
             wel.left_count = u"充足"
-    task_list = Task.objects.filter(state='1')[0:3]
-    finance_list = Finance.objects.filter(state='1')[0:3]
+    query_set = Finance.objects.filter(state__in=['1','2'], level__in=['all','normal']).order_by("state","-news_priority","-pub_date")
+    finance_list1 = query_set.filter(f_type='1')[0:3]
+    finance_list2 = query_set.filter(f_type='2')[0:3]
+    finance_list3 = query_set.filter(f_type='3')[0:3]
     news_list = Activity.objects.filter(is_hidden=False)[0:2]
     exchange_list = ExchangeRecord.objects.all()[0:10]
     strategy_list = Press.objects.filter(type='2')[0:6]
@@ -42,12 +46,26 @@ def index(request):
                'hongbao_list': hongbao_list,
                'baoyou_list': baoyou_list, 
                'youhuiquan_list': youhuiquan_list, 
-               'task_list': task_list, 'announce_list':announce_list,
-               'finance_list': finance_list,
-               'news_list': news_list,'exchange_list': exchange_list,
+#                'task_list': task_list, 
+               'announce_list':announce_list,
+               'finance_list1': finance_list1,
+               'finance_list2': finance_list2,
+               'finance_list3': finance_list3,
+               'news_list': news_list,
+               'exchange_list': exchange_list,
                'strategy_list': strategy_list,
                'info': info,
     }
+    task_list = list(Task.objects.filter(state__in=['1','2'],type='junior').order_by("state","-news_priority","-pub_date")[0:2])
+    if len(task_list)==2:
+        context.update(task1=task_list[0],task2=task_list[1])
+    task_list = list(Task.objects.filter(state__in=['1','2'],type='middle').order_by("state","-news_priority","-pub_date")[0:2])
+    if len(task_list)==2:
+        context.update(task3=task_list[0],task4=task_list[1])
+    task_list = list(Task.objects.filter(state__in=['1','2'],type='senior').order_by("state","-news_priority","-pub_date")[0:2])
+    if len(task_list)==2:
+        context.update(task5=task_list[0],task6=task_list[1])
+        
     try:
         statis = DayStatis.objects.get(date=date.today())
     except:
@@ -57,7 +75,7 @@ def index(request):
     glo_statis = GlobalStatis.objects.first()
     if glo_statis:
         all_wel_num = glo_statis.all_wel_num
-        withdraw_total = glo_statis.award_total
+        withdraw_total = int(glo_statis.award_total/100.0)
         
     else:
         withdraw_total = 0
@@ -88,8 +106,20 @@ def finance(request, id=None):
         except Finance.DoesNotExist:
             raise Http404(u"该页面不存在")
         update_view_count(news)
-        other_wel_list = Finance.objects.filter(state='1').order_by('-view_count')[0:10]
-        return render(request, 'detail-taskandfinance.html',{'news':news,'type':'Finance','other_wel_list':other_wel_list})
+        scheme = news.scheme
+        table = []
+        str_rows = scheme.split('|')
+        for str_row in str_rows:
+            row = str_row.split('#')
+            table.append(row);
+        other_wel_list = Finance.objects.filter(state='1', level__in=['normal','all']).order_by('-view_count')[0:10]
+        context = {
+                   'news':news,
+                   'type':'Finance',
+                   'other_wel_list':other_wel_list,
+                   'table':table,
+        }
+        return render(request, 'detail-finance.html', context)
         
 def task(request, id=None):
     if id is None:
@@ -108,6 +138,15 @@ def task(request, id=None):
                 username = username + '****'
             exps.append({'username':username,'title':task.title})
         context.update({'exps':exps})
+        defalut_filter = request.GET.get('type','')
+        if defalut_filter=='junior':
+            context.update(defalut_filter=1)
+        elif defalut_filter=='middle':
+            context.update(defalut_filter=2)
+        elif defalut_filter=='senior':
+            context.update(defalut_filter=3)
+        else:
+            context.update(defalut_filter=0)
         return render(request, 'taskWelfare.html', context)
     else:
         id = int(id)
@@ -118,7 +157,17 @@ def task(request, id=None):
             raise Http404(u"该页面不存在")
         update_view_count(news)
         other_wel_list = Task.objects.filter(state='1').order_by('-view_count')[0:10]
-        return render(request, 'detail-taskandfinance.html',{'news':news,'type':'Task','other_wel_list':other_wel_list})
+        context = {'news':news,'type':'Task','other_wel_list':other_wel_list}
+        if request.user.is_authenticated():
+            try:
+                UserTask.objects.get(user=request.user,task=news)
+            except UserTask.DoesNotExist:
+                context.update(accepted=0)
+            else:
+                context.update(accepted=1)
+        else:
+            context.update(accepted=0)
+        return render(request, 'detail-task.html',context)
 def commodity(request, id):
     id = int(id)
     try:
@@ -164,7 +213,7 @@ def aboutus(request):
 #     result = {'code':code, 'url':url}
 #     return JsonResponse(result)
 from decimal import Decimal
-def expsubmit(request):
+def expsubmit_finance(request):
     if not request.is_ajax():
         logger.warning("Expsubmit refused no-ajax request!!!")
         raise Http404
@@ -175,15 +224,12 @@ def expsubmit(request):
         result = {'code':code, 'url':url}
         return JsonResponse(result)
     news_id = request.POST.get('id', None)
-    news_type = request.POST.get('type', None)
-    is_futou = request.POST.get('is_futou', '0')
-    telnum = request.POST.get('telnum', None)
-    telnum = str(telnum).strip()
+    telnum = request.POST.get('telnum', '').strip()
     remark = request.POST.get('remark', '')
     term = request.POST.get('term', '').strip()
     amount = request.POST.get('amount',0)
     amount = Decimal(amount)
-    if not (news_id and news_type and telnum):
+    if not (news_id and telnum):
         logger.error("news_id or news_type is missing!!!")
         raise Http404
     if len(telnum)>100 or len(remark)>200:
@@ -192,31 +238,88 @@ def expsubmit(request):
         result = {'code':code, 'msg':msg}
         return JsonResponse(result)
     news = None
-    model = globals()[news_type]
 #     if news.state != '1':
 #         code = '4'
 #         msg = u'该项目已结束或未开始！'
 #         result = {'code':code, 'msg':msg}
 #         return JsonResponse(result)
-    news = model.objects.get(pk=news_id)
-    is_futou = news.is_futou
-    info_str = "news_id:" + news_id + "| invest_account:" + telnum + "| is_futou:" + str(is_futou)
-    logger.info(info_str)
-    if is_futou:
-        remark = u"复投：" + remark
+    news = Finance.objects.get(pk=news_id)
+#     is_futou = news.is_futou
+#     info_str = "news_id:" + news_id + "| invest_account:" + telnum + "| is_futou:" + str(is_futou)
+#     logger.info(info_str)
+#     if is_futou:
+#         remark = u"复投：" + remark
     try:
         with transaction.atomic():
-            if not is_futou and news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
+            if news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
                 raise ValueError('This invest_account is repective in project:' + str(news.id))
             else:
                 UserEvent.objects.create(user=request.user, event_type='1', invest_account=telnum, invest_term=term,
-                                 invest_amount=amount, content_object=news, audit_state='1',remark=remark,)
+                                 invest_amount=int(amount), content_object=news, audit_state='1',remark=remark,)
                 code = '1'
                 msg = u'提交成功，请通过用户中心查询！'
     except Exception, e:
         logger.info(e)
         code = '2'
         msg = u'该注册手机号已被提交过，请不要重复提交！'
+    result = {'code':code, 'msg':msg}
+    return JsonResponse(result)
+
+def expsubmit_task(request):
+    if not request.is_ajax():
+        logger.warning("Expsubmit refused no-ajax request!!!")
+        raise Http404
+    if not request.user.is_authenticated():
+        url = reverse('login') + '?next=' + request.META['HTTP_REFERER']
+        result = {'code':0, 'url':url}
+        return JsonResponse(result)
+    news_id = request.POST.get('id', None)
+    telnum = request.POST.get('telnum', '').strip()
+    remark = request.POST.get('remark', '')
+    if not (news_id and telnum):
+        raise Http404
+    news = Task.objects.get(pk=news_id)
+    try:
+        record = UserTask.objects.get(user=request.user,task=news)
+    except UserTask.DoesNotExist:
+        result = {'code':3, 'msg':u"请先领取任务再提交！"}
+        return JsonResponse(result)
+    code = None
+    msg = ''
+    userlog = None
+    try:
+        with transaction.atomic():
+            if news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
+                raise ValueError('This invest_account is repective in project:' + str(news.id))
+            else:
+                userlog = UserEvent.objects.create(user=request.user, event_type='1', invest_account=telnum,
+                                 invest_image='', content_object=news, audit_state='1',remark=remark,)
+                code = 1
+                msg = u'提交成功，请通过用户中心查询！'
+    except Exception, e:
+        logger.info(e)
+        result = {'code':2, 'msg':u"该注册手机号已被提交过，请不要重复提交！"}
+        return JsonResponse(result)
+    else:
+        imgurl_list = []
+        if len(request.FILES)>6:
+            result = {'code':-2, 'msg':u"上传图片数量不能超过6张"}
+            userlog.delete()
+            return JsonResponse(result)
+        for key in request.FILES:
+            block = request.FILES[key]
+            if block.size > 100*1024:
+                result = {'code':-1, 'msg':u"每张图片大小不能超过100k，请重新上传"}
+                userlog.delete()
+                return JsonResponse(result)
+        for key in request.FILES:
+            block = request.FILES[key]
+            imgurl = saveImgAndGenerateUrl(key, block)
+            imgurl_list.append(imgurl)
+        invest_image = ';'.join(imgurl_list)
+        userlog.invest_image = invest_image
+        userlog.save(update_fields=['invest_image'])
+        record.delete()
     result = {'code':code, 'msg':msg}
     return JsonResponse(result)
 
@@ -343,11 +446,11 @@ def get_finance_page(request):
         size = 6
     if not page or size <= 0:
         raise Http404
-    item_list = Finance.objects.all()
+    item_list = Finance.objects.filter(level__in=['normal','all'])
     filter = str(filter)
     state = str(state)
     if filter != '0':
-        item_list = item_list.filter(filter=filter)
+        item_list = item_list.filter(f_type=filter)
     item_list = item_list.filter(state=state)
     paginator = Paginator(item_list, size)
     try:
@@ -360,14 +463,19 @@ def get_finance_page(request):
         contacts = paginator.page(paginator.num_pages)
     data = []
     for con in contacts:
+        marks = con.marks.all();
+        str_marks = ''
+        for mark in marks:
+            str_marks += '<span>' + mark.name + '</span>'
         i = {"title":con.title,
              "interest":con.interest,
              "amount":con.amount_to_invest,
              "time":con.investTime,
-             "scores":con.scrores,
+             "revenue":con.revenue,
              "benefit":con.benefit,
              "url":con.url,
              "is_new":'new' if con.is_new() else '',
+             "marks":str_marks
         }
         data.append(i)
     if data:
@@ -392,11 +500,11 @@ def get_task_page(request):
     filter = str(filter)
     state = str(state)
     if filter == '1':
-        item_list = item_list.filter(amount_to_invest=0)
+        item_list = item_list.filter(type='junior')
     elif filter == '2':
-        item_list = item_list.filter(amount_to_invest__lte=100)
+        item_list = item_list.filter(type='middle')
     elif filter == '3':
-        item_list = item_list.filter(amount_to_invest__gt=100)
+        item_list = item_list.filter(type='senior')
     item_list = item_list.filter(state=state)
     paginator = Paginator(item_list, size)
     try:
@@ -408,7 +516,14 @@ def get_task_page(request):
     # If page is out of range (e.g. 9999), deliver last page of results.
         contacts = paginator.page(paginator.num_pages)
     data = []
-    for con in contacts:        
+    for con in contacts:
+        money = con.moneyToAdd
+        score = con.scoreToAdd
+        award = ''
+        if money > 0:
+            award += str(money) + u"福币  "
+        if score > 0:
+            award += str(score) + u"积分"
         i = {"title":con.title,
              "url":con.url,
              "time":con.time_limit,
@@ -416,6 +531,8 @@ def get_task_page(request):
              "view":con.view_count,
              'provider':con.provider,
              "is_new":'new' if con.is_new() else '',
+             "num":con.left_num,
+             'award':award,
         }
         data.append(i)
     if data:
@@ -508,10 +625,6 @@ def get_press_page(request):
     res["data"] = data
     return JsonResponse(res)
 
-def freshman_introduction(request):
-    return render(request, "freshman_introduction.html")
-def freshman_award(request):
-    return render(request, "freshman_award.html")
 
 def business(request, page=None):
     if not page:
@@ -624,3 +737,18 @@ def information(request, type=None, page=None, id=None):
         update_view_count(info)
         hot_info_list = Information.objects.filter(is_display=True).order_by('-view_count')[0:6]
         return render(request, 'detail-information.html',{'info':info, 'hot_info_list':hot_info_list, 'type':'Information'})
+
+@login_required    
+def display_screenshot(request):
+    id = request.GET.get('id', None)
+    if not id:
+        raise Http404
+    log = UserEvent.objects.get(id=id)
+    if log.user.id != request.user.id and not request.user.is_staff:
+        raise Http404
+    url_list = log.invest_image.split(';')
+    img_list = []
+    for url in url_list:
+        name = url.split('/')[-1]
+        img_list.append({'name':name,'url':url})
+    return render(request, 'screenshot.html', {'img_list':img_list})

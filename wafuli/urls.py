@@ -36,12 +36,13 @@ urlpatterns = [
     url(r'^exp_wel_erweima/$', 'wafuli.welfare.exp_welfare_erweima', name='exp_welfare_erweima'),
     url(r'^exp_wel_openwindow/$', 'wafuli.welfare.exp_welfare_openwindow', name='exp_welfare_openwindow'),
     url(r'^exp_wel_youhuiquan/$', 'wafuli.welfare.exp_welfare_youhuiquan', name='exp_welfare_youhuiquan'),
-    url(r'^expsubmit/$', 'wafuli.views.expsubmit', name='expsubmit'),
+    url(r'^expsubmit/task/$', 'wafuli.views.expsubmit_task', name='expsubmit_task'),
+    url(r'^expsubmit/finance/$', 'wafuli.views.expsubmit_finance', name='expsubmit_finance'),
     url(r'^lookup_order/$', 'wafuli.views.lookup_order', name='lookup_order'),
     url(r'^submit_order/$', 'wafuli.views.submit_order', name='submit_order'),
     
-    url(r'^freshman/introduction/$', 'wafuli.views.freshman_introduction', name='freshman_introduction'),
-    url(r'^freshman/award/$', 'wafuli.views.freshman_award', name='freshman_award'),
+    url(r'^freshman/introduction/$', TemplateView.as_view(template_name="freshman_introduction.html"), name='freshman_introduction'),
+    url(r'^freshman/award/$', TemplateView.as_view(template_name="freshman_award.html"), name='freshman_award'),
     
     url(r'^activity/recommend/$', 'wafuli.activity.recommend', name='activity_recommend'),
     url(r'^activity/recompage/$', 'wafuli.activity.get_activity_recommend_page', name='get_activity_recommend_page'),
@@ -55,4 +56,7 @@ urlpatterns = [
     url(r'^information/(?:(?P<type>wahangqing|wagushi|washuju|wahuodong)/)?(?:list-page(?P<page>[0-9]*)/)?$', 'wafuli.views.information', name='information_list'),
     
     url(r'^sitemap/$', TemplateView.as_view(template_name="sitemap.html"), name='sitemap'),
+    url(r'^screenshot/$', 'wafuli.views.display_screenshot', name='screenshot'),
+    
+    url(r'^APP_download/$', TemplateView.as_view(template_name="download_app.html"), name='APP_download'),
 ]

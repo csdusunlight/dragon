@@ -10,7 +10,6 @@ from django.utils import timezone
 from django.contrib.auth.hashers import (
     check_password, make_password,
 )
-from decimal import Decimal
 class MyUserManager(BaseUserManager):
 
     def _create_user(self, email, mobile, username, password,
@@ -44,6 +43,9 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField('email address', max_length=255)
     mobile = models.CharField('mobile number', max_length=11, unique=True,)
     username = models.CharField(u'用户昵称', max_length=30, unique=True)
+    level = models.SmallIntegerField(u'用户等级', default=0)
+    with_total = models.IntegerField(u'提现总额度（VIP晋级用）', default = 0)
+    open_id = models.CharField(u'公众号关注者编号', max_length=30)
     inviter = models.ForeignKey('self', related_name = 'invitees', 
                                 blank=True, null=True, on_delete=models.SET_NULL)
     invite_code = models.CharField(u"邀请码", unique=True, blank=True, max_length=20)
@@ -52,13 +54,14 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField('active', default=True,
         help_text=('Designates whether this user should be treated as '
                     'active. Unselect this instead of deleting accounts.'))
+    is_channel = models.BooleanField(u'是否渠道用户', default = False)
     date_joined = models.DateTimeField('date joined', default=timezone.now)
-    accu_income = models.DecimalField(u'累计收益', default = Decimal(0.00), decimal_places = 2, max_digits=10)
+    accu_income = models.IntegerField(u'累计收益', default = 0)
     accu_scores = models.IntegerField(u'累计获得积分', default = 0)
-    invite_account = models.DecimalField(u'邀请奖励结余', default = Decimal(0.00), decimal_places = 2, max_digits=10)
-    invite_income = models.DecimalField(u'邀请奖励现金', default = Decimal(0.00), decimal_places = 2, max_digits=10)
+    invite_account = models.IntegerField(u'邀请奖励结余', default = 0)
+    invite_income = models.IntegerField(u'邀请奖励现金', default = 0)
     invite_scores = models.IntegerField(u'邀请奖励积分', default = 0)
-    balance = models.DecimalField(u'现金余额', default = Decimal(0.00), decimal_places = 2, max_digits=10)
+    balance = models.IntegerField(u'现金余额', default = 0)
     scores = models.IntegerField(u'积分余额', default = 0)
     isSigned = models.BooleanField('是否签到', default=False,
         help_text='Designates whether the user had signed in today.')
@@ -104,11 +107,14 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         return self.admin_permissions.filter(code=code).exists()
     def __unicode__(self): 
         return self.mobile
-    
-# class InviteDetail(MyUser):
-#     inviter = models.ForeignKey(MyUser, related_name="user_inviter_ditail")
-#     invitee = models.OneToOneField(MyUser, related_name="user_invitee_ditail")
-#     message_num = models.IntegerField()
+
+class Channel(models.Model):
+    user = models.OneToOneField(MyUser, primary_key=True)
+    level = models.CharField(u"渠道等级",max_length=10)
+    qq_number = models.CharField(u"QQ号", max_length=20)
+    join_time = models.DateTimeField(u"加入渠道时间", default=timezone.now)
+    def __unicode__(self): 
+        return self.user.mobile
 class Userlogin(models.Model):
     user = models.ForeignKey(MyUser, related_name="user_login_history")
     time = models.DateTimeField(u'登录时间', default = timezone.now)
@@ -152,3 +158,20 @@ class AdminPermission(models.Model):
     name = models.CharField('name', max_length=255)
     def __unicode__(self):
         return self.code + ',' + self.name
+
+class UserToken(models.Model):
+    token = models.CharField("token", max_length=32, primary_key=True)
+    user = models.ForeignKey(MyUser,related_name = 'tokens',)
+    expire = models.BigIntegerField(u"expire_time")
+
+class User_Envelope(models.Model):
+    user = models.ForeignKey(MyUser, related_name='envelope')
+    envelope_left = models.PositiveSmallIntegerField(u"剩余红包数量",default=0)
+    envelope_total = models.PositiveSmallIntegerField(u"累计获得红包数量",default=0)
+    accu_fubi = models.PositiveIntegerField(u"累计获得福币",default=0)
+    def __unicode__(self):
+        return self.user.mobile
+    
+class DBlock(models.Model):
+    index = models.CharField("name",max_length=10,primary_key=True)
+    description = models.CharField("description",max_length=30)

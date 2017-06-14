@@ -9,6 +9,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/style-i.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/dialog.css' %}" />
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/accounts/refresh.js' %}"></script>
 <script type="text/javascript" >
@@ -21,11 +22,23 @@ $(function(){
 	$("#submit").click(function(){
 		varicode = $("#input_varicode").val();
 		amount = $("#withdraw_amount").val();
-		hashkey = $("#id_hashkey").val();
-		if (!amount || !varicode){
-			alert("不能为空");
+		amount = parseInt(amount,0)
+		if (isNaN(amount) || (amount%1000 != 0)){
+			alert("提现福币数量必须为1000的整数倍！");
 			return;
 		}
+		if (!varicode){
+			alert("验证码不能为空");
+			return;
+		}
+		$("#rmb_with").text(amount/100.0)
+		$(".popup1").css("display","block");
+	});
+    $('.confirm_withdraw').click(function(){
+    	$(".popup1").hide();
+    	varicode = $("#input_varicode").val();
+		amount = $("#withdraw_amount").val();
+		hashkey = $("#id_hashkey").val();
 		var post_url = "{%url 'account_withdraw' %}";
 		$.ajax({
 			url: post_url,
@@ -55,7 +68,14 @@ $(function(){
 				alert("请检查网络连接");
 			}
 		});
-	});
+    });
+    $('.btn_x').click(function(){
+        $(this).parent().parent().hide();
+        bRotate = false;
+    });
+    $('.btn_cont button').click(function(){
+        $(this).parent().parent().parent().parent().hide();
+    });
 });
 </script>
 </head>
@@ -74,12 +94,12 @@ $(function(){
                         	<h2>提现</h2>
                         </div>
                         <div class="Cash-box">
-                        	<div class="Cash-info"><span>可提现金额：</span><i>{{user.balance}}</i></div>
+                        	<div class="Cash-info"><span>可提现福币：</span><i>{{user.balance}}</i>&nbsp;&nbsp;（每100福币可兑换1元现金）</div>
 
                             	<div class="Cash-input">
-                                	<span>提现金额：</span>
+                                	<span>提现福币：</span>
                                     <input id="withdraw_amount" type="text" />
-                                    <i>（最低提现金额为10元）</i>
+                                    <i>（最低提现1000福币）</i>
                                 </div>
                                 <div class="Cash-input">
                                 	<span>提现账户：</span>
@@ -92,13 +112,13 @@ $(function(){
                                     <a target="_blank" href="{%url 'account_alipay'%}#update">更换账号</a>
                                     {%endif%}
                                 </div>
-                                
+
                                 <div class="Cash-input2">
                                 	<span>验证码：</span>
                                     <input id="input_varicode" type="text" />
                                     <div class="info-con">
                                     	<div class="Yzin">
-                                    	<img width="111" height="34" src="{{ codimg_url }}" id="id_checkImg" class="imageCheckRefresh"> 
+                                    	<img width="111" height="34" src="{{ codimg_url }}" id="id_checkImg" class="imageCheckRefresh">
        									<input id="id_hashkey" name="hashkey" type="hidden" value="{{ hashkey }}">
                                     	</div>
                                     </div>
@@ -107,14 +127,28 @@ $(function(){
 
                         </div>
                     </div>
-                    
-                    
+
+
                 </div>
             </div>
         </div>
+        <!-- 提现弹窗部分 -->
+        <div class="popup1" style="display:none;">
+            <div class="w698_box">
+                <div class="pop_left">
+                    <h2>温馨提示</h2>
+                    <p>您好，您本次兑换现金为<font id="rmb_with"></font>元，并将在24小时内提现到您的支付宝账号</p>
+                    <div class="btn_cont">
+                        <button>取&nbsp;&nbsp;消</button>
+                        <button class="confirm_withdraw">确&nbsp;&nbsp;定</button>
+                    </div>
+                </div>
+                <div class="btn_x"><button></button></div>
+            </div>
+          </div>
     	<!--底部-->
   {% include "footer.html" %}
-  <!--浮动窗口-->  
+  <!--浮动窗口-->
   {% include "outline.html" %}
     </div>
 

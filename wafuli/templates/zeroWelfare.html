@@ -303,9 +303,10 @@ $(this).children().attr("src","{%static 'images/nav-4.png'%}");
   </div>
 
   <div class="subject">
-    <div class="subject_top">
+    <div class="subject_top" style="position: relative;">
       <div>专题栏目</div>
       <img src="{%static 'images/pict_100.png'%}" />
+      <a href="{% url 'information_list' %}" style="position: absolute;bottom: 6px;right: 10px;text-decoration: underline;color: #f08519">更多精彩&gt;&gt;</a>
     </div>
     <div class="subject_box">
         <a href="{{info.url}}" target="_blank"><img src="{{info.pic.url}}"  /></a>

@@ -15,11 +15,16 @@ class NewsAdmin(admin.ModelAdmin):
     list_filter = ['news_priority', 'change_user',]
     def save_model(self, request, obj, form, change):
         obj.change_user = str(request.user)
-        if obj.advert is None:
-            obj.advert = Advertisement.objects.filter(location='7',is_hidden=False).first()
+#         if obj.advert is None:
+#             obj.advert = Advertisement.objects.filter(location='7',is_hidden=False).first()
         obj.save()
 class FinanceAdmin(NewsAdmin):
     readonly_fields = ('url','pub_date','change_user')
+    filter_horizontal = ('marks',)
+#     def formfield_for_foreignkey(self, db_field, request, **kwargs): 
+#         if db_field.name == "company": 
+#             kwargs["queryset"] = Company.objects.order_by("pinyin") 
+#         return super(FinanceAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
     def save_model(self, request, obj, form, change):
         super(FinanceAdmin,self).save_model (request, obj, form, change)
         if not change:
@@ -27,6 +32,8 @@ class FinanceAdmin(NewsAdmin):
             obj.save(update_fields=['url',])
 class TaskAdmin(NewsAdmin):
     readonly_fields = ('url','pub_date','change_user')
+    list_display = ('title','is_forbidden',)
+    list_filter = ['is_forbidden',]
     def save_model(self, request, obj, form, change):
         super(TaskAdmin,self).save_model (request, obj, form, change)      
         if not change:
@@ -76,6 +83,7 @@ class TransListAdmin(admin.ModelAdmin):
     search_fields = ['user__mobile',]
 class CouponAdmin(admin.ModelAdmin):
     list_display = ('project','user', 'exchange_code','is_used',)
+    search_fields = ['user__mobile',]
 class AdvertisementAdmin(admin.ModelAdmin):
     list_filter = ('location',)
 admin.site.register(Finance,FinanceAdmin)
@@ -93,7 +101,9 @@ admin.site.register(Press,PressAdmin)
 admin.site.register(Coupon, CouponAdmin)
 admin.site.register(Message)
 admin.site.register(Advertisement, AdvertisementAdmin)
+admin.site.register(Advertisement_Mobile, AdvertisementAdmin)
 admin.site.register(MAdvert, AdvertisementAdmin)
+admin.site.register(MAdvert_App, AdvertisementAdmin)
 admin.site.register(UserWelfare)
 admin.site.register(Activity, ActivityAdmin)
 admin.site.register(LotteryRecord)
@@ -105,8 +115,8 @@ class WelfareAdmin(admin.ModelAdmin):
     filter_horizontal = ('marks',)
     def save_model(self, request, obj, form, change):
         obj.change_user = str(request.user)
-        if obj.advert is None:
-            obj.advert = Advertisement.objects.filter(location='7',is_hidden=False).first()
+#         if obj.advert is None:
+#             obj.advert = Advertisement.objects.filter(location='7',is_hidden=False).first()
         super(WelfareAdmin,self).save_model (request, obj, form, change)
         if not change:
             obj.url = reverse('welfare', kwargs={'id': obj.pk})
@@ -121,8 +131,8 @@ class BaoyouAdmin(WelfareAdmin):
         if not change:
             obj.type = 'baoyou'
         obj.change_user = str(request.user)
-        if obj.advert is None:
-            obj.advert = Advertisement.objects.filter(location='7',is_hidden=False).first()
+#         if obj.advert is None:
+#             obj.advert = Advertisement.objects.filter(location='7',is_hidden=False).first()
         if not change:
             obj.save()
         obj.url = reverse('exp_welfare_openwindow') + '?id=' + str(obj.id) + "&type=Welfare"
@@ -147,3 +157,4 @@ class InformationAdmin(NewsAdmin):
             obj.url = reverse('information', kwargs={'id': obj.pk})
             obj.save(update_fields=['url',])
 admin.site.register(Information,InformationAdmin)
+admin.site.register(UserTask)

@@ -35,7 +35,7 @@ $(function(){
 		else {
 			window.open(url_openwindow + "?id=" + id + "&type=" + type);
 		}
-		
+
 	});
 	$("button.td-tj").click(function(){
 		var telnum = $('input#telnum').val();
@@ -48,40 +48,6 @@ $(function(){
 		else{
 			$('#myModal').modal();
 		}
-	});
-	$("a#confirm").click(function(){
-		var telnum = $('input#telnum').val();
-		var remark = $('input#remark').val();
-		var is_futou = 0;
-		if($('input[name="futou"]:eq(0)').is(':checked')){
-			is_futou = 1;
-		}
-		$.ajax({
-			url:"{%url 'expsubmit' %}?type=" + type +"&id=" + id + "&telnum=" + telnum 
-					+ "&remark=" + remark,
-			type:'post',
-			data:{
-				'type':type,
-				'id':id,
-				'is_futou':is_futou,
-				'telnum':telnum,
-				'remark':remark,
-			},
-			dataType:"json",
-			success:function(ret){
-				if(ret.code==0){
-					alert("请先登录！")
-					window.location.href = ret.url;
-				}
-				else {
-					$('#myModal').modal("hide");
-					alert(ret.msg);
-				}
-			},
-			error:function(){
-				alert("请检查网络连接");
-			}
-		});
 	});
 });
 </script>
@@ -117,10 +83,10 @@ $(function(){
             <div>
                 <p style="color:#F08619;font-size:16px;margin:2em 0px 0em 0px;">用手机扫描二维码进行体验</p>
                 <img id='erweima' src="#" style="margin:2em 0px 3em 0px;"/>
-            </div>            
+            </div>
                 </div>
               </div>
-        </div>    
+        </div>
 
       <div class="modal fade" id="myModal">
           <div class="modal-dialog modal-mg">
@@ -134,7 +100,8 @@ $(function(){
 				</div>
 			</div>
 				</div><!-- modal-body-->
-                  
+
                 </div>
        </div>
        {%endblock%}
+

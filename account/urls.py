@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^get_nums$', 'account.views.get_nums', name='get_nums'),
     url(r'^welfare/$', 'account.views.welfare', name='account_welfare'),
     url(r'^welpage/$', 'account.views.get_user_wel_page', name='get_user_wel_page'),
+    url(r'^channelwelpage/$', 'account.views.get_channel_result_page', name='get_channel_result_page'),
     url(r'^score/$', 'account.views.score', name='account_score'),
     url(r'^scorepage/$', 'account.views.get_user_score_page', name='get_user_score_page'),
     url(r'^money/$', 'account.views.money', name='account_money'),
@@ -48,4 +49,11 @@ urlpatterns = [
     url(r'^resetpw/$', 'account.forgot_passwd.forgot_passwd', name='forgot_passwd'),
     url(r'^forgot_validate_randcode/$', 'account.forgot_passwd.validate_randcode', name='forgot-validate-randcode'),
     url(r'^forgot_validate_telcode/$', 'account.forgot_passwd.validate_telcode', name='forgot-validate-telcode'),
+    
+    url(r'^channel/$', 'account.channel.channel', name='account_channel'),
+    url(r'^export/$', 'account.channel.export_audit_result', name='export_audit_result'),
+    
+    url(r'^submit_itembyitem/$', 'account.channel.submit_itembyitem', name='submit_itembyitem'),
+    
+    url(r'^vip/$', 'account.views.vip', name='account_vip'),
 ]

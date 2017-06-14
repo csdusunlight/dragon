@@ -18,7 +18,7 @@ $.ajaxSetup({
 });
 var data = '<ul>[data]<li onclick="readon($(this),{id})" class="{state}"><div ' + 
 'class="New-title"><strong>{title}</strong>'+
-'<span>2015-01-15</span></div><p>{content}</p></li>[/data]</ul>';
+'<span>{time}</span></div><p>{content}</p></li>[/data]</ul>';
 var url = "{% url 'get_user_message_page' %}" + "?page={page}&size={pageSize}";
 function readon(a,n){
 	if(a.attr("class")!="on"){
