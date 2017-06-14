@@ -118,7 +118,7 @@ class Channel(models.Model):
         return self.user.mobile
 class BankCard(models.Model):
     user = models.ForeignKey(MyUser, related_name="user_bankcard")
-    card_number = models.CharField(u"银行卡号",max_length=20)
+    card_number = models.CharField(u"银行卡号",max_length=23)
     real_name = models.CharField(u'实名', max_length=10)
     bank = models.CharField(u'开户银行', max_length=10, choices=BANK)
     subbranch = models.CharField(u'开户支行', max_length=50)
