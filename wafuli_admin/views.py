@@ -1075,7 +1075,7 @@ def admin_withdraw(request):
                 vip_judge(event.user, amount)
                 trans_withdraw.admin_event = admin_event
                 trans_withdraw.save(update_fields=['admin_event'])
-            msg_content = u'您提现的' + str(event.invest_amount) + u'福币，已发放到您的支付宝账号中，请注意查收'
+            msg_content = u'您提现的' + str(event.invest_amount) + u'福币，已发放到您的银行卡中，请注意查收'
             Message.objects.create(user=event.user, content=msg_content, title=u"提现审核")
 
         elif type == 2:
