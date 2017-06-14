@@ -573,11 +573,11 @@ def get_user_score_page(request):
 def security(request):
     return render(request, 'account/account_security.html', {})
 @login_required
-def alipay(request):
+def bankcard(request):
     user = request.user
     card = user.user_bankcard.first()
     banks = BANK
-    return render(request, 'account/account_alipay.html', {"card":card, 'banks':banks})
+    return render(request, 'account/account_bankcard.html', {"card":card, 'banks':banks})
 
 def password_change(request):
     if not request.is_ajax():

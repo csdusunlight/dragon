@@ -14,7 +14,7 @@
 <script type="text/javascript" src="{% static 'js/accounts/send.js' %}"></script>
 <script type="text/javascript">
 var phoneNum = "{{user.mobile}}";
-var this_url = "{%url 'account_alipay' %}";
+var this_url = "{%url 'account_bankcard' %}";
 var get_code_url = "{% url 'phoneImageV' %}";
 $.ajaxSetup({
     data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
