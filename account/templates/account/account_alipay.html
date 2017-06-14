@@ -26,6 +26,8 @@ $(function(){
     real_name = $("#real_name").val();
     card_number = $("#card_number").val();
 
+    console.log(card_number);
+
     var bank = $("#bank option:selected").val();
 		if (!subbranch || !real_name || !card_number){
 			alert("填写项不能为空");
@@ -81,8 +83,10 @@ $(function(){
     card_number = $("#card_number").val();
     code = $("#yanzhengma").val();
 
+    console.log(card_number);
+
     var bank = $("#bank option:selected").val();
-    alert(bank);
+    // alert(bank);
     if(bank == 0) {
       alert("请选择开户行");
       return;
