@@ -168,6 +168,7 @@ def admin_finance(request):
             return JsonResponse(res)
         event = UserEvent.objects.get(id=event_id)
         event_user = event.user
+        card = event_user.user_bankcard.first()
 
         project = event.content_object   #jzy
         project_title = project.title   # jzy
@@ -198,7 +199,7 @@ def admin_finance(request):
                 res['res_msg'] = u"操作失败，返现重复！"
             else:
                 log.audit_result = True
-                
+
                 # translist = charge_money(event_user, '0', cash, u'福利返现')
                 translist = charge_money(event_user, '0', cash, project_title)  #jzy
                 if event.content_object.is_vip_bonus:
@@ -213,7 +214,7 @@ def admin_finance(request):
                     res['code'] = 0
                     #更新投资记录表
                     Invest_Record.objects.create(invest_date=event.time,invest_company=event.content_object.company.name,
-                                                 user_name=event_user.zhifubao_name,zhifubao=event_user.zhifubao,
+                                                 user_name=card.real_name,card_number=card.card_number,
                                                  invest_mobile=event.invest_account,invest_period=event.invest_term,
                                                  invest_amount=event.invest_amount,return_amount=cash/100.0,wafuli_account=event_user.mobile,
                                                  return_date=datetime.date.today(),remark=event.remark)
@@ -488,6 +489,10 @@ def export_finance_excel(request):
         s = datetime.datetime.strptime(startTime,'%Y-%m-%dT%H:%M')
         e = datetime.datetime.strptime(endTime,'%Y-%m-%dT%H:%M')
         item_list = item_list.filter(time__range=(s,e))
+    if startTime2 and endTime2:
+        s = datetime.datetime.strptime(startTime2,'%Y-%m-%dT%H:%M')
+        e = datetime.datetime.strptime(endTime2,'%Y-%m-%dT%H:%M')
+        item_list = item_list.filter(audit_time__range=(s,e))
     username = request.GET.get("username", None)
     if username:
         item_list = item_list.filter(user__username=username)
@@ -535,7 +540,7 @@ def export_finance_excel(request):
         if con.audit_state=='0':
             result = u'是'
             if con.translist.exists():
-                return_amount = str(con.translist.first().transAmount)
+                return_amount = str(con.translist.first().transAmount/100.0)
         elif con.audit_state=='2':
             result = u'否'
             if con.audited_logs.exists():
@@ -976,14 +981,24 @@ def get_admin_user_page(request):
         if inviter:
             inviter_username = inviter.username
             inviter_mobile = inviter.mobile
+
+        card_number = u'无'
+        real_name = u'无'
+        if con.user_bankcard.exists():
+            card = con.user_bankcard.first()
+            card_number = card.card_number
+            real_name = card.real_name
+
         recent_login_time = u'无'
         if con.this_login_time:
             recent_login_time = con.this_login_time.strftime("%Y-%m-%d %H:%M")
         i = {"username":con.username,
              "mobile":con.mobile,
              "email":con.email,
-             "zhifubao":con.zhifubao,
-             "zhifubao_name":con.zhifubao_name,
+             "card_number":card_number,
+             "real_name":real_name,
+             # "zhifubao":con.zhifubao,
+             # "zhifubao_name":con.zhifubao_name,
              "time":con.date_joined.strftime("%Y-%m-%d %H:%M"),
              'recent_login_time':recent_login_time,
              "inviter_name":inviter_username,
@@ -1060,7 +1075,7 @@ def admin_withdraw(request):
                 vip_judge(event.user, amount)
                 trans_withdraw.admin_event = admin_event
                 trans_withdraw.save(update_fields=['admin_event'])
-            msg_content = u'您提现的' + str(event.invest_amount) + u'福币，已发放到您的支付宝账号中，请注意查收'
+            msg_content = u'您提现的' + str(event.invest_amount) + u'福币，已发放到您的银行卡中，请注意查收'
             Message.objects.create(user=event.user, content=msg_content, title=u"提现审核")
 
         elif type == 2:
@@ -1133,13 +1148,13 @@ def get_admin_with_page(request):
     if mobile:
         item_list = item_list.filter(user__mobile=mobile)
 
-    zhifubao = request.GET.get("zhifubao", None)
-    if zhifubao:
-        item_list = item_list.filter(user__zhifubao=zhifubao)
+    card_number = request.GET.get("card_number", None)
+    if card_number:
+        item_list = item_list.filter(user__user_bankcard__card_number=card_number)
 
-    zhifubao_name = request.GET.get("zhifubao_name", None)
-    if zhifubao_name:
-        item_list = item_list.filter(user__zhifubao_name=zhifubao_name)
+    real_name = request.GET.get("real_name", None)
+    if real_name:
+        item_list = item_list.filter(user__user_bankcard__real_name=real_name)
 
     adminname = request.GET.get("adminname", None)
     if adminname:
@@ -1158,11 +1173,21 @@ def get_admin_with_page(request):
     data = []
     for con in contacts:
         obj_user = con.user
+
+        bank = u'无'
+        card_number = u'无'
+        real_name = u'无'
+        if obj_user.user_bankcard.exists():
+            card = obj_user.user_bankcard.first()
+            bank = card.get_bank_display()
+            card_number = card.card_number
+            real_name = card.real_name
         i = {"username":obj_user.username,
              "mobile":obj_user.mobile,
              "balance":obj_user.balance/100.0,
-             "zhifubao_name":obj_user.zhifubao_name,
-             "zhifubao":obj_user.zhifubao,
+             "bank":bank,
+             "real_name":real_name,
+             "card_number":card_number,
              "amount":con.invest_amount/100.0,
              "time":con.time.strftime("%Y-%m-%d %H:%M"),
              "state":con.get_audit_state_display(),
@@ -1373,7 +1398,7 @@ def get_admin_charge_page(request):
     adminname = request.GET.get("adminname", None)
     if adminname:
         item_list = item_list.filter(admin_event__admin_user__username=adminname)
-        
+
     charge_reason = request.GET.get("charge_reason", None)
     if charge_reason:
         item_list = item_list.filter(reason__contains=charge_reason)
@@ -1466,12 +1491,15 @@ def get_admin_investrecord_page(request):
         contacts = paginator.page(paginator.num_pages)
     data = []
     for con in contacts:
+        card_number = u'无'
+        if con.card_number:
+            card_number = con.card_number
         i = {
              "invest_date": con.invest_date.strftime("%Y-%m-%d") if con.invest_date else '',
              'invest_company':con.invest_company,
              'qq_number':con.qq_number,
              "user_name":con.user_name,
-             "zhifubao":con.zhifubao,
+             "card_number":card_number,
              "invest_mobile":con.invest_mobile,
              'invest_period':con.invest_period,
              'invest_amount':con.invest_amount,
@@ -1518,11 +1546,11 @@ def send_multiple_msg(request):
 #     username = request.POST.get("username", None)
 #     if username:
 #         item_list = item_list.filter(user_name=username)
-# 
+#
 #     mobile = request.POST.get("mobile", None)
 #     if mobile:
 #         item_list = item_list.filter(invest_mobile=mobile)
-# 
+#
 #     projectname = request.POST.get("projectname", None)
 #     if projectname:
 #         item_list = item_list.filter(invest_company__contains=projectname)

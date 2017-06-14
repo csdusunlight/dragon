@@ -184,6 +184,12 @@ $(document).ready(function(){
 			html += '<input name="startTime" type="hidden" value="'+ startTime + '"/>';
 			html += '<input name="endTime" type="hidden" value="'+ endTime + '"/>';
 		}
+		startTime2 = $("#startTime2").val();
+		endTime2 = $("#endTime2").val();
+		if(startTime2 && endTime2){
+			html += '<input name="startTime2" type="hidden" value="'+ startTime2 + '"/>';
+			html += '<input name="endTime2" type="hidden" value="'+ endTime2 + '"/>';
+		}
 		username = $("#username").val();
 		mobile = $("#mobile").val();
 		if(username){
@@ -252,7 +258,6 @@ $(document).ready(function(){
     //	hint.innerHTML = '无';
 	});
 
-  var filechooser = document.getElementById("fileupload1");
   var choose_file = document.getElementById("input_clone");
   var hint = document.getElementById("hint");
   choose_file.onclick = function() {

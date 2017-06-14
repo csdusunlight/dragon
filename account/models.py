@@ -10,6 +10,7 @@ from django.utils import timezone
 from django.contrib.auth.hashers import (
     check_password, make_password,
 )
+from wafuli.data import BANK
 class MyUserManager(BaseUserManager):
 
     def _create_user(self, email, mobile, username, password,
@@ -18,11 +19,11 @@ class MyUserManager(BaseUserManager):
         Creates and saves a User with the given username, email and password.
         """
         now = datetime.datetime.now()
-        if not email or not mobile or not username:
+        if not mobile or not username:
             raise ValueError('The given email, mobile and username must be set')
         email = self.normalize_email(email)
-        user = self.model(email=email, mobile=mobile, username=username, 
-                          is_staff=is_staff, 
+        user = self.model(email=email, mobile=mobile, username=username,
+                          is_staff=is_staff,
                           is_active=True, is_superuser=is_superuser,
                           date_joined=now)
         user.set_password(password)
@@ -32,8 +33,8 @@ class MyUserManager(BaseUserManager):
     def create_user(self, email, mobile, username, password=None, **extra_fields):
         return self._create_user(email, mobile, username, password, False, False)
 
-    def create_superuser(self,email, mobile, username, password):
-        return self._create_user(email, mobile, username, password, True, True)
+    def create_superuser(self, mobile, username, password):
+        return self._create_user('', mobile, username, password, True, True)
     def get_by_natural_key(self, username):
         try:
             return self.get(**{'mobile': username})
@@ -46,7 +47,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     level = models.SmallIntegerField(u'用户等级', default=0)
     with_total = models.IntegerField(u'提现总额度（VIP晋级用）', default = 0)
     open_id = models.CharField(u'公众号关注者编号', max_length=30)
-    inviter = models.ForeignKey('self', related_name = 'invitees', 
+    inviter = models.ForeignKey('self', related_name = 'invitees',
                                 blank=True, null=True, on_delete=models.SET_NULL)
     invite_code = models.CharField(u"邀请码", unique=True, blank=True, max_length=20)
     is_staff = models.BooleanField('staff status', default=False,
@@ -78,12 +79,12 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'mobile'
     REQUIRED_FIELDS = ['username']
-    
+
     def set_pay_password(self, raw_password):
         self.pay_password = make_password(raw_password)
     def check_pay_password(self, raw_password):
         return check_password(raw_password, self.pay_password)
-    def save(self, force_insert=False, force_update=False, using=None, 
+    def save(self, force_insert=False, force_update=False, using=None,
         update_fields=None):
         if not self.pk:
             self.invite_code = random_str(5) + str(MyUser.objects.count())
@@ -105,7 +106,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         return username
     def has_admin_perms(self, code):
         return self.admin_permissions.filter(code=code).exists()
-    def __unicode__(self): 
+    def __unicode__(self):
         return self.mobile
 
 class Channel(models.Model):
@@ -113,8 +114,16 @@ class Channel(models.Model):
     level = models.CharField(u"渠道等级",max_length=10)
     qq_number = models.CharField(u"QQ号", max_length=20)
     join_time = models.DateTimeField(u"加入渠道时间", default=timezone.now)
-    def __unicode__(self): 
+    def __unicode__(self):
         return self.user.mobile
+class BankCard(models.Model):
+    user = models.ForeignKey(MyUser, related_name="user_bankcard")
+    card_number = models.CharField(u"银行卡号",max_length=23)
+    real_name = models.CharField(u'实名', max_length=10)
+    bank = models.CharField(u'开户银行', max_length=10, choices=BANK)
+    subbranch = models.CharField(u'开户支行', max_length=50)
+    def __unicode__(self):
+        return self.user.mobile + self.get_bank_display() + self.real_name
 class Userlogin(models.Model):
     user = models.ForeignKey(MyUser, related_name="user_login_history")
     time = models.DateTimeField(u'登录时间', default = timezone.now)
@@ -152,7 +161,7 @@ class Access_Token(models.Model):
     app_secret = models.CharField(u"app_secret",max_length=40,)
     access_token = models.CharField(u"access_token",max_length=60,)
     expire_stramp = models.IntegerField(u"expire_time")
-    
+
 class AdminPermission(models.Model):
     code = models.CharField(unique=True, max_length=3)
     name = models.CharField('name', max_length=255)
@@ -171,7 +180,7 @@ class User_Envelope(models.Model):
     accu_fubi = models.PositiveIntegerField(u"累计获得福币",default=0)
     def __unicode__(self):
         return self.user.mobile
-    
+
 class DBlock(models.Model):
     index = models.CharField("name",max_length=10,primary_key=True)
     description = models.CharField("description",max_length=30)

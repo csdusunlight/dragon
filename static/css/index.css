@@ -359,7 +359,7 @@ table{border-collapse:collapse;}
     -o-transform-origin: 50% 50%;
     transform-origin: 50% 50%;
 }
-.finance-item img {
+.finance-item .intro-content img {
     display: block;
     height: 160px;
     width: auto;
@@ -523,6 +523,30 @@ table{border-collapse:collapse;}
     -webkit-transition: all 0.35s ease 0.35s;
     -moz-transition: all 0.35s ease 0.35s;
     transition: all 0.35s ease 0.35s;
+}
+
+.finance-risk {
+    padding: 0 16px;
+    height: 345px;
+    text-align: center;
+}
+.finance-risk h3 {
+    font-size: 20px;
+}
+.finance-risk p {
+    margin-top: 60px;
+    text-align: left;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #777;
+}
+.finance-risk a {
+    display: inline-block;
+    margin-top: 80px;
+    font-size: 14px;
+    position: static;
+    padding: 4px 30px;
+    border-radius: 8px;
 }
 /*理财板块改版部分——————end*/
 #index_23{width:1100px;height:377px;clear:both;display:inline-block;margin-top:20px;text-align:left; position:relative;}

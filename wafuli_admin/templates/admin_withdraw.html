@@ -1,22 +1,22 @@
 {% extends "base.html" %}
 {% block js %}
-<script type="text/javascript"> 
+<script type="text/javascript">
 $.ajaxSetup({
     data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
 });
-var data = '<table width="100%"><tr><th>用户名</th><th>手机号</th><th>账户余额</th><th>支付宝姓名</th>'+
-	'<th>支付宝帐户</th><th>申请提现金额</th><th>申请时间</th><th>处理状态</th>'+
+var data = '<table width="100%"><tr><th>用户名</th><th>手机号</th><th>账户余额</th><th>开户行</th><th>开户行姓名</th>'+
+	'<th>银行卡号</th><th>申请提现金额</th><th>申请时间</th><th>处理状态</th>'+
 	'<th>处理</th><th>备注</th>'+
-	'</tr>[data]<tr><td>{username}</td><td>{mobile}</td><td>{balance}</td>'+
-	'<td>{zhifubao_name}</td><td>{zhifubao}</td><td>{amount}</td><td>{time}</td>'+
+	'</tr>[data]<tr><td>{username}</td><td>{mobile}</td><td>{balance}</td><td>{bank}</td>'+
+	'<td>{real_name}</td><td>{card_number}</td><td>{amount}</td><td>{time}</td>'+
 	'<td>{state}</td>'+
 	'<td id="item_{id}"><a class="fyin" onclick="pass({id})">接受'+
 	'</a> │ <a class="jion-s" onclick="refuse({id})">拒绝</a></td><td>{remark}</td></tr>[/data]</table>';
-var data2 = '<table width="100%"><tr><th>用户名</th><th>手机号</th><th>账户余额</th><th>支付宝姓名</th>'+
-	'<th>支付宝帐户</th><th>申请提现金额</th><th>申请时间</th><th>处理状态</th>'+
+var data2 = '<table width="100%"><tr><th>用户名</th><th>手机号</th><th>账户余额</th><th>开户行</th><th>开户行姓名</th>'+
+	'<th>银行卡号</th><th>申请提现金额</th><th>申请时间</th><th>处理状态</th>'+
 	'<th>处理人</th><th>处理时间</th><th>备注</th>'+
-	'</tr>[data]<tr><td>{username}</td><td>{mobile}</td><td>{balance}</td>'+
-	'<td>{zhifubao_name}</td><td>{zhifubao}</td><td>{amount}</td><td>{time}</td>'+
+	'</tr>[data]<tr><td>{username}</td><td>{mobile}</td><td>{balance}</td><td>{bank}</td>'+
+	'<td>{real_name}</td><td>{card_number}</td><td>{amount}</td><td>{time}</td>'+
 	'<td>{state}</td><td>{admin}</td><td>{time_admin}</td>'+
 	'<td>{remark}</td></tr>[/data]</table>';
 var url = "{% url 'get_admin_with_page' %}" + "?page={page}&size={pageSize}";
@@ -33,7 +33,7 @@ $(document).ready(function(){
 	$("li.home3").toggleClass("on");
 	$(".Tin-table-box tr:even").css("background-color","#fcfcfc");
 	$("#pagedata").ajaxPage({
-	    url:url+"&state=1", 
+	    url:url+"&state=1",
 	    pageId:$("#page"),
 	    pageSize:10,
 	    run:true,
@@ -131,13 +131,13 @@ $(document).ready(function(){
 		if(mobile){
 			newurl += "&mobile="+mobile;
 		}
-		zhifubao = $("#zhifubao").val();
-		zhifubao_name = $("#zhifubao_name").val();
-		if(zhifubao){
-			newurl += "&zhifubao="+zhifubao;
+		card_number = $("#card_number").val();
+		real_name = $("#real_name").val();
+		if(card_number){
+			newurl += "&card_number="+card_number;
 		}
-		if(zhifubao_name){
-			newurl += "&zhifubao_name="+zhifubao_name;
+		if(real_name){
+			newurl += "&real_name="+real_name;
 		}
 		adminname = $("#adminname").val();
 		state = $("#state").val();
@@ -153,7 +153,7 @@ $(document).ready(function(){
 		}
 		$("#page").empty();
 		$("#pagedata").ajaxPage({
-		    url:newurl, 
+		    url:newurl,
 		    pageId:$("#page"),
 		    pageSize:10,
 		    run:true,
@@ -161,7 +161,7 @@ $(document).ready(function(){
 		});
 	});
 });
-</script>     
+</script>
 {% endblock js %}
 {% block right %}
 <div class="Criteria">
@@ -197,12 +197,12 @@ $(document).ready(function(){
                                                 <input id="mobile" type="text" />
                                             </td>
                                         	<td>
-                                            	<i style="letter-spacing:2px;">支付宝姓名：</i>
-                                                <input id="zhifubao_name" type="text" />
+                                            	<i style="letter-spacing:2px;">开户行姓名：</i>
+                                                <input id="real_name" type="text" />
                                             </td>
                                         	<td>
-                                            	<i style="letter-spacing:2px;">支付宝账户：</i>
-                                                <input id="zhifubao" type="text" />
+                                            	<i style="letter-spacing:2px;">银行卡号：</i>
+                                                <input id="card_number" type="text" onkeyup="this.value =this.value.replace(/\s/g,'').replace(/[^\d]/g,'').replace(/(\d{4})(?=\d)/g,'$1 ');" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -212,9 +212,9 @@ $(document).ready(function(){
                                             </td>
                                         	<td>
                                             	<i style="letter-spacing:4.8px;">处理状态：</i>
-                                                <select name="selectAge" id="state">   
-											        <option value="1">未审核</option>   
-											        <option value="0">审核通过</option>   
+                                                <select name="selectAge" id="state">
+											        <option value="1">未审核</option>
+											        <option value="0">审核通过</option>
 											        <option value="2">审核拒绝</option>
 											    </select>
                                             </td>
@@ -227,7 +227,7 @@ $(document).ready(function(){
                                         	<td></td>
                                         </tr>
                                     </table>
-                                    
+
                                 </form>
                             </div>
                         </div>
@@ -238,7 +238,7 @@ $(document).ready(function(){
 		                    <div class="Page-in-admin">
 		                    	<div class="page"  id="page">
 		                        </div>
-		                    </div> 
+		                    </div>
                         </div>
 {%endblock%}
 
@@ -272,6 +272,6 @@ $(document).ready(function(){
             </form>
         </div>
     </div>
-    
+
     <!--end-->
-	{% endblock modal %}  
+	{% endblock modal %}
