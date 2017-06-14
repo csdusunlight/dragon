@@ -540,7 +540,7 @@ def export_finance_excel(request):
         if con.audit_state=='0':
             result = u'是'
             if con.translist.exists():
-                return_amount = str(con.translist.first().transAmount)
+                return_amount = str(con.translist.first().transAmount/100.0)
         elif con.audit_state=='2':
             result = u'否'
             if con.audited_logs.exists():
