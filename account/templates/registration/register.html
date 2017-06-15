@@ -115,7 +115,9 @@ $(function(){
     }
   }
 
-  $(".re-input").value = "";
+  $(".re-input").each(function() {
+    this.value = "";
+  });
 });
   </script>
 </head>
