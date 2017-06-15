@@ -214,7 +214,7 @@ def admin_finance(request):
                     res['code'] = 0
                     #更新投资记录表
                     Invest_Record.objects.create(invest_date=event.time,invest_company=event.content_object.company.name,
-                                                 user_name=card.real_name,card_number=card.card_number,
+                                                 user_name=card.real_name if card else '',card_number=card.card_number if card else '',
                                                  invest_mobile=event.invest_account,invest_period=event.invest_term,
                                                  invest_amount=event.invest_amount,return_amount=cash/100.0,wafuli_account=event_user.mobile,
                                                  return_date=datetime.date.today(),remark=event.remark)
