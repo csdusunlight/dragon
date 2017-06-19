@@ -82,3 +82,9 @@ class Message_Record(models.Model):
     class Meta:
         verbose_name_plural = u"短信群发记录"
         verbose_name = u"短信群发记录"
+
+class Gongzhonghao(models.Model):
+    name = models.CharField(u"公众号全称（如券妈妈、天天挖福利）", max_length=20, blank=False, unique=True)
+    is_on = models.BooleanField(u"开启自动抓取", default=True)
+    def __unicode__(self):
+        return self.name + str(self.is_on)

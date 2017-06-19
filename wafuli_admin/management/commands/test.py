@@ -186,12 +186,16 @@ def load_gzh():
         c['content'] = content
     return contents
 class Command(BaseCommand):
+    help = 'input gongzhaohao name'
+    def add_arguments(self, parser):
+        parser.add_argument('name', nargs='+', type=unicode)
     def handle(self, *args, **options):
-        company = Company.objects.get(name=u"免费福利")
-        contents = load_gzh()
-        for con in contents:
-            wel = Hongbao.objects.create(type='hongbao',title=con['title'],state='1',company=company,strategy=con['content'], pic = con['pic_download'])
-            wel.url = reverse('welfare', kwargs={'id': wel.id})
-            wel.save(update_fields=['url'])
-#             Hongbao.objects.create(welfare_ptr_id=wel.id)
+#         company = Company.objects.get(name=u"免费福利")
+#         contents = load_gzh()
+        print args,options
+#         for con in contents:
+#             wel = Hongbao.objects.create(type='hongbao',title=con['title'],state='1',company=company,strategy=con['content'], pic = con['pic_download'])
+#             wel.url = reverse('welfare', kwargs={'id': wel.id})
+#             wel.save(update_fields=['url'])
+# #             Hongbao.objects.create(welfare_ptr_id=wel.id)
         logger.info("******Invite_charge is finished*********")
