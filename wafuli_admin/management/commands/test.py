@@ -188,11 +188,12 @@ def load_gzh():
 class Command(BaseCommand):
     help = 'input gongzhaohao name'
     def add_arguments(self, parser):
-        parser.add_argument('name', nargs='+', type=unicode)
+        parser.add_argument('name', nargs='+')
     def handle(self, *args, **options):
 #         company = Company.objects.get(name=u"免费福利")
 #         contents = load_gzh()
-        print args,options
+        he=options['name'][0]
+        print type(he)
 #         for con in contents:
 #             wel = Hongbao.objects.create(type='hongbao',title=con['title'],state='1',company=company,strategy=con['content'], pic = con['pic_download'])
 #             wel.url = reverse('welfare', kwargs={'id': wel.id})
