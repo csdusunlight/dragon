@@ -599,6 +599,9 @@ def import_finance_excel(request):
                 if j==0:
                     id = int(cell.value)
                     temp.append(id)
+                elif j==1:
+                    project = cell.value
+                    temp.append(project)
                 elif j==9:
                     result = cell.value.strip()
                     if result == u"是":
@@ -632,8 +635,8 @@ def import_finance_excel(request):
     try:
         for row in rtable:
             id = row[0]
-            result = row[1]
-            reason = row[3]
+            result = row[2]
+            reason = row[4]
             event = UserEvent.objects.get(id=id)
             if event.audit_state != '1' or event.translist.exists():
                 continue
@@ -641,9 +644,9 @@ def import_finance_excel(request):
             event_user = event.user
             translist = None
             if result:
-                amount = int(row[2]*100)
+                amount = int(row[3]*100)
                 log.audit_result = True
-                translist = charge_money(event_user, '0', amount, u'福利返现')
+                translist = charge_money(event_user, '0', amount, row[1])
                 if event.content_object.is_vip_bonus:
                     get_vip_bonus(event_user, amount, 'finance')
                 if translist:
