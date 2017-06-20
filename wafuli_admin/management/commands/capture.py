@@ -25,6 +25,10 @@ todaydir = os.path.join(MEDIA_ROOT, 'capfromweixin', today).replace('\\','/')
 url_pre = '/media/capfromweixin/' + today + '/'
 if not os.path.exists(todaydir):
     os.makedirs(todaydir)
+import platform
+ 
+def isWindowsSystem():
+    return 'Windows' in platform.system()
 class Browser(object):
     cookie = cookielib.CookieJar()
     handler = urllib2.HTTPCookieProcessor(cookie)
@@ -56,13 +60,19 @@ class Browser(object):
     
 
 
-def load_gzh():
+def load_gzh(name):
     browser = Browser()
-    page = browser.get('http://weixin.sogou.com/weixin?type=1&s_from=input&query=券妈妈&ie=utf8&_sug_=n&_sug_type_=')
+#     logger.error('http://weixin.sogou.com/weixin?type=1&s_from=input&query=券妈妈&ie=utf8&_sug_=n&_sug_type_=')
+    page = browser.get('http://weixin.sogou.com/weixin?type=1&s_from=input&query='+name+'&ie=utf8&_sug_=n&_sug_type_=')
     soup = BeautifulSoup(page,"html.parser")
     news_box = soup.find("div", class_="news-box")
-    gongzhonghao = news_box.a['href']
-    print gongzhonghao
+    try:
+        gongzhonghao = news_box.a['href']
+    except:
+        if isWindowsSystem():
+            name = name.decode('utf-8').encode('gbk')
+        logger.error("no gzh found named" + name )
+        return None
     article_list_html = browser.get(gongzhonghao)
     if article_list_html.find('请输入验证码') != -1:
         cert = time.time()
@@ -77,7 +87,7 @@ def load_gzh():
         local.write(picture)
         local.close()
         # 保存验证码到本地
-        SecretCode = raw_input('输入验证码： ')
+        SecretCode = raw_input('input code::')
         # 打开保存的验证码图片 输入
         postData = {
             'input': SecretCode,
@@ -111,7 +121,7 @@ def load_gzh():
         day_list = eval(matchObj[0])
     else:
         print "no list"
-        return
+        return None
     if day_list:
         today_list = day_list[0]['app_msg_ext_info']
         msg_item_list = day_list[0]['app_msg_ext_info']['multi_app_msg_item_list']
@@ -119,7 +129,7 @@ def load_gzh():
         msg_item_list.insert(0, {'content_url':today_list['content_url'], 'cover':today_list['cover']})
     else:
         print 'day_list is empty'
-        return
+        return None
     article_urls = []
     pics=[]
     for msg in msg_item_list:
@@ -190,13 +200,14 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('name', nargs='+')
     def handle(self, *args, **options):
-#         company = Company.objects.get(name=u"免费福利")
-#         contents = load_gzh()
-        he=options['name'][0]
-        print type(he)
-#         for con in contents:
-#             wel = Hongbao.objects.create(type='hongbao',title=con['title'],state='1',company=company,strategy=con['content'], pic = con['pic_download'])
-#             wel.url = reverse('welfare', kwargs={'id': wel.id})
-#             wel.save(update_fields=['url'])
-# #             Hongbao.objects.create(welfare_ptr_id=wel.id)
+        company = Company.objects.get(name=u"免费福利")
+        name=options['name'][0]
+        if isWindowsSystem():
+            name = name.decode('gbk').encode('utf-8')
+        contents = load_gzh(name)
+        for con in contents:
+            wel = Hongbao.objects.create(type='hongbao',title=con['title'],state='1',company=company,strategy=con['content'], pic = con['pic_download'])
+            wel.url = reverse('welfare', kwargs={'id': wel.id})
+            wel.save(update_fields=['url'])
+#             Hongbao.objects.create(welfare_ptr_id=wel.id)
         logger.info("******Invite_charge is finished*********")
