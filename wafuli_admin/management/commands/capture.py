@@ -18,6 +18,8 @@ from dragon.settings import MEDIA_ROOT
 from django.core.urlresolvers import reverse
 import datetime
 from django.core.management.base import BaseCommand
+from PIL import Image
+from wafuli_admin.management.commands.ruokuai import APIClient
 host = 'http://mp.weixin.qq.com'
 logger=logging.getLogger('wafuli')
 today =datetime.date.today().strftime("%Y-%m-%d")
@@ -58,8 +60,32 @@ class Browser(object):
             print e.code
         return data
     
-
-
+def getimgcode(imagePath):
+    client = APIClient()
+    result = ''
+    paramDict = {}
+    paramDict['username'] = 'boy28930'
+    paramDict['password'] = 'pl6561066'
+    paramDict['typeid'] = 2040
+    paramDict['timeout'] = 60
+    paramDict['softid'] = 1
+    paramDict['softkey'] = 'b40ffbee5c1cf4e38028c197eb2fc751'
+    paramKeys = ['username',
+         'password',
+         'typeid',
+         'timeout',
+         'softid',
+         'softkey'
+        ]
+#     imagePath = 'e:\image.jpeg'
+    img = Image.open(imagePath)
+    if img is None:
+        logger.error('get file error!')
+        return None
+    img.save("upload.gif", format="gif")
+    filebytes = open("upload.gif", "rb").read()
+    result = client.http_upload_image("http://api.ruokuai.com/create.xml", paramKeys, paramDict, filebytes)
+    return result
 def load_gzh(name):
     browser = Browser()
 #     logger.error('http://weixin.sogou.com/weixin?type=1&s_from=input&query=券妈妈&ie=utf8&_sug_=n&_sug_type_=')
@@ -87,7 +113,7 @@ def load_gzh(name):
         local.write(picture)
         local.close()
         # 保存验证码到本地
-        SecretCode = raw_input('input code::')
+        SecretCode = getimgcode(imgname)#raw_input('input code::')
         # 打开保存的验证码图片 输入
         postData = {
             'input': SecretCode,
