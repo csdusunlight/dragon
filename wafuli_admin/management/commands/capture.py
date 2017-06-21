@@ -114,6 +114,7 @@ def load_gzh(name):
         local.close()
         # 保存验证码到本地
         SecretCode = getimgcode(imgname)#raw_input('input code::')
+        logger.error(SecretCode)
         # 打开保存的验证码图片 输入
         postData = {
             'input': SecretCode,
@@ -137,6 +138,7 @@ def load_gzh(name):
         # 构造request请求
         result = browser.post(PostUrl, postData, headers)
         article_list_html = browser.get(gongzhonghao)
+        logger.error(article_list_html)
     soup = BeautifulSoup(article_list_html,"html.parser")
 #     print soup.prettify(encoding='')
     matchObj = re.findall("\"list\":(\[.*\])", soup.prettify())
