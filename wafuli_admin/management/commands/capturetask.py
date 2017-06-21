@@ -25,8 +25,6 @@ class Command(BaseCommand):
             if not contents:
                 if isWindowsSystem():
                     name = name.encode('gbk')
-                else:
-                    name = name.encode('utf-8')
                 logger.error("why" + name)
                 return
             for con in contents:
