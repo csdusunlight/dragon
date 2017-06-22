@@ -85,6 +85,8 @@ def getimgcode(imagePath):
     img.save("upload.gif", format="gif")
     filebytes = open("upload.gif", "rb").read()
     result = client.http_upload_image("http://api.ruokuai.com/create.xml", paramKeys, paramDict, filebytes)
+    match = re.search(r'<Result>(\S*)</Result>',result)
+    result = match.group(1)
     return result
 def load_gzh(name):
     browser = Browser()
