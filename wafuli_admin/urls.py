@@ -39,4 +39,7 @@ urlpatterns = [
     
     url(r'^export_conpon/$', 'wafuli_admin.coupon.export_coupon_excel', name='export_coupon_excel'),
     url(r'^import_conpon/$', 'wafuli_admin.coupon.import_coupon_excel', name='import_coupon_excel'),
+    
+    url(r'^export_withdraw/$', 'wafuli_admin.views.export_withdraw_excel', name='export_withdraw_excel'),
+    url(r'^import_withdraw/$', 'wafuli_admin.views.import_withdraw_excel', name='import_withdraw_excel'),
 ]

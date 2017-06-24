@@ -451,9 +451,11 @@ def export_coupon_excel(request):
     
     return response 
 
-@login_required
 @csrf_exempt
 def import_coupon_excel(request):
+    user = request.user
+    if not ( user.is_authenticated() and user.is_staff):
+        raise Http404
     ret = {'code':-1}
     file = request.FILES.get('file')
 #     print file.name
