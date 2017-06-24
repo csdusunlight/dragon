@@ -1152,7 +1152,16 @@ def get_admin_with_page(request):
     mobile = request.GET.get("mobile", None)
     if mobile:
         item_list = item_list.filter(user__mobile=mobile)
-
+        
+    usertype = request.GET.get("usertype",0)
+    usertype= int(usertype)
+    if usertype == 1:
+        item_list = item_list.filter(user__is_channel=False)
+    elif usertype == 2:
+        item_list = item_list.filter(user__is_channel=True)
+        chalevel = request.GET.get("chalevel","")
+        if chalevel:
+            item_list = item_list.filter(user__channel__level=chalevel)
     card_number = request.GET.get("card_number", None)
     if card_number:
         item_list = item_list.filter(user__user_bankcard__card_number=card_number)
@@ -1188,6 +1197,7 @@ def get_admin_with_page(request):
             real_name = card.real_name
         i = {"username":obj_user.username,
              "mobile":obj_user.mobile,
+             "usertype":u"普通用户" if not con.user.is_channel else u"渠道："+ con.user.channel.level,
              "balance":obj_user.balance/100.0,
              "bank":bank,
              "real_name":real_name,
@@ -1233,7 +1243,16 @@ def export_withdraw_excel(request):
     mobile = request.GET.get("mobile", None)
     if mobile:
         item_list = item_list.filter(user__mobile=mobile)
-
+    
+    usertype = request.GET.get("usertype",0)
+    usertype= int(usertype)
+    if usertype == 1:
+        item_list = item_list.filter(user__is_channel=False)
+    elif usertype == 2:
+        item_list = item_list.filter(user__is_channel=True)
+        chalevel = request.GET.get("chalevel","")
+        if chalevel:
+            item_list = item_list.filter(user__channel__level=chalevel)
     card_number = request.GET.get("card_number", None)
     if card_number:
         item_list = item_list.filter(user__user_bankcard__card_number=card_number)
@@ -1266,8 +1285,8 @@ def export_withdraw_excel(request):
         remark= con.remark
         amount= con.invest_amount/100.0
         state=con.get_audit_state_display()
-        user_mobile = con.user.mobile if not con.user.is_channel else con.user.channel.qq_number
-        user_type = u"普通用户" if not con.user.is_channel else u"渠道："+ con.user.channel.level
+        user_mobile = obj_user.mobile if not obj_user.is_channel else obj_user.channel.qq_number
+        user_type = u"普通用户" if not obj_user.is_channel else u"渠道："+ obj_user.channel.level
         result = ''
         reason = ''
         if con.audit_state=='0':
@@ -1276,11 +1295,11 @@ def export_withdraw_excel(request):
             result = u'否'
             if con.audited_logs.exists():
                 reason = con.audited_logs.first().reason
-        data.append([id, username, mobile, balance, bank, real_name, card_number, amount,
+        data.append([id, username, mobile, user_type, balance, bank, real_name, card_number, amount,
                      time, result, reason])
     w = Workbook()     #创建一个工作簿
     ws = w.add_sheet(u'待审核记录')     #创建一个工作表
-    title_row = [u'记录ID',u'用户名',u'手机号', u'账户余额', u'开户行', u'实名' ,u'银行卡号' ,u'申请提现金额', u'申请时间',
+    title_row = [u'记录ID',u'用户名',u'手机号', u'用户类型', u'账户余额', u'开户行', u'实名' ,u'银行卡号' ,u'申请提现金额', u'申请时间',
                  u'审核结果',u'拒绝原因']
     for i in range(len(title_row)):
         ws.write(0,i,title_row[i])
@@ -1290,7 +1309,7 @@ def export_withdraw_excel(request):
         lis = data[i]
         col = len(lis)
         for j in range(col):
-            if j==8:
+            if j==9:
                 ws.write(i+1,j,lis[j],style1)
             else:
                 ws.write(i+1,j,lis[j])
@@ -1318,7 +1337,7 @@ def import_withdraw_excel(request):
     table = data.sheets()[0]
     nrows = table.nrows
     ncols = table.ncols
-    if ncols!=11:
+    if ncols!=12:
         ret['msg'] = u"文件格式与模板不符，请在导出的待审核记录表中更新后将文件导入！"
         return JsonResponse(ret)
     rtable = []
@@ -1332,7 +1351,7 @@ def import_withdraw_excel(request):
                 if j==0:
                     id = int(cell.value)
                     temp.append(id)
-                elif j==9:
+                elif j==10:
                     result = cell.value.strip()
                     if result == u"是":
                         result = True
@@ -1342,7 +1361,7 @@ def import_withdraw_excel(request):
                         temp.append(False)
                     else:
                         raise Exception(u"审核结果必须为是或否。")
-                elif j==10:
+                elif j==11:
                     reason = cell.value
                     temp.append(reason)
                 else:
