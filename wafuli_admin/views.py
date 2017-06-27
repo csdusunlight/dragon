@@ -1152,7 +1152,7 @@ def get_admin_with_page(request):
     mobile = request.GET.get("mobile", None)
     if mobile:
         item_list = item_list.filter(user__mobile=mobile)
-        
+
     usertype = request.GET.get("usertype",0)
     usertype= int(usertype)
     if usertype == 1:
@@ -1243,7 +1243,7 @@ def export_withdraw_excel(request):
     mobile = request.GET.get("mobile", None)
     if mobile:
         item_list = item_list.filter(user__mobile=mobile)
-    
+
     usertype = request.GET.get("usertype",0)
     usertype= int(usertype)
     if usertype == 1:
@@ -1412,7 +1412,7 @@ def import_withdraw_excel(request):
                         trans_withdraw.save(update_fields=['admin_event'])
                     msg_content = u'您提现的' + str(event.invest_amount) + u'福币，已发放到您的银行卡中，请注意查收'
                     Message.objects.create(user=event.user, content=msg_content, title=u"提现审核")
-            
+
                 else:
                     if not reason:
                         raise Exception(u"拒绝原因缺失")
@@ -1824,3 +1824,468 @@ def send_multiple_msg(request):
         res['code'] = 0
         res['res_msg'] = u"没有选中任何手机号码"
     return JsonResponse(res)
+
+# 立项部分增加
+def admin_project(request):
+    admin_user = request.user
+    if request.method == "GET":
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
+        return render(request,"admin_project.html")
+    if request.method == "POST":
+        res = {}
+        if not request.is_ajax():
+            raise Http404
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            res['code'] = -1
+            res['url'] = reverse('admin:login') + "?next=" + reverse('admin_finance')
+            return JsonResponse(res)
+        if not admin_user.has_admin_perms('002'):
+            res['code'] = -5
+            res['res_msg'] = u'您没有操作权限！'
+            return JsonResponse(res)
+        event_id = request.POST.get('id', None)
+        cash = request.POST.get('cash', None)
+        score = request.POST.get('score', None)
+        type = request.POST.get('type', None)
+        reason = request.POST.get('reason', None)
+        type = int(type)
+        if not event_id or type==1 and not (cash and score) or type==2 and not reason or type!=1 and type!=2:
+            res['code'] = -2
+            res['res_msg'] = u'传入参数不足，请联系技术人员！'
+            return JsonResponse(res)
+        event = UserEvent.objects.get(id=event_id)
+        event_user = event.user
+        card = event_user.user_bankcard.first()
+
+        project = event.content_object   #jzy
+        project_title = project.title   # jzy
+
+        log = AuditLog(user=admin_user,item=event)
+        translist = None
+        scoretranslist = None
+        if type==1:
+            try:
+                cash = float(cash)*100
+                cash = int(cash)
+                score = int(score)
+            except:
+                res['code'] = -2
+                res['res_msg'] = u"操作失败，输入不合法！"
+                return JsonResponse(res)
+            if cash < 0 or score < 0:
+                res['code'] = -2
+                res['res_msg'] = u"操作失败，输入不合法！"
+                return JsonResponse(res)
+            if event.audit_state != '1':
+                res['code'] = -3
+                res['res_msg'] = u'该项目已审核过，不要重复审核！'
+                return JsonResponse(res)
+            if event.translist.exists():
+                logger.critical("Returning cash is repetitive!!!")
+                res['code'] = -3
+                res['res_msg'] = u"操作失败，返现重复！"
+            else:
+                log.audit_result = True
+
+                # translist = charge_money(event_user, '0', cash, u'福利返现')
+                translist = charge_money(event_user, '0', cash, project_title)  #jzy
+                if event.content_object.is_vip_bonus:
+                    get_vip_bonus(event_user, cash, 'finance')
+                scoretranslist = charge_score(event_user, '0', score, u'福利返现（积分）')
+                if translist and scoretranslist:
+                    event.audit_state = '0'
+                    translist.user_event = event
+                    translist.save(update_fields=['user_event'])
+                    scoretranslist.user_event = event
+                    scoretranslist.save(update_fields=['user_event'])
+                    res['code'] = 0
+                    #更新投资记录表
+                    Invest_Record.objects.create(invest_date=event.time,invest_company=event.content_object.company.name,
+                                                 user_name=card.real_name if card else '',card_number=card.card_number if card else '',
+                                                 invest_mobile=event.invest_account,invest_period=event.invest_term,
+                                                 invest_amount=event.invest_amount,return_amount=cash/100.0,wafuli_account=event_user.mobile,
+                                                 return_date=datetime.date.today(),remark=event.remark)
+                    msg_content = u'您提交的"' + event.content_object.title + u'"理财福利已审核通过。'
+                    Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
+                else:
+                    res['code'] = -4
+                    res['res_msg'] = "注意，重复提交时只提交失败项目，成功的可以输入0。\n"
+                    if not translist:
+                        logger.error(u"Charging cash is failed!!!")
+                        res['res_msg'] += u"现金记账失败，请检查输入合法性后再次提交！"
+                    if not scoretranslist:
+                        logger.error(u"Charging score is failed!!!")
+                        res['res_msg'] += u"积分记账失败，请检查输入合法性后再次提交！"
+        else:
+            event.audit_state = '2'
+            log.audit_result = False
+            log.reason = reason
+            res['code'] = 0
+
+            msg_content = u'您提交的"' + event.content_object.title + u'"理财福利审核未通过，原因：' + reason
+            Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
+
+
+        if res['code'] == 0:
+            admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='1')
+            if translist:
+                translist.admin_event = admin_event
+                translist.save(update_fields=['admin_event'])
+            if scoretranslist:
+                scoretranslist.admin_event = admin_event
+                scoretranslist.save(update_fields=['admin_event'])
+            log.admin_item = admin_event
+            log.save()
+            event.audit_time = log.time
+            event.save(update_fields=['audit_state','audit_time'])
+        return JsonResponse(res)
+
+
+def admin_project_data(request):
+    admin_user = request.user
+    if request.method == "GET":
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
+        return render(request,"admin_project_data.html")
+    if request.method == "POST":
+        res = {}
+        if not request.is_ajax():
+            raise Http404
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            res['code'] = -1
+            res['url'] = reverse('admin:login') + "?next=" + reverse('admin_finance')
+            return JsonResponse(res)
+        if not admin_user.has_admin_perms('002'):
+            res['code'] = -5
+            res['res_msg'] = u'您没有操作权限！'
+            return JsonResponse(res)
+        event_id = request.POST.get('id', None)
+        cash = request.POST.get('cash', None)
+        score = request.POST.get('score', None)
+        type = request.POST.get('type', None)
+        reason = request.POST.get('reason', None)
+        type = int(type)
+        if not event_id or type==1 and not (cash and score) or type==2 and not reason or type!=1 and type!=2:
+            res['code'] = -2
+            res['res_msg'] = u'传入参数不足，请联系技术人员！'
+            return JsonResponse(res)
+        event = UserEvent.objects.get(id=event_id)
+        event_user = event.user
+        card = event_user.user_bankcard.first()
+
+        project = event.content_object   #jzy
+        project_title = project.title   # jzy
+
+        log = AuditLog(user=admin_user,item=event)
+        translist = None
+        scoretranslist = None
+        if type==1:
+            try:
+                cash = float(cash)*100
+                cash = int(cash)
+                score = int(score)
+            except:
+                res['code'] = -2
+                res['res_msg'] = u"操作失败，输入不合法！"
+                return JsonResponse(res)
+            if cash < 0 or score < 0:
+                res['code'] = -2
+                res['res_msg'] = u"操作失败，输入不合法！"
+                return JsonResponse(res)
+            if event.audit_state != '1':
+                res['code'] = -3
+                res['res_msg'] = u'该项目已审核过，不要重复审核！'
+                return JsonResponse(res)
+            if event.translist.exists():
+                logger.critical("Returning cash is repetitive!!!")
+                res['code'] = -3
+                res['res_msg'] = u"操作失败，返现重复！"
+            else:
+                log.audit_result = True
+
+                # translist = charge_money(event_user, '0', cash, u'福利返现')
+                translist = charge_money(event_user, '0', cash, project_title)  #jzy
+                if event.content_object.is_vip_bonus:
+                    get_vip_bonus(event_user, cash, 'finance')
+                scoretranslist = charge_score(event_user, '0', score, u'福利返现（积分）')
+                if translist and scoretranslist:
+                    event.audit_state = '0'
+                    translist.user_event = event
+                    translist.save(update_fields=['user_event'])
+                    scoretranslist.user_event = event
+                    scoretranslist.save(update_fields=['user_event'])
+                    res['code'] = 0
+                    #更新投资记录表
+                    Invest_Record.objects.create(invest_date=event.time,invest_company=event.content_object.company.name,
+                                                 user_name=card.real_name if card else '',card_number=card.card_number if card else '',
+                                                 invest_mobile=event.invest_account,invest_period=event.invest_term,
+                                                 invest_amount=event.invest_amount,return_amount=cash/100.0,wafuli_account=event_user.mobile,
+                                                 return_date=datetime.date.today(),remark=event.remark)
+                    msg_content = u'您提交的"' + event.content_object.title + u'"理财福利已审核通过。'
+                    Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
+                else:
+                    res['code'] = -4
+                    res['res_msg'] = "注意，重复提交时只提交失败项目，成功的可以输入0。\n"
+                    if not translist:
+                        logger.error(u"Charging cash is failed!!!")
+                        res['res_msg'] += u"现金记账失败，请检查输入合法性后再次提交！"
+                    if not scoretranslist:
+                        logger.error(u"Charging score is failed!!!")
+                        res['res_msg'] += u"积分记账失败，请检查输入合法性后再次提交！"
+        else:
+            event.audit_state = '2'
+            log.audit_result = False
+            log.reason = reason
+            res['code'] = 0
+
+            msg_content = u'您提交的"' + event.content_object.title + u'"理财福利审核未通过，原因：' + reason
+            Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
+
+
+        if res['code'] == 0:
+            admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='1')
+            if translist:
+                translist.admin_event = admin_event
+                translist.save(update_fields=['admin_event'])
+            if scoretranslist:
+                scoretranslist.admin_event = admin_event
+                scoretranslist.save(update_fields=['admin_event'])
+            log.admin_item = admin_event
+            log.save()
+            event.audit_time = log.time
+            event.save(update_fields=['audit_state','audit_time'])
+        return JsonResponse(res)
+
+
+def admin_project_finance(request):
+    admin_user = request.user
+    if request.method == "GET":
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
+        return render(request,"admin_project_finance.html")
+    if request.method == "POST":
+        res = {}
+        if not request.is_ajax():
+            raise Http404
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            res['code'] = -1
+            res['url'] = reverse('admin:login') + "?next=" + reverse('admin_finance')
+            return JsonResponse(res)
+        if not admin_user.has_admin_perms('002'):
+            res['code'] = -5
+            res['res_msg'] = u'您没有操作权限！'
+            return JsonResponse(res)
+        event_id = request.POST.get('id', None)
+        cash = request.POST.get('cash', None)
+        score = request.POST.get('score', None)
+        type = request.POST.get('type', None)
+        reason = request.POST.get('reason', None)
+        type = int(type)
+        if not event_id or type==1 and not (cash and score) or type==2 and not reason or type!=1 and type!=2:
+            res['code'] = -2
+            res['res_msg'] = u'传入参数不足，请联系技术人员！'
+            return JsonResponse(res)
+        event = UserEvent.objects.get(id=event_id)
+        event_user = event.user
+        card = event_user.user_bankcard.first()
+
+        project = event.content_object   #jzy
+        project_title = project.title   # jzy
+
+        log = AuditLog(user=admin_user,item=event)
+        translist = None
+        scoretranslist = None
+        if type==1:
+            try:
+                cash = float(cash)*100
+                cash = int(cash)
+                score = int(score)
+            except:
+                res['code'] = -2
+                res['res_msg'] = u"操作失败，输入不合法！"
+                return JsonResponse(res)
+            if cash < 0 or score < 0:
+                res['code'] = -2
+                res['res_msg'] = u"操作失败，输入不合法！"
+                return JsonResponse(res)
+            if event.audit_state != '1':
+                res['code'] = -3
+                res['res_msg'] = u'该项目已审核过，不要重复审核！'
+                return JsonResponse(res)
+            if event.translist.exists():
+                logger.critical("Returning cash is repetitive!!!")
+                res['code'] = -3
+                res['res_msg'] = u"操作失败，返现重复！"
+            else:
+                log.audit_result = True
+
+                # translist = charge_money(event_user, '0', cash, u'福利返现')
+                translist = charge_money(event_user, '0', cash, project_title)  #jzy
+                if event.content_object.is_vip_bonus:
+                    get_vip_bonus(event_user, cash, 'finance')
+                scoretranslist = charge_score(event_user, '0', score, u'福利返现（积分）')
+                if translist and scoretranslist:
+                    event.audit_state = '0'
+                    translist.user_event = event
+                    translist.save(update_fields=['user_event'])
+                    scoretranslist.user_event = event
+                    scoretranslist.save(update_fields=['user_event'])
+                    res['code'] = 0
+                    #更新投资记录表
+                    Invest_Record.objects.create(invest_date=event.time,invest_company=event.content_object.company.name,
+                                                 user_name=card.real_name if card else '',card_number=card.card_number if card else '',
+                                                 invest_mobile=event.invest_account,invest_period=event.invest_term,
+                                                 invest_amount=event.invest_amount,return_amount=cash/100.0,wafuli_account=event_user.mobile,
+                                                 return_date=datetime.date.today(),remark=event.remark)
+                    msg_content = u'您提交的"' + event.content_object.title + u'"理财福利已审核通过。'
+                    Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
+                else:
+                    res['code'] = -4
+                    res['res_msg'] = "注意，重复提交时只提交失败项目，成功的可以输入0。\n"
+                    if not translist:
+                        logger.error(u"Charging cash is failed!!!")
+                        res['res_msg'] += u"现金记账失败，请检查输入合法性后再次提交！"
+                    if not scoretranslist:
+                        logger.error(u"Charging score is failed!!!")
+                        res['res_msg'] += u"积分记账失败，请检查输入合法性后再次提交！"
+        else:
+            event.audit_state = '2'
+            log.audit_result = False
+            log.reason = reason
+            res['code'] = 0
+
+            msg_content = u'您提交的"' + event.content_object.title + u'"理财福利审核未通过，原因：' + reason
+            Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
+
+
+        if res['code'] == 0:
+            admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='1')
+            if translist:
+                translist.admin_event = admin_event
+                translist.save(update_fields=['admin_event'])
+            if scoretranslist:
+                scoretranslist.admin_event = admin_event
+                scoretranslist.save(update_fields=['admin_event'])
+            log.admin_item = admin_event
+            log.save()
+            event.audit_time = log.time
+            event.save(update_fields=['audit_state','audit_time'])
+        return JsonResponse(res)
+
+
+def admin_project_account(request):
+    admin_user = request.user
+    if request.method == "GET":
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
+        return render(request,"admin_project_account.html")
+    if request.method == "POST":
+        res = {}
+        if not request.is_ajax():
+            raise Http404
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            res['code'] = -1
+            res['url'] = reverse('admin:login') + "?next=" + reverse('admin_finance')
+            return JsonResponse(res)
+        if not admin_user.has_admin_perms('002'):
+            res['code'] = -5
+            res['res_msg'] = u'您没有操作权限！'
+            return JsonResponse(res)
+        event_id = request.POST.get('id', None)
+        cash = request.POST.get('cash', None)
+        score = request.POST.get('score', None)
+        type = request.POST.get('type', None)
+        reason = request.POST.get('reason', None)
+        type = int(type)
+        if not event_id or type==1 and not (cash and score) or type==2 and not reason or type!=1 and type!=2:
+            res['code'] = -2
+            res['res_msg'] = u'传入参数不足，请联系技术人员！'
+            return JsonResponse(res)
+        event = UserEvent.objects.get(id=event_id)
+        event_user = event.user
+        card = event_user.user_bankcard.first()
+
+        project = event.content_object   #jzy
+        project_title = project.title   # jzy
+
+        log = AuditLog(user=admin_user,item=event)
+        translist = None
+        scoretranslist = None
+        if type==1:
+            try:
+                cash = float(cash)*100
+                cash = int(cash)
+                score = int(score)
+            except:
+                res['code'] = -2
+                res['res_msg'] = u"操作失败，输入不合法！"
+                return JsonResponse(res)
+            if cash < 0 or score < 0:
+                res['code'] = -2
+                res['res_msg'] = u"操作失败，输入不合法！"
+                return JsonResponse(res)
+            if event.audit_state != '1':
+                res['code'] = -3
+                res['res_msg'] = u'该项目已审核过，不要重复审核！'
+                return JsonResponse(res)
+            if event.translist.exists():
+                logger.critical("Returning cash is repetitive!!!")
+                res['code'] = -3
+                res['res_msg'] = u"操作失败，返现重复！"
+            else:
+                log.audit_result = True
+
+                # translist = charge_money(event_user, '0', cash, u'福利返现')
+                translist = charge_money(event_user, '0', cash, project_title)  #jzy
+                if event.content_object.is_vip_bonus:
+                    get_vip_bonus(event_user, cash, 'finance')
+                scoretranslist = charge_score(event_user, '0', score, u'福利返现（积分）')
+                if translist and scoretranslist:
+                    event.audit_state = '0'
+                    translist.user_event = event
+                    translist.save(update_fields=['user_event'])
+                    scoretranslist.user_event = event
+                    scoretranslist.save(update_fields=['user_event'])
+                    res['code'] = 0
+                    #更新投资记录表
+                    Invest_Record.objects.create(invest_date=event.time,invest_company=event.content_object.company.name,
+                                                 user_name=card.real_name if card else '',card_number=card.card_number if card else '',
+                                                 invest_mobile=event.invest_account,invest_period=event.invest_term,
+                                                 invest_amount=event.invest_amount,return_amount=cash/100.0,wafuli_account=event_user.mobile,
+                                                 return_date=datetime.date.today(),remark=event.remark)
+                    msg_content = u'您提交的"' + event.content_object.title + u'"理财福利已审核通过。'
+                    Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
+                else:
+                    res['code'] = -4
+                    res['res_msg'] = "注意，重复提交时只提交失败项目，成功的可以输入0。\n"
+                    if not translist:
+                        logger.error(u"Charging cash is failed!!!")
+                        res['res_msg'] += u"现金记账失败，请检查输入合法性后再次提交！"
+                    if not scoretranslist:
+                        logger.error(u"Charging score is failed!!!")
+                        res['res_msg'] += u"积分记账失败，请检查输入合法性后再次提交！"
+        else:
+            event.audit_state = '2'
+            log.audit_result = False
+            log.reason = reason
+            res['code'] = 0
+
+            msg_content = u'您提交的"' + event.content_object.title + u'"理财福利审核未通过，原因：' + reason
+            Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
+
+
+        if res['code'] == 0:
+            admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='1')
+            if translist:
+                translist.admin_event = admin_event
+                translist.save(update_fields=['admin_event'])
+            if scoretranslist:
+                scoretranslist.admin_event = admin_event
+                scoretranslist.save(update_fields=['admin_event'])
+            log.admin_item = admin_event
+            log.save()
+            event.audit_time = log.time
+            event.save(update_fields=['audit_state','audit_time'])
+        return JsonResponse(res)
+# 立项部分---end
