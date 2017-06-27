@@ -150,15 +150,14 @@ def submit_itembyitem(request):
         term = temp[4]
         remark = temp[5]
         try:
-            with transaction.atomic():
-                if news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
-                    exist_num += 1   #jzy
-                    exist_phone = exist_phone + telnum + ", "   #jzy
-                    raise ValueError('This invest_account is repective in project:' + str(news.id))
-                else:
-                    UserEvent.objects.create(user=request.user, invest_time=time, event_type='1', invest_account=telnum, invest_term=term,
-                                     invest_amount=int(amount), content_object=news, audit_state='1',remark=remark,)
-                    suc_num += 1
+            if not news.is_multisub_allowed and news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
+                exist_num += 1   #jzy
+                exist_phone = exist_phone + telnum + ", "   #jzy
+                raise ValueError('This invest_account is repective in project:' + str(news.id))
+            else:
+                UserEvent.objects.create(user=request.user, invest_time=time, event_type='1', invest_account=telnum, invest_term=term,
+                                 invest_amount=int(amount), content_object=news, audit_state='1',remark=remark,)
+                suc_num += 1
         except Exception, e:
             logger.info(e)
     result = {'code':0, 'suc_num':suc_num, 'exist_num':exist_num, 'exist_phone':exist_phone}   #jzy
