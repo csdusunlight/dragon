@@ -1,403 +1,432 @@
-{% extends "base.html" %}
-{%load staticfiles%}
-{% block js %}
+{% extends "base.html" %} {%load staticfiles%} {% block js %}
 <script type="text/javascript" src="{%static 'js/ajaxfileupload.js'%}"></script>
 <script type="text/javascript">
-  $.ajaxSetup({
-    data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
-  });
-  var data = '<table width="100%"><tr><th>用户名</th><th>用户类型</th><th>手机号</th>'+
-  '<th>项目名称</th><th>投资时间</th><th>提交手机号</th><th>投资金额</th><th>投资标期</th><th>提交时间</th><th>处理状态</th>'+
-  '<th>操作</th><th>备注</th></tr>[data]<tr><td>{username}</td><td>{usertype}</td><td>{mobile}</td>'+
-  '<td>{project}</td><td>{invest_time}</td><td>{mobile_sub}</td><td>{invest_amount}</td><td>{term}</td>'+
-  '<td>{time_sub}</td><td>{state}</td>'+
-  '<td id="item_{id}"><a class="fyin" onclick="pass({id})">返现'+
-  '</a> │ <a class="jion-s" onclick="refuse({id})">拒绝</a></td><td>{remark}</td></tr>[/data]</table>';
-  var data2 = '<table width="100%"><tr><th>用户名</th><th>用户类型</th><th>手机号</th>'+
-  '<th>项目名称</th><th>投资时间</th><th>提交手机号</th><th>投资金额</th><th>投资标期</th><th>提交时间</th><th>处理状态</th>'+
-  '<th>审核人</th><th>审核时间</th><th width="6%">返现金额</th><th width="6%">返现积分</th>'+
-  '<th>备注</th></tr>[data]<tr><td>{username}</td><td>{usertype}</td><td>{mobile}</td>'+
-  '<td>{project}</td><td>{invest_time}</td><td>{mobile_sub}</td><td>{invest_amount}</td><td>{term}</td>'+
-  '<td>{time_sub}</td><td>{state}</td><td>{admin}</td><td>{time_admin}</td>'+
-  '<td>{ret_amount}</td><td>{score}</td><td>{remark}</td></tr>[/data]</table>';
-  var url = "{% url 'get_admin_finance_page' %}" + "?page={page}&size={pageSize}";
-  function pass(id){
-   $(".BackNow").css("display","block");
-   $("input#ret_event_id").val(id);
- }
- function refuse(id){
-   $(".Audit").css("display","block");
-   $("input#refuse_event_id").val(id);
- }
- $(document).ready(function(){
-   $("li.home15").addClass("show-project").toggleClass("on");
-   $("li.home19").toggleClass("show");
-   $(".Tin-table tr:even").css("background-color","#fcfcfc");
-   $("#pagedata").ajaxPage({
-     url:url+"&state=1",
-     pageId:$("#page"),
-     pageSize:10,
-     run:true,
-     content:data,
-   });
-   $(".none-x").click(function(){
-    $(this).parent().parent().css("display","none");<!--隐藏-->
-  })
-   $('.Finnow input[type="submit"]').click(function(){
-    id = $("input#ret_event_id").val();
-    cash = $("input#add_cash").val();
-    score = $("input#add_score").val();
-    if (!id || !cash || !score){
-     return;
-   }
-   $.ajax({
-     url:"{%url 'admin_finance' %}",
-     dataType:"json",
-     type:"POST",
-     data:{
-      'id':id,
-      'cash':cash,
-      'score':score,
-      'type':1,
-    },
-    success:function(ret){
-      if(ret.code==0){
-       $("#item_"+id).html("审核完成，通过");
-     }
-     else if(ret.code==-1){
-       alert("该页面已过期，请重新登录！");
-       window.location.href = ret.url;
-     }
-     else {
-       alert(ret.res_msg);
-     }
-   },
-   error:function(){
-    alert("请检查网络连接");
-  }
-});
-   $(".BackNow").css("display","none");
- });
-   $('.Audit-in input[type="submit"]').click(function(){
-    id = $("input#refuse_event_id").val();
-    reason = $("#refuse_reason").val();
-    if (!id || !reason){
-     return;
-   }
-   $.ajax({
-     url:"{%url 'admin_finance' %}",
-     dataType:"json",
-     type:"POST",
-     data:{
-      'id':id,
-      'reason':reason,
-      'type':2,
-    },
-    success:function(ret){
-      if(ret.code==0){
-       $("#item_"+id).html("审核完成，拒绝");
-     }
-     else if(ret.code==-1){
-       alert("该页面已过期，请重新登录！");
-       window.location.href = ret.url;
-     }
-     else {
-       alert(ret.res_msg);
-     }
-   },
-   error:function(){
-    alert("请检查网络连接");
-  }
-});
-   $(".Audit").css("display","none");
- });
-   $("#search").click(function(){
-    startTime = $("#startTime").val();
-    endTime = $("#endTime").val();
-    var newurl = url;
-    if(startTime && endTime){
-     newurl += "&startTime="+startTime;
-     newurl += "&endTime="+endTime;
-   }
-   startTime2 = $("#startTime2").val();
-   endTime2 = $("#endTime2").val();
-   if(startTime2 && endTime2){
-     newurl += "&startTime2="+startTime2;
-     newurl += "&endTime2="+endTime2;
-   }
-   username = $("#username").val();
-   mobile = $("#mobile").val();
-   mobile_sub = $("#mobile_sub").val();
+	$.ajaxSetup({
+		data: {
+			csrfmiddlewaretoken: '{{ csrf_token }}'
+		},
+	});
+	var data = '<table width="100%"><tr><th>立项日期</th><th>项目编号</th><th>项目名称</th>' +
+		'<th>商务对接人</th><th>付款总额</th><th>消耗总额</th><th>代收总额</th><th>返现总额</th><th>盈利总额</th><th>项目状态</th>' +
+		'<th>操作</th></tr>[data]<tr id="parent{id}"><td>{invest_time}</td><td>{usertype}</td><td>{mobile}</td>' +
+		'<td>{project}</td><td>{invest_time}</td><td>{mobile_sub}</td><td>{invest_amount}</td><td>{invest_amount}</td><td>{term}</td>' +
+		'<td>全部</td>' +
+		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">修改' +
+		'</a> │ <a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/data]</table>';
+	var url = "{% url 'get_admin_finance_page' %}" + "?page={page}&size={pageSize}";
+	
+	var project_id;		// project_id = -1 时，为导入单条数据；project_id != -1 时，为修改单条数据
+	
+	function pass(id) {			//弹出修改单条数据弹窗
+		$(".popup-title").text("修改项目数据");
+		$("#create_time_change")[0].type = "text";
+		$("input#project_change_id").val(id);
+		project_id = id;
+		
+		var parent = "parent" + id;
+		var dom = document.getElementById(parent);
+		var children0 = $(dom).find("td").eq(0).text(),
+			children1 = $(dom).find("td").eq(1).text(),
+			children2 = $(dom).find("td").eq(2).text(),
+			children3 = $(dom).find("td").eq(3).text(),
+			children4 = $(dom).find("td").eq(4).text(),
+			children5 = $(dom).find("td").eq(5).text(),
+			children6 = $(dom).find("td").eq(6).text(),
+			children7 = $(dom).find("td").eq(7).text();
+			children8 = $(dom).find("td").eq(8).text();
+		var	children9 = $(dom).find("td").eq(9).text(),
+			children8_num; 
+			switch (children9)
+			{
+				case "全部":
+					children9_num = 0;
+					break;
+				case "正在进行":
+					children9_num = 1;
+					break;
+				case "暂停":
+					children9_num = 2;
+					break;
+				case "已结束":
+					children9_num = 3;
+					break;
+			}
+		$("#create_time_change").val(children0);
+		$("#project_name_change").val(children1);
+		$("#contact_person_change").val(children2);
+		$("#project_num_change").val(children3);
+		$("#payment_all_change").val(children4);
+		$("#use_all_change").val(children5);
+		$("#collection_all_change").val(children6);
+		$("#cashback_all_change").val(children7);
+		$("#profit_all_change").val(children8);
+		$("#project_status_change").val(children9_num);
+		
+		$(".change-project").show();
+	}
+	
+	function refuse(id) {		//弹出删除项目数据弹窗
+		$("input#project_delete_id").val(id);
+		$(".delete-project").show();
+	}
+	
+	
+	$(document).ready(function() {
+		$("li.home15").addClass("show-project").toggleClass("on");
+		$("li.home19").toggleClass("show");
+		$(".Tin-table tr:even").css("background-color", "#fcfcfc");
+		
+		var choose_file = document.getElementById("input_clone");
+		var hint = document.getElementById("hint");
+		choose_file.onclick = function() {
+			document.getElementById("fileupload1").click();
+		}
+		
+		$("#pagedata").ajaxPage({
+			url: url + "&state=1",
+			pageId: $("#page"),
+			pageSize: 10,
+			run: true,
+			content: data,
+		});
+		
+		$("#single_import").click(function(){			//弹出单条导入弹窗
+			$(".Finnow p input, .Finnow p select").val("");
+			$("#project_status_change").val(0);
+			$("#create_time_change")[0].type = "datetime-local";
+			$(".popup-title").text("单条数据导入");
+			$(".change-project").show();
+			project_id = -1;
+		})
+		
+		$(".none-x, .none-x-s").click(function() {		// 关闭或取消 弹窗
+			$(".project-box").hide(); 
+		})
+		
+		$('#change_project_btn').click(function() {		//点击确认按钮提交或修改单条项目数据
+			var create_time_change = $("#create_time_change").val(),
+				project_num_change = $("#project_num_change").val(),
+				project_name_change = $("#project_name_change").val(),
+				contact_person_change = $("#contact_person_change").val(),
+				payment_all_change = $("#payment_all_change").val(),
+				use_all_change = $("#use_all_change").val(),
+				collection_all_change = $("#collection_all_change").val(),
+				cashback_all_change = $("#cashback_all_change").val(),
+				profit_all_change = $("#profit_all_change").val(),
+				project_status_change = $("#project_status_change").val();
+			
+			console.log(project_id+", "+create_time_change+", "+project_num_change+", "+project_name_change+", "+contact_person_change+", "+payment_all_change+", "+use_all_change+", "+collection_all_change+", "+cashback_all_change+", "+project_status_change);
+			
+			$.ajax({
+				url: "{%url 'admin_finance' %}",
+				dataType: "json",
+				type: "POST",
+				data: {
+					'id': project_id,
+					'create_time_change': create_time_change,
+					'project_num_change': project_num_change,
+					'project_name_change': project_name_change,
+					'contact_person_change': contact_person_change,
+					'payment_all_change': payment_all_change,
+					'use_all_change': use_all_change,
+					'collection_all_change': collection_all_change,
+					'cashback_all_change': cashback_all_change,
+					'profit_all_change': profit_all_change,
+					'project_status_change': project_status_change
+				},
+				success: function(ret) {
+					if(ret.code == 0) {
+						alert("操作成功！");
+					} else if(ret.code == -1) {
+						alert("该页面已过期，请重新登录！");
+						window.location.href = ret.url;
+					} else {
+						alert(ret.res_msg);
+					}
+				},
+				error: function() {
+					alert("请检查网络连接");
+				}
+			});
+			$(".change-project").hide();
+		});
+		
+		$('#delete_project_btn').click(function() {		//点击确认按钮删除单条项目数据
+			project_id = $("input#project_delete_id").val();
+			console.log(project_id);
+			
+			$.ajax({
+				url: "{%url 'admin_finance' %}",
+				dataType: "json",
+				type: "POST",
+				data: {
+					'id': project_id,
+				},
+				success: function(ret) {
+					if(ret.code == 0) {
+						alert("删除成功！");
+					} else if(ret.code == -1) {
+						alert("该页面已过期，请重新登录！");
+						window.location.href = ret.url;
+					} else {
+						alert(ret.res_msg);
+					}
+				},
+				error: function() {
+					alert("请检查网络连接");
+				}
+			});
+			$(".delete-project").hide();
+		});
+		
+		$("#search").click(function() {			//搜索项目数据
+			var newurl = url;
+			
+			created_time = $("#created_time").val();
+			project_name = $("#project_name").val();
+			contact_person = $("#contact_person").val();
+			project_num = $("#project_num").val();
+			project_status = $("#project_status").val();
+			
+			if(created_time) {
+				newurl += "&created_time=" + created_time;
+			}
+			if(project_name) {
+				newurl += "&project_name=" + project_name;
+			}
+			if(contact_person) {
+				newurl += "&contact_person=" + contact_person;
+			}
+			if(project_num) {
+				newurl += "&project_num=" + project_num;
+			}
+			if(project_status) {
+				newurl += "&project_status=" + project_status;
+			}
+			console.log(newurl);
+			
+			var newdata = data;
+			$("#page").empty();
+			$("#pagedata").ajaxPage({
+				url: newurl,
+				pageId: $("#page"),
+				pageSize: 10,
+				run: true,
+				content: newdata,
+			});
+		});
+		
+		$("#export").click(function() {			//导出表格
+			created_time = $("#created_time").val();
+			project_name = $("#project_name").val();
+			contact_person = $("#contact_person").val();
+			project_num = $("#project_num").val();
+			cooperate_type = $("#cooperate_type").val();
+			balance_type = $("#balance_type").val();
+			sign_company = $("#sign_company").val();
+			project_status = $("#project_status").val();
+			
+			var html = '<form action="' + "{% url 'export_finance_excel' %}" + '" method="get" target="_self" id="postData_form">';
+			
+			if(created_time) {
+				html += '<input name="created_time" type="hidden" value="' + created_time + '"/>';
+			}
+			
+			if(project_name) {
+				html += '<input name="project_name" type="hidden" value="' + project_name + '"/>';
+			}
+			
+			if(contact_person) {
+				html += '<input name="contact_person" type="hidden" value="' + contact_person + '"/>';
+			}
+			if(project_num) {
+				html += '<input name="project_num" type="hidden" value="' + project_num + '"/>';
+			}
+			
+			if(cooperate_type) {
+				html += '<input name="cooperate_type" type="hidden" value="' + cooperate_type + '"/>';
+			}
+			if(balance_type) {
+				html += '<input name="balance_type" type="hidden" value="' + balance_type + '"/>';
+			}
+			
+			if(sign_company) {
+				html += '<input name="sign_company" type="hidden" value="' + sign_company + '"/>';
+			}
+			if(project_status) {
+				html += '<input name="project_status" type="hidden" value="' + project_status + '"/>';
+			}
+			
+			html += '</form>';
+			var iframe = document.getElementById('myIFrame');
+			iframe.contentWindow.document.open();
+			iframe.contentWindow.document.write(html);
+			iframe.contentWindow.document.close();
+			document.getElementById('myIFrame').contentWindow.document.getElementById('postData_form').submit();
+		});
+		
+		$('#import').click(function() {			//导入表格
+			var fileElementId = 'fileupload1';
+			if(!document.getElementById(fileElementId).value) {
+				alert("请先选择文件");
+				return;
+			}
+			$.ajaxFileUpload({
+				url: "{% url 'import_finance_excel'%}",
+				secureuri: false,
+				fileElementId: fileElementId, //file标签的id
+				dataType: 'json', //返回数据的类型
+				data: {}, //一同上传的数据
+				success: function(data, status) {
+					if(data.code == 0) {
+						alert("导入成功！ 数量：" + data.num);
+					} else {
+						alert(data.msg + " 成功数量：" + data.num);
+					}
+				},
+				error: function(data, status, e) {
+					alert(e);
+				}
+			});
+			//	hint.innerHTML = '无';
+		});
 
-   if(username){
-     newurl += "&username="+username;
-   }
-   if(mobile){
-     newurl += "&mobile="+mobile;
-   }
-   if(mobile_sub){
-    newurl += "&mobile_sub="+mobile_sub;
-  }
-  companyname = $("#companyname").val();
-  projectname = $("#projectname").val();
-  if(companyname){
-   newurl += "&companyname="+companyname;
- }
- if(projectname){
-   newurl += "&projectname="+projectname;
- }
- adminname = $("#adminname").val();
- state = $("#state").val();
- if(adminname){
-   newurl += "&adminname="+adminname;
- }
- if(state){
-   newurl += "&state="+state;
- }
- var usertype = $("#usertype").val();
- if(usertype){
-   newurl += "&usertype="+usertype;
- }
- if(usertype=='2'){
-   var chalevel = $("#chalevel").val();
-   if(chalevel){
-    newurl += "&chalevel="+chalevel;
-  }
-}
-var newdata = data;
-if(state!='1'){
- newdata = data2;
-}
-$("#page").empty();
-$("#pagedata").ajaxPage({
-  url:newurl,
-  pageId:$("#page"),
-  pageSize:10,
-  run:true,
-  content:newdata,
-});
-});
-   $("#export").click(function(){
-    var html = '<form action="'+"{% url 'export_finance_excel' %}"+'" method="get" target="_self" id="postData_form">';
-    startTime = $("#startTime").val();
-    endTime = $("#endTime").val();
-    if(startTime && endTime){
-     html += '<input name="startTime" type="hidden" value="'+ startTime + '"/>';
-     html += '<input name="endTime" type="hidden" value="'+ endTime + '"/>';
-   }
-   startTime2 = $("#startTime2").val();
-   endTime2 = $("#endTime2").val();
-   if(startTime2 && endTime2){
-     html += '<input name="startTime2" type="hidden" value="'+ startTime2 + '"/>';
-     html += '<input name="endTime2" type="hidden" value="'+ endTime2 + '"/>';
-   }
-   username = $("#username").val();
-   mobile = $("#mobile").val();
-   if(username){
-     html += '<input name="username" type="hidden" value="'+ username + '"/>';
-   }
-   if(mobile){
-     html += '<input name="mobile" type="hidden" value="'+ mobile + '"/>';
-   }
-   companyname = $("#companyname").val();
-   projectname = $("#projectname").val();
-   if(companyname){
-     html += '<input name="companyname" type="hidden" value="'+ companyname + '"/>';
-   }
-   if(projectname){
-     html += '<input name="projectname" type="hidden" value="'+ projectname + '"/>';
-   }
-   adminname = $("#adminname").val();
-   state = $("#state").val();
-   if(adminname){
-     html += '<input name="adminname" type="hidden" value="'+ adminname + '"/>';
-   }
-   if(state){
-     html += '<input name="state" type="hidden" value="'+ state + '"/>';
-   }
-   var usertype = $("#usertype").val();
-   if(usertype){
-     html += '<input name="usertype" type="hidden" value="'+ usertype + '"/>';
-   }
-   if(usertype=='2'){
-     var chalevel = $("#chalevel").val();
-     if(chalevel){
-      html += '<input name="chalevel" type="hidden" value="'+ chalevel + '"/>';
-    }
-  }
-  html += '</form>';
-  var iframe = document.getElementById('myIFrame');
-  iframe.contentWindow.document.open();
-  iframe.contentWindow.document.write(html);
-  iframe.contentWindow.document.close();
-  document.getElementById('myIFrame').contentWindow.document.getElementById('postData_form').submit();
-});
-   $('#import').click(function() {
-    var fileElementId  = 'fileupload1';
-    if(!document.getElementById(fileElementId).value){
-     alert("请先选择文件");
-     return;
-   }
-   $.ajaxFileUpload({
-    url:"{% url 'import_finance_excel'%}",
-    secureuri:false,
-            fileElementId:fileElementId,//file标签的id
-            dataType: 'json',//返回数据的类型
-            data:{},//一同上传的数据
-            success: function (data, status) {
-            	if (data.code==0){
-            		alert("导入成功！ 数量：" + data.num);
-            	}
-            	else {
-            		alert(data.msg + " 成功数量："+data.num);
-            	}
-            },
-            error: function (data, status, e) {
-              alert(e);
-            }
-          });
-    //	hint.innerHTML = '无';
-  });
-
-   var choose_file = document.getElementById("input_clone");
-   var hint = document.getElementById("hint");
-   choose_file.onclick = function() {
-     document.getElementById("fileupload1").click();
-   }
-
- });
+	});
 </script>
-{% endblock js %}
-{% block right %}
+{% endblock js %} {% block right %}
 <div class="Criteria">
- <span>搜索条件</span>
- <div class="Crite-box">
-   <form>
-     <table width="100%">
-       <tr>
-         <td>
-           <i>申请开始时间：</i>
-           <input id="startTime" type="datetime-local" />
-         </td>
-         <td>
-           <i>申请结束时间：</i>
-           <input id="endTime" type="datetime-local" />
-         </td>
-         <td>
-           <i>操作开始时间：</i>
-           <input id="startTime2" type="datetime-local" />
-         </td>
-         <td>
-           <i>操作结束时间：</i>
-           <input id="endTime2" type="datetime-local" />
-         </td>
-       </tr>
-       <tr>
-         <td>
-           <i>用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;户&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</i>
-           <input id="username" type="text" />
-         </td>
-         <td>
-           <i style="letter-spacing:2px;">用户手机号：</i>
-           <input id="mobile" type="text" />
-         </td>
-         <td>
-           <i style="letter-spacing:4.8px;">公司名称：</i>
-           <input id="companyname" type="text" />
-         </td>
-         <td>
-          <i style="letter-spacing:4.8px;">用户类型</i>
-          <select name="selectAge" id="usertype">
-           <option value="0">全部</option>
-           <option value="1">普通用户</option>
-           <option value="2">渠道用户</option>
-         </select>
-       </td>
-       <td>
-         <i style="letter-spacing:4.8px;">渠道级别：</i>
-         <input id="chalevel" type="text" />
-       </td>
-     </tr>
-     <tr>
-      <td>
-        <i style="letter-spacing:4.8px;">提交手机号</i>
-        <input id="mobile_sub" type="text" />
-      </td>
-      <td>
-       <i style="letter-spacing:4.8px;">项目名称：</i>
-       <input id="projectname" type="text" />
-     </td>
-     <td>
-       <i>处&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;理&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人：</i>
-       <input id="adminname" type="text" />
-     </td>
-     <td>
-       <i style="letter-spacing:4.8px;">处理状态：</i>
-       <select name="selectAge" id="state">
-         <option value="1">未审核</option>
-         <option value="0">审核通过</option>
-         <option value="2">审核拒绝</option>
-       </select>
-     </td>
-   </tr>
- </table>
- <div class="Submit-in">
-   <input id="search" type="button" value="搜索" />
-   <input id="export" type="button" value="导出" />
- </div>
- <div class="leading-in">
-  <input id="fileupload1" name="file"  type="file" onchange='hint.innerHTML = this.files[0].name;'/>
-  <a id="input_clone" class="input-clone">选择文件</a>
-  <p class="hint-box">已选择表格：<b id="hint" class="hint">无</b></p>
-  <input id="import" type="button" value="导入" />
-</div>
-</form>
-</div>
+	<span>搜索条件</span>
+	<div class="Crite-box">
+		<form>
+			<table width="100%">
+				<tr>
+					<td>
+						<i>立项日期：</i>
+						<input id="created_time" type="datetime-local" />
+					</td>
+					<td>
+						<i style="letter-spacing:4.8px;">项目名称：</i>
+						<input id="project_name" type="text" />
+					</td>
+					<td>
+						<i style="letter-spacing:4.8px;">商务对接人：</i>
+						<input id="contact_person" type="text" />
+					</td>
+					<td>
+						<i style="letter-spacing:4.8px;">项目编号：</i>
+						<input id="project_num" type="text" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<i style="letter-spacing:4.8px;">项目状态</i>
+						<select name="selectAge" id="project_status">
+							<option value="0">全部</option>
+							<option value="1">正在进行</option>
+							<option value="2">暂停</option>
+							<option value="3">已结束</option>
+						</select>
+					</td>
+				</tr>
+				
+			</table>
+			<div class="Submit-in">
+				<input id="single_import" type="button" value="单条导入" />
+				<input id="search" type="button" value="搜索" />
+				<input id="export" type="button" value="导出" />
+			</div>
+			<div class="leading-in">
+				<input id="fileupload1" name="file" type="file" onchange='hint.innerHTML = this.files[0].name;' />
+				<a id="input_clone" class="input-clone">选择文件</a>
+				<p class="hint-box">已选择表格：<b id="hint" class="hint">无</b></p>
+				<input id="import" type="button" value="表格导入" />
+			</div>
+		</form>
+	</div>
 </div>
 
 <div class="Tin-table">
- <div id="pagedata">
- </div>
- <div class="Page-in-admin">
-   <div class="page"  id="page">
-   </div>
- </div>
+	<div id="pagedata">
+	</div>
+	<div class="Page-in-admin">
+		<div class="page" id="page">
+		</div>
+	</div>
 </div>
-{%endblock%}
+{%endblock%} {% block modal %}
+<div class="change-project project-box">
+	<div class="w570-box">
+		<h3 class="popup-title">修改项目数据</h3>
+		<button class="none-x"></button>
+		<form class="Finnow set-project">
+				<input id="project_change_id" type="hidden" />
+			<p>
+				<span>立项日期：</span>
+				<input id="create_time_change" type="text" />
+			</p>
+			<p>
+				<span>项目编号：</span>
+				<input id="project_num_change" type="text" />
+			</p>
+			<p>
+				<span>项目名称：</span>
+				<input id="project_name_change" type="text" />
+			</p>
+			<p>
+				<span>商务对接人：</span>
+				<input id="contact_person_change" type="text" />
+			</p>
+			<p>
+				<span>付款总额：</span>
+				<input id="payment_all_change" type="text" />
+			</p>
+			<p>
+				<span>消耗总额：</span>
+				<input id="use_all_change" type="text" />
+			</p>
+			<p>
+				<span>代收总额：</span>
+				<input id="collection_all_change" type="text" />
+			</p>
+			<p>
+				<span>返现总额：</span>
+				<input id="cashback_all_change" type="text" />
+			</p>
+			<p>
+				<span>盈利总额：</span>
+				<input id="profit_all_change" type="text" />
+			</p>
+			<p>
+				<span>项目状态：</span>
+				<select name="selectAge" id="project_status_change">
+					<option value="0">全部</option>
+					<option value="1">正在进行</option>
+					<option value="2">暂停</option>
+					<option value="3">已结束</option>
+				</select>
+			</p>
+			
+			<div class="Finnow-Sub">
+				<input id="change_project_btn" type="submit" value="确认" onclick="return false;"/>
+				<input type="button" value="取消" class="none-x-s" />
+			</div>
+		</form>
+	</div>
+</div>
 
-{% block modal %}
-<div class="BackNow">
- <div class="w570-box">
-   <h3>返现操作</h3>
-   <button class="none-x"></button>
-   <form class="Finnow">
-     <input id="ret_event_id" type="hidden" />
-     <span>添加现金：</span>
-     <input id="add_cash" type="text" />
-     <span>添加积分：</span>
-     <input id="add_score" type="text" />
-     <div class="Finnow-Sub">
-      <input type="submit" value="确认" onclick="return false;"/>
-      <input type="button" value="取消" class="none-x-s" />
-    </div>
-  </form>
-</div>
-</div>
-<!--审核拒绝-->
-<div class="Audit">
- <div class="w570-box">
-   <h3>审核拒绝</h3>
-   <button class="none-x"></button>
-   <form class="Audit-in">
-     <span>填写拒绝原因：</span>
-     <input id="refuse_event_id" type="hidden" />
-     <textarea id="refuse_reason"></textarea>
-     <div class="Finnow-Sub">
-      <input type="submit" value="确认" class="Deny-box" onclick="return false;"/>
-      <input type="button" value="取消" class="none-x-s" />
-    </div>
-  </form>
-</div>
+<!--删除项目弹窗-->
+<div class="delete-project project-box">
+	<div class="w570-box">
+		<h3>确认删除该条数据？</h3>
+		<button class="none-x"></button>
+		<form class="Audit-in">
+			<input id="project_delete_id" type="hidden" />
+			<div class="Finnow-Sub">
+				<input id="delete_project_btn" type="submit" value="确认" class="Deny-box" onclick="return false;" />
+				<input type="button" value="取消" class="none-x-s" />
+			</div>
+		</form>
+	</div>
 </div>
 <iframe id="myIFrame" scrolling="yes" src="abount:blank" style="display:none" frameborder=1></iframe>
 <!--end-->
