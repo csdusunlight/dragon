@@ -1826,7 +1826,7 @@ def send_multiple_msg(request):
     return JsonResponse(res)
 
 # 立项部分增加
-def admin_project(request):
+def admin_project_index(request):
     admin_user = request.user
     if request.method == "GET":
         if not ( admin_user.is_authenticated() and admin_user.is_staff):
