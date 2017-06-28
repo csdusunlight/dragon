@@ -7,9 +7,9 @@
 		},
 	});
 	var data = '<table width="100%"><tr><th>项目编号</th><th>项目名称</th><th>投资日期</th>' +
-		'<th>提交手机号</th><th>投资金额</th><th>投资时间</th><th>结算金额</th><th>返现金额</th><th>处理状态</th><th>备注</th>' +
-		'<th>操作</th></tr>[data]<tr id="parent{id}"><td>{usertype}</td><td>{mobile}</td><td>{invest_time}</td>' +
-		'<td>{project}</td><td>{invest_time}</td><td>{mobile_sub}</td><td>{invest_amount}</td><td>{term}</td>' +
+		'<th>提交手机号</th><th>投资金额</th><th>投资标期</th><th>结算金额</th><th>返现金额</th><th>处理状态</th><th>备注</th>' +
+		'<th>操作</th></tr>[data]<tr id="parent{id}"><td>{usertype}</td><td>{project}</td><td>{invest_time}</td>' +
+		'<td>{mobile}</td><td>{invest_time}</td><td>{mobile_sub}</td><td>{invest_amount}</td><td>{term}</td>' +
 		'<td>{state}</td><td>{time_sub}</td>' +
 		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">修改' +
 		'</a> │ <a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/data]</table>';
@@ -102,15 +102,15 @@
 		
 		$('#change_project_btn').click(function() {		//点击确认按钮提交或修改单条项目数据
 			var project_num_change = $("#project_num_change").val(),
-					project_name_change = $("#project_name_change").val(),
-					invest_time_change = $("#invest_time_change").val(),
-					submit_tel_change = $("#submit_tel_change").val(),
-					invest_money_change = $("#invest_money_change").val(),
-					invest_days_change = $("#invest_days_change").val(),
-					balance_money_change = $("#balance_money_change").val(),
-					cashback_change = $("#cashback_change").val(),
-					handle_status_change = $("#handle_status_change").val(),
-					remark_change = $("#remark_change").val();
+				project_name_change = $("#project_name_change").val(),
+				invest_time_change = $("#invest_time_change").val(),
+				submit_tel_change = $("#submit_tel_change").val(),
+				invest_money_change = $("#invest_money_change").val(),
+				invest_days_change = $("#invest_days_change").val(),
+				balance_money_change = $("#balance_money_change").val(),
+				cashback_change = $("#cashback_change").val(),
+				handle_status_change = $("#handle_status_change").val(),
+				remark_change = $("#remark_change").val();
 			
 			console.log(project_id+", "+project_num_change+", "+project_name_change+", "+invest_time_change+", "+submit_tel_change+", "+invest_money_change+", "+invest_days_change+", "+balance_money_change+", "+cashback_change+", "+handle_status_change+", "+remark_change);
 			
@@ -236,19 +236,8 @@
 			if(project_num) {
 				html += '<input name="project_num" type="hidden" value="' + project_num + '"/>';
 			}
-			
-			if(cooperate_type) {
-				html += '<input name="cooperate_type" type="hidden" value="' + cooperate_type + '"/>';
-			}
-			if(balance_type) {
-				html += '<input name="balance_type" type="hidden" value="' + balance_type + '"/>';
-			}
-			
-			if(sign_company) {
-				html += '<input name="sign_company" type="hidden" value="' + sign_company + '"/>';
-			}
-			if(project_status) {
-				html += '<input name="project_status" type="hidden" value="' + project_status + '"/>';
+			if(handle_status) {
+				html += '<input name="handle_status" type="hidden" value="' + handle_status + '"/>';
 			}
 			
 			html += '</form>';
@@ -361,7 +350,7 @@
 				<input id="project_name_change" type="text" />
 			</p>
 			<p>
-				<span>投资时间：</span>
+				<span>投资日期：</span>
 				<input id="invest_time_change" type="text" />
 			</p>
 			<p>

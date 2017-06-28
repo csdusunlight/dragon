@@ -8,9 +8,9 @@
 	});
 	var data = '<table width="100%"><tr><th>立项日期</th><th>项目编号</th><th>项目名称</th>' +
 		'<th>商务对接人</th><th>付款总额</th><th>消耗总额</th><th>代收总额</th><th>返现总额</th><th>盈利总额</th><th>项目状态</th>' +
-		'<th>操作</th></tr>[data]<tr id="parent{id}"><td>{invest_time}</td><td>{usertype}</td><td>{mobile}</td>' +
-		'<td>{project}</td><td>{invest_time}</td><td>{mobile_sub}</td><td>{invest_amount}</td><td>{invest_amount}</td><td>{term}</td>' +
-		'<td>全部</td>' +
+		'<th>操作</th></tr>[data]<tr id="parent{id}"><td>{invest_time}</td><td>{usertype}</td><td>{project}</td>' +
+		'<td>{mobile}</td><td>{invest_time}</td><td>{mobile_sub}</td><td>{invest_amount}</td><td>{invest_time}</td><td>{term}</td>' +
+		'<td>{state}</td>' +
 		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">修改' +
 		'</a> │ <a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/data]</table>';
 	var url = "{% url 'get_admin_finance_page' %}" + "?page={page}&size={pageSize}";
@@ -35,7 +35,7 @@
 			children7 = $(dom).find("td").eq(7).text();
 			children8 = $(dom).find("td").eq(8).text();
 		var	children9 = $(dom).find("td").eq(9).text(),
-			children8_num; 
+			children9_num; 
 			switch (children9)
 			{
 				case "全部":
@@ -52,9 +52,9 @@
 					break;
 			}
 		$("#create_time_change").val(children0);
-		$("#project_name_change").val(children1);
-		$("#contact_person_change").val(children2);
-		$("#project_num_change").val(children3);
+		$("#project_num_change").val(children1);
+		$("#project_name_change").val(children2);
+		$("#contact_person_change").val(children3);
 		$("#payment_all_change").val(children4);
 		$("#use_all_change").val(children5);
 		$("#collection_all_change").val(children6);
@@ -115,7 +115,7 @@
 				profit_all_change = $("#profit_all_change").val(),
 				project_status_change = $("#project_status_change").val();
 			
-			console.log(project_id+", "+create_time_change+", "+project_num_change+", "+project_name_change+", "+contact_person_change+", "+payment_all_change+", "+use_all_change+", "+collection_all_change+", "+cashback_all_change+", "+project_status_change);
+			console.log(project_id+", "+create_time_change+", "+project_num_change+", "+project_name_change+", "+contact_person_change+", "+payment_all_change+", "+use_all_change+", "+collection_all_change+", "+cashback_all_change+", "+profit_all_change+", "+project_status_change);
 			
 			$.ajax({
 				url: "{%url 'admin_finance' %}",
@@ -221,9 +221,6 @@
 			project_name = $("#project_name").val();
 			contact_person = $("#contact_person").val();
 			project_num = $("#project_num").val();
-			cooperate_type = $("#cooperate_type").val();
-			balance_type = $("#balance_type").val();
-			sign_company = $("#sign_company").val();
 			project_status = $("#project_status").val();
 			
 			var html = '<form action="' + "{% url 'export_finance_excel' %}" + '" method="get" target="_self" id="postData_form">';
@@ -239,19 +236,9 @@
 			if(contact_person) {
 				html += '<input name="contact_person" type="hidden" value="' + contact_person + '"/>';
 			}
+			
 			if(project_num) {
 				html += '<input name="project_num" type="hidden" value="' + project_num + '"/>';
-			}
-			
-			if(cooperate_type) {
-				html += '<input name="cooperate_type" type="hidden" value="' + cooperate_type + '"/>';
-			}
-			if(balance_type) {
-				html += '<input name="balance_type" type="hidden" value="' + balance_type + '"/>';
-			}
-			
-			if(sign_company) {
-				html += '<input name="sign_company" type="hidden" value="' + sign_company + '"/>';
 			}
 			if(project_status) {
 				html += '<input name="project_status" type="hidden" value="' + project_status + '"/>';
