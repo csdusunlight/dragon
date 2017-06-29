@@ -140,3 +140,6 @@
 .clearfix:after {
   clear: both;
 }
+#content {
+	margin: 0 auto;
+}
