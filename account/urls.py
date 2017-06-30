@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^moneypage/$', 'account.views.get_user_money_page', name='get_user_money_page'),
 #     url(r'money/$', 'account.views.money', name='account_money'),
 #     url(r'user/$', 'account.views.user', name='account_user'),
-    url(r'^coupon/$', 'account.views.coupon', name='account_coupon'), 
+    url(r'^coupon/$', 'account.views.coupon', name='account_coupon'),
     url(r'^couponpage/$', 'account.views.get_user_coupon_page', name='get_user_coupon_page'),
     url(r'^coupondetail/$', 'account.views.get_user_coupon_exchange_detail', name='get_user_coupon_exchange_detail'),
     url(r'^useCoupon/$', 'account.views.useCoupon', name='useCoupon'),
@@ -45,15 +45,16 @@ urlpatterns = [
     url(r'^phoneImageV/$', 'account.views.phoneImageV', name='phoneImageV'),
 #    url(r'verifytelcode/$', 'account.views.verifytelcode', name='verifytelcode'),
     url(r'^callback/$', 'account.views.callbackby189', name='callback'),
-    
+
     url(r'^resetpw/$', 'account.forgot_passwd.forgot_passwd', name='forgot_passwd'),
     url(r'^forgot_validate_randcode/$', 'account.forgot_passwd.validate_randcode', name='forgot-validate-randcode'),
     url(r'^forgot_validate_telcode/$', 'account.forgot_passwd.validate_telcode', name='forgot-validate-telcode'),
-    
+
     url(r'^channel/$', 'account.channel.channel', name='account_channel'),
     url(r'^export/$', 'account.channel.export_audit_result', name='export_audit_result'),
-    
+
     url(r'^submit_itembyitem/$', 'account.channel.submit_itembyitem', name='submit_itembyitem'),
-    
+    url(r'^revise_project/$', 'account.channel.revise_project', name='revise_project'),
+
     url(r'^vip/$', 'account.views.vip', name='account_vip'),
 ]

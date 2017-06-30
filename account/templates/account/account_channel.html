@@ -239,9 +239,9 @@
 										<span>备注：</span>
 										<input id="balance_type_change" class="invest-remarks" type="text" placeholder="选填" />
 									</p>
-									 
+
 									<a id="cancel" class="cancel confirm" onclick="popupOutInfo()">取&nbsp;&nbsp;&nbsp;&nbsp;消</a>
-									<a id="confirm_delete" class="confirm">确认修改</a>
+									<a id="confirm_revise" class="confirm">确认修改</a>
 								</div>
 							</div>
 
@@ -569,19 +569,15 @@
 									// console.log(ret.exist_num);
 									if(!repeat_num) {
 										$(".repeat-phonenumber").hide();
-										console.log("hide");
 									} else {
 										$(".repeat-phonenumber").show();
-										console.log("show");
 									}
 									$(".data-item-repeat-phone").text(repeat_phone);
 									// $(".data-item-exist").text(ret.exist_num);
 									if(!ret.exist_num) {
 										$(".exist-phonenumber").hide();
-										console.log("hide");
 									} else {
 										$(".exist-phonenumber").show();
-										console.log("show");
 									}
 									$(".data-item-exist-phone").text(ret.exist_phone);
 									$(".data-item-valid").text(ret.suc_num);
@@ -663,10 +659,10 @@
 				}
 				$("#export").click(function() {
 					var fid = $("select#project_select_out").val();
-					if(fid == "0") {
-						alert("请先选择项目");
-						return;
-					}
+//					if(fid == "0") {
+//						alert("请先选择项目");
+//						return;
+//					}
 					var html = '<form action="' + "{% url 'export_audit_result' %}" + '" method="get" target="_self" id="postData_form">';
 					html += '<input name="fid" type="hidden" value="' + fid + '"/></form>';
 					var iframe = document.getElementById('myIFrame');
@@ -680,28 +676,30 @@
 				function popupOutRevise() { // 再次提交调用函数
 					$(".popup-box-05").addClass("in");
 				}
-//				$(".tabCon").on("click", ".revise-data", function() {
-//					popupOutRevise();
-//				})
-				function reviseData(id,obj) {
-//					console.log(id);
+				//				$(".tabCon").on("click", ".revise-data", function() {
+				//					popupOutRevise();
+				//				})
+				var project_id;
+				function reviseData(id, obj) {
+					project_id = id;
+					//					console.log(id);
 					var revise_parent = $(obj).parent().parent();
-					
-					var	children0 = $(revise_parent).find("td").eq(0).text(),
+
+					var children0 = $(revise_parent).find("td").eq(0).text(),
 						children1 = $(revise_parent).find("td").eq(1).text(),
 						children2 = $(revise_parent).find("td").eq(2).text(),
 						children3 = $(revise_parent).find("td").eq(3).text(),
 						children4 = $(revise_parent).find("td").eq(4).text(),
 						children5 = $(revise_parent).find("td").eq(5).text();
-//					console.log(children0+", "+children1+", "+children2+", "+children3+", "+children4+", "+children5+", ");
+					//					console.log(children0+", "+children1+", "+children2+", "+children3+", "+children4+", "+children5+", ");
 					var option_val;
 					var options = $(".project_select option");
-//					var options = $(select).find("option");
-					for (var i=0; i<options.length; i++) {
+					//					var options = $(select).find("option");
+					for(var i = 0; i < options.length; i++) {
 						if($(options)[i].text == children0) {
 							option_val = options[i].value;
 						}
-						
+
 					}
 					console.log(option_val);
 					$(".invest-project").val(option_val);
@@ -710,13 +708,63 @@
 					$(".invest-days").val(children3);
 					$(".invest-money").val(children4);
 					$(".invest-remarks").val(children5);
-					
-//					console.log($(options)[0].value);
+
+					//					console.log($(options)[0].value);
 					popupOutRevise();
 				}
 				$(".popup-box-05").on("focus", ".date_picker", function() {
 					$('.date_picker').date_input();
 				})
+
+				$("#confirm_revise").click(function() {
+					var invest_project = $(".invest-project").val(),
+						invest_time = $(".invest-time").val(),
+						invest_tel = $(".submit-tel").val(),
+						invest_days = $(".invest-days").val(),
+						invest_money = $(".invest-money").val(),
+						invest_remarks = $(".invest-remarks").val();
+					console.log(invest_project);
+//					var bank = $("#bank option:selected").val();
+					console.log(project_id+","+invest_project+","+invest_time+","+invest_tel+","+invest_days+","+invest_money+","+invest_remarks+",");
+					if(!invest_project || !invest_time || !invest_tel || !invest_days || !invest_money) {
+						alert("填写项不能为空");
+						return;
+					}
+					if(invest_project == 0) {
+						alert("请选择项目");
+						return;
+					}
+
+					var revise_url = "{%url 'revise_project' %}";
+					$.ajax({
+						url: revise_url,
+						dataType: "json",
+						type: 'POST',
+						data: {
+							'project_id': project_id,
+							'invest_project': invest_project,
+							'invest_time': invest_time,
+							'invest_tel': invest_tel,
+							'invest_days': invest_days,
+							'invest_money': invest_money,
+							'invest_remarks': invest_remarks
+						},
+						success: function(ret) {
+							if(ret.code == 1) {
+								alert("请重新登录！")
+								window.location.href = ret.url;
+							} else if(ret.code == 0) {
+								alert("更改数据成功！");
+								popupOutInfo();
+							} else {
+								alert(ret.res_msg);
+							}
+						},
+						error: function() {
+							alert("请检查网络连接");
+						}
+					});
+				});
 			</script>
 	</body>
 
