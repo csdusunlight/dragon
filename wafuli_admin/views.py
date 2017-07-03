@@ -570,7 +570,69 @@ def export_finance_excel(request):
     response = HttpResponse(sio.getvalue(), content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = 'attachment; filename=待审核记录.xls'
     response.write(sio.getvalue())
+    return response
 
+def export_charge_excel(request):
+    user = request.user
+    item_list = []
+    item_list = TransList.objects.all()
+    startTime = request.GET.get("startTime", None)
+    endTime = request.GET.get("endTime", None)
+    state = request.GET.get("state",'1')
+    if startTime and endTime:
+        s = datetime.datetime.strptime(startTime,'%Y-%m-%dT%H:%M')
+        e = datetime.datetime.strptime(endTime,'%Y-%m-%dT%H:%M')
+        item_list = item_list.filter(time__range=(s,e))
+    username = request.GET.get("username", None)
+    if username:
+        item_list = item_list.filter(user__username=username)
+    mobile = request.GET.get("mobile", None)
+    if mobile:
+        item_list = item_list.filter(user__mobile=mobile)
+    adminname = request.GET.get("adminname", None)
+    if adminname:
+        item_list = item_list.filter(audited_logs__user__username=adminname)
+    charge_reason = request.GET.get("charge_reason", None)
+    if charge_reason:
+        item_list = item_list.filter(reason__contains=charge_reason)
+    item_list = item_list.order_by('time')
+    # task_type = ContentType.objects.get_for_model(Finance)
+    # item_list = item_list.filter(content_type = task_type.id)
+    # item_list = item_list.filter(event_type='1').select_related('user').order_by('time')
+    data = []
+    for con in item_list:
+        id=con.id
+        user = con.user.username
+        user_mobile = con.user.mobile if not con.user.is_channel else con.user.channel.qq_number
+        time = con.time.strftime("%Y-%m-%d %H:%M")
+        initAmount = con.initAmount/100.0
+        transAmount = ('+' if con.transType=='0' else '-') + str(con.transAmount/100.0)
+        reason= con.reason
+        remark = con.remark
+        adminname = u'无' if not con.admin_event else con.admin_event.admin_user.username
+        data.append([id, user, user_mobile, time, initAmount,transAmount, reason, remark,
+                     adminname])
+    w = Workbook()     #创建一个工作簿
+    ws = w.add_sheet(u'待审核记录')     #创建一个工作表
+    title_row = [u'记录ID',u'用户名',u'手机号', u'时间', u'初始余额', u'变动值' ,u'变动原因' ,u'备注', u'操作管理员']
+    for i in range(len(title_row)):
+        ws.write(0,i,title_row[i])
+    row = len(data)
+    style1 = easyxf(num_format_str='YY/MM/DD')
+    for i in range(row):
+        lis = data[i]
+        col = len(lis)
+        for j in range(col):
+            if j==2:
+                ws.write(i+1,j,lis[j],style1)
+            else:
+                ws.write(i+1,j,lis[j])
+    sio = StringIO.StringIO()
+    w.save(sio)
+    sio.seek(0)
+    response = HttpResponse(sio.getvalue(), content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=待审核记录.xls'
+    response.write(sio.getvalue())
     return response
 
 @csrf_exempt
