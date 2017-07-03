@@ -1,11 +1,7 @@
 {% extends "base.html" %} {%load staticfiles%} {% block js %}
 <script type="text/javascript" src="{%static 'js/ajaxfileupload.js'%}"></script>
 <script type="text/javascript">
-	$.ajaxSetup({
-		data: {
-			csrfmiddlewaretoken: '{{ csrf_token }}'
-		},
-	});
+
 	var data = '<table width="100%"><tr><th>立项日期</th><th>项目编号</th><th>项目名称</th>' +
 		'<th>商务对接人</th><th>合作方式</th><th>结算方式</th><th>签约公司</th><th>结算详情</th><th>项目状态</th>' +
 		'<th>操作</th></tr>[data]<tr id="parent{id}"><td>{invest_time}</td><td>{usertype}</td><td>{mobile}</td>' +
@@ -13,7 +9,7 @@
 		'<td>{state}</td>' +
 		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">修改' +
 		'</a> │ <a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/data]</table>';
-	var url = "{% url 'get_admin_finance_page' %}" + "?page={page}&size={pageSize}";
+	var url = "/project/projects" + "?page={page}&size={pageSize}";
 	
 	var project_id;		// project_id = -1 时，为导入单条数据；project_id != -1 时，为修改单条数据
 	
@@ -84,7 +80,7 @@
 		$("#pagedata").ajaxPage({
 			url: url + "&state=1",
 			pageId: $("#page"),
-			pageSize: 10,
+			pageSize: 5,
 			run: true,
 			content: data,
 		});
@@ -116,7 +112,7 @@
 			console.log(project_id+", "+create_time_change+", "+project_num_change+", "+project_name_change+", "+contact_person_change+", "+cooperate_type_change+", "+balance_type_change+", "+sign_company_change+", "+balance_change+", "+project_status_change);
 			
 			$.ajax({
-				url: "{%url 'admin_finance' %}",
+				url: "/project/projects/",
 				dataType: "json",
 				type: "POST",
 				data: {

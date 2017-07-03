@@ -14,8 +14,12 @@ urlpatterns = [
 ]
 from django.conf.urls import include
 
-urlpatterns += [
-    url(r'^api-auth/', include('rest_framework.urls',
-                               namespace='rest_framework')),
-]
+
 urlpatterns = format_suffix_patterns(urlpatterns)
+urlpatterns += [
+    url(r'^api-auth/', include('rest_framework.urls',namespace='rest_framework')),
+    url(r'^$', views.project_index, name='project_index'),
+    url(r'^project_data/$', views.project_data, name='project_data'),
+    url(r'^project_finance/$', views.project_finance, name='project_finance'),
+    url(r'^project_settle/$', views.project_settle, name='project_settle'),
+]
