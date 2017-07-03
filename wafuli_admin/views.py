@@ -591,7 +591,7 @@ def export_charge_excel(request):
         item_list = item_list.filter(user__mobile=mobile)
     adminname = request.GET.get("adminname", None)
     if adminname:
-        item_list = item_list.filter(audited_logs__user__username=adminname)
+        item_list = item_list.filter(admin_event__admin_user__username=adminname)
     charge_reason = request.GET.get("charge_reason", None)
     if charge_reason:
         item_list = item_list.filter(reason__contains=charge_reason)
