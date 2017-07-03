@@ -1152,7 +1152,7 @@ def get_admin_with_page(request):
     mobile = request.GET.get("mobile", None)
     if mobile:
         item_list = item_list.filter(user__mobile=mobile)
-        
+
     usertype = request.GET.get("usertype",0)
     usertype= int(usertype)
     if usertype == 1:
@@ -1243,7 +1243,7 @@ def export_withdraw_excel(request):
     mobile = request.GET.get("mobile", None)
     if mobile:
         item_list = item_list.filter(user__mobile=mobile)
-    
+
     usertype = request.GET.get("usertype",0)
     usertype= int(usertype)
     if usertype == 1:
@@ -1412,7 +1412,7 @@ def import_withdraw_excel(request):
                         trans_withdraw.save(update_fields=['admin_event'])
                     msg_content = u'您提现的' + str(event.invest_amount) + u'福币，已发放到您的银行卡中，请注意查收'
                     Message.objects.create(user=event.user, content=msg_content, title=u"提现审核")
-            
+
                 else:
                     if not reason:
                         raise Exception(u"拒绝原因缺失")
@@ -1824,3 +1824,4 @@ def send_multiple_msg(request):
         res['code'] = 0
         res['res_msg'] = u"没有选中任何手机号码"
     return JsonResponse(res)
+

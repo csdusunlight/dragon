@@ -2,6 +2,7 @@
 from django.db import models
 from account.models import MyUser
 from django.utils import timezone
+from wafuli.data import AUDIT_STATE
 class DayStatis(models.Model):
     date = models.DateField(u"日期", primary_key=True)
     new_reg_num = models.PositiveIntegerField(u"新注册人数", default=0)

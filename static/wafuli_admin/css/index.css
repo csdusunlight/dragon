@@ -16,9 +16,9 @@ a { cursor:pointer;}
 .LeftNav-in li {background-color: #e9f8ff;border-bottom: 2px solid #fff; float:left; width:100%; height:auto;}
 .LeftNav-in li a { float:left; width:100%; height:56px; box-sizing:border-box; padding:0 30px 0 54px; font-size:15px; color:#008fd7; line-height:56px;/*font-weight: bold;*/}
 .LeftNav-in li:hover { background-color:#008fd7}
-.LeftNav-in li:hover a { color:#fff; background:url(../images/back.png) right no-repeat ;}
+.LeftNav-in li:hover a { color:#fff;/* background:url(../images/back.png) right no-repeat ;*/}
 .LeftNav-in .on { background-color:#008fd7}
-.LeftNav-in .on a { color:#fff; background:url(../images/back.png) right no-repeat ;}
+.LeftNav-in .on a { color:#fff;/* background:url(../images/back.png) right no-repeat ;*/}
 .Right-box { float:left; width:100%; height:auto; }
 .Need-T {overflow: hidden; float:left; width:100%; height:auto; border:1px solid #fafafa;}
 .Need-T span {margin-bottom: 10px; font-size:14px;font-weight: bold; color:#2b2b2b; line-height:44px; display:block; width:100%; height:44px; margin-left:20px; box-sizing:border-box;border-bottom: 2px solid #008fd7;/* background:#979797;*/}
@@ -161,13 +161,13 @@ a { cursor:pointer;}
 .Tin-table-box td { text-align:center; height:44px; font-family:"宋体"; color:#666666;}
 .Tin-table-box td a { color:#666666; font-family:"宋体"}
 .fyin { cursor:pointer;}
-.BackNow { position:fixed; width:100%; height:100%; background:url(../images/back-in.png); display:none;}
+.BackNow, .change-project, .delete-project { position:fixed; width:100%; height:100%; background:url(../images/back-in.png); display:none;}
 .w570-box { width:570px; height:auto; overflow:hidden; margin:10% auto; background:#fff; position:relative;border-radius: 8px;}
 .w570-box h3 {padding: 20px 0; font-weight:400; font-size:25px; color:#04b3ff; line-height:44px; /*background:#979797;*/ text-align:center;}
 .none-x { position:absolute; right:17px; top:13px; width:19px; height:19px; border:none; background:url(../images/none.png) no-repeat center; outline:none;}
 .Finnow { float:left; width:100%; height:auto; padding:20px 6px; box-sizing:border-box; text-align:center;}
 .Finnow span { font-size:12px; color:#666666; line-height:28px; margin-left:30px;}
-.Finnow input[type="text"]{ width:153px; height:28px; border:1px solid #cdcdcd; line-height:28px; outline:none; text-indent:10px;}
+.Finnow input[type="text"],.Finnow input[type="datetime-local"], .Finnow select { width:153px; height:28px; border:1px solid #cdcdcd; line-height:28px; outline:none; text-indent:10px;}
 .Finnow-Sub { float:left; width:100%; height:auto; margin-top:30px;}
 .Finnow-Sub input[type="submit"]{ width:98px; height:26px; background:url(../images/pic2.png) no-repeat right #008fd7; border:none; border-radius: 13px; color:#fff; padding-right:10px; margin:0 5px;}
 .Finnow-Sub input[type="button"]{ width:98px; height:26px; background:url(../images/pic1.png) no-repeat right #c8c8c8; border:none; border-radius: 13px; color:#fff; padding-right:10px; margin:0 5px;}
@@ -248,3 +248,40 @@ a { cursor:pointer;}
         position: relative;
         top: 10px;
 }
+/*立项部分添加*/
+.LeftNav-in .admin-project li a {
+	background-color: #fff;
+	color: #4daa84;
+	padding-left: 80px;
+}
+.LeftNav-in .admin-project li:hover a {
+	background-color: #4daa84;
+	color: #fff;
+}
+.admin-project {
+	display: none;
+}
+.show-project .admin-project {
+	display: block;
+}
+.project-item.show a {
+	background-color: #4daa84 !important;
+	color: #fff !important;
+}
+
+.set-project p {
+	margin-bottom: 10px;
+}
+.set-project span {
+	display: inline-block;
+	width: 90px;
+	margin-left: 0;
+	font-size: 14px;
+	text-align: right;
+}
+.set-project input[type="text"],
+.set-project input[type="datetime-local"],
+.set-project select {
+	width: 200px;
+}
+/*立项部分---end*/
