@@ -596,9 +596,6 @@ def export_charge_excel(request):
     if charge_reason:
         item_list = item_list.filter(reason__contains=charge_reason)
     item_list = item_list.order_by('time')
-    # task_type = ContentType.objects.get_for_model(Finance)
-    # item_list = item_list.filter(content_type = task_type.id)
-    # item_list = item_list.filter(event_type='1').select_related('user').order_by('time')
     data = []
     for con in item_list:
         id=con.id
