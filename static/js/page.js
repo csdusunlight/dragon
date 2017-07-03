@@ -37,10 +37,11 @@
 			var str;
 			function fun(str) {
 				for(var name in opt) {
-					if(typeof opt[name]=="object") {
+					if(opt[name] && typeof opt[name]=="object") {
 						// 字符串截取出新字符串
 						var getStr=str.substring(str.indexOf("["+name+"]")+2+name.length,str.lastIndexOf("[/"+name+"]"));
 						var newStr="";
+						
 						for(var i=0;i<opt[name].length;i++) {
 							var newStrP=getStr;
 							for(var s in opt[name][i]) {

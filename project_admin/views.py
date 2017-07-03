@@ -11,6 +11,7 @@ from project_admin.Filters import ProjectFilter
 from django.shortcuts import redirect, render
 from django.core.urlresolvers import reverse
 from django.http.response import Http404
+from project_admin.Paginations import ProjectPageNumberPagination
 class BaseViewMixin(object):
     authentication_classes = (CsrfExemptSessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,IsAdminOrReadOnly)
@@ -20,6 +21,7 @@ class ProjectList(BaseViewMixin,generics.ListCreateAPIView):
     serializer_class = ProjectSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     filter_class = ProjectFilter
+    pagination_class = ProjectPageNumberPagination
 #     search_fields = ('=name', '=contact')
 
 

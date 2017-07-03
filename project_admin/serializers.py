@@ -10,4 +10,5 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = ('uuid', 'name', 'time', 'contact', 'coopway', 'settleway', 'state',
-                  'contract_company', 'settle_detail', 'paid_amount', 'consume_amount')
+                  'contract_company', 'settle_detail', 'paid_amount', 'consume_amount',
+                  'return_amount', 'topay_amount', 'profit')

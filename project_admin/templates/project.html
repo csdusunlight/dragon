@@ -205,12 +205,13 @@
 			if(sign_company) {
 				newurl += "&sign_company=" + sign_company;
 			}
-			if(project_status) {
-				newurl += "&project_status=" + project_status;
-			}
+	//		if(project_status) {
+	//			newurl += "&project_status=" + project_status;
+	//		}
 			console.log(newurl);
 			
 			var newdata = data;
+			alert(newurl);
 			$("#page").empty();
 			$("#pagedata").ajaxPage({
 				url: newurl,

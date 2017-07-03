@@ -6,10 +6,12 @@ Created on 2017年7月3日
 '''
 from rest_framework import permissions
 class IsAdminOrReadOnly(permissions.BasePermission):
-    """
-    自定义权限，只允许对象的所有者编辑它
-    """
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
 
+        # 写的请求只对对象的创建者开放
+        return request.user.has_admin_perms('008')
     def has_object_permission(self, request, view, obj):
         # 查看的权限对所有请求开放
         # 所以我们永远开放 GET, HEAD or OPTIONS 请求
