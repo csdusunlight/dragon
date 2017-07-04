@@ -7,8 +7,8 @@
 		'<th>操作</th></tr>[results]<tr id="parent{uuid}"><td>{time}</td><td>{uuid}</td><td>{name}</td>' +
 		'<td>{contact}</td><td>{coopway}</td><td>{settleway}</td><td>{contract_company}</td><td>{settle_detail}</td>' +
 		'<td>{state_des}</td>' +
-		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">修改' +
-		'</a> │ <a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/results]</table>';
+		'<td id="item_{uuid}"><a class="revise-btn" onclick="pass({uuid})">修改' +
+		'</a> │ <a class="delete-btn" onclick="refuse({uuid})">删除</a></td></tr>[/results]</table>';
 	var url = "/project/projects" + "?page={page}";
 	
 	var project_flag;		// project_flag = -1 时，为导入单条数据；project_flag != -1 时，为修改单条数据
@@ -17,6 +17,7 @@
 		$(".popup-title").text("修改项目数据");
 		$("#create_time_change")[0].type = "text";
 		$("input#project_change_id").val(id);
+		$("#project_num_change").disabled=true;
 		project_flag = id;
 		
 		var parent = "parent" + id;
@@ -61,6 +62,7 @@
 	}
 	
 	function refuse(id) {		//弹出删除项目数据弹窗
+		console.log(id);
 		$("input#project_delete_id").val(id);
 		$(".delete-project").show();
 	}
@@ -90,6 +92,7 @@
 			$("#create_time_change")[0].type = "datetime-local";
 			$(".popup-title").text("单条数据导入");
 			$(".change-project").show();
+			$("#project_num_change").disabled=false;
 			project_flag = -1;
 		})
 		
@@ -110,7 +113,6 @@
 			
 			console.log(create_time_change+", "+project_num_change+", "+project_name_change+", "+contact_person_change+", "+cooperate_type_change+", "+balance_type_change+", "+sign_company_change+", "+balance_change+", "+project_status_change);
 			if (project_flag == -1) {
-				$("#project_num_change").show();
 				$.ajax({
 					url: "/project/projects",
 					dataType: "json",
@@ -141,7 +143,6 @@
 					}
 				});
 			} else{
-				$("#project_num_change").hide();
 				$.ajax({
 					url: "/project/projects",
 					dataType: "json",
