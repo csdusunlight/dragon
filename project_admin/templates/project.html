@@ -35,7 +35,10 @@
 			children8_num; 
 			switch (children8)
 			{
-				case "全部":
+				case "未开始":
+					children8_num = 0;
+					break;
+				case "未开始":
 					children8_num = "prepare";
 					break;
 				case "正在进行":
@@ -111,12 +114,12 @@
 				balance_change = $("#balance_change").val(),
 				project_status_change = $("#project_status_change").val();
 			
-			console.log(create_time_change+", "+project_num_change+", "+project_name_change+", "+contact_person_change+", "+cooperate_type_change+", "+balance_type_change+", "+sign_company_change+", "+balance_change+", "+project_status_change);
+			console.log(project_flag+", "+create_time_change+", "+project_num_change+", "+project_name_change+", "+contact_person_change+", "+cooperate_type_change+", "+balance_type_change+", "+sign_company_change+", "+balance_change+", "+project_status_change);
 			if (project_flag == -1) {
 				$.ajax({
 					url: "/project/projects",
 					dataType: "json",
-					type: "post",
+					type: "POST",
 					data: {
 						'time': create_time_change,
 						'uuid': project_num_change,
@@ -146,7 +149,7 @@
 				$.ajax({
 					url: "/project/projects",
 					dataType: "json",
-					type: "put",
+					type: "PUT",
 					data: {
 						'time': create_time_change,
 						'uuid': project_num_change,
@@ -184,7 +187,7 @@
 			$.ajax({
 				url: "/project/projects",
 				dataType: "json",
-				type: "delete",
+				type: "DELETE",
 				data: {
 					'uuid': project_flag
 				},

@@ -8,12 +8,13 @@
 	});
 	var data = '<table width="100%"><tr><th>立项日期</th><th>项目编号</th><th>项目名称</th>' +
 		'<th>商务对接人</th><th>付款总额</th><th>消耗总额</th><th>代收总额</th><th>返现总额</th><th>盈利总额</th><th>项目状态</th>' +
-		'<th>操作</th></tr>[data]<tr id="parent{id}"><td>{invest_time}</td><td>{usertype}</td><td>{project}</td>' +
-		'<td>{mobile}</td><td>{invest_time}</td><td>{mobile_sub}</td><td>{invest_amount}</td><td>{invest_time}</td><td>{term}</td>' +
-		'<td>{state}</td>' +
-		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">修改' +
-		'</a> │ <a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/data]</table>';
-	var url = "{% url 'get_admin_finance_page' %}" + "?page={page}&size={pageSize}";
+		'<th>操作</th></tr>[data]<tr id="parent{uuid}"><td>{time}</td><td>{uuid}</td><td>{name}</td>' +
+		'<td>{contact}</td><td>{paid_amount}</td><td>{consume_amount}</td><td>{topay_amount}</td><td>{return_amount}</td><td>{profit}</td>' +
+		'<td>{state_des}</td>' +
+		'<td id="item_{uuid}"><a class="revise-btn" onclick="pass({uuid})">修改' +
+		'</a> │ <a class="delete-btn" onclick="refuse({uuid})">删除</a></td></tr>[/data]</table>';
+	var url = "http://old.wafuli.cn/project/projects/" + "?page={page}";
+	var url2 = "http://old.wafuli.cn/project/projects/";
 	
 	var project_id;		// project_id = -1 时，为导入单条数据；project_id != -1 时，为修改单条数据
 	
@@ -117,37 +118,69 @@
 			
 			console.log(project_id+", "+create_time_change+", "+project_num_change+", "+project_name_change+", "+contact_person_change+", "+payment_all_change+", "+use_all_change+", "+collection_all_change+", "+cashback_all_change+", "+profit_all_change+", "+project_status_change);
 			
-			$.ajax({
-				url: "{%url 'admin_finance' %}",
-				dataType: "json",
-				type: "POST",
-				data: {
-					'id': project_id,
-					'create_time_change': create_time_change,
-					'project_num_change': project_num_change,
-					'project_name_change': project_name_change,
-					'contact_person_change': contact_person_change,
-					'payment_all_change': payment_all_change,
-					'use_all_change': use_all_change,
-					'collection_all_change': collection_all_change,
-					'cashback_all_change': cashback_all_change,
-					'profit_all_change': profit_all_change,
-					'project_status_change': project_status_change
-				},
-				success: function(ret) {
-					if(ret.code == 0) {
-						alert("操作成功！");
-					} else if(ret.code == -1) {
-						alert("该页面已过期，请重新登录！");
-						window.location.href = ret.url;
-					} else {
-						alert(ret.res_msg);
+			if (project_flag == -1) {
+				$.ajax({
+					url: url2,
+					dataType: "json",
+					type: "POST",
+					data: {
+						'time': create_time_change,
+						'uuid': project_num_change,
+						'name': project_name_change,
+						'contact': contact_person_change,
+						'paid_amount': payment_all_change,
+						'consume_amount': use_all_change,
+						'topay_amount': collection_all_change,
+						'return_amount': cashback_all_change,
+						'profit': profit_all_change,
+						'state_des': project_status_change
+					},
+					success: function(ret) {
+						if(ret.code == 0) {
+							alert("操作成功！");
+						} else if(ret.code == -1) {
+							alert("该页面已过期，请重新登录！");
+							window.location.href = ret.url;
+						} else {
+							alert(ret.res_msg);
+						}
+					},
+					error: function() {
+						alert("请检查网络连接");
 					}
-				},
-				error: function() {
-					alert("请检查网络连接");
-				}
-			});
+				});
+			} else{
+				$.ajax({
+					url: url2,
+					dataType: "json",
+					type: "PUT",
+					data: {
+						'time': create_time_change,
+						'uuid': project_num_change,
+						'name': project_name_change,
+						'contact': contact_person_change,
+						'paid_amount': payment_all_change,
+						'consume_amount': use_all_change,
+						'topay_amount': collection_all_change,
+						'return_amount': cashback_all_change,
+						'profit': profit_all_change,
+						'state_des': project_status_change
+					},
+					success: function(ret) {
+						if(ret.code == 0) {
+							alert("操作成功！");
+						} else if(ret.code == -1) {
+							alert("该页面已过期，请重新登录！");
+							window.location.href = ret.url;
+						} else {
+							alert(ret.res_msg);
+						}
+					},
+					error: function() {
+						alert("请检查网络连接");
+					}
+				});
+			}
 			$(".change-project").hide();
 		});
 		
@@ -156,11 +189,11 @@
 			console.log(project_id);
 			
 			$.ajax({
-				url: "{%url 'admin_finance' %}",
+				url: url2,
 				dataType: "json",
-				type: "POST",
+				type: "DELETE",
 				data: {
-					'id': project_id,
+					'uuid': project_id,
 				},
 				success: function(ret) {
 					if(ret.code == 0) {
@@ -182,14 +215,18 @@
 		$("#search").click(function() {			//搜索项目数据
 			var newurl = url;
 			
-			created_time = $("#created_time").val();
+			created_time_start = $("#created_time_start").val();
+			created_time_end = $("#created_time_end").val();
 			project_name = $("#project_name").val();
 			contact_person = $("#contact_person").val();
 			project_num = $("#project_num").val();
 			project_status = $("#project_status").val();
 			
-			if(created_time) {
-				newurl += "&created_time=" + created_time;
+			if(created_time_start) {
+				newurl += "&created_time_start=" + created_time_start;
+			}
+			if(created_time_end) {
+				newurl += "&created_time_end=" + created_time_end;
 			}
 			if(project_name) {
 				newurl += "&project_name=" + project_name;
@@ -217,7 +254,8 @@
 		});
 		
 		$("#export").click(function() {			//导出表格
-			created_time = $("#created_time").val();
+			created_time_start = $("#created_time_start").val();
+			created_time_end = $("#created_time_end").val();
 			project_name = $("#project_name").val();
 			contact_person = $("#contact_person").val();
 			project_num = $("#project_num").val();
@@ -225,8 +263,11 @@
 			
 			var html = '<form action="' + "{% url 'export_finance_excel' %}" + '" method="get" target="_self" id="postData_form">';
 			
-			if(created_time) {
-				html += '<input name="created_time" type="hidden" value="' + created_time + '"/>';
+			if(created_time_start) {
+				html += '<input name="created_time_start" type="hidden" value="' + created_time_start + '"/>';
+			}
+			if(created_time_end) {
+				html += '<input name="created_time_end" type="hidden" value="' + created_time_end + '"/>';
 			}
 			
 			if(project_name) {
@@ -288,8 +329,12 @@
 			<table width="100%">
 				<tr>
 					<td>
-						<i>立项日期：</i>
-						<input id="created_time" type="datetime-local" />
+						<i>立项开始日期：</i>
+						<input id="created_time_start" type="datetime-local" />
+					</td>
+					<td>
+						<i>立项结束日期：</i>
+						<input id="created_time_end" type="datetime-local" />
 					</td>
 					<td>
 						<i style="letter-spacing:4.8px;">项目名称：</i>
@@ -299,12 +344,12 @@
 						<i style="letter-spacing:4.8px;">商务对接人：</i>
 						<input id="contact_person" type="text" />
 					</td>
+				</tr>
+				<tr>
 					<td>
 						<i style="letter-spacing:4.8px;">项目编号：</i>
 						<input id="project_num" type="text" />
 					</td>
-				</tr>
-				<tr>
 					<td>
 						<i style="letter-spacing:4.8px;">项目状态</i>
 						<select name="selectAge" id="project_status">
