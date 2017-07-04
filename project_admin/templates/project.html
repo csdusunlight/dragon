@@ -17,7 +17,7 @@
 		$(".popup-title").text("修改项目数据");
 		$("#create_time_change")[0].type = "text";
 		$("input#project_change_id").val(id);
-		$("#project_num_change").disabled=true;
+		$("#project_num_change")[0].disabled=true;
 		project_flag = id;
 		
 		var parent = "parent" + id;
@@ -92,7 +92,7 @@
 			$("#create_time_change")[0].type = "datetime-local";
 			$(".popup-title").text("单条数据导入");
 			$(".change-project").show();
-			$("#project_num_change").disabled=false;
+			$("#project_num_change")[0].disabled=false;
 			project_flag = -1;
 		})
 		
