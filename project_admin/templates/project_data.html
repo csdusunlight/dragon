@@ -13,8 +13,8 @@
 		'<td>{state_des}</td><td>{remark}</td>' +
 		'<td id="item_{projectuuid}"><a class="revise-btn" onclick="pass({projectuuid})">修改' +
 		'</a> │ <a class="delete-btn" onclick="refuse({projectuuid})">删除</a></td></tr>[/data]</table>';
-	var url = "http://old.wafuli.cn/project/investdata/" + "?page={page}";
-	var url2 = "http://old.wafuli.cn/project/investdata/";
+	var url = "/project/investdata/" + "?page={page}";
+	var url2 = "/project/investdata/";
 	
 	var project_flag;		// project_flag = -1 时，为导入单条数据；project_flag != -1 时，为修改单条数据
 	
@@ -82,7 +82,7 @@
 		}
 		
 		$("#pagedata").ajaxPage({
-			url: url + "&state=1",
+			url: url,
 			pageId: $("#page"),
 			run: true,
 			content: data,

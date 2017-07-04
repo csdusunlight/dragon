@@ -5,11 +5,12 @@
 	var data = '<table width="100%"><tr><th>立项日期</th><th>项目编号</th><th>项目名称</th>' +
 		'<th>商务对接人</th><th>合作方式</th><th>结算方式</th><th>签约公司</th><th>结算详情</th><th>项目状态</th>' +
 		'<th>操作</th></tr>[results]<tr id="parent{uuid}"><td>{time}</td><td>{uuid}</td><td>{name}</td>' +
-		'<td>{contact}</td><td>{coopway}</td><td>{settleway}</td><td>{contract_company}</td><td>{settle_detail}</td>' +
+		'<td>{contact}</td><td>{coopway}</td><td>{settleway_des}</td><td>{contract_company}</td><td>{settle_detail}</td>' +
 		'<td>{state_des}</td>' +
 		'<td id="item_{uuid}"><a class="revise-btn" onclick="pass({uuid})">修改' +
 		'</a> │ <a class="delete-btn" onclick="refuse({uuid})">删除</a></td></tr>[/results]</table>';
-	var url = "/project/projects" + "?page={page}";
+	var url = "/project/projects/" + "?page={page}";
+	var url2 = "/project/projects/";
 	
 	var project_flag;		// project_flag = -1 时，为导入单条数据；project_flag != -1 时，为修改单条数据
 	
@@ -117,7 +118,7 @@
 			console.log(project_flag+", "+create_time_change+", "+project_num_change+", "+project_name_change+", "+contact_person_change+", "+cooperate_type_change+", "+balance_type_change+", "+sign_company_change+", "+balance_change+", "+project_status_change);
 			if (project_flag == -1) {
 				$.ajax({
-					url: "/project/projects",
+					url: url2,
 					dataType: "json",
 					type: "POST",
 					data: {
@@ -147,7 +148,7 @@
 				});
 			} else{
 				$.ajax({
-					url: "/project/projects",
+					url: url2,
 					dataType: "json",
 					type: "PUT",
 					data: {
@@ -185,7 +186,7 @@
 			console.log(project_flag);
 			
 			$.ajax({
-				url: "/project/projects",
+				url: url2,
 				dataType: "json",
 				type: "DELETE",
 				data: {
@@ -377,7 +378,13 @@
 					</td>
 					<td>
 						<i style="letter-spacing:2px;">结算方式：</i>
-						<input id="balance_type" type="text" />
+						<!--<input id="balance_type" type="text" />-->
+						<select name="selectType" id="balance_type">
+							<option value="0">全部</option>
+							<option value="advance">预付款</option>
+							<option value="later">后付款</option>
+							<option value="daily">日结</option>
+						</select>
 					</td>
 					<td>
 						<i style="letter-spacing:4.8px;">签约公司：</i>
@@ -449,7 +456,13 @@
 			</p>
 			<p>
 				<span>结算方式：</span>
-				<input id="balance_type_change" type="text" />
+				<!--<input id="balance_type_change" type="text" />-->
+				<select name="selectType" id="balance_type">
+					<option value="0">全部</option>
+					<option value="advance">预付款</option>
+					<option value="later">后付款</option>
+					<option value="daily">日结</option>
+				</select>
 			</p>
 			<p>
 				<span>签约公司：</span>

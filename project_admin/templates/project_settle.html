@@ -13,8 +13,8 @@
 		'<td>{state_des}</td>' +
 		'<td id="item_{uuid}"><a class="revise-btn" onclick="pass({uuid})">修改' +
 		'</a> │ <a class="delete-btn" onclick="refuse({uuid})">删除</a></td></tr>[/data]</table>';
-	var url = "http://old.wafuli.cn/project/projects/" + "?page={page}";
-	var url2 = "http://old.wafuli.cn/project/projects/";
+	var url = "/project/projects/" + "?page={page}";
+	var url2 = "/project/projects/";
 	
 	var project_id;		// project_id = -1 时，为导入单条数据；project_id != -1 时，为修改单条数据
 	
