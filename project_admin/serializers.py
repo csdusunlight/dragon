@@ -14,7 +14,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = ('uuid', 'name', 'time', 'contact', 'coopway', 'settleway', 'settleway_des', 'state','state_des',
                   'contract_company', 'settle_detail', 'paid_amount', 'consume_amount',
                   'return_amount', 'topay_amount', 'profit')
-        read_only_fields = ('uuid',)
+#         read_only_fields = ('uuid',)
 
 class ProjectInvestDataSerializer(serializers.ModelSerializer):
     projectname = serializers.CharField(source='project.name', read_only=True)
