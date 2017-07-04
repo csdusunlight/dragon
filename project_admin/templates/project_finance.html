@@ -12,7 +12,7 @@
 		'<td>{income}</td><td>{expenditure}</td><td>{remark}</td>' +
 		'<td id="item_{projectuuid}"><a class="revise-btn" onclick="pass({projectuuid})">修改' +
 		'</a> │ <a class="delete-btn" onclick="refuse({projectuuid})">删除</a></td></tr>[/data]</table>';
-	var url = "/project/balance/" + "?page={page};
+	var url = "/project/balance/" + "?page={page}";
 	var url2 = "/project/balance/";
 	
 	var project_id;		// project_id = -1 时，为导入单条数据；project_id != -1 时，为修改单条数据
