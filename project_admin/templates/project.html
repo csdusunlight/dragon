@@ -30,7 +30,7 @@
 			children6 = $(dom).find("td").eq(6).text(),
 			children7 = $(dom).find("td").eq(7).text();
 			
-		var	children8 = $(dom).find("td").eq(8).text();
+		var	children8 = $(dom).find("td").eq(8).text(),
 			children8_num; 
 			switch (children8)
 			{
@@ -112,7 +112,7 @@
 			if (project_flag == -1) {
 				$("#project_num_change").show();
 				$.ajax({
-					url: "/project/projects/",
+					url: "/project/projects",
 					dataType: "json",
 					type: "post",
 					data: {
@@ -143,7 +143,7 @@
 			} else{
 				$("#project_num_change").hide();
 				$.ajax({
-					url: "/project/projects/",
+					url: "/project/projects",
 					dataType: "json",
 					type: "put",
 					data: {
@@ -181,11 +181,11 @@
 			console.log(project_flag);
 			
 			$.ajax({
-				url: "/project/projects/",
+				url: "/project/projects",
 				dataType: "json",
 				type: "delete",
 				data: {
-					'uuid': project_flag,
+					'uuid': project_flag
 				},
 				success: function(ret) {
 					if(ret.code == 0) {
