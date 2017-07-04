@@ -4,12 +4,12 @@
 
 	var data = '<table width="100%"><tr><th>立项日期</th><th>项目编号</th><th>项目名称</th>' +
 		'<th>商务对接人</th><th>合作方式</th><th>结算方式</th><th>签约公司</th><th>结算详情</th><th>项目状态</th>' +
-		'<th>操作</th></tr>[data]<tr id="parent{id}"><td>{invest_time}</td><td>{usertype}</td><td>{mobile}</td>' +
-		'<td>{project}</td><td>{invest_time}</td><td>{mobile_sub}</td><td>{invest_amount}</td><td>{term}</td>' +
-		'<td>{state}</td>' +
+		'<th>操作</th></tr>[results]<tr id="parent{uuid}"><td>{time}</td><td>{uuid}</td><td>{name}</td>' +
+		'<td>{contact}</td><td>{coopway}</td><td>{settleway}</td><td>{contract_company}</td><td>{settle_detail}</td>' +
+		'<td>{state_des}</td>' +
 		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">修改' +
-		'</a> │ <a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/data]</table>';
-	var url = "/project/projects" + "?page={page}&size={pageSize}";
+		'</a> │ <a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/results]</table>';
+	var url = "/project/projects" + "?page={page}";
 	
 	var project_id;		// project_id = -1 时，为导入单条数据；project_id != -1 时，为修改单条数据
 	
@@ -340,9 +340,10 @@
 						<i style="letter-spacing:4.8px;">项目状态</i>
 						<select name="selectAge" id="project_status">
 							<option value="0">全部</option>
-							<option value="1">正在进行</option>
-							<option value="2">暂停</option>
-							<option value="3">已结束</option>
+							<option value="prepare">未开始</option>
+							<option value="start">正在进行</option>
+							<option value="pause">暂停</option>
+							<option value="finish">已结束</option>
 						</select>
 					</td>
 				</tr>
