@@ -8,7 +8,8 @@ import django_filters
 from project_admin.models import Project
 class ProjectFilter(django_filters.rest_framework.FilterSet):
     dateft = django_filters.DateFromToRangeFilter(name="time")
-
+    name__contains = django_filters.CharFilter(name="name", lookup_expr='contains')
     class Meta:
         model = Project
-        fields = ['name', 'dateft','state']
+        fields = ['uuid', 'name__contains', 'dateft','state', 'contact', 'coopway', 'settleway',
+                  'contract_company']
