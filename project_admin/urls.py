@@ -11,6 +11,10 @@ from rest_framework.urlpatterns import format_suffix_patterns
 urlpatterns = [
     url(r'^projects/$', views.ProjectList.as_view()),
     url(r'^projects/(?P<pk>[0-9]+)/$', views.ProjectDetail.as_view()),
+    url(r'^investdata/$', views.ProjectInvestDataList.as_view()),
+    url(r'^investdata/(?P<pk>[0-9]+)/$', views.ProjectInvestDataDetail.as_view()),
+    url(r'^balance/$', views.ProjectBalanceList.as_view()),
+    url(r'^balance/(?P<pk>[0-9]+)/$', views.ProjectBalanceDetail.as_view()),
 ]
 from django.conf.urls import include
 
