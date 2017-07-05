@@ -28,17 +28,27 @@
 			children2 = $(dom).find("td").eq(2).text(),
 			children3 = $(dom).find("td").eq(3).text(),
 			children4 = $(dom).find("td").eq(4).text(),
-			children5 = $(dom).find("td").eq(5).text(),
 			children6 = $(dom).find("td").eq(6).text(),
 			children7 = $(dom).find("td").eq(7).text();
 			
+		var	children5 = $(dom).find("td").eq(5).text(),
+			children5_num; 
+			switch (children5)
+			{
+				case "预付款":
+					children5_num = "advance";
+					break;
+				case "后付款":
+					children5_num = "later";
+					break;
+				case "日结":
+					children5_num = "daily";
+					break;
+			}	
 		var	children8 = $(dom).find("td").eq(8).text(),
 			children8_num; 
 			switch (children8)
 			{
-				case "未开始":
-					children8_num = 0;
-					break;
 				case "未开始":
 					children8_num = "prepare";
 					break;
@@ -57,7 +67,7 @@
 		$("#project_name_change").val(children2);
 		$("#contact_person_change").val(children3);
 		$("#cooperate_type_change").val(children4);
-		$("#balance_type_change").val(children5);
+		$("#balance_type_change").val(children5_num);
 		$("#sign_company_change").val(children6);
 		$("#balance_change").val(children7);
 		$("#project_status_change").val(children8_num);
@@ -84,7 +94,7 @@
 		}
 		
 		$("#pagedata").ajaxPage({
-			url: url + "&state=1",
+			url: url + "&state=start",
 			pageId: $("#page"),
 			run: true,
 			content: data,
@@ -93,7 +103,7 @@
 		$("#single_import").click(function(){			//弹出单条导入弹窗
 			$(".Finnow p input, .Finnow p select").val("");
 			$("#project_status_change").val(0);
-			$("#create_time_change")[0].type = "datetime-local";
+			$("#create_time_change")[0].type = "date";
 			$(".popup-title").text("单条数据导入");
 			$(".change-project").show();
 			$("#project_num_change")[0].disabled=false;
@@ -117,6 +127,7 @@
 			
 			console.log(project_flag+", "+create_time_change+", "+project_num_change+", "+project_name_change+", "+contact_person_change+", "+cooperate_type_change+", "+balance_type_change+", "+sign_company_change+", "+balance_change+", "+project_status_change);
 			if (project_flag == -1) {
+				console.log(url2)
 				$.ajax({
 					url: url2,
 					dataType: "json",
@@ -133,22 +144,23 @@
 						'state': project_status_change
 					},
 					success: function(ret) {
-						if(ret.code == 0) {
+//						if(ret.code == 0) {
 							alert("操作成功！");
-						} else if(ret.code == -1) {
-							alert("该页面已过期，请重新登录！");
-							window.location.href = ret.url;
-						} else {
-							alert(ret.res_msg);
-						}
+//						} else if(ret.code == -1) {
+//							alert("该页面已过期，请重新登录！");
+//							window.location.href = ret.url;
+//						} else {
+//							alert(ret.res_msg);
+//						}
 					},
 					error: function() {
 						alert("请检查网络连接");
 					}
 				});
 			} else{
+				console.log(url2 + project_flag)
 				$.ajax({
-					url: url2,
+					url: url2 + project_flag,
 					dataType: "json",
 					type: "PUT",
 					data: {
@@ -163,14 +175,14 @@
 						'state': project_status_change
 					},
 					success: function(ret) {
-						if(ret.code == 0) {
+//						if(ret.code == 0) {
 							alert("操作成功！");
-						} else if(ret.code == -1) {
-							alert("该页面已过期，请重新登录！");
-							window.location.href = ret.url;
-						} else {
-							alert(ret.res_msg);
-						}
+//						} else if(ret.code == -1) {
+//							alert("该页面已过期，请重新登录！");
+//							window.location.href = ret.url;
+//						} else {
+//							alert(ret.res_msg);
+//						}
 					},
 					error: function() {
 						alert("请检查网络连接");
@@ -184,23 +196,24 @@
 		$('#delete_project_btn').click(function() {		//点击确认按钮删除单条项目数据
 			project_flag = $("input#project_delete_id").val();
 			console.log(project_flag);
-			
+			var url3 = url2 + project_flag;
+			console.log(url3);
 			$.ajax({
-				url: url2,
+				url: url3,
 				dataType: "json",
 				type: "DELETE",
 				data: {
 					'uuid': project_flag
 				},
 				success: function(ret) {
-					if(ret.code == 0) {
+//					if(ret.code == 0) {
 						alert("删除成功！");
-					} else if(ret.code == -1) {
-						alert("该页面已过期，请重新登录！");
-						window.location.href = ret.url;
-					} else {
-						alert(ret.res_msg);
-					}
+//					} else if(ret.code == -1) {
+//						alert("该页面已过期，请重新登录！");
+//						window.location.href = ret.url;
+//					} else {
+//						alert(ret.res_msg);
+//					}
 				},
 				error: function() {
 					alert("请检查网络连接");
@@ -223,32 +236,32 @@
 			project_status = $("#project_status").val();
 			
 			if(created_time_start) {
-				newurl += "&created_time_start=" + created_time_start;
+				newurl += "&dateft_0=" + created_time_start;
 			}
 			if(created_time_end) {
-				newurl += "&created_time_end=" + created_time_end;
+				newurl += "&dateft_1=" + created_time_end;
 			}
 			if(project_name) {
-				newurl += "&project_name=" + project_name;
+				newurl += "&name__contains=" + project_name;
 			}
 			if(contact_person) {
-				newurl += "&contact_person=" + contact_person;
+				newurl += "&contact=" + contact_person;
 			}
 			if(project_num) {
-				newurl += "&project_num=" + project_num;
+				newurl += "&uuid=" + project_num;
 			}
 			if(cooperate_type) {
-				newurl += "&cooperate_type=" + cooperate_type;
+				newurl += "&coopway=" + cooperate_type;
 			}
-			if(balance_type) {
-				newurl += "&balance_type=" + balance_type;
+			if(balance_type && balance_type != 0) {
+				newurl += "&settleway=" + balance_type;
 			}
 			if(sign_company) {
-				newurl += "&sign_company=" + sign_company;
+				newurl += "&contract_company=" + sign_company;
 			}
-	//		if(project_status) {
-	//			newurl += "&project_status=" + project_status;
-	//		}
+			if(project_status && project_status != 0) {
+				newurl += "&state=" + project_status;
+			}
 			console.log(newurl);
 			
 			var newdata = data;
@@ -352,11 +365,11 @@
 				<tr>
 					<td>
 						<i>立项开始日期：</i>
-						<input id="created_time_start" type="datetime-local" />
+						<input id="created_time_start" type="date" />
 					</td>
 					<td>
 						<i>立项结束日期：</i>
-						<input id="created_time_end" type="datetime-local" />
+						<input id="created_time_end" type="date" />
 					</td>
 					<td>
 						<i style="letter-spacing:4.8px;">项目名称：</i>
@@ -457,8 +470,7 @@
 			<p>
 				<span>结算方式：</span>
 				<!--<input id="balance_type_change" type="text" />-->
-				<select name="selectType" id="balance_type">
-					<option value="0">全部</option>
+				<select name="selectType" id="balance_type_change">
 					<option value="advance">预付款</option>
 					<option value="later">后付款</option>
 					<option value="daily">日结</option>
@@ -475,7 +487,6 @@
 			<p>
 				<span>项目状态：</span>
 				<select name="selectAge" id="project_status_change">
-					<option value="0">全部</option>
 					<option value="prepare">未开始</option>
 					<option value="start">正在进行</option>
 					<option value="pause">暂停</option>
