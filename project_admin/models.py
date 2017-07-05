@@ -50,7 +50,7 @@ class ProjectInvestData(models.Model):
         return self.project.name + self.invest_mobile
 
 class CompanyBalance(models.Model):
-    company = models.CharField(u"公司", max_length=20, primary_key=True)
+    company = models.CharField(u"公司", max_length=20, unique=True)
     date = models.DateField(u"日期")
     income = models.DecimalField(u"收入", max_digits=10, decimal_places=2)
     expenditure = models.DecimalField(u"支出", max_digits=10, decimal_places=2)

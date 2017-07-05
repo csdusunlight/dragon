@@ -13,8 +13,8 @@ urlpatterns = [
     url(r'^projects/(?P<pk>[0-9]+)/$', views.ProjectDetail.as_view()),
     url(r'^investdata/$', views.ProjectInvestDataList.as_view()),
     url(r'^investdata/(?P<pk>[0-9]+)/$', views.ProjectInvestDataDetail.as_view()),
-    url(r'^balance/$', views.ProjectBalanceList.as_view()),
-    url(r'^balance/(?P<pk>[0-9]+)/$', views.ProjectBalanceDetail.as_view()),
+    url(r'^balance/$', views.CompanyBalanceList.as_view()),
+    url(r'^balance/(?P<pk>[0-9]+)/$', views.CompanyBalanceDetail.as_view()),
 ]
 from django.conf.urls import include
 

@@ -1,7 +1,7 @@
 #coding:utf-8
 from .models import Project
 from project_admin.serializers import ProjectSerializer,\
-    ProjectInvestDataSerializer, ProjectBalanceSerializer
+    ProjectInvestDataSerializer, CompanyBalanceSerializer
 # Create your views here.
 
 from rest_framework import generics, permissions
@@ -9,12 +9,12 @@ from project_admin.permissions import IsAdminOrReadOnly,\
     CsrfExemptSessionAuthentication
 import django_filters
 from project_admin.Filters import ProjectFilter, ProjectInvestDateFilter,\
-    ProjectBalanceFilter
+    CompanyBalanceFilter
 from django.shortcuts import redirect, render
 from django.core.urlresolvers import reverse
 from django.http.response import Http404
 from project_admin.Paginations import ProjectPageNumberPagination
-from project_admin.models import ProjectInvestData, ProjectBalance
+from project_admin.models import ProjectInvestData, CompanyBalance
 class BaseViewMixin(object):
     authentication_classes = (CsrfExemptSessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,IsAdminOrReadOnly)
@@ -46,19 +46,19 @@ class ProjectInvestDataDetail(BaseViewMixin,generics.RetrieveUpdateDestroyAPIVie
     queryset = ProjectInvestData.objects.all()
     serializer_class = ProjectInvestDataSerializer 
 
-class ProjectBalanceList(BaseViewMixin,generics.ListCreateAPIView):
-    queryset = ProjectBalance.objects.all()
-    serializer_class = ProjectBalanceSerializer
+class CompanyBalanceList(BaseViewMixin,generics.ListCreateAPIView):
+    queryset = CompanyBalance.objects.all()
+    serializer_class = CompanyBalanceSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
 #     filter_fields = ('__all__')
-    filter_class = ProjectBalanceFilter
+    filter_class = CompanyBalanceFilter
     pagination_class = ProjectPageNumberPagination
 #     search_fields = ('=name', '=contact')
 
 
-class ProjectBalanceDetail(BaseViewMixin,generics.RetrieveUpdateDestroyAPIView):
-    queryset = ProjectBalance.objects.all()
-    serializer_class = ProjectBalanceSerializer 
+class CompanyBalanceDetail(BaseViewMixin,generics.RetrieveUpdateDestroyAPIView):
+    queryset = CompanyBalance.objects.all()
+    serializer_class = CompanyBalanceSerializer 
 # 立项部分增加
 def project_index(request):
     admin_user = request.user

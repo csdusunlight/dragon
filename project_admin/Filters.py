@@ -5,7 +5,7 @@ Created on 2017年7月3日
 @author: lch
 '''
 import django_filters
-from project_admin.models import Project, ProjectInvestData, ProjectBalance
+from project_admin.models import Project, ProjectInvestData, CompanyBalance
 class ProjectFilter(django_filters.rest_framework.FilterSet):
     dateft = django_filters.DateFromToRangeFilter(name="time")
     name__contains = django_filters.CharFilter(name="name", lookup_expr='contains')
@@ -21,9 +21,9 @@ class ProjectInvestDateFilter(django_filters.rest_framework.FilterSet):
         model = ProjectInvestData
         fields = ['invest_time', 'project', 'name__contains', 'dateft','state', 'invest_mobile']
 
-class ProjectBalanceFilter(django_filters.rest_framework.FilterSet):
+class CompanyBalanceFilter(django_filters.rest_framework.FilterSet):
     dateft = django_filters.DateFromToRangeFilter(name="date")
     name__contains = django_filters.CharFilter(name="project", lookup_expr='name__contains')
     class Meta:
-        model = ProjectBalance
-        fields = ['project', 'date', 'name__contains', 'dateft',]
+        model = CompanyBalance
+        fields = ['company', 'date', 'name__contains', 'dateft',]
