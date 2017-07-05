@@ -26,11 +26,8 @@ class ProjectInvestDataSerializer(serializers.ModelSerializer):
                  'invest_term','settle_amount','return_amount','state','state_des','remark')
         read_only_fields = ('id',)
 
-class ProjectBalanceSerializer(serializers.ModelSerializer):
-    projectname = serializers.CharField(source='project.name', read_only=True)
-    projectuuid = serializers.CharField(source='project.uuid', read_only=True)
+class CompanyBalanceSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ProjectBalance
-        fields =('id','project', 'projectname', 'projectuuid','date','income','expenditure',
-                 'remark')
+        model = CompanyBalance
+        fields =('company', 'date','income','expenditure','remark')
         read_only_fields = ('id',)

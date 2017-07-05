@@ -49,8 +49,8 @@ class ProjectInvestData(models.Model):
     def __unicode__(self):
         return self.project.name + self.invest_mobile
 
-class ProjectBalance(models.Model):
-    project = models.ForeignKey(Project, verbose_name=u"项目id", related_name='project_balance')
+class CompanyBalance(models.Model):
+    company = models.CharField(u"公司", max_length=20, primary_key=True)
     date = models.DateField(u"日期")
     income = models.DecimalField(u"收入", max_digits=10, decimal_places=2)
     expenditure = models.DecimalField(u"支出", max_digits=10, decimal_places=2)
