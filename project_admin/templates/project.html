@@ -184,8 +184,8 @@
 //							alert(ret.res_msg);
 //						}
 					},
-					error: function() {
-						alert("字段填写不合法");
+					error: function(ret) {
+						alert(JSON.stringify(ret));
 					}
 				});
 			}
