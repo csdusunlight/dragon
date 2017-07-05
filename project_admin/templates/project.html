@@ -94,7 +94,7 @@
 		}
 		
 		$("#pagedata").ajaxPage({
-			url: url + "&state=start",
+			url: url,
 			pageId: $("#page"),
 			run: true,
 			content: data,
@@ -144,17 +144,10 @@
 						'state': project_status_change
 					},
 					success: function(ret) {
-//						if(ret.code == 0) {
 							alert("操作成功！");
-//						} else if(ret.code == -1) {
-//							alert("该页面已过期，请重新登录！");
-//							window.location.href = ret.url;
-//						} else {
-//							alert(ret.res_msg);
-//						}
 					},
-					error: function() {
-						alert("请检查网络连接");
+					error: function(ret) {
+						alert(JSON.stringify(ret));
 					}
 				});
 			} else{
@@ -195,11 +188,9 @@
 		
 		$('#delete_project_btn').click(function() {		//点击确认按钮删除单条项目数据
 			project_flag = $("input#project_delete_id").val();
-			console.log(project_flag);
-			var url3 = url2 + project_flag;
-			console.log(url3);
+			console.log(url2 + project_flag);
 			$.ajax({
-				url: url3,
+				url: url2 + project_flag,
 				dataType: "json",
 				type: "DELETE",
 				data: {
@@ -215,8 +206,8 @@
 //						alert(ret.res_msg);
 //					}
 				},
-				error: function() {
-					alert("请检查网络连接");
+				error: function(ret) {
+					alert(JSON.stringify(ret));
 				}
 			});
 			$(".delete-project").hide();

@@ -8,21 +8,22 @@
 	});
 	var data = '<table width="100%"><tr><th>立项日期</th><th>项目编号</th><th>项目名称</th>' +
 		'<th>商务对接人</th><th>付款总额</th><th>消耗总额</th><th>代收总额</th><th>返现总额</th><th>盈利总额</th><th>项目状态</th>' +
-		'<th>操作</th></tr>[data]<tr id="parent{uuid}"><td>{time}</td><td>{uuid}</td><td>{name}</td>' +
+		'<th>操作</th></tr>[results]<tr id="parent{uuid}"><td>{time}</td><td>{uuid}</td><td>{name}</td>' +
 		'<td>{contact}</td><td>{paid_amount}</td><td>{consume_amount}</td><td>{topay_amount}</td><td>{return_amount}</td><td>{profit}</td>' +
 		'<td>{state_des}</td>' +
 		'<td id="item_{uuid}"><a class="revise-btn" onclick="pass({uuid})">修改' +
-		'</a> │ <a class="delete-btn" onclick="refuse({uuid})">删除</a></td></tr>[/data]</table>';
+		'</a> │ <a class="delete-btn" onclick="refuse({uuid})">删除</a></td></tr>[/results]</table>';
 	var url = "/project/projects/" + "?page={page}";
 	var url2 = "/project/projects/";
 	
-	var project_id;		// project_id = -1 时，为导入单条数据；project_id != -1 时，为修改单条数据
+	var project_flag;		// project_flag = -1 时，为导入单条数据；project_flag != -1 时，为修改单条数据
 	
 	function pass(id) {			//弹出修改单条数据弹窗
 		$(".popup-title").text("修改项目数据");
 		$("#create_time_change")[0].type = "text";
 		$("input#project_change_id").val(id);
-		project_id = id;
+		$("#project_num_change")[0].disabled=true;
+		project_flag = id;
 		
 		var parent = "parent" + id;
 		var dom = document.getElementById(parent);
@@ -39,17 +40,17 @@
 			children9_num; 
 			switch (children9)
 			{
-				case "全部":
-					children9_num = 0;
+				case "未开始":
+					children9_num = "prepare";
 					break;
 				case "正在进行":
-					children9_num = 1;
+					children9_num = "start";
 					break;
 				case "暂停":
-					children9_num = 2;
+					children9_num = "pause";
 					break;
 				case "已结束":
-					children9_num = 3;
+					children9_num = "finish";
 					break;
 			}
 		$("#create_time_change").val(children0);
@@ -84,9 +85,8 @@
 		}
 		
 		$("#pagedata").ajaxPage({
-			url: url + "&state=1",
+			url: url,
 			pageId: $("#page"),
-			pageSize: 10,
 			run: true,
 			content: data,
 		});
@@ -94,10 +94,11 @@
 		$("#single_import").click(function(){			//弹出单条导入弹窗
 			$(".Finnow p input, .Finnow p select").val("");
 			$("#project_status_change").val(0);
-			$("#create_time_change")[0].type = "datetime-local";
+			$("#create_time_change")[0].type = "date";
 			$(".popup-title").text("单条数据导入");
 			$(".change-project").show();
-			project_id = -1;
+			$("#project_num_change")[0].disabled=false;
+			project_flag = -1;
 		})
 		
 		$(".none-x, .none-x-s").click(function() {		// 关闭或取消 弹窗
@@ -116,7 +117,7 @@
 				profit_all_change = $("#profit_all_change").val(),
 				project_status_change = $("#project_status_change").val();
 			
-			console.log(project_id+", "+create_time_change+", "+project_num_change+", "+project_name_change+", "+contact_person_change+", "+payment_all_change+", "+use_all_change+", "+collection_all_change+", "+cashback_all_change+", "+profit_all_change+", "+project_status_change);
+			console.log(project_flag+", "+create_time_change+", "+project_num_change+", "+project_name_change+", "+contact_person_change+", "+payment_all_change+", "+use_all_change+", "+collection_all_change+", "+cashback_all_change+", "+profit_all_change+", "+project_status_change);
 			
 			if (project_flag == -1) {
 				$.ajax({
@@ -133,25 +134,18 @@
 						'topay_amount': collection_all_change,
 						'return_amount': cashback_all_change,
 						'profit': profit_all_change,
-						'state_des': project_status_change
+						'state': project_status_change
 					},
 					success: function(ret) {
-						if(ret.code == 0) {
 							alert("操作成功！");
-						} else if(ret.code == -1) {
-							alert("该页面已过期，请重新登录！");
-							window.location.href = ret.url;
-						} else {
-							alert(ret.res_msg);
-						}
 					},
-					error: function() {
-						alert("请检查网络连接");
+					error: function(ret) {
+						alert(JSON.stringify(ret));
 					}
 				});
 			} else{
 				$.ajax({
-					url: url2,
+					url: url2 + project_flag,
 					dataType: "json",
 					type: "PUT",
 					data: {
@@ -164,20 +158,13 @@
 						'topay_amount': collection_all_change,
 						'return_amount': cashback_all_change,
 						'profit': profit_all_change,
-						'state_des': project_status_change
+						'state': project_status_change
 					},
 					success: function(ret) {
-						if(ret.code == 0) {
 							alert("操作成功！");
-						} else if(ret.code == -1) {
-							alert("该页面已过期，请重新登录！");
-							window.location.href = ret.url;
-						} else {
-							alert(ret.res_msg);
-						}
 					},
-					error: function() {
-						alert("请检查网络连接");
+					error: function(ret) {
+						alert(JSON.stringify(ret));
 					}
 				});
 			}
@@ -185,28 +172,21 @@
 		});
 		
 		$('#delete_project_btn').click(function() {		//点击确认按钮删除单条项目数据
-			project_id = $("input#project_delete_id").val();
-			console.log(project_id);
+			project_flag = $("input#project_delete_id").val();
+			console.log(project_flag);
 			
 			$.ajax({
-				url: url2,
+				url: url2 + project_flag,
 				dataType: "json",
 				type: "DELETE",
 				data: {
-					'uuid': project_id,
+					'uuid': project_flag,
 				},
 				success: function(ret) {
-					if(ret.code == 0) {
-						alert("删除成功！");
-					} else if(ret.code == -1) {
-						alert("该页面已过期，请重新登录！");
-						window.location.href = ret.url;
-					} else {
-						alert(ret.res_msg);
-					}
+						alert("操作成功！");
 				},
-				error: function() {
-					alert("请检查网络连接");
+				error: function(ret) {
+					alert(JSON.stringify(ret));
 				}
 			});
 			$(".delete-project").hide();
@@ -223,22 +203,22 @@
 			project_status = $("#project_status").val();
 			
 			if(created_time_start) {
-				newurl += "&created_time_start=" + created_time_start;
+				newurl += "&dateft_0=" + created_time_start;
 			}
 			if(created_time_end) {
-				newurl += "&created_time_end=" + created_time_end;
+				newurl += "&dateft_1=" + created_time_end;
 			}
 			if(project_name) {
-				newurl += "&project_name=" + project_name;
+				newurl += "&name__contains=" + project_name;
 			}
 			if(contact_person) {
-				newurl += "&contact_person=" + contact_person;
+				newurl += "&contact=" + contact_person;
 			}
 			if(project_num) {
-				newurl += "&project_num=" + project_num;
+				newurl += "&uuid=" + project_num;
 			}
-			if(project_status) {
-				newurl += "&project_status=" + project_status;
+			if(project_status && project_status != 0) {
+				newurl += "&state=" + project_status;
 			}
 			console.log(newurl);
 			
@@ -247,7 +227,6 @@
 			$("#pagedata").ajaxPage({
 				url: newurl,
 				pageId: $("#page"),
-				pageSize: 10,
 				run: true,
 				content: newdata,
 			});
@@ -330,11 +309,11 @@
 				<tr>
 					<td>
 						<i>立项开始日期：</i>
-						<input id="created_time_start" type="datetime-local" />
+						<input id="created_time_start" type="date" />
 					</td>
 					<td>
 						<i>立项结束日期：</i>
-						<input id="created_time_end" type="datetime-local" />
+						<input id="created_time_end" type="date" />
 					</td>
 					<td>
 						<i style="letter-spacing:4.8px;">项目名称：</i>
@@ -354,9 +333,10 @@
 						<i style="letter-spacing:4.8px;">项目状态</i>
 						<select name="selectAge" id="project_status">
 							<option value="0">全部</option>
-							<option value="1">正在进行</option>
-							<option value="2">暂停</option>
-							<option value="3">已结束</option>
+							<option value="prepare">未开始</option>
+							<option value="start">正在进行</option>
+							<option value="pause">暂停</option>
+							<option value="finish">已结束</option>
 						</select>
 					</td>
 				</tr>
@@ -431,10 +411,10 @@
 			<p>
 				<span>项目状态：</span>
 				<select name="selectAge" id="project_status_change">
-					<option value="0">全部</option>
-					<option value="1">正在进行</option>
-					<option value="2">暂停</option>
-					<option value="3">已结束</option>
+					<option value="prepare">未开始</option>
+					<option value="start">正在进行</option>
+					<option value="pause">暂停</option>
+					<option value="finish">已结束</option>
 				</select>
 			</p>
 			

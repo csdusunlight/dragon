@@ -8,20 +8,20 @@
 	});
 	var data = '<table width="100%"><tr><th>日期</th><th>名称</th>' +
 		'<th>收入</th><th>支出</th><th>摘要</th>' +
-		'<th>操作</th></tr>[data]<tr id="parent{projectuuid}"><td>{date}</td><td>{projectname}</td>' +
+		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{date}</td><td>{projectname}</td>' +
 		'<td>{income}</td><td>{expenditure}</td><td>{remark}</td>' +
-		'<td id="item_{projectuuid}"><a class="revise-btn" onclick="pass({projectuuid})">修改' +
-		'</a> │ <a class="delete-btn" onclick="refuse({projectuuid})">删除</a></td></tr>[/data]</table>';
+		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">修改' +
+		'</a> │ <a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/results]</table>';
 	var url = "/project/balance/" + "?page={page}";
 	var url2 = "/project/balance/";
 	
-	var project_id;		// project_id = -1 时，为导入单条数据；project_id != -1 时，为修改单条数据
+	var project_flag;		// project_flag = -1 时，为导入单条数据；project_flag != -1 时，为修改单条数据
 	
 	function pass(id) {			//弹出修改单条数据弹窗
 		$(".popup-title").text("修改项目数据");
 		$("#create_time_change")[0].type = "text";
 		$("input#project_change_id").val(id);
-		project_id = id;
+		project_flag = id;
 		
 		var parent = "parent" + id;
 		var dom = document.getElementById(parent);
@@ -67,9 +67,9 @@
 		$("#single_import").click(function(){			//弹出单条导入弹窗
 			$(".Finnow p input").val("");
 			$(".popup-title").text("单条数据导入");
-			$("#create_time_change")[0].type = "datetime-local";
+			$("#create_time_change")[0].type = "date";
 			$(".change-project").show();
-			project_id = -1;
+			project_flag = -1;
 		})
 		
 		$(".none-x, .none-x-s").click(function() {		// 关闭或取消 弹窗
@@ -83,14 +83,15 @@
 				use_change = $("#use_change").val(),
 				summary_change = $("#summary_change").val();
 			
-//			console.log(project_id+", "+create_time_change+", "+project_name_change+", "+profit_change+", "+use_change+", "+summary_change);
+//			console.log(project_flag+", "+create_time_change+", "+project_name_change+", "+profit_change+", "+use_change+", "+summary_change);
 			if (project_flag == -1) {
+				console.log(url2)
 				$.ajax({
-					url: url,
+					url: url2,
 					dataType: "json",
 					type: "POST",
 					data: {
-						'projectuuid': project_id,
+						'projectuuid': project_flag,
 						'date': create_time_change,
 						'projectname': project_name_change,
 						'income': profit_change,
@@ -98,26 +99,20 @@
 						'remark': summary_change
 					},
 					success: function(ret) {
-						if(ret.code == 0) {
 							alert("操作成功！");
-						} else if(ret.code == -1) {
-							alert("该页面已过期，请重新登录！");
-							window.location.href = ret.url;
-						} else {
-							alert(ret.res_msg);
-						}
 					},
-					error: function() {
-						alert("请检查网络连接");
+					error: function(ret) {
+						alert(JSON.stringify(ret));
 					}
 				});
 			} else{
+				console.log(url2 + project_flag)
 				$.ajax({
-					url: url,
+					url: url2 + project_flag,
 					dataType: "json",
 					type: "PUT",
 					data: {
-						'projectuuid': project_id,
+						'projectuuid': project_flag,
 						'date': create_time_change,
 						'projectname': project_name_change,
 						'income': profit_change,
@@ -125,17 +120,10 @@
 						'remark': summary_change
 					},
 					success: function(ret) {
-						if(ret.code == 0) {
 							alert("操作成功！");
-						} else if(ret.code == -1) {
-							alert("该页面已过期，请重新登录！");
-							window.location.href = ret.url;
-						} else {
-							alert(ret.res_msg);
-						}
 					},
-					error: function() {
-						alert("请检查网络连接");
+					error: function(ret) {
+						alert(JSON.stringify(ret));
 					}
 				});
 			}
@@ -143,28 +131,21 @@
 		});
 		
 		$('#delete_project_btn').click(function() {		//点击确认按钮删除单条项目数据
-			project_id = $("input#project_delete_id").val();
-			console.log(project_id);
+			project_flag = $("input#project_delete_id").val();
+			console.log(url2 + project_flag);
 			
 			$.ajax({
-				url: url,
+				url: url2 + project_flag,
 				dataType: "json",
 				type: "DELETE",
 				data: {
-					'id': project_id,
+					'id': project_flag,
 				},
 				success: function(ret) {
-					if(ret.code == 0) {
-						alert("删除成功！");
-					} else if(ret.code == -1) {
-						alert("该页面已过期，请重新登录！");
-						window.location.href = ret.url;
-					} else {
-						alert(ret.res_msg);
-					}
+						alert("操作成功！");
 				},
-				error: function() {
-					alert("请检查网络连接");
+				error: function(ret) {
+					alert(JSON.stringify(ret));
 				}
 			});
 			$(".delete-project").hide();
@@ -178,13 +159,13 @@
 			project_name = $("#project_name").val();
 			
 			if(created_time_start) {
-				newurl += "&created_time_start=" + created_time_start;
+				newurl += "&dateft_0=" + created_time_start;
 			}
 			if(created_time_end) {
-				newurl += "&created_time_end=" + created_time_end;
+				newurl += "&dateft_1=" + created_time_end;
 			}
 			if(project_name) {
-				newurl += "&project_name=" + project_name;
+				newurl += "&name__contains=" + project_name;
 			}
 			console.log(newurl);
 			
@@ -261,11 +242,11 @@
 				<tr>
 					<td>
 						<i>开始日期：</i>
-						<input id="created_time_start" type="datetime-local" />
+						<input id="created_time_start" type="date" />
 					</td>
 					<td>
 						<i>结束日期：</i>
-						<input id="created_time_end" type="datetime-local" />
+						<input id="created_time_end" type="date" />
 					</td>
 					<td>
 						<i style="letter-spacing:4.8px;">名称：</i>
