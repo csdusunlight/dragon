@@ -280,8 +280,9 @@ a { cursor:pointer;}
 	text-align: right;
 }
 .set-project input[type="text"],
-.set-project input[type="datetime-local"],
+.set-project input[type="date"],
 .set-project select {
 	width: 200px;
+	height: 30px;
 }
 /*立项部分---end*/
