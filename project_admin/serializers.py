@@ -22,13 +22,15 @@ class ProjectInvestDataSerializer(serializers.ModelSerializer):
     state_des = serializers.CharField(source='get_state_display', read_only=True)
     class Meta:
         model = ProjectInvestData
-        fields =('project', 'projectname', 'projectuuid','invest_mobile','invest_time','invest_amount',
+        fields =('id', 'project', 'projectname', 'projectuuid','invest_mobile','invest_time','invest_amount',
                  'invest_term','settle_amount','return_amount','state','state_des','remark')
+        read_only_fields = ('id',)
 
 class ProjectBalanceSerializer(serializers.ModelSerializer):
     projectname = serializers.CharField(source='project.name', read_only=True)
     projectuuid = serializers.CharField(source='project.uuid', read_only=True)
     class Meta:
         model = ProjectBalance
-        fields =('project', 'projectname', 'projectuuid','date','income','expenditure',
+        fields =('id','project', 'projectname', 'projectuuid','date','income','expenditure',
                  'remark')
+        read_only_fields = ('id',)
