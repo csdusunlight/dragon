@@ -25,12 +25,12 @@ class Project(models.Model):
     contract_company = models.CharField(u"签约公司", max_length=30)
     settle_detail = models.CharField(u"结算详情", max_length=30)
     state = models.CharField(u"项目状态", max_length=10, choices=PROJECT_STATE)
-    paid_amount = models.DecimalField(u"付款总额", max_digits=10, decimal_places=2)
-    consume_amount = models.DecimalField(u"消耗总额", max_digits=10, decimal_places=2)
+    paid_amount = models.DecimalField(u"付款总额", max_digits=10, decimal_places=2, default=0)
+    consume_amount = models.DecimalField(u"消耗总额", max_digits=10, decimal_places=2, default=0)
     def consume_minus_paid(self):
         return self.consume_amount - self.paid_amount
     topay_amount = property(consume_minus_paid)
-    return_amount = models.DecimalField(u"返现总额", max_digits=10, decimal_places=2)
+    return_amount = models.DecimalField(u"返现总额", max_digits=10, decimal_places=2, default=0)
     def paid_minus_return(self):
         return self.paid_amount-self.return_amount
     profit = property(paid_minus_return)
