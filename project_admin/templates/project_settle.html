@@ -22,7 +22,6 @@
 		$(".popup-title").text("修改项目数据");
 		$("#create_time_change")[0].type = "text";
 		$("input#project_change_id").val(id);
-		$("#project_num_change")[0].disabled=true;
 		project_flag = id;
 		
 		parent = "parent" + id;
@@ -105,7 +104,7 @@
 			console.log(project_flag+", "+create_time_change+", "+project_num_change+", "+project_name_change+", "+contact_person_change+", "+payment_all_change+", "+use_all_change+", "+collection_all_change+", "+cashback_all_change+", "+profit_all_change+", "+project_status_change);
 
 			$.ajax({
-				url: url2 + project_flag,
+				url: url2 + project_flag + "/",
 				dataType: "json",
 				type: "PUT",
 				data: {
@@ -324,19 +323,19 @@
 				<input id="project_change_id" type="hidden" />
 			<p>
 				<span>立项日期：</span>
-				<input id="create_time_change" type="text" />
+				<input id="create_time_change" disabled="disabled" type="text" />
 			</p>
 			<p>
 				<span>项目编号：</span>
-				<input id="project_num_change" type="text" />
+				<input id="project_num_change" disabled="disabled" type="text" />
 			</p>
 			<p>
 				<span>项目名称：</span>
-				<input id="project_name_change" type="text" />
+				<input id="project_name_change" disabled="disabled" type="text" />
 			</p>
 			<p>
 				<span>商务对接人：</span>
-				<input id="contact_person_change" type="text" />
+				<input id="contact_person_change" disabled="disabled" type="text" />
 			</p>
 			<p>
 				<span>付款总额：</span>
@@ -346,18 +345,18 @@
 				<span>消耗总额：</span>
 				<input id="use_all_change" type="text" />
 			</p>
-			<p>
+			<!--<p>
 				<span>代收总额：</span>
 				<input id="collection_all_change" type="text" />
-			</p>
+			</p>-->
 			<p>
 				<span>返现总额：</span>
 				<input id="cashback_all_change" type="text" />
 			</p>
-			<p>
+			<!--<p>
 				<span>盈利总额：</span>
 				<input id="profit_all_change" type="text" />
-			</p>
+			</p>-->
 			<p>
 				<span>项目状态：</span>
 				<select name="selectAge" id="project_status_change">

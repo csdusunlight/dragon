@@ -146,7 +146,7 @@
 			} else{
 				console.log(url2 + project_flag)
 				$.ajax({
-					url: url2 + project_flag,
+					url: url2 + project_flag + "/",
 					dataType: "json",
 					type: "PUT",
 					data: {
@@ -190,7 +190,7 @@
 			console.log(url2 + project_flag);
 			
 			$.ajax({
-				url: url2 + project_flag,
+				url: url2 + project_flag + "/",
 				dataType: "json",
 				type: "DELETE",
 				data: {
