@@ -17,6 +17,7 @@
 	var url2 = "/project/investdata/";
 	
 	var project_flag;		// project_flag = -1 时，为导入单条数据；project_flag != -1 时，为修改单条数据
+	var parent;
 	
 	function pass(id) {			//弹出修改单条数据弹窗
 		$(".popup-title").text("修改项目数据");
@@ -25,7 +26,7 @@
 		$("#project_num_change")[0].disabled=true;
 		project_flag = id;
 		
-		var parent = "parent" + id;
+		parent = "parent" + id;
 		var dom = document.getElementById(parent);
 		var children0 = $(dom).find("td").eq(0).text(),
 			children1 = $(dom).find("td").eq(1).text(),
@@ -162,7 +163,19 @@
 						"remark": remark_change
 					},
 					success: function(ret) {
-							alert("操作成功！");
+						console.log(ret);
+						alert("操作成功！");
+						var dom = document.getElementById(parent);
+						$(dom).find("td").eq(0).text(ret.projectuuid);
+						$(dom).find("td").eq(1).text(ret.projectname);
+						$(dom).find("td").eq(2).text(ret.invest_time);
+						$(dom).find("td").eq(3).text(ret.invest_mobile);
+						$(dom).find("td").eq(4).text(ret.invest_amount);
+						$(dom).find("td").eq(5).text(ret.invest_term);
+						$(dom).find("td").eq(6).text(ret.settle_amount);
+						$(dom).find("td").eq(7).text(ret.return_amount);
+						$(dom).find("td").eq(8).text(ret.state_des);
+						$(dom).find("td").eq(9).text(ret.remark);
 					},
 					error: function(ret) {
 						alert(JSON.stringify(ret));

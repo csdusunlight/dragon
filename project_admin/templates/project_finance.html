@@ -16,6 +16,7 @@
 	var url2 = "/project/balance/";
 	
 	var project_flag;		// project_flag = -1 时，为导入单条数据；project_flag != -1 时，为修改单条数据
+	var parent;
 	
 	function pass(id) {			//弹出修改单条数据弹窗
 		$(".popup-title").text("修改项目数据");
@@ -23,7 +24,7 @@
 		$("input#project_change_id").val(id);
 		project_flag = id;
 		
-		var parent = "parent" + id;
+		parent = "parent" + id;
 		var dom = document.getElementById(parent);
 		var children0 = $(dom).find("td").eq(0).text(),
 			children1 = $(dom).find("td").eq(1).text(),
@@ -118,7 +119,14 @@
 						'remark': summary_change
 					},
 					success: function(ret) {
+							console.log(ret);
 							alert("操作成功！");
+							var dom = document.getElementById(parent);
+							$(dom).find("td").eq(0).text(ret.date);
+							$(dom).find("td").eq(1).text(ret.company);
+							$(dom).find("td").eq(2).text(ret.income);
+							$(dom).find("td").eq(3).text(ret.expenditure);
+							$(dom).find("td").eq(4).text(ret.remark);
 					},
 					error: function(ret) {
 						alert(JSON.stringify(ret));
