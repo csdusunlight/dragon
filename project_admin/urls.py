@@ -10,7 +10,7 @@ from project_admin import views
 from rest_framework.urlpatterns import format_suffix_patterns
 urlpatterns = [
     url(r'^projects/$', views.ProjectList.as_view()),
-    url(r'^projects/(?P<pk>[0-9]+)/$', views.ProjectDetail.as_view()),
+    url(r'^projects/(?P<pk>[0-9]+)/$', views.ProjectDetail.as_view(), kwargs={'partial':True}),
     url(r'^investdata/$', views.ProjectInvestDataList.as_view()),
     url(r'^investdata/(?P<pk>[0-9]+)/$', views.ProjectInvestDataDetail.as_view()),
     url(r'^balance/$', views.CompanyBalanceList.as_view()),
