@@ -11,8 +11,7 @@
 		'<th>操作</th></tr>[results]<tr id="parent{uuid}"><td>{time}</td><td>{uuid}</td><td>{name}</td>' +
 		'<td>{contact}</td><td>{paid_amount}</td><td>{consume_amount}</td><td>{topay_amount}</td><td>{return_amount}</td><td>{profit}</td>' +
 		'<td>{state_des}</td>' +
-		'<td id="item_{uuid}"><a class="revise-btn" onclick="pass({uuid})">修改' +
-		'</a> │ <a class="delete-btn" onclick="refuse({uuid})">删除</a></td></tr>[/results]</table>';
+		'<td id="item_{uuid}"><a class="revise-btn" onclick="pass({uuid})">修改</a></td></tr>[/results]</table>';
 	var url = "/project/projects/" + "?page={page}";
 	var url2 = "/project/projects/";
 	
@@ -66,11 +65,6 @@
 		$("#project_status_change").val(children9_num);
 		
 		$(".change-project").show();
-	}
-	
-	function refuse(id) {		//弹出删除项目数据弹窗
-		$("input#project_delete_id").val(id);
-		$(".delete-project").show();
 	}
 	
 	
@@ -148,26 +142,6 @@
 			$(".change-project").hide();
 		});
 		
-		$('#delete_project_btn').click(function() {		//点击确认按钮删除单条项目数据
-			project_flag = $("input#project_delete_id").val();
-			console.log(project_flag);
-			
-			$.ajax({
-				url: url2 + project_flag,
-				dataType: "json",
-				type: "DELETE",
-				data: {
-					'uuid': project_flag,
-				},
-				success: function(ret) {
-						alert("操作成功！");
-				},
-				error: function(ret) {
-					alert(JSON.stringify(ret));
-				}
-			});
-			$(".delete-project").hide();
-		});
 		
 		$("#search").click(function() {			//搜索项目数据
 			var newurl = url;
@@ -402,20 +376,7 @@
 	</div>
 </div>
 
-<!--删除项目弹窗-->
-<div class="delete-project project-box">
-	<div class="w570-box">
-		<h3>确认删除该条数据？</h3>
-		<button class="none-x"></button>
-		<form class="Audit-in">
-			<input id="project_delete_id" type="hidden" />
-			<div class="Finnow-Sub">
-				<input id="delete_project_btn" type="submit" value="确认" class="Deny-box" onclick="return false;" />
-				<input type="button" value="取消" class="none-x-s" />
-			</div>
-		</form>
-	</div>
-</div>
+
 <iframe id="myIFrame" scrolling="yes" src="abount:blank" style="display:none" frameborder=1></iframe>
 <!--end-->
 {% endblock modal %}
