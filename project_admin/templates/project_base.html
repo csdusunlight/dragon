@@ -13,6 +13,12 @@
     {% endblock css %}
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/page.js' %}"></script>
+<script type="text/javascript">
+	function showProject() {
+		console.log("jzy");
+		$(".home15").toggleClass("show-project");
+	}
+</script>
     {% block js %}
 
     {% endblock js %}
@@ -24,9 +30,9 @@
     	<img src="{%static 'wafuli_admin/images/logo.png'%}" class="fl" />
         <div class="Name-info">
         	<div class="Head-img"><img src="{%static 'wafuli_admin/images/head.png'%}" /></div>
-            <div class="Name"><span>ADMIN</span></div>
+            <div class="Name"><span>PROJECT</span></div>
             <div class="Name-link">
-            	<a href="{%url 'admin_index'%}">首页</a>    <a href="#">设置</a>    <a href="#">帮助</a>
+            	<a href="{%url 'project_index'%}">首页</a>    <a href="#">设置</a>    <a href="#">帮助</a>
 				<a href="{%url 'admin:logout'%}" class="Signout">【退出】</a>
             </div>
         </div>
@@ -38,7 +44,7 @@
             	<td width="13%" class="Td-ing1" valign="top">
                 	<div class="LeftNav-in">
                     	<ul>
-                        	<li class="home1"><a href="{%url 'admin_index'%}">首页</a></li>
+                        	<!--<li class="home1"><a href="{%url 'admin_index'%}">首页</a></li>
                         	<li class="home2"><a href="{%url 'admin_user'%}">用户管理</a></li>
                         	<li class="home3"><a href="{%url 'admin_withdraw'%}">提现管理</a></li>
                         	<li class="home4"><a href="{%url 'admin_finance'%}">理财福利</a></li>
@@ -50,7 +56,16 @@
                             <li class="home10"><a href="{%url 'admin_coupon'%}">优惠券审核</a></li>
                             <li class="home11"><a href="{%url 'admin_charge'%}">记账查询</a></li>
                             <li class="home13"><a href="{%url 'admin_investrecord'%}">投资记录</a></li>
-                            <li class="home14"><a href="{%url 'admin_channel'%}">渠道用户管理</a></li>
+                            <li class="home14"><a href="{%url 'admin_channel'%}">渠道用户管理</a></li>-->
+                            <li class="home15" onclick="showProject()">
+                            	<a>综合管理</a>
+                            	<ul class="admin-project">
+                            		<li class="project-item home16"><a href="{%url 'project_index'%}">立项管理</a></li>
+                            		<li class="project-item home17"><a href="{%url 'project_data'%}">项目数据</a></li>
+                            		<li class="project-item home18"><a href="{%url 'project_finance'%}">财务管理</a></li>
+                            		<li class="project-item home19"><a href="{%url 'project_settle'%}">项目结算</a></li>
+                            	</ul>
+                            </li>
                         </ul>
                     </div>
                 </td>
