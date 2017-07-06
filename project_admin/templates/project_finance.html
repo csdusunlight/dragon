@@ -8,7 +8,7 @@
 	});
 	var data = '<table width="100%"><tr><th>日期</th><th>名称</th>' +
 		'<th>收入</th><th>支出</th><th>摘要</th>' +
-		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{date}</td><td>{projectname}</td>' +
+		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{date}</td><td>{company}</td>' +
 		'<td>{income}</td><td>{expenditure}</td><td>{remark}</td>' +
 		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">修改' +
 		'</a> │ <a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/results]</table>';
@@ -91,9 +91,8 @@
 					dataType: "json",
 					type: "POST",
 					data: {
-						'projectuuid': project_flag,
 						'date': create_time_change,
-						'projectname': project_name_change,
+						'company': project_name_change,
 						'income': profit_change,
 						'expenditure': use_change,
 						'remark': summary_change
@@ -112,9 +111,8 @@
 					dataType: "json",
 					type: "PUT",
 					data: {
-						'projectuuid': project_flag,
 						'date': create_time_change,
-						'projectname': project_name_change,
+						'company': project_name_change,
 						'income': profit_change,
 						'expenditure': use_change,
 						'remark': summary_change
@@ -165,7 +163,7 @@
 				newurl += "&dateft_1=" + created_time_end;
 			}
 			if(project_name) {
-				newurl += "&name__contains=" + project_name;
+				newurl += "&company=" + project_name;
 			}
 			console.log(newurl);
 			
@@ -249,7 +247,7 @@
 						<input id="created_time_end" type="date" />
 					</td>
 					<td>
-						<i style="letter-spacing:4.8px;">名称：</i>
+						<i style="letter-spacing:4.8px;">公司名称：</i>
 						<input id="project_name" type="text" />
 					</td>
 				</tr>
@@ -289,7 +287,7 @@
 				<input id="create_time_change" type="text" />
 			</p>
 			<p>
-				<span>名称：</span>
+				<span>公司名称：</span>
 				<input id="project_name_change" type="text" />
 			</p>
 			<p>
