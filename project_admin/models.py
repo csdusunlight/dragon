@@ -43,7 +43,7 @@ class Project(models.Model):
         return self.paid_amount-self.return_amount
     profit = property(paid_minus_return)
     def __unicode__(self):
-        return self.id + ' ' + self.name
+        return str(self.id) + ' ' + self.name
 
 class ProjectInvestData(models.Model):
     project = models.ForeignKey(Project, verbose_name=u"项目", related_name='project_data')
