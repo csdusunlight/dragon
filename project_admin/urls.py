@@ -9,6 +9,8 @@ from django.conf.urls import url
 from project_admin import views
 from rest_framework.urlpatterns import format_suffix_patterns
 urlpatterns = [
+    url(r'^platform/$', views.PlatformList.as_view()),
+    url(r'^platform/(?P<pk>[0-9]+)/$', views.PlatformDetail.as_view(), kwargs={'partial':True}),
     url(r'^projects/$', views.ProjectList.as_view()),
     url(r'^projects/(?P<pk>[0-9]+)/$', views.ProjectDetail.as_view(), kwargs={'partial':True}),
     url(r'^investdata/$', views.ProjectInvestDataList.as_view()),

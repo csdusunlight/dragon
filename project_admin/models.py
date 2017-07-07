@@ -2,7 +2,7 @@
 from django.db import models
 from django.utils import timezone
 from wafuli.data import AUDIT_STATE
-
+import time,datetime
 # Create your models here.
 PROJECT_STATE=(
     ('prepare', u"未开始"),
@@ -14,11 +14,19 @@ SETTLE_STATE=(
     ('advance', u"预付款"),
     ('later', u"后付款"),
     ('daily', u"日结"),
-)   
+)
+class Platform(models.Model):
+    name = models.CharField(u"平台名称", max_length=20)
+    contact = models.CharField(u"联系人", max_length=200)
+    def __unicode__(self):
+        return self.name
+
+def get_today():
+    return datetime.date.today()
 class Project(models.Model):
-    uuid = models.CharField(u"项目编号", max_length=20, primary_key=True)
     name = models.CharField(u"项目名称", max_length=50)
-    time = models.DateField(u"立项日期", default=timezone.now)
+    platform = models.ForeignKey(Platform, verbose_name=u"合作平台", related_name='projects')
+    time = models.DateField(u"立项日期", default=get_today)
     contact = models.CharField(u"商务对接人", max_length=10)
     coopway = models.CharField(u"合作方式", max_length=10)
     settleway = models.CharField(u"结算方式", max_length=10, choices=SETTLE_STATE)
@@ -35,9 +43,11 @@ class Project(models.Model):
         return self.paid_amount-self.return_amount
     profit = property(paid_minus_return)
     def __unicode__(self):
-        return self.uuid + ' ' + self.name
+        return self.id + ' ' + self.name
+
 class ProjectInvestData(models.Model):
-    project = models.ForeignKey(Project, verbose_name=u"项目id", related_name='project_data')
+    project = models.ForeignKey(Project, verbose_name=u"项目", related_name='project_data')
+    is_futou = models.BooleanField(u"是否复投", default=False)
     invest_mobile = models.CharField(u"投资手机号", max_length=13)
     invest_time = models.DateField(u"投资时间")
     invest_amount = models.DecimalField(u"投资金额", max_digits=10, decimal_places=2)
@@ -52,8 +62,10 @@ class ProjectInvestData(models.Model):
 class CompanyBalance(models.Model):
     company = models.CharField(u"公司", max_length=20, unique=True)
     date = models.DateField(u"日期")
-    income = models.DecimalField(u"收入", max_digits=10, decimal_places=2)
-    expenditure = models.DecimalField(u"支出", max_digits=10, decimal_places=2)
+    income = models.DecimalField(u"收支", max_digits=10, decimal_places=2)
+    balance = models.DecimalField(u"余额", max_digits=10, decimal_places=2)
     remark = models.CharField(u"摘要", max_length=100)
     def __unicode__(self):
         return self.project.name + str(self.date)
+
+

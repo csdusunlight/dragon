@@ -1,7 +1,7 @@
 #coding:utf-8
 from .models import Project
 from project_admin.serializers import ProjectSerializer,\
-    ProjectInvestDataSerializer, CompanyBalanceSerializer
+    ProjectInvestDataSerializer, CompanyBalanceSerializer, PlatformSerializer
 # Create your views here.
 
 from rest_framework import generics, permissions
@@ -14,10 +14,21 @@ from django.shortcuts import redirect, render
 from django.core.urlresolvers import reverse
 from django.http.response import Http404
 from project_admin.Paginations import ProjectPageNumberPagination
-from project_admin.models import ProjectInvestData, CompanyBalance
+from project_admin.models import ProjectInvestData, CompanyBalance, Platform
 class BaseViewMixin(object):
     authentication_classes = (CsrfExemptSessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,IsAdminOrReadOnly)
+
+class PlatformList(BaseViewMixin,generics.ListCreateAPIView):
+    queryset = Platform.objects.all()
+    serializer_class = PlatformSerializer
+    pagination_class = ProjectPageNumberPagination
+#     search_fields = ('=name', '=contact')
+
+
+class PlatformDetail(BaseViewMixin,generics.RetrieveUpdateDestroyAPIView):
+    queryset = Platform.objects.all()
+    serializer_class = PlatformSerializer
     
 class ProjectList(BaseViewMixin,generics.ListCreateAPIView):
     queryset = Project.objects.all()
