@@ -34,5 +34,5 @@ class ProjectInvestDataSerializer(serializers.ModelSerializer):
 class CompanyBalanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompanyBalance
-        fields =('id','company', 'date','income','expenditure','remark')
+        fields ='__all__'
         read_only_fields = ('id',)
