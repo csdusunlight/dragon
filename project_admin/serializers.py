@@ -6,10 +6,16 @@ Created on 2017年7月3日
 '''
 from rest_framework import serializers
 from .models import *
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = '__all__'
 class PlatformSerializer(serializers.ModelSerializer):
+#     contacts = serializers.PrimaryKeyRelatedField(many=True, queryset=Contact.objects.all())
+    contacts = ContactSerializer(many=True)
     class Meta:
         model = Platform
-        fields = '__all__'
+        fields = ('id', 'name', 'url', 'contacts')
 class ProjectSerializer(serializers.ModelSerializer):
     state_des = serializers.CharField(source='get_state_display', read_only=True)
     settleway_des = serializers.CharField(source='get_settleway_display', read_only=True)
@@ -17,9 +23,9 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = ('id', 'name', 'platform','platformname','time', 'contact', 'coopway', 'settleway', 'settleway_des', 'state','state_des',
-                  'contract_company', 'settle_detail', 'paid_amount', 'consume_amount',
-                  'return_amount', 'topay_amount', 'profit')
-        read_only_fields = ('id', 'profit', 'settleway_des', 'state_des', 'time')
+                  'contract_company', 'settle', 'cost', 'consume',
+                  'topay_amount', 'profit')
+        read_only_fields = ('id', 'profit','topay_amount','settleway_des','consume','state_des', 'time')
 
 class ProjectInvestDataSerializer(serializers.ModelSerializer):
     projectname = serializers.CharField(source='project.name', read_only=True)

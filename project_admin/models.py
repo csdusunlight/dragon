@@ -17,15 +17,26 @@ SETTLE_STATE=(
 )
 class Platform(models.Model):
     name = models.CharField(u"平台名称", max_length=20)
-    contact = models.CharField(u"联系人", max_length=200)
+    url = models.CharField(u"网站域名", max_length=100)
     def __unicode__(self):
         return self.name
-
+class Contact(models.Model):
+    platform = models.ForeignKey(Platform, verbose_name=u"合作平台", related_name='contacts')
+    name = models.CharField(u"姓名", max_length=50)
+    mobile = models.CharField(u"手机号", max_length=50)
+    qq = models.CharField(u"QQ号", max_length=50)
+    weixin = models.CharField(u"微信号", max_length=50)
+    invoicecompany = models.CharField(u"开票公司", max_length=50)
+    invoiceid = models.CharField(u"开票税号", max_length=50)
+    address = models.CharField(u"联系地址", max_length=50)
+    remark = models.CharField(u"备注", max_length=50)
+    def __unicode__(self):
+        return self.name
 def get_today():
     return datetime.date.today()
 class Project(models.Model):
     name = models.CharField(u"项目名称", max_length=50)
-    platform = models.ForeignKey(Platform, verbose_name=u"合作平台", related_name='projects')
+    platform = models.ForeignKey(Platform, verbose_name=u"甲方名称", related_name='projects')
     time = models.DateField(u"立项日期", default=get_today)
     contact = models.CharField(u"商务对接人", max_length=10)
     coopway = models.CharField(u"合作方式", max_length=10)
@@ -33,17 +44,23 @@ class Project(models.Model):
     contract_company = models.CharField(u"签约公司", max_length=30)
     settle_detail = models.CharField(u"结算详情", max_length=30)
     state = models.CharField(u"项目状态", max_length=10, choices=PROJECT_STATE)
-    paid_amount = models.DecimalField(u"付款总额", max_digits=10, decimal_places=2, default=0)
-    consume_amount = models.DecimalField(u"消耗总额", max_digits=10, decimal_places=2, default=0)
+    settle = models.DecimalField(u"结算费用", max_digits=10, decimal_places=2, default=0)
+    consume = models.DecimalField(u"消耗总额", max_digits=10, decimal_places=2, default=0)
+    cost = models.DecimalField(u"项目成本", max_digits=10, decimal_places=2, default=0)
     def consume_minus_paid(self):
-        return self.consume_amount - self.paid_amount
+        return self.consume - self.settle
     topay_amount = property(consume_minus_paid)
-    return_amount = models.DecimalField(u"返现总额", max_digits=10, decimal_places=2, default=0)
-    def paid_minus_return(self):
-        return self.paid_amount-self.return_amount
-    profit = property(paid_minus_return)
+#     return_amount = models.DecimalField(u"返现总额", max_digits=10, decimal_places=2, default=0)
+    def paid_minus_cost(self):
+        return self.settle-self.cost
+    profit = property(paid_minus_cost)
     def __unicode__(self):
         return str(self.id) + ' ' + self.name
+    def save(self, force_insert=False, force_update=False, using=None, 
+        update_fields=None):
+        if self.state != 'finish':
+            self.cost = self.settle
+        return models.Model.save(self, force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
 
 class ProjectInvestData(models.Model):
     project = models.ForeignKey(Project, verbose_name=u"项目", related_name='project_data')
