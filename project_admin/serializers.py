@@ -42,3 +42,10 @@ class CompanyBalanceSerializer(serializers.ModelSerializer):
         model = CompanyBalance
         fields ='__all__'
         read_only_fields = ('id',)
+        
+class ProjectStatisSerializer(serializers.ModelSerializer):
+    projectname = serializers.CharField(source='project.name', read_only=True)
+    class Meta:
+        model = ProjectStatis
+        fields =('id','project','projectname','channel_consume','channel_return','site_consume','site_return','consume','ret')
+#         read_only_fields = '__all__'

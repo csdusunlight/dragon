@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^investdata/(?P<pk>[0-9]+)/$', views.ProjectInvestDataDetail.as_view()),
     url(r'^balance/$', views.CompanyBalanceList.as_view()),
     url(r'^balance/(?P<pk>[0-9]+)/$', views.CompanyBalanceDetail.as_view()),
+    url(r'^projectstatis/$', views.ProjectStatisList.as_view()),
 ]
 from django.conf.urls import include
 
@@ -30,4 +31,5 @@ urlpatterns += [
     url(r'^project_data/$', views.project_data, name='project_data'),
     url(r'^project_finance/$', views.project_finance, name='project_finance'),
     url(r'^project_settle/$', views.project_settle, name='project_settle'),
+    url(r'^import_projectdata_excel/$', views.import_projectdata_excel, name='import_projectdata_excel'),
 ]
