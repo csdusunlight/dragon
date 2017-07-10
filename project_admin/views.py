@@ -41,7 +41,7 @@ class PlatformList(BaseViewMixin,generics.ListCreateAPIView):
 class PlatformDetail(BaseViewMixin,generics.RetrieveUpdateDestroyAPIView):
     queryset = Platform.objects.all()
     serializer_class = PlatformSerializer
-    
+
 class ProjectList(BaseViewMixin,generics.ListCreateAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
@@ -67,7 +67,7 @@ class ProjectInvestDataList(BaseViewMixin,generics.ListCreateAPIView):
 
 class ProjectInvestDataDetail(BaseViewMixin,generics.RetrieveUpdateDestroyAPIView):
     queryset = ProjectInvestData.objects.all()
-    serializer_class = ProjectInvestDataSerializer 
+    serializer_class = ProjectInvestDataSerializer
 
 class CompanyBalanceList(BaseViewMixin,generics.ListCreateAPIView):
     queryset = CompanyBalance.objects.all()
@@ -81,7 +81,7 @@ class CompanyBalanceList(BaseViewMixin,generics.ListCreateAPIView):
 
 class CompanyBalanceDetail(BaseViewMixin,generics.RetrieveUpdateDestroyAPIView):
     queryset = CompanyBalance.objects.all()
-    serializer_class = CompanyBalanceSerializer 
+    serializer_class = CompanyBalanceSerializer
 # 立项部分增加
 def project_index(request):
     admin_user = request.user
@@ -89,7 +89,7 @@ def project_index(request):
         if not ( admin_user.is_authenticated() and admin_user.is_staff):
             return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
         return render(request,"project.html")
- 
+
 
 
 def project_data(request):
@@ -98,7 +98,7 @@ def project_data(request):
         if not ( admin_user.is_authenticated() and admin_user.is_staff):
             return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
         return render(request,"project_data.html")
-    
+
 def project_finance(request):
     admin_user = request.user
     if request.method == "GET":
@@ -116,4 +116,46 @@ def project_settle(request):
         return render(request,"project_settle.html")
 
 # 立项部分---end
- 
+
+# 综合管理部分修改
+def project_detail(request):
+    admin_user = request.user
+    if request.method == "GET":
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
+        return render(request,"project_detail.html")
+def project_status(request):
+    admin_user = request.user
+    if request.method == "GET":
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
+        return render(request,"project_status.html")
+
+def jiafang_detail(request):
+    admin_user = request.user
+    if request.method == "GET":
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
+        return render(request,"jiafang_detail.html")
+
+def finance_pandect(request):
+    admin_user = request.user
+    if request.method == "GET":
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
+        return render(request,"finance_pandect.html")
+
+def account_manage(request):
+    admin_user = request.user
+    if request.method == "GET":
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
+        return render(request,"account_manage.html")
+def account_detail(request):
+    admin_user = request.user
+    if request.method == "GET":
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
+        return render(request,"account_detail.html")
+# 综合管理部分修改----end
+
