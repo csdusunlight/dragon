@@ -15,11 +15,13 @@ from django.conf import settings
 from decimal import Decimal
 from django.core.urlresolvers import reverse
 from django.db.models import F
-from wafuli_admin.models import RecommendRank, DayStatis
-from project_admin.models import ProjectStatis
+from project_admin.models import ProjectStatis, DayStatis, Project,\
+    ProjectInvestData
+import logging
 logger = logging.getLogger("wafuli")
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        today = datetime.date.today()
         from django.db import connection, transaction
         cursor = connection.cursor()
         cursor.execute("select a.project_id, a.source, sum(a.settle_amount) as sumofsettle, \
@@ -56,3 +58,17 @@ class Command(BaseCommand):
         for id, kwarg in project_dic.items():
             ProjectStatis.objects.update_or_create(project_id=id, defaults=kwarg)
 #         return row
+        update_fields = {}
+        update_fields['start_num'] = Project.objects.filter(state='start').count()
+        update_fields['finish_num'] = Project.objects.filter(state='finish').count()
+        update_fields['invest_count'] = ProjectInvestData.objects.filter(invest_time=today).count()
+        statdic = ProjectInvestData.objects.filter(invest_time=today).aggregate(invest_sum=Sum('invest_amount'),
+               consume_sum=Sum('settle_amount'))
+        statdic_pass = ProjectInvestData.objects.filter(invest_time=today, state='0').aggregate(
+               ret_invest_sum=Sum('invest_amount'), ret_sum=Sum('return_amount'))
+        update_fields.update(statdic)
+        update_fields.update(statdic_pass)
+        DayStatis.objects.update_or_create(date=today, defaults=update_fields)
+#         cursor.execute("select a.project_id, a.source, sum(a.settle_amount) as sumofsettle, \
+#                             sum(a.return_amount) as sumofret from project_admin_projectinvestdata a \
+#                             group by a.project_id, a.source")

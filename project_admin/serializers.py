@@ -24,7 +24,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = Project
         fields = ('id', 'name', 'platform','platformname','time', 'contact', 'coopway', 'settleway', 'settleway_des', 'state','state_des',
                   'contract_company', 'settle', 'cost', 'consume',
-                  'topay_amount', 'profit')
+                  'topay_amount', 'profit', 'finish_time')
         read_only_fields = ('id', 'profit','topay_amount','settleway_des','consume','state_des', 'time')
 
 class ProjectInvestDataSerializer(serializers.ModelSerializer):
@@ -49,3 +49,8 @@ class ProjectStatisSerializer(serializers.ModelSerializer):
         model = ProjectStatis
         fields =('id','project','projectname','channel_consume','channel_return','site_consume','site_return','consume','ret')
 #         read_only_fields = '__all__'
+
+class DayStatisSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DayStatis
+        fields = '__all__'

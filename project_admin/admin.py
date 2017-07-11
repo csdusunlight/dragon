@@ -13,3 +13,5 @@ class PlatformAdmin(admin.ModelAdmin):
 admin.site.register(Project)
 admin.site.register(Contact)
 admin.site.register(Platform,PlatformAdmin)
+admin.site.register(DayStatis)
+admin.site.register(ProjectStatis)

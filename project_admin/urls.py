@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^balance/$', views.CompanyBalanceList.as_view()),
     url(r'^balance/(?P<pk>[0-9]+)/$', views.CompanyBalanceDetail.as_view()),
     url(r'^projectstatis/$', views.ProjectStatisList.as_view()),
+    url(r'^daystatis/$', views.DayStatisList.as_view()),
 ]
 from django.conf.urls import include
 

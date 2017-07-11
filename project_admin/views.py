@@ -2,7 +2,7 @@
 from .models import Project
 from project_admin.serializers import ProjectSerializer,\
     ProjectInvestDataSerializer, CompanyBalanceSerializer, PlatformSerializer,\
-    ContactSerializer, ProjectStatisSerializer
+    ContactSerializer, ProjectStatisSerializer, DayStatisSerializer
 # Create your views here.
 
 from rest_framework import generics, permissions
@@ -93,6 +93,10 @@ class CompanyBalanceDetail(BaseViewMixin,generics.RetrieveUpdateDestroyAPIView):
 class ProjectStatisList(BaseViewMixin,generics.ListCreateAPIView):
     queryset = ProjectStatis.objects.all()
     serializer_class = ProjectStatisSerializer
+    pagination_class = ProjectPageNumberPagination
+class DayStatisList(BaseViewMixin,generics.ListCreateAPIView):
+    queryset = DayStatis.objects.all()
+    serializer_class = DayStatisSerializer
     pagination_class = ProjectPageNumberPagination
 # 立项部分增加
 def project_index(request):

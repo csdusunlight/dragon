@@ -51,6 +51,7 @@ class Project(models.Model):
     settle = models.DecimalField(u"结算费用", max_digits=10, decimal_places=2, default=0)
     consume = models.DecimalField(u"消耗总额", max_digits=10, decimal_places=2, default=0)
     cost = models.DecimalField(u"项目成本", max_digits=10, decimal_places=2, default=0)
+    finish_time = models.DateField(u"结项日期", null=True)
     def consume_minus_paid(self):
         return self.consume - self.settle
     topay_amount = property(consume_minus_paid)
@@ -64,6 +65,10 @@ class Project(models.Model):
         update_fields=None):
         if self.state != 'finish':
             self.cost = self.settle
+            self.finish_time = None
+        else:
+            if not self.finish_time:
+                self.finish_time = datetime.date.today()
         return models.Model.save(self, force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
 
 class ProjectInvestData(models.Model):
@@ -102,4 +107,16 @@ class ProjectStatis(models.Model):
         return self.channel_return + self.site_return
     def __unicode__(self):
         return str(self.project_id) + self.project.name
-
+class DayStatis(models.Model):
+    date = models.DateField(u"日期", primary_key=True)
+    start_num = models.IntegerField(u"正在进行的项目数")
+    finish_num = models.IntegerField(u"已结项的项目数")
+    invest_count = models.IntegerField(u"投资人数")
+    invest_sum = models.DecimalField(u"投资金额", max_digits=10, decimal_places=2, null=True)
+    consume_sum = models.DecimalField(u"投资金额", max_digits=10, decimal_places=2, null=True)
+    ret_invest_sum = models.DecimalField(u"返现投资金额", max_digits=10, decimal_places=2, null=True)
+    ret_sum = models.DecimalField(u"返现费用", max_digits=10, decimal_places=2, null=True)
+    def __unicode__(self):
+        return self.date.strftime("%Y-%m-%d")
+    class Meta:
+        ordering = ['-date']
