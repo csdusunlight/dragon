@@ -8,7 +8,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from collections import OrderedDict
 class ProjectPageNumberPagination(PageNumberPagination):
-    page_size = 1
+    page_size = 10
     def get_paginated_response(self, data):
         if self.page.paginator.count>0:
             code = 1

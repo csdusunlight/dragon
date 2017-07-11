@@ -19,6 +19,8 @@ urlpatterns = [
     url(r'^investdata/(?P<pk>[0-9]+)/$', views.ProjectInvestDataDetail.as_view()),
     url(r'^balance/$', views.CompanyBalanceList.as_view()),
     url(r'^balance/(?P<pk>[0-9]+)/$', views.CompanyBalanceDetail.as_view()),
+    url(r'^projectstatis/$', views.ProjectStatisList.as_view()),
+    url(r'^daystatis/$', views.DayStatisList.as_view()),
 ]
 from django.conf.urls import include
 
@@ -30,6 +32,7 @@ urlpatterns += [
     url(r'^project_data/$', views.project_data, name='project_data'),
     url(r'^project_finance/$', views.project_finance, name='project_finance'),
     url(r'^project_settle/$', views.project_settle, name='project_settle'),
+
     # 综合管理部分修改
     url(r'^project_detail/$', views.project_detail, name='project_detail'),
     url(r'^project_status/$', views.project_status, name='project_status'),
@@ -37,4 +40,7 @@ urlpatterns += [
     url(r'^finance_pandect/$', views.finance_pandect, name='finance_pandect'),
     url(r'^account_manage/$', views.account_manage, name='account_manage'),
     url(r'^account_detail/$', views.account_detail, name='account_detail'),
+
+    url(r'^import_projectdata_excel/$', views.import_projectdata_excel, name='import_projectdata_excel'),
+
 ]

@@ -15,6 +15,10 @@ SETTLE_STATE=(
     ('later', u"后付款"),
     ('daily', u"日结"),
 )
+SOURCE=(
+    ('site', u"网站"),
+    ('channel', u"渠道"),
+)
 class Platform(models.Model):
     name = models.CharField(u"平台名称", max_length=20)
     url = models.CharField(u"网站域名", max_length=100)
@@ -47,6 +51,7 @@ class Project(models.Model):
     settle = models.DecimalField(u"结算费用", max_digits=10, decimal_places=2, default=0)
     consume = models.DecimalField(u"消耗总额", max_digits=10, decimal_places=2, default=0)
     cost = models.DecimalField(u"项目成本", max_digits=10, decimal_places=2, default=0)
+    finish_time = models.DateField(u"结项日期", null=True)
     def consume_minus_paid(self):
         return self.consume - self.settle
     topay_amount = property(consume_minus_paid)
@@ -60,17 +65,22 @@ class Project(models.Model):
         update_fields=None):
         if self.state != 'finish':
             self.cost = self.settle
+            self.finish_time = None
+        else:
+            if not self.finish_time:
+                self.finish_time = datetime.date.today()
         return models.Model.save(self, force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
 
 class ProjectInvestData(models.Model):
     project = models.ForeignKey(Project, verbose_name=u"项目", related_name='project_data')
     is_futou = models.BooleanField(u"是否复投", default=False)
+    source = models.CharField(u"投资来源", choices=SOURCE, max_length=10)
     invest_mobile = models.CharField(u"投资手机号", max_length=13)
     invest_time = models.DateField(u"投资时间")
     invest_amount = models.DecimalField(u"投资金额", max_digits=10, decimal_places=2)
     invest_term = models.CharField(u"投资标期", max_length=13)
     settle_amount = models.DecimalField(u"结算金额", max_digits=10, decimal_places=2)
-    return_amount = models.DecimalField(u"返现金额", max_digits=10, decimal_places=2)
+    return_amount = models.DecimalField(u"返现金额", max_digits=10, decimal_places=2, default=0)
     state = models.CharField(u"审核状态", max_length=10, choices=AUDIT_STATE)
     remark = models.CharField(u"备注", max_length=100)
     def __unicode__(self):
@@ -85,4 +95,28 @@ class CompanyBalance(models.Model):
     def __unicode__(self):
         return self.project.name + str(self.date)
 
-
+class ProjectStatis(models.Model):
+    project = models.ForeignKey(Project, verbose_name=u"项目", related_name='project_statis')
+    channel_consume = models.DecimalField(u"渠道消耗", max_digits=10, decimal_places=2, default=0)
+    channel_return = models.DecimalField(u"渠道返现金额", max_digits=10, decimal_places=2, default=0)
+    site_consume = models.DecimalField(u"网站消耗", max_digits=10, decimal_places=2, default=0)
+    site_return = models.DecimalField(u"网站返现金额", max_digits=10, decimal_places=2, default=0)
+    def consume(self):
+        return self.channel_consume + self.site_consume
+    def ret(self):
+        return self.channel_return + self.site_return
+    def __unicode__(self):
+        return str(self.project_id) + self.project.name
+class DayStatis(models.Model):
+    date = models.DateField(u"日期", primary_key=True)
+    start_num = models.IntegerField(u"正在进行的项目数")
+    finish_num = models.IntegerField(u"已结项的项目数")
+    invest_count = models.IntegerField(u"投资人数")
+    invest_sum = models.DecimalField(u"投资金额", max_digits=10, decimal_places=2, null=True)
+    consume_sum = models.DecimalField(u"投资金额", max_digits=10, decimal_places=2, null=True)
+    ret_invest_sum = models.DecimalField(u"返现投资金额", max_digits=10, decimal_places=2, null=True)
+    ret_sum = models.DecimalField(u"返现费用", max_digits=10, decimal_places=2, null=True)
+    def __unicode__(self):
+        return self.date.strftime("%Y-%m-%d")
+    class Meta:
+        ordering = ['-date']
