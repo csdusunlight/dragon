@@ -6,23 +6,20 @@
 			csrfmiddlewaretoken: '{{ csrf_token }}'
 		},
 	});
-	var data = '<table width="100%"><tr><th>项目编号</th><th>项目名称</th><th>投资日期</th>' +
-		'<th>提交手机号</th><th>投资金额</th><th>投资标期</th><th>结算金额</th><th>返现金额</th><th>处理状态</th><th>备注</th>' +
-		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{projectuuid}</td><td>{projectname}</td><td>{invest_time}</td>' +
-		'<td>{invest_mobile}</td><td>{invest_amount}</td><td>{invest_term}</td><td>{settle_amount}</td><td>{return_amount}</td>' +
-		'<td>{state_des}</td><td>{remark}</td>' +
-		'<td id="item_{id}"><a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/results]</table>';
-	var url = "/project/investdata/" + "?page={page}";
-	var url2 = "/project/investdata/";
+	var data = '<table width="100%"><tr><th>创建时间</th><th>甲方ID</th><th>甲方名称</th>' +
+		'<th>甲方网址</th><th>甲方联系信息1</th><th>甲方联系信息2</th><th>甲方联系信息3</th><th>操作</th>' +
+		'</tr>[results]<tr id="parent{id}"><td>{time}</td><td>{id}</td><td>{name}</td>' +
+		'<td>{url}</td><td>{contacts}</td><td>查看</td><td>查看</td>' +
+		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">编辑</a> │ <a class="hide-btn" onclick="hide({id})">隐藏</a>' +
+		' │ <a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/results]</table>';
+	var url = "/project/platform/" + "?page={page}";
+	var url2 = "/project/platform/";
 	
 	var project_flag;		// project_flag = -1 时，为导入单条数据；project_flag != -1 时，为修改单条数据
 	var parent;
 	
 	function pass(id) {			//弹出修改单条数据弹窗
-		$(".popup-title").text("修改项目数据");
-		$("#invest_time_change")[0].type = "text";
 		$("input#project_change_id").val(id);
-		$("#project_num_change")[0].disabled=true;
 		project_flag = id;
 		
 		parent = "parent" + id;
@@ -83,13 +80,23 @@
 			content: data,
 		});
 		
+		$("#tab li").click(function(){				//		tab切换
+			if($(this).attr("class")!="cur"){
+				$(this).toggleClass("cur").siblings().removeClass("cur")
+				var index = $(this).index();
+				$("#page").empty();
+				$("#pagedata").ajaxPage({
+				    url:url,
+				    pageId:$("#page"),
+				    run:true,
+				    content:data,
+//				    complete:pagecallback,
+				});
+			}
+	 	});
+		
 		$("#single_import").click(function(){			//弹出单条导入弹窗
-			$(".Finnow p input, .Finnow p select").val("");
-			$("#handle_status_change").val(0);
-			$("#invest_time_change")[0].type = "date";
-			$(".popup-title").text("单条数据导入");
-			$(".change-project").show();
-			$("#project_num_change")[0].disabled=false;
+			$(".add-project").show();
 			project_flag = -1;
 		})
 		
@@ -203,17 +210,21 @@
 	});
 </script>
 {% endblock js %} {% block right %}
-<div class="Criteria">
-	<span>搜索条件</span>
+<!--<div class="Criteria">
+	<span>搜索条件</span>-->
 	<div class="Crite-box">
 		<form>
+			<ul id="tab" class="tab-box">
+				<li class="tab-item cur">显示</li>
+				<li class="tab-item">隐藏</li>
+			</ul>
 			<div class="Submit-in">
-				<input id="single_import" type="button" value="单条导入" />
+				<input id="single_import" type="button" value="新建甲方信息" />
 			</div>
 			
 		</form>
 	</div>
-</div>
+<!--</div>-->
 
 <div class="Tin-table">
 	<div id="pagedata">
@@ -224,6 +235,65 @@
 	</div>
 </div>
 {%endblock%} {% block modal %}
+<div class="add-project project-box">
+	<div class="w570-box" style="height: 600px; overflow-y:scroll;">
+		<h3 class="popup-title">新建甲方信息</h3>
+		<button class="none-x"></button>
+		<form class="Finnow set-project">
+				<input id="project_change_id" type="hidden" />
+			<p>
+				<span>甲方名称：</span>
+				<input id="project_num_change" type="text" />
+			</p>
+			<p>
+				<span>甲方网址：</span>
+				<input id="project_name_change" type="text" />
+			</p>
+			<p>以下所有数据皆为非必填项</p>
+			<div class="contact-deatil">
+				<p>
+					<span>联系人名称：</span>
+					<input id="project_num_change" type="text" />
+				</p>
+				<p>
+					<span>联系人手机：</span>
+					<input id="project_num_change" type="text" />
+				</p>
+				<p>
+					<span>联系人QQ：</span>
+					<input id="project_num_change" type="text" />
+				</p>
+				<p>
+					<span>开票公司：</span>
+					<input id="project_num_change" type="text" />
+				</p>
+				<p>
+					<span>开票税号：</span>
+					<input id="project_num_change" type="text" />
+				</p>
+				<p>
+					<span>联系地址：</span>
+					<input id="project_num_change" type="text" />
+				</p>
+				<p>
+					<span>手机号：</span>
+					<input id="project_num_change" type="text" />
+				</p>
+				<p>
+					<span>备注：</span>
+					<input id="project_num_change" type="text" />
+				</p>
+			</div>
+			
+			
+			<div class="Finnow-Sub">
+				<input id="change_project_btn" type="submit" value="确认" onclick="return false;"/>
+				<input type="button" value="取消" class="none-x-s" />
+			</div>
+		</form>
+	</div>
+</div>
+
 <div class="change-project project-box">
 	<div class="w570-box">
 		<h3 class="popup-title">修改项目数据</h3>

@@ -7,13 +7,10 @@
 			csrfmiddlewaretoken: '{{ csrf_token }}'
 		},
 	});
-	var data = '<table width="100%"><tr><th>立项日期</th><th>项目编号</th><th>项目名称</th>' +
-		'<th>商务对接人</th><th>付款总额</th><th>消耗总额</th><th>代收总额</th><th>返现总额</th><th>盈利总额</th><th>项目状态</th>' +
-		'</tr>[results]<tr id="parent{uuid}"><td>{time}</td><td>{uuid}</td><td>{name}</td>' +
-		'<td>{contact}</td><td>{paid_amount}</td><td>{consume_amount}</td><td>{topay_amount}</td><td>{return_amount}</td><td>{profit}</td>' +
-		'<td>{state_des}</td></tr>[/results]</table>';
-	var url = "/project/projects/" + "?page={page}";
-	var url2 = "/project/projects/";
+	var data = '<table width="100%"><tr><th>日期</th><th>收入</th><th>支出</th><th>结余</th>' +
+		'</tr>[results]<tr id="parent{id}"><td>{date}</td><td>{income}</td><td>{balance}</td><td>{balance}</td></tr>[/results]</table>';
+	var url = "/project/balance/" + "?page={page}";
+	var url2 = "/project/balance/";
 	
 	
 	
@@ -101,9 +98,18 @@
    <span>项目总览</span>
    <p>当前在线项目<number>0</number>个</p>
    <div class="Need-Cont">
-	   	<div id="main" style="width: 300px;height:200px; display: inline-block;"></div>
-	    <div id="main2" style="width: 300px;height:200px; display: inline-block;""></div>
-	    <div id="main3" style="width: 300px;height:200px; display: inline-block;""></div>
+   		<div class="pie-box">
+   			<div id="main" style="width: 300px;height:200px;"></div>
+   			<p>当前余额<number>445546546</number></p>
+   		</div>
+	   	<div class="pie-box">
+   			<div id="main2" style="width: 300px;height:200px;"></div>
+   			<p>本月收入<number>445546546</number></p>
+   		</div>
+   		<div class="pie-box">
+   			<div id="main3" style="width: 300px;height:200px;"></div>
+   			<p>本月支出<number>445546546</number></p>
+   		</div>
    </div>
 </div>
 

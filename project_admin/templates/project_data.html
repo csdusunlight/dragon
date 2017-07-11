@@ -8,7 +8,7 @@
 	});
 	var data = '<table width="100%"><tr><th>项目编号</th><th>项目名称</th><th>投资日期</th>' +
 		'<th>提交手机号</th><th>投资金额</th><th>投资标期</th><th>结算金额</th><th>返现金额</th><th>处理状态</th><th>备注</th>' +
-		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{projectuuid}</td><td>{projectname}</td><td>{invest_time}</td>' +
+		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{project}</td><td>{projectname}</td><td>{invest_time}</td>' +
 		'<td>{invest_mobile}</td><td>{invest_amount}</td><td>{invest_term}</td><td>{settle_amount}</td><td>{return_amount}</td>' +
 		'<td>{state_des}</td><td>{remark}</td>' +
 		'<td id="item_{id}"><a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/results]</table>';
@@ -102,87 +102,6 @@
 			$(".project-box").hide(); 
 		})
 		
-		$('#change_project_btn').click(function() {		//点击确认按钮提交或修改单条项目数据
-			var project_num_change = $("#project_num_change").val(),
-				project_name_change = $("#project_name_change").val(),
-				invest_time_change = $("#invest_time_change").val(),
-				submit_tel_change = $("#submit_tel_change").val(),
-				invest_money_change = $("#invest_money_change").val(),
-				invest_days_change = $("#invest_days_change").val(),
-				balance_money_change = $("#balance_money_change").val(),
-				cashback_change = $("#cashback_change").val(),
-				handle_status_change = $("#handle_status_change").val(),
-				remark_change = $("#remark_change").val();
-			
-			console.log(project_flag+", "+project_num_change+", "+project_name_change+", "+invest_time_change+", "+submit_tel_change+", "+invest_money_change+", "+invest_days_change+", "+balance_money_change+", "+cashback_change+", "+handle_status_change+", "+remark_change);
-			
-			if (project_flag == -1) {
-				console.log(url2)
-				$.ajax({
-					url: url2,
-					dataType: "json",
-					type: "POST",
-					data: {
-						'project': project_num_change,
-						'projectuuid': project_num_change,
-						'projectname': project_name_change,
-						'invest_time': invest_time_change,
-						'invest_mobile': submit_tel_change,
-						'invest_amount': invest_money_change,
-						'invest_term': invest_days_change,
-						'settle_amount': balance_money_change,
-						'return_amount': cashback_change,
-						'state': handle_status_change,
-						"remark": remark_change
-					},
-					success: function(ret) {
-							alert("操作成功！");
-					},
-					error: function(ret) {
-						alert(JSON.stringify(ret));
-					}
-				});
-			} else{
-				console.log(url2 + project_flag)
-				$.ajax({
-					url: url2 + project_flag + "/",
-					dataType: "json",
-					type: "PUT",
-					data: {
-						'project': project_num_change,
-						'projectuuid': project_num_change,
-						'projectname': project_name_change,
-						'invest_time': invest_time_change,
-						'invest_mobile': submit_tel_change,
-						'invest_amount': invest_money_change,
-						'invest_term': invest_days_change,
-						'settle_amount': balance_money_change,
-						'return_amount': cashback_change,
-						'state': handle_status_change,
-						"remark": remark_change
-					},
-					success: function(ret) {
-						console.log(ret);
-						alert("操作成功！");
-						var dom = document.getElementById(parent);
-						$(dom).find("td").eq(0).text(ret.projectuuid);
-						$(dom).find("td").eq(1).text(ret.projectname);
-						$(dom).find("td").eq(2).text(ret.invest_time);
-						$(dom).find("td").eq(3).text(ret.invest_mobile);
-						$(dom).find("td").eq(4).text(ret.invest_amount);
-						$(dom).find("td").eq(5).text(ret.invest_term);
-						$(dom).find("td").eq(6).text(ret.settle_amount);
-						$(dom).find("td").eq(7).text(ret.return_amount);
-						$(dom).find("td").eq(8).text(ret.state_des);
-						$(dom).find("td").eq(9).text(ret.remark);
-					},
-					error: function(ret) {
-						alert(JSON.stringify(ret));
-					}
-				});
-			}
-			$(".change-project").hide();
-		});
 		
 		$('#delete_project_btn').click(function() {		//点击确认按钮删除单条项目数据
 			project_flag = $("input#project_delete_id").val();
@@ -208,30 +127,46 @@
 		$("#search").click(function() {			//搜索项目数据
 			var newurl = url;
 			
-			invest_time_start = $("#invest_time_start").val();
-			invest_time_end = $("#invest_time_end").val();
-			project_name = $("#project_name").val();
-			submit_tel = $("#submit_tel").val();
-			project_num = $("#project_num").val();
-			handle_status = $("#handle_status").val();
+			dateft_0 = $("#dateft_0").val();
+			dateft_1 = $("#dateft_1").val();
+			dateft2_0 = $("#dateft2_0").val();
+			dateft2_1 = $("#dateft2_1").val();
+			project_id = $("#project_id").val();
+			name = $("#name").val();
+			invest_mobile = $("#invest_mobile").val();
+			invest_source = $("#invest_source").val();
+			is_futou = $("#is_futou").val();
+			state = $("#state").val();
 			
-			if(invest_time_start) {
-				newurl += "&dateft_0=" + invest_time_start;
+			if(dateft_0) {
+				newurl += "&dateft_0=" + dateft_0;
 			}
-			if(invest_time_end) {
-				newurl += "&dateft_1=" + invest_time_end;
+			if(dateft_1) {
+				newurl += "&dateft_1=" + dateft_1;
 			}
-			if(project_name) {
-				newurl += "&name__contains=" + project_name;
+			if(dateft2_0) {
+				newurl += "&dateft2_0=" + dateft2_0;
 			}
-			if(submit_tel) {
-				newurl += "&invest_mobile=" + submit_tel;
+			if(dateft2_1) {
+				newurl += "&dateft2_1=" + dateft2_1;
 			}
-			if(project_num) {
-				newurl += "&project=" + project_num;
+			if(project_id) {
+				newurl += "&project=" + project_id;
 			}
-			if(handle_status && handle_status != -1) {
-				newurl += "&state=" + handle_status;
+			if(name) {
+				newurl += "&name__contains=" + name;
+			}
+			if(invest_mobile) {
+				newurl += "&invest_mobile=" + invest_mobile;
+			}
+			if(invest_source && invest_source != 0) {
+				newurl += "&invest_source=" + invest_source;
+			}
+			if(is_futou && is_futou != -1) {
+				newurl += "&is_futou=" + is_futou;
+			}
+			if(state && state != -1) {
+				newurl += "&state=" + state;
 			}
 			console.log(newurl);
 			
@@ -246,34 +181,51 @@
 		});
 		
 		$("#export").click(function() {			//导出表格
-			invest_time_start = $("#invest_time_start").val();
-			invest_time_end = $("#invest_time_end").val();
-			project_name = $("#project_name").val();
-			submit_tel = $("#submit_tel").val();
-			project_num = $("#project_num").val();
-			handle_status = $("#handle_status").val();
+			dateft_0 = $("#dateft_0").val();
+			dateft_1 = $("#dateft_1").val();
+			dateft2_0 = $("#dateft2_0").val();
+			dateft2_1 = $("#dateft2_1").val();
+			project_id = $("#project_id").val();
+			name = $("#name").val();
+			invest_mobile = $("#invest_mobile").val();
+			invest_source = $("#invest_source").val();
+			is_futou = $("#is_futou").val();
+			state = $("#state").val();
 			
 			var html = '<form action="' + "{% url 'export_finance_excel' %}" + '" method="get" target="_self" id="postData_form">';
 			
-			if(invest_time_start) {
-				html += '<input name="invest_time_start" type="hidden" value="' + invest_time_start + '"/>';
+			if(dateft_0) {
+				html += '<input name="dateft_0" type="hidden" value="' + dateft_0 + '"/>';
 			}
-			if(invest_time_end) {
-				html += '<input name="invest_time_end" type="hidden" value="' + invest_time_end + '"/>';
-			}
-			
-			if(project_name) {
-				html += '<input name="project_name" type="hidden" value="' + project_name + '"/>';
+			if(dateft_1) {
+				html += '<input name="dateft_1" type="hidden" value="' + dateft_1 + '"/>';
 			}
 			
-			if(submit_tel) {
-				html += '<input name="submit_tel" type="hidden" value="' + submit_tel + '"/>';
+			if(dateft2_0) {
+				html += '<input name="dateft2_0" type="hidden" value="' + dateft2_0 + '"/>';
 			}
-			if(project_num) {
-				html += '<input name="project_num" type="hidden" value="' + project_num + '"/>';
+			if(dateft2_1) {
+				html += '<input name="dateft2_1" type="hidden" value="' + dateft2_1 + '"/>';
 			}
-			if(handle_status) {
-				html += '<input name="handle_status" type="hidden" value="' + handle_status + '"/>';
+			
+			if(project_id) {
+				html += '<input name="project_id" type="hidden" value="' + project_id + '"/>';
+			}
+			if(name) {
+				html += '<input name="name" type="hidden" value="' + name + '"/>';
+			}
+			
+			if(invest_mobile) {
+				html += '<input name="invest_mobile" type="hidden" value="' + invest_mobile + '"/>';
+			}
+			if(invest_source && invest_source != 0) {
+				html += '<input name="invest_source" type="hidden" value="' + invest_source + '"/>';
+			}
+			if(is_futou && is_futou != -1) {
+				html += '<input name="is_futou" type="hidden" value="' + is_futou + '"/>';
+			}
+			if(state && state != -1) {
+				html += '<input name="state" type="hidden" value="' + state + '"/>';
 			}
 			
 			html += '</form>';
@@ -320,38 +272,38 @@
 			<table width="100%">
 				<tr>
 					<td>
-						<i>投资开始日期：</i>
-						<input id="invest_time_start" type="date" />
+						<i>投资日期-start：</i>
+						<input id="dateft_0" type="date" />
 					</td>
 					<td>
-						<i>投资结束日期：</i>
-						<input id="invest_time_end" type="date" />
+						<i>投资日期-end：</i>
+						<input id="dateft_1" type="date" />
 					</td>
 					<td>
-						<i>审核开始日期：</i>
-						<input id="invest_time_start" type="date" />
+						<i>审核时间-start：</i>
+						<input id="dateft2_0" type="date" />
 					</td>
 					<td>
-						<i>审核结束日期：</i>
-						<input id="invest_time_end" type="date" />
+						<i>审核时间-end：</i>
+						<input id="dateft2_1" type="date" />
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<i style="letter-spacing:4.8px;">项目编号：</i>
-						<input id="project_num" type="text" />
+						<input id="project_id" type="text" />
 					</td>
 					<td>
 						<i style="letter-spacing:4.8px;">项目名称：</i>
-						<input id="project_name" type="text" />
+						<input id="name" type="text" />
 					</td>
 					<td>
 						<i style="letter-spacing:4.8px;">提交手机号：</i>
-						<input id="submit_tel" type="text" />
+						<input id="invest_mobile" type="text" />
 					</td>
 					<td>
 						<i style="letter-spacing:4.8px;">投资来源</i>
-						<select name="selectAge" id="handle_status">
+						<select name="selectAge" id="invest_source">
 							<option value="0">全部</option>
 							<option value="channel">渠道</option>
 							<option value="website">网站</option>
@@ -361,16 +313,16 @@
 				<tr>
 					<td>
 						<i style="letter-spacing:4.8px;">投资方式</i>
-						<select name="selectAge" id="handle_status">
-							<option value="0">全部</option>
-							<option value="shoutou">首投</option>
-							<option value="futou">复投</option>
+						<select name="selectAge" id="is_futou">
+							<option value="-1">全部</option>
+							<option value="0">首投</option>
+							<option value="1">复投</option>
 						</select>
 					</td>
 					<td>
 						<i style="letter-spacing:4.8px;">审核状态</i>
-						<select name="selectAge" id="handle_status">
-							<option value="0">全部</option>
+						<select name="selectAge" id="state">
+							<option value="-1">全部</option>
 							<option value="0">已审核</option>
 							<option value="1">待审核</option>
 						</select>
@@ -387,6 +339,8 @@
 				<a id="input_clone" class="input-clone">选择文件</a>
 				<p class="hint-box">已选择表格：<b id="hint" class="hint">无</b></p>
 				<input id="import" type="button" value="表格导入" />
+				<input type="button" value="获取模版" />
+				<input type="button" value="审核数据导入" />
 			</div>
 		</form>
 	</div>
@@ -401,64 +355,6 @@
 	</div>
 </div>
 {%endblock%} {% block modal %}
-<div class="change-project project-box">
-	<div class="w570-box">
-		<h3 class="popup-title">修改项目数据</h3>
-		<button class="none-x"></button>
-		<form class="Finnow set-project">
-				<input id="project_change_id" type="hidden" />
-			<p>
-				<span>项目编号：</span>
-				<input id="project_num_change" type="text" />
-			</p>
-			<p>
-				<span>项目名称：</span>
-				<input id="project_name_change" type="text" />
-			</p>
-			<p>
-				<span>投资日期：</span>
-				<input id="invest_time_change" type="text" />
-			</p>
-			<p>
-				<span>提交手机号：</span>
-				<input id="submit_tel_change" type="text" />
-			</p>
-			<p>
-				<span>投资金额：</span>
-				<input id="invest_money_change" type="text" />
-			</p>
-			<p>
-				<span>投资标期：</span>
-				<input id="invest_days_change" type="text" />
-			</p>
-			<p>
-				<span>结算金额：</span>
-				<input id="balance_money_change" type="text" />
-			</p>
-			<p>
-				<span>返现金额：</span>
-				<input id="cashback_change" type="text" />
-			</p>
-			<p>
-				<span>处理状态：</span>
-				<select name="selectAge" id="handle_status_change">
-					<option value="0">审核通过</option>
-					<option value="1">待审核</option>
-					<option value="2">审核未通过</option>
-				</select>
-			</p>
-			<p>
-				<span>备注：</span>
-				<input id="remark_change" type="text" />
-			</p>
-			
-			<div class="Finnow-Sub">
-				<input id="change_project_btn" type="submit" value="确认" onclick="return false;"/>
-				<input type="button" value="取消" class="none-x-s" />
-			</div>
-		</form>
-	</div>
-</div>
 
 <!--删除项目弹窗-->
 <div class="delete-project project-box">

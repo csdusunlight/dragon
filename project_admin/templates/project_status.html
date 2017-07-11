@@ -6,8 +6,8 @@
 			csrfmiddlewaretoken: '{{ csrf_token }}'
 		},
 	});
-	var data = '<table width="100%"><tr><th>项目编号</th><th>结项项日期</th><th>项目名称</th>' +
-		'<th>预计代收/待消耗</th><th>预计总消耗</th><th>总返现金额</th><th>预估渠道消耗</th><th>渠道返现金额</th><th>预估网站消耗</th><th>网站消耗金额</th><th>项目状态</th>' +
+	var data = '<table width="100%"><tr><th>项目编号</th><th>结项日期</th><th>项目名称</th>' +
+		'<th>预计代收/待消耗</th><th>预计总消耗</th><th>总返现金额</th><th>预估渠道消耗</th><th>渠道返现金额</th><th>预估网站消耗</th><th>网站返现金额</th><th>项目状态</th>' +
 		'</tr>[results]<tr id="parent{id}"><td>{id}</td><td>{time}</td><td>{name}</td>' +
 		'<td>{topay_amount}</td><td>{paid_amount}</td><td>{consume_amount}</td><td>{topay_amount}</td><td>{return_amount}</td><td>{profit}</td>' +
 		'<td>{state_des}</td><td>{state_des}</td></tr>[/results]</table>';
@@ -38,30 +38,30 @@
 		$("#search").click(function() {			//搜索项目数据
 			var newurl = url;
 			
-			created_time_start = $("#created_time_start").val();
-			created_time_end = $("#created_time_end").val();
-			project_name = $("#project_name").val();
+			dateft_0 = $("#dateft_0").val();
+			dateft_1 = $("#dateft_1").val();
+			name = $("#name").val();
 			contact_person = $("#contact_person").val();
-			project_num = $("#project_num").val();
-			project_status = $("#project_status").val();
+			project_id = $("#project_id").val();
+			state = $("#state").val();
 			
-			if(created_time_start) {
-				newurl += "&dateft_0=" + created_time_start;
+			if(dateft_0) {
+				newurl += "&dateft_0=" + dateft_0;
 			}
-			if(created_time_end) {
-				newurl += "&dateft_1=" + created_time_end;
+			if(dateft_1) {
+				newurl += "&dateft_1=" + dateft_1;
 			}
-			if(project_name) {
-				newurl += "&name__contains=" + project_name;
+			if(project_id) {
+				newurl += "&id=" + project_id;
+			}
+			if(name) {
+				newurl += "&name__contains=" + name;
 			}
 			if(contact_person) {
 				newurl += "&contact=" + contact_person;
 			}
-			if(project_num) {
-				newurl += "&uuid=" + project_num;
-			}
-			if(project_status && project_status != 0) {
-				newurl += "&state=" + project_status;
+			if(state && state != 0) {
+				newurl += "&state=" + state;
 			}
 			console.log(newurl);
 			
@@ -76,35 +76,35 @@
 		});
 		
 		$("#export").click(function() {			//导出表格
-			created_time_start = $("#created_time_start").val();
-			created_time_end = $("#created_time_end").val();
-			project_name = $("#project_name").val();
+			dateft_0 = $("#dateft_0").val();
+			dateft_1 = $("#dateft_1").val();
+			name = $("#name").val();
 			contact_person = $("#contact_person").val();
-			project_num = $("#project_num").val();
-			project_status = $("#project_status").val();
+			project_id = $("#project_id").val();
+			state = $("#state").val();
 			
 			var html = '<form action="' + "{% url 'export_finance_excel' %}" + '" method="get" target="_self" id="postData_form">';
 			
-			if(created_time_start) {
-				html += '<input name="created_time_start" type="hidden" value="' + created_time_start + '"/>';
+			if(dateft_0) {
+				html += '<input name="dateft_0" type="hidden" value="' + dateft_0 + '"/>';
 			}
-			if(created_time_end) {
-				html += '<input name="created_time_end" type="hidden" value="' + created_time_end + '"/>';
+			if(dateft_1) {
+				html += '<input name="dateft_1" type="hidden" value="' + dateft_1 + '"/>';
 			}
 			
-			if(project_name) {
-				html += '<input name="project_name" type="hidden" value="' + project_name + '"/>';
+			if(name) {
+				html += '<input name="name" type="hidden" value="' + name + '"/>';
 			}
 			
 			if(contact_person) {
 				html += '<input name="contact_person" type="hidden" value="' + contact_person + '"/>';
 			}
 			
-			if(project_num) {
-				html += '<input name="project_num" type="hidden" value="' + project_num + '"/>';
+			if(project_id) {
+				html += '<input name="id" type="hidden" value="' + project_id + '"/>';
 			}
-			if(project_status) {
-				html += '<input name="project_status" type="hidden" value="' + project_status + '"/>';
+			if(state) {
+				html += '<input name="state" type="hidden" value="' + state + '"/>';
 			}
 			
 			html += '</form>';
@@ -128,25 +128,25 @@
 				<tr>
 					<td>
 						<i>立项开始日期：</i>
-						<input id="created_time_start" type="date" />
+						<input id="dateft_0" type="date" />
 					</td>
 					<td>
 						<i>立项结束日期：</i>
-						<input id="created_time_end" type="date" />
+						<input id="dateft_1" type="date" />
 					</td>
 					<td>
 						<i style="letter-spacing:4.8px;">项目编号：</i>
-						<input id="project_num" type="text" />
+						<input id="project_id" type="text" />
 					</td>
 					<td>
 						<i style="letter-spacing:4.8px;">项目名称：</i>
-						<input id="project_name" type="text" />
+						<input id="name" type="text" />
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<i style="letter-spacing:4.8px;">项目状态</i>
-						<select name="selectAge" id="project_status">
+						<select name="selectAge" id="state">
 							<option value="0">全部</option>
 							<option value="start">正在进行</option>
 							<option value="finish">已结项</option>
