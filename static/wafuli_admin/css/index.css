@@ -97,9 +97,9 @@ a { cursor:pointer;}
 .Crite-box td input[type="date"]{ width:58%; margin-left:1%; height:28px; border:1px solid #4daa84; outline:none; padding:0 5px; box-sizing:border-box; vertical-align:middle;}
 .Crite-box td select{ width:60%; margin-left:1%; height:28px; border:1px solid #4daa84; outline:none; padding:0 5px; box-sizing:border-box; vertical-align:middle;}
 .Submit-in { width:100%; height:auto; text-align:right; padding:10px 0;}
-.Submit-in input{ width:10%; height:30px; border:1px solid #1377aa; color:#fff; font-size:16px; color:#fff; padding:0 40px 0 0; box-sizing:border-box; min-width:80px; margin:0 7px;}
+.Submit-in input, .leading-in input { width:10%; height:30px; border:1px solid #1377aa; color:#fff; font-size:16px; color:#fff; padding:0 40px 0 0; box-sizing:border-box; min-width:80px; margin:0 7px;}
 .Submit-in input[type="submit"]{ background:url(../images/ico1.png) no-repeat 80% #4daa84;border: none;}
-.Submit-in input[type="button"]{ background:url(../images/ico2.png) no-repeat 80% #4daa84;border: none;}
+.Submit-in input[type="button"], .leading-in input[type="button"]{ background:url(../images/ico2.png) no-repeat 80% #4daa84;border: none;}
 .Submit-in .choose-btn {
     width: 30px;
     background: #4daa84 !important;
@@ -161,7 +161,7 @@ a { cursor:pointer;}
 .Tin-table-box td { text-align:center; height:44px; font-family:"宋体"; color:#666666;}
 .Tin-table-box td a { color:#666666; font-family:"宋体"}
 .fyin { cursor:pointer;}
-.BackNow, .change-project, .delete-project { position:fixed; width:100%; height:100%; background:url(../images/back-in.png); display:none;}
+.BackNow, .project-box, .delete-project { position:fixed; width:100%; height:100%; background:url(../images/back-in.png); display:none;}
 .w570-box { width:570px; height:auto; overflow:hidden; margin:10% auto; background:#fff; position:relative;border-radius: 8px;}
 .w570-box h3 {padding: 20px 0; font-weight:400; font-size:25px; color:#04b3ff; line-height:44px; /*background:#979797;*/ text-align:center;}
 .none-x { position:absolute; right:17px; top:13px; width:19px; height:19px; border:none; background:url(../images/none.png) no-repeat center; outline:none;}
@@ -284,5 +284,35 @@ a { cursor:pointer;}
 .set-project select {
 	width: 200px;
 	height: 30px;
+}
+.pie-box {
+	display: inline-block;
+	width: 32%;
+}
+.tab-box {
+	font-size: 0;
+}
+.tab-item {
+	display: inline-block;
+	width: 100px;
+	font-size: 14px;
+	line-height: 30px;
+	text-align: center;
+	color: #fff;
+	background-color: darkseagreen;
+	cursor: pointer;
+}
+.tab-item.cur {
+	color: red;
+}
+.look-finish {
+	color: red !important;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.finish-project p {
+	font-size: 14px;
+	line-height: 30px;
+	text-align: center;
 }
 /*立项部分---end*/

@@ -1,0 +1,371 @@
+{% extends "project_base.html" %} {%load staticfiles%} {% block js %}
+<script type="text/javascript" src="{%static 'js/ajaxfileupload.js'%}"></script>
+<script type="text/javascript">
+	$.ajaxSetup({
+		data: {
+			csrfmiddlewaretoken: '{{ csrf_token }}'
+		},
+	});
+	var data = '<table width="100%"><tr><th>创建时间</th><th>甲方ID</th><th>甲方名称</th>' +
+		'<th>甲方网址</th><th>甲方联系信息1</th><th>甲方联系信息2</th><th>甲方联系信息3</th><th>操作</th>' +
+		'</tr>[results]<tr id="parent{id}"><td>{time}</td><td>{id}</td><td>{name}</td>' +
+		'<td>{url}</td><td>{contacts}</td><td>查看</td><td>查看</td>' +
+		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">编辑</a> │ <a class="hide-btn" onclick="hide({id})">隐藏</a>' +
+		' │ <a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/results]</table>';
+	var url = "/project/platform/" + "?page={page}";
+	var url2 = "/project/platform/";
+	
+	var project_flag;		// project_flag = -1 时，为导入单条数据；project_flag != -1 时，为修改单条数据
+	var parent;
+	
+	function pass(id) {			//弹出修改单条数据弹窗
+		$("input#project_change_id").val(id);
+		project_flag = id;
+		
+		parent = "parent" + id;
+		var dom = document.getElementById(parent);
+		var children0 = $(dom).find("td").eq(0).text(),
+			children1 = $(dom).find("td").eq(1).text(),
+			children2 = $(dom).find("td").eq(2).text(),
+			children3 = $(dom).find("td").eq(3).text(),
+			children4 = $(dom).find("td").eq(4).text(),
+			children5 = $(dom).find("td").eq(5).text(),
+			children6 = $(dom).find("td").eq(6).text(),
+			children7 = $(dom).find("td").eq(7).text();
+			children9 = $(dom).find("td").eq(9).text();
+		var	children8 = $(dom).find("td").eq(8).text(),
+			children8_num; 
+			switch (children8)
+			{
+				case "审核通过":
+					children8_num = 0;
+					break;
+				case "待审核":
+					children8_num = 1;
+					break;
+				case "审核未通过":
+					children8_num = 2;
+					break;
+			}
+		$("#project_num_change").val(children0);
+		$("#project_name_change").val(children1);
+		$("#invest_time_change").val(children2);
+		$("#submit_tel_change").val(children3);
+		$("#invest_money_change").val(children4);
+		$("#invest_days_change").val(children5);
+		$("#balance_money_change").val(children6);
+		$("#cashback_change").val(children7);
+		$("#handle_status_change").val(children8_num);
+		$("#remark_change").val(children9);
+		
+		$(".change-project").show();
+	}
+	
+	function refuse(id) {		//弹出删除项目数据弹窗
+		$("input#project_delete_id").val(id);
+		$(".delete-project").show();
+	}
+	
+	
+	$(document).ready(function() {
+		$("li.home15").addClass("show-project").toggleClass("on");
+		$("li.home3").toggleClass("show");
+		$(".Tin-table tr:even").css("background-color", "#fcfcfc");
+		
+		
+		$("#pagedata").ajaxPage({
+			url: url,
+			pageId: $("#page"),
+			run: true,
+			content: data,
+		});
+		
+		$("#tab li").click(function(){				//		tab切换
+			if($(this).attr("class")!="cur"){
+				$(this).toggleClass("cur").siblings().removeClass("cur")
+				var index = $(this).index();
+				$("#page").empty();
+				$("#pagedata").ajaxPage({
+				    url:url,
+				    pageId:$("#page"),
+				    run:true,
+				    content:data,
+//				    complete:pagecallback,
+				});
+			}
+	 	});
+		
+		$("#single_import").click(function(){			//弹出单条导入弹窗
+			$(".add-project").show();
+			project_flag = -1;
+		})
+		
+		$(".none-x, .none-x-s").click(function() {		// 关闭或取消 弹窗
+			$(".project-box").hide(); 
+		})
+		
+		$('#change_project_btn').click(function() {		//点击确认按钮提交或修改单条项目数据
+			var project_num_change = $("#project_num_change").val(),
+				project_name_change = $("#project_name_change").val(),
+				invest_time_change = $("#invest_time_change").val(),
+				submit_tel_change = $("#submit_tel_change").val(),
+				invest_money_change = $("#invest_money_change").val(),
+				invest_days_change = $("#invest_days_change").val(),
+				balance_money_change = $("#balance_money_change").val(),
+				cashback_change = $("#cashback_change").val(),
+				handle_status_change = $("#handle_status_change").val(),
+				remark_change = $("#remark_change").val();
+			
+			console.log(project_flag+", "+project_num_change+", "+project_name_change+", "+invest_time_change+", "+submit_tel_change+", "+invest_money_change+", "+invest_days_change+", "+balance_money_change+", "+cashback_change+", "+handle_status_change+", "+remark_change);
+			
+			if (project_flag == -1) {
+				console.log(url2)
+				$.ajax({
+					url: url2,
+					dataType: "json",
+					type: "POST",
+					data: {
+						'project': project_num_change,
+						'projectuuid': project_num_change,
+						'projectname': project_name_change,
+						'invest_time': invest_time_change,
+						'invest_mobile': submit_tel_change,
+						'invest_amount': invest_money_change,
+						'invest_term': invest_days_change,
+						'settle_amount': balance_money_change,
+						'return_amount': cashback_change,
+						'state': handle_status_change,
+						"remark": remark_change
+					},
+					success: function(ret) {
+							alert("操作成功！");
+					},
+					error: function(ret) {
+						alert(JSON.stringify(ret));
+					}
+				});
+			} else{
+				console.log(url2 + project_flag)
+				$.ajax({
+					url: url2 + project_flag + "/",
+					dataType: "json",
+					type: "PUT",
+					data: {
+						'project': project_num_change,
+						'projectuuid': project_num_change,
+						'projectname': project_name_change,
+						'invest_time': invest_time_change,
+						'invest_mobile': submit_tel_change,
+						'invest_amount': invest_money_change,
+						'invest_term': invest_days_change,
+						'settle_amount': balance_money_change,
+						'return_amount': cashback_change,
+						'state': handle_status_change,
+						"remark": remark_change
+					},
+					success: function(ret) {
+						console.log(ret);
+						alert("操作成功！");
+						var dom = document.getElementById(parent);
+						$(dom).find("td").eq(0).text(ret.projectuuid);
+						$(dom).find("td").eq(1).text(ret.projectname);
+						$(dom).find("td").eq(2).text(ret.invest_time);
+						$(dom).find("td").eq(3).text(ret.invest_mobile);
+						$(dom).find("td").eq(4).text(ret.invest_amount);
+						$(dom).find("td").eq(5).text(ret.invest_term);
+						$(dom).find("td").eq(6).text(ret.settle_amount);
+						$(dom).find("td").eq(7).text(ret.return_amount);
+						$(dom).find("td").eq(8).text(ret.state_des);
+						$(dom).find("td").eq(9).text(ret.remark);
+					},
+					error: function(ret) {
+						alert(JSON.stringify(ret));
+					}
+				});
+			}
+			$(".change-project").hide();
+		});
+		
+		$('#delete_project_btn').click(function() {		//点击确认按钮删除单条项目数据
+			project_flag = $("input#project_delete_id").val();
+			console.log(url2 + project_flag);
+			
+			$.ajax({
+				url: url2 + project_flag + "/",
+				dataType: "json",
+				type: "DELETE",
+				data: {
+					'id': project_flag,
+				},
+				success: function(ret) {
+						alert("操作成功！");
+				},
+				error: function(ret) {
+					alert(JSON.stringify(ret));
+				}
+			});
+			$(".delete-project").hide();
+		});
+		
+	});
+</script>
+{% endblock js %} {% block right %}
+<!--<div class="Criteria">
+	<span>搜索条件</span>-->
+	<div class="Crite-box">
+		<form>
+			<ul id="tab" class="tab-box">
+				<li class="tab-item cur">显示</li>
+				<li class="tab-item">隐藏</li>
+			</ul>
+			<div class="Submit-in">
+				<input id="single_import" type="button" value="新建甲方信息" />
+			</div>
+			
+		</form>
+	</div>
+<!--</div>-->
+
+<div class="Tin-table">
+	<div id="pagedata">
+	</div>
+	<div class="Page-in-admin">
+		<div class="page" id="page">
+		</div>
+	</div>
+</div>
+{%endblock%} {% block modal %}
+<div class="add-project project-box">
+	<div class="w570-box" style="height: 600px; overflow-y:scroll;">
+		<h3 class="popup-title">新建甲方信息</h3>
+		<button class="none-x"></button>
+		<form class="Finnow set-project">
+				<input id="project_change_id" type="hidden" />
+			<p>
+				<span>甲方名称：</span>
+				<input id="project_num_change" type="text" />
+			</p>
+			<p>
+				<span>甲方网址：</span>
+				<input id="project_name_change" type="text" />
+			</p>
+			<p>以下所有数据皆为非必填项</p>
+			<div class="contact-deatil">
+				<p>
+					<span>联系人名称：</span>
+					<input id="project_num_change" type="text" />
+				</p>
+				<p>
+					<span>联系人手机：</span>
+					<input id="project_num_change" type="text" />
+				</p>
+				<p>
+					<span>联系人QQ：</span>
+					<input id="project_num_change" type="text" />
+				</p>
+				<p>
+					<span>开票公司：</span>
+					<input id="project_num_change" type="text" />
+				</p>
+				<p>
+					<span>开票税号：</span>
+					<input id="project_num_change" type="text" />
+				</p>
+				<p>
+					<span>联系地址：</span>
+					<input id="project_num_change" type="text" />
+				</p>
+				<p>
+					<span>手机号：</span>
+					<input id="project_num_change" type="text" />
+				</p>
+				<p>
+					<span>备注：</span>
+					<input id="project_num_change" type="text" />
+				</p>
+			</div>
+			
+			
+			<div class="Finnow-Sub">
+				<input id="change_project_btn" type="submit" value="确认" onclick="return false;"/>
+				<input type="button" value="取消" class="none-x-s" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="change-project project-box">
+	<div class="w570-box">
+		<h3 class="popup-title">修改项目数据</h3>
+		<button class="none-x"></button>
+		<form class="Finnow set-project">
+				<input id="project_change_id" type="hidden" />
+			<p>
+				<span>项目编号：</span>
+				<input id="project_num_change" type="text" />
+			</p>
+			<p>
+				<span>项目名称：</span>
+				<input id="project_name_change" type="text" />
+			</p>
+			<p>
+				<span>投资日期：</span>
+				<input id="invest_time_change" type="text" />
+			</p>
+			<p>
+				<span>提交手机号：</span>
+				<input id="submit_tel_change" type="text" />
+			</p>
+			<p>
+				<span>投资金额：</span>
+				<input id="invest_money_change" type="text" />
+			</p>
+			<p>
+				<span>投资标期：</span>
+				<input id="invest_days_change" type="text" />
+			</p>
+			<p>
+				<span>结算金额：</span>
+				<input id="balance_money_change" type="text" />
+			</p>
+			<p>
+				<span>返现金额：</span>
+				<input id="cashback_change" type="text" />
+			</p>
+			<p>
+				<span>处理状态：</span>
+				<select name="selectAge" id="handle_status_change">
+					<option value="0">审核通过</option>
+					<option value="1">待审核</option>
+					<option value="2">审核未通过</option>
+				</select>
+			</p>
+			<p>
+				<span>备注：</span>
+				<input id="remark_change" type="text" />
+			</p>
+			
+			<div class="Finnow-Sub">
+				<input id="change_project_btn" type="submit" value="确认" onclick="return false;"/>
+				<input type="button" value="取消" class="none-x-s" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<!--删除项目弹窗-->
+<div class="delete-project project-box">
+	<div class="w570-box">
+		<h3>确认删除该条数据？</h3>
+		<button class="none-x"></button>
+		<form class="Audit-in">
+			<input id="project_delete_id" type="hidden" />
+			<div class="Finnow-Sub">
+				<input id="delete_project_btn" type="submit" value="确认" class="Deny-box" onclick="return false;" />
+				<input type="button" value="取消" class="none-x-s" />
+			</div>
+		</form>
+	</div>
+</div>
+<!--end-->
+{% endblock modal %}
