@@ -54,9 +54,10 @@ class Command(BaseCommand):
             elif source == 'channel':
                 attr['channel_consume'] = consume
                 attr['channel_return'] = ret
-        print project_dic        
+#         print project_dic        
         for id, kwarg in project_dic.items():
-            ProjectStatis.objects.update_or_create(project_id=id, defaults=kwarg)
+            obj,created = ProjectStatis.objects.update_or_create(project_id=id, defaults=kwarg)
+            Project.objects.filter(id=id).update(consume=obj.consume())
 #         return row
         update_fields = {}
         update_fields['start_num'] = Project.objects.filter(state='start').count()
@@ -64,11 +65,12 @@ class Command(BaseCommand):
         update_fields['invest_count'] = ProjectInvestData.objects.filter(invest_time=today).count()
         statdic = ProjectInvestData.objects.filter(invest_time=today).aggregate(invest_sum=Sum('invest_amount'),
                consume_sum=Sum('settle_amount'))
+        update_fields['ret_count'] = ProjectInvestData.objects.filter(invest_time=today, state='0').count()
         statdic_pass = ProjectInvestData.objects.filter(invest_time=today, state='0').aggregate(
                ret_invest_sum=Sum('invest_amount'), ret_sum=Sum('return_amount'))
         update_fields.update(statdic)
         update_fields.update(statdic_pass)
-        DayStatis.objects.update_or_create(date=today, defaults=update_fields)
+        obj, created = DayStatis.objects.update_or_create(date=today, defaults=update_fields)
 #         cursor.execute("select a.project_id, a.source, sum(a.settle_amount) as sumofsettle, \
 #                             sum(a.return_amount) as sumofret from project_admin_projectinvestdata a \
 #                             group by a.project_id, a.source")

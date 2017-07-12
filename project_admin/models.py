@@ -112,8 +112,9 @@ class DayStatis(models.Model):
     start_num = models.IntegerField(u"正在进行的项目数")
     finish_num = models.IntegerField(u"已结项的项目数")
     invest_count = models.IntegerField(u"投资人数")
+    ret_count = models.IntegerField(u"返现人数")
     invest_sum = models.DecimalField(u"投资金额", max_digits=10, decimal_places=2, null=True)
-    consume_sum = models.DecimalField(u"投资金额", max_digits=10, decimal_places=2, null=True)
+    consume_sum = models.DecimalField(u"消耗金额", max_digits=10, decimal_places=2, null=True)
     ret_invest_sum = models.DecimalField(u"返现投资金额", max_digits=10, decimal_places=2, null=True)
     ret_sum = models.DecimalField(u"返现费用", max_digits=10, decimal_places=2, null=True)
     def __unicode__(self):

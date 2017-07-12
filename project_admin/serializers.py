@@ -45,9 +45,11 @@ class CompanyBalanceSerializer(serializers.ModelSerializer):
         
 class ProjectStatisSerializer(serializers.ModelSerializer):
     projectname = serializers.CharField(source='project.name', read_only=True)
+    finish_time = serializers.CharField(source='project.finish_time', read_only=True)
+    topay_amount = serializers.CharField(source='project.topay_amount', read_only=True)
     class Meta:
         model = ProjectStatis
-        fields =('id','project','projectname','channel_consume','channel_return','site_consume','site_return','consume','ret')
+        fields =('id','project','projectname', 'finish_time', 'topay_amount', 'channel_consume','channel_return','site_consume','site_return','consume','ret')
 #         read_only_fields = '__all__'
 
 class DayStatisSerializer(serializers.ModelSerializer):
