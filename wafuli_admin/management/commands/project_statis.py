@@ -18,9 +18,12 @@ from django.db.models import F
 from project_admin.models import ProjectStatis, DayStatis, Project,\
     ProjectInvestData
 import logging
+import time
 logger = logging.getLogger("wafuli")
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        logger.info("******Day-task is beginning*********")
+        begin_time = time.time()
         today = datetime.date.today()
         from django.db import connection, transaction
         cursor = connection.cursor()
@@ -74,3 +77,5 @@ class Command(BaseCommand):
 #         cursor.execute("select a.project_id, a.source, sum(a.settle_amount) as sumofsettle, \
 #                             sum(a.return_amount) as sumofret from project_admin_projectinvestdata a \
 #                             group by a.project_id, a.source")
+        end_time = time.time()
+        logger.info("******Day-task is finished, time:%s*********",end_time-begin_time)
