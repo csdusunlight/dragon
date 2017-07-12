@@ -7,7 +7,8 @@ Created on 2017年7月3日
 import django_filters
 from project_admin.models import Project, ProjectInvestData, CompanyBalance
 class ProjectFilter(django_filters.rest_framework.FilterSet):
-    dateft = django_filters.DateFromToRangeFilter(name="time")
+    startDate = django_filters.DateFromToRangeFilter(name="time")
+    finishdate = django_filters.DateFromToRangeFilter(name="finish_time")
     name__contains = django_filters.CharFilter(name="name", lookup_expr='contains')
     platformname__contains = django_filters.CharFilter(name="platform", lookup_expr='name__contains')
     class Meta:

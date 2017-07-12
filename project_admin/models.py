@@ -19,6 +19,13 @@ SOURCE=(
     ('site', u"网站"),
     ('channel', u"渠道"),
 )
+COOPWAYS=(
+    ('cpa', 'cpa'),
+    ('cpc', 'cpc'),
+    ('cps', 'cps'),
+    ('cpm', 'cpm'),
+    ('other', '其他'),
+)
 class Platform(models.Model):
     name = models.CharField(u"平台名称", max_length=20)
     url = models.CharField(u"网站域名", max_length=100)
@@ -43,7 +50,7 @@ class Project(models.Model):
     platform = models.ForeignKey(Platform, verbose_name=u"甲方名称", related_name='projects')
     time = models.DateField(u"立项日期", default=get_today)
     contact = models.CharField(u"商务对接人", max_length=10)
-    coopway = models.CharField(u"合作方式", max_length=10)
+    coopway = models.CharField(u"合作方式", max_length=10, choices=COOPWAYS)
     settleway = models.CharField(u"结算方式", max_length=10, choices=SETTLE_STATE)
     contract_company = models.CharField(u"签约公司", max_length=30)
     settle_detail = models.CharField(u"结算详情", max_length=30)
@@ -51,7 +58,9 @@ class Project(models.Model):
     settle = models.DecimalField(u"结算费用", max_digits=10, decimal_places=2, default=0)
     consume = models.DecimalField(u"消耗总额", max_digits=10, decimal_places=2, default=0)
     cost = models.DecimalField(u"项目成本", max_digits=10, decimal_places=2, default=0)
+    cost_explain = models.CharField(u"成本说明", max_length=100)
     finish_time = models.DateField(u"结项日期", null=True)
+    remark = models.CharField(u"备注", max_length=100)
     def consume_minus_paid(self):
         return self.consume - self.settle
     topay_amount = property(consume_minus_paid)
