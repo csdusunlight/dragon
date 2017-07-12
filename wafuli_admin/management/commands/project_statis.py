@@ -22,7 +22,7 @@ import time
 logger = logging.getLogger("wafuli")
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        logger.info("******Day-task is beginning*********")
+        logger.info("******Project_statis is beginning*********")
         begin_time = time.time()
         today = datetime.date.today()
         from django.db import connection, transaction
@@ -78,4 +78,4 @@ class Command(BaseCommand):
 #                             sum(a.return_amount) as sumofret from project_admin_projectinvestdata a \
 #                             group by a.project_id, a.source")
         end_time = time.time()
-        logger.info("******Day-task is finished, time:%s*********",end_time-begin_time)
+        logger.info("******Project_statis is finished, time:%s*********",end_time-begin_time)
