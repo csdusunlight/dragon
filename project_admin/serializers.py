@@ -12,7 +12,7 @@ class ContactSerializer(serializers.ModelSerializer):
         fields = '__all__'
 class PlatformSerializer(serializers.ModelSerializer):
 #     contacts = serializers.PrimaryKeyRelatedField(many=True, queryset=Contact.objects.all())
-    contacts = ContactSerializer(many=True)
+    contacts = ContactSerializer(many=True, read_only=True)
     class Meta:
         model = Platform
         fields = ('id', 'name', 'url', 'contacts')
