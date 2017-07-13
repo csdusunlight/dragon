@@ -23,8 +23,8 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = ('id', 'name', 'platform','platformname','time', 'contact', 'coopway', 'settleway', 'settleway_des', 'state','state_des',
-                  'contract_company', 'settle', 'cost', 'consume',
-                  'topay_amount', 'profit', 'finish_time')
+                  'contract_company', 'settle', 'cost', 'cost_explain', 'consume', 'settle_detail',
+                  'topay_amount', 'profit', 'finish_time', 'remark')
         read_only_fields = ('id', 'profit','topay_amount','settleway_des','consume','state_des', 'time')
 
 class ProjectInvestDataSerializer(serializers.ModelSerializer):
@@ -45,9 +45,11 @@ class CompanyBalanceSerializer(serializers.ModelSerializer):
         
 class ProjectStatisSerializer(serializers.ModelSerializer):
     projectname = serializers.CharField(source='project.name', read_only=True)
+    finish_time = serializers.CharField(source='project.finish_time', read_only=True)
+    topay_amount = serializers.CharField(source='project.topay_amount', read_only=True)
     class Meta:
         model = ProjectStatis
-        fields =('id','project','projectname','channel_consume','channel_return','site_consume','site_return','consume','ret')
+        fields =('id','project','projectname', 'finish_time', 'topay_amount', 'channel_consume','channel_return','site_consume','site_return','consume','ret')
 #         read_only_fields = '__all__'
 
 class DayStatisSerializer(serializers.ModelSerializer):
