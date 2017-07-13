@@ -178,6 +178,13 @@ def account_detail(request):
         if not ( admin_user.is_authenticated() and admin_user.is_staff):
             return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
         return render(request,"account_detail.html")
+
+def contacts_detail(request):
+    admin_user = request.user
+    if request.method == "GET":
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
+        return render(request,"contacts_detail.html")
 # 综合管理部分修改----end
 
 
