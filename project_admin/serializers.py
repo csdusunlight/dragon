@@ -31,10 +31,11 @@ class ProjectInvestDataSerializer(serializers.ModelSerializer):
     projectname = serializers.CharField(source='project.name', read_only=True)
 #     projectid = serializers.CharField(source='project.id', read_only=True)
     state_des = serializers.CharField(source='get_state_display', read_only=True)
+    source_des = serializers.CharField(source='get_source_display', read_only=True)
     class Meta:
         model = ProjectInvestData
-        fields =('id', 'project', 'projectname', 'is_futou','invest_mobile','invest_time','invest_amount',
-                 'invest_term','settle_amount','return_amount','state','state_des','remark')
+        fields =('id', 'project', 'projectname', 'is_futou','invest_mobile','invest_time','invest_amount','source',
+                 'invest_term','settle_amount','return_amount','state','audit_time','state_des','remark','source_des')
         read_only_fields = ('id',)
 
 class CompanyBalanceSerializer(serializers.ModelSerializer):

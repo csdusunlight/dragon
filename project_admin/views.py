@@ -13,7 +13,7 @@ from project_admin.Filters import ProjectFilter, ProjectInvestDateFilter,\
     CompanyBalanceFilter
 from django.shortcuts import redirect, render
 from django.core.urlresolvers import reverse
-from django.http.response import Http404, JsonResponse
+from django.http.response import Http404, JsonResponse, HttpResponse
 from project_admin.Paginations import ProjectPageNumberPagination
 from project_admin.models import *
 from django.views.decorators.csrf import csrf_exempt
@@ -22,6 +22,9 @@ import logging
 from django.db import transaction
 from account.models import DBlock
 from decimal import Decimal
+from xlwt.Workbook import Workbook
+from xlwt.Style import easyxf
+import StringIO
 logger = logging.getLogger('wafuli')
 class BaseViewMixin(object):
     authentication_classes = (CsrfExemptSessionAuthentication,)
@@ -444,77 +447,68 @@ def export_investdata_excel(request):
     user = request.user
     item_list = []
     item_list = ProjectInvestData.objects
-    startTime = request.GET.get("startTime", None)
-    endTime = request.GET.get("endTime", None)
-    startTime2 = request.GET.get("startTime2", None)
-    endTime2 = request.GET.get("endTime2", None)
-    state = request.GET.get("state",'1')
-    if startTime and endTime:
-        s = datetime.datetime.strptime(startTime,'%Y-%m-%dT%H:%M')
-        e = datetime.datetime.strptime(endTime,'%Y-%m-%dT%H:%M')
-        item_list = item_list.filter(time__range=(s,e))
-    if startTime2 and endTime2:
-        s = datetime.datetime.strptime(startTime2,'%Y-%m-%dT%H:%M')
-        e = datetime.datetime.strptime(endTime2,'%Y-%m-%dT%H:%M')
+    is_futou = request.GET.get("is_futou", None)
+    if is_futou=="true":
+        item_list = item_list.filter(is_futou=True)
+    elif is_futou=="false":
+        item_list = item_list.filter(is_futou=False)
+    state = request.GET.get("state", None)
+    if state:
+        item_list = item_list.filter(state=state)
+    source = request.GET.get("source", None)
+    if source:
+        item_list = item_list.filter(source=source)
+    invest_mobile = request.GET.get("invest_mobile", None)
+    if invest_mobile:
+        item_list = item_list.filter(invest_mobile=invest_mobile)
+    name__contains = request.GET.get("name__contains", None)
+    if name__contains:
+        item_list = item_list.filter(project__name__contains=name__contains)
+    project = request.GET.get("project", None)
+    if project:
+        item_list = item_list.filter(project_id=project)
+    investtime_0 = request.GET.get("investtime_0", None)
+    investtime_1 = request.GET.get("investtime_1", None)
+    audittime_0 = request.GET.get("audittime_0", None)
+    audittime_1 = request.GET.get("audittime_1", None)
+    if investtime_0 and investtime_1:
+        s = datetime.date.strptime(investtime_0,'%Y-%m-%d')
+        e = datetime.date.strptime(investtime_1,'%Y-%m-%d')
+        item_list = item_list.filter(invest_time__range=(s,e))
+    if audittime_0 and audittime_1:
+        s = datetime.datetime.strptime(audittime_0,'%Y-%m-%dT%H:%M')
+        e = datetime.datetime.strptime(audittime_1,'%Y-%m-%dT%H:%M')
         item_list = item_list.filter(audit_time__range=(s,e))
-    username = request.GET.get("username", None)
-    if username:
-        item_list = item_list.filter(user__username=username)
-    mobile = request.GET.get("mobile", None)
-    if mobile:
-        item_list = item_list.filter(user__mobile=mobile)
-    usertype = request.GET.get("usertype",0)
-    usertype= int(usertype)
-    if usertype == 1:
-        item_list = item_list.filter(user__is_channel=False)
-    elif usertype == 2:
-        item_list = item_list.filter(user__is_channel=True)
-        chalevel = request.GET.get("chalevel","")
-        print usertype,chalevel
-        if chalevel:
-            item_list = item_list.filter(user__channel__level=chalevel)
-    companyname = request.GET.get("companyname", None)
-    if companyname:
-        item_list = item_list.filter(finance__company__name__contains=companyname)
-
-    projectname = request.GET.get("projectname", None)
-    if projectname:
-        item_list = item_list.filter(finance__title__contains=projectname)
-    adminname = request.GET.get("adminname", None)
-    if adminname:
-        item_list = item_list.filter(audited_logs__user__username=adminname)
-    task_type = ContentType.objects.get_for_model(Finance)
-    item_list = item_list.filter(content_type = task_type.id)
-    item_list = item_list.filter(event_type='1', audit_state=state).select_related('user').order_by('time')
+  
+    item_list = item_list.select_related('project').order_by('invest_time')
     data = []
     for con in item_list:
-        project = con.content_object
-        project_name=project.title
-        mobile_sub=con.invest_account
-        invest_time=con.invest_time
+        project = con.project
         id=con.id
-        remark= con.remark
-        invest_amount= con.invest_amount
-        term=con.invest_term
-        user_mobile = con.user.mobile if not con.user.is_channel else con.user.channel.qq_number
-        user_type = u"普通用户" if not con.user.is_channel else u"渠道："+ con.user.channel.level
-        result = ''
-        return_amount = ''
-        reason = ''
-        if con.audit_state=='0':
+        project_id = project.id
+        project_name = project.name
+        if con.is_futou:
+            is_futou = u"复投"
+        else:
+            is_futou = u"首投"
+        invest_time = con.invest_time
+        invest_mobile = con.invest_mobile
+        invest_amount = con.invest_amount
+        invest_term = con.invest_term
+        settle_amount = con.settle_amount
+        if con.state=='0':
             result = u'是'
-            if con.translist.exists():
-                return_amount = str(con.translist.first().transAmount/100.0)
-        elif con.audit_state=='2':
+        else:
             result = u'否'
-            if con.audited_logs.exists():
-                reason = con.audited_logs.first().reason
-        data.append([id, project_name, invest_time, user_mobile,user_type, mobile_sub, term,
-                     invest_amount, remark, result, return_amount, reason])
+        return_amount = con.return_amount
+        source = con.get_source_display()
+        remark = con.remark
+        data.append([id, project_id, project_name, is_futou, invest_time, invest_mobile, invest_amount, invest_term, settle_amount,
+                     result, return_amount, source, remark])
     w = Workbook()     #创建一个工作簿
     ws = w.add_sheet(u'待审核记录')     #创建一个工作表
-    title_row = [u'记录ID',u'项目名称',u'投资日期', u'挖福利账号', u'用户类型', u'注册手机号' ,u'投资期限' ,u'投资金额', u'备注',
-                 u'审核通过',u'返现金额',u'拒绝原因']
+    title_row = [u'记录ID',u'项目编号',u'项目名称',u'首投/复投',u'投资日期', u'提交手机号',u'投资金额' ,u'投资标期',u'结算金额', u'审核状态',
+                 u'返现金额',u'投资来源',u'备注']
     for i in range(len(title_row)):
         ws.write(0,i,title_row[i])
     row = len(data)
@@ -523,7 +517,7 @@ def export_investdata_excel(request):
         lis = data[i]
         col = len(lis)
         for j in range(col):
-            if j==2:
+            if j==4:
                 ws.write(i+1,j,lis[j],style1)
             else:
                 ws.write(i+1,j,lis[j])
@@ -531,6 +525,6 @@ def export_investdata_excel(request):
     w.save(sio)
     sio.seek(0)
     response = HttpResponse(sio.getvalue(), content_type='application/vnd.ms-excel')
-    response['Content-Disposition'] = 'attachment; filename=待审核记录.xls'
+    response['Content-Disposition'] = 'attachment; filename=导出表格.xls'
     response.write(sio.getvalue())
     return response

@@ -72,10 +72,10 @@
 		$("#search").click(function() {			//搜索项目数据
 			var newurl = url;
 			
-			dateft_0 = $("#dateft_0").val();
-			dateft_1 = $("#dateft_1").val();
-			dateft2_0 = $("#dateft2_0").val();
-			dateft2_1 = $("#dateft2_1").val();
+			investtime_0 = $("#investtime_0").val();
+			investtime_1 = $("#investtime_1").val();
+			audittime_0 = $("#audittime_0").val();
+			audittime_1 = $("#audittime_1").val();
 			project_id = $("#project_id").val();
 			name = $("#name").val();
 			invest_mobile = $("#invest_mobile").val();
@@ -83,17 +83,17 @@
 			is_futou = $("#is_futou").val();
 			state = $("#state").val();
 			
-			if(dateft_0) {
-				newurl += "&dateft_0=" + dateft_0;
+			if(investtime_0) {
+				newurl += "&investtime_0=" + investtime_0;
 			}
-			if(dateft_1) {
-				newurl += "&dateft_1=" + dateft_1;
+			if(investtime_1) {
+				newurl += "&investtime_1=" + investtime_1;
 			}
-			if(dateft2_0) {
-				newurl += "&dateft2_0=" + dateft2_0;
+			if(audittime_0) {
+				newurl += "&audittime_0=" + audittime_0;
 			}
-			if(dateft2_1) {
-				newurl += "&dateft2_1=" + dateft2_1;
+			if(audittime_1) {
+				newurl += "&audittime_1=" + audittime_1;
 			}
 			if(project_id) {
 				newurl += "&project=" + project_id;
@@ -126,10 +126,10 @@
 		});
 		
 		$("#export").click(function() {			//导出表格
-			dateft_0 = $("#dateft_0").val();
-			dateft_1 = $("#dateft_1").val();
-			dateft2_0 = $("#dateft2_0").val();
-			dateft2_1 = $("#dateft2_1").val();
+			investtime_0 = $("#investtime_0").val();
+			investtime_1 = $("#investtime_1").val();
+			audittime_0 = $("#audittime_0").val();
+			audittime_1 = $("#audittime_1").val();
 			project_id = $("#project_id").val();
 			name = $("#name").val();
 			invest_mobile = $("#invest_mobile").val();
@@ -137,20 +137,20 @@
 			is_futou = $("#is_futou").val();
 			state = $("#state").val();
 			
-			var html = '<form action="' + "{% url 'export_finance_excel' %}" + '" method="get" target="_self" id="postData_form">';
+			var html = '<form action="' + "{% url 'export_investdata_excel' %}" + '" method="get" target="_self" id="postData_form">';
 			
-			if(dateft_0) {
-				html += '<input name="dateft_0" type="hidden" value="' + dateft_0 + '"/>';
+			if(investtime_0) {
+				html += '<input name="investtime_0" type="hidden" value="' + investtime_0 + '"/>';
 			}
-			if(dateft_1) {
-				html += '<input name="dateft_1" type="hidden" value="' + dateft_1 + '"/>';
+			if(investtime_1) {
+				html += '<input name="investtime_1" type="hidden" value="' + investtime_1 + '"/>';
 			}
 			
-			if(dateft2_0) {
-				html += '<input name="dateft2_0" type="hidden" value="' + dateft2_0 + '"/>';
+			if(audittime_0) {
+				html += '<input name="audittime_0" type="hidden" value="' + audittime_0 + '"/>';
 			}
-			if(dateft2_1) {
-				html += '<input name="dateft2_1" type="hidden" value="' + dateft2_1 + '"/>';
+			if(audittime_1) {
+				html += '<input name="audittime_1" type="hidden" value="' + audittime_1 + '"/>';
 			}
 			
 			if(project_id) {
@@ -243,19 +243,19 @@
 				<tr>
 					<td>
 						<i>投资日期-start：</i>
-						<input id="dateft_0" type="date" />
+						<input id="investtime_0" type="date" />
 					</td>
 					<td>
 						<i>投资日期-end：</i>
-						<input id="dateft_1" type="date" />
+						<input id="investtime_1" type="date" />
 					</td>
 					<td>
 						<i>审核时间-start：</i>
-						<input id="dateft2_0" type="date" />
+						<input id="audittime_0" type="date" />
 					</td>
 					<td>
 						<i>审核时间-end：</i>
-						<input id="dateft2_1" type="date" />
+						<input id="audittime_1" type="date" />
 					</td>
 				</tr>
 				<tr>
@@ -285,8 +285,8 @@
 						<i style="letter-spacing:4.8px;">投资方式</i>
 						<select name="selectAge" id="is_futou">
 							<option value="-1">全部</option>
-							<option value="0">首投</option>
-							<option value="1">复投</option>
+							<option value="false">首投</option>
+							<option value="true">复投</option>
 						</select>
 					</td>
 					<td>

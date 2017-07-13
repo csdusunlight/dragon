@@ -90,6 +90,7 @@ class ProjectInvestData(models.Model):
     invest_term = models.CharField(u"投资标期", max_length=13)
     settle_amount = models.DecimalField(u"结算金额", max_digits=10, decimal_places=2)
     return_amount = models.DecimalField(u"返现金额", max_digits=10, decimal_places=2, default=0)
+    audit_time = models.DateTimeField(u"审核时间（二次导入时间）", null=True)
     state = models.CharField(u"审核状态", max_length=10, choices=AUDIT_STATE)
     remark = models.CharField(u"备注", max_length=100)
     def __unicode__(self):
