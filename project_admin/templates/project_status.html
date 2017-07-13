@@ -8,21 +8,16 @@
 	});
 	var data = '<table width="100%"><tr><th>项目编号</th><th>结项日期</th><th>项目名称</th>' +
 		'<th>预计代收/待消耗</th><th>预计总消耗</th><th>总返现金额</th><th>预估渠道消耗</th><th>渠道返现金额</th><th>预估网站消耗</th><th>网站返现金额</th><th>项目状态</th>' +
-		'</tr>[results]<tr id="parent{id}"><td>{id}</td><td>{time}</td><td>{name}</td>' +
-		'<td>{topay_amount}</td><td>{paid_amount}</td><td>{consume_amount}</td><td>{topay_amount}</td><td>{return_amount}</td><td>{profit}</td>' +
-		'<td>{state_des}</td><td>{state_des}</td></tr>[/results]</table>';
-	var url = "/project/projects/" + "?page={page}";
-	var url2 = "/project/projects/";
-	
-	
-	
-	
+		'</tr>[results]<tr id="parent{id}"><td>{project}</td><td>{time}</td><td>{projectname}</td>' +
+		'<td>{topay_amount}</td><td>{consume}</td><td>{ret}</td><td>{channel_consume}</td><td>{channel_return}</td><td>{site_consume}</td>' +
+		'<td>{site_return}</td><td>{state_des}</td></tr>[/results]</table>';
+	var url = "/project/projectstatis/" + "?page={page}";
+	var url2 = "/project/projectstatis/";
 	
 	$(document).ready(function() {
 		$("li.home15").addClass("show-project").toggleClass("on");
 		$("li.home2").toggleClass("show");
 		$(".Tin-table tr:even").css("background-color", "#fcfcfc");
-		
 		
 		$("#pagedata").ajaxPage({
 			url: url,
@@ -30,10 +25,6 @@
 			run: true,
 			content: data,
 		});
-		
-		
-		
-		
 		
 		$("#search").click(function() {			//搜索项目数据
 			var newurl = url;
@@ -115,8 +106,6 @@
 			document.getElementById('myIFrame').contentWindow.document.getElementById('postData_form').submit();
 		});
 		
-		
-
 	});
 </script>
 {% endblock js %} {% block right %}

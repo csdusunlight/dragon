@@ -4,7 +4,7 @@
 
 	var data = '<table width="100%"><tr><th>项目编号</th><th>结项日期</th><th>项目名称</th><th>甲方名称</th><th>商务对接人</th>' +
 		'<th>合作方式</th><th>结算方式</th><th>签约公司</th><th>结算详情</th><th>项目状态</th><th>结算费用</th><th>备注</th>' +
-		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{id}</td><td>{time}</td><td>{name}</td><td>{platform}</td><td>{contact}</td>' +
+		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{id}</td><td>{finish_time}</td><td>{name}</td><td data-platform_id={platform}>{platformname}</td><td>{contact}</td>' +
 		'<td>{coopway}</td><td>{settleway_des}</td><td>{contract_company}</td><td>{settle_detail}</td>' +
 		'<td class="look-{state}" data-id="{id}">{state_des}</td><td>{settle}</td><td>{备注}</td>' +
 		'<td id="item_{id}"><a class="revise-btn revise-{state}" onclick="pass({id})">修改' +
@@ -34,21 +34,20 @@
 				$("#settle_detail_change").val(ret.settle_detail);
 				$("#settle_money_change").val(ret.settle_money);
 				
-				$("#chengben_change").val(ret.chengben);
+				$("#chengben_change").val(ret.cost);
 				$("#chengbenbeizhu_change").val(ret.chengbenbeizhu);
 				$("#maoli_change").val(ret.maoli);
 				$("#remark_change").val(ret.remark);
 				
 				var radio_btn = "project-" + ret.state;
 				var dom = document.getElementById(radio_btn);
-//				dom.click();
-				$(dom).click();
-				$(dom)[0].checked = true;
 				console.log(radio_btn);
+				dom.checked = true;
+				console.log(ret.state);
 				if(ret.state == "finish") {
-					$('#project-prepare')[0].disabled = true;
+					$(".show-hide").show();
 				}else {
-					$('#project-prepare')[0].disabled = false;
+					$(".show-hide").hide();
 				}
 			},
 			error: function(ret) {
@@ -81,6 +80,25 @@
 			content: data,
 		});
 		
+//		获取甲方名称信息
+		$.ajax({
+			url: '/project/platform/',
+			dataType: "json",
+			type: "get",
+			success: function(ret) {
+				console.log(ret.results);
+				for (var i=0; i<ret.results.length; i++) {
+					var option_item = document.createElement('option');
+					option_item.innerText = ret.results[i].name;
+					option_item.value = ret.results[i].id;
+					console.log(option_item);
+					$(".platform-select").append(option_item);
+				}
+			},
+			error: function(ret) {
+				alert(JSON.stringify(ret));
+			}
+		});
 		
 		$('#add_project_btn').click(function() {		//点击新增项目数据
 			var name_add = $("#name_add").val(),
@@ -183,9 +201,6 @@
 		});
 		
 //		查看已结项项目详情
-//		$('.look-item').each(function(){
-//			condole.log("uu");
-//		})
 		$('#pagedata').on('click', '.look-finish', function(){
 			var state = $(this).text();
 			var finish_id = this.dataset.id;
@@ -343,11 +358,12 @@
 		
 		
 		$(".project-state:radio").click(function() {
-			console.log("radio click");
-//			console.log($(this).val());
+			
 			if ($(this).val() == "start") {
 				$(".show-hide").hide();
-			} else{
+				console.log("start click");
+			} else {
+				console.log("finish click");
 				$(".show-hide").show();
 			}
 		});
@@ -457,7 +473,10 @@
 			</p>
 			<p>
 				<span>甲方名称：</span>
-				<input id="platform_add" type="text" />
+				<!--<input id="platform_add" type="text" />-->
+				<select class="platform-select" name="selectType" id="platform_add">
+					<option value="0">--</option>
+				</select>
 			</p>
 			<p>
 				<span>商务对接人：</span>
@@ -520,7 +539,9 @@
 			</p>
 			<p>
 				<span>甲方名称：</span>
-				<input id="platform_change" type="text" />
+				<select name="selectType" class="platform-select" id="platform_change">
+					<option value="0">--</option>
+				</select>
 			</p>
 			<p>
 				<span>商务对接人：</span>
@@ -556,7 +577,7 @@
 			</p>
 			<p>
 				<span>项目状态：</span>
-				<input id="project-prepare" class="project-state" type="radio" name="state" value="start" />正在进行&nbsp;&nbsp;
+				<input id="project-start" class="project-state" type="radio" name="state" value="start" />正在进行&nbsp;&nbsp;
 				<input id="project-finish" class="project-state" type="radio" name="state" value="finish" />已结束
 			</p>
 			<p>
