@@ -42,5 +42,5 @@ urlpatterns += [
     url(r'^account_detail/$', views.account_detail, name='account_detail'),
 
     url(r'^import_projectdata_excel/$', views.import_projectdata_excel, name='import_projectdata_excel'),
-
+    url(r'^import_audit_projectdata_excel/$', views.import_audit_projectdata_excel, name='import_audit_projectdata_excel'),
 ]
