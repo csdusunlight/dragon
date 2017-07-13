@@ -315,4 +315,16 @@ a { cursor:pointer;}
 	line-height: 30px;
 	text-align: center;
 }
+.Need-T>.num-detail {
+	margin-left: 20px;
+	font-size: 16px;
+	line-height: 30px;
+	font-weight: bold;
+	
+}
+.pie-box .num-detail {
+	font-size: 16px;
+	margin-left: 100px;
+	margin-top: 20px;
+}
 /*立项部分---end*/

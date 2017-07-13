@@ -18,52 +18,6 @@
 	var project_flag;		// project_flag = -1 时，为导入单条数据；project_flag != -1 时，为修改单条数据
 	var parent;
 	
-	function pass(id) {			//弹出修改单条数据弹窗
-		$(".popup-title").text("修改项目数据");
-		$("#invest_time_change")[0].type = "text";
-		$("input#project_change_id").val(id);
-		$("#project_num_change")[0].disabled=true;
-		project_flag = id;
-		
-		parent = "parent" + id;
-		var dom = document.getElementById(parent);
-		var children0 = $(dom).find("td").eq(0).text(),
-			children1 = $(dom).find("td").eq(1).text(),
-			children2 = $(dom).find("td").eq(2).text(),
-			children3 = $(dom).find("td").eq(3).text(),
-			children4 = $(dom).find("td").eq(4).text(),
-			children5 = $(dom).find("td").eq(5).text(),
-			children6 = $(dom).find("td").eq(6).text(),
-			children7 = $(dom).find("td").eq(7).text();
-			children9 = $(dom).find("td").eq(9).text();
-		var	children8 = $(dom).find("td").eq(8).text(),
-			children8_num; 
-			switch (children8)
-			{
-				case "审核通过":
-					children8_num = 0;
-					break;
-				case "待审核":
-					children8_num = 1;
-					break;
-				case "审核未通过":
-					children8_num = 2;
-					break;
-			}
-		$("#project_num_change").val(children0);
-		$("#project_name_change").val(children1);
-		$("#invest_time_change").val(children2);
-		$("#submit_tel_change").val(children3);
-		$("#invest_money_change").val(children4);
-		$("#invest_days_change").val(children5);
-		$("#balance_money_change").val(children6);
-		$("#cashback_change").val(children7);
-		$("#handle_status_change").val(children8_num);
-		$("#remark_change").val(children9);
-		
-		$(".change-project").show();
-	}
-	
 	function refuse(id) {		//弹出删除项目数据弹窗
 		$("input#project_delete_id").val(id);
 		$(".delete-project").show();
@@ -88,15 +42,6 @@
 			content: data,
 		});
 		
-		$("#single_import").click(function(){			//弹出单条导入弹窗
-			$(".Finnow p input, .Finnow p select").val("");
-			$("#handle_status_change").val(0);
-			$("#invest_time_change")[0].type = "date";
-			$(".popup-title").text("单条数据导入");
-			$(".change-project").show();
-			$("#project_num_change")[0].disabled=false;
-			project_flag = -1;
-		})
 		
 		$(".none-x, .none-x-s").click(function() {		// 关闭或取消 弹窗
 			$(".project-box").hide(); 
@@ -330,7 +275,6 @@
 				</tr>
 			</table>
 			<div class="Submit-in">
-				<input id="single_import" type="button" value="单条导入" />
 				<input id="search" type="button" value="搜索" />
 				<input id="export" type="button" value="导出" />
 			</div>
