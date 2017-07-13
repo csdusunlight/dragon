@@ -4,9 +4,9 @@
 
 	var data = '<table width="100%"><tr><th>账单时间</th><th>账户ID</th><th>账户类型</th><th>账户名称</th><th>账单类型</th>' +
 		'<th>收/支类型</th><th>交易对象</th><th>交易金额</th><th>账户余额</th><th>备注</th>' +
-		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{time}</td><td>{id}</td><td>{name}</td>' +
-		'<td>{contact}</td><td>{coopway}</td><td>{state_des}</td><td>{contract_company}</td><td>{settle}</td>' +
-		'<td>{id}</td><td>{settleway_des}</td>' +
+		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{time}</td><td>{id}</td><td data-value={settleway}>{settleway_des}</td>' +
+		'<td data-value="1">{contact}</td><td data-value={settleway}>{settleway_des}</td><td data-value={state}>{state_des}</td><td>{contract_company}</td><td>{settle}</td>' +
+		'<td>{id}</td><td>{coopway}</td>' +
 		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">修改' +
 		'</a> │ <a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/results]</table>';
 	var url = "/project/projects/" + "?page={page}";
@@ -21,36 +21,40 @@
 		
 		parent = "parent" + id;
 		var dom = document.getElementById(parent);
-		var account_type_change = $(dom).find("td").eq(2).text(),
+		var bill_time_change = $(dom).find("td").eq(0).text(),
+			account_type_change = $(dom).find("td").eq(2).text(),
+			account_type_change_value = $(dom).find("td").eq(2).data("value"),
 			account_name_change = $(dom).find("td").eq(3).text(),
-			bank_account_change = $(dom).find("td").eq(4).text(),
-			bank_change = $(dom).find("td").eq(5).text(),
-			bank_sub_change = $(dom).find("td").eq(6).text(),
-			start_money_change = $(dom).find("td").eq(7).text(),
-			remark_change = $(dom).find("td").eq(8).text();
+			account_name_change_value = $(dom).find("td").eq(3).data("value"),
+			bill_type_change = $(dom).find("td").eq(4).text(),
+			in_out_change = $(dom).find("td").eq(5).text(),
+			in_out_change_value = $(dom).find("td").eq(5).data("value"),
+			trade_obj_change = $(dom).find("td").eq(6).text(),
+			trade_money_change = $(dom).find("td").eq(7).text(),
+			remark_change = $(dom).find("td").eq(9).text();
 			
-//		var	settleway_des;
-//			
-//			switch (settleway)
-//			{
-//				case "预付款":
-//					settleway_des = "advance";
-//					break;
-//				case "后付款":
-//					settleway_des = "later";
-//					break;
-//				case "日结":
-//					settleway_des = "daily";
-//					break;
-//			}	
+		if (bill_type_change == "预付款") {
+			document.getElementById('bill_in_change').checked = true;
+			$('.in-out-change').html('<option value="start">收入类型start</option>' +
+								'<option value="prepare">收入类型prepare</option>');
+			
+		} else{
+			console.log('false');
+			document.getElementById('bill_out_change').checked = true;
+			$('#in_out_change').html('<option value="start">支出类型start</option>' +
+								'<option value="finish">支出类型finish</option>');
+		}
+			console.log($('#in_out_change').html());
+		$('#in_out_change').val(in_out_change_value)
 		
 
-		$("#account_type_change").val(account_type_change);
-		$("#account_name_change").val(account_name_change);
-		$("#bank_account_change").val(bank_account_change);
-		$("#bank_change").val(bank_change);
-		$("#bank_sub_change").val(bank_sub_change);
-		$("#start_money_change").val(start_money_change);
+		$("#bill_time_change").val(bill_time_change);
+		$("#account_type_change").val(account_type_change_value);
+		$("#account_name_change").val(account_name_change_value);
+		$("#bill_type_change").val(bill_type_change);
+//		$("#in_out_change").val(in_out_change);
+		$("#trade_obj_change").val(trade_obj_change);
+		$("#trade_money_change").val(trade_money_change);
 		$("#remark_change").val(remark_change);
 		
 		$(".change-project").show();
@@ -76,9 +80,31 @@
 			content: data,
 		});
 		
+		//		获取账户名称信息
+		$.ajax({
+			url: '/project/platform/',
+			dataType: "json",
+			type: "get",
+			success: function(ret) {
+				console.log(ret.results);
+				for (var i=0; i<ret.results.length; i++) {
+					var option_item = document.createElement('option');
+					option_item.innerText = ret.results[i].name;
+					option_item.value = ret.results[i].id;
+					console.log(option_item);
+					$(".account-name").append(option_item);
+				}
+				$("#account_name").prepend('<option value="0" selected="selected">全部</option>');
+			},
+			error: function(ret) {
+				alert(JSON.stringify(ret));
+			}
+		});
+		
 		
 		$('#add_project_btn').click(function() {		//点击新增项目数据
-			var account_type_add = $("#account_type_add").val(),
+			var bill_time_add = $("#bill_time_add").val(),
+				account_type_add = $("#account_type_add").val(),
 				account_name_add = $("#account_name_add").val(),
 				bill_type_add = $("#bill_type_add").val(),
 				in_out_add = $("#in_out_add").val(),
@@ -92,11 +118,12 @@
 				dataType: "json",
 				type: "POST",
 				data: {
+					'bill_time': bill_time_add,
 					'account_type': account_type_add,
 					'account_name': account_name_add,
-					'bank_account': bill_type_add,
-					'bank': in_out_add,
-					'bank_sub': trade_obj_add,
+					'bill_type': bill_type_add,
+					'in_out': in_out_add,
+					'trade_obj': trade_obj_add,
 					'start_money': trade_money_add,
 					'remark': remark_add
 				},
@@ -112,12 +139,13 @@
 		
 		
 		$('#change_project_btn').click(function() {		//点击修改项目数据
-			var account_type_change = $("#account_type_change").val(),
+			var bill_time_change = $("#bill_time_change").val(),
+				account_type_change = $("#account_type_change").val(),
 				account_name_change = $("#account_name_change").val(),
-				bank_account_change = $("#bank_account_change").val(),
-				bank_change = $("#bank_change").val(),
-				bank_sub_change = $("#bank_sub_change").val(),
-				start_money_change = $("#start_money_change").val(),
+				bill_type_change = $("#bill_type_change").val(),
+				in_out_change = $("#in_out_change").val(),
+				trade_obj_change = $("#trade_obj_change").val(),
+				trade_money_change = $("#trade_money_change").val(),
 				remark_change = $("#remark_change").val();
 			
 //			console.log(project_flag+", "+platformname_change+", "+project_name_change+", "+contact_person_change+", "+cooperate_type_change+", "+balance_type_change+", "+sign_company_change+", "+balance_change+", "+project_status_change);
@@ -128,27 +156,27 @@
 				dataType: "json",
 				type: "PUT",
 				data: {
+					'bill_time': bill_time_change,
 					'account_type': account_type_change,
 					'account_name': account_name_change,
-					'bank_account': bank_account_change,
-					'bank': bank_change,
-					'bank_sub': bank_sub_change,
-					'start_money': start_money_change,
+					'bill_type': bill_type_change,
+					'in_out': in_out_change,
+					'trade_obj': trade_obj_change,
+					'trade_money': trade_money_change,
 					'remark': remark_change
 				},
 				success: function(ret) {
 					console.log(ret);
 					alert("操作成功！");
 					var dom = document.getElementById(parent);
-					$(dom).find("td").eq(0).text(ret.time);
-					$(dom).find("td").eq(1).text(ret.id);
+					$(dom).find("td").eq(0).text(ret.bill_time);
 					$(dom).find("td").eq(2).text(ret.account_type);
 					$(dom).find("td").eq(3).text(ret.account_name);
-					$(dom).find("td").eq(4).text(ret.bank_account);
-					$(dom).find("td").eq(5).text(ret.bank);
-					$(dom).find("td").eq(6).text(ret.bank_sub);
-					$(dom).find("td").eq(7).text(ret.start_money);
-					$(dom).find("td").eq(8).text(ret.remark);
+					$(dom).find("td").eq(4).text(ret.bill_type);
+					$(dom).find("td").eq(5).text(ret.in_out);
+					$(dom).find("td").eq(6).text(ret.trade_obj);
+					$(dom).find("td").eq(7).text(ret.trade_money);
+					$(dom).find("td").eq(9).text(ret.remark);
 				},
 				error: function(ret) {
 					alert(JSON.stringify(ret));
@@ -181,42 +209,38 @@
 		$("#search").click(function() {			//搜索项目数据
 			var newurl = url;
 			
-			created_time_start = $("#created_time_start").val();
-			created_time_end = $("#created_time_end").val();
-			project_name = $("#project_name").val();
-			contact_person = $("#contact_person").val();
-			project_num = $("#project_num").val();
-			cooperate_type = $("#cooperate_type").val();
-			balance_type = $("#balance_type").val();
-			sign_company = $("#sign_company").val();
-			project_status = $("#project_status").val();
+			project_finish_start = $("#project_finish_start").val();
+			project_finish_end = $("#project_finish_end").val();
+			account_name = $("#account_name").val();
+			account_id = $("#account_id").val();
+			account_type = $("#account_type").val();
+			bill_type = $("#bill_type").val();
+			in_out_type = $("#in_out_type").val();
+			trade_obj = $("#trade_obj").val();
 			
-			if(created_time_start) {
-				newurl += "&dateft_0=" + created_time_start;
+			if(project_finish_start) {
+				newurl += "&dateft_0=" + project_finish_start;
 			}
-			if(created_time_end) {
-				newurl += "&dateft_1=" + created_time_end;
+			if(project_finish_end) {
+				newurl += "&dateft_1=" + project_finish_end;
 			}
-			if(project_name) {
-				newurl += "&name__contains=" + project_name;
+			if(account_name) {
+				newurl += "&name__contains=" + account_name;
 			}
-			if(contact_person) {
-				newurl += "&contact=" + contact_person;
+			if(account_id) {
+				newurl += "&contact=" + account_id;
 			}
-			if(project_num) {
-				newurl += "&id=" + project_num;
+			if(account_type) {
+				newurl += "&id=" + account_type;
 			}
-			if(cooperate_type) {
-				newurl += "&coopway=" + cooperate_type;
+			if(bill_type) {
+				newurl += "&coopway=" + bill_type;
 			}
-			if(balance_type && balance_type != 0) {
-				newurl += "&settleway=" + balance_type;
+			if(in_out_type && in_out_type != 0) {
+				newurl += "&settleway=" + in_out_type;
 			}
-			if(sign_company) {
-				newurl += "&contract_company=" + sign_company;
-			}
-			if(project_status && project_status != 0) {
-				newurl += "&state=" + project_status;
+			if(trade_obj) {
+				newurl += "&contract_company=" + trade_obj;
 			}
 			console.log(newurl);
 			
@@ -232,48 +256,44 @@
 		});
 		
 		$("#export").click(function() {			//导出表格
-			created_time_start = $("#created_time_start").val();
-			created_time_end = $("#created_time_end").val();
-			project_name = $("#project_name").val();
-			contact_person = $("#contact_person").val();
-			project_num = $("#project_num").val();
-			cooperate_type = $("#cooperate_type").val();
-			balance_type = $("#balance_type").val();
-			sign_company = $("#sign_company").val();
-			project_status = $("#project_status").val();
+			project_finish_start = $("#project_finish_start").val();
+			project_finish_end = $("#project_finish_end").val();
+			account_name = $("#account_name").val();
+			account_id = $("#account_id").val();
+			account_type = $("#account_type").val();
+			bill_type = $("#bill_type").val();
+			in_out_type = $("#in_out_type").val();
+			trade_obj = $("#trade_obj").val();
 			
 			var html = '<form action="' + "{% url 'export_finance_excel' %}" + '" method="get" target="_self" id="postData_form">';
 			
-			if(created_time_start) {
-				html += '<input name="created_time_start" type="hidden" value="' + created_time_start + '"/>';
+			if(project_finish_start) {
+				html += '<input name="project_finish_start" type="hidden" value="' + project_finish_start + '"/>';
 			}
-			if(created_time_end) {
-				html += '<input name="created_time_end" type="hidden" value="' + created_time_end + '"/>';
-			}
-			
-			if(project_name) {
-				html += '<input name="project_name" type="hidden" value="' + project_name + '"/>';
+			if(project_finish_end) {
+				html += '<input name="project_finish_end" type="hidden" value="' + project_finish_end + '"/>';
 			}
 			
-			if(contact_person) {
-				html += '<input name="contact_person" type="hidden" value="' + contact_person + '"/>';
-			}
-			if(project_num) {
-				html += '<input name="project_num" type="hidden" value="' + project_num + '"/>';
+			if(account_name) {
+				html += '<input name="account_name" type="hidden" value="' + account_name + '"/>';
 			}
 			
-			if(cooperate_type) {
-				html += '<input name="cooperate_type" type="hidden" value="' + cooperate_type + '"/>';
+			if(account_id) {
+				html += '<input name="account_id" type="hidden" value="' + account_id + '"/>';
 			}
-			if(balance_type) {
-				html += '<input name="balance_type" type="hidden" value="' + balance_type + '"/>';
+			if(account_type) {
+				html += '<input name="account_type" type="hidden" value="' + account_type + '"/>';
 			}
 			
-			if(sign_company) {
-				html += '<input name="sign_company" type="hidden" value="' + sign_company + '"/>';
+			if(bill_type) {
+				html += '<input name="bill_type" type="hidden" value="' + bill_type + '"/>';
 			}
-			if(project_status) {
-				html += '<input name="project_status" type="hidden" value="' + project_status + '"/>';
+			if(in_out_type) {
+				html += '<input name="in_out_type" type="hidden" value="' + in_out_type + '"/>';
+			}
+			
+			if(trade_obj) {
+				html += '<input name="trade_obj" type="hidden" value="' + trade_obj + '"/>';
 			}
 			
 			html += '</form>';
@@ -340,11 +360,11 @@
 		$(".bill-type-radio:radio").click(function() {
 			
 			if ($(this).val() == "start") {
-				$('.in-out').html('<option value="1">收入类型1</option>' +
-								'<option value="2">收入类型2</option>')			
+				$('.in-out').html('<option value="start">收入类型start</option>' +
+								'<option value="prepare">收入类型prepare</option>')			
 			} else {
-				$('.in-out').html('<option value="1">支出类型1</option>' +
-								'<option value="2">支出类型2</option>')	
+				$('.in-out').html('<option value="start">支出类型start</option>' +
+								'<option value="finish">支出类型finish</option>')	
 			}
 		});
 
@@ -359,30 +379,38 @@
 				<tr>
 					<td>
 						<i>结项日期start：</i>
-						<input id="created_time_start" type="date" />
+						<input id="project_finish_start" type="date" />
 					</td>
 					<td>
 						<i>结项日期end：</i>
-						<input id="created_time_end" type="date" />
+						<input id="project_finish_end" type="date" />
 					</td>
 					<td>
-						<i style="letter-spacing:4.8px;">项目编号：</i>
-						<input id="project_num" type="text" />
+						<i style="letter-spacing:4.8px;">账户类型：</i>
+						<select name="selectType" id="account_type">
+							<option value="advance">公帐</option>
+							<option value="later">私帐</option>
+							<option value="daily">投资</option>
+							<option value="4">借贷</option>
+							<option value="other">其他</option>
+						</select>
+						
 					</td>
 					<td>
-						<i style="letter-spacing:4.8px;">项目名称：</i>
-						<input id="project_name" type="text" />
+						<i style="letter-spacing:4.8px;">账户名称：</i>
+						<select name="selectType" id="account_name" class="account-name">
+						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<i style="letter-spacing:4.8px;">商务对接人：</i>
-						<input id="contact_person" type="text" />
+						<i style="letter-spacing:4.8px;">账户ID：</i>
+						<input id="account_id" type="text" />
 					</td>
 					<td>
-						<i>合作方式：</i>
-						<!--<input id="cooperate_type" type="text" />-->
-						<select name="selectType" id="cooperate_type">
+						<i>账单类型：</i>
+						<!--<input id="bill_type" type="text" />-->
+						<select name="selectType" id="bill_type">
 							<option value="0">全部</option>
 							<option value="cpa">cpa</option>
 							<option value="cpc">cpc</option>
@@ -392,29 +420,19 @@
 						</select>
 					</td>
 					<td>
-						<i style="letter-spacing:2px;">结算方式：</i>
-						<!--<input id="balance_type" type="text" />-->
-						<select name="selectType" id="balance_type">
+						<i style="letter-spacing:2px;">收支类型：</i>
+						<select name="selectType" id="in_out_type">
 							<option value="0">全部</option>
-							<option value="advance">预付款</option>
-							<option value="later">后付款</option>
+							<option value="advance">收入</option>
+							<option value="later">支出</option>
 						</select>
 					</td>
 					<td>
-						<i style="letter-spacing:4.8px;">签约公司：</i>
-						<input id="sign_company" type="text" />
+						<i style="letter-spacing:4.8px;">交易对象：</i>
+						<input id="trade_obj" type="text" />
 					</td>
 				</tr>
-				<tr>
-					<td>
-						<i style="letter-spacing:4.8px;">项目状态</i>
-						<select name="selectAge" id="project_status">
-							<option value="0">全部</option>
-							<option value="start">正在进行</option>
-							<option value="finish">已结项</option>
-						</select>
-					</td>
-				</tr>
+				
 			</table>
 			<div class="Submit-in">
 				<input id="single_import" type="button" value="单条导入" />
@@ -453,9 +471,9 @@
 			<p>
 				<span>账户类型：</span>
 				<select name="selectType" id="account_type_add">
-					<option value="1">公帐</option>
-					<option value="2">私帐</option>
-					<option value="3">投资</option>
+					<option value="advance">公帐</option>
+					<option value="later">私帐</option>
+					<option value="daily">投资</option>
 					<option value="4">借贷</option>
 					<option value="other">其他</option>
 				</select>
@@ -463,21 +481,21 @@
 			<p>
 				<span>账户名称：</span>
 				<!--<input id="account_name_add" type="text" />-->
-				<select name="selectType" id="account_name_add">
+				<select name="selectType" id="account_name_add" class="account-name">
 				</select>
 			</p>
 			<p>
 				<span>账单类型：</span>
 				<!--<input id="bill_type_add" type="text" />-->
-				<input id="bill-type-in" class="bill-type-radio" type="radio" name="bill_type_add" value="start" />收入&nbsp;&nbsp;
-				<input id="bill-type-out" class="bill-type-radio" type="radio" name="bill_type_add" value="finish" />支出
+				<input class="bill-type-radio bill-type-add" type="radio" name="bill_type_add" value="start"/>收入&nbsp;&nbsp;
+				<input class="bill-type-radio" type="radio" name="bill_type_add" value="finish" />支出
 			</p>
 			<p>
 				<span class="in-out-name">收入类型：</span>
 				<!--<input id="in_out_add" type="text" />-->
 				<select name="selectType" id="in_out_add" class="in-out">
-					<option value="1">收入类型1</option>
-					<option value="2">收入类型2</option>
+					<option value="start">收入类型start</option>
+					<option value="prepare">收入类型prepare</option>
 				</select>
 			</p>
 			<p>
@@ -508,35 +526,43 @@
 		<form class="Finnow set-project">
 				<input id="project_change_id" type="hidden" />
 			<p>
+				<span>账单时间：</span>
+				<input id="bill_time_change" type="date" />
+			</p>
+			<p>
 				<span>账户类型：</span>
 				<select name="selectType" id="account_type_change">
-					<option value="1">公帐</option>
-					<option value="2">私帐</option>
-					<option value="3">投资</option>
+					<option value="advance">公帐</option>
+					<option value="later">私帐</option>
+					<option value="daily">投资</option>
 					<option value="4">借贷</option>
 					<option value="other">其他</option>
 				</select>
 			</p>
 			<p>
 				<span>账户名称：</span>
-				<input id="account_name_change" type="text" />
+				<select name="selectType" id="account_name_change" class="account-name">
+				</select>
 			</p>
 			<p>
-				<span>银行帐号：</span>
-				<input id="bank_account_change" type="text" />
+				<span>账单类型：</span>
+				<input id="bill_in_change" class="bill-type-radio bill-type-change" type="radio" name="bill_type_change" value="start"/>收入&nbsp;&nbsp;
+				<input id="bill_out_change" class="bill-type-radio bill-type-change" type="radio" name="bill_type_change" value="finish" />支出
 			</p>
 			<p>
-				<span>开户行：</span>
-				<input id="bank_change" type="text" />
-				
+				<span class="in-out-name">收入类型：</span>
+				<select name="selectType" id="in_out_change" class="in-out in-out-change">
+					<option value="start">收入类型start</option>
+					<option value="finish">收入类型finish</option>
+				</select>
 			</p>
 			<p>
-				<span>支行信息：</span>
-				<input id="bank_sub_change" type="text" />
+				<span>交易对象：</span>
+				<input id="trade_obj_change" type="text" />
 			</p>
 			<p>
-				<span>初始余额：</span>
-				<input id="start_money_change" type="text" />
+				<span>交易金额：</span>
+				<input id="trade_money_change" type="text" />
 			</p>
 			<p>
 				<span>备注：</span>
