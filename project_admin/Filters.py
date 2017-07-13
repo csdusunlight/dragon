@@ -13,8 +13,8 @@ class ProjectFilter(django_filters.rest_framework.FilterSet):
     platformname__contains = django_filters.CharFilter(name="platform", lookup_expr='name__contains')
     class Meta:
         model = Project
-        fields = ['id', 'platformname__contains', 'name__contains', 'dateft','state', 'contact', 'coopway', 'settleway',
-                  'contract_company']
+        fields = ['id', 'platformname__contains', 'name__contains', 'startDate','state', 'contact', 'coopway', 'settleway',
+                  'contract_company','finishdate']
 
 class ProjectInvestDateFilter(django_filters.rest_framework.FilterSet):
     dateft = django_filters.DateFromToRangeFilter(name="invest_time")
