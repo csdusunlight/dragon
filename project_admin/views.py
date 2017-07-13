@@ -341,108 +341,68 @@ def import_audit_projectdata_excel(request):
     try:
         for i in range(1,nrows):
             temp = []
+            duplic = False
             for j in range(ncols):
                 cell = table.cell(i,j)
-                value = cell.value
                 if j==0:
-                    id = int(value)
+                    id = int(cell.value)
                     temp.append(id)
-                elif j==2:
-                    value = value.strip()
-                    if value == u"首投":
-                        temp.append(False)
-                    elif value == u"复投":
+                elif j==9:
+                    result = cell.value.strip()
+                    if result == u"是":
+                        result = True
                         temp.append(True)
+                    elif result == u"否":
+                        result = False
+                        temp.append(False)
                     else:
-                        raise Exception(u"必须为首投或复投。")
-                elif j==3:
-                    if(cell.ctype!=3):
-                        raise Exception(u"投资日期列格式错误，请修改后重新提交。")
-                    else:
-                        time = xlrd.xldate.xldate_as_datetime(value, 0)
-                        temp.append(time)
-                elif j==4:
-                    try:
-                        mobile = str(int(value)).strip()
-                    except Exception,e:
-                        raise Exception(u"手机号必须是11位数字，请修改后重新提交。")
-                    if len(mobile)==11:
-                        temp.append(mobile)
-                    else:
-                        raise Exception(u"手机号必须是11位数字，请修改后重新提交。")
-                elif j==5 or j==7:
-                    try:
-                        temp.append(Decimal(value))
-                    except:
-                        raise Exception(u"投资金额必须为数字")
-                elif j==6:
-                    try:
-                        temp.append(int(value))
-                    except Exception,e:
-                        raise Exception(u"投资标期必须为数字，请修改后重新提交。")
-                elif j==8:
-                    value = value.strip()
-                    if value == u"网站":
-                        temp.append('site')
-                    elif value == u"渠道":
-                        temp.append('channel')
-                    else:
-                        raise Exception(u"必须为网站或渠道。")
+                        raise Exception(u"审核结果必须为是或否。")
+                elif j==10:
+                    return_amount = 0
+                    if cell.value:
+                        return_amount = Decimal(cell.value)
+                    elif result:
+                        raise Exception(u"审核结果为是时，返现金额不能为空或零。")
+                    temp.append(return_amount)
+                elif j==11:
+                    reason = cell.value
+                    temp.append(reason)
                 else:
-                    temp.append(value)
-            tid = temp[0]
-            if not temp[2]:
-                if dup.has_key(tid):
-                    if temp[4] in dup[tid]:
-                        continue
-                    else:
-                        dup[tid].append(temp[4])
-                else:
-                    dup[tid] = [temp[4],]
-
-            if rtable.has_key(tid):
-                rtable[tid].append(temp)
-            else:
-                rtable[tid]=[temp,]
+                    continue;
+            rtable.append(temp)
     except Exception, e:
         logger.info(unicode(e))
 #             traceback.print_exc()
         ret['msg'] = unicode(e)
         return JsonResponse(ret)
     ####开始去重
-    investdata_list = []
-    duplicate_mobile_list = []
-    with transaction.atomic():
-        db_key = DBlock.objects.select_for_update().get(index='investdata')
-        print rtable
-        for id, values in rtable.items():
-            temp = ProjectInvestData.objects.filter(project_id=id).values('invest_mobile')
-            db_mobile_list = map(lambda x: x['invest_mobile'], temp)
-            for item in values:
-                pid = item[0]
-                time = item[3]
-                mob = item[4]
-                is_futou = item[2]
-                amount = item[5]
-                term = item[6]
-                settle = item[7]
-                source = item[8]
-                remark = item[9]
-                if not is_futou and mob in db_mobile_list:
-                    duplicate_mobile_list.append(mob)
-                else:
-                    obj = ProjectInvestData(project_id=pid, invest_mobile=mob,settle_amount=settle,
-                                    invest_amount=amount,invest_term=term,invest_time=time,
-                                    state='1',remark=remark,source=source)
-                    investdata_list.append(obj)
-        ProjectInvestData.objects.bulk_create(investdata_list)
-    succ_num = len(investdata_list)
-    duplic_num2 = len(duplicate_mobile_list)
-    duplic_num1 = nrows - succ_num - duplic_num2
-    duplic_mobile_list_str = u'，'.join(duplicate_mobile_list)
-    ret.update(code=0,sun=succ_num, dup1=duplic_num1, dup2=duplic_num2, anum=nrows-1, dupstr=duplic_mobile_list_str)
+        admin_user = request.user
+    suc_num = 0
+    try:
+        for row in rtable:
+            id = row[0]
+            result = row[1]
+            retamount = row[2]
+            remark = row[3]
+            event = ProjectInvestData.objects.get(id=id)
+            if event.state != '1':
+                continue
+            if result:
+                amount = retamount
+                event.state = '0'
+                event.return_amount = retamount
+                event.save(update_fields=['state', 'return_amount'])
+            if remark:
+                event.remark = remark
+                event.save(update_fields=['remark',])
+            suc_num += 1
+        ret['code'] = 0
+    except Exception as e:
+        logger.info(unicode(e))
+        ret['code'] = 1
+        ret['msg'] = unicode(e)
+    ret['num'] = suc_num
     return JsonResponse(ret)
-
 def export_investdata_excel(request):
     user = request.user
     item_list = []
