@@ -31,7 +31,9 @@ class ContactList(BaseViewMixin,generics.ListCreateAPIView):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
     pagination_class = ProjectPageNumberPagination
-#     search_fields = ('=name', '=contact')
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
+    filter_fields = '__all__'
+    #     search_fields = ('=name', '=contact')
 
 
 class ContactDetail(BaseViewMixin,generics.RetrieveUpdateDestroyAPIView):
