@@ -6,11 +6,11 @@
 			csrfmiddlewaretoken: '{{ csrf_token }}'
 		},
 	});
-	var data = '<table width="100%"><tr><th>创建时间</th><th>甲方ID</th><th>甲方名称</th>' +
+	var data = '<table width="100%"><tr><th>甲方ID</th><th>甲方名称</th>' +
 		'<th>甲方网址</th><th>甲方联系信息</th><th>操作</th>' +
-		'</tr>[results]<tr id="parent{id}"><td>{time}</td><td>{id}</td><td>{name}</td>' +
+		'</tr>[results]<tr id="parent{id}"><td>{id}</td><td>{name}</td>' +
 		'<td>{url}</td><td><a href="/project/contacts_detail/{id}" target="_blank">查看</a></td>' +
-		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">编辑</a> │ <a class="hide-btn" onclick="hide({id})">隐藏</a>' +
+		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">编辑</a>' +
 		' │ <a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/results]</table>';
 	var url = "/project/platform/" + "?page={page}";
 	var url2 = "/project/platform/";
@@ -52,20 +52,20 @@
 			content: data,
 		});
 		
-		$("#tab li").click(function(){				//		tab切换
-			if($(this).attr("class")!="cur"){
-				$(this).toggleClass("cur").siblings().removeClass("cur")
-				var index = $(this).index();
-				$("#page").empty();
-				$("#pagedata").ajaxPage({
-				    url:url,
-				    pageId:$("#page"),
-				    run:true,
-				    content:data,
-//				    complete:pagecallback,
-				});
-			}
-	 	});
+//		$("#tab li").click(function(){				//		tab切换
+//			if($(this).attr("class")!="cur"){
+//				$(this).toggleClass("cur").siblings().removeClass("cur")
+//				var index = $(this).index();
+//				$("#page").empty();
+//				$("#pagedata").ajaxPage({
+//				    url:url,
+//				    pageId:$("#page"),
+//				    run:true,
+//				    content:data,
+////				    complete:pagecallback,
+//				});
+//			}
+//	 	});
 		
 		$("#single_import").click(function(){			//弹出单条导入弹窗
 			$(".add-project").show();
@@ -153,10 +153,10 @@
 	<span>搜索条件</span>-->
 	<div class="Crite-box">
 		<form>
-			<ul id="tab" class="tab-box">
+			<!--<ul id="tab" class="tab-box">
 				<li class="tab-item cur">显示</li>
 				<li class="tab-item">隐藏</li>
-			</ul>
+			</ul>-->
 			<div class="Submit-in">
 				<input id="single_import" type="button" value="新建甲方信息" />
 			</div>
