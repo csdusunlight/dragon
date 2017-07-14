@@ -22,7 +22,7 @@ class ProjectInvestDateFilter(django_filters.rest_framework.FilterSet):
     name__contains = django_filters.CharFilter(name="project", lookup_expr='name__contains')
     class Meta:
         model = ProjectInvestData
-        fields = ['is_futou', 'invest_time', 'project', 'name__contains', 'investtime','state', 'invest_mobile', 'audittime']
+        fields = ['is_futou', 'invest_time', 'project', 'name__contains', 'investtime','state', 'invest_mobile', 'audittime', 'source']
 
 class CompanyBalanceFilter(django_filters.rest_framework.FilterSet):
     dateft = django_filters.DateFromToRangeFilter(name="date")
