@@ -332,10 +332,10 @@ def import_audit_projectdata_excel(request):
     table = data.sheets()[0]
     nrows = table.nrows
     ncols = table.ncols
-    if ncols!=10:
+    if ncols!=13:
         ret['msg'] = u"文件格式与模板不符，请下载最新模板填写！"
         return JsonResponse(ret)
-    rtable = {}
+    rtable = []
     mobile_list = []
     dup={}
     try:
@@ -368,7 +368,7 @@ def import_audit_projectdata_excel(request):
                     reason = cell.value
                     temp.append(reason)
                 else:
-                    continue;
+                    continue
             rtable.append(temp)
     except Exception, e:
         logger.info(unicode(e))
@@ -458,9 +458,10 @@ def export_investdata_excel(request):
         settle_amount = con.settle_amount
         if con.state=='0':
             result = u'是'
+            return_amount = con.return_amount
         else:
             result = u'否'
-        return_amount = con.return_amount
+            return_amount = ''
         source = con.get_source_display()
         remark = con.remark
         data.append([id, project_id, project_name, is_futou, invest_time, invest_mobile, invest_amount, invest_term, settle_amount,
