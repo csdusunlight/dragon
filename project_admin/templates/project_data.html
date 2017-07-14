@@ -6,11 +6,11 @@
 			csrfmiddlewaretoken: '{{ csrf_token }}'
 		},
 	});
-	var data = '<table width="100%"><tr><th>项目编号</th><th>项目名称</th><th>投资日期</th>' +
-		'<th>提交手机号</th><th>投资金额</th><th>投资标期</th><th>结算金额</th><th>返现金额</th><th>处理状态</th><th>备注</th>' +
-		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{project}</td><td>{projectname}</td><td>{invest_time}</td>' +
-		'<td>{invest_mobile}</td><td>{invest_amount}</td><td>{invest_term}</td><td>{settle_amount}</td><td>{return_amount}</td>' +
-		'<td>{state_des}</td><td>{remark}</td>' +
+	var data = '<table width="100%"><tr><th>项目编号</th><th>项目名称</th><th>投资日期</th><th>是否复投</th><th>提交手机号</th>' +
+		'<th>投资金额</th><th>投资标期</th><th>预估消耗</th><th>投资来源</th><th>返现金额</th><th>审核状态</th><th>审核时间</th><th>备注</th>' +
+		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{project}</td><td>{projectname}</td><td>{invest_time}</td><td>{is_futou}</td>' +
+		'<td>{invest_mobile}</td><td>{invest_amount}</td><td>{invest_term}</td><td>{settle_amount}</td><td>{source}</td><td>{return_amount}</td>' +
+		'<td>{state_des}</td><td>{audit_time}</td><td>{remark}</td>' +
 		'<td id="item_{id}"><a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/results]</table>';
 	var url = "/project/investdata/" + "?page={page}";
 	var url2 = "/project/investdata/";
@@ -105,7 +105,7 @@
 				newurl += "&invest_mobile=" + invest_mobile;
 			}
 			if(invest_source && invest_source != 0) {
-				newurl += "&invest_source=" + invest_source;
+				newurl += "&source=" + invest_source;
 			}
 			if(is_futou && is_futou != -1) {
 				newurl += "&is_futou=" + is_futou;
@@ -164,7 +164,7 @@
 				html += '<input name="invest_mobile" type="hidden" value="' + invest_mobile + '"/>';
 			}
 			if(invest_source && invest_source != 0) {
-				html += '<input name="invest_source" type="hidden" value="' + invest_source + '"/>';
+				html += '<input name="source" type="hidden" value="' + invest_source + '"/>';
 			}
 			if(is_futou && is_futou != -1) {
 				html += '<input name="is_futou" type="hidden" value="' + is_futou + '"/>';
@@ -275,8 +275,8 @@
 						<i style="letter-spacing:4.8px;">投资来源</i>
 						<select name="selectAge" id="invest_source">
 							<option value="0">全部</option>
+							<option value="site">网站</option>
 							<option value="channel">渠道</option>
-							<option value="website">网站</option>
 						</select>
 					</td>
 				</tr>

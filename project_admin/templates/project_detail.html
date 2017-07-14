@@ -19,6 +19,8 @@
 		$("input#project_change_id").val(id);
 		project_flag = id;
 		
+		parent = "parent" + id;
+		
 		$.ajax({
 			url: url2 + project_flag + "/",
 			dataType: "json",
@@ -32,7 +34,7 @@
 				$("#settleway_change").val(ret.settleway);
 				$("#contract_company_change").val(ret.contract_company);
 				$("#settle_detail_change").val(ret.settle_detail);
-				$("#settle_money_change").val(ret.settle_money);
+				$("#settle_money_change").val(ret.settle);
 				
 				$("#chengben_change").val(ret.cost);
 				$("#chengbenbeizhu_change").val(ret.cost_explain);
@@ -124,9 +126,9 @@
 					'settleway': settleway_add,
 					'contract_company': contract_company_add,
 					'settle_detail': settle_detail_add,
-					'settle_money': settle_money_add,
+					'settle': settle_money_add,
 					'remark': remark_add,
-					"state": "prepare"
+					"state": "start"
 				},
 				success: function(ret) {
 						alert("操作成功！");
@@ -173,7 +175,7 @@
 					'contract_company': contract_company_change,
 					'settle_detail': settle_detail_change,
 					'state': state_change,
-					'settle_money': settle_money_change,
+					'settle': settle_money_change,
 					'cost': chengben_change,
 					'cost_explain': chengbenbeizhu_change,
 					'profit': maoli_change,
@@ -189,11 +191,11 @@
 					$(dom).find("td").eq(3).text(ret.platformname);
 					$(dom).find("td").eq(4).text(ret.contact);
 					$(dom).find("td").eq(5).text(ret.coopway);
-					$(dom).find("td").eq(6).text(ret.settleway);
+					$(dom).find("td").eq(6).text(ret.settleway_des);
 					$(dom).find("td").eq(7).text(ret.contract_company);
 					$(dom).find("td").eq(8).text(ret.settle_detail);
-					$(dom).find("td").eq(9).text(ret.state);
-					$(dom).find("td").eq(10).text(ret.profit);
+					$(dom).find("td").eq(9).text(ret.state_res);
+					$(dom).find("td").eq(10).text(ret.settle);
 					$(dom).find("td").eq(11).text(ret.remark);
 				},
 				error: function(ret) {
@@ -420,7 +422,7 @@
 							<option value="cpc">cpc</option>
 							<option value="cps">cps</option>
 							<option value="cpm">cpm</option>
-							<option value="else">其他</option>
+							<option value="other">其他</option>
 						</select>
 					</td>
 					<td>
@@ -503,7 +505,6 @@
 				<select name="selectType" id="settleway_add">
 					<option value="advance">预付款</option>
 					<option value="later">后付款</option>
-					<option value="daily">日结</option>
 				</select>
 			</p>
 			<p>
@@ -568,7 +569,6 @@
 				<select name="selectType" id="settleway_change">
 					<option value="advance">预付款</option>
 					<option value="later">后付款</option>
-					<option value="daily">日结</option>
 				</select>
 			</p>
 			<p>

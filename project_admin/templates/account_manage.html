@@ -85,6 +85,8 @@
 				start_money_add = $("#start_money_add").val(),
 				remark_add = $("#remark_add").val();
 				
+			console.log(account_type_add+", "+account_name_add+", "+bank_account_add+", "+bank_add+", "+bank_sub_add+", "+start_money_add+", "+remark_add);
+			
 			console.log(url2)
 			$.ajax({
 				url: url2,
@@ -118,7 +120,7 @@
 				start_money_change = $("#start_money_change").val(),
 				remark_change = $("#remark_change").val();
 			
-//			console.log(project_flag+", "+platformname_change+", "+project_name_change+", "+contact_person_change+", "+cooperate_type_change+", "+balance_type_change+", "+sign_company_change+", "+balance_change+", "+project_status_change);
+			console.log(account_type_change+", "+account_name_change+", "+bank_account_change+", "+bank_change+", "+bank_sub_change+", "+start_money_change+", "+remark_change);
 			
 			console.log(url2 + project_flag)
 			$.ajax({

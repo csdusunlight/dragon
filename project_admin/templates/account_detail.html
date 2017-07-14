@@ -106,12 +106,15 @@
 			var bill_time_add = $("#bill_time_add").val(),
 				account_type_add = $("#account_type_add").val(),
 				account_name_add = $("#account_name_add").val(),
-				bill_type_add = $("#bill_type_add").val(),
+//				bill_type_add = $("#bill_type_add").val(),
+				bill_type_add = $("input[name='bill_type_add']:checked").val(),
 				in_out_add = $("#in_out_add").val(),
 				trade_obj_add = $("#trade_obj_add").val(),
 				trade_money_add = $("#trade_money_add").val(),
 				remark_add = $("#remark_add").val();
-				
+			console.log(bill_type_add);
+			console.log(bill_time_add+", "+account_type_add+", "+account_name_add+", "+bill_type_add+", "+in_out_add+", "+trade_obj_add+", "+trade_money_add+", "+remark_add);
+			
 			console.log(url2)
 			$.ajax({
 				url: url2,
@@ -142,13 +145,14 @@
 			var bill_time_change = $("#bill_time_change").val(),
 				account_type_change = $("#account_type_change").val(),
 				account_name_change = $("#account_name_change").val(),
-				bill_type_change = $("#bill_type_change").val(),
+//				bill_type_change = $("#bill_type_change").val(),
+				bill_type_change = $("input[name='bill_type_change']:checked").val(),
 				in_out_change = $("#in_out_change").val(),
 				trade_obj_change = $("#trade_obj_change").val(),
 				trade_money_change = $("#trade_money_change").val(),
 				remark_change = $("#remark_change").val();
-			
-//			console.log(project_flag+", "+platformname_change+", "+project_name_change+", "+contact_person_change+", "+cooperate_type_change+", "+balance_type_change+", "+sign_company_change+", "+balance_change+", "+project_status_change);
+			console.log(bill_type_change);
+			console.log(bill_time_change+", "+account_type_change+", "+account_name_change+", "+bill_type_change+", "+in_out_change+", "+trade_obj_change+", "+trade_money_change+", "+remark_change);
 			
 			console.log(url2 + project_flag)
 			$.ajax({
