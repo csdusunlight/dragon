@@ -6,11 +6,11 @@
 			csrfmiddlewaretoken: '{{ csrf_token }}'
 		},
 	});
-	var data = '<table width="100%"><tr><th>项目编号</th><th>项目名称</th><th>投资日期</th>' +
-		'<th>提交手机号</th><th>投资金额</th><th>投资标期</th><th>结算金额</th><th>返现金额</th><th>处理状态</th><th>备注</th>' +
-		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{project}</td><td>{projectname}</td><td>{invest_time}</td>' +
-		'<td>{invest_mobile}</td><td>{invest_amount}</td><td>{invest_term}</td><td>{settle_amount}</td><td>{return_amount}</td>' +
-		'<td>{state_des}</td><td>{remark}</td>' +
+	var data = '<table width="100%"><tr><th>项目编号</th><th>项目名称</th><th>投资日期</th><th>是否复投</th><th>提交手机号</th>' +
+		'<th>投资金额</th><th>投资标期</th><th>预估消耗</th><th>投资来源</th><th>返现金额</th><th>审核状态</th><th>审核时间</th><th>备注</th>' +
+		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{project}</td><td>{projectname}</td><td>{invest_time}</td><td>{is_futou}</td>' +
+		'<td>{invest_mobile}</td><td>{invest_amount}</td><td>{invest_term}</td><td>{settle_amount}</td><td>{source}</td><td>{return_amount}</td>' +
+		'<td>{state_des}</td><td>{audit_time}</td><td>{remark}</td>' +
 		'<td id="item_{id}"><a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/results]</table>';
 	var url = "/project/investdata/" + "?page={page}";
 	var url2 = "/project/investdata/";
