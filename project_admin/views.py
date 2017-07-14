@@ -202,7 +202,7 @@ def import_projectdata_excel(request):
     table = data.sheets()[0]
     nrows = table.nrows
     ncols = table.ncols
-    if ncols!=10:
+    if ncols!=8:
         ret['msg'] = u"文件格式与模板不符，请下载最新模板填写！"
         return JsonResponse(ret)
     rtable = {}
@@ -250,14 +250,6 @@ def import_projectdata_excel(request):
                         temp.append(int(value))
                     except Exception,e:
                         raise Exception(u"投资标期必须为数字，请修改后重新提交。")
-                elif j==8:
-                    value = value.strip()
-                    if value == u"网站":
-                        temp.append('site')
-                    elif value == u"渠道":
-                        temp.append('channel')
-                    else:
-                        raise Exception(u"必须为网站或渠道。")
                 else:
                     temp.append(value)
             tid = temp[0]
@@ -296,8 +288,8 @@ def import_projectdata_excel(request):
                 amount = item[5]
                 term = item[6]
                 settle = item[7]
-                source = item[8]
-                remark = item[9]
+                source = ''
+                remark = ''
                 if not is_futou and mob in db_mobile_list:
                     duplicate_mobile_list.append(mob)
                 else:
@@ -360,7 +352,15 @@ def import_audit_projectdata_excel(request):
                     elif result:
                         raise Exception(u"审核结果为是时，返现金额不能为空或零。")
                     temp.append(return_amount)
-                elif j==11:
+                elif j==10:
+                    value = cell.value.strip()
+                    if value == u"网站":
+                        temp.append('site')
+                    elif value == u"渠道":
+                        temp.append('channel')
+                    else:
+                        raise Exception(u"必须为网站或渠道。")
+                elif j==12:
                     reason = cell.value
                     temp.append(reason)
                 else:
@@ -379,7 +379,8 @@ def import_audit_projectdata_excel(request):
             id = row[0]
             result = row[1]
             retamount = row[2]
-            remark = row[3]
+            source = row[3]
+            remark = row[4]
             event = ProjectInvestData.objects.get(id=id)
             if event.state != '1':
                 continue
@@ -387,11 +388,11 @@ def import_audit_projectdata_excel(request):
                 amount = retamount
                 event.state = '0'
                 event.return_amount = retamount
-                event.save(update_fields=['state', 'return_amount'])
-            if remark:
+                event.audit_time = datetime.datetime.now()
+                event.source = source
                 event.remark = remark
-                event.save(update_fields=['remark',])
-            suc_num += 1
+                event.save(update_fields=['state', 'return_amount', 'audit_time', 'source', 'remark'])
+                suc_num += 1
         ret['code'] = 0
     except Exception as e:
         logger.info(unicode(e))
