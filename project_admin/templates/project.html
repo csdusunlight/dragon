@@ -39,6 +39,7 @@
 		$.ajax({
 			type:"get",
 			url:"/project/projects/",
+			pageSize: 1000,
 			success: function(ret) {
 				$('.num-detail-0').text(ret.results.length);
 				for (var i=0; i<ret.results.length; i++) {
@@ -126,6 +127,7 @@
 		$.ajax({
 			type:"get",
 			url:"/project/projects/" + "?state=finish&dateft_0=" + date_now_str,
+			pageSize: 1000,
 			success: function(ret) {
 				
 				for (var i=0; i<ret.results.length; i++) {
