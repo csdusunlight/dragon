@@ -17,11 +17,12 @@ class ProjectFilter(django_filters.rest_framework.FilterSet):
                   'contract_company','finishdate']
 
 class ProjectInvestDateFilter(django_filters.rest_framework.FilterSet):
-    dateft = django_filters.DateFromToRangeFilter(name="invest_time")
+    investtime = django_filters.DateFromToRangeFilter(name="invest_time")
+    audittime = django_filters.DateTimeFromToRangeFilter(name="audit_time")
     name__contains = django_filters.CharFilter(name="project", lookup_expr='name__contains')
     class Meta:
         model = ProjectInvestData
-        fields = ['is_futou', 'invest_time', 'project', 'name__contains', 'dateft','state', 'invest_mobile']
+        fields = ['is_futou', 'invest_time', 'project', 'name__contains', 'investtime','state', 'invest_mobile', 'audittime']
 
 class CompanyBalanceFilter(django_filters.rest_framework.FilterSet):
     dateft = django_filters.DateFromToRangeFilter(name="date")
