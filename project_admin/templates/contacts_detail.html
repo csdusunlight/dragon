@@ -61,14 +61,16 @@
 		$("li.home4").toggleClass("show");
 		$(".Tin-table tr:even").css("background-color", "#fcfcfc");
 		
-		var str = location.href; //获取到整个地址
-		console.log(str);
-		console.log(str.length);
-		var str_id = str.substr(str.length - 2,1);
-		console.log(str_id);
+//		var str = location.href; //获取到整个地址
+//		console.log(str);
+//		console.log(str.length);
+//		var str_id = str.substr(str.length - 2,1);
+//		console.log(str_id);
+		var platform_id = {{platform_id}};
+		console.log(platform_id);
 		
 		$("#pagedata").ajaxPage({
-			url: url + "&platform=" + str_id,
+			url: url + "&platform=" + platform_id,
 			pageId: $("#page"),
 			run: true,
 			content: data,
