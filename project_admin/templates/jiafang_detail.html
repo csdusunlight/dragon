@@ -24,11 +24,11 @@
 		
 		parent = "parent" + id;
 		var dom = document.getElementById(parent);
-		var children2 = $(dom).find("td").eq(2).text(),
-			children3 = $(dom).find("td").eq(3).text(); 
+		var children1 = $(dom).find("td").eq(1).text(),
+			children2 = $(dom).find("td").eq(2).text(); 
 
-		$("#name_change").val(children2);
-		$("#url_change").val(children3);
+		$("#name_change").val(children1);
+		$("#url_change").val(children2);
 		
 		$(".change-project").show();
 	}
@@ -115,8 +115,8 @@
 					console.log(ret);
 					alert("操作成功！");
 					var dom = document.getElementById(parent);
-					$(dom).find("td").eq(2).text(ret.name);
-					$(dom).find("td").eq(3).text(ret.url);
+					$(dom).find("td").eq(1).text(ret.name);
+					$(dom).find("td").eq(2).text(ret.url);
 				},
 				error: function(ret) {
 					alert(JSON.stringify(ret));
