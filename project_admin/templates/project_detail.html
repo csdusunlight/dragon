@@ -32,7 +32,7 @@
 				$("#settleway_change").val(ret.settleway);
 				$("#contract_company_change").val(ret.contract_company);
 				$("#settle_detail_change").val(ret.settle_detail);
-				$("#settle_money_change").val(ret.settle_money);
+				$("#settle_money_change").val(ret.settle);
 				
 				$("#chengben_change").val(ret.cost);
 				$("#chengbenbeizhu_change").val(ret.cost_explain);
@@ -124,7 +124,7 @@
 					'settleway': settleway_add,
 					'contract_company': contract_company_add,
 					'settle_detail': settle_detail_add,
-					'settle_money': settle_money_add,
+					'settle': settle_money_add,
 					'remark': remark_add,
 					"state": "start"
 				},
@@ -173,7 +173,7 @@
 					'contract_company': contract_company_change,
 					'settle_detail': settle_detail_change,
 					'state': state_change,
-					'settle_money': settle_money_change,
+					'settle': settle_money_change,
 					'cost': chengben_change,
 					'cost_explain': chengbenbeizhu_change,
 					'profit': maoli_change,
@@ -193,7 +193,7 @@
 					$(dom).find("td").eq(7).text(ret.contract_company);
 					$(dom).find("td").eq(8).text(ret.settle_detail);
 					$(dom).find("td").eq(9).text(ret.state);
-					$(dom).find("td").eq(10).text(ret.profit);
+					$(dom).find("td").eq(10).text(ret.settle);
 					$(dom).find("td").eq(11).text(ret.remark);
 				},
 				error: function(ret) {
