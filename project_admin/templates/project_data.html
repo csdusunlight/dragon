@@ -105,7 +105,7 @@
 				newurl += "&invest_mobile=" + invest_mobile;
 			}
 			if(invest_source && invest_source != 0) {
-				newurl += "&invest_source=" + invest_source;
+				newurl += "&source=" + invest_source;
 			}
 			if(is_futou && is_futou != -1) {
 				newurl += "&is_futou=" + is_futou;
@@ -164,7 +164,7 @@
 				html += '<input name="invest_mobile" type="hidden" value="' + invest_mobile + '"/>';
 			}
 			if(invest_source && invest_source != 0) {
-				html += '<input name="invest_source" type="hidden" value="' + invest_source + '"/>';
+				html += '<input name="source" type="hidden" value="' + invest_source + '"/>';
 			}
 			if(is_futou && is_futou != -1) {
 				html += '<input name="is_futou" type="hidden" value="' + is_futou + '"/>';
@@ -275,8 +275,8 @@
 						<i style="letter-spacing:4.8px;">投资来源</i>
 						<select name="selectAge" id="invest_source">
 							<option value="0">全部</option>
+							<option value="site">网站</option>
 							<option value="channel">渠道</option>
-							<option value="website">网站</option>
 						</select>
 					</td>
 				</tr>
