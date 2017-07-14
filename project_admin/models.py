@@ -131,3 +131,13 @@ class DayStatis(models.Model):
         return self.date.strftime("%Y-%m-%d")
     class Meta:
         ordering = ['-date']
+
+ACCOUNT_TYPE=(
+    ('public', 'cpa'),
+    ('privare', 'cpc'),
+    ('invest', 'cps'),
+    ('cpm', 'cpm'),
+    ('other', '其他'),
+)
+class Account(models.Model):
+    type = models.CharField(u"账户类型", max_length=10)
