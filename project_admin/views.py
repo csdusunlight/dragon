@@ -274,30 +274,36 @@ def import_projectdata_excel(request):
     ####开始去重
     investdata_list = []
     duplicate_mobile_list = []
-    with transaction.atomic():
-        db_key = DBlock.objects.select_for_update().get(index='investdata')
-        print rtable
-        for id, values in rtable.items():
-            temp = ProjectInvestData.objects.filter(project_id=id).values('invest_mobile')
-            db_mobile_list = map(lambda x: x['invest_mobile'], temp)
-            for item in values:
-                pid = item[0]
-                time = item[3]
-                mob = item[4]
-                is_futou = item[2]
-                amount = item[5]
-                term = item[6]
-                settle = item[7]
-                source = ''
-                remark = ''
-                if not is_futou and mob in db_mobile_list:
-                    duplicate_mobile_list.append(mob)
-                else:
-                    obj = ProjectInvestData(project_id=pid, invest_mobile=mob,settle_amount=settle,
-                                    invest_amount=amount,invest_term=term,invest_time=time,
-                                    state='1',remark=remark,source=source)
-                    investdata_list.append(obj)
-        ProjectInvestData.objects.bulk_create(investdata_list)
+    try:
+        with transaction.atomic():
+            db_key = DBlock.objects.select_for_update().get(index='investdata')
+            print rtable
+            for id, values in rtable.items():
+                temp = ProjectInvestData.objects.filter(project_id=id).values('invest_mobile')
+                db_mobile_list = map(lambda x: x['invest_mobile'], temp)
+                for item in values:
+                    pid = item[0]
+                    time = item[3]
+                    mob = item[4]
+                    is_futou = item[2]
+                    amount = item[5]
+                    term = item[6]
+                    settle = item[7]
+                    source = ''
+                    remark = ''
+                    if not is_futou and mob in db_mobile_list:
+                        duplicate_mobile_list.append(mob)
+                    else:
+                        obj = ProjectInvestData(project_id=pid, invest_mobile=mob,settle_amount=settle,
+                                        invest_amount=amount,invest_term=term,invest_time=time,
+                                        state='1',remark=remark,source=source)
+                        investdata_list.append(obj)
+            ProjectInvestData.objects.bulk_create(investdata_list)
+    except Exception, e:
+        logger.info(unicode(e))
+#             traceback.print_exc()
+        ret['msg'] = unicode(e)
+        return JsonResponse(ret)
     succ_num = len(investdata_list)
     duplic_num2 = len(duplicate_mobile_list)
     duplic_num1 = nrows - succ_num - duplic_num2
