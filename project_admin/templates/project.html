@@ -39,23 +39,29 @@
 		$.ajax({
 			type:"get",
 			url:"/project/projects/",
-			pageSize: 1000,
+			data: {
+				'pageSize': 1000,
+			},
 			success: function(ret) {
 				$('.num-detail-0').text(ret.results.length);
 				for (var i=0; i<ret.results.length; i++) {
-					if(ret.results[i].topay_amount >= 0) {
-						pie_data_1.push({
-							value: ret.results[i].topay_amount,
-							name: ret.results[i].name
-						});
-						num_detail_1 += parseFloat(ret.results[i].topay_amount);
-					} else {
-						pie_data_2.push({
-							value: ret.results[i].topay_amount,
-							name: ret.results[i].name
-						});
-						num_detail_2 += parseFloat(ret.results[i].topay_amount);
+					console.log(ret.results[i].state);
+					if(ret.results[i].state == "start") {
+						if(ret.results[i].topay_amount >= 0) {
+							pie_data_1.push({
+								value: ret.results[i].topay_amount,
+								name: ret.results[i].name
+							});
+							num_detail_1 += parseFloat(ret.results[i].topay_amount);
+						} else {
+							pie_data_2.push({
+								value: ret.results[i].topay_amount,
+								name: ret.results[i].name
+							});
+							num_detail_2 += parseFloat(ret.results[i].topay_amount);
+						}
 					}
+					
 				}
 				$('.num-detail-1').text(num_detail_1);
 				$('.num-detail-2').text(num_detail_2)
@@ -127,7 +133,9 @@
 		$.ajax({
 			type:"get",
 			url:"/project/projects/" + "?state=finish&dateft_0=" + date_now_str,
-			pageSize: 1000,
+			data: {
+				'pageSize': 1000,
+			},
 			success: function(ret) {
 				
 				for (var i=0; i<ret.results.length; i++) {
