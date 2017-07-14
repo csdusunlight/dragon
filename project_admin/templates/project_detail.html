@@ -126,7 +126,7 @@
 					'settle_detail': settle_detail_add,
 					'settle_money': settle_money_add,
 					'remark': remark_add,
-					"state": "prepare"
+					"state": "start"
 				},
 				success: function(ret) {
 						alert("操作成功！");
@@ -503,7 +503,6 @@
 				<select name="selectType" id="settleway_add">
 					<option value="advance">预付款</option>
 					<option value="later">后付款</option>
-					<option value="daily">日结</option>
 				</select>
 			</p>
 			<p>
@@ -568,7 +567,6 @@
 				<select name="selectType" id="settleway_change">
 					<option value="advance">预付款</option>
 					<option value="later">后付款</option>
-					<option value="daily">日结</option>
 				</select>
 			</p>
 			<p>
