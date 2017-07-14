@@ -19,6 +19,8 @@
 		$("input#project_change_id").val(id);
 		project_flag = id;
 		
+		parent = "parent" + id;
+		
 		$.ajax({
 			url: url2 + project_flag + "/",
 			dataType: "json",
