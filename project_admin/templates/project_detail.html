@@ -35,8 +35,8 @@
 				$("#settle_money_change").val(ret.settle_money);
 				
 				$("#chengben_change").val(ret.cost);
-				$("#chengbenbeizhu_change").val(ret.chengbenbeizhu);
-				$("#maoli_change").val(ret.maoli);
+				$("#chengbenbeizhu_change").val(ret.cost_explain);
+				$("#maoli_change").val(ret.profit);
 				$("#remark_change").val(ret.remark);
 				
 				var radio_btn = "project-" + ret.state;
@@ -173,9 +173,9 @@
 					'settle_detail': settle_detail_change,
 					'state': state_change,
 					'settle_money': settle_money_change,
-					'chengben': chengben_change,
-					'chengbenbeizhu': chengbenbeizhu_change,
-					'maoli': maoli_change,
+					'cost': chengben_change,
+					'cost_explain': chengbenbeizhu_change,
+					'profit': maoli_change,
 					'remark': remark_change,
 				},
 				success: function(ret) {
@@ -215,9 +215,9 @@
 						'id': finish_id
 					},
 					success: function(ret) {
-						$('#finish_detail_1').text(ret.id);
-						$('#finish_detail_2').text(ret.name);
-						$('#finish_detail_3').text(ret.coopway);
+						$('#finish_detail_1').text(ret.cost);
+						$('#finish_detail_2').text(ret.cost_explain);
+						$('#finish_detail_3').text(ret.profit);
 						$(".finish-project").show();
 					},
 					error: function(ret) {

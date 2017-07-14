@@ -40,7 +40,7 @@ urlpatterns += [
     url(r'^finance_pandect/$', views.finance_pandect, name='finance_pandect'),
     url(r'^account_manage/$', views.account_manage, name='account_manage'),
     url(r'^account_detail/$', views.account_detail, name='account_detail'),
-    url(r'^contacts_detail/$', views.contacts_detail, name='contacts_detail'),
+    url(r'^contacts_detail/$', views.contacts_detail, name='contacts'),
     url(r'^contacts_detail/(?P<id>[0-9]*)/$', views.contacts_detail, name='contacts_detail'),   #jzy
 
     url(r'^import_projectdata_excel/$', views.import_projectdata_excel, name='import_projectdata_excel'),

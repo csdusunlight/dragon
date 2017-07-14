@@ -1,4 +1,10 @@
-{% extends "project_base.html" %} {%load staticfiles%} {% block js %}
+ {%load staticfiles%} {% block js %}
+<link href="{% static 'images/favicon.ico'%}" rel="shortcut icon"/>
+<link rel="stylesheet" type="text/css" href="{% static 'wafuli_admin/css/index.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'wafuli_admin/css/style-i.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/page.css' %}" />
+<script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/page.js' %}"></script>
 <script type="text/javascript" src="{%static 'js/ajaxfileupload.js'%}"></script>
 <script type="text/javascript">
 
@@ -55,9 +61,14 @@
 		$("li.home4").toggleClass("show");
 		$(".Tin-table tr:even").css("background-color", "#fcfcfc");
 		
+		var str = location.href; //获取到整个地址
+		console.log(str);
+		console.log(str.length);
+		var str_id = str.substr(str.length - 2,1);
+		console.log(str_id);
 		
 		$("#pagedata").ajaxPage({
-			url: url,
+			url: url + "&platform=" + str_id,
 			pageId: $("#page"),
 			run: true,
 			content: data,
@@ -133,15 +144,15 @@
 					console.log(ret);
 					alert("操作成功！");
 					var dom = document.getElementById(parent);
-					$(dom).find("td").eq(0).text(ret.time);
-					$(dom).find("td").eq(1).text(ret.id);
-					$(dom).find("td").eq(2).text(ret.name);
-					$(dom).find("td").eq(3).text(ret.contact);
-					$(dom).find("td").eq(4).text(ret.coopway);
-					$(dom).find("td").eq(5).text(ret.settleway_des);
-					$(dom).find("td").eq(6).text(ret.contract_company);
-					$(dom).find("td").eq(7).text(ret.settle_detail);
-					$(dom).find("td").eq(8).text(ret.state_des);
+					$(dom).find("td").eq(0).text(ret.name);
+					$(dom).find("td").eq(1).text(ret.mobile);
+					$(dom).find("td").eq(2).text(ret.qq);
+					$(dom).find("td").eq(3).text(ret.weixin);
+					$(dom).find("td").eq(4).text(ret.invoicecompany);
+					$(dom).find("td").eq(5).text(ret.invoiceid);
+					$(dom).find("td").eq(6).text(ret.address);
+					$(dom).find("td").eq(7).text(ret.mobile2);
+					$(dom).find("td").eq(8).text(ret.remark);
 				},
 				error: function(ret) {
 					alert(JSON.stringify(ret));
@@ -225,7 +236,7 @@
 </script>
 {% endblock js %} {% block right %}
 <div class="Criteria">
-	<!--<span>搜索条件</span>-->
+	<span>甲方联系人信息</span>
 	<div class="Crite-box">
 		<form>
 			<div class="Submit-in">
