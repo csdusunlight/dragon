@@ -58,9 +58,9 @@ class Project(models.Model):
     settle = models.DecimalField(u"结算费用", max_digits=10, decimal_places=2, default=0)
     consume = models.DecimalField(u"消耗总额", max_digits=10, decimal_places=2, default=0)
     cost = models.DecimalField(u"项目成本", max_digits=10, decimal_places=2, default=0)
-    cost_explain = models.CharField(u"成本说明", max_length=100)
+    cost_explain = models.CharField(u"成本说明", max_length=100,blank=True)
     finish_time = models.DateField(u"结项日期", null=True)
-    remark = models.CharField(u"备注", max_length=100)
+    remark = models.CharField(u"备注", max_length=100,blank=True)
     def consume_minus_paid(self):
         return self.consume - self.settle
     topay_amount = property(consume_minus_paid)
