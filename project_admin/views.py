@@ -465,7 +465,7 @@ def export_investdata_excel(request):
                      result, return_amount, source, remark])
     w = Workbook()     #创建一个工作簿
     ws = w.add_sheet(u'待审核记录')     #创建一个工作表
-    title_row = [u'记录ID',u'项目编号',u'项目名称',u'首投/复投',u'投资日期', u'提交手机号',u'投资金额' ,u'投资标期',u'结算金额', u'审核状态',
+    title_row = [u'记录ID',u'项目编号',u'项目名称',u'首投/复投',u'投资日期', u'提交手机号',u'投资金额' ,u'投资标期',u'预估消耗', u'审核状态',
                  u'返现金额',u'投资来源',u'备注']
     for i in range(len(title_row)):
         ws.write(0,i,title_row[i])
