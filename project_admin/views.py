@@ -22,6 +22,7 @@ from decimal import Decimal
 from xlwt.Workbook import Workbook
 from xlwt.Style import easyxf
 import StringIO
+import traceback
 logger = logging.getLogger('wafuli')
 class BaseViewMixin(object):
     authentication_classes = (CsrfExemptSessionAuthentication,)
@@ -330,7 +331,6 @@ def import_projectdata_excel(request):
 
 @csrf_exempt
 def import_audit_projectdata_excel(request):
-    logger.info('mama')
     admin_user = request.user
     if not ( admin_user.is_authenticated() and admin_user.is_staff):
         raise Http404
@@ -419,7 +419,8 @@ def import_audit_projectdata_excel(request):
                 suc_num += 1
         ret['code'] = 0
     except Exception as e:
-        logger.info(unicode(e))
+        exstr = traceback.format_exc()
+        logger.info(unicode(exstr))
         ret['code'] = 1
         ret['msg'] = unicode(e)
     ret['num'] = suc_num
