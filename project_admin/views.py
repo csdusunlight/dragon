@@ -376,7 +376,7 @@ def import_audit_projectdata_excel(request):
                     elif result:
                         raise Exception(u"审核结果为是时，返现金额不能为空或零。")
                     temp.append(return_amount)
-                elif j==10:
+                elif j==11:
                     value = cell.value.strip()
                     if value == u"网站":
                         temp.append('site')
