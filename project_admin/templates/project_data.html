@@ -131,7 +131,7 @@
 			audittime_0 = $("#audittime_0").val();
 			audittime_1 = $("#audittime_1").val();
 			project_id = $("#project_id").val();
-			name__contains = $("#name").val();
+			name = $("#name").val();
 			invest_mobile = $("#invest_mobile").val();
 			invest_source = $("#invest_source").val();
 			is_futou = $("#is_futou").val();
@@ -157,7 +157,7 @@
 				html += '<input name="project_id" type="hidden" value="' + project_id + '"/>';
 			}
 			if(name) {
-				html += '<input name="name" type="hidden" value="' + name + '"/>';
+				html += '<input name="name__contains" type="hidden" value="' + name + '"/>';
 			}
 			
 			if(invest_mobile) {
