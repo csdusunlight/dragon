@@ -21,6 +21,10 @@ urlpatterns = [
     url(r'^balance/(?P<pk>[0-9]+)/$', views.CompanyBalanceDetail.as_view()),
     url(r'^projectstatis/$', views.ProjectStatisList.as_view()),
     url(r'^daystatis/$', views.DayStatisList.as_view()),
+    url(r'^account/$', views.AccountList.as_view()),
+    url(r'^account/(?P<pk>[0-9]+)/$', views.AccountDetail.as_view()),
+    url(r'^accountbill/$', views.AccountBillList.as_view()),
+    url(r'^accountbill/(?P<pk>[0-9]+)/$', views.AccountBillDetail.as_view()),
 ]
 from django.conf.urls import include
 

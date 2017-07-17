@@ -1,8 +1,5 @@
 #coding:utf-8
-from .models import Project
-from project_admin.serializers import ProjectSerializer,\
-    ProjectInvestDataSerializer, CompanyBalanceSerializer, PlatformSerializer,\
-    ContactSerializer, ProjectStatisSerializer, DayStatisSerializer
+from project_admin.serializers import *
 # Create your views here.
 
 from rest_framework import generics, permissions
@@ -104,7 +101,27 @@ class DayStatisList(BaseViewMixin,generics.ListCreateAPIView):
     queryset = DayStatis.objects.all()
     serializer_class = DayStatisSerializer
     pagination_class = ProjectPageNumberPagination
-
+class AccountList(BaseViewMixin,generics.ListCreateAPIView):
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
+#     filter_fields = ('__all__')
+#     filter_class = ProjectInvestDateFilt
+    pagination_class = ProjectPageNumberPagination
+class AccountDetail(BaseViewMixin,generics.RetrieveUpdateDestroyAPIView):
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
+    
+class AccountBillList(BaseViewMixin,generics.ListCreateAPIView):
+    queryset = AccountBill.objects.all()
+    serializer_class = AccountBillSerializer
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
+#     filter_fields = ('__all__')
+#     filter_class = ProjectInvestDateFilt
+    pagination_class = ProjectPageNumberPagination
+class AccountBillDetail(BaseViewMixin,generics.RetrieveUpdateDestroyAPIView):
+    queryset = AccountBill.objects.all()
+    serializer_class = AccountBillSerializer
 # 立项部分增加
 def project_index(request):
     admin_user = request.user
@@ -313,6 +330,7 @@ def import_projectdata_excel(request):
 
 @csrf_exempt
 def import_audit_projectdata_excel(request):
+    logger.info('mama')
     admin_user = request.user
     if not ( admin_user.is_authenticated() and admin_user.is_staff):
         raise Http404

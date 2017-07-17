@@ -57,3 +57,13 @@ class DayStatisSerializer(serializers.ModelSerializer):
     class Meta:
         model = DayStatis
         fields = '__all__'
+        
+class AccountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = '__all__'
+        read_only_fields = ('id',)
+class AccountBillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AccountBill
+        fields = '__all__'        

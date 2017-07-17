@@ -1,7 +1,7 @@
 #coding:utf-8
 from django.db import models
 from django.utils import timezone
-from wafuli.data import AUDIT_STATE
+from wafuli.data import AUDIT_STATE, BANK
 import time,datetime
 # Create your models here.
 PROJECT_STATE=(
@@ -133,11 +133,42 @@ class DayStatis(models.Model):
         ordering = ['-date']
 
 ACCOUNT_TYPE=(
-    ('public', 'cpa'),
-    ('privare', 'cpc'),
-    ('invest', 'cps'),
-    ('cpm', 'cpm'),
+    ('public', '公账'),
+    ('private', '私账'),
+    ('invest', '投资'),
+    ('loan', '借款'),
     ('other', '其他'),
 )
 class Account(models.Model):
-    type = models.CharField(u"账户类型", max_length=10)
+    type = models.CharField(u"账户类型", max_length=10, choices=ACCOUNT_TYPE)
+    name = models.CharField(u"账户名称", max_length=50)
+    bankaccount = models.CharField(u"银行账号", max_length=40)
+    bank = models.CharField(u'开户银行', max_length=10, choices=BANK)
+    subbranch = models.CharField(u"开户支行", max_length=40)
+    balance = models.DecimalField(u"余额", max_digits=10, decimal_places=2)
+    remark = models.CharField(u"备注", max_length=100, blank=True)
+BILL_TYPE = (
+    ('income', '收入'),
+    ('expend', '支出'),
+)
+BILL_SUBTYPE = (
+    ('swrz', '商务入账'),
+    ('nbzr', '内部转入'),
+    ('qtsr', '其他收入'),
+    ('nbzc', '内部转出'),
+    ('wztx', '网站提现'),
+    ('gzbx', '工资报销'),
+    ('swfy', '税务费用'),
+    ('swcz', '商务出账'),
+    ('qtzc', '其他支出'),
+)
+class AccountBill(models.Model):
+    time = models.DateTimeField(u"账单时间", default=timezone.now)
+    account = models.ForeignKey(Account, verbose_name=u"账户", related_name='account_bills')
+    type = models.CharField(max_length=6, choices=BILL_TYPE, verbose_name=u"账单类型")
+    subtype = models.CharField(max_length=6, choices=BILL_SUBTYPE, verbose_name=u"支出/收入类型")
+    target = models.CharField(u"交易对象", max_length=100)
+    amount = models.DecimalField(u"交易余额", max_digits=10, decimal_places=2)
+    remark = models.CharField(u"备注", max_length=100, blank=True)
+    def __unicode__(self):
+        return self.account + ' ' + self.get_type_display() + ' ' + str(self.amount)
