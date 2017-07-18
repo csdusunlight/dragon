@@ -4,13 +4,13 @@
 
 	var data = '<table width="100%"><tr><th>创建时间</th><th>账户ID</th><th>账户类型</th>' +
 		'<th>账户名称</th><th>银行帐号</th><th>开户行</th><th>支行信息</th><th>余额</th><th>备注</th>' +
-		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{time}</td><td>{id}</td><td>{name}</td>' +
-		'<td>{contact}</td><td>{coopway}</td><td>{settleway_des}</td><td>{contract_company}</td><td>{settle_detail}</td>' +
-		'<td>{state_des}</td>' +
+		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{time}</td><td>{id}</td><td>{type}</td>' +
+		'<td>{name}</td><td>{bankaccount}</td><td>{bank}</td><td>{subbranch}</td><td>{balance}</td>' +
+		'<td>{remark}</td>' +
 		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">修改' +
 		'</a> │ <a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/results]</table>';
-	var url = "/project/projects/" + "?page={page}";
-	var url2 = "/project/projects/";
+	var url = "/project/account/" + "?page={page}";
+	var url2 = "/project/account/";
 	
 	var project_flag;		// project_flag = -1 时，为导入单条数据；project_flag != -1 时，为修改单条数据
 	var parent;
@@ -222,10 +222,10 @@
 			<p>
 				<span>账户类型：</span>
 				<select name="selectType" id="account_type_add">
-					<option value="1">公帐</option>
-					<option value="2">私帐</option>
-					<option value="3">投资</option>
-					<option value="4">借贷</option>
+					<option value="public">公帐</option>
+					<option value="private">私帐</option>
+					<option value="invest">投资</option>
+					<option value="loan">借贷</option>
 					<option value="other">其他</option>
 				</select>
 			</p>
@@ -239,8 +239,23 @@
 			</p>
 			<p>
 				<span>开户行：</span>
-				<input id="bank_add" type="text" />
-				
+				<!--<input id="bank_add" type="text" />-->
+				<select name="selectType" id="bank_add">
+					<option value="gsyh">中国工商银行</option>
+					<option value="nyyh">中国农业银行</option>
+					<option value="zgyh">中国银行</option>
+					<option value="jsyh">中国建设银行</option>
+					<option value="jtyh">交通银行</option>
+					<option value="ycyh">中国邮政储蓄银行</option>
+					<option value="zxyh">中信银行</option>
+					<option value="gdyh">中国光大银行</option>
+					<option value="hxyh">华夏银行</option>
+					<option value="msyh">中国民生银行</option>
+					<option value="gfyh">广发银行股份有限公司</option>
+					<option value="payh">平安银行</option>
+					<option value="zsyh">招商银行</option>
+					<option value="xyyh">兴业银行</option>
+				</select>
 			</p>
 			<p>
 				<span>支行信息：</span>
@@ -272,10 +287,10 @@
 			<p>
 				<span>账户类型：</span>
 				<select name="selectType" id="account_type_change">
-					<option value="1">公帐</option>
-					<option value="2">私帐</option>
-					<option value="3">投资</option>
-					<option value="4">借贷</option>
+					<option value="public">公帐</option>
+					<option value="private">私帐</option>
+					<option value="invest">投资</option>
+					<option value="loan">借贷</option>
 					<option value="other">其他</option>
 				</select>
 			</p>
@@ -289,8 +304,23 @@
 			</p>
 			<p>
 				<span>开户行：</span>
-				<input id="bank_change" type="text" />
-				
+				<!--<input id="bank_change" type="text" />-->
+				<select name="selectType" id="bank_change">
+					<option value="gsyh">中国工商银行</option>
+					<option value="nyyh">中国农业银行</option>
+					<option value="zgyh">中国银行</option>
+					<option value="jsyh">中国建设银行</option>
+					<option value="jtyh">交通银行</option>
+					<option value="ycyh">中国邮政储蓄银行</option>
+					<option value="zxyh">中信银行</option>
+					<option value="gdyh">中国光大银行</option>
+					<option value="hxyh">华夏银行</option>
+					<option value="msyh">中国民生银行</option>
+					<option value="gfyh">广发银行股份有限公司</option>
+					<option value="payh">平安银行</option>
+					<option value="zsyh">招商银行</option>
+					<option value="xyyh">兴业银行</option>
+				</select>
 			</p>
 			<p>
 				<span>支行信息：</span>
