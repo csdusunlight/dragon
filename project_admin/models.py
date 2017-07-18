@@ -140,6 +140,7 @@ ACCOUNT_TYPE=(
     ('other', '其他'),
 )
 class Account(models.Model):
+    time = models.DateTimeField(u"创建时间", auto_now_add=True)
     type = models.CharField(u"账户类型", max_length=10, choices=ACCOUNT_TYPE)
     name = models.CharField(u"账户名称", max_length=50)
     bankaccount = models.CharField(u"银行账号", max_length=40)
@@ -147,6 +148,8 @@ class Account(models.Model):
     subbranch = models.CharField(u"开户支行", max_length=40)
     balance = models.DecimalField(u"余额", max_digits=10, decimal_places=2)
     remark = models.CharField(u"备注", max_length=100, blank=True)
+    def __unicode__(self):
+        return self.name
 BILL_TYPE = (
     ('income', '收入'),
     ('expend', '支出'),

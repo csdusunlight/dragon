@@ -48,9 +48,11 @@ class ProjectStatisSerializer(serializers.ModelSerializer):
     projectname = serializers.CharField(source='project.name', read_only=True)
     finish_time = serializers.CharField(source='project.finish_time', read_only=True)
     topay_amount = serializers.CharField(source='project.topay_amount', read_only=True)
+    state_des = serializers.CharField(source='project.get_state_display', read_only=True)
     class Meta:
         model = ProjectStatis
-        fields =('id','project','projectname', 'finish_time', 'topay_amount', 'channel_consume','channel_return','site_consume','site_return','consume','ret')
+        fields =('id','project','projectname', 'finish_time', 'topay_amount', 'channel_consume','channel_return','site_consume','site_return',
+                 'consume','ret','state_des')
 #         read_only_fields = '__all__'
 
 class DayStatisSerializer(serializers.ModelSerializer):
@@ -59,11 +61,19 @@ class DayStatisSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class AccountSerializer(serializers.ModelSerializer):
+    type_des = serializers.CharField(source='get_type_display', read_only=True)
+    bank_des = serializers.CharField(source='get_bank_display', read_only=True)
     class Meta:
         model = Account
-        fields = '__all__'
+        fields = ('id','time','type','name','bankaccount','bank','subbranch','balance','remark','type_des','bank_des')
         read_only_fields = ('id',)
 class AccountBillSerializer(serializers.ModelSerializer):
+    account_type = serializers.CharField(source='account.get_type_display', read_only=True)
+    account_name = serializers.CharField(source='account.name', read_only=True)
+    account_balance = serializers.CharField(source='account.balance', read_only=True)
+    subtype_des = serializers.CharField(source='get_subtype_display', read_only=True)
+    type_des = serializers.CharField(source='get_type_display', read_only=True)
     class Meta:
         model = AccountBill
-        fields = '__all__'        
+        fields = ('id', 'time', 'account', 'type', 'subtype', 'target', 'amount', 'remark',
+                  'account_type','account_name','account_balance','subtype_des','type_des')        

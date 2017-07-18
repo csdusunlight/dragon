@@ -7,7 +7,7 @@ from project_admin.permissions import IsAdminOrReadOnly,\
     CsrfExemptSessionAuthentication
 import django_filters
 from project_admin.Filters import ProjectFilter, ProjectInvestDateFilter,\
-    CompanyBalanceFilter
+    CompanyBalanceFilter, AccountBillFilter
 from django.shortcuts import redirect, render
 from django.core.urlresolvers import reverse
 from django.http.response import Http404, JsonResponse, HttpResponse
@@ -118,7 +118,7 @@ class AccountBillList(BaseViewMixin,generics.ListCreateAPIView):
     serializer_class = AccountBillSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
 #     filter_fields = ('__all__')
-#     filter_class = ProjectInvestDateFilt
+    filter_class = AccountBillFilter
     pagination_class = ProjectPageNumberPagination
 class AccountBillDetail(BaseViewMixin,generics.RetrieveUpdateDestroyAPIView):
     queryset = AccountBill.objects.all()
