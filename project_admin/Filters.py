@@ -5,7 +5,8 @@ Created on 2017年7月3日
 @author: lch
 '''
 import django_filters
-from project_admin.models import Project, ProjectInvestData, CompanyBalance
+from project_admin.models import Project, ProjectInvestData, CompanyBalance,\
+    AccountBill
 class ProjectFilter(django_filters.rest_framework.FilterSet):
     startDate = django_filters.DateFromToRangeFilter(name="time")
     finishdate = django_filters.DateFromToRangeFilter(name="finish_time")
@@ -30,3 +31,11 @@ class CompanyBalanceFilter(django_filters.rest_framework.FilterSet):
     class Meta:
         model = CompanyBalance
         fields = ['company', 'date', 'name__contains', 'dateft',]
+        
+class AccountBillFilter(django_filters.rest_framework.FilterSet):
+    timeft = django_filters.DateTimeFromToRangeFilter(name="time")
+    name__contains = django_filters.CharFilter(name="account", lookup_expr='name__contains')
+    account_type = django_filters.CharFilter(name="account", lookup_expr='type')
+    class Meta:
+        model = AccountBill
+        fields = ['type', 'account_type', 'subtype', 'name__contains', 'time','target']
