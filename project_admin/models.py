@@ -190,8 +190,8 @@ class AccountBill(models.Model):
     
 class DayAccountStatic(models.Model):
     date = models.DateField(u"日期", primary_key=True)
-    income = models.DecimalField(u"收入", max_digits=10, decimal_places=2)
-    expenditure = models.DecimalField(u"收入", max_digits=10, decimal_places=2)
+    income = models.DecimalField(u"收入", max_digits=10, decimal_places=2, null=True)
+    expenditure = models.DecimalField(u"收入", max_digits=10, decimal_places=2, null=True)
     balance = models.DecimalField(u"收入", max_digits=10, decimal_places=2)
     def __unicode__(self):
         return self.date.strftime("%Y-%m-%d")
