@@ -174,6 +174,8 @@ class AccountBill(models.Model):
     target = models.CharField(u"交易对象", max_length=100)
     amount = models.DecimalField(u"交易余额", max_digits=10, decimal_places=2)
     remark = models.CharField(u"备注", max_length=100, blank=True)
+    def strftime(self):
+        return self.time.strftime("%Y-%m-%d %H:%M")
     def __unicode__(self):
         return self.account + ' ' + self.get_type_display() + ' ' + str(self.amount)
     def save(self, force_insert=False, force_update=False, using=None, 

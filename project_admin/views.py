@@ -515,3 +515,69 @@ def export_investdata_excel(request):
     response['Content-Disposition'] = 'attachment; filename=导出表格.xls'
     response.write(sio.getvalue())
     return response
+
+def export_account_bill_excel(request):
+    user = request.user
+    item_list = []
+    item_list = AccountBill.objects.all()
+    name = request.GET.get("name", None)
+    if name:
+        item_list = item_list.filter(account__name=name)
+    account = request.GET.get("account", None)
+    if account:
+        item_list = item_list.filter(account_id=account)
+    account_type = request.GET.get("account_type", None)
+    if account_type:
+        item_list = item_list.filter(account__type=account_type)
+    type = request.GET.get("type", None)
+    if type:
+        item_list = item_list.filter(type=type)
+    subtype = request.GET.get("subtype", None)
+    if subtype:
+        item_list = item_list.filter(subtype=subtype)
+    target = request.GET.get("target", None)
+    if target:
+        item_list = item_list.filter(target=target)
+    timeft_0 = request.GET.get("timeft_0", None)
+    timeft_1 = request.GET.get("timeft_1", None)
+    if timeft_0 and timeft_1:
+        s = datetime.date.strptime(timeft_0,'%Y-%m-%dT%H:%M')
+        e = datetime.date.strptime(timeft_1,'%Y-%m-%dT%H:%M')
+        item_list = item_list.filter(time__range=(s,e))
+    data = []
+    for con in item_list:
+        time = con.time.strftime("%Y-%m-%d %H:%M")
+        account_id = con.account_id
+        account_type = con.account.get_type_display()
+        account_name = con.account.name
+        bill_type = con.get_type_display()
+        subtype = con.get_subtype_display()
+        target = con.target
+        amount = con.amount
+        balance = con.account.balance
+        remark = con.remark
+        data.append([time, account_id, account_type, account_name, bill_type, subtype, 
+                     target, amount, balance, remark])
+    w = Workbook()     #创建一个工作簿
+    ws = w.add_sheet(u'账目明细')     #创建一个工作表
+    title_row = [u'账单时间',u'账户ID',u'账户类型',u'账户名称',u'账单类型', u'收/支类型',
+                 u'交易对象',u'交易金额',u'账户余额',u'备注']
+    for i in range(len(title_row)):
+        ws.write(0,i,title_row[i])
+    row = len(data)
+    style1 = easyxf(num_format_str='YY/MM/DD HH:mm')
+    for i in range(row):
+        lis = data[i]
+        col = len(lis)
+        for j in range(col):
+            if j==0:
+                ws.write(i+1,j,lis[j],style1)
+            else:
+                ws.write(i+1,j,lis[j])
+    sio = StringIO.StringIO()
+    w.save(sio)
+    sio.seek(0)
+    response = HttpResponse(sio.getvalue(), content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=导出表格.xls'
+    response.write(sio.getvalue())
+    return response
