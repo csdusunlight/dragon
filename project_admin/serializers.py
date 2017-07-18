@@ -77,3 +77,8 @@ class AccountBillSerializer(serializers.ModelSerializer):
         model = AccountBill
         fields = ('id', 'time', 'account', 'type', 'subtype', 'target', 'amount', 'remark',
                   'account_type','account_name','account_balance','subtype_des','type_des')        
+
+class DayAccountStatisSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DayAccountStatic
+        fields = '__all__'
