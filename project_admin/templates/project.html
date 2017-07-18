@@ -46,7 +46,7 @@
 				$('.num-detail-0').text(ret.results.length);
 				for (var i=0; i<ret.results.length; i++) {
 					console.log(ret.results[i].state);
-					if(ret.results[i].state == "start") {
+					if(ret.results[i].state_des == "正在进行") {
 						if(ret.results[i].topay_amount >= 0) {
 							pie_data_1.push({
 								value: ret.results[i].topay_amount,
