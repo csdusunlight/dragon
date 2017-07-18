@@ -38,7 +38,7 @@
 			
 		$.ajax({
 			type:"get",
-			url:"/project/projects/",
+			url:"/project/projectstatis/",
 			data: {
 				'pageSize': 1000,
 			},
@@ -50,13 +50,13 @@
 						if(ret.results[i].topay_amount >= 0) {
 							pie_data_1.push({
 								value: ret.results[i].topay_amount,
-								name: ret.results[i].name
+								name: ret.results[i].projectname
 							});
 							num_detail_1 += parseFloat(ret.results[i].topay_amount);
 						} else {
 							pie_data_2.push({
 								value: ret.results[i].topay_amount,
-								name: ret.results[i].name
+								name: ret.results[i].projectname
 							});
 							num_detail_2 += parseFloat(ret.results[i].topay_amount);
 						}
