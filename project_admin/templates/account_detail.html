@@ -4,13 +4,13 @@
 
 	var data = '<table width="100%"><tr><th>账单时间</th><th>账户ID</th><th>账户类型</th><th>账户名称</th><th>账单类型</th>' +
 		'<th>收/支类型</th><th>交易对象</th><th>交易金额</th><th>账户余额</th><th>备注</th>' +
-		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{time}</td><td>{id}</td><td data-value={settleway}>{settleway_des}</td>' +
-		'<td data-value="1">{contact}</td><td data-value={settleway}>{settleway_des}</td><td data-value={state}>{state_des}</td><td>{contract_company}</td><td>{settle}</td>' +
-		'<td>{id}</td><td>{coopway}</td>' +
+		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{time}</td><td>{id}</td><td data-value={type}>{type}</td>' +
+		'<td data-value="1">{account}</td><td data-value={type}>{type}</td><td data-value={subtype}>{subtype}</td><td>{target}</td><td>{amount}</td>' +
+		'<td>{}</td><td>{remark}</td>' +
 		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">修改' +
 		'</a> │ <a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/results]</table>';
-	var url = "/project/projects/" + "?page={page}";
-	var url2 = "/project/projects/";
+	var url = "/project/accountbill/" + "?page={page}";
+	var url2 = "/project/accountbill/";
 	
 	var project_flag;		// project_flag = -1 时，为导入单条数据；project_flag != -1 时，为修改单条数据
 	var parent;
@@ -35,14 +35,19 @@
 			
 		if (bill_type_change == "预付款") {
 			document.getElementById('bill_in_change').checked = true;
-			$('.in-out-change').html('<option value="start">收入类型start</option>' +
-								'<option value="prepare">收入类型prepare</option>');
+			$('.in-out-change').html('<option value="swrz">商务入账</option>' +
+									'<option value="nbzr">内部转入</option>' +
+									'<option value="qtsr">其他收入</option>');
 			
 		} else{
 			console.log('false');
 			document.getElementById('bill_out_change').checked = true;
-			$('#in_out_change').html('<option value="start">支出类型start</option>' +
-								'<option value="finish">支出类型finish</option>');
+			$('#in_out_change').html('<option value="nbzc">内部转出</option>' +
+									'<option value="wztx">网站提现</option>' +
+									'<option value="gzbx">工资报销</option>' +
+									'<option value="swfy">税务费用</option>' +
+									'<option value="swcz">商务出账</option>' +
+									'<option value="qtzc">其他支出</option>');
 		}
 			console.log($('#in_out_change').html());
 		$('#in_out_change').val(in_out_change_value)
@@ -364,13 +369,19 @@
 		$(".bill-type-radio:radio").click(function() {
 			
 			if ($(this).val() == "start") {
-				$('.in-out').html('<option value="start">收入类型start</option>' +
-								'<option value="prepare">收入类型prepare</option>')			
+				$('.in-out').html('<option value="swrz">商务入账</option>' +
+								'<option value="nbzr">内部转入</option>' +
+								'<option value="qtsr">其他收入</option>');
 			} else {
-				$('.in-out').html('<option value="start">支出类型start</option>' +
-								'<option value="finish">支出类型finish</option>')	
+				$('.in-out').html('<option value="nbzc">内部转出</option>' +
+								'<option value="wztx">网站提现</option>' +
+								'<option value="gzbx">工资报销</option>' +
+								'<option value="swfy">税务费用</option>' +
+								'<option value="swcz">商务出账</option>' +
+								'<option value="qtzc">其他支出</option>');
 			}
 		});
+		
 
 	});
 </script>
@@ -392,10 +403,11 @@
 					<td>
 						<i style="letter-spacing:4.8px;">账户类型：</i>
 						<select name="selectType" id="account_type">
-							<option value="advance">公帐</option>
-							<option value="later">私帐</option>
-							<option value="daily">投资</option>
-							<option value="4">借贷</option>
+							<option value="0">全部</option>
+							<option value="public">公帐</option>
+							<option value="private">私帐</option>
+							<option value="invest">投资</option>
+							<option value="loan">借贷</option>
 							<option value="other">其他</option>
 						</select>
 						
@@ -416,19 +428,23 @@
 						<!--<input id="bill_type" type="text" />-->
 						<select name="selectType" id="bill_type">
 							<option value="0">全部</option>
-							<option value="cpa">cpa</option>
-							<option value="cpc">cpc</option>
-							<option value="cps">cps</option>
-							<option value="cpm">cpm</option>
-							<option value="else">else</option>
+							<option value="income">收入</option>
+							<option value="expend">支出</option>
 						</select>
 					</td>
 					<td>
 						<i style="letter-spacing:2px;">收支类型：</i>
 						<select name="selectType" id="in_out_type">
 							<option value="0">全部</option>
-							<option value="advance">收入</option>
-							<option value="later">支出</option>
+							<option value="swrz">商务入账</option>
+							<option value="nbzr">内部转入</option>
+							<option value="qtsr">其他收入</option>
+							<option value="nbzc">内部转出</option>
+							<option value="wztx">网站提现</option>
+							<option value="gzbx">工资报销</option>
+							<option value="swfy">税务费用</option>
+							<option value="swcz">商务出账</option>
+							<option value="qtzc">其他支出</option>
 						</select>
 					</td>
 					<td>
@@ -475,10 +491,10 @@
 			<p>
 				<span>账户类型：</span>
 				<select name="selectType" id="account_type_add">
-					<option value="advance">公帐</option>
-					<option value="later">私帐</option>
-					<option value="daily">投资</option>
-					<option value="4">借贷</option>
+					<option value="public">公帐</option>
+					<option value="private">私帐</option>
+					<option value="invest">投资</option>
+					<option value="loan">借贷</option>
 					<option value="other">其他</option>
 				</select>
 			</p>
@@ -491,15 +507,16 @@
 			<p>
 				<span>账单类型：</span>
 				<!--<input id="bill_type_add" type="text" />-->
-				<input class="bill-type-radio bill-type-add" type="radio" name="bill_type_add" value="start"/>收入&nbsp;&nbsp;
-				<input class="bill-type-radio" type="radio" name="bill_type_add" value="finish" />支出
+				<input class="bill-type-radio bill-type-add" type="radio" name="bill_type_add" value="income"/>收入&nbsp;&nbsp;
+				<input class="bill-type-radio" type="radio" name="bill_type_add" value="expend" />支出
 			</p>
 			<p>
 				<span class="in-out-name">收入类型：</span>
 				<!--<input id="in_out_add" type="text" />-->
 				<select name="selectType" id="in_out_add" class="in-out">
-					<option value="start">收入类型start</option>
-					<option value="prepare">收入类型prepare</option>
+					<option value="swrz">商务入账</option>
+					<option value="nbzr">内部转入</option>
+					<option value="qtsr">其他收入</option>
 				</select>
 			</p>
 			<p>
@@ -536,10 +553,10 @@
 			<p>
 				<span>账户类型：</span>
 				<select name="selectType" id="account_type_change">
-					<option value="advance">公帐</option>
-					<option value="later">私帐</option>
-					<option value="daily">投资</option>
-					<option value="4">借贷</option>
+					<option value="public">公帐</option>
+					<option value="private">私帐</option>
+					<option value="invest">投资</option>
+					<option value="loan">借贷</option>
 					<option value="other">其他</option>
 				</select>
 			</p>
@@ -550,14 +567,12 @@
 			</p>
 			<p>
 				<span>账单类型：</span>
-				<input id="bill_in_change" class="bill-type-radio bill-type-change" type="radio" name="bill_type_change" value="start"/>收入&nbsp;&nbsp;
-				<input id="bill_out_change" class="bill-type-radio bill-type-change" type="radio" name="bill_type_change" value="finish" />支出
+				<input id="bill_in_change" class="bill-type-radio bill-type-change" type="radio" name="bill_type_change" value="income"/>收入&nbsp;&nbsp;
+				<input id="bill_out_change" class="bill-type-radio bill-type-change" type="radio" name="bill_type_change" value="expend" />支出
 			</p>
 			<p>
 				<span class="in-out-name">收入类型：</span>
 				<select name="selectType" id="in_out_change" class="in-out in-out-change">
-					<option value="start">收入类型start</option>
-					<option value="finish">收入类型finish</option>
 				</select>
 			</p>
 			<p>
