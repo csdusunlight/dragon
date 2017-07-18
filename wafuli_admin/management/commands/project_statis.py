@@ -16,7 +16,7 @@ from decimal import Decimal
 from django.core.urlresolvers import reverse
 from django.db.models import F
 from project_admin.models import ProjectStatis, DayStatis, Project,\
-    ProjectInvestData
+    ProjectInvestData, AccountBill, Account, DayAccountStatic
 import logging
 import time
 logger = logging.getLogger("wafuli")
@@ -77,5 +77,14 @@ class Command(BaseCommand):
 #         cursor.execute("select a.project_id, a.source, sum(a.settle_amount) as sumofsettle, \
 #                             sum(a.return_amount) as sumofret from project_admin_projectinvestdata a \
 #                             group by a.project_id, a.source")
+        update_fields = {}
+        income = AccountBill.objects.filter(time__gte=today, type='income').aggregate(income=Sum('amount'))
+        expenditure = AccountBill.objects.filter(time__gte=today, type='expend').aggregate(expenditure=Sum('amount'))
+        balance = Account.objects.aggregate(balance=Sum('balance'))
+        update_fields.update(income)
+        update_fields.update(expenditure)
+        update_fields.update(balance)
+        obj, created = DayAccountStatic.objects.update_or_create(date=today, defaults=update_fields)
+        
         end_time = time.time()
         logger.info("******Project_statis is finished, time:%s*********",end_time-begin_time)

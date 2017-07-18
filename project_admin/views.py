@@ -123,6 +123,10 @@ class AccountBillList(BaseViewMixin,generics.ListCreateAPIView):
 class AccountBillDetail(BaseViewMixin,generics.RetrieveUpdateDestroyAPIView):
     queryset = AccountBill.objects.all()
     serializer_class = AccountBillSerializer
+class DayAccountStatisList(BaseViewMixin,generics.ListCreateAPIView):
+    queryset = DayAccountStatic.objects.all()
+    serializer_class = DayAccountStatisSerializer
+    pagination_class = ProjectPageNumberPagination
 # 立项部分增加
 def project_index(request):
     admin_user = request.user

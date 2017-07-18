@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 from wafuli.data import AUDIT_STATE, BANK
 import time,datetime
+from django.db.models import F
 # Create your models here.
 PROJECT_STATE=(
     ('prepare', u"未开始"),
@@ -175,3 +176,22 @@ class AccountBill(models.Model):
     remark = models.CharField(u"备注", max_length=100, blank=True)
     def __unicode__(self):
         return self.account + ' ' + self.get_type_display() + ' ' + str(self.amount)
+    def save(self, force_insert=False, force_update=False, using=None, 
+        update_fields=None):
+        if self.id:
+            return
+        else:
+            if self.type == 'income':
+                self.account.balance = F('balance') + self.amount
+            elif self.type == 'expend':
+                self.account.balance = F('balance') - self.amount
+            self.account.save(update_fields=['balance'])
+        return models.Model.save(self, force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
+    
+class DayAccountStatic(models.Model):
+    date = models.DateField(u"日期", primary_key=True)
+    income = models.DecimalField(u"收入", max_digits=10, decimal_places=2)
+    expenditure = models.DecimalField(u"收入", max_digits=10, decimal_places=2)
+    balance = models.DecimalField(u"收入", max_digits=10, decimal_places=2)
+    def __unicode__(self):
+        return self.date.strftime("%Y-%m-%d")
