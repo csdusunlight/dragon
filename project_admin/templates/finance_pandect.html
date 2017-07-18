@@ -45,23 +45,11 @@
 			},
 			success: function(ret) {
 				for (var i=0; i<ret.results.length; i++) {
-					console.log(ret.results[i].state);
-//					if(ret.results[i].state == "start") {
-//						if(ret.results[i].type == "income") {
-							pie_data_1.push({
-								value: ret.results[i].balance,
-								name: ret.results[i].name
-							});
-							num_detail_1 += parseFloat(ret.results[i].balance);
-//						} else {
-//							pie_data_3.push({
-//								value: ret.results[i].amount,
-//								name: ret.results[i].subtype_des
-//							});
-//							num_detail_3 += parseFloat(ret.results[i].amount);
-//						}
-//					}
-					
+					pie_data_1.push({
+						value: ret.results[i].balance,
+						name: ret.results[i].name
+					});
+					num_detail_1 += parseFloat(ret.results[i].balance);
 				}
 				$('.num-detail-1').text(num_detail_1);
 				
@@ -70,7 +58,7 @@
 					
 				option1 = {
 					title: {
-						text: '收入类型分布',
+						text: '现金余额分布',
 						x: 'center'
 					},
 					tooltip: {
@@ -109,22 +97,19 @@
 			},
 			success: function(ret) {
 				for (var i=0; i<ret.results.length; i++) {
-					console.log(ret.results[i].state);
-//					if(ret.results[i].state == "start") {
-						if(ret.results[i].type == "income") {
-							pie_data_2.push({
-								value: ret.results[i].amount,
-								name: ret.results[i].subtype_des
-							});
-							num_detail_2 += parseFloat(ret.results[i].amount);
-						} else {
-							pie_data_3.push({
-								value: ret.results[i].amount,
-								name: ret.results[i].subtype_des
-							});
-							num_detail_3 += parseFloat(ret.results[i].amount);
-						}
-//					}
+					if(ret.results[i].type == "income") {
+						pie_data_2.push({
+							value: ret.results[i].amount,
+							name: ret.results[i].subtype_des
+						});
+						num_detail_2 += parseFloat(ret.results[i].amount);
+					} else {
+						pie_data_3.push({
+							value: ret.results[i].amount,
+							name: ret.results[i].subtype_des
+						});
+						num_detail_3 += parseFloat(ret.results[i].amount);
+					}
 					
 				}
 				$('.num-detail-2').text(num_detail_2);
