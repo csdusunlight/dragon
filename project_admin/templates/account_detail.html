@@ -22,12 +22,9 @@
 		parent = "parent" + id;
 		var dom = document.getElementById(parent);
 		var bill_time_change = $(dom).find("td").eq(0).text(),
-//			account_type_change = $(dom).find("td").eq(2).text(),
 			account_type_change = $(dom).find("td").eq(2).text(),
-//			account_name_change = $(dom).find("td").eq(3).text(),
 			account_name_change_value = $(dom).find("td").eq(3).data("value"),
 			bill_type_change_value = $(dom).find("td").eq(4).data("value"),
-//			in_out_change = $(dom).find("td").eq(5).text(),
 			in_out_change_value = $(dom).find("td").eq(5).data("value"),
 			trade_obj_change = $(dom).find("td").eq(6).text(),
 			trade_money_change = $(dom).find("td").eq(7).text(),
@@ -150,13 +147,13 @@
 				dataType: "json",
 				type: "POST",
 				data: {
-					'bill_time': bill_time_add,
+					'time': bill_time_add,
 					'account_type': account_type_add,
-					'account_name': account_name_add,
-					'bill_type': bill_type_add,
-					'in_out': in_out_add,
-					'trade_obj': trade_obj_add,
-					'start_money': trade_money_add,
+					'account': account_name_add,
+					'type': bill_type_add,
+					'subtype': in_out_add,
+					'target': trade_obj_add,
+					'amount': trade_money_add,
 					'remark': remark_add
 				},
 				success: function(ret) {
@@ -189,13 +186,13 @@
 				dataType: "json",
 				type: "PUT",
 				data: {
-					'bill_time': bill_time_change,
+					'time': bill_time_change,
 					'account_type': account_type_change,
 					'account_name': account_name_change,
-					'bill_type': bill_type_change,
-					'in_out': in_out_change,
-					'trade_obj': trade_obj_change,
-					'trade_money': trade_money_change,
+					'type': bill_type_change,
+					'subtype': in_out_change,
+					'target': trade_obj_change,
+					'amount': trade_money_change,
 					'remark': remark_change
 				},
 				success: function(ret) {

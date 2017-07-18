@@ -32,8 +32,42 @@
 		
 //		获取饼状图数据
 		var pie_data_1 = [],
-			pie_data_2 = [],
-			pie_data_3 = [],
+			pie_data_2 = [{
+							value: 0,
+							name: "商务入账"
+						},
+						{
+							value: 0,
+							name: "内部转入"
+						},
+						{
+							value: 0,
+							name: "其他收入"
+						}],
+			pie_data_3 = [{
+							value: 0,
+							name: "内部转出"
+						},
+						{
+							value: 0,
+							name: "网站提现"
+						},
+						{
+							value: 0,
+							name: "工资报销"
+						},
+						{
+							value: 0,
+							name: "税务费用"
+						},
+						{
+							value: 0,
+							name: "商务出账"
+						},
+						{
+							value: 0,
+							name: "其他支出"
+						}],
 			num_detail_1 = 0,
 			num_detail_2 = 0,
 			num_detail_3 = 0;
@@ -98,16 +132,41 @@
 			success: function(ret) {
 				for (var i=0; i<ret.results.length; i++) {
 					if(ret.results[i].type == "income") {
-						pie_data_2.push({
-							value: ret.results[i].amount,
-							name: ret.results[i].subtype_des
-						});
+						console.log(ret.results[i].subtype_des);
+						switch (ret.results[i].subtype_des){
+							case "商务入账":
+								pie_data_2[0].value += parseFloat(ret.results[i].amount);
+								console.log(pie_data_2[0].value);
+								break;
+							case "内部转入":
+								pie_data_2[1].value += parseFloat(ret.results[i].amount);
+								break;
+							case "其他收入":
+								pie_data_2[2].value += parseFloat(ret.results[i].amount);
+								break;
+						}
 						num_detail_2 += parseFloat(ret.results[i].amount);
 					} else {
-						pie_data_3.push({
-							value: ret.results[i].amount,
-							name: ret.results[i].subtype_des
-						});
+						switch (ret.results[i].subtype_des){
+							case "内部转出":
+								pie_data_3[0].value += parseFloat(ret.results[i].amount);
+								break;
+							case "网站提现":
+								pie_data_3[1].value += parseFloat(ret.results[i].amount);
+								break;
+							case "工资报销":
+								pie_data_3[2].value += parseFloat(ret.results[i].amount);
+								break;
+							case "税务费用":
+								pie_data_3[3].value += parseFloat(ret.results[i].amount);
+								break;
+							case "商务出账":
+								pie_data_3[4].value += parseFloat(ret.results[i].amount);
+								break;
+							case "其他支出":
+								pie_data_3[5].value += parseFloat(ret.results[i].amount);
+								break;
+						}
 						num_detail_3 += parseFloat(ret.results[i].amount);
 					}
 					
