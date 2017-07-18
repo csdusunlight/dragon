@@ -4,11 +4,11 @@
 
 	var data = '<table width="100%"><tr><th>账单时间</th><th>账户ID</th><th>账户类型</th><th>账户名称</th><th>账单类型</th>' +
 		'<th>收/支类型</th><th>交易对象</th><th>交易金额</th><th>账户余额</th><th>备注</th>' +
-		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{time}</td><td>{id}</td><td data-value={type}>{type}</td>' +
-		'<td data-value="1">{account}</td><td data-value={type}>{type}</td><td data-value={subtype}>{subtype}</td><td>{target}</td><td>{amount}</td>' +
-		'<td>{}</td><td>{remark}</td>' +
-		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">修改' +
-		'</a> │ <a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/results]</table>';
+		'</tr>[results]<tr id="parent{id}"><td>{time}</td><td>{id}</td><td>{account_type}</td>' +
+		'<td data-value={account}>{account_name}</td><td data-value={type}>{type_des}</td><td data-value={subtype}>{subtype_des}</td><td>{target}</td><td>{amount}</td>' +
+		'<td>{account_balance}</td><td>{remark}</td>' +
+//		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">修改</a> │ <a class="delete-btn" onclick="refuse({id})">删除</a></td>' +
+		'</tr>[/results]</table>';
 	var url = "/project/accountbill/" + "?page={page}";
 	var url2 = "/project/accountbill/";
 	
@@ -22,18 +22,42 @@
 		parent = "parent" + id;
 		var dom = document.getElementById(parent);
 		var bill_time_change = $(dom).find("td").eq(0).text(),
+//			account_type_change = $(dom).find("td").eq(2).text(),
 			account_type_change = $(dom).find("td").eq(2).text(),
-			account_type_change_value = $(dom).find("td").eq(2).data("value"),
-			account_name_change = $(dom).find("td").eq(3).text(),
+//			account_name_change = $(dom).find("td").eq(3).text(),
 			account_name_change_value = $(dom).find("td").eq(3).data("value"),
-			bill_type_change = $(dom).find("td").eq(4).text(),
-			in_out_change = $(dom).find("td").eq(5).text(),
+			bill_type_change_value = $(dom).find("td").eq(4).data("value"),
+//			in_out_change = $(dom).find("td").eq(5).text(),
 			in_out_change_value = $(dom).find("td").eq(5).data("value"),
 			trade_obj_change = $(dom).find("td").eq(6).text(),
 			trade_money_change = $(dom).find("td").eq(7).text(),
 			remark_change = $(dom).find("td").eq(9).text();
 			
-		if (bill_type_change == "预付款") {
+		var account_type_change_value = "";
+		
+		console.log(account_type_change);	
+		switch (account_type_change){
+			case "公账":
+				console.log("sdf");
+				account_type_change_value = "public";
+				break;
+			case "私账":
+				account_type_change_value = "private";
+				break;
+			case "投资":
+				account_type_change_value = "invest";
+				break;
+			case "借贷":
+				account_type_change_value = "loan";
+				break;
+			case "其他":
+				account_type_change_value = "other";
+				break;
+		}
+		console.log(account_type_change_value);	
+			
+			
+		if (bill_type_change_value == "income") {
 			document.getElementById('bill_in_change').checked = true;
 			$('.in-out-change').html('<option value="swrz">商务入账</option>' +
 									'<option value="nbzr">内部转入</option>' +
@@ -56,7 +80,7 @@
 		$("#bill_time_change").val(bill_time_change);
 		$("#account_type_change").val(account_type_change_value);
 		$("#account_name_change").val(account_name_change_value);
-		$("#bill_type_change").val(bill_type_change);
+		$("#bill_type_change").val(bill_type_change_value);
 //		$("#in_out_change").val(in_out_change);
 		$("#trade_obj_change").val(trade_obj_change);
 		$("#trade_money_change").val(trade_money_change);
@@ -87,7 +111,7 @@
 		
 		//		获取账户名称信息
 		$.ajax({
-			url: '/project/platform/',
+			url: '/project/account/',
 			dataType: "json",
 			type: "get",
 			success: function(ret) {
@@ -218,8 +242,8 @@
 		$("#search").click(function() {			//搜索项目数据
 			var newurl = url;
 			
-			project_finish_start = $("#project_finish_start").val();
-			project_finish_end = $("#project_finish_end").val();
+			bill_time_start = $("#bill_time_start").val();
+			bill_time_end = $("#bill_time_end").val();
 			account_name = $("#account_name").val();
 			account_id = $("#account_id").val();
 			account_type = $("#account_type").val();
@@ -227,29 +251,29 @@
 			in_out_type = $("#in_out_type").val();
 			trade_obj = $("#trade_obj").val();
 			
-			if(project_finish_start) {
-				newurl += "&dateft_0=" + project_finish_start;
+			if(bill_time_start) {
+				newurl += "&timeft_0=" + bill_time_start;
 			}
-			if(project_finish_end) {
-				newurl += "&dateft_1=" + project_finish_end;
+			if(bill_time_end) {
+				newurl += "&timeft_1=" + bill_time_end;
 			}
-			if(account_name) {
+			if(account_name && account_name != 0) {
 				newurl += "&name__contains=" + account_name;
 			}
 			if(account_id) {
-				newurl += "&contact=" + account_id;
+				newurl += "&account=" + account_id;
 			}
-			if(account_type) {
-				newurl += "&id=" + account_type;
+			if(account_type && account_type != 0) {
+				newurl += "&account_type=" + account_type;
 			}
-			if(bill_type) {
-				newurl += "&coopway=" + bill_type;
+			if(bill_type && bill_type != 0) {
+				newurl += "&type=" + bill_type;
 			}
 			if(in_out_type && in_out_type != 0) {
-				newurl += "&settleway=" + in_out_type;
+				newurl += "&subtype=" + in_out_type;
 			}
 			if(trade_obj) {
-				newurl += "&contract_company=" + trade_obj;
+				newurl += "&target=" + trade_obj;
 			}
 			console.log(newurl);
 			
@@ -265,8 +289,8 @@
 		});
 		
 		$("#export").click(function() {			//导出表格
-			project_finish_start = $("#project_finish_start").val();
-			project_finish_end = $("#project_finish_end").val();
+			bill_time_start = $("#bill_time_start").val();
+			bill_time_end = $("#bill_time_end").val();
 			account_name = $("#account_name").val();
 			account_id = $("#account_id").val();
 			account_type = $("#account_type").val();
@@ -276,33 +300,33 @@
 			
 			var html = '<form action="' + "{% url 'export_finance_excel' %}" + '" method="get" target="_self" id="postData_form">';
 			
-			if(project_finish_start) {
-				html += '<input name="project_finish_start" type="hidden" value="' + project_finish_start + '"/>';
+			if(bill_time_start) {
+				html += '<input name="timeft_0" type="hidden" value="' + bill_time_start + '"/>';
 			}
-			if(project_finish_end) {
-				html += '<input name="project_finish_end" type="hidden" value="' + project_finish_end + '"/>';
+			if(bill_time_end) {
+				html += '<input name="timeft_1" type="hidden" value="' + bill_time_end + '"/>';
 			}
 			
-			if(account_name) {
-				html += '<input name="account_name" type="hidden" value="' + account_name + '"/>';
+			if(account_name && account_name != 0) {
+				html += '<input name="name" type="hidden" value="' + account_name + '"/>';
 			}
 			
 			if(account_id) {
-				html += '<input name="account_id" type="hidden" value="' + account_id + '"/>';
+				html += '<input name="account" type="hidden" value="' + account_id + '"/>';
 			}
-			if(account_type) {
+			if(account_type && account_type != 0) {
 				html += '<input name="account_type" type="hidden" value="' + account_type + '"/>';
 			}
 			
-			if(bill_type) {
-				html += '<input name="bill_type" type="hidden" value="' + bill_type + '"/>';
+			if(bill_type && bill_type != 0) {
+				html += '<input name="type" type="hidden" value="' + bill_type + '"/>';
 			}
-			if(in_out_type) {
-				html += '<input name="in_out_type" type="hidden" value="' + in_out_type + '"/>';
+			if(in_out_type && in_out_type != 0) {
+				html += '<input name="subtype" type="hidden" value="' + in_out_type + '"/>';
 			}
 			
 			if(trade_obj) {
-				html += '<input name="trade_obj" type="hidden" value="' + trade_obj + '"/>';
+				html += '<input name="target" type="hidden" value="' + trade_obj + '"/>';
 			}
 			
 			html += '</form>';
@@ -368,7 +392,7 @@
 		//切换单选按钮
 		$(".bill-type-radio:radio").click(function() {
 			
-			if ($(this).val() == "start") {
+			if ($(this).val() == "income") {
 				$('.in-out').html('<option value="swrz">商务入账</option>' +
 								'<option value="nbzr">内部转入</option>' +
 								'<option value="qtsr">其他收入</option>');
@@ -393,12 +417,12 @@
 			<table width="100%">
 				<tr>
 					<td>
-						<i>结项日期start：</i>
-						<input id="project_finish_start" type="date" />
+						<i>账单时间-start：</i>
+						<input id="bill_time_start" type="datetime-local" />
 					</td>
 					<td>
-						<i>结项日期end：</i>
-						<input id="project_finish_end" type="date" />
+						<i>账单时间-end：</i>
+						<input id="bill_time_end" type="datetime-local" />
 					</td>
 					<td>
 						<i style="letter-spacing:4.8px;">账户类型：</i>
@@ -455,7 +479,7 @@
 				
 			</table>
 			<div class="Submit-in">
-				<input id="single_import" type="button" value="单条导入" />
+				<input id="single_import" type="button" value="新建明细" />
 				<input id="search" type="button" value="搜索" />
 				<input id="export" type="button" value="导出" />
 			</div>
@@ -486,7 +510,7 @@
 				<!--<input id="project_add_id" type="hidden" />-->
 			<p>
 				<span>账单时间：</span>
-				<input id="bill_time_add" type="date" />
+				<input id="bill_time_add" type="datetime-local" />
 			</p>
 			<p>
 				<span>账户类型：</span>
@@ -536,6 +560,7 @@
 				<input id="add_project_btn" type="submit" value="确认" onclick="return false;"/>
 				<input type="button" value="取消" class="none-x-s" />
 			</div>
+			<p style="margin-top: 10px; color: red;">一旦提交将变动账户余额，且不可删除和修改，务必核对准确</p>
 		</form>
 	</div>
 </div>				<!--新增项目数据---end-->
@@ -548,7 +573,7 @@
 				<input id="project_change_id" type="hidden" />
 			<p>
 				<span>账单时间：</span>
-				<input id="bill_time_change" type="date" />
+				<input id="bill_time_change" type="text" />
 			</p>
 			<p>
 				<span>账户类型：</span>

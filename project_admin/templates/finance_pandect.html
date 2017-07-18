@@ -30,61 +30,104 @@
 		});
 		
 		
-//		饼状图部分
-		var myChart = echarts.init(document.getElementById('main'));
-		var myChart2 = echarts.init(document.getElementById('main2'));
-		var myChart3 = echarts.init(document.getElementById('main3'));
-		option = {
-			title: {
-				text: '某站点用户访问来源',
-				subtext: '纯属虚构',
-				x: 'center'
+//		获取饼状图数据
+		var pie_data_1 = [],
+			pie_data_2 = [],
+			pie_data_3 = [],
+			num_detail_1 = 0,
+			num_detail_2 = 0,
+			num_detail_3 = 0;
+			
+		$.ajax({
+			type:"get",
+			url:"/project/accountbill/",
+			data: {
+				'pageSize': 1000,
 			},
-			tooltip: {
-				trigger: 'item',
-				formatter: "{a} <br/>{b} : {c} ({d}%)"
-			},
-			series: [{
-				name: '访问来源',
-				type: 'pie',
-				radius: '55%',
-				center: ['50%', '60%'],
-				data: [{
-						value: 335,
-						name: '直接访问'
-					},
-					{
-						value: 310,
-						name: '邮件营销'
-					},
-					{
-						value: 234,
-						name: '联盟广告'
-					},
-					{
-						value: 135,
-						name: '视频广告'
-					},
-					{
-						value: 1548,
-						name: '搜索引擎'
-					}
-				],
-				itemStyle: {
-					emphasis: {
-						shadowBlur: 10,
-						shadowOffsetX: 0,
-						shadowColor: 'rgba(0, 0, 0, 0.5)'
-					}
+			success: function(ret) {
+				for (var i=0; i<ret.results.length; i++) {
+					console.log(ret.results[i].state);
+//					if(ret.results[i].state == "start") {
+						if(ret.results[i].type == "income") {
+							pie_data_2.push({
+								value: ret.results[i].amount,
+								name: ret.results[i].subtype_des
+							});
+							num_detail_2 += parseFloat(ret.results[i].amount);
+						} else {
+							pie_data_3.push({
+								value: ret.results[i].amount,
+								name: ret.results[i].subtype_des
+							});
+							num_detail_3 += parseFloat(ret.results[i].amount);
+						}
+//					}
+					
 				}
-			}]
-		};
-
-		// 使用刚指定的配置项和数据显示图表。
-		myChart.setOption(option);
-		myChart2.setOption(option);
-		myChart3.setOption(option);
-		//		饼状图部分---end
+				$('.num-detail-2').text(num_detail_2);
+				$('.num-detail-3').text(num_detail_3)
+				
+				//		饼状图部分
+				var myChart2 = echarts.init(document.getElementById('main2'));
+				var myChart3 = echarts.init(document.getElementById('main3'));
+					
+				option2 = {
+					title: {
+						text: '收入类型分布',
+						x: 'center'
+					},
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b} : {c} ({d}%)"
+					},
+					series: [{
+						name: '详情',
+						type: 'pie',
+						radius: '55%',
+						center: ['50%', '60%'],
+						data: pie_data_2,
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}]
+				};
+				option3 = {
+					title: {
+						text: '支出类型分布',
+						x: 'center',
+					},
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b} : {c} ({d}%)"
+					},
+					series: [{
+						name: '详情',
+						type: 'pie',
+						radius: '55%',
+						center: ['50%', '60%'],
+						data: pie_data_3,
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}]
+				};
+				// 使用刚指定的配置项和数据显示图表。
+				myChart2.setOption(option2);
+				myChart3.setOption(option3);
+				//		饼状图部分---end
+			},
+			error: function(ret) {
+				alert(JSON.stringify(ret));
+			}
+		});	
 		
 		
 		
@@ -96,19 +139,18 @@
 {% endblock js %} {% block right %}
 <div class="Need-T">
    <span>项目总览</span>
-   <p>当前在线项目<number>0</number>个</p>
    <div class="Need-Cont">
    		<div class="pie-box">
    			<div id="main" style="width: 300px;height:200px;"></div>
-   			<p>当前余额<number>445546546</number></p>
+   			<p>当前余额<number class="num-detail-1 num-detail-num">445546546</number></p>
    		</div>
 	   	<div class="pie-box">
    			<div id="main2" style="width: 300px;height:200px;"></div>
-   			<p>本月收入<number>445546546</number></p>
+   			<p>本月收入<number class="num-detail-2 num-detail-num">445546546</number></p>
    		</div>
    		<div class="pie-box">
    			<div id="main3" style="width: 300px;height:200px;"></div>
-   			<p>本月支出<number>445546546</number></p>
+   			<p>本月支出<number class="num-detail-3 num-detail-num">445546546</number></p>
    		</div>
    </div>
 </div>

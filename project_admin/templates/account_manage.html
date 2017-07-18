@@ -4,11 +4,11 @@
 
 	var data = '<table width="100%"><tr><th>创建时间</th><th>账户ID</th><th>账户类型</th>' +
 		'<th>账户名称</th><th>银行帐号</th><th>开户行</th><th>支行信息</th><th>余额</th><th>备注</th>' +
-		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{time}</td><td>{id}</td><td>{type}</td>' +
-		'<td>{name}</td><td>{bankaccount}</td><td>{bank}</td><td>{subbranch}</td><td>{balance}</td>' +
+		'</tr>[results]<tr id="parent{id}"><td>{time}</td><td>{id}</td><td data-value={type}>{type_des}</td>' +
+		'<td>{name}</td><td>{bankaccount}</td><td data-value={bank}>{bank_des}</td><td>{subbranch}</td><td>{balance}</td>' +
 		'<td>{remark}</td>' +
-		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">修改' +
-		'</a> │ <a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/results]</table>';
+//		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">修改</a> │ <a class="delete-btn" onclick="refuse({id})">删除</a></td>' +
+		'</tr>[/results]</table>';
 	var url = "/project/account/" + "?page={page}";
 	var url2 = "/project/account/";
 	
@@ -21,29 +21,13 @@
 		
 		parent = "parent" + id;
 		var dom = document.getElementById(parent);
-		var account_type_change = $(dom).find("td").eq(2).text(),
+		var account_type_change = $(dom).find("td").eq(2).data("value"),
 			account_name_change = $(dom).find("td").eq(3).text(),
 			bank_account_change = $(dom).find("td").eq(4).text(),
-			bank_change = $(dom).find("td").eq(5).text(),
+			bank_change = $(dom).find("td").eq(5).data("value"),
 			bank_sub_change = $(dom).find("td").eq(6).text(),
 			start_money_change = $(dom).find("td").eq(7).text(),
 			remark_change = $(dom).find("td").eq(8).text();
-			
-//		var	settleway_des;
-//			
-//			switch (settleway)
-//			{
-//				case "预付款":
-//					settleway_des = "advance";
-//					break;
-//				case "后付款":
-//					settleway_des = "later";
-//					break;
-//				case "日结":
-//					settleway_des = "daily";
-//					break;
-//			}	
-		
 
 		$("#account_type_change").val(account_type_change);
 		$("#account_name_change").val(account_name_change);
@@ -93,12 +77,12 @@
 				dataType: "json",
 				type: "POST",
 				data: {
-					'account_type': account_type_add,
-					'account_name': account_name_add,
-					'bank_account': bank_account_add,
+					'type': account_type_add,
+					'name': account_name_add,
+					'bankaccount': bank_account_add,
 					'bank': bank_add,
-					'bank_sub': bank_sub_add,
-					'start_money': start_money_add,
+					'subbranch': bank_sub_add,
+					'balance': start_money_add,
 					'remark': remark_add
 				},
 				success: function(ret) {
@@ -128,12 +112,12 @@
 				dataType: "json",
 				type: "PUT",
 				data: {
-					'account_type': account_type_change,
-					'account_name': account_name_change,
-					'bank_account': bank_account_change,
+					'type': account_type_change,
+					'name': account_name_change,
+					'bankaccount': bank_account_change,
 					'bank': bank_change,
-					'bank_sub': bank_sub_change,
-					'start_money': start_money_change,
+					'subbranch': bank_sub_change,
+					'balance': start_money_change,
 					'remark': remark_change
 				},
 				success: function(ret) {
