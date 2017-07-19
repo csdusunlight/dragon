@@ -26,7 +26,6 @@
 			dataType: "json",
 			type: "get",
 			success: function(ret) {
-				console.log(ret);
 				$("#name_change").val(ret.name);
 				$("#platform_change").val(ret.platform);
 				$("#contact_change").val(ret.contact);
@@ -43,9 +42,7 @@
 				
 				var radio_btn = "project-" + ret.state;
 				var dom = document.getElementById(radio_btn);
-				console.log(radio_btn);
 				dom.checked = true;
-				console.log(ret.state);
 				if(ret.state == "finish") {
 					$(".show-hide").show();
 				}else {
@@ -63,7 +60,6 @@
 	}
 	
 	function refuse(id) {		//弹出删除项目数据弹窗
-		console.log(id);
 		$("input#project_delete_id").val(id);
 		$(".delete-project").show();
 	}
@@ -91,12 +87,10 @@
 					'pageSize': 1000,
 			},
 			success: function(ret) {
-				console.log(ret.results);
 				for (var i=0; i<ret.results.length; i++) {
 					var option_item = document.createElement('option');
 					option_item.innerText = ret.results[i].name;
 					option_item.value = ret.results[i].id;
-					console.log(option_item);
 					$(".platform-select").append(option_item);
 				}
 			},
@@ -116,7 +110,6 @@
 				settle_money_add = $("#settle_money_add").val(),
 				remark_add = $("#remark_add").val();
 				
-			console.log(url2)
 			$.ajax({
 				url: url2,
 				dataType: "json",
@@ -160,9 +153,7 @@
 				maoli_change = $("#maoli_change").val(),
 				remark_change = $("#remark_change").val();
 			var state_change = $("input[name='state']:checked").val();
-			console.log(state_change);
 			
-//			console.log(project_flag+", "+platformname_change+", "+project_name_change+", "+contact_person_change+", "+cooperate_type_change+", "+balance_type_change+", "+sign_company_change+", "+balance_change+", "+project_status_change);
 			
 			console.log(url2 + project_flag);
 			$.ajax({
@@ -185,7 +176,6 @@
 					'remark': remark_change,
 				},
 				success: function(ret) {
-					console.log(ret);
 					alert("操作成功！");
 					var dom = document.getElementById(parent);
 //					$(dom).find("td").eq(0).text(ret.time);
@@ -215,7 +205,6 @@
 		$('#pagedata').on('click', '.look-finish', function(){
 			var state = $(this).text();
 			var finish_id = this.dataset.id;
-			console.log(state);
 			if (state == "已结束") {
 				
 				$.ajax({
@@ -236,8 +225,7 @@
 					}
 				});
 				
-				}
-//			console.log(this.dataset.id);
+			}
 		})
 //		查看已结项项目详情---end
 		
@@ -372,9 +360,7 @@
 			
 			if ($(this).val() == "start") {
 				$(".show-hide").hide();
-				console.log("start click");
 			} else {
-				console.log("finish click");
 				$(".show-hide").show();
 			}
 		});
