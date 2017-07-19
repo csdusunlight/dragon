@@ -155,7 +155,7 @@ def project_status(request):
 def jiafang_detail(request):
     return render(request,"jiafang_detail.html")
 @login_required
-@has_permission('008')
+@has_permission('009')
 def finance_pandect(request):
     return render(request,"finance_pandect.html")
 
