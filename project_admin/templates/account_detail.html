@@ -241,7 +241,7 @@
 			
 			bill_time_start = $("#bill_time_start").val();
 			bill_time_end = $("#bill_time_end").val();
-			account_name = $("#account_name").val();
+			account_name = $("#account_name option:selected").text();
 			account_id = $("#account_id").val();
 			account_type = $("#account_type").val();
 			bill_type = $("#bill_type").val();
@@ -254,7 +254,7 @@
 			if(bill_time_end) {
 				newurl += "&timeft_1=" + bill_time_end;
 			}
-			if(account_name && account_name != 0) {
+			if(account_name && account_name != "全部") {
 				newurl += "&name__contains=" + account_name;
 			}
 			if(account_id) {
@@ -275,7 +275,7 @@
 			console.log(newurl);
 			
 			var newdata = data;
-			alert(newurl);
+			console.log(newurl);
 			$("#page").empty();
 			$("#pagedata").ajaxPage({
 				url: newurl,
