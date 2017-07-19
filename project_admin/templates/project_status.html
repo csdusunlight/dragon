@@ -43,7 +43,7 @@
 				newurl += "&dateft_1=" + dateft_1;
 			}
 			if(project_id) {
-				newurl += "&id=" + project_id;
+				newurl += "&project=" + project_id;
 			}
 			if(name) {
 				newurl += "&name__contains=" + name;
@@ -52,7 +52,7 @@
 				newurl += "&contact=" + contact_person;
 			}
 			if(state && state != 0) {
-				newurl += "&state=" + state;
+				newurl += "&project_state=" + state;
 			}
 			console.log(newurl);
 			
