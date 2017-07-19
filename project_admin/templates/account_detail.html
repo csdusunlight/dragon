@@ -32,7 +32,6 @@
 			
 		var account_type_change_value = "";
 		
-		console.log(account_type_change);	
 		switch (account_type_change){
 			case "公账":
 				console.log("sdf");
@@ -51,7 +50,6 @@
 				account_type_change_value = "other";
 				break;
 		}
-		console.log(account_type_change_value);	
 			
 			
 		if (bill_type_change_value == "income") {
@@ -61,7 +59,6 @@
 									'<option value="qtsr">其他收入</option>');
 			
 		} else{
-			console.log('false');
 			document.getElementById('bill_out_change').checked = true;
 			$('#in_out_change').html('<option value="nbzc">内部转出</option>' +
 									'<option value="wztx">网站提现</option>' +
@@ -70,7 +67,6 @@
 									'<option value="swcz">商务出账</option>' +
 									'<option value="qtzc">其他支出</option>');
 		}
-			console.log($('#in_out_change').html());
 		$('#in_out_change').val(in_out_change_value)
 		
 
@@ -78,7 +74,6 @@
 		$("#account_type_change").val(account_type_change_value);
 		$("#account_name_change").val(account_name_change_value);
 		$("#bill_type_change").val(bill_type_change_value);
-//		$("#in_out_change").val(in_out_change);
 		$("#trade_obj_change").val(trade_obj_change);
 		$("#trade_money_change").val(trade_money_change);
 		$("#remark_change").val(remark_change);
@@ -87,7 +82,6 @@
 	}
 	
 	function refuse(id) {		//弹出删除项目数据弹窗
-		console.log(id);
 		$("input#project_delete_id").val(id);
 		$(".delete-project").show();
 	}
@@ -112,12 +106,10 @@
 			dataType: "json",
 			type: "get",
 			success: function(ret) {
-				console.log(ret.results);
 				for (var i=0; i<ret.results.length; i++) {
 					var option_item = document.createElement('option');
 					option_item.innerText = ret.results[i].name;
 					option_item.value = ret.results[i].id;
-					console.log(option_item);
 					$(".account-name").append(option_item);
 				}
 				$("#account_name").prepend('<option value="0" selected="selected">全部</option>');
@@ -132,16 +124,12 @@
 			var bill_time_add = $("#bill_time_add").val(),
 				account_type_add = $("#account_type_add").val(),
 				account_name_add = $("#account_name_add").val(),
-//				bill_type_add = $("#bill_type_add").val(),
 				bill_type_add = $("input[name='bill_type_add']:checked").val(),
 				in_out_add = $("#in_out_add").val(),
 				trade_obj_add = $("#trade_obj_add").val(),
 				trade_money_add = $("#trade_money_add").val(),
 				remark_add = $("#remark_add").val();
-			console.log(bill_type_add);
-			console.log(bill_time_add+", "+account_type_add+", "+account_name_add+", "+bill_type_add+", "+in_out_add+", "+trade_obj_add+", "+trade_money_add+", "+remark_add);
-			
-			console.log(url2)
+
 			$.ajax({
 				url: url2,
 				dataType: "json",
@@ -171,14 +159,11 @@
 			var bill_time_change = $("#bill_time_change").val(),
 				account_type_change = $("#account_type_change").val(),
 				account_name_change = $("#account_name_change").val(),
-//				bill_type_change = $("#bill_type_change").val(),
 				bill_type_change = $("input[name='bill_type_change']:checked").val(),
 				in_out_change = $("#in_out_change").val(),
 				trade_obj_change = $("#trade_obj_change").val(),
 				trade_money_change = $("#trade_money_change").val(),
 				remark_change = $("#remark_change").val();
-			console.log(bill_type_change);
-			console.log(bill_time_change+", "+account_type_change+", "+account_name_change+", "+bill_type_change+", "+in_out_change+", "+trade_obj_change+", "+trade_money_change+", "+remark_change);
 			
 			console.log(url2 + project_flag)
 			$.ajax({
@@ -196,7 +181,6 @@
 					'remark': remark_change
 				},
 				success: function(ret) {
-					console.log(ret);
 					alert("操作成功！");
 					var dom = document.getElementById(parent);
 					$(dom).find("td").eq(0).text(ret.bill_time);
@@ -241,7 +225,7 @@
 			
 			bill_time_start = $("#bill_time_start").val();
 			bill_time_end = $("#bill_time_end").val();
-			account_name = $("#account_name").val();
+			account_name = $("#account_name option:selected").text();
 			account_id = $("#account_id").val();
 			account_type = $("#account_type").val();
 			bill_type = $("#bill_type").val();
@@ -254,7 +238,7 @@
 			if(bill_time_end) {
 				newurl += "&timeft_1=" + bill_time_end;
 			}
-			if(account_name && account_name != 0) {
+			if(account_name && account_name != "全部") {
 				newurl += "&name__contains=" + account_name;
 			}
 			if(account_id) {
@@ -272,10 +256,9 @@
 			if(trade_obj) {
 				newurl += "&target=" + trade_obj;
 			}
-			console.log(newurl);
 			
 			var newdata = data;
-			alert(newurl);
+			console.log(newurl);
 			$("#page").empty();
 			$("#pagedata").ajaxPage({
 				url: newurl,
@@ -364,10 +347,8 @@
 			console.log($(this).val());
 			if ($(this).val() == "start") {
 				$(".show-hide").show();
-				console.log("show");
 			} else{
 				$(".show-hide").hide();
-				console.log("hide");
 			}
 		});
 		

@@ -41,7 +41,6 @@
 	}
 	
 	function refuse(id) {		//弹出删除项目数据弹窗
-		console.log(id);
 		$("input#project_delete_id").val(id);
 		$(".delete-project").show();
 	}
@@ -68,10 +67,7 @@
 				bank_sub_add = $("#bank_sub_add").val(),
 				start_money_add = $("#start_money_add").val(),
 				remark_add = $("#remark_add").val();
-				
-			console.log(account_type_add+", "+account_name_add+", "+bank_account_add+", "+bank_add+", "+bank_sub_add+", "+start_money_add+", "+remark_add);
 			
-			console.log(url2)
 			$.ajax({
 				url: url2,
 				dataType: "json",
@@ -104,9 +100,7 @@
 				start_money_change = $("#start_money_change").val(),
 				remark_change = $("#remark_change").val();
 			
-			console.log(account_type_change+", "+account_name_change+", "+bank_account_change+", "+bank_change+", "+bank_sub_change+", "+start_money_change+", "+remark_change);
 			
-			console.log(url2 + project_flag)
 			$.ajax({
 				url: url2 + project_flag + "/",
 				dataType: "json",
@@ -121,7 +115,6 @@
 					'remark': remark_change
 				},
 				success: function(ret) {
-					console.log(ret);
 					alert("操作成功！");
 					var dom = document.getElementById(parent);
 					$(dom).find("td").eq(0).text(ret.time);
@@ -144,7 +137,6 @@
 		
 		$('#delete_project_btn').click(function() {		//点击确认按钮删除单条项目数据
 			project_flag = $("input#project_delete_id").val();
-			console.log(url2 + project_flag);
 			$.ajax({
 				url: url2 + project_flag + "/",
 				dataType: "json",
