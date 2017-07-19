@@ -38,11 +38,6 @@ class ProjectInvestDataSerializer(serializers.ModelSerializer):
                  'invest_term','settle_amount','return_amount','state','audit_time','state_des','remark','source_des')
         read_only_fields = ('id',)
 
-class CompanyBalanceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CompanyBalance
-        fields ='__all__'
-        read_only_fields = ('id',)
         
 class ProjectStatisSerializer(serializers.ModelSerializer):
     projectname = serializers.CharField(source='project.name', read_only=True)
