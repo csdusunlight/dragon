@@ -3,11 +3,10 @@ from project_admin.serializers import *
 # Create your views here.
 
 from rest_framework import generics, permissions
-from project_admin.permissions import IsAdminOrReadOnly,\
-    CsrfExemptSessionAuthentication
+from project_admin.permissions import CsrfExemptSessionAuthentication, IsAdmin
 import django_filters
 from project_admin.Filters import ProjectFilter, ProjectInvestDateFilter,\
-    CompanyBalanceFilter, AccountBillFilter
+     AccountBillFilter, ProjectStatisFilter
 from django.shortcuts import redirect, render
 from django.core.urlresolvers import reverse
 from django.http.response import Http404, JsonResponse, HttpResponse
@@ -23,10 +22,12 @@ from xlwt.Workbook import Workbook
 from xlwt.Style import easyxf
 import StringIO
 import traceback
+from project_admin.tools import has_permission
+from django.contrib.auth.decorators import login_required
 logger = logging.getLogger('wafuli')
 class BaseViewMixin(object):
     authentication_classes = (CsrfExemptSessionAuthentication,)
-    permission_classes = (permissions.IsAuthenticated,IsAdminOrReadOnly)
+    permission_classes = (permissions.IsAuthenticated,IsAdmin)
 
 class ContactList(BaseViewMixin,generics.ListCreateAPIView):
     queryset = Contact.objects.all()
@@ -79,25 +80,12 @@ class ProjectInvestDataDetail(BaseViewMixin,generics.RetrieveUpdateDestroyAPIVie
     queryset = ProjectInvestData.objects.all()
     serializer_class = ProjectInvestDataSerializer
 
-class CompanyBalanceList(BaseViewMixin,generics.ListCreateAPIView):
-    queryset = CompanyBalance.objects.all()
-    serializer_class = CompanyBalanceSerializer
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
-#     filter_fields = ('__all__')
-    filter_class = CompanyBalanceFilter
-    pagination_class = ProjectPageNumberPagination
-#     search_fields = ('=name', '=contact')
-
-
-class CompanyBalanceDetail(BaseViewMixin,generics.RetrieveUpdateDestroyAPIView):
-    queryset = CompanyBalance.objects.all()
-    serializer_class = CompanyBalanceSerializer
-
-
 class ProjectStatisList(BaseViewMixin,generics.ListCreateAPIView):
     queryset = ProjectStatis.objects.all()
     serializer_class = ProjectStatisSerializer
     pagination_class = ProjectPageNumberPagination
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
+    filter_class = ProjectStatisFilter
 class DayStatisList(BaseViewMixin,generics.ListCreateAPIView):
     queryset = DayStatis.objects.all()
     serializer_class = DayStatisSerializer
@@ -128,88 +116,67 @@ class DayAccountStatisList(BaseViewMixin,generics.ListCreateAPIView):
     serializer_class = DayAccountStatisSerializer
     pagination_class = ProjectPageNumberPagination
 # 立项部分增加
+@login_required
+@has_permission('008')
 def project_index(request):
-    admin_user = request.user
-    if request.method == "GET":
-        if not ( admin_user.is_authenticated() and admin_user.is_staff):
-            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
-        return render(request,"project.html")
+    return render(request,"project.html")
 
 
-
+@login_required
+@has_permission('008')
 def project_data(request):
-    admin_user = request.user
-    if request.method == "GET":
-        if not ( admin_user.is_authenticated() and admin_user.is_staff):
-            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
-        return render(request,"project_data.html")
+    return render(request,"project_data.html")
 
+@login_required
+@has_permission('008')
 def project_finance(request):
-    admin_user = request.user
-    if request.method == "GET":
-        if not ( admin_user.is_authenticated() and admin_user.is_staff):
-            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
-        return render(request,"project_finance.html")
+    return render(request,"project_finance.html")
 
 
-
+@login_required
+@has_permission('008')
 def project_settle(request):
-    admin_user = request.user
-    if request.method == "GET":
-        if not ( admin_user.is_authenticated() and admin_user.is_staff):
-            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
-        return render(request,"project_settle.html")
+    return render(request,"project_settle.html")
 
 # 立项部分---end
 
 
 # 综合管理部分修改
+@login_required
+@has_permission('008')
 def project_detail(request):
-    admin_user = request.user
-    if request.method == "GET":
-        if not ( admin_user.is_authenticated() and admin_user.is_staff):
-            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
-        return render(request,"project_detail.html")
+    return render(request,"project_detail.html")
+@login_required
+@has_permission('008')
 def project_status(request):
-    admin_user = request.user
-    if request.method == "GET":
-        if not ( admin_user.is_authenticated() and admin_user.is_staff):
-            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
-        return render(request,"project_status.html")
-
+    return render(request,"project_status.html")
+@login_required
+@has_permission('008')
 def jiafang_detail(request):
-    admin_user = request.user
-    if request.method == "GET":
-        if not ( admin_user.is_authenticated() and admin_user.is_staff):
-            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
-        return render(request,"jiafang_detail.html")
-
+    return render(request,"jiafang_detail.html")
+@login_required
+@has_permission('009')
 def finance_pandect(request):
-    admin_user = request.user
-    if request.method == "GET":
-        if not ( admin_user.is_authenticated() and admin_user.is_staff):
-            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
-        return render(request,"finance_pandect.html")
+    return render(request,"finance_pandect.html")
 
+@login_required
+@has_permission('009')
 def account_manage(request):
-    admin_user = request.user
-    if request.method == "GET":
-        if not ( admin_user.is_authenticated() and admin_user.is_staff):
-            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
-        return render(request,"account_manage.html")
+    return render(request,"account_manage.html")
+@login_required
+@has_permission('009')
 def account_detail(request):
-    admin_user = request.user
-    if request.method == "GET":
-        if not ( admin_user.is_authenticated() and admin_user.is_staff):
-            return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
-        return render(request,"account_detail.html")
-
+    return render(request,"account_detail.html")
+@login_required
+@has_permission('009')
 def contacts_detail(request, id):
     return render(request,"contacts_detail.html",{'platform_id':id})
 # 综合管理部分修改----end
 
 
 @csrf_exempt
+@login_required
+@has_permission('008')
 def import_projectdata_excel(request):
     admin_user = request.user
     if not ( admin_user.is_authenticated() and admin_user.is_staff):
@@ -334,6 +301,8 @@ def import_projectdata_excel(request):
     return JsonResponse(ret)
 
 @csrf_exempt
+@login_required
+@has_permission('008')
 def import_audit_projectdata_excel(request):
     admin_user = request.user
     if not ( admin_user.is_authenticated() and admin_user.is_staff):
@@ -429,6 +398,9 @@ def import_audit_projectdata_excel(request):
         ret['msg'] = unicode(e)
     ret['num'] = suc_num
     return JsonResponse(ret)
+
+@login_required
+@has_permission('008')
 def export_investdata_excel(request):
     user = request.user
     item_list = []
@@ -515,7 +487,8 @@ def export_investdata_excel(request):
     response['Content-Disposition'] = 'attachment; filename=导出表格.xls'
     response.write(sio.getvalue())
     return response
-
+@login_required
+@has_permission('009')
 def export_account_bill_excel(request):
     user = request.user
     item_list = []
