@@ -38,5 +38,5 @@ class AccountBillFilter(django_filters.rest_framework.FilterSet):
     account_type = django_filters.CharFilter(name="account", lookup_expr='type')
     class Meta:
         model = AccountBill
-        fields = ['type', 'account_type', 'subtype', 'name__contains', 'time','target']
+        fields = ['type', 'account_type', 'subtype', 'name__contains', 'time','target','account']
         
