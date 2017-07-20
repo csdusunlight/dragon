@@ -39,7 +39,6 @@ class Command(BaseCommand):
         # 数据检索操作,不需要提交
 #         cursor.execute("SELECT foo FROM bar WHERE baz = %s", [self.baz])
         row = cursor.fetchall()
-        print row
         project_dic = {}
         for item in row:
             id = item[0]
