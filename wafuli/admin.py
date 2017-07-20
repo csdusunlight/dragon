@@ -21,6 +21,7 @@ class NewsAdmin(admin.ModelAdmin):
 class FinanceAdmin(NewsAdmin):
     readonly_fields = ('url','pub_date','change_user')
     filter_horizontal = ('marks',)
+    list_display = ('title','state',)
 #     def formfield_for_foreignkey(self, db_field, request, **kwargs): 
 #         if db_field.name == "company": 
 #             kwargs["queryset"] = Company.objects.order_by("pinyin") 
@@ -34,6 +35,7 @@ class TaskAdmin(NewsAdmin):
     readonly_fields = ('url','pub_date','change_user')
     list_display = ('title','is_forbidden',)
     list_filter = ['is_forbidden',]
+    list_display = ('title','state',)
     def save_model(self, request, obj, form, change):
         super(TaskAdmin,self).save_model (request, obj, form, change)      
         if not change:
@@ -113,6 +115,7 @@ class WelfareAdmin(admin.ModelAdmin):
     list_filter = ['news_priority', 'change_user',]
     readonly_fields = ('pub_date','change_user','url')
     filter_horizontal = ('marks',)
+    list_display = ('title','state',)
     def save_model(self, request, obj, form, change):
         obj.change_user = str(request.user)
 #         if obj.advert is None:
