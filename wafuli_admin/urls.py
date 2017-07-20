@@ -42,14 +42,11 @@ urlpatterns = [
 
     url(r'^export_withdraw/$', 'wafuli_admin.views.export_withdraw_excel', name='export_withdraw_excel'),
     url(r'^import_withdraw/$', 'wafuli_admin.views.import_withdraw_excel', name='import_withdraw_excel'),
+    url(r'^export_charge/$', 'wafuli_admin.views.export_charge_excel', name='export_charge_excel'),
 ]
 
 
-    # url(r'^export_charge/$', 'wafuli_admin.views.export_charge_excel', name='export_charge_excel'),
+    
 
-    # url(r'^admin_project_index/$', 'wafuli_admin.views.admin_project_index', name='admin_project_index'),
-    # url(r'^admin_project_data/$', 'wafuli_admin.views.admin_project_data', name='admin_project_data'),
-    # url(r'^admin_project_finance/$', 'wafuli_admin.views.admin_project_finance', name='admin_project_finance'),
-    # url(r'^admin_project_account/$', 'wafuli_admin.views.admin_project_account', name='admin_project_account'),
 
 
