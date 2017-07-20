@@ -152,7 +152,7 @@ def submit_itembyitem(request):
         remark = temp[5]
         try:
             with transaction.atomic():
-                if news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
+                if not news.is_multisub_allowed and news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
                     exist_num += 1   #jzy
                     exist_phone = exist_phone + telnum + ", "   #jzy
                     raise ValueError('This invest_account is repective in project:' + str(news.id))
