@@ -20,6 +20,7 @@ from xlwt.Style import easyxf
 from xlwt.Workbook import Workbook
 import logging
 import datetime
+from django.contrib.contenttypes.models import ContentType
 logger = logging.getLogger("wafuli")
 
 @login_required
@@ -126,7 +127,7 @@ def channel(request):
         ret.update(code=0,sun=succ_num, dup1=duplic_num1, dup2=duplic_num2, anum=nrows-1, dupstr=duplic_mobile_list_str)
         return JsonResponse(ret)
     else:
-        flist = list(Finance.objects.filter(state='1', level__in=['channel','all']))
+        flist = list(Finance.objects.filter(state='1', level__in=['channel','all']).order_by('title'))      #jzy
         return render(request, 'account/account_channel.html', {'flist':flist})
 
 @login_required
@@ -163,16 +164,58 @@ def submit_itembyitem(request):
             logger.info(e)
     result = {'code':0, 'suc_num':suc_num, 'exist_num':exist_num, 'exist_phone':exist_phone}   #jzy
     return JsonResponse(result)
+
+def revise_project(request):
+    result={'code':-1, 'url':'', 'data':{}}
+    if not request.is_ajax():
+        raise Http404
+    user = request.user
+    if not user.is_authenticated():
+        result['code'] = 1
+        return JsonResponse(result)
+    if request.method == 'POST':
+        project_id = request.POST.get("project_id", '')
+        invest_project = request.POST.get("invest_project", '')
+        invest_time = request.POST.get("invest_time", '')
+        invest_tel = request.POST.get("invest_tel", '')
+        invest_days = request.POST.get("invest_days",'')
+        invest_money = request.POST.get("invest_money", '')
+        invest_remarks = request.POST.get("invest_remarks", '')
+        etype = ContentType.objects.get_for_model(Finance)
+        news = Finance.objects.get(id=invest_project)
+        project_item = UserEvent.objects.filter(user=request.user, content_type = etype).get(id=project_id)
+        project_item.content_object = news
+        print news.title
+        project_item.invest_time = invest_time
+        project_item.invest_account = invest_tel
+        project_item.invest_term = invest_days
+        project_item.invest_amount = invest_money
+        project_item.remark = invest_remarks
+        project_item.save()
+        result['code'] = 0
+        # result['data'] = {'content_object':news, 'invest_time':invest_time, 'invest_account':invest_tel, 'invest_term':invest_days, 'invest_amount':invest_money, 'remark':invest_remarks}
+        result['data'] = {'content_object':news.title, 'invest_time':invest_time, 'invest_account':invest_tel, 'invest_term':invest_days, 'invest_amount':invest_money, 'remark':invest_remarks}
+    return JsonResponse(result)
+
 def export_audit_result(request):
     user = request.user
     fid = request.GET.get("fid")
-    finance = Finance.objects.get(id=fid)
-    item_list = UserEvent.objects.filter(user=user, finance=finance).order_by("-time")
+    print fid
+    if fid == '0':      #jzy
+        finance = Finance.objects.all()
+        item_list = UserEvent.objects.filter(user=user, finance=finance).order_by("-time")
+    else:
+        finance = Finance.objects.get(id=fid)
+        item_list = UserEvent.objects.filter(user=user, finance=finance).order_by("-time")
     data = []
     for con in item_list:
-        project_name=finance.title
+        # project_name=finance.title
+        project = con.content_object        #jzy
+        project_name=project.title          #jzy
+
         mobile_sub=con.invest_account
-        time_sub=con.time
+        # time_sub=con.time
+        time_sub=con.invest_time            #jzy
         id=con.id
         remark= con.remark
         invest_amount= con.invest_amount

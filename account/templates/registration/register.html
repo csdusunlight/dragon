@@ -114,6 +114,10 @@ $(function(){
       passwordEye.setAttribute("class", "password-eye")
     }
   }
+
+//$(".re-input").each(function() {
+//  this.value = "";
+//});
 });
   </script>
 </head>
@@ -127,13 +131,13 @@ $(function(){
               <input type="text" class="re-input" name="mobile" placeholder="请输入您的手机号" /><span class="tips" id="divphone"></span>
             </div>
             <div class="re-d">
-              <input type="text" class="re-input" name="code" placeholder="请输入手机验证码" />
+              <input type="text" autocomplete="off" class="re-input" name="code" placeholder="请输入手机验证码" />
               <button id="action-send-code-imagvalidate" class="re-huo">获取手机验证码</button>
               <span class="tips" id="divcode"></span>
             </div>
             <div class="re-d" style="position: relative;">
               <img class="register-icon register-lock" src="{% static 'images/register-lock.png' %}" />
-              <input type="password" id="password_input" class="re-input" name="password1" placeholder="登录密码，6-16位，至少包含数字、字母和特殊符号中的两种" />
+              <input type="password" onfocus="this.type='password'" autocomplete="off" id="password_input" class="re-input" name="password1" placeholder="登录密码，6-16位，至少包含数字、字母和特殊符号中的两种" />
               <span class="tips" id="divpd"></span>
               <a id="password_eye" class="password-eye"></a>
             </div>

@@ -4,11 +4,11 @@
 $.ajaxSetup({
     data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
 });
-var data = '<table width="100%"><tr><th>用户名</th><th>手机号</th><th>邮箱</th><th>支付宝</th>'+
-	'<th>支付宝姓名</th><th>注册时间</th><th>最近登录时间</th><th>推荐人用户名</th><th>推荐人手机号</th>'+
+var data = '<table width="100%"><tr><th>用户名</th><th>手机号</th><th>邮箱</th><th>银行卡号</th>'+
+	'<th>持卡人姓名</th><th>注册时间</th><th>最近登录时间</th><th>推荐人用户名</th><th>推荐人手机号</th>'+
 	'<th>账户余额</th><th width="5%">是否为黑名单</th><th>账户操作</th><th>渠道管理</th>'+
 	'</tr>[data]<tr><td>{username}</td><td>{mobile}</td><td>{email}</td>'+
-	'<td>{zhifubao}</td><td>{zhifubao_name}</td><td>{time}</td><td>{recent_login_time}</td>'+
+	'<td>{card_number}</td><td>{real_name}</td><td>{time}</td><td>{recent_login_time}</td>'+
 	'<td>{inviter_name}</td><td>{inviter_mobile}</td><td>{balance}</td><td id="is_black_{id}">{is_black}</td>'+
 	'<td id="item_{id}"><a class="btn1-x" onclick="addcash({id})">余额</a>│'+
 	'<a class="btn2-x" onclick="addscore({id})">积分</a>│<a id="black_{id}" onclick="addblack({id})" class="btn3-x">{opertype}</a>'+

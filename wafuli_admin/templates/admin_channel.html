@@ -4,10 +4,10 @@
 $.ajaxSetup({
     data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
 });
-var data = '<table width="100%"><tr><th>渠道等级</th><th>QQ号/QQ昵称</th><th>手机号</th><th>支付宝帐号</th><th>支付宝姓名</th>'+
+var data = '<table width="100%"><tr><th>渠道等级</th><th>QQ号/QQ昵称</th><th>手机号</th><th>银行卡号</th><th>开户行姓名</th>'+
 	'<th>添加为渠道时间</th><th>账户余额</th>'+
-	'</tr>[data]<tr><td><span id="level_span_{id}">{level}</span> | <a onclick="changeChannel({id})">修改</a></td><td>{qq}</td><td>{mobile}</td><td>{zhifubao}</td>'+
-	'<td>{zhifubao_name}</td><td>{join_time}</td><td>{balance}</td></tr>[/data]</table>';
+	'</tr>[data]<tr><td><span id="level_span_{id}">{level}</span> | <a onclick="changeChannel({id})">修改</a></td><td>{qq}</td><td>{mobile}</td><td>{card_number}</td>'+
+	'<td>{real_name}</td><td>{join_time}</td><td>{balance}</td></tr>[/data]</table>';
 
 var url = "{% url 'get_admin_channel_page' %}" + "?page={page}&size={pageSize}";
 var send_msg_para = {};

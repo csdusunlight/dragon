@@ -2,6 +2,7 @@
 from django.db import models
 from account.models import MyUser
 from django.utils import timezone
+from wafuli.data import AUDIT_STATE
 class DayStatis(models.Model):
     date = models.DateField(u"日期", primary_key=True)
     new_reg_num = models.PositiveIntegerField(u"新注册人数", default=0)
@@ -47,7 +48,7 @@ class Dict(models.Model):
     expire_stamp = models.IntegerField()
     def __unicode__(self):
         return self.key + ':' + self.value
-    
+
 class Invite_Rank(models.Model):
     user = models.OneToOneField(MyUser,related_name="invite_rank")
     rank = models.PositiveSmallIntegerField(u"排名", default=100)
@@ -57,13 +58,14 @@ class Invite_Rank(models.Model):
         return self.user.username +',' + str(self.num) +','+str(self.rank)
     class Meta:
         ordering = ['rank']
-        
+
 class Invest_Record(models.Model):
     invest_date = models.DateField(u"创建时间", default=timezone.now)
     invest_company = models.CharField(max_length=20)
     qq_number = models.CharField(max_length=15)
     user_name = models.CharField(max_length=20)
     zhifubao = models.CharField(max_length=50)
+    card_number = models.CharField(max_length=50)
     invest_mobile = models.CharField(max_length=11)
     invest_period = models.CharField(max_length=10)
     invest_amount = models.IntegerField()
@@ -81,3 +83,9 @@ class Message_Record(models.Model):
     class Meta:
         verbose_name_plural = u"短信群发记录"
         verbose_name = u"短信群发记录"
+
+class Gongzhonghao(models.Model):
+    name = models.CharField(u"公众号全称（如券妈妈、天天挖福利）", max_length=20, blank=False, unique=True)
+    is_on = models.BooleanField(u"开启自动抓取", default=True)
+    def __unicode__(self):
+        return self.name + str(self.is_on)
