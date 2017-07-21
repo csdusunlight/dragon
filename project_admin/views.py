@@ -286,7 +286,7 @@ def import_projectdata_excel(request):
                     else:
                         obj = ProjectInvestData(project_id=pid, invest_mobile=mob,settle_amount=settle,
                                         invest_amount=amount,invest_term=term,invest_time=time,
-                                        state='1',remark=remark,source=source)
+                                        state='1',remark=remark,source=source,is_futou=is_futou)
                         investdata_list.append(obj)
             ProjectInvestData.objects.bulk_create(investdata_list)
     except Exception, e:

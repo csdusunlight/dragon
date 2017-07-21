@@ -43,7 +43,6 @@
 				'pageSize': 1000,
 			},
 			success: function(ret) {
-				$('.num-detail-0').text(ret.results.length);
 				for (var i=0; i<ret.results.length; i++) {
 					console.log(ret.results[i].state);
 					if(ret.results[i].state_des == "正在进行") {
@@ -190,7 +189,7 @@
 {% endblock js %} {% block right %}
 <div class="Need-T">
    <span>项目总览</span>
-   <p class="num-detail">当前在线项目&nbsp;&nbsp;<number class="num-detail-0 num-detail-num">0</number>&nbsp;&nbsp;个</p>
+   <p class="num-detail">当前在线项目&nbsp;&nbsp;<number class="num-detail-0 num-detail-num">{{online_num}}</number>&nbsp;&nbsp;个</p>
    <div class="Need-Cont">
 	   	<div class="pie-box">
    			<div id="main" style="width: 300px;height:200px;"></div>
