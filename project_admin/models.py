@@ -96,6 +96,8 @@ class ProjectInvestData(models.Model):
     remark = models.CharField(u"备注", max_length=100)
     def __unicode__(self):
         return self.project.name + self.invest_mobile
+    def futou_des(self):
+        return u"复投" if self.is_futou else u"首投"
 
 
 class ProjectStatis(models.Model):
