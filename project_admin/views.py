@@ -379,8 +379,8 @@ def import_audit_projectdata_excel(request):
             source = row[3]
             remark = row[4]
             event = ProjectInvestData.objects.get(id=id)
-            if event.state != '1':
-                continue
+#             if event.state != '1':
+#                 continue
             if result:
                 amount = retamount
                 event.state = '0'
