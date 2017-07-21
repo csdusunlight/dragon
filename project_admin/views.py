@@ -119,7 +119,8 @@ class DayAccountStatisList(BaseViewMixin,generics.ListCreateAPIView):
 @login_required
 @has_permission('008')
 def project_index(request):
-    return render(request,"project.html")
+    online_num = Project.objects.filter(state='start').count()
+    return render(request,"project.html", {'online_num':online_num})
 
 
 @login_required
