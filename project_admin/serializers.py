@@ -34,7 +34,7 @@ class ProjectInvestDataSerializer(serializers.ModelSerializer):
     source_des = serializers.CharField(source='get_source_display', read_only=True)
     class Meta:
         model = ProjectInvestData
-        fields =('id', 'project', 'projectname', 'is_futou','invest_mobile','invest_time','invest_amount','source',
+        fields =('id', 'project', 'projectname', 'is_futou','futou_des','invest_mobile','invest_time','invest_amount','source',
                  'invest_term','settle_amount','return_amount','state','audit_time','state_des','remark','source_des')
         read_only_fields = ('id',)
 

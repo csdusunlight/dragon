@@ -501,3 +501,16 @@ class UserTask(models.Model):
         unique_together = (('user', 'task'),)
     def __unicode__(self):
         return self.user.mobile + '+' + self.task.title
+
+
+class Fuligou(models.Model):
+    is_main = models.BooleanField()
+    title = models.CharField(max_length=60)
+    buy_price = models.FloatField()
+    old_price = models.FloatField()
+    img_src = models.CharField(max_length=200)
+    href = models.CharField(max_length=200)
+    def coupon_value(self):
+        return self.old_price - self.buy_price
+    def __unicode__(self):
+        return self.title

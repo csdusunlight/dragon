@@ -119,7 +119,8 @@ class DayAccountStatisList(BaseViewMixin,generics.ListCreateAPIView):
 @login_required
 @has_permission('008')
 def project_index(request):
-    return render(request,"project.html")
+    online_num = Project.objects.filter(state='start').count()
+    return render(request,"project.html", {'online_num':online_num})
 
 
 @login_required
@@ -285,7 +286,7 @@ def import_projectdata_excel(request):
                     else:
                         obj = ProjectInvestData(project_id=pid, invest_mobile=mob,settle_amount=settle,
                                         invest_amount=amount,invest_term=term,invest_time=time,
-                                        state='1',remark=remark,source=source)
+                                        state='1',remark=remark,source=source,is_futou=is_futou)
                         investdata_list.append(obj)
             ProjectInvestData.objects.bulk_create(investdata_list)
     except Exception, e:
@@ -379,8 +380,8 @@ def import_audit_projectdata_excel(request):
             source = row[3]
             remark = row[4]
             event = ProjectInvestData.objects.get(id=id)
-            if event.state != '1':
-                continue
+#             if event.state != '1':
+#                 continue
             if result:
                 amount = retamount
                 event.state = '0'

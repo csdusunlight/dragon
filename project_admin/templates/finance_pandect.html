@@ -85,7 +85,7 @@
 					});
 					num_detail_1 += parseFloat(ret.results[i].balance);
 				}
-				$('.num-detail-1').text(num_detail_1);
+				$('.num-detail-1').text(num_detail_1.toFixed(2));
 				
 				//		饼状图部分
 				var myChart1 = echarts.init(document.getElementById('main'));
@@ -171,8 +171,8 @@
 					}
 					
 				}
-				$('.num-detail-2').text(num_detail_2);
-				$('.num-detail-3').text(num_detail_3)
+				$('.num-detail-2').text(num_detail_2.toFixed(2));
+				$('.num-detail-3').text(num_detail_3.toFixed(2))
 				
 				//		饼状图部分
 				var myChart2 = echarts.init(document.getElementById('main2'));
