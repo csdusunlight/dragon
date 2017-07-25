@@ -185,7 +185,6 @@ def revise_project(request):
         news = Finance.objects.get(id=invest_project)
         project_item = UserEvent.objects.filter(user=request.user, content_type = etype).get(id=project_id)
         project_item.content_object = news
-        print news.title
         project_item.invest_time = invest_time
         project_item.invest_account = invest_tel
         project_item.invest_term = invest_days
@@ -200,7 +199,6 @@ def revise_project(request):
 def export_audit_result(request):
     user = request.user
     fid = request.GET.get("fid")
-    print fid
     if fid == '0':      #jzy
         finance = Finance.objects.all()
         item_list = UserEvent.objects.filter(user=user, finance=finance).order_by("-time")
