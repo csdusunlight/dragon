@@ -85,7 +85,7 @@ class ProjectInvestData(models.Model):
     project = models.ForeignKey(Project, verbose_name=u"项目", related_name='project_data')
     is_futou = models.BooleanField(u"是否复投", default=False)
     source = models.CharField(u"投资来源", choices=SOURCE, max_length=10)
-    invest_mobile = models.CharField(u"投资手机号", max_length=13)
+    invest_mobile = models.CharField(u"投资手机号", max_length=11)
     invest_time = models.DateField(u"投资时间")
     invest_amount = models.DecimalField(u"投资金额", max_digits=10, decimal_places=2)
     invest_term = models.CharField(u"投资标期", max_length=13)

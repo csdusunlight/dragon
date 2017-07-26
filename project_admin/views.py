@@ -206,6 +206,7 @@ def import_projectdata_excel(request):
                 value = cell.value
                 if j==0:
                     id = int(value)
+                    project = Project.objects.get(id=id)
                     temp.append(id)
                 elif j==2:
                     value = value.strip()
@@ -296,9 +297,10 @@ def import_projectdata_excel(request):
         return JsonResponse(ret)
     succ_num = len(investdata_list)
     duplic_num2 = len(duplicate_mobile_list)
-    duplic_num1 = nrows - succ_num - duplic_num2
+    duplic_num1 = nrows - 1 - succ_num - duplic_num2
     duplic_mobile_list_str = u'，'.join(duplicate_mobile_list)
-    ret.update(code=0,sun=succ_num, dup1=duplic_num1, dup2=duplic_num2, anum=nrows-1, dupstr=duplic_mobile_list_str)
+    ret.update(code=0,num=succ_num, dup1=duplic_num1, dup2=duplic_num2, anum=nrows-1, dupstr=duplic_mobile_list_str)
+    print ret   
     return JsonResponse(ret)
 
 @csrf_exempt
@@ -322,76 +324,48 @@ def import_audit_projectdata_excel(request):
         ret['msg'] = u"文件格式与模板不符，请下载最新模板填写！"
         return JsonResponse(ret)
     rtable = []
-    mobile_list = []
-    dup={}
     try:
         for i in range(1,nrows):
             row = table.row_values(i)
             temp = {}
-            duplic = False
             id = int(row[0])
             project_id = int(row[1])
             mobile = row[5]
             consume = Decimal(row[8])
-            return_amount = Decimal(row[10])
-            if return_amount > consume:
-                raise Exception(u"返现金额不能大于结算金额，请检查表格")
+            remark = row[12]
             
             if row[9] == u"是":
                 result = True
-            elif result == u"否":
+                temp['state'] = '0'
+            elif row[9] == u"否":
                 result = False
+                temp['state'] = '1'
             else:
                 raise Exception(u"审核结果必须为是或否。")
-                
+            
+            if row[10]:
+                return_amount = Decimal(row[10])
+                if return_amount > consume:
+                    raise Exception(u"返现金额不能大于结算金额，请检查表格") 
+            elif result:
+                raise Exception(u"审核结果为是时，返现金额不能为空或零。")
+            else:
+                return_amount = 0
+            
+               
             if row[11] == u"网站":
                 source = 'site'
-            elif result == u"渠道":
+            elif row[11] == u"渠道":
                 source = 'channel'
             else:
                 raise Exception(u"必须为网站或渠道。")
             temp['id'] = id
-            temp['is_futou'] = result
+            temp['project_id'] = project_id
             temp['source'] = source
-            for j in range(ncols):
-                cell = table.cell(i,j)
-                value = cell.value
-                if j==0:
-                    id = int(value)
-                    temp['id'] = id
-                elif j==1:
-                    project_id = int(value)
-                    temp['project_id'] = id
-                elif j==9:
-                    result = cell.value.strip()
-                    if result == u"是":
-                        result = True
-                        temp['is_futou'] = True
-                    elif result == u"否":
-                        result = False
-                        temp['is_futou'] = False
-                    else:
-                        raise Exception(u"审核结果必须为是或否。")
-                elif j==10:
-                    return_amount = 0
-                    if cell.value:
-                        return_amount = Decimal(cell.value)
-                    elif result:
-                        raise Exception(u"审核结果为是时，返现金额不能为空或零。")
-                    temp.append(return_amount)
-                elif j==11:
-                    value = cell.value.strip()
-                    if value == u"网站":
-                        temp.append('site')
-                    elif value == u"渠道":
-                        temp.append('channel')
-                    else:
-                        raise Exception(u"必须为网站或渠道。")
-                elif j==12:
-                    reason = cell.value
-                    temp.append(reason)
-                else:
-                    continue
+            temp['return_amount'] = return_amount
+            temp['consume'] = consume
+            temp['remark'] = remark
+            temp['mobile'] = mobile
             rtable.append(temp)
     except Exception, e:
         logger.info(unicode(e))
@@ -403,23 +377,28 @@ def import_audit_projectdata_excel(request):
     suc_num = 0
     try:
         for row in rtable:
-            id = row[0]
-            result = row[1]
-            retamount = row[2]
-            source = row[3]
-            remark = row[4]
+            id = row['id']
+            return_amount = row['return_amount']
+            source = row['source']
+            remark = row['remark']
+            mobile = row['mobile']
+            consume = row['consume']
+            project_id = row['project_id']
+            state = row['state']
             event = ProjectInvestData.objects.get(id=id)
 #             if event.state != '1':
 #                 continue
-            if result:
-                amount = retamount
-                event.state = '0'
-                event.return_amount = retamount
-                event.audit_time = datetime.datetime.now()
-                event.source = source
-                event.remark = remark
-                event.save(update_fields=['state', 'return_amount', 'audit_time', 'source', 'remark'])
-                suc_num += 1
+            event.state = state
+            event.return_amount = return_amount
+            event.audit_time = datetime.datetime.now()
+            event.source = source
+            event.remark = remark
+            event.settle_amount = consume
+            event.project_id = project_id
+            event.invest_mobile = mobile
+            event.save(update_fields=['state', 'return_amount', 'audit_time', 'source', 'remark', 
+                                      'project_id', 'settle_amount', 'invest_mobile'])
+            suc_num += 1
         ret['code'] = 0
     except Exception as e:
         exstr = traceback.format_exc()
@@ -433,7 +412,6 @@ def import_audit_projectdata_excel(request):
 @has_permission('008')
 def export_investdata_excel(request):
     user = request.user
-    item_list = []
     item_list = ProjectInvestData.objects
     is_futou = request.GET.get("is_futou", None)
     if is_futou=="true":
