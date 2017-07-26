@@ -73,7 +73,7 @@ def updateFuligou():
     soup = BeautifulSoup(allhtml, "html.parser")
     good_list = soup.find('div', class_='goods-list').find_all('li')
     for i in range(4):
-        item = good_list[0]
+        item = good_list[i]
         href = url + item.a['href']
         img_src = item.img['src']
         buy_price = item.find('span', class_='price').b.text.strip()[1:]
@@ -86,7 +86,7 @@ def updateFuligou():
                     img_src=img_src, href=href)
         new_list.append(f)
     with transaction.atomic():
-        Fuligou.objects.delete()
+        Fuligou.objects.all().delete()
         Fuligou.objects.bulk_create(new_list)
 
 class Command(BaseCommand):

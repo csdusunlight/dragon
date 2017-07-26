@@ -161,3 +161,4 @@ class InformationAdmin(NewsAdmin):
             obj.save(update_fields=['url',])
 admin.site.register(Information,InformationAdmin)
 admin.site.register(UserTask)
+admin.site.register(Fuligou)

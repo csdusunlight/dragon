@@ -326,21 +326,50 @@ def import_audit_projectdata_excel(request):
     dup={}
     try:
         for i in range(1,nrows):
-            temp = []
+            row = table.row_values(i)
+            temp = {}
             duplic = False
+            id = int(row[0])
+            project_id = int(row[1])
+            mobile = row[5]
+            consume = Decimal(row[8])
+            return_amount = Decimal(row[10])
+            if return_amount > consume:
+                raise Exception(u"返现金额不能大于结算金额，请检查表格")
+            
+            if row[9] == u"是":
+                result = True
+            elif result == u"否":
+                result = False
+            else:
+                raise Exception(u"审核结果必须为是或否。")
+                
+            if row[11] == u"网站":
+                source = 'site'
+            elif result == u"渠道":
+                source = 'channel'
+            else:
+                raise Exception(u"必须为网站或渠道。")
+            temp['id'] = id
+            temp['is_futou'] = result
+            temp['source'] = source
             for j in range(ncols):
                 cell = table.cell(i,j)
+                value = cell.value
                 if j==0:
-                    id = int(cell.value)
-                    temp.append(id)
+                    id = int(value)
+                    temp['id'] = id
+                elif j==1:
+                    project_id = int(value)
+                    temp['project_id'] = id
                 elif j==9:
                     result = cell.value.strip()
                     if result == u"是":
                         result = True
-                        temp.append(True)
+                        temp['is_futou'] = True
                     elif result == u"否":
                         result = False
-                        temp.append(False)
+                        temp['is_futou'] = False
                     else:
                         raise Exception(u"审核结果必须为是或否。")
                 elif j==10:

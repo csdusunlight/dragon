@@ -136,6 +136,8 @@ class Welfare(Base):
     def get_type_url(self):
         return reverse('welfare')
 class Hongbao(Welfare):
+    up = models.IntegerField(u"顶")
+    down = models.IntegerField(u"踩")
     class Meta:
         verbose_name = u"红包"
         verbose_name_plural = u"红包"
@@ -438,6 +440,19 @@ class MAdvert_App(Base):
         ordering = ["-news_priority","-pub_date"]
         verbose_name = u"app今日推荐"
         verbose_name_plural = u"app今日推荐"
+    def clean(self):
+        if self.pic and self.pic.size > 30000:
+            raise ValidationError({'pic': u'图片大小不能超过30k'})
+class MAdvert_PC(Base):
+    pic = models.ImageField(upload_to='photos/%Y/%m/%d', blank=False,
+                             verbose_name=u"banner图片上传(1920*300)，小于100k")
+    location = models.CharField(u"广告位置", max_length=2, choices=MADLOCATION)
+    is_hidden = models.BooleanField(u"是否隐藏",default=False)
+    wel_id = models.ForeignKey(Welfare, verbose_name="展示福利")
+    class Meta:
+        ordering = ["-news_priority","-pub_date"]
+        verbose_name = u"PC端热门推荐"
+        verbose_name_plural = u"PC端热门推荐"
     def clean(self):
         if self.pic and self.pic.size > 30000:
             raise ValidationError({'pic': u'图片大小不能超过30k'})
