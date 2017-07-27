@@ -226,11 +226,11 @@ def import_projectdata_excel(request):
                     try:
                         mobile = str(int(value)).strip()
                     except Exception,e:
-                        raise Exception(u"手机号必须是11位数字，请修改后重新提交。")
+                        mobile = str(value).strip()
                     if len(mobile)==11:
                         temp.append(mobile)
                     else:
-                        raise Exception(u"手机号必须是11位数字，请修改后重新提交。")
+                        raise Exception(u"手机号必须是11位，请修改后重新提交。")
                 elif j==5 or j==7:
                     try:
                         temp.append(Decimal(value))
@@ -268,7 +268,6 @@ def import_projectdata_excel(request):
     try:
         with transaction.atomic():
             db_key = DBlock.objects.select_for_update().get(index='investdata')
-            print rtable
             for id, values in rtable.items():
                 temp = ProjectInvestData.objects.filter(project_id=id).values('invest_mobile')
                 db_mobile_list = map(lambda x: x['invest_mobile'], temp)
@@ -300,7 +299,6 @@ def import_projectdata_excel(request):
     duplic_num1 = nrows - 1 - succ_num - duplic_num2
     duplic_mobile_list_str = u'，'.join(duplicate_mobile_list)
     ret.update(code=0,num=succ_num, dup1=duplic_num1, dup2=duplic_num2, anum=nrows-1, dupstr=duplic_mobile_list_str)
-    print ret   
     return JsonResponse(ret)
 
 @csrf_exempt
