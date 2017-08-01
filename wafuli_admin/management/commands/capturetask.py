@@ -26,9 +26,9 @@ class Command(BaseCommand):
                 if isWindowsSystem():
                     name = name.encode('gbk')
                 logger.error("why" + name)
-                return
+                continue
             for con in contents:
-                wel = Hongbao.objects.create(type='hongbao',title=con['title'],state='1',company=company,strategy=con['content'], pic = con['pic_download'])
+                wel = Hongbao.objects.create(type='hongbao',title=con['title'],state='0',company=company,strategy=con['content'], pic = con['pic_download'])
                 wel.url = reverse('welfare', kwargs={'id': wel.id})
                 wel.save(update_fields=['url'])
 #         company = Company.objects.get(name=u"免费福利")

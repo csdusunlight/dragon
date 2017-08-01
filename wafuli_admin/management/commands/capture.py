@@ -235,7 +235,7 @@ class Command(BaseCommand):
             name = name.decode('gbk').encode('utf-8')
         contents = load_gzh(name)
         for con in contents:
-            wel = Hongbao.objects.create(type='hongbao',title=con['title'],state='1',company=company,strategy=con['content'], pic = con['pic_download'])
+            wel = Hongbao.objects.create(type='hongbao',title=con['title'],state='0',company=company,strategy=con['content'], pic = con['pic_download'])
             wel.url = reverse('welfare', kwargs={'id': wel.id})
             wel.save(update_fields=['url'])
 #             Hongbao.objects.create(welfare_ptr_id=wel.id)
