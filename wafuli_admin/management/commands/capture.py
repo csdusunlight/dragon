@@ -184,7 +184,8 @@ def load_gzh(name):
         else:
             rich_content = u"没有内容"
             title = u"无"
-        contents.append({'title':title, 'content':rich_content, 'picture':pics[t]})
+        if not Hongbao.objects.filter(state__in=['0','1'], title=title).exists():
+            contents.append({'title':title, 'content':rich_content, 'picture':pics[t]})
         t += 1
     for c in contents:
         url = c['picture']
@@ -231,6 +232,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         company = Company.objects.get(name=u"免费福利")
         name=options['name'][0]
+        print name
         if isWindowsSystem():
             name = name.decode('gbk').encode('utf-8')
         contents = load_gzh(name)

@@ -112,7 +112,7 @@ admin.site.register(LotteryRecord)
 
 class WelfareAdmin(admin.ModelAdmin):
     search_fields = ['title',]
-    list_filter = ['news_priority', 'change_user',]
+    list_filter = ['news_priority', 'state',]
     readonly_fields = ('pub_date','change_user','url')
     filter_horizontal = ('marks',)
     list_display = ('title','state',)

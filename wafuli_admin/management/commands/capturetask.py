@@ -24,7 +24,7 @@ class Command(BaseCommand):
             contents = load_gzh(name)
             if not contents:
                 if isWindowsSystem():
-                    name = name.encode('gbk')
+                    name = name.decode('utf-8').encode('gbk')
                 logger.error("why" + name)
                 continue
             for con in contents:
