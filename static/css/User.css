@@ -2,7 +2,7 @@
 /* CSS Document */
 td {white-space:nowrap;overflow:hidden;}
 #header { border-bottom:1px solid #c1c1c1;}
-.Content { padding-top:32px; padding-bottom:50px;}
+.Content { padding-top:32px; padding-bottom:50px;overflow: hidden;}
 .LeftNav { float:left; width:196px; height:auto; border:1px solid #e1e1e1; background:#fbfbfb;}
 .LeftNav li { float:left; width:100%; height:auto;background: #f7f7f7;position: relative;}
 .LeftNav li a{ display:block; width:auto; height:44px; line-height:44px; padding-left:70px; font-size:15px; color:#666666; background:url(../images/sin-picon.png) no-repeat; text-align:left; border-bottom:1px solid #e1e1e1;}

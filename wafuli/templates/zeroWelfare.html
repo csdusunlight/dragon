@@ -10,6 +10,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/welfare.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/wfl-flexslider.css' %}" />
 
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/jquery.flexslider-min.js' %}"></script>
@@ -31,7 +32,8 @@ function getText(n) {
 		 return n;
 }
 $(function(){
-	$('.zero_h a').toggleClass("vo");
+	// $('.zero_h a').toggleClass("vo");
+  $('.nav__item:eq(1)').addClass('active');
 	if (type!=="None"){
     	$('.nav_'+type).toggleClass("box-shadow");
     }
