@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http.response import Http404
 from wafuli.models import Welfare, Task, Finance, Commodity, Information, \
     ExchangeRecord, Press, UserEvent, Advertisement, Activity, Company,\
-    CouponProject, Baoyou, Hongbao, UserTask
+    CouponProject, Baoyou, Hongbao, UserTask, MAdvert_PC
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
@@ -24,6 +24,66 @@ import re
 
 def index(request):
     ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='1'),is_hidden=False)[0:8]
+    announce_list = Press.objects.filter(type='1')[0:5]
+    hongbao_list = Hongbao.objects.filter(is_display=True,state='1')[0:3]
+    baoyou_list = Baoyou.objects.filter(is_display=True,state='1')[0:3]
+    youhuiquan_list = CouponProject.objects.filter(is_display=True,state='1')[0:3]
+    for wel in youhuiquan_list:
+        wel.draw_count = wel.coupons.filter(user__isnull=False).count()
+        if wel.ctype == '2':
+            wel.left_count = wel.coupons.filter(user__isnull=True).count()
+        else:
+            wel.left_count = u"充足"
+    query_set = Finance.objects.filter(state__in=['1','2'], level__in=['all','normal']).order_by("state","-news_priority","-pub_date")
+    finance_list1 = query_set.filter(f_type='1')[0:3]
+    finance_list2 = query_set.filter(f_type='2')[0:3]
+    finance_list3 = query_set.filter(f_type='3')[0:3]
+    news_list = Activity.objects.filter(is_hidden=False)[0:2]
+    exchange_list = ExchangeRecord.objects.all()[0:10]
+    strategy_list = Press.objects.filter(type='2')[0:6]
+    info = Information.objects.filter(is_display=True).first()
+    context = {'ad_list':ad_list,
+               'hongbao_list': hongbao_list,
+               'baoyou_list': baoyou_list,
+               'youhuiquan_list': youhuiquan_list,
+#                'task_list': task_list,
+               'announce_list':announce_list,
+               'finance_list1': finance_list1,
+               'finance_list2': finance_list2,
+               'finance_list3': finance_list3,
+               'news_list': news_list,
+               'exchange_list': exchange_list,
+               'strategy_list': strategy_list,
+               'info': info,
+    }
+    task_list = list(Task.objects.filter(state__in=['1','2'],type='junior').order_by("state","-news_priority","-pub_date")[0:2])
+    if len(task_list)==2:
+        context.update(task1=task_list[0],task2=task_list[1])
+    task_list = list(Task.objects.filter(state__in=['1','2'],type='middle').order_by("state","-news_priority","-pub_date")[0:2])
+    if len(task_list)==2:
+        context.update(task3=task_list[0],task4=task_list[1])
+    task_list = list(Task.objects.filter(state__in=['1','2'],type='senior').order_by("state","-news_priority","-pub_date")[0:2])
+    if len(task_list)==2:
+        context.update(task5=task_list[0],task6=task_list[1])
+
+    try:
+        statis = DayStatis.objects.get(date=date.today())
+    except:
+        new_wel_num = 0
+    else:
+        new_wel_num = statis.new_wel_num
+    glo_statis = GlobalStatis.objects.first()
+    if glo_statis:
+        all_wel_num = glo_statis.all_wel_num
+        withdraw_total = int(glo_statis.award_total/100.0)
+
+    else:
+        withdraw_total = 0
+        all_wel_num = 0
+    context.update({'new_wel_num':new_wel_num, 'all_wel_num':all_wel_num, 'withdraw_total':withdraw_total})
+    return render(request, 'wfl-index.html', context)
+def wfl_index(request):
+    ad_list = MAdvert_PC.objects.filter(location='00', is_hidden=False)[0:6]
     announce_list = Press.objects.filter(type='1')[0:5]
     hongbao_list = Hongbao.objects.filter(is_display=True,state='1')[0:3]
     baoyou_list = Baoyou.objects.filter(is_display=True,state='1')[0:3]
