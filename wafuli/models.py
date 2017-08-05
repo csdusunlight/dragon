@@ -136,8 +136,8 @@ class Welfare(Base):
     def get_type_url(self):
         return reverse('welfare')
 class Hongbao(Welfare):
-    up = models.IntegerField(u"顶")
-    down = models.IntegerField(u"踩")
+    up = models.IntegerField(u"顶", default=0)
+    down = models.IntegerField(u"踩", default=0)
     class Meta:
         verbose_name = u"红包"
         verbose_name_plural = u"红包"

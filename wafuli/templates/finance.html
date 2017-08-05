@@ -9,7 +9,7 @@
 <link href="{% static 'images/favicon.ico'%}" rel="shortcut icon"/>
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}" />
-<!-- <link rel="stylesheet" type="text/css" href="{% static 'css/welfare.css' %}" /> -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/wfl-flexslider.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/page.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/finance.css' %}" />
 
@@ -46,7 +46,8 @@ function emptydisplay(obj){
   obj.html('<p style="margin-top:20px;">抱歉，没有找到符合条件的项目！</p>');
 }
 $(function(){
-   	$('.finan_h a').toggleClass("vo");
+   	// $('.finan_h a').toggleClass("vo");
+    $('.nav__item:eq(2)').addClass('active');
 
   var newurl = url;
   var index = "0",
@@ -112,7 +113,7 @@ $(function(){
 
 
     $('.flexslider').flexslider({
-           directionNav: true,
+           directionNav: false,
            pauseOnAction: false
     });
 

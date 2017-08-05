@@ -1,36 +1,55 @@
+<!--header-->
 {% load staticfiles %}
-<div id="header">
-  <div class="header-main">
-    <div class="header-t">欢迎来到挖福利，全国首家综合性互联网产品体验超市！客服热线：<span>0731-85586375</span>&nbsp;&nbsp;<a href="http://m.wafuli.cn"><span class="goto-mobile">切换到触屏版</span></a>
-    	<div class="rt">
-    	{% if not user.is_authenticated %}
-    	<a href="{% url 'register' %}">注册</a>&nbsp;|&nbsp;<a href="{% url 'login' %}">登录</a>
-  		&nbsp;|&nbsp;
-  		{% else %}
-  		<font>您好，<a href="{% url 'account_index' %}">{{user.mobile}}</a>
-  			{%if user.level > 0 %}
-  			 （VIP{{user.level}}）
-  			{%endif%}
-  		</font>
-  		<a href="{%url 'logout' %}">退出</a>&nbsp;|&nbsp;
-  		<a href="{%url 'account_message' %}">消息中心</a>&nbsp;|&nbsp;
-  		{% endif %}
-  		<a href="{%url 'aboutus' %}#cont=strategy">帮助</a>&nbsp;|&nbsp;
-      	<a target="_blank" href="{%url 'APP_download' %}">APP下载</a>
-    	</div>
+<div class="header">
+    <div class="bgc-333">
+        <div class="headertop color-fff clearfix">
+            <p class="headertop__welcome l">欢迎来到挖福利，全国首家综合性互联网产品体验超市！客服热线：0731-85586375&nbsp;&nbsp;<a href="#">切换到触屏版</a></p>
+            <ul class="r fs-0">
+
+                {% if not user.is_authenticated %}
+                <li class="d-ib"><a class="headertop__navitem link" href="{% url 'login' %}">登录</a></li>
+                <li class="d-ib"><a class="headertop__navitem link" href="{% url 'register' %}">注册</a></li>
+                {% else %}
+                <li class="d-ib"><font>您好，<a class="headertop__navitem link" href="{% url 'account_index' %}">{{user.mobile}}</a></li>
+                    {%if user.level > 0 %}
+                     （VIP{{user.level}}）
+                    {%endif%}
+                </font>
+                <li class="d-ib"><a class="headertop__navitem link" href="{%url 'logout' %}">退出</a></li>
+                <!-- <a href="{%url 'account_message' %}">消息中心</a>&nbsp;|&nbsp; -->
+                {% endif %}
+
+
+                <li class="d-ib"><a class="headertop__navitem link" href="{%url 'aboutus' %}#cont=strategy">帮助中心</a></li>
+                <li class="d-ib"><a class="headertop__navitem link" href="{%url 'APP_download' %}">app下载</a></li>
+            </ul>
+        </div>
     </div>
-    <div class="header-b">
-      <div id="logo"><a href="{% url 'index' %}"><img src="{% static 'images/logo.jpg' %}" alt="logo"/></a></div>
-      <div id="menu">
-        <ul>
-          <li class="home"><a href="{% url 'index' %}">首 页</a></li>
-          <li class="zero_h"><a href="{% url 'welfare_list' %}">免费福利</a></li>
-          <li class="task_h"><a href="{% url 'task' %}">体验福利</a></li>
-          <li class="finan_h"><a href="{% url 'finance' %}">理财福利</a></li>
-          <li class="mall_h"><a href="{% url 'mall' %}">积分商城</a></li>
-          <li class="about_h"><a href="{% url 'aboutus' %}">关于我们</a></li>
-        </ul>
-      </div>
+    <div class="headermain-box bgc-fff">
+        <div class="headermain clearfix">
+            <a href="{% url 'index' %}"><img src="{% static 'images/wafuli-logo.png' %}" alt="logo" class="logo l" /></a>
+            <ul class="nav nav-layout l fs-0">
+                <li class="nav__itembox d-ib"><a class="nav__item" href="{% url 'index' %}">首页</a></li>
+                <li class="nav__itembox subnav-show d-ib">
+                    <a class="nav__item" href="#">福利大全</a>
+                    <ul class="subnav welfare-subnav">
+                        <li><a class="subnav__item link" href="{% url 'welfare_list' %}">红包福利</a></li>
+                        <li><a class="subnav__item link" href="#">福利购</a></li>
+                    </ul>
+                </li>
+                <li class="nav__itembox subnav-show d-ib">
+                    <a class="nav__item" href="#">赚点钱</a>
+                    <ul class="subnav">
+                        <li><a class="subnav__item link" href="{% url 'task' %}">任务赚</a></li>
+                        <li><a class="subnav__item link" href="{% url 'finance' %}">p2p返利</a></li>
+                        <li><a class="subnav__item link" href="#">借点钱</a></li>
+                        <li><a class="subnav__item link" href="#">信用卡</a></li>
+                    </ul>
+                </li>
+                <li class="nav__itembox d-ib"><a class="nav__item" href="{% url 'mall' %}">积分商城</a></li>
+                <li class="nav__itembox d-ib"><a class="nav__item" href="{% url 'account_index' %}">个人中心</a></li>
+            </ul>
+        </div>
     </div>
-  </div>
 </div>
+<!--header---end-->

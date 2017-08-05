@@ -75,7 +75,7 @@ button[disabled], html input[disabled] {
 .div-box { float:left; width:100%; height:auto;}
 .fl-box { float:left; width:auto; height:auto;}
 .fr-box { float:right; width:auto; height:auto;}
-.Content { float:left; width:100%; height:auto;}
+.Content { float:left; width:100%; height:auto;background-color: #fff;}
 
 
 /*-------------框架样式---------------*/

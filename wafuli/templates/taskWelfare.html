@@ -9,6 +9,7 @@
 <link href="{% static 'images/favicon.ico'%}" rel="shortcut icon"/>
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/wfl-flexslider.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/welfare.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/page.css' %}" />
 
@@ -44,7 +45,8 @@ function getText(n) {
 }
 
 $(function(){
-   	$('.task_h a').toggleClass("vo");
+   	// $('.task_h a').toggleClass("vo");
+    $('.nav__item:eq(2)').addClass('active');
    	$("#tab li").eq(default_filter).toggleClass("cur");
 	$("#pagedata1").ajaxPage({
 	    url:url+"state=1&filter=" + default_filter,
