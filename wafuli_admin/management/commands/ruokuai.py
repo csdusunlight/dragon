@@ -120,7 +120,7 @@ if __name__ == '__main__':
                  'softkey'
                 ]
             from PIL import Image
-            imagePath = 'e:\image.jpeg'
+            imagePath = 'e:\image.jpg'
             img = Image.open(imagePath)
             if img is None:
                 print 'get file error!'

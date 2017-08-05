@@ -81,7 +81,7 @@ def index(request):
         withdraw_total = 0
         all_wel_num = 0
     context.update({'new_wel_num':new_wel_num, 'all_wel_num':all_wel_num, 'withdraw_total':withdraw_total})
-    return render(request, 'index.html', context)
+    return render(request, 'wfl-index.html', context)
 def finance(request, id=None):
     if id is None:
         ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='4'),is_hidden=False)[0:8]

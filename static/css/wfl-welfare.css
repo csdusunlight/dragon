@@ -1,0 +1,233 @@
+/*banner-container*/
+.banner-container {
+	height: 402px;
+	background: #fff;
+}
+
+.banner {
+	width: 680px;
+	height: 100%;
+	padding: 11px 0;
+	background-color: #fff;
+}
+
+.hongbao-recommend {
+	padding: 11px 0;
+	width: 570px;
+}
+.hongbao-recommend-item {
+	display: inline-block;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	width: 275px;
+	height: 185px;
+}
+/*banner-container--end*/
+
+/*红包、积分、福利购*/
+
+.hongbao-search {
+	position: relative;
+	padding: 20px 20px 0;
+	background-color: #fff;
+}
+.hongbao-input[type="text"] {
+	width: 1210px;
+	height: 46px;
+	padding-left: 10px;
+	border: 1px solid #e4e4e4;
+	border-radius: 8px;
+}
+.hongbao-submit {
+	position: absolute;
+	top: 20px;
+	right: 30px;
+	width: 46px;
+	height: 46px;
+	border: none;
+	background: url(../images/search.png) center center no-repeat;
+	cursor: pointer;
+}
+.hot-txt {
+	display: inline-block;
+	margin-left: 10px;
+	cursor: pointer;
+}
+
+.hongbao-content {
+	background-color: #fff;
+}
+.hongbao-nav-box {
+	margin-top: 8px;
+	margin-left: 12px;
+}
+.hongbao-nav-name {
+	margin-right: 10px;
+	font-weight: normal;
+	line-height: 46px;
+	color: #666;
+}
+.hongbao-nav {
+	font-size: 0;
+}
+.hongbao-nav__item {
+	position: relative;
+	display: inline-block;
+	padding: 16px 10px;
+	font-size: 14px;
+	line-height: 1;
+	color: #222;
+	cursor: pointer;
+}
+.hongbao-nav__item:hover {
+	color: #91C11D;
+}
+.hongbao-choose {
+    font-size: 0;
+}
+.hongbao-nav__num {
+	display: inline-block;
+	margin-left: 4px;
+	color: #999;
+}
+.hongbao-choose {
+	font-size: 0;
+}
+.hongbao-choose__item {
+	display: inline-block;
+	margin-top: 16px;
+	margin-right: 20px;
+	font-size: 14px;
+	cursor: pointer;
+}
+.hongbao-nav__item.on, .hongbao-choose__item.on {
+	color: #91c11d;
+}
+.hongbao-nav__item:after {
+	content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    color: #91c11d;
+    background-color: #91c11d;
+    opacity: 0;
+    transform: scaleX(0);
+    transition: all 0.4s ease-in;
+}
+.hongbao-nav__item.on:after {
+	opacity: 1;
+	transform: scaleX(1);
+}
+
+.hongbao-box {
+	margin-top: 4px;
+}
+.hongbao {
+	position: relative;;
+	padding: 20px 35px;
+	height: 180px;
+	border-bottom: 1px solid #f5f5f5;
+}
+.hongbao__img {
+	width: 140px;
+	height: 140px;
+	margin-right: 24px;
+	float: left;
+}
+.hongbao__detail {
+	margin-top: 14px;
+	margin-bottom: 22px;
+}
+.hongbao-action {
+	height: 28px;
+	line-height: 1;
+}
+.support__up, .support__down {
+	display: inline-block;
+	padding-left: 36px;
+	padding-top: 14px;
+	background-size: 27px 27px;
+	background-position: left bottom;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	vertical-align: bottom;
+}
+.support__up {
+	background-image: url(../images/click-up.png);
+}
+.support__down {
+	margin-left: 36px;
+	background-image: url(../images/click-down.png);
+}
+.hognbao__time,
+.hongbao__source {
+	display: inline-block;
+	padding-top: 14px;
+	vertical-align: bottom;
+}
+.hongbao__source {
+	margin: 0 136px 0 30px;
+}
+.btn.m-hongbao-link {
+	position: absolute;
+	right: 35px;
+	bottom: 19px;
+}
+.btn.m-hongbao-link:hover {
+	color: #fff;
+}
+
+.wflbox__titlebox.m-mt {
+    margin-top: 15px;
+}
+.fuligou-box,
+.jifen-box {
+	margin-top: -6px;
+}
+.fuligou,
+.jifen {
+	height: 118px;
+	padding: 10px 20px;
+}
+.fuligou__img,
+.jifen__img {
+	width: 98px;
+	height: 98px;
+	float: left;
+	margin-right: 20px;
+}
+.fuligou__title,
+.jifen__title {
+	line-height: 30px;
+}
+.fuligou__title {
+    margin-bottom: 6px;
+}
+.price {
+    height: 20px;
+    font-size: 0;
+    color: #F95A5A;
+}
+.price__now, .price__tag, .price__before {
+    display: inline-block;
+    vertical-align: baseline;
+}
+.price__now {
+    font-size: 18px;
+}
+.price__tag {
+    margin: 0 2px;
+    font-size: 12px;
+}
+.price__before {
+    color: #999;
+    font-size: 12px;
+}
+.jifen__num {
+	color: #91c11d;
+}
+/*红包、积分、福利购---end*/
+

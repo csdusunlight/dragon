@@ -21,7 +21,7 @@ from django.core.management.base import BaseCommand
 from PIL import Image
 from wafuli_admin.management.commands.ruokuai import APIClient
 host = 'http://mp.weixin.qq.com'
-logger=logging.getLogger('wafuli')
+logger=logging.getLogger('django')
 today =datetime.date.today().strftime("%Y-%m-%d")
 todaydir = os.path.join(MEDIA_ROOT, 'capfromweixin', today).replace('\\','/')
 url_pre = '/media/capfromweixin/' + today + '/'
@@ -36,6 +36,7 @@ class Browser(object):
     handler = urllib2.HTTPCookieProcessor(cookie)
     opener = urllib2.build_opener(handler)
     def get(self,url):
+#         logger.info("geturl:" + url)
         request = urllib2.Request(url)
     #     request.add_header('Accept-encoding', 'gzip')
         request.add_header('User-Agent','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36')
@@ -46,9 +47,9 @@ class Browser(object):
         request = urllib2.Request(url, data, headers)
         return self.open(request)
     def open(self, request):
-        result = ''
+        data = None
         try:
-            response = Browser.opener.open(request)
+            response = Browser.opener.open(request, timeout=5)
 #             buf = StringIO(response.read())
 #             f = gzip.GzipFile(fileobj=buf)
             data = response.read()
@@ -60,13 +61,13 @@ class Browser(object):
             print e.code
         return data
     
-def getimgcode(imagePath):
+def getimgcode(imagePath, typeid):
     client = APIClient()
     result = ''
     paramDict = {}
     paramDict['username'] = 'boy28930'
     paramDict['password'] = 'pl6561066'
-    paramDict['typeid'] = 2040
+    paramDict['typeid'] = typeid
     paramDict['timeout'] = 60
     paramDict['softid'] = 1
     paramDict['softkey'] = 'b40ffbee5c1cf4e38028c197eb2fc751'
@@ -89,9 +90,55 @@ def getimgcode(imagePath):
     result = match.group(1)
     return result
 def load_gzh(name):
+    logger.info(name + "is beginning to load...")
     browser = Browser()
+    burl = 'http://weixin.sogou.com/weixin?type=1&s_from=input&query='+name+'&ie=utf8&_sug_=n&_sug_type_='
 #     logger.error('http://weixin.sogou.com/weixin?type=1&s_from=input&query=券妈妈&ie=utf8&_sug_=n&_sug_type_=')
-    page = browser.get('http://weixin.sogou.com/weixin?type=1&s_from=input&query='+name+'&ie=utf8&_sug_=n&_sug_type_=')
+    page = browser.get(burl)
+    if page.find('请输入验证码') != -1:
+        tc = time.time()
+        tc = tc*1000
+        CaptchaUrl = "http://weixin.sogou.com/antispider/util/seccode.php?tc=" + str(tc)
+        PostUrl = "http://weixin.sogou.com/antispider/thank.php"
+        
+        picture = browser.get(CaptchaUrl)
+        # 用openr访问验证码地址,获取cookie
+        imgname = os.path.join(todaydir, 'vericode.jpg').replace('\\','/')
+        local = open(imgname, 'wb')
+        local.write(picture)
+        local.close()
+        # 保存验证码到本地
+        SecretCode = getimgcode(imgname, 3060)#raw_input('input code::')
+        logger.error('secretcode'+ SecretCode)
+        # 打开保存的验证码图片 输入
+        postData = {
+            'c': SecretCode,
+            'r': burl,
+            'v':5
+        }
+        # 根据抓包信息 构造表单
+        headers = {
+            'Accept': '*/*',
+            'Accept-Encoding':'gzip, deflate',
+            'Accept-Language': 'zh-CN,zh;q=0.8',
+            'Connection': 'keep-alive',
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36',
+            'Host':'weixin.sogou.com',
+            'Origin':'http://weixin.sogou.com/',
+            'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+            'X-Requested-With':'XMLHttpRequest',
+        }
+        # 根据抓包信息 构造headers
+        # 生成post数据 ?key1=value1&key2=value2的形式
+        # 构造request请求
+        result = browser.post(PostUrl, postData, headers)
+
+        logger.error(name + "sougou antispider")
+        return None
+#        page = browser.get(burl)
+        
+	print page
     soup = BeautifulSoup(page,"html.parser")
     news_box = soup.find("div", class_="news-box")
     try:
@@ -100,6 +147,8 @@ def load_gzh(name):
         if isWindowsSystem():
             name = name.decode('utf-8').encode('gbk')
         logger.error("no gzh found named" + name )
+        logger.error(burl)
+        print soup.prettify()
         return None
     article_list_html = browser.get(gongzhonghao)
     if article_list_html.find('请输入验证码') != -1:
@@ -115,7 +164,7 @@ def load_gzh(name):
         local.write(picture)
         local.close()
         # 保存验证码到本地
-        SecretCode = getimgcode(imgname)#raw_input('input code::')
+        SecretCode = getimgcode(imgname, 2040)#raw_input('input code::')
         logger.error(SecretCode)
         # 打开保存的验证码图片 输入
         postData = {
@@ -140,7 +189,7 @@ def load_gzh(name):
         # 构造request请求
         result = browser.post(PostUrl, postData, headers)
         article_list_html = browser.get(gongzhonghao)
-        logger.error(article_list_html)
+
     soup = BeautifulSoup(article_list_html,"html.parser")
 #     print soup.prettify(encoding='')
     matchObj = re.findall("\"list\":(\[.*\])", soup.prettify())
@@ -149,7 +198,7 @@ def load_gzh(name):
     if matchObj:
         day_list = eval(matchObj[0])
     else:
-        print "no list"
+        logger.info("no list")
         return None
     if day_list:
         today_list = day_list[0]['app_msg_ext_info']
@@ -157,7 +206,7 @@ def load_gzh(name):
         #最新文章在列表中是独立列出的
         msg_item_list.insert(0, {'content_url':today_list['content_url'], 'cover':today_list['cover']})
     else:
-        print 'day_list is empty'
+        logger.info('day_list is empty')
         return None
     article_urls = []
     pics=[]
@@ -175,7 +224,7 @@ def load_gzh(name):
         datestr = soup.find(id="post-date").string.strip()
         todaystr =datetime.date.today().strftime("%Y-%m-%d")
         if datestr!=todaystr:
-            print u'今天没有新闻'
+            logger.info(name + '今天没有新闻')
             return None
         div = soup.find("div",class_="rich_media_content")
         if div:
@@ -184,13 +233,14 @@ def load_gzh(name):
         else:
             rich_content = u"没有内容"
             title = u"无"
-        contents.append({'title':title, 'content':rich_content, 'picture':pics[t]})
+        if not Hongbao.objects.filter(state__in=['0','1'], title=title).exists():
+            contents.append({'title':title, 'content':rich_content, 'picture':pics[t]})
         t += 1
     for c in contents:
         url = c['picture']
         title_pre = c['title'][:3]
         sub = re.findall("wx_fmt=([a-z]+)", url)
-        stype = sub[0]
+        stype = sub[0] if sub else 'jpg'
         picture = browser.get(url)
 #         cert = time.time()
 #         cert = int(cert*1000)
@@ -231,12 +281,61 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         company = Company.objects.get(name=u"免费福利")
         name=options['name'][0]
+        print name
         if isWindowsSystem():
             name = name.decode('gbk').encode('utf-8')
         contents = load_gzh(name)
         for con in contents:
-            wel = Hongbao.objects.create(type='hongbao',title=con['title'],state='1',company=company,strategy=con['content'], pic = con['pic_download'])
+            wel = Hongbao.objects.create(type='hongbao',title=con['title'],state='0',company=company,strategy=con['content'], pic = con['pic_download'])
             wel.url = reverse('welfare', kwargs={'id': wel.id})
             wel.save(update_fields=['url'])
 #             Hongbao.objects.create(welfare_ptr_id=wel.id)
         logger.info("******Invite_charge is finished*********")
+        
+if __name__ == '__main__':
+    browser=Browser()
+    burl = 'http://weixin.sogou.com/weixin?type=1&s_from=input&query=券妈妈&ie=utf8&_sug_=n&_sug_type_='
+#     logger.error('http://weixin.sogou.com/weixin?type=1&s_from=input&query=券妈妈&ie=utf8&_sug_=n&_sug_type_=')
+    page = browser.get(burl)
+    if page.find('请输入验证码') != -1:
+        tc = time.time()
+        tc = tc*1000
+        CaptchaUrl = "http://weixin.sogou.com/antispider/util/seccode.php?tc=" + str(tc)
+        PostUrl = "http://weixin.sogou.com/antispider/thank.php"
+        
+        picture = browser.get(CaptchaUrl)
+        # 用openr访问验证码地址,获取cookie
+        imgname = os.path.join(todaydir, 'vericode.jpg').replace('\\','/')
+        local = open(imgname, 'wb')
+        local.write(picture)
+        local.close()
+        # 保存验证码到本地
+        SecretCode = getimgcode(imgname, 3060)#raw_input('input code::')
+#         logger.error(SecretCode)
+        # 打开保存的验证码图片 输入
+        postData = {
+            'c': SecretCode,
+            'r': burl,
+            'v':5
+        }
+        # 根据抓包信息 构造表单
+        headers = {
+            'Accept': '*/*',
+            'Accept-Encoding':'gzip, deflate',
+            'Accept-Language': 'zh-CN,zh;q=0.8',
+            'Connection': 'keep-alive',
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36',
+            'Host':'mp.weixin.qq.com',
+            'Origin':'http://mp.weixin.qq.com',
+            'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+            'X-Requested-With':'XMLHttpRequest',
+        }
+        # 根据抓包信息 构造headers
+        # 生成post数据 ?key1=value1&key2=value2的形式
+        # 构造request请求
+        result = browser.post(PostUrl, postData, headers)
+        print result
+        page = browser.get(burl)
+    soup = BeautifulSoup(page,"html.parser")
+    print soup.prettify()

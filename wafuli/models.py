@@ -443,19 +443,30 @@ class MAdvert_App(Base):
     def clean(self):
         if self.pic and self.pic.size > 30000:
             raise ValidationError({'pic': u'图片大小不能超过30k'})
+ADLOCATION_NEW = (
+    ('00', u'首页banner（680*380）'),
+    ('01', u'首页推荐位（200*200），配不超过20字的文字描述'),
+    ('02', u'首页发现位（280*200），配不超过30字的文字描述'),
+    ('03', u'首页中间广告位（1250*110）'),
+    ('10', u'红包页大banner（680*380）'),
+    ('11', u'红包页小banner（275*185）'),
+)
 class MAdvert_PC(Base):
     pic = models.ImageField(upload_to='photos/%Y/%m/%d', blank=False,
-                             verbose_name=u"banner图片上传(1920*300)，小于100k")
-    location = models.CharField(u"广告位置", max_length=2, choices=MADLOCATION)
+                             verbose_name=u"图片上传", help_text=u"保证图片质量的前提下，越小越好，莉萍负责图片 审核")
+    location = models.CharField(u"位置", max_length=2, choices=ADLOCATION_NEW)
+    description = models.CharField(u"文字描述", max_length=30, blank=True)
     is_hidden = models.BooleanField(u"是否隐藏",default=False)
-    wel_id = models.ForeignKey(Welfare, verbose_name="展示福利")
     class Meta:
         ordering = ["-news_priority","-pub_date"]
-        verbose_name = u"PC端热门推荐"
-        verbose_name_plural = u"PC端热门推荐"
+        verbose_name = u"PC端广告位（新）"
+        verbose_name_plural = u"PC端广告位（新）"
     def clean(self):
-        if self.pic and self.pic.size > 30000:
-            raise ValidationError({'pic': u'图片大小不能超过30k'})
+        if self.pic:
+            if self.location in ['00', '10', '03'] and self.pic.size > 100000:
+                raise ValidationError({'pic': u'图片大小不能超过100k'})
+            elif self.pic.size > 50000:
+                raise ValidationError({'pic': u'图片大小不能超过50k'})
 class UserWelfare(models.Model):
     user = models.ForeignKey(MyUser, related_name="submited_welfare")
     title = models.CharField(max_length=200, verbose_name=u"标题")
