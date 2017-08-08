@@ -26,6 +26,7 @@
 </div>
 <script>
 $(function(){
+	$('.nav__item:eq(4)').addClass('active');
 	$.ajax({
 		url:"{%url 'get_nums' %}",
 		dataType:"json",

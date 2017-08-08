@@ -141,18 +141,19 @@ a.wflbox__more:hover {
     float: right;
 }
 .nav__itembox {
+    display: inline-block !important;
     margin-right: 8px;
 }
 .nav__item {
     display: block;
-    padding: 0 30px;
+    padding: 0 30px !important;
     font-size: 14px;
     line-height: 36px;
     border-radius: 4px;
 }
 .nav__item:hover {
     color: #fff;
-    background-color: #91c11d;
+    background-color: #91c11d !important;
 }
 .nav__item.active {
     color: #fff;
@@ -356,6 +357,7 @@ a.wflbox__more:hover {
     opacity: 1;
 }
 .contact__show {
+    box-sizing: border-box;
     position: absolute;
     right: 54px;
     top: -34px;

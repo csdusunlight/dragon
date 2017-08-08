@@ -15,6 +15,7 @@ h3 { font-size: 16px; }
 h4 { font-size: 14px; }
 h5 { font-size: 12px; }
 p,a,span,li { color: inherit; font-size: 14px; }
+span { font-size: inherit;}
 p {line-height: 30px; color: inherit;}
 a.link:hover {
 	color: #91C11D;
@@ -100,7 +101,7 @@ select {
 	height: 36px;
 	border-radius: 3px;
 	background-color: #91C11D;
-	
+
 }
 .wflbox__more {
 	float: right;
@@ -128,7 +129,7 @@ a.wflbox__more:hover {
 }
 .btn.m-green:active {
 	background-color: #628314;
-}   
+}
 
 .popup {
 	position: fixed;

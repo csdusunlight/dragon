@@ -774,8 +774,8 @@ padding: 15px;}
 .contact-box {
   text-align: left;
 }
-.taste-btn button,
-/*.contact {
+.taste-btn button
+/*.contact*/ {
   display: inline-block;
   border: none;
   padding: 3px 13px;
@@ -787,6 +787,7 @@ padding: 15px;}
   border-radius: 20px;
   transition: all 0.4s ease;
 }
+/*
 .contact {
   background-position: 4px center;
   background-repeat: no-repeat;
@@ -1097,13 +1098,16 @@ padding-left: 7px;}
   height: 40px;
   border: 1px solid rgb(204, 204, 204);
 }
-.ma-div{margin: 20px 0px 0px 256px;
+.ma-div{
+  /*margin: 20px 0px 0px 256px;*/
+  margin: 20px 0px 0px 0;
   font-size: 16px;
   width: 500px;
   text-align: right;
   /*float: left;*/
 }
-.ma-div2{margin: 20px 0px 0px 346px;
+.ma-div2{
+  margin: 20px 0px 0px 346px;
   font-size: 16px;
   width: 500px;
   text-align: left;
@@ -1111,7 +1115,9 @@ padding-left: 7px;}
 }
 .ma-div2 label{font-weight: normal;margin-right:10px;}
 .ma-div2 #radio_box {margin-right:2px;}
-.ma-div3{margin: 20px 0px 30px 256px;
+.ma-div3{
+  /*margin: 20px 0px 30px 256px;*/
+    margin: 20px 0px 0px 0;
   font-size: 16px;
   width: 500px;
   text-align: right;
