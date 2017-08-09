@@ -3,7 +3,8 @@ from django.shortcuts import render
 from django.http.response import Http404
 from wafuli.models import Welfare, Task, Finance, Commodity, Information, \
     ExchangeRecord, Press, UserEvent, Advertisement, Activity, Company,\
-    CouponProject, Baoyou, Hongbao, UserTask, MAdvert_PC, Fuligou
+    CouponProject, Baoyou, Hongbao, UserTask, MAdvert_PC, Fuligou, CreditCard,\
+    Loan
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
@@ -85,39 +86,30 @@ def index(request):
 def wfl_index(request):
     ad_list = MAdvert_PC.objects.filter(location='00', is_hidden=False)[0:6]
     announce_list = Press.objects.filter(type='1')[0:2]
-    hongbao_list = Hongbao.objects.filter(is_display=True,is_qualified=True,state='1')[0:3]
+    hongbao_list = Hongbao.objects.filter(is_display=True,is_qualified=True,state='1')[0:4]
     fuligou_main = Fuligou.objects.filter(is_main=True)[0:4]
     fuligou_side = Fuligou.objects.filter(is_main=False)[0:4]
-    
-    query_set = Finance.objects.filter(state='1', level__in=['all','normal']).order_by("-news_priority","-pub_date")
-    finance = query_set.filter(f_type='1')[0:3]
-#     finance_list2 = query_set.filter(f_type='2')[0:3]
-#     finance_list3 = query_set.filter(f_type='3')[0:3]
-#     news_list = Activity.objects.filter(is_hidden=False)[0:2]
-#     exchange_list = ExchangeRecord.objects.all()[0:10]
-    strategy_list = Press.objects.filter(type='2')[0:6]
+    task_list = Task.objects.filter(state='1').order_by("-news_priority","-pub_date")[0:4]
+    finance_list = Finance.objects.filter(state='1', level__in=['all','normal']).order_by("-news_priority","-pub_date")[0:3]
+    commodity_list = Commodity.objects.all()[0:6]
     info = Information.objects.filter(is_display=True).first()
+    recom_list = MAdvert_PC.objects.filter(location='01',is_hidden=False)[0:4]
+    find = MAdvert_PC.objects.filter(location='02',is_hidden=False).first()
+    credit_list = CreditCard.objects.all()[0:4]
+    loan_list = Loan.objects.all()[0:4]
     context = {'ad_list':ad_list,
                'hongbao_list': hongbao_list,
-               'baoyou_list': baoyou_list,
-               'youhuiquan_list': youhuiquan_list,
-#                'task_list': task_list,
+               'fuligou_main': fuligou_main,
+               'fuligou_side': fuligou_side,
+               'task_list': task_list,
                'announce_list':announce_list,
                'finance_list': finance_list,
-               'news_list': news_list,
-               'exchange_list': exchange_list,
-               'strategy_list': strategy_list,
-               'info': info,
+               'commodity_list': commodity_list,
+               'recom_list': recom_list,
+               'find': find,
+               'credit_list': credit_list,
+               'loan_list': loan_list,
     }
-    task_list = list(Task.objects.filter(state__in=['1','2'],type='junior').order_by("state","-news_priority","-pub_date")[0:2])
-    if len(task_list)==2:
-        context.update(task1=task_list[0],task2=task_list[1])
-    task_list = list(Task.objects.filter(state__in=['1','2'],type='middle').order_by("state","-news_priority","-pub_date")[0:2])
-    if len(task_list)==2:
-        context.update(task3=task_list[0],task4=task_list[1])
-    task_list = list(Task.objects.filter(state__in=['1','2'],type='senior').order_by("state","-news_priority","-pub_date")[0:2])
-    if len(task_list)==2:
-        context.update(task5=task_list[0],task6=task_list[1])
 
     try:
         statis = DayStatis.objects.get(date=date.today())
