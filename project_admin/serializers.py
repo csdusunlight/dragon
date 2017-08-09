@@ -42,11 +42,12 @@ class ProjectInvestDataSerializer(serializers.ModelSerializer):
 class ProjectStatisSerializer(serializers.ModelSerializer):
     projectname = serializers.CharField(source='project.name', read_only=True)
     finish_time = serializers.CharField(source='project.finish_time', read_only=True)
+    start_time = serializers.CharField(source='project.time', read_only=True)
     topay_amount = serializers.CharField(source='project.topay_amount', read_only=True)
     state_des = serializers.CharField(source='project.get_state_display', read_only=True)
     class Meta:
         model = ProjectStatis
-        fields =('id','project','projectname', 'finish_time', 'topay_amount', 'channel_consume','channel_return','site_consume','site_return',
+        fields =('id','project','projectname', 'start_time', 'finish_time', 'topay_amount', 'channel_consume','channel_return','site_consume','site_return',
                  'consume','ret','state_des')
 #         read_only_fields = '__all__'
 

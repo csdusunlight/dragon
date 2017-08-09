@@ -6,9 +6,9 @@
 			csrfmiddlewaretoken: '{{ csrf_token }}'
 		},
 	});
-	var data = '<table width="100%"><tr><th>项目编号</th><th>结项日期</th><th>项目名称</th>' +
+	var data = '<table width="100%"><tr><th>项目编号</th><th>立项日期</th><th>结项日期</th><th>项目名称</th>' +
 		'<th>预计待收/待消耗</th><th>预计总消耗</th><th>总返现金额</th><th>预估渠道消耗</th><th>渠道返现金额</th><th>预估网站消耗</th><th>网站返现金额</th><th>项目状态</th>' +
-		'</tr>[results]<tr id="parent{id}"><td>{project}</td><td>{finish_time}</td><td>{projectname}</td>' +
+		'</tr>[results]<tr id="parent{id}"><td>{project}</td><td>{start_time}</td><td>{finish_time}</td><td>{projectname}</td>' +
 		'<td>{topay_amount}</td><td>{consume}</td><td>{ret}</td><td>{channel_consume}</td><td>{channel_return}</td><td>{site_consume}</td>' +
 		'<td>{site_return}</td><td>{state_des}</td></tr>[/results]</table>';
 	var url = "/project/projectstatis/" + "?page={page}";
@@ -20,7 +20,7 @@
 		$(".Tin-table tr:even").css("background-color", "#fcfcfc");
 		
 		$("#pagedata").ajaxPage({
-			url: url,
+			url: url + '&project_state=start',
 			pageId: $("#page"),
 			run: true,
 			content: data,
@@ -136,9 +136,9 @@
 					<td>
 						<i style="letter-spacing:4.8px;">项目状态</i>
 						<select name="selectAge" id="state">
-							<option value="0">全部</option>
 							<option value="start">正在进行</option>
 							<option value="finish">已结项</option>
+							<option value="0">全部</option>
 						</select>
 					</td>
 				</tr>

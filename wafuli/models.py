@@ -135,7 +135,17 @@ class Welfare(Base):
         return u"免费福利"
     def get_type_url(self):
         return reverse('welfare')
+HTYPE = (
+    ('0', u'微信红包'),
+    ('1', u'支付宝红包'),
+    ('2', u'购物红包'),
+    ('3', u'话费红包'),
+    ('4', u'流量红包'),
+    ('5', u'理财红包'),
+)
 class Hongbao(Welfare):
+    htype = models.CharField(u"红包类型", max_length=1, choices=HTYPE)
+    is_qualified = models.BooleanField(u"精选", default=False)
     up = models.IntegerField(u"顶", default=0)
     down = models.IntegerField(u"踩", default=0)
     class Meta:
@@ -540,3 +550,14 @@ class Fuligou(models.Model):
         return self.old_price - self.buy_price
     def __unicode__(self):
         return self.title
+    
+class CreditCard(models.Model):
+    title = models.CharField(u"名称", max_length=20)
+    class Meta:
+        verbose_name = u"信用卡"
+        verbose_name_plural = u"信用卡"
+class Loan(models.Model):
+    title = models.CharField(u"名称", max_length=20)
+    class Meta:
+        verbose_name = u"借点钱"
+        verbose_name_plural = u"借点钱"

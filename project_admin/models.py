@@ -80,7 +80,8 @@ class Project(models.Model):
             if not self.finish_time:
                 self.finish_time = datetime.date.today()
         return models.Model.save(self, force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
-
+    class Meta:
+        ordering = ["-time"]
 class ProjectInvestData(models.Model):
     project = models.ForeignKey(Project, verbose_name=u"项目", related_name='project_data')
     is_futou = models.BooleanField(u"是否复投", default=False)
@@ -112,6 +113,8 @@ class ProjectStatis(models.Model):
         return self.channel_return + self.site_return
     def __unicode__(self):
         return str(self.project_id) + self.project.name
+    class Meta:
+        ordering = ["-project__time"]
 class DayStatis(models.Model):
     date = models.DateField(u"日期", primary_key=True)
     start_num = models.IntegerField(u"正在进行的项目数")

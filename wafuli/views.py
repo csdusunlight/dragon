@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http.response import Http404
 from wafuli.models import Welfare, Task, Finance, Commodity, Information, \
     ExchangeRecord, Press, UserEvent, Advertisement, Activity, Company,\
-    CouponProject, Baoyou, Hongbao, UserTask, MAdvert_PC
+    CouponProject, Baoyou, Hongbao, UserTask, MAdvert_PC, Fuligou
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
@@ -84,22 +84,17 @@ def index(request):
     return render(request, 'wfl-index.html', context)
 def wfl_index(request):
     ad_list = MAdvert_PC.objects.filter(location='00', is_hidden=False)[0:6]
-    announce_list = Press.objects.filter(type='1')[0:5]
-    hongbao_list = Hongbao.objects.filter(is_display=True,state='1')[0:3]
-    baoyou_list = Baoyou.objects.filter(is_display=True,state='1')[0:3]
-    youhuiquan_list = CouponProject.objects.filter(is_display=True,state='1')[0:3]
-    for wel in youhuiquan_list:
-        wel.draw_count = wel.coupons.filter(user__isnull=False).count()
-        if wel.ctype == '2':
-            wel.left_count = wel.coupons.filter(user__isnull=True).count()
-        else:
-            wel.left_count = u"充足"
-    query_set = Finance.objects.filter(state__in=['1','2'], level__in=['all','normal']).order_by("state","-news_priority","-pub_date")
-    finance_list1 = query_set.filter(f_type='1')[0:3]
-    finance_list2 = query_set.filter(f_type='2')[0:3]
-    finance_list3 = query_set.filter(f_type='3')[0:3]
-    news_list = Activity.objects.filter(is_hidden=False)[0:2]
-    exchange_list = ExchangeRecord.objects.all()[0:10]
+    announce_list = Press.objects.filter(type='1')[0:2]
+    hongbao_list = Hongbao.objects.filter(is_display=True,is_qualified=True,state='1')[0:3]
+    fuligou_main = Fuligou.objects.filter(is_main=True)[0:4]
+    fuligou_side = Fuligou.objects.filter(is_main=False)[0:4]
+    
+    query_set = Finance.objects.filter(state='1', level__in=['all','normal']).order_by("-news_priority","-pub_date")
+    finance = query_set.filter(f_type='1')[0:3]
+#     finance_list2 = query_set.filter(f_type='2')[0:3]
+#     finance_list3 = query_set.filter(f_type='3')[0:3]
+#     news_list = Activity.objects.filter(is_hidden=False)[0:2]
+#     exchange_list = ExchangeRecord.objects.all()[0:10]
     strategy_list = Press.objects.filter(type='2')[0:6]
     info = Information.objects.filter(is_display=True).first()
     context = {'ad_list':ad_list,
@@ -108,9 +103,7 @@ def wfl_index(request):
                'youhuiquan_list': youhuiquan_list,
 #                'task_list': task_list,
                'announce_list':announce_list,
-               'finance_list1': finance_list1,
-               'finance_list2': finance_list2,
-               'finance_list3': finance_list3,
+               'finance_list': finance_list,
                'news_list': news_list,
                'exchange_list': exchange_list,
                'strategy_list': strategy_list,
