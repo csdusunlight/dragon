@@ -96,6 +96,7 @@ def wfl_index(request):
     info = Information.objects.filter(is_display=True).first()
     recom_list = MAdvert_PC.objects.filter(location='01',is_hidden=False)[0:4]
     find = MAdvert_PC.objects.filter(location='02',is_hidden=False).first()
+    adv_index = MAdvert_PC.objects.filter(location='03',is_hidden=False).first()
     credit_list = CreditCard.objects.all()[0:4]
     loan_list = Loan.objects.all()[0:4]
     week_statis = UserStatis.objects.order_by('-week_statis')[0:8]
