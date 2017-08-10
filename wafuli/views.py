@@ -12,7 +12,8 @@ from account.transaction import charge_score
 from django.db.models import F,Q
 import logging
 from datetime import date
-from wafuli_admin.models import DayStatis, GlobalStatis, RecommendRank
+from wafuli_admin.models import DayStatis, GlobalStatis, RecommendRank,\
+    UserStatis
 from account.models import MyUser
 from django.contrib.contenttypes.models import ContentType
 from django.db import transaction
@@ -95,8 +96,11 @@ def wfl_index(request):
     info = Information.objects.filter(is_display=True).first()
     recom_list = MAdvert_PC.objects.filter(location='01',is_hidden=False)[0:4]
     find = MAdvert_PC.objects.filter(location='02',is_hidden=False).first()
+    adv_index = MAdvert_PC.objects.filter(location='03',is_hidden=False).first()
     credit_list = CreditCard.objects.all()[0:4]
     loan_list = Loan.objects.all()[0:4]
+    week_statis = UserStatis.objects.order_by('-week_statis')[0:8]
+    month_statis = UserStatis.objects.order_by('-month_statis')[0:8]
     context = {'ad_list':ad_list, #banner
                'hongbao_list': hongbao_list, #红包精选4个
                'fuligou_main': fuligou_main, #福利购正文部分的4个
@@ -109,7 +113,10 @@ def wfl_index(request):
                'find': find,#发现，1个
                'credit_list': credit_list,#信用卡，4个
                'loan_list': loan_list,#借点钱，4个
+               'week_statis':week_statis,#提现金额周排名前8
+               'month_statis':month_statis,#提现金额月排名前8
     }
+    
 
     try:
         statis = DayStatis.objects.get(date=date.today())

@@ -89,3 +89,17 @@ class Gongzhonghao(models.Model):
     is_on = models.BooleanField(u"开启自动抓取", default=True)
     def __unicode__(self):
         return self.name + str(self.is_on)
+    
+class UserStatis(models.Model):
+    user = models.OneToOneField(MyUser,related_name="withdraw_statis")
+    week_statis = models.IntegerField()
+    month_statis = models.IntegerField()
+    def username_display(self):
+        username = self.user.username
+        if len(username) > 4:
+            username = username[0:4] + '****'
+        else:
+            username = username + '****'
+        return username
+    def __unicode__(self):
+        return self.user.username +',' + str(self.week_statis) + ','+str(self.month_statis)

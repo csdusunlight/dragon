@@ -555,6 +555,10 @@ class CreditCard(models.Model):
     title = models.CharField(u"名称", max_length=20)
     apply_num = models.IntegerField(u"申请人数")
     url = models.CharField(u"地址", max_length=200)
+    pic = models.ImageField(upload_to='photos/%Y/%m/%d', verbose_name=u"标志图片上传（最大不超过30k，越小越好）",blank=False)
+    def clean(self):
+        if self.pic and self.pic.size > 30000:
+            raise ValidationError({'pic': u'图片大小不能超过30k'})
     class Meta:
         verbose_name = u"信用卡"
         verbose_name_plural = u"信用卡"
