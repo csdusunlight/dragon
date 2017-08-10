@@ -162,3 +162,5 @@ class InformationAdmin(NewsAdmin):
 admin.site.register(Information,InformationAdmin)
 admin.site.register(UserTask)
 admin.site.register(Fuligou)
+admin.site.register(CreditCard)
+admin.site.register(Loan)

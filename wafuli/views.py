@@ -87,7 +87,7 @@ def index(request):
 def wfl_index(request):
     ad_list = MAdvert_PC.objects.filter(location='00', is_hidden=False)[0:6]
     announce_list = Press.objects.filter(type='1')[0:2]
-    hongbao_list = Hongbao.objects.filter(is_display=True,is_qualified=True,state='1')[0:4]
+    hongbao_list = Hongbao.objects.filter(is_qualified=True,state='1')[0:4]
     fuligou_main = Fuligou.objects.filter(is_main=True)[0:4]
     fuligou_side = Fuligou.objects.filter(is_main=False)[0:4]
     task_list = Task.objects.filter(state='1').order_by("-news_priority","-pub_date")[0:4]
@@ -135,6 +135,19 @@ def wfl_index(request):
         all_wel_num = 0
     context.update({'new_wel_num':new_wel_num, 'all_wel_num':all_wel_num, 'withdraw_total':withdraw_total})
     return render(request, 'wfl-index.html', context)
+def get_hongbao_by_type(request):
+    htype = request.GET.get('type', None)
+    order = request.GET.get('type', 0)
+    order = int(order)
+    if htype is None:
+        hongbao_list = Hongbao.objects.filter(state='1', is_qualified=True)
+    else:
+        hongbao_list = Hongbao.objects.filter(htype=htype)
+    if order == 0:
+        hongbao_list = hongbao_list.order_by('-up')
+    else:
+        hongbao_list = hongbao_list.order_by("-startTime")
+    
 def finance(request, id=None):
     if id is None:
         ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='4'),is_hidden=False)[0:8]
