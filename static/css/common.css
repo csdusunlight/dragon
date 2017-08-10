@@ -322,10 +322,10 @@ a.wflbox__more:hover {
     color: #fff;
 }
 .contact__qq {
-    background: url(../images/contact-kefu.png) center center/70% auto no-repeat #f08519;
+    background: url(../images/contact-kefu.png) center center/70% auto no-repeat #91C11D;
 }
 .contact__weixin {
-    background: url(../images/contact-qq.png) center center/64% auto no-repeat #f08519;
+    background: url(../images/contact-qq.png) center center/64% auto no-repeat #91C11D;
 }
 .contact__item-txt {
     opacity: 0;
@@ -344,7 +344,7 @@ a.wflbox__more:hover {
     opacity: 1;
 }
 .contact__top {
-    background: #f08519;
+    background: #91C11D;
 }
 .contact__qq:hover,
 .contact__weixin:hover {

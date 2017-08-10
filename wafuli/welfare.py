@@ -108,7 +108,7 @@ def welfare(request, id=None, page=None, type=None):
                 username = username + '****'
             acc_num = ranks[i].acc_num
             context.update({key:{'username':username,'acc_num':str(acc_num)+u'条'}})
-        return render(request, 'zeroWelfare.html', context)
+        return render(request, 'wfl-welfare.html', context)
     elif id:
         id = int(id)
         wel = None
@@ -132,7 +132,7 @@ def welfare(request, id=None, page=None, type=None):
         elif wel.type == "baoyou":
             wel = wel.baoyou
         return render(request, template,{'news':wel,'type':'Welfare', 'other_wel_list':other_wel_list})
-    
+
 def exp_welfare_erweima(request):
     if not request.is_ajax():
         logger.warning("Experience refused no-ajax request!!!")

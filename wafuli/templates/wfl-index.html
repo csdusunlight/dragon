@@ -18,16 +18,16 @@
         <div class="banner-container wfl-wrap clearfix">
             <ul class="left-iconnav l fs-0 clearfix">
                 <li class="left-iconnav__itembox d-ib">
-                    <a href="#" class="left-iconnav-01 iconnav__item">红包福利</a>
+                    <a href="{% url 'welfare_list' %}" class="left-iconnav-01 iconnav__item">红包福利</a>
                 </li>
                 <li class="left-iconnav__itembox d-ib">
                     <a href="#" class="left-iconnav-02 iconnav__item">福利购</a>
                 </li>
                 <li class="left-iconnav__itembox d-ib">
-                    <a href="#" class="left-iconnav-03 iconnav__item">任务赚</a>
+                    <a href="{% url 'task' %}" class="left-iconnav-03 iconnav__item">任务赚</a>
                 </li>
                 <li class="left-iconnav__itembox d-ib">
-                    <a href="#" class="left-iconnav-04 iconnav__item">P2P返利</a>
+                    <a href="{% url 'finance' %}" class="left-iconnav-04 iconnav__item">P2P返利</a>
                 </li>
                 <li class="left-iconnav__itembox d-ib">
                     <a href="#" class="left-iconnav-05 iconnav__item">借点钱</a>
@@ -39,11 +39,15 @@
             <div class="banner l">
                 <div class="flexslider">
                     <ul class="slides">
-                        <li style="background:url(/static/images/test-img1.jpg) 50% 0 no-repeat;"></li>
+                        {% for adv in ad_list %}
+                            <li onclick="location='{{adv.url}}'" style="background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li>
+                            <!-- <script>textarray.push("{{adv.navigation}}");</script> -->
+                        {%endfor%}
+                        <!-- <li style="background:url(/static/images/test-img1.jpg) 50% 0 no-repeat;"></li>
                         <li style="background:url(/static/images/test-img2.jpg) 50% 0 no-repeat;"></li>
                         <li style="background:url(/static/images/test-img3.jpg) 50% 0 no-repeat;"></li>
                         <li style="background:url(/static/images/test-img4.jpg) 50% 0 no-repeat;"></li>
-                        <li style="background:url(/static/images/test-img5.jpg) 50% 0 no-repeat;"></li>
+                        <li style="background:url(/static/images/test-img5.jpg) 50% 0 no-repeat;"></li> -->
                     </ul>
 
                 </div>
@@ -76,8 +80,8 @@
                     <div class="flexslider2">
                         <ul class="slides slides-box">
                             <li>
-                                <p class="oneline"><a href="">截止到今天，已累计上线&nbsp;&nbsp;<span>{{all_wel_num}}</span>&nbsp;&nbsp;个福利</a></p>
-                                <p class="oneline"><a href="">截止到今天，已累计返现&nbsp;&nbsp;<span>{{withdraw_total}}</span>&nbsp;&nbsp;个福币</a></p>
+                                <p class="oneline"><a>截止到今天，已累计上线&nbsp;&nbsp;<span>{{all_wel_num}}</span>&nbsp;&nbsp;个福利</a></p>
+                                <p class="oneline"><a>截止到今天，已累计返现&nbsp;&nbsp;<span>{{withdraw_total}}</span>&nbsp;&nbsp;个福币</a></p>
                             </li>
                             <li>
                                 {% for news in announce_list %}
@@ -93,13 +97,13 @@
                     </div>
                     <ul class="right-iconnav fs-0">
                         <li class="right-iconnav__itembox d-ib">
-                            <a href="#" class="right-iconnav-01 iconnav__item">红包福利</a>
+                            <a href="/freshman/award/#invited" class="right-iconnav-01 iconnav__item">新手奖励</a>
                         </li>
                         <li class="right-iconnav__itembox d-ib">
-                            <a href="#" class="right-iconnav-02 iconnav__item">福利购</a>
+                            <a href="/activity/lottery/" class="right-iconnav-02 iconnav__item">积分抽奖</a>
                         </li>
                         <li class="right-iconnav__itembox d-ib">
-                            <a href="#" class="right-iconnav-03 iconnav__item">任务赚</a>
+                            <a href="/freshman/award/" class="right-iconnav-03 iconnav__item">推荐有礼</a>
                         </li>
                     </ul>
                 </div>
@@ -344,7 +348,7 @@
                     <div>
                         <ul class="vip-content conitem" style="display: block;">
                             {% for news in week_statis %}
-                            <li class="vip-item"><span class="vip-num">1</span><span class="vip-account">{{news.username_display}}</span><span class="vip-withdrow">提现<number>{{news.week_statis}}</number>福币</span></li>
+                            <li class="vip-item"><span class="vip-num">1</span><span class="vip-account">{{news.username_display}}</span><span class="vip-withdrow">提现<number>{{news.with_total}}</number>福币</span></li>
                             {% endfor %}
                             <!-- <li class="vip-item"><span class="vip-num">1</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
                             <li class="vip-item"><span class="vip-num">2</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
@@ -699,6 +703,10 @@
         </div>
         <!--推荐、发现---end-->
         <!--信用卡、借点钱---end-->
+        <!--底部-->
+        {% include "footer.html" %}
+        <!--浮动窗口-->
+        {% include "outline.html" %}
 
         <script src="/static/js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="/static/js/wfl-flexslider-min.js" type="text/javascript" charset="utf-8"></script>
@@ -920,6 +928,6 @@
 
             });
         </script>
-        {% include "footer.html" %}
+
     </body>
 </html>
