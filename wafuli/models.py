@@ -145,6 +145,7 @@ HTYPE = (
 )
 class Hongbao(Welfare):
     htype = models.CharField(u"红包类型", max_length=1, choices=HTYPE)
+    subtitle = models.CharField(u"副标题", max_length=20, blank=False)
     is_qualified = models.BooleanField(u"精选", default=False)
     up = models.IntegerField(u"顶", default=0)
     down = models.IntegerField(u"踩", default=0)
