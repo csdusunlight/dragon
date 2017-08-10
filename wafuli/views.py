@@ -111,6 +111,7 @@ def wfl_index(request):
                'commodity_list': commodity_list,#边栏积分商品，6个
                'recom_list': recom_list,#热门推荐，4个
                'find': find,#发现，1个
+               'adv_index':adv_index,#首页中部横幅广告位
                'credit_list': credit_list,#信用卡，4个
                'loan_list': loan_list,#借点钱，4个
                'week_statis':week_statis,#提现金额周排名前8
