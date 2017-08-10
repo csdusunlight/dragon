@@ -6,6 +6,8 @@ Created on 2017年4月23日
 '''
 from account.transaction import charge_money
 from wafuli.models import Message
+from wafuli_admin.models import UserStatis
+from django.db.models import F
 VIP_BONUS = {
     0:{'finance':0, 'task':0, 'money':0,},
     1:{'finance':0.01, 'task':0.10, 'money':500,},
@@ -23,6 +25,10 @@ def get_vip_bonus(user, amount, type):
         cash = amount*VIP_BONUS[level][type]
         translist = charge_money(user, '0', cash, u'vip奖励')
 def vip_judge(user, with_amount):
+    obj=UserStatis.objects.get_or_create(user=user)
+    obj.week_statis = F('week_statis') + with_amount
+    obj.month_statis = F('week_statis') + with_amount
+    obj.save(update_fields=['week_statis', 'month_statis'])
     if user.is_channel:
         return
     level = user.level
