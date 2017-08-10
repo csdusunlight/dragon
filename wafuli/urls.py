@@ -15,7 +15,7 @@ from django.views.generic.base import TemplateView
 #     url(r'^statement/$', 'wafuli.views.statement'),
 # ]
 urlpatterns = [
-    url(r'^$', 'wafuli.views.index', name='index'),
+    url(r'^$', 'wafuli.views.wfl_index', name='index'),     #jzy
 #    url(r'^(?P<board>\S+)/$', 'wafuli.views.board', name='board'),
     # url(r'^finance/$', 'wafuli.views.finance', name='finance'),
     # url(r'^finance/(?P<id>[0-9]*)/$', 'wafuli.views.finance', name='finance_detail'),

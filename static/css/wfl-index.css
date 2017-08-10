@@ -63,9 +63,11 @@
 }
 .user-info {
 	display: table;
+	width: 194px;
 	height: 70px;
 }
 .user-info-detail {
+    padding-top: 10px;
 	height: 70px;
 	font-size: 18px;
 	color: #222;
@@ -74,6 +76,30 @@
 	font-size: 18px;
 	color: #91C11D;
 	cursor: pointer;
+}
+.user-login-detail {
+    font-size: 18px;
+    color: #222;
+}
+.user-account {
+    font-size: 18px;
+    color: #91C11D;
+    cursor: pointer;
+}
+.user-vip-level {
+    display: inline-block;
+    padding: 0 4px;
+    margin-left: 8px;
+    font-size: 14px;
+    line-height: 24px;
+    color: #fff;
+    background-color: #f08519;
+    border-radius: 2px;
+}
+.user-fubi,
+.user-jifen {
+    margin-top: 4px;
+    font-size: 12px;
 }
 .btn-signin {
 	display: block;
@@ -96,6 +122,10 @@
 .flexslider2 {
 	position: relative;
 	margin-top: 70px;
+}
+.slides-box {
+    height: 48px;
+    overflow: hidden;
 }
 .flexslider2 .flex-control-nav {
 	top: -40px;
@@ -126,6 +156,7 @@
 }
 .flexslider2 .flex-control-nav {
 	left: 80px;
+	height: 24px;
 }
 .flexslider2 .flex-control-nav li {
 	margin: 0 2px;
@@ -175,6 +206,7 @@
 .hot-recommend__img {
 	width: 200px;
 	height: 200px;
+	vertical-align: middle;
 }
 .hot-recommend__txt {
 	height: 60px;
@@ -363,6 +395,7 @@
 }
 .vip-content {
 	padding: 0 8px 4px;
+	display: none;
 }
 .vip-item {
 	margin-bottom: 6px;

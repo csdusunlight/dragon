@@ -65,6 +65,12 @@ select {
 .bg-green {
 	background-color: #91C11D;
 }
+.oneline {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+}
 .clearfix:before,
 .clearfix:after {
 	content: " ";
