@@ -6,7 +6,7 @@
 <title>奖品详情</title>
 <link href="{% static 'images/favicon.ico'%}" rel="shortcut icon"/>
 <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}" />
-<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> 
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/default.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/component.css' %}" />
@@ -81,7 +81,7 @@ $(function(){
                     <button class="md-trigger te-mo lo-apf" >请先登录</button>
                     </p>
                     <p class="pol-p">对不起，你尚未登陆，请&nbsp;<span>
-                    <a class="login" href="{%url 'login' %}" style="color:#018ED5;">点此登陆</a></span>
+                    <a class="login" href="{%url 'login' %}" style="color:#91C11D;">点此登陆</a></span>
                     </p>
 
 
@@ -91,21 +91,21 @@ $(function(){
                     <button class="md-trigger te-mo lo-apf">积分不足</button>
                     </p>
                     <p class="pol-p">快去&nbsp;<span>
-                    <a href="{%url 'task' %}" style="color:#018ED5;">体验福利</a>&nbsp;和&nbsp;<a href="{%url 'finance' %}" style="color:#018ED5;">理财福利</a>&nbsp;赚取积分</span>
+                    <a href="{%url 'task' %}" style="color:#91C11D;">体验福利</a>&nbsp;和&nbsp;<a href="{%url 'finance' %}" style="color:#91C11D;">理财福利</a>&nbsp;赚取积分</span>
                     </span>
                     </p>
 
-                  {% else %} 
+                  {% else %}
                     <p class="po-dou lp-up" >账户剩余积分：<span class="lo-sp">{{user.scores}}</span><img src="{% static 'images/doudou.png' %}" class="dou-dou"/></p>
                     <p class="lk-po">
                     <button class="md-trigger te-mo lo-apft" href="#myReModal" data-toggle="modal" data-target="#myReModal" style="outline:none">立即兑换</button>
                     </p>
 
                     {% endif %}
-                    
+
                     </div>
-               
-               <!--代码部分begin--> 
+
+               <!--代码部分begin-->
             <div id="menus">
             <!--tag标题-->
                 <ul id="navs" class="navt">
@@ -116,13 +116,13 @@ $(function(){
                 <div id="menu_con">
                     <div class="tag" style="display:block">
                         {{com.rules|safe}}
-                     </div> 
+                     </div>
                     <div class="tag" style="display:none">
                         {{com.strategy|safe}}
                      </div>
             </div>
             </div>
-            
+
         </div>
             </div>
 
@@ -133,10 +133,10 @@ $(function(){
 <div style="clear:both"></div>
  <!--底部-->
   {% include "footer.html" %}
-  <!--浮动窗口-->  
+  <!--浮动窗口-->
   {% include "outline.html" %}
-  
-  
+
+
    <!--//体验-->
       <div class="modal fade" id="myReModal">
           <div class="modal-dialog modal-mg">
@@ -150,16 +150,16 @@ $(function(){
                     <div style="margin: 2em 0px 2em 2em;"><span style="color: rgb(191, 191, 191);">我们将对您的信息严格保密!</span>
                     <button id="submit" class="md-trigger iu-btn">提交</button></div>
 					<button class="close lk-cloe" data-dismiss="modal" aria-label="Close">×</button>
-                
+
             </div>
-                
-                
-                
-              
-                  
+
+
+
+
+
                 </div>
               </div>
-        </div>    
+        </div>
 
       <div class="modal fade" id="myModal">
           <div class="modal-dialog modal-mg">
@@ -173,11 +173,11 @@ $(function(){
 				</div>
 			</div>
 				</div><!-- modal-body-->
-                  
+
                 </div>
               </div>
-        </div>   
-  
+        </div>
+
 
 <script>
 var tabs=function(){
@@ -194,9 +194,9 @@ var tabs=function(){
     }
     function next(elem){
         do{
-            elem=elem.nextSibling;  
+            elem=elem.nextSibling;
         }while(
-            elem&&elem.nodeType!=1  
+            elem&&elem.nodeType!=1
         )
         return elem;
     }

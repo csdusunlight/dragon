@@ -52,13 +52,13 @@ h5 {
 }
 
 .tab-head li:hover {
-	background: #f08519;
+	background: #ffbe00;
 	color: #fff;
 	cursor: pointer;
 }
 
 .tab-head li.on {
-	background: #f08519;
+	background: #ffbe00;
 	color: #fff;
 }
 
@@ -248,7 +248,7 @@ h5 {
 }
 
 .download-templete:hover {
-	background: #f08519;
+	background: #ffbe00;
 	border: none;
 	color: #fff;
 }
@@ -286,7 +286,7 @@ h5 {
 
 .upload-box-btn:hover,
 .export-btn:hover {
-	background: #f08519;
+	background: #ffbe00;
 	color: #fff;
 }
 

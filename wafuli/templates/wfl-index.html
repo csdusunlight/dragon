@@ -113,7 +113,7 @@
                     <h1 class="wflbox__title">热门推荐</h1>
                 </div>
                 <ul class="hot-recommend-box">
-                    {% for news in hongbao_list %}
+                    {% for news in recom_list %}
                     <li class="hot-recommend"><a href="{{news.url}}">
                         <img class="hot-recommend__img" src="{{news.pic.url}}" alt="" />
                         <p class="hot-recommend__txt">{{news.title}}</p>
@@ -173,8 +173,28 @@
                     </ul>
                 </div>
                 <ul class="hongbao-box">
+                    {% for news in hongbao_list %}
                     <li class="hongbao">
-                        <h2 class="hongbao__title">京东618优惠券总攻略<span class="hongbao__title-two">两天即领</span></h2><!--<h2 class="hongbao__title m-two">两天即领</h2>-->
+                        <h2 class="hongbao__title">{{news.title}}<span class="hongbao__title-two">{{news.htype}}</span></h2>
+                        <div class="hongbao-detail">
+                            <img class="hongbao__img" src="" alt="" />
+                            <span class="hongbao__look">阅读量:&nbsp;&nbsp;{{news.view_count}}</span>
+                            <div class="hongbao__detailbox">
+                                <p class="hongbao__detail">{{news.strategy}}</p>
+                            </div>
+                            <div class="hongbao-action clearfix">
+                                <div class="support l">
+                                    <span class="support__up">顶&nbsp;&nbsp;<number>{{news.up}}</number></span><span class="support__down">踩&nbsp;&nbsp;<number>{{news.down}}</number></span>
+                                </div>
+                                <div class="hongbao-rb r">
+                                    <span class="hongbao__time">{{news.pub_date}}</span><span class="hongbao__source">{{news.provider}}</span><a class="btn m-green m-hongbao-link" href="{{news.url}}">查看详情</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                    <!-- <li class="hongbao">
+                        <h2 class="hongbao__title">京东618优惠券总攻略<span class="hongbao__title-two">两天即领</span></h2>
                         <div class="hongbao-detail">
                             <img class="hongbao__img" src="" alt="" />
                             <span class="hongbao__look">阅读量:&nbsp;&nbsp;2344</span>
@@ -194,7 +214,7 @@
                         </div>
                     </li>
                     <li class="hongbao">
-                        <h2 class="hongbao__title">京东618优惠券总攻略<span class="hongbao__title-two">两天即领</span></h2><!--<h2 class="hongbao__title m-two">两天即领</h2>-->
+                        <h2 class="hongbao__title">京东618优惠券总攻略<span class="hongbao__title-two">两天即领</span></h2>
                         <div class="hongbao-detail">
                             <img class="hongbao__img" src="" alt="" />
                             <span class="hongbao__look">阅读量:&nbsp;&nbsp;2344</span>
@@ -214,7 +234,7 @@
                         </div>
                     </li>
                     <li class="hongbao">
-                        <h2 class="hongbao__title">京东618优惠券总攻略<span class="hongbao__title-two">两天即领</span></h2><!--<h2 class="hongbao__title m-two">两天即领</h2>-->
+                        <h2 class="hongbao__title">京东618优惠券总攻略<span class="hongbao__title-two">两天即领</span></h2>
                         <div class="hongbao-detail">
                             <img class="hongbao__img" src="" alt="" />
                             <span class="hongbao__look">阅读量:&nbsp;&nbsp;2344</span>
@@ -234,7 +254,7 @@
                         </div>
                     </li>
                     <li class="hongbao">
-                        <h2 class="hongbao__title">京东618优惠券总攻略<span class="hongbao__title-two">两天即领</span></h2><!--<h2 class="hongbao__title m-two">两天即领</h2>-->
+                        <h2 class="hongbao__title">京东618优惠券总攻略<span class="hongbao__title-two">两天即领</span></h2>
                         <div class="hongbao-detail">
                             <img class="hongbao__img" src="" alt="" />
                             <span class="hongbao__look">阅读量:&nbsp;&nbsp;2344</span>
@@ -252,7 +272,7 @@
                                 </div>
                             </div>
                         </div>
-                    </li>
+                    </li> -->
                     <li class="hongbao-more">查看更多</li>
                 </ul>
             </div>
