@@ -52,8 +52,21 @@
                 <div class="user-content">
                     <img class="user-img" src="/static/images/user-head.png"/>
                     <div class="user-info">
-                        <p class="user-info-detail d-tc">Hi,<span>你好</span><br />
-                        <a href="{% url 'login' %}" class="login-link">登录</a>发现更多精彩</p>
+                        {% if not user.is_authenticated %}
+                        <p class="user-info-detail">Hi,<span>你好</span><br />
+                            <a href="{% url 'login' %}" class="login-link">登录</a>发现更多精彩</p>
+                        {% else %}
+                        <div class="user-info-detail d-tc">
+                            <p class="user-login-detail">Hi,<a href="{% url 'account_index' %}" class="user-account">15111071431</a>
+                                {%if user.level > 0 %}
+                                <span class="user-vip-level">VIP{{user.level}}</span>
+                                {%endif%}
+                            </p>
+                            <p class="user-detail-num clearfix"><span class="user-fubi l">福币：10000</span><span class="user-jifen r">积分：20000</span></p>
+                        </div>
+                        {% endif %}
+                        <!-- <p class="user-info-detail d-tc">Hi,<span>你好</span><br />
+                        <a href="{% url 'login' %}" class="login-link">登录</a>发现更多精彩</p> -->
                     </div>
                 </div>
                 <a href="#" class="btn-signin btn bg-green">签到领积分</a>
@@ -63,16 +76,18 @@
                     <div class="flexslider2">
                         <ul class="slides">
                             <li>
-                                <p>截止到今天，已累计上线&nbsp;&nbsp;<span>7987<span>&nbsp;&nbsp;个福利</p>
-                                <p>截止到今天，已累计上线&nbsp;&nbsp;<span>7987<span>&nbsp;&nbsp;个福利</p>
+                                <p><a href="">截止到今天，已累计上线&nbsp;&nbsp;<span>{{all_wel_num}}</span>&nbsp;&nbsp;个福利</a></p>
+                                <p><a href="">截止到今天，已累计返现&nbsp;&nbsp;<span>{{withdraw_total}}</span>&nbsp;&nbsp;个福币</a></p>
                             </li>
                             <li>
-                                <p>2截止到今天，已累计上线&nbsp;&nbsp;<span>7987<span>&nbsp;&nbsp;个福利</p>
-                                <p>2截止到今天，已累计上线&nbsp;&nbsp;<span>7987<span>&nbsp;&nbsp;个福利</p>
+                                {% for news in announce_list %}
+                                <p><a href="{{news.url}}">{{news.summary}}</a></p>
+                                {% endfor %}
                             </li>
                             <li>
-                                <p>3截止到今天，已累计上线&nbsp;&nbsp;<span>7987<span>&nbsp;&nbsp;个福利</p>
-                                <p>3截止到今天，已累计上线&nbsp;&nbsp;<span>7987<span>&nbsp;&nbsp;个福利</p>
+                                {% for news in finance_list %}
+                                <p><a href="{{news.url}}">{{news.title}}</a></p>
+                                {% endfor %}
                             </li>
                       </ul>
                     </div>
@@ -252,7 +267,7 @@
                         <li class="jifen"><a href="{{news.url}}">
                             <img class="jifen__img" src="{{news.pic.url}}" alt="" />
                             <div>
-                                <h3 class="jifen__title">{{news.name}}}</h3>
+                                <h3 class="jifen__title">{{news.name}}</h3>
                                 <p class="jifen__num">积分：{{news.price}}</p>
                             </div>
                         </a></li>
@@ -307,14 +322,17 @@
                         <div class="wflbox__more" href="#"><a class="on title-link">本周<a><a class="title-link">本月</a></div>
                     </div>
                     <ul class="vip-content">
-                        <li class="vip-item"><span class="vip-num">1</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
+                        {% for news in week_statis %}
+                        <li class="vip-item"><span class="vip-num">1</span><span class="vip-account">{{news.username_display}}</span><span class="vip-withdrow">提现<number>{{news.week_statis}}</number>福币</span></li>
+                        {% endfor %}
+                        <!-- <li class="vip-item"><span class="vip-num">1</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
                         <li class="vip-item"><span class="vip-num">2</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
                         <li class="vip-item"><span class="vip-num">3</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
                         <li class="vip-item"><span class="vip-num">4</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
                         <li class="vip-item"><span class="vip-num">5</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
                         <li class="vip-item"><span class="vip-num">6</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
                         <li class="vip-item"><span class="vip-num">7</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
-                        <li class="vip-item"><span class="vip-num">8</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
+                        <li class="vip-item"><span class="vip-num">8</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li> -->
                     </ul>
                 </div>
             </div>
@@ -598,7 +616,7 @@
                 <ul class="creditcard-box fs-0 l">
                     {% for news in credit_list %}
                         <li class="creditcard d-ib">
-                        <img class="creditcard__img" src="" alt="信用卡图片" />
+                        <img class="creditcard__img" src="{{news.pic.url}}" alt="信用卡图片" />
                         <div class="creditcard__detail">
                             <h2 class="creditcard__title">{{news.title}}</h2>
                             <p class="creditcard__persons">已有<number>{{news.apply_num}}</number>人申请</p>
@@ -866,11 +884,6 @@
                 });
 //              计算器部分---end
 
-                $('.vip-account').each(function(){      //vip 设置手机号星号
-                    var vipItem = $(this).text();
-                    vipItem = vipItem.replace(/(\d{3})\d{4}(\d{4})/, "$1****$2");
-                    $(this).html(vipItem);
-                })
             });
         </script>
         {% include "footer.html" %}
