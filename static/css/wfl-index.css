@@ -123,6 +123,10 @@
 	position: relative;
 	margin-top: 70px;
 }
+.slides-box {
+    height: 48px;
+    overflow: hidden;
+}
 .flexslider2 .flex-control-nav {
 	top: -40px;
 }
@@ -152,6 +156,7 @@
 }
 .flexslider2 .flex-control-nav {
 	left: 80px;
+	height: 24px;
 }
 .flexslider2 .flex-control-nav li {
 	margin: 0 2px;
@@ -390,6 +395,7 @@
 }
 .vip-content {
 	padding: 0 8px 4px;
+	display: none;
 }
 .vip-item {
 	margin-bottom: 6px;

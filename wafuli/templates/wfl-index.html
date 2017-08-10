@@ -74,19 +74,19 @@
                 <div class="welfare-top">
                     <h2>福利头条</h2>
                     <div class="flexslider2">
-                        <ul class="slides">
+                        <ul class="slides slides-box">
                             <li>
-                                <p><a href="">截止到今天，已累计上线&nbsp;&nbsp;<span>{{all_wel_num}}</span>&nbsp;&nbsp;个福利</a></p>
-                                <p><a href="">截止到今天，已累计返现&nbsp;&nbsp;<span>{{withdraw_total}}</span>&nbsp;&nbsp;个福币</a></p>
+                                <p class="oneline"><a href="">截止到今天，已累计上线&nbsp;&nbsp;<span>{{all_wel_num}}</span>&nbsp;&nbsp;个福利</a></p>
+                                <p class="oneline"><a href="">截止到今天，已累计返现&nbsp;&nbsp;<span>{{withdraw_total}}</span>&nbsp;&nbsp;个福币</a></p>
                             </li>
                             <li>
                                 {% for news in announce_list %}
-                                <p><a href="{{news.url}}">{{news.summary}}</a></p>
+                                <p class="oneline"><a href="{{news.url}}">{{news.summary}}</a></p>
                                 {% endfor %}
                             </li>
                             <li>
                                 {% for news in finance_list %}
-                                <p><a href="{{news.url}}">{{news.title}}</a></p>
+                                <p class="oneline"><a href="{{news.url}}">{{news.title}}</a></p>
                                 {% endfor %}
                             </li>
                       </ul>
@@ -316,24 +316,31 @@
                         </a></li> -->
                     </ul>
                 </div>
-                <div class="wflbox m-vip">
+                <div class="wflbox m-vip vip-tab">
                     <div class="wflbox__titlebox clearfix  m-vip">
                         <h1 class="wflbox__title">会员收益排行榜</h1>
-                        <div class="wflbox__more" href="#"><a class="on title-link">本周<a><a class="title-link">本月</a></div>
+                        <div class="wflbox__more" href="#"><a class="on title-link navitem">本周</a><a class="title-link navitem">本月</a></div>
                     </div>
-                    <ul class="vip-content">
-                        {% for news in week_statis %}
-                        <li class="vip-item"><span class="vip-num">1</span><span class="vip-account">{{news.username_display}}</span><span class="vip-withdrow">提现<number>{{news.week_statis}}</number>福币</span></li>
-                        {% endfor %}
-                        <!-- <li class="vip-item"><span class="vip-num">1</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
-                        <li class="vip-item"><span class="vip-num">2</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
-                        <li class="vip-item"><span class="vip-num">3</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
-                        <li class="vip-item"><span class="vip-num">4</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
-                        <li class="vip-item"><span class="vip-num">5</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
-                        <li class="vip-item"><span class="vip-num">6</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
-                        <li class="vip-item"><span class="vip-num">7</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
-                        <li class="vip-item"><span class="vip-num">8</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li> -->
-                    </ul>
+                    <div>
+                        <ul class="vip-content conitem" style="display: block;">
+                            {% for news in week_statis %}
+                            <li class="vip-item"><span class="vip-num">1</span><span class="vip-account">{{news.username_display}}</span><span class="vip-withdrow">提现<number>{{news.week_statis}}</number>福币</span></li>
+                            {% endfor %}
+                            <!-- <li class="vip-item"><span class="vip-num">1</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
+                            <li class="vip-item"><span class="vip-num">2</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
+                            <li class="vip-item"><span class="vip-num">3</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
+                            <li class="vip-item"><span class="vip-num">4</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
+                            <li class="vip-item"><span class="vip-num">5</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
+                            <li class="vip-item"><span class="vip-num">6</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
+                            <li class="vip-item"><span class="vip-num">7</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
+                            <li class="vip-item"><span class="vip-num">8</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li> -->
+                        </ul>
+                        <ul class="vip-content conitem">
+                            {% for news in month_statis %}
+                            <li class="vip-item"><span class="vip-num">1</span><span class="vip-account">{{news.username_display}}</span><span class="vip-withdrow">提现<number>{{news.week_statis}}</number>福币</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -676,6 +683,7 @@
         <script src="/static/js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="/static/js/wfl-flexslider-min.js" type="text/javascript" charset="utf-8"></script>
         <script src="/static/js/wfl-common.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/static/js/wfl-tab.js" type="text/javascript" charset="utf-8"></script>
         <script type="text/javascript">
             $(document).ready(function(){
                 $('.nav__item:eq(0)').addClass('active');
@@ -687,10 +695,16 @@
                 $('.flexslider2').flexslider({
                     directionNav: true,
                     pauseOnAction: false,
-                    animation: "slide"
+                    animation: "slide",
+                    slideshowSpeed: 500000
                 });
 //              轮播部分---end
 //              选项卡切换部分
+                $('.vip-tab').tab({
+                    tabActiveClass: 'on',
+                    tabType: 'mouseover'
+                });
+
                 $('.hongbao-nav__item').click(function(){
                     $(this).addClass('on').siblings().removeClass('on');
                     console.log($(this).index())
