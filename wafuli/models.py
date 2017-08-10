@@ -553,11 +553,14 @@ class Fuligou(models.Model):
     
 class CreditCard(models.Model):
     title = models.CharField(u"名称", max_length=20)
+    apply_num = models.IntegerField(u"申请人数")
+    url = models.CharField(u"地址", max_length=200)
     class Meta:
         verbose_name = u"信用卡"
         verbose_name_plural = u"信用卡"
 class Loan(models.Model):
     title = models.CharField(u"名称", max_length=20)
+    url = models.CharField(u"地址", max_length=200)
     class Meta:
         verbose_name = u"借点钱"
         verbose_name_plural = u"借点钱"
