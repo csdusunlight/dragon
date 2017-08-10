@@ -152,6 +152,7 @@ class Hongbao(Welfare):
     class Meta:
         verbose_name = u"红包"
         verbose_name_plural = u"红包"
+        ordering = ["-up",]
 class Baoyou(Welfare):
     mprice = models.CharField(u"市场价", max_length=10)
     nprice = models.CharField(u"现价", max_length=10)
