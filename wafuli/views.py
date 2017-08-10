@@ -20,6 +20,11 @@ from django.db import transaction
 from wafuli.tools import update_view_count
 from .tools import saveImgAndGenerateUrl
 from django.contrib.auth.decorators import login_required
+from rest_framework import generics
+from wafuli.serializers import HongbaoSerializer
+import django_filters
+from rest_framework.filters import OrderingFilter
+from project_admin.Paginations import ProjectPageNumberPagination
 logger = logging.getLogger('wafuli')
 from .tools import listing
 import re
@@ -135,18 +140,31 @@ def wfl_index(request):
         all_wel_num = 0
     context.update({'new_wel_num':new_wel_num, 'all_wel_num':all_wel_num, 'withdraw_total':withdraw_total})
     return render(request, 'wfl-index.html', context)
-def get_hongbao_by_type(request):
-    htype = request.GET.get('type', None)
-    order = request.GET.get('type', 0)
-    order = int(order)
-    if htype is None:
-        hongbao_list = Hongbao.objects.filter(state='1', is_qualified=True)
-    else:
-        hongbao_list = Hongbao.objects.filter(htype=htype)
-    if order == 0:
-        hongbao_list = hongbao_list.order_by('-up')
-    else:
-        hongbao_list = hongbao_list.order_by("-startTime")
+# def get_hongbao_by_type(request):
+#     htype = request.GET.get('type', None)
+#     order = request.GET.get('type', 0)
+#     order = int(order)
+#     if htype is None:
+#         hongbao_list = Hongbao.objects.filter(state='1', is_qualified=True)
+#     else:
+#         hongbao_list = Hongbao.objects.filter(htype=htype)
+#     if order == 0:
+#         hongbao_list = hongbao_list.order_by('-up')
+#     else:
+#         hongbao_list = hongbao_list.order_by("-startTime")
+#     ret = []
+#     for item in hongbao_list:
+#         ret.append({
+#             'subtitle':        
+#         })
+#         
+class HongbaoList(generics.ListCreateAPIView):
+    queryset = Hongbao.objects.all()
+    serializer_class = HongbaoSerializer
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend, OrderingFilter)
+    filter_fields = ['state','htype']
+    ordering_fields = ('up','startTime')
+    pagination_class = ProjectPageNumberPagination
     
 def finance(request, id=None):
     if id is None:
