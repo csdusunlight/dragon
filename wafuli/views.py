@@ -97,18 +97,18 @@ def wfl_index(request):
     find = MAdvert_PC.objects.filter(location='02',is_hidden=False).first()
     credit_list = CreditCard.objects.all()[0:4]
     loan_list = Loan.objects.all()[0:4]
-    context = {'ad_list':ad_list,
-               'hongbao_list': hongbao_list,
-               'fuligou_main': fuligou_main,
-               'fuligou_side': fuligou_side,
-               'task_list': task_list,
-               'announce_list':announce_list,
-               'finance_list': finance_list,
-               'commodity_list': commodity_list,
-               'recom_list': recom_list,
-               'find': find,
-               'credit_list': credit_list,
-               'loan_list': loan_list,
+    context = {'ad_list':ad_list, #banner
+               'hongbao_list': hongbao_list, #红包精选4个
+               'fuligou_main': fuligou_main, #福利购正文部分的4个
+               'fuligou_side': fuligou_side,#福利购边栏4个
+               'task_list': task_list, #任务福利4个
+               'announce_list':announce_list, #福利头条，第二屏，两个通知
+               'finance_list': finance_list, #理财福利，三个，前两个可以放到福利头条第三屏
+               'commodity_list': commodity_list,#边栏积分商品，6个
+               'recom_list': recom_list,#热门推荐，4个
+               'find': find,#发现，1个
+               'credit_list': credit_list,#信用卡，4个
+               'loan_list': loan_list,#借点钱，4个
     }
 
     try:
@@ -123,7 +123,7 @@ def wfl_index(request):
         withdraw_total = int(glo_statis.award_total/100.0)
 
     else:
-        withdraw_total = 0
+        withdraw_total = 0#提现总额
         all_wel_num = 0
     context.update({'new_wel_num':new_wel_num, 'all_wel_num':all_wel_num, 'withdraw_total':withdraw_total})
     return render(request, 'wfl-index.html', context)
