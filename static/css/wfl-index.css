@@ -175,6 +175,7 @@
 .hot-recommend__img {
 	width: 200px;
 	height: 200px;
+	vertical-align: middle;
 }
 .hot-recommend__txt {
 	height: 60px;
