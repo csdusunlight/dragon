@@ -816,14 +816,12 @@
                                 alert(JSON.stringify(ret));
                             }
                         });
-                    } else {
-                        $.prompt({
-                            Content: '请不要重复操作！'
-                        });
+                    } else if(upFlag != 0) {
+                        return false;
                     }
                 })
                 $('.support__down').click(function(){
-                    if (true) {
+                    if (downFlag == 0) {
                         $.ajax({
                             url: '/updown_welfare/7/?click=down',
                             dataType: "json",
@@ -838,10 +836,8 @@
                                 alert(JSON.stringify(ret));
                             }
                         });
-                    } else {
-                        $.prompt({
-                            Content: '请不要重复操作！'
-                        });
+                    } else if (downFlag != 0) {
+                        return false;
                     }
                 })
                 // 点赞部分---end

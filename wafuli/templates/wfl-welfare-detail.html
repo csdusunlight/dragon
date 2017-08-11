@@ -179,7 +179,8 @@
                             dataType: "json",
                             type: "get",
                             success: function() {
-                                var upNum = parseInt($('.support__up-num').text()) + 1;
+                                console.log(parseInt($('.support__up-num').text(),10))
+                                var upNum = parseInt($('.support__up-num').text(),10) + 1;
                                 $('.support__up-num').text(upNum);
                                 upFlag++;
                                 console.log(upFlag);
@@ -188,20 +189,18 @@
                                 alert(JSON.stringify(ret));
                             }
                         });
-                    } else {
-                        $.prompt({
-                            Content: '请不要重复操作！'
-                        });
+                    } else if(upFlag != 0) {
+                        return false;
                     }
                 })
                 $('.support__down').click(function(){
-                    if (true) {
+                    if (downFlag == 0) {
                         $.ajax({
                             url: '/updown_welfare/7/?click=down',
                             dataType: "json",
                             type: "get",
                             success: function() {
-                                var downNum = parseInt($('.support__down-num').text()) + 1;
+                                var downNum = parseInt($('.support__down-num').text(),10) + 1;
                                 $('.support__down-num').text(downNum);
                                 downFlag++;
                                 console.log(downFlag);
@@ -210,14 +209,11 @@
                                 alert(JSON.stringify(ret));
                             }
                         });
-                    } else {
-                        $.prompt({
-                            Content: '请不要重复操作！'
-                        });
+                    } else if (downFlag != 0) {
+                        return false;
                     }
                 })
                 // 点赞部分---end
-
 			});
 		</script>
 	</body>
