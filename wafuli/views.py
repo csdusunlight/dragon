@@ -92,7 +92,7 @@ def index(request):
 def wfl_index(request):
     ad_list = MAdvert_PC.objects.filter(location='00', is_hidden=False)[0:6]
     announce_list = Press.objects.filter(type='1')[0:2]
-    hongbao_list = Hongbao.objects.filter(is_qualified=True,state='1')[0:4]
+    hongbao_list = Hongbao.objects.filter(is_qualified=True,state='1').order_by("-startTime")[0:4]
     fuligou_main = Fuligou.objects.filter(is_main=True)[0:4]
     fuligou_side = Fuligou.objects.filter(is_main=False)[0:4]
     task_list = Task.objects.filter(state='1').order_by("-news_priority","-pub_date")[0:4]
@@ -162,7 +162,7 @@ class HongbaoList(generics.ListCreateAPIView):
     queryset = Hongbao.objects.all()
     serializer_class = HongbaoSerializer
     filter_backends = (SearchFilter, django_filters.rest_framework.DjangoFilterBackend, OrderingFilter)
-    filter_fields = ['state','htype']
+    filter_fields = ['state','htype','is_qualified']
     ordering_fields = ('up','startTime')
     search_fields = ('title', 'subtitle', 'provider', 'seo_description')
     pagination_class = ProjectPageNumberPagination

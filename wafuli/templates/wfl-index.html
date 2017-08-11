@@ -714,17 +714,21 @@
                 });
                 // 红包部分
                 var htype = '';
-                var ordering = 'startTime';
-                var url ='/hongbaolist/?state=1';
+                var ordering = '-startTime';
+                var typeindex = 0;
+                var url ='/hongbaolist/?state=1&pageSize=4';
                 $('.hongbao-nav__item').click(function(){
                     $(this).addClass('on').siblings().removeClass('on');
                     console.log($(this).index());
-                    if ($(this).index() == 0) {
-                            htype = '';
+                    var newurl = url;
+                    typeindex = $(this).index();
+                    if (typeindex == 0) {
+                    	newurl += '&is_qualified=true';
                     } else {
-                        htype = $(this).index() - 1;
+                        htype = typeindex - 1;
+                        newurl += '&htype=' + htype;
                     }
-                    var newurl = url + '&htype=' + htype + '&ordering=' + ordering;
+                    newurl += '&ordering=' + ordering;
                     console.log(newurl);
                     $.ajax({
                         url: newurl,
@@ -759,12 +763,19 @@
                 $('.hongbao-choose__item').click(function(){
                     $(this).addClass('on').siblings().removeClass('on');
                     console.log($(this).index());
+                    var newurl = url;
                     if ($(this).index() == 0) {
-                            ordering = 'startTime';
+                            ordering = '-startTime';
                     } else {
-                        ordering = 'up';
+                        ordering = '-up';
                     }
-                    var newurl = url + '&htype=' + htype + '&ordering=' + ordering;
+                    if (typeindex == 0) {
+                    	newurl += '&is_qualified=true';
+                    } else {
+                        htype = typeindex - 1;
+                        newurl += '&htype=' + htype;
+                    }
+                    newurl += '&ordering=' + ordering;
                     console.log(newurl);
                     $.ajax({
                         url: newurl,
