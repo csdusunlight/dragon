@@ -808,6 +808,50 @@
                     });
                 })
                 // 红包部分---end
+                // 点赞部分
+                var upFlag = 0;     //点攒控制开关
+                var downFlag = 0;     //踩控制开关
+                $('.support__up').click(function(){
+                    if (upFlag == 0) {
+                        $.ajax({
+                            url: '/updown_welfare/7/?click=up',
+                            dataType: "json",
+                            type: "get",
+                            success: function() {
+                                var upNum = parseInt($('.support__up-num').text()) + 1;
+                                $('.support__up-num').text(upNum);
+                                upFlag++;
+                                console.log(upFlag);
+                            },
+                            error: function(ret) {
+                                alert(JSON.stringify(ret));
+                            }
+                        });
+                    } else if(upFlag != 0) {
+                        return false;
+                    }
+                })
+                $('.support__down').click(function(){
+                    if (downFlag == 0) {
+                        $.ajax({
+                            url: '/updown_welfare/7/?click=down',
+                            dataType: "json",
+                            type: "get",
+                            success: function() {
+                                var downNum = parseInt($('.support__down-num').text()) + 1;
+                                $('.support__down-num').text(downNum);
+                                downFlag++;
+                                console.log(downFlag);
+                            },
+                            error: function(ret) {
+                                alert(JSON.stringify(ret));
+                            }
+                        });
+                    } else if (downFlag != 0) {
+                        return false;
+                    }
+                })
+                // 点赞部分---end
                 $('.title-link').click(function(){
                     $(this).addClass('on').siblings().removeClass('on');
                     console.log($(this).index())
