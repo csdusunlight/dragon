@@ -61,12 +61,12 @@
                             <a href="{% url 'login' %}" class="login-link">登录</a>发现更多精彩</p>
                         {% else %}
                         <div class="user-info-detail d-tc">
-                            <p class="user-login-detail">Hi,<a href="{% url 'account_index' %}" class="user-account">15111071431</a>
+                            <p class="user-login-detail">Hi,<a href="{% url 'account_index' %}" class="user-account">{{user.mobile}}</a>
                                 {%if user.level > 0 %}
                                 <span class="user-vip-level">VIP{{user.level}}</span>
                                 {%endif%}
                             </p>
-                            <p class="user-detail-num clearfix"><span class="user-fubi l">福币：10000</span><span class="user-jifen r">积分：20000</span></p>
+                            <p class="user-detail-num clearfix"><span class="user-fubi l">福币：{{user.balance}}</span><span class="user-jifen r">积分：{{user.scores}}</span></p>
                         </div>
                         {% endif %}
                         <!-- <p class="user-info-detail d-tc">Hi,<span>你好</span><br />
@@ -90,7 +90,7 @@
                             </li>
                             <li>
                                 {% for news in finance_list %}
-                                <p class="oneline"><a href="{{news.url}}">{{news.title}}</a></p>
+                                <p class="oneline"><a href="{{news.url}}">理财精选：{{news.title}}</a></p>
                                 {% endfor %}
                             </li>
                       </ul>
@@ -277,14 +277,14 @@
                             </div>
                         </div>
                     </li> -->
-                    <li class="hongbao-more">查看更多</li>
+                    <li class="hongbao-more"><a style="display: block" href="{% url 'welfare_list' %}">查看更多</a></li>
                 </ul>
             </div>
             <div class="sidebar wright r">
                 <div class="wflbox">
                     <div class="wflbox__titlebox clearfix">
                         <h1 class="wflbox__title">积分商城</h1>
-                        <a class="wflbox__more" href="#">查看全部</a>
+                        <a class="wflbox__more" href="{% url 'mall' %}">查看更多</a>
                     </div>
                     <ul class="jifen-box">
                         {% for news in commodity_list %}
@@ -457,7 +457,7 @@
             <div class="wflbox">
                 <div class="wflbox__titlebox clearfix">
                     <h1 class="wflbox__title">任务赚</h1>
-                    <a class="wflbox__more" href="#">查看更多</a>
+                    <a class="wflbox__more" href="{% url 'task' %}">查看更多</a>
                 </div>
                 <div class="clearfix">
                     <ul class="task-box fs-0 l">
@@ -535,17 +535,17 @@
             <div class="wflbox">
                 <div class="wflbox__titlebox clearfix">
                     <h1 class="wflbox__title">理财返利</h1>
-                    <a class="wflbox__more" href="#">查看更多</a>
+                    <a class="wflbox__more" href="{% url 'finance' %}">查看更多</a>
                 </div>
                 <div class="clearfix">
                     <ul class="finance-box fs-0 l">
                         {% for news in finance_list %}
                         <li class="finance d-ib">
                             <img class="finance__img" src="{{news.pic.url}}" alt="商家logo">
-                            <p class="finance__name finance__column">{{news.title}}<span class="finance__mark">首投</span></p>
+                            <p class="finance__name finance__column">{{news.title}}{% for mark in news.marks.all|slice:":3" %}<span class="finance__mark">{{mark.name}}</span>{% endfor %}</p>
                             <p class="finance__column"><span class="finance__column-title">官网利率</span><span class="finance__interest">{{news.interest}}</span></p>
-                            <p class="finance__column"><span class="finance__column-title">起投金额</span><span class="finance__invest">{{news.amount}}</span></p>
-                            <p class="finance__column"><span class="finance__column-title">标期长度</span><span class="finance__date">{{news.time}}</span></p>
+                            <p class="finance__column"><span class="finance__column-title">起投金额</span><span class="finance__invest">{{news.amount_to_invest}}</span></p>
+                            <p class="finance__column"><span class="finance__column-title">标期长度</span><span class="finance__date">{{news.investTime}}</span></p>
                             <p class="finance__column"><span class="finance__column-title">补贴收益</span><span class="finance__profit">+投资额{{news.benefit}}</span></p>
                             <p class="finance__column"><span class="finance__column-title">预计年化收益</span><span class="finance__year">{{news.revenue}}</span></p>
                             <a class="btn m-green m-finance" href="{{news.url}}">立即投资</a>
@@ -586,28 +586,28 @@
                         <h2 class="profit-calc-title">b2b收益计算器</h2>
                         <div class="calc-box">
                             <div class="calc-item">
-                                <span class="calc-item-name">金额</span><input value="10000" id="money" class="calc-input" type="text" onkeyup="value=value.replace(/[^\d.]/g,'')"/>
-                                <span class="calc-item-name">利率</span><input value="8" style="width: 80px;" id="interest_rate" class="calc-input" type="text" onkeyup="value=value.replace(/[^\d.]/g,'')"/>&nbsp;%
+                                <span class="calc-item-name">金额</span><input id="money" class="calc-input" type="text" onkeyup="value=value.replace(/[^\d.]/g,'')"/>&nbsp;元
+                                <span class="calc-item-name">利率</span><input id="interest_rate" class="calc-input" type="text" onkeyup="value=value.replace(/[^\d.]/g,'')"/>&nbsp;%
                             </div>
                             <div class="calc-item">
-                                <span class="calc-item-name">期限</span><input value="3" id="term" class="calc-input" type="text" onkeyup="value=value.replace(/[^\d]/g,'')"/>&nbsp;&nbsp;
-                                <input type="radio" name="date_choose" value="month" checked="checked"/>月&nbsp;&nbsp;<input type="radio" name="date_choose" value="day"/>天
+                                <span class="calc-item-name">期限</span><input id="term" class="calc-input" type="text" onkeyup="value=value.replace(/[^\d]/g,'')"/>&nbsp;&nbsp;
+                                <input type="radio" name="date_choose" value="month" checked="checked"/>月&nbsp;&nbsp;<input type="radio" name="date_choose" value="day"/>&nbsp;天
                             </div>
                             <div class="calc-item">
                                 <span class="calc-item-name">还款方式</span>
                                 <!--<input id="back_type" class="calc-input" type="text" />-->
-                                <select name="selectType" id="back_type" class="calc-input">
+                                <select style="width: 160px;" name="selectType" id="back_type" class="calc-input">
                                     <option value="0">一次性还本付息</option>
                                     <option value="1">月还息到期还本</option>
                                 </select>
                             </div>
                             <div class="calc-item">
-                                <span class="calc-item-name">投标奖励</span><input value="0.65" style="width: 80px;" id="bid_reward" class="calc-input" type="text" onkeyup="value=value.replace(/[^\d.]/g,'')"/>&nbsp;%
-                                <span class="calc-item-name">管理费</span><input value="10" style="width: 80px;" id="manage_pay" class="calc-input" type="text" onkeyup="value=value.replace(/[^\d.]/g,'')"/>&nbsp;%
+                                <span class="calc-item-name">投标奖励</span><input id="bid_reward" class="calc-input" type="text" onkeyup="value=value.replace(/[^\d.]/g,'')"/>&nbsp;%
+                                <span class="calc-item-name">管理费</span><input id="manage_pay" class="calc-input" type="text" onkeyup="value=value.replace(/[^\d.]/g,'')"/>&nbsp;%
                             </div>
                             <div class="calc-item">
-                                <span class="calc-item-name">返现奖励</span><input value="30" id="return_reward" class="calc-input" type="text" onkeyup="value=value.replace(/[^\d.]/g,'')"/>
-                                <span class="calc-item-name">抵扣奖励</span><input value="20" id="deduction_reward" class="calc-input" type="text" onkeyup="value=value.replace(/[^\d.]/g,'')"/>
+                                <span class="calc-item-name">返现奖励</span><input id="return_reward" class="calc-input" type="text" onkeyup="value=value.replace(/[^\d.]/g,'')"/>&nbsp;元
+                                <span class="calc-item-name">抵扣奖励</span><input id="deduction_reward" class="calc-input" type="text" onkeyup="value=value.replace(/[^\d.]/g,'')"/>&nbsp;元
                             </div>
                             <div class="btn-box"><a id="calc" class="btn m-green m-calc-profit">计算</a><a id="reset" class="btn m-green m-calc-profit">重置</a></div>
                         </div>
