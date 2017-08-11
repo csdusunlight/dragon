@@ -165,6 +165,7 @@
                 {%else%}
                 var ismobile = false;
                 console.log(ismobile);
+                $('.show-ewm').attr('href', "{{news.exp_url_pc}}");
                 {%endif%}
 
 
@@ -175,7 +176,7 @@
                         dataType: "json",
                         type: "get",
                         success: function() {
-                            var upNum = $('.support__up-num').text() + 1;
+                            var upNum = parseInt($('.support__up-num').text()) + 1;
                             $('.support__up-num').text(upNum);
                         },
                         error: function(ret) {
@@ -189,7 +190,7 @@
                         dataType: "json",
                         type: "get",
                         success: function() {
-                            var downNum = $('.support__down-num').text() + 1;
+                            var downNum = parseInt($('.support__down-num').text()) + 1;
                             $('.support__down-num').text(downNum);
                         },
                         error: function(ret) {

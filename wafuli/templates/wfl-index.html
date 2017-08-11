@@ -797,6 +797,36 @@
                     });
                 })
                 // 红包部分---end
+                // 点赞部分
+                $('.support__up').click(function(){
+                    $.ajax({
+                        url: '/updown_welfare/7/?click=up',
+                        dataType: "json",
+                        type: "get",
+                        success: function() {
+                            var upNum = parseInt($('.support__up-num').text()) + 1;
+                            $('.support__up-num').text(upNum);
+                        },
+                        error: function(ret) {
+                            alert(JSON.stringify(ret));
+                        }
+                    });
+                })
+                $('.support__down').click(function(){
+                    $.ajax({
+                        url: '/updown_welfare/7/?click=down',
+                        dataType: "json",
+                        type: "get",
+                        success: function() {
+                            var downNum = parseInt($('.support__down-num').text()) + 1;
+                            $('.support__down-num').text(downNum);
+                        },
+                        error: function(ret) {
+                            alert(JSON.stringify(ret));
+                        }
+                    });
+                })
+                // 点赞部分---end
                 $('.title-link').click(function(){
                     $(this).addClass('on').siblings().removeClass('on');
                     console.log($(this).index())
