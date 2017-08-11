@@ -23,7 +23,7 @@ from django.contrib.auth.decorators import login_required
 from rest_framework import generics
 from wafuli.serializers import HongbaoSerializer
 import django_filters
-from rest_framework.filters import OrderingFilter
+from rest_framework.filters import OrderingFilter, SearchFilter
 from project_admin.Paginations import ProjectPageNumberPagination
 logger = logging.getLogger('wafuli')
 from .tools import listing
@@ -161,10 +161,34 @@ def wfl_index(request):
 class HongbaoList(generics.ListCreateAPIView):
     queryset = Hongbao.objects.all()
     serializer_class = HongbaoSerializer
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend, OrderingFilter)
+    filter_backends = (SearchFilter, django_filters.rest_framework.DjangoFilterBackend, OrderingFilter)
     filter_fields = ['state','htype']
     ordering_fields = ('up','startTime')
+    search_fields = ('title', 'subtitle', 'provider', 'seo_description')
     pagination_class = ProjectPageNumberPagination
+    
+def hongbao(request, id):
+    if id is None:
+        ad_list = MAdvert_PC.objects.filter(location='10', is_hidden=False)[0:6]
+        ad_list2 = MAdvert_PC.objects.filter(location='11', is_hidden=False)[0:4]
+        fuligou_side = Fuligou.objects.filter(is_main=False)[0:5]
+        commodity_list = Commodity.objects.all()[0:5]
+        context = {
+            'ad_list':ad_list,
+            'ad_list2':ad_list2,
+            'fuligou_side':fuligou_side,
+            'commodity_list':commodity_list
+        }
+        return render(request, 'wfl-welfare.html', context)
+    else:
+        id = int(id)
+        news = Hongbao.objects.get(id=id)
+        other_hongbao_list = Hongbao.objects.filter(state='1').order_by('-pub_date')[0:6]
+        context = {
+                   'news':news,
+                   'other_hongbao_list':other_hongbao_list,
+        }
+        return render(request, 'wfl-welfare-detail.html', context)
     
 def finance(request, id=None):
     if id is None:
