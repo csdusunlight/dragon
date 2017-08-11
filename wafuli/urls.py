@@ -65,4 +65,5 @@ urlpatterns = [
     url(r'^APP_download/$', TemplateView.as_view(template_name="download_app.html"), name='APP_download'),
     
     url(r'^hongbaolist/$', views.HongbaoList.as_view()),
+    url(r'^hongbao/(?:(?P<id>[0-9]*)/)?$', views.hongbao, name='hongbao'),
 ]
