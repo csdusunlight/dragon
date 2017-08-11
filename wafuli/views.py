@@ -189,7 +189,18 @@ def hongbao(request, id):
                    'other_hongbao_list':other_hongbao_list,
         }
         return render(request, 'wfl-welfare-detail.html', context)
+def updown_hongbao(request, id):
+    click = request.GET.get('click', 'up')
+    hongbao = Hongbao.objects.get(id=id)
+    if click == 'up':
+        hongbao.up = F('up') + 1
+        hongbao.save(update_fields=['up',])
+    elif click == 'down':
+        hongbao.down = F('down') + 1
+        hongbao.save(update_fields=['down',])
+    return JsonResponse({})
     
+        
 def finance(request, id=None):
     if id is None:
         ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='4'),is_hidden=False)[0:8]
