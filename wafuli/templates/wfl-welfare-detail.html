@@ -28,7 +28,7 @@
     		              <a class="btn m-green m-detailmain show-ewm">直达链接</a>
                         {% endif %}
     		            <div class="support d-ib">
-                            <span class="support__up">顶（<number>{{news.up}}</number>）</span><span class="support__down">踩（<number>{{news.down}}</number>）</span>
+                            <span class="support__up">顶（<number class="support__up-num">{{news.up}}</number>）</span><span class="support__down">踩（<number class="support__down-num">{{news.down}}</number>）</span>
                         </div>
     		        </div>
     		    </div>
@@ -151,13 +151,54 @@
         <script src="/static/js/wfl-popup.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			$(function(){
+
+                {%if news.isonMobile %}
+                var ismobile = true;
+                console.log(ismobile);
                 $('.show-ewm').click(function(){
                     $.warning({
                         Title: '手机扫二维码体验',
-                        Content: '<img style="width:100%" src="{{news.exp_code}}" alt="" />',
+                        Content: '<img style="width:100%" src="{{news.exp_code.url}}" alt="" />',
                         Confirm: '关闭'
                     });
                 })
+                {%else%}
+                var ismobile = false;
+                console.log(ismobile);
+                {%endif%}
+
+
+                // 点赞部分
+                $('.support__up').click(function(){
+                    $.ajax({
+                        url: '/updown_welfare/7/?click=up',
+                        dataType: "json",
+                        type: "get",
+                        success: function() {
+                            var upNum = $('.support__up-num').text() + 1;
+                            $('.support__up-num').text(upNum);
+                        },
+                        error: function(ret) {
+                            alert(JSON.stringify(ret));
+                        }
+                    });
+                })
+                $('.support__down').click(function(){
+                    $.ajax({
+                        url: '/updown_welfare/7/?click=down',
+                        dataType: "json",
+                        type: "get",
+                        success: function() {
+                            var downNum = $('.support__down-num').text() + 1;
+                            $('.support__down-num').text(downNum);
+                        },
+                        error: function(ret) {
+                            alert(JSON.stringify(ret));
+                        }
+                    });
+                })
+                // 点赞部分---end
+
 			});
 		</script>
 	</body>
