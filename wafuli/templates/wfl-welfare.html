@@ -39,10 +39,10 @@
 		<!--banner-container--end-->
 		<div class="wfl-wrap">
 			<div class="hongbao-search">
-			  <form action="" method="get">
+			  <!-- <form action="" method="get"> -->
 			    <input class="hongbao-input" name="key" type="text">
 			    <input class="hongbao-submit" type="submit" value="">
-			  </form>
+			  <!-- </form> -->
 			  <p class="hot-search">热搜：<span class="hot-txt">热搜01</span><span class="hot-txt">热搜02</span><span class="hot-txt">热搜03</span><span class="hot-txt">热搜04</span></p>
 			</div>
 		</div>
@@ -105,7 +105,7 @@
 						<a class="wflbox__more" href="#">查看全部</a>
 					</div>
 					<ul class="fuligou-box">
-<!-- 						{% for news in fuligou_side %}
+						{% for news in fuligou_side %}
             <li class="fuligou"><a href="{{news.href}}">
 							<img class="fuligou__img" src="{{news.img_src}}" alt="" />
 							<div>
@@ -113,8 +113,8 @@
 								<div class="price l"><span class="price__now">￥<number>{{news.buy_price}}</number></span><span class="price__tag">券后价</span><span class="price__before">￥{{news.old_price}}</span></div>
 							</div>
 						</a></li>
-            {% endfor %} -->
-						<li class="fuligou"><a href="#">
+            {% endfor %}
+						<!-- <li class="fuligou"><a href="#">
 							<img class="fuligou__img" src="" alt="" />
 							<div>
 								<h3 class="fuligou__title">iPhone7全网通全网通全网通</h3>
@@ -148,7 +148,7 @@
 								<h3 class="fuligou__title">iPhone7全网通全网通全网通</h3>
 								<div class="price l"><span class="price__now">￥<number>24.5</number></span><span class="price__tag">券后价</span><span class="price__before">￥34.5</span></div>
 							</div>
-						</a></li>
+						</a></li> -->
 					</ul>
 				</div>
 
@@ -158,7 +158,7 @@
 						<a class="wflbox__more" href="#">查看全部</a>
 					</div>
 					<ul class="jifen-box">
-						<!-- {% for news in commodity_list %}
+						{% for news in commodity_list %}
             <li class="jifen"><a href="{{news.url}}">
                 <img class="jifen__img" src="{{news.pic.url}}" alt="" />
                 <div>
@@ -166,8 +166,8 @@
                     <p class="jifen__num">积分：{{news.price}}</p>
                 </div>
             </a></li>
-            {% endfor %} -->
-						<li class="jifen"><a href="#">
+            {% endfor %}
+						<!-- <li class="jifen"><a href="#">
 							<img class="jifen__img" src="" alt="" />
 							<div>
 								<h3 class="jifen__title">iPhone7全网通全网通全网通</h3>
@@ -201,7 +201,7 @@
 								<h3 class="jifen__title">iPhone7全网通全网通全网通</h3>
 								<p class="jifen__num">积分：777888</p>
 							</div>
-						</a></li>
+						</a></li> -->
 					</ul>
 				</div>
 			</div>
@@ -263,6 +263,20 @@
 				    directionNav: true,
 				    pauseOnAction: false
 				});
+
+				$('.hongbao-submit').click(function(){
+					console.log($('.hongbao-input').val());
+					var newurl = url + '&search=' + $('.hongbao-input').val();
+					console.log(newurl);
+					$("#pagedata1").ajaxPage({
+				      url:newurl,
+				      pageId:$("#page1"),
+				      pageSize:2,
+				      run:true,
+				      content:data,
+				      complete:pagecallback,
+				  });
+				})
 				$('.hongbao-nav__item').click(function(){
 					$(this).addClass('on').siblings().removeClass('on');
 					if ($(this).index() == 0) {

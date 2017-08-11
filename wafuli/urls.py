@@ -24,8 +24,10 @@ urlpatterns = [
     url(r'^add_finance/$', 'wafuli.finance.add_finance', name='add_finance'),     #jzy
     url(r'^task/$', 'wafuli.views.task', name='task'),
     url(r'^task/(?P<id>[0-9]*)/$', 'wafuli.views.task', name='task_detail'),
-    url(r'^welfare/(?:(?P<id>[0-9]*)/)?$', 'wafuli.welfare.welfare', name='welfare'),
-    url(r'^welfare/(?:(?P<type>hb|yhq|by)/)?(?:list-page(?P<page>[0-9]*)/)?$', 'wafuli.welfare.welfare', name='welfare_list'),
+    # url(r'^welfare/(?:(?P<id>[0-9]*)/)?$', 'wafuli.welfare.welfare', name='welfare'),
+    # url(r'^welfare/(?:(?P<type>hb|yhq|by)/)?(?:list-page(?P<page>[0-9]*)/)?$', 'wafuli.welfare.welfare', name='welfare_list'),
+    url(r'^welfare/$', 'wafuli.views.hongbao', name='welfare'),   #jzy
+    url(r'^welfare/(?P<id>[0-9]*)/$', 'wafuli.views.hongbao', name='welfare_list'),   #jzy
     url(r'^mall/$', 'wafuli.views.mall', name='mall'),
     url(r'^commodity/(?P<id>[0-9]*)/$', 'wafuli.views.commodity', name='commodity_detail'),
     url(r'^press/(?P<id>[0-9]*)/$', 'wafuli.views.press', name='press_detail'),
@@ -63,7 +65,7 @@ urlpatterns = [
     url(r'^screenshot/$', 'wafuli.views.display_screenshot', name='screenshot'),
 
     url(r'^APP_download/$', TemplateView.as_view(template_name="download_app.html"), name='APP_download'),
-    
+
     url(r'^hongbaolist/$', views.HongbaoList.as_view()),
     url(r'^hongbao/(?:(?P<id>[0-9]*)/)?$', views.hongbao, name='hongbao'),
 ]
