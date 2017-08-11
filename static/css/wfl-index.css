@@ -692,7 +692,7 @@
 }
 .calc-item>input[type="text"],
 .calc-item>select {
-	width: 100px;
+	width: 80px;
 }
 .calc-item>input[type="radio"] {
 	margin-top: 5px;
