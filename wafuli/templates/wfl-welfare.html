@@ -30,10 +30,13 @@
 				</div>
 			</div>
 			<div class="hongbao-recommend fs-0 r">
+				{% for adv in ad_list2 %}
+	          <li onclick="location='{{adv.url}}'" style="background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li>
+	      {%endfor%}
+				<!-- <img class="hongbao-recommend-item" src=""/>
 				<img class="hongbao-recommend-item" src=""/>
 				<img class="hongbao-recommend-item" src=""/>
-				<img class="hongbao-recommend-item" src=""/>
-				<img class="hongbao-recommend-item" src=""/>
+				<img class="hongbao-recommend-item" src=""/> -->
 			</div>
 		</div>
 		<!--banner-container--end-->

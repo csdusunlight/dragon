@@ -730,13 +730,14 @@
                         url: newurl,
                         dataType: "json",
                         type: "get",
-                        pagesize: "1",
+                        pagesize: "4",
                         success: function(ret) {
                             console.log(ret.results);
                             console.log(ret.results[0].view_count);
                             $('.hongbao').each(function(i,obj){
                                 console.log(i);
                                 console.log(obj);
+                                console.log('sdfs');
                                 $(obj).find('.hongbao__title').text(ret.results[i].title);
                                 $(obj).find('.hongbao__title-two').text(ret.results[i].subtitle);
                                 $(obj).find('.hongbao__look-num').text(ret.results[i].view_count);
@@ -768,7 +769,7 @@
                         url: newurl,
                         dataType: "json",
                         type: "get",
-                        pagesize: "1",
+                        pagesize: "4",
                         success: function(ret) {
                             console.log(ret.results);
                             console.log(ret.results[0].view_count);

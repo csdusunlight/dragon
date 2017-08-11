@@ -10,22 +10,30 @@
 	<body>
 		{% include "header.html" %}
 		<div class="wfl-wrap m-welfare-detail clearfix">
-		    <p class="crumb">当前时间：&nbsp;&nbsp;<a href="">福利大全</a>&nbsp;>&nbsp;<a href="">福利购</a>&nbsp;>&nbsp;<a href="">京东618</a></p>
+		    <p class="crumb">当前位置：&nbsp;&nbsp;<a href="#">免费领</a>&nbsp;>&nbsp;<a href="{% url 'welfare' %}">红包福利</a>&nbsp;>&nbsp;<a href="#">{{news.title}}</a></p>
 		    <div class="leftcontainer l wleft">
     		    <div class="detailmain">
-    		        <img class="detailmain__img" src="" alt="" />
+    		        <img class="detailmain__img" src="{{news.pic.url}}" alt="" />
     		        <div class="detailmain__content">
-    		            <h1 class="detailmain__title">绝对值：MIJIA扫地机器人  1569元包邮（下单立减）</h1>
-    		            <p class="detail__p1">商家：<span>京东</span></p>
-    		            <p class="detail__p2">分类：<span>红包</span><span>红包</span>免费领<span>易操作</span></p>
-    		            <a href="" class="btn m-green m-detailmain">直达链接</a>
+    		            <h1 class="detailmain__title">{{news.title}}<span class="hongbao__title-two">{{news.subtitle}}</span></h1>
+    		            <p class="detail__p1">商家：<span>{{news.provider}}</span></p>
+    		            <p class="detail__p2">分类：
+                        {% for mark in news.marks.all|slice:":3" %}
+                           <span>{{mark.name}}</span>
+                        {% endfor %}</p>
+
+                        {% if not user.is_authenticated %}
+                            <a href="{% url 'login' %}" class="btn m-green m-detailmain">点击登录</a>
+                        {% else %}
+    		              <a class="btn m-green m-detailmain show-ewm">直达链接</a>
+                        {% endif %}
     		            <div class="support d-ib">
-                            <span class="support__up">顶（<number>345</number>）</span><span class="support__down">踩（<number>345</number>）</span>
+                            <span class="support__up">顶（<number>{{news.up}}</number>）</span><span class="support__down">踩（<number>{{news.down}}</number>）</span>
                         </div>
     		        </div>
     		    </div>
     		    <div class="detail-html">
-    		          上传内容区域
+    		          {{news.strategy|safe}}
     		    </div>
     		    <div class="near">
     		        <p class="near__pre">上一福利<a class="near__link" href="">可口可乐汽水300ml*24瓶整箱</a></p>
@@ -34,7 +42,13 @@
     		    <div class="other-recommend">
                     <h3 class="other-recommend__title">您可能还喜欢</h3>
                     <ul class="other-recommend__box">
-                        <li class="other-recommend__item"><a href="#">
+                        {% for news in other_hongbao_list %}
+                        <li class="other-recommend__item"><a href="{{news.url}}">
+                            <img class="other-recommend__img" src="{{news.pic.url}}" alt="" />
+                            <p class="other-recommend__txt">{{news.title}}</p>
+                        </a></li>
+                        {%endfor%}
+                        <!-- <li class="other-recommend__item"><a href="#">
                             <img class="other-recommend__img" src="" alt="" />
                             <p class="other-recommend__txt">历史低价，618疯抢，史前最低。</p>
                         </a></li>
@@ -49,7 +63,7 @@
                         <li class="other-recommend__item"><a href="#">
                             <img class="other-recommend__img" src="" alt="" />
                             <p class="other-recommend__txt">历史低价，618疯抢，史前最低。</p>
-                        </a></li>
+                        </a></li> -->
                     </ul>
                 </div>
 		    </div>            <!--leftcontainer---end-->
@@ -61,7 +75,16 @@
     					<a class="wflbox__more" href="#">查看全部</a>
     				</div>
     				<ul class="recommend-box">
-    					<li class="recommend"><a href="#">
+                        {% for news in other_hongbao_list %}
+                        <li class="recommend"><a href="{{news.url}}">
+                            <img class="recommend__img" src="{{news.pic.url}}" alt="" />
+                            <div>
+                                <h3 class="recommend__title">{{news.title}}</h3>
+                                <div class="recommend__detail clearfix"><span class="recommend__support-up">顶&nbsp;&nbsp;<number>{{news.up}}</number></span><span class="recommend__source">{{news.provider}}</span></div>
+                            </div>
+                        </a></li>
+                        {%endfor%}
+    					<!-- <li class="recommend"><a href="#">
     						<img class="recommend__img" src="" alt="" />
     						<div>
     							<h3 class="recommend__title">iPhone7全网通全网通全网通</h3>
@@ -102,7 +125,7 @@
                                 <h3 class="recommend__title">iPhone7全网通全网通全网通</h3>
                                 <div class="recommend__detail clearfix"><span class="recommend__support-up">顶&nbsp;&nbsp;<number>345</number></span><span class="recommend__source">京东</span></div>
                             </div>
-                        </a></li>
+                        </a></li> -->
     				</ul>
     			</div>
     		</div>
@@ -113,7 +136,7 @@
   <!--浮动窗口-->
   {% include "outline.html" %}
 
-		<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"slide":{"type":"slide","bdImg":"0","bdPos":"left","bdTop":"106.5"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+		<!-- <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"slide":{"type":"slide","bdImg":"0","bdPos":"left","bdTop":"106.5"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
         <script>
             var _hmt = _hmt || [];
             (function() {
@@ -122,11 +145,19 @@
               var s = document.getElementsByTagName("script")[0];
               s.parentNode.insertBefore(hm, s);
             })();
-        </script>
+        </script> -->
 
 		<script src="/static/js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/static/js/wfl-popup.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			$(document).ready(function(){
+			$(function(){
+                // $('.show-ewm').click(function(){
+                //     $.warning({
+                //         Title: '手机扫二维码体验',
+                //         Content: '<img style="width:100%" src="{{news.pic.url}}" alt="" />',
+                //         Confirm: '关闭'
+                //     });
+                // })
 			});
 		</script>
 	</body>
