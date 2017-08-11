@@ -108,7 +108,7 @@ class Welfare(Base):
                          upload_settings={"imageMaxSize":120000},settings={},command=None,blank=True)
 #     advert = models.ForeignKey("Advertisement",blank=True, null=True, on_delete=models.SET_NULL)
     isonMobile = models.BooleanField(u'是否只限移动端（pc端显示二维码）？', default= False)
-    exp_url = models.CharField(u"活动地址（已废弃）", blank=True, max_length=200)
+#     exp_url = models.CharField(u"活动地址（已废弃）", blank=True, max_length=200)
     exp_url_pc = models.CharField(u"活动地址pc", blank=True, max_length=200)
     exp_url_mobile = models.CharField(u"活动地址mobile", blank=True, max_length=200)
     exp_code = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, verbose_name=u"上传二维码")
