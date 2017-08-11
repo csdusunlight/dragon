@@ -707,11 +707,7 @@
                     slideshowSpeed: 500000
                 });
 //              轮播部分---end
-//              选项卡切换部分
-                $('.vip-tab').tab({
-                    tabActiveClass: 'on',
-                    tabType: 'mouseover'
-                });
+
                 // 红包部分
                 var htype = '';
                 var ordering = 'startTime';
@@ -741,7 +737,8 @@
                                             '<span class="hongbao__look">阅读量:&nbsp;&nbsp;<number class="hongbao__look-num">'+ ret.results[i].view_count +'</number></span>'+
                                             '<div class="hongbao__detailbox"><p class="hongbao__detail">'+ ret.results[i].seo_description + '</p></div>'+
                                             '<div class="hongbao-action clearfix"><div class="support l">'+
-                                                    '<span class="support__up">顶&nbsp;&nbsp;<number class="support__up-num">'+ ret.results[i].up +'</number></span><span class="support__down">踩&nbsp;&nbsp;<number class="support__down-num">'+ ret.results[i].down +'</number></span>'+
+                                                    '<span class="support__up">顶&nbsp;&nbsp;<number data-upid = '+ ret.results[i].id +' class="support__up-num">'+ ret.results[i].up +'</number></span>'+
+                                                    '<span class="support__down">踩&nbsp;&nbsp;<number data-downid = '+ ret.results[i].id +' class="support__down-num">'+ ret.results[i].down +'</number></span>'+
                                                 '</div><div class="hongbao-rb r">'+
                                                     '<span class="hongbao__time">'+ ret.results[i].startTime +'</span><span class="hongbao__source">'+ ret.results[i].provider +'</span><a class="btn m-green m-hongbao-link" href="'+ ret.results[i].url +'">查看详情</a>'+
                                                 '</div></div></div></li>';
@@ -781,7 +778,8 @@
                                             '<span class="hongbao__look">阅读量:&nbsp;&nbsp;<number class="hongbao__look-num">'+ ret.results[i].view_count +'</number></span>'+
                                             '<div class="hongbao__detailbox"><p class="hongbao__detail">'+ ret.results[i].seo_description + '</p></div>'+
                                             '<div class="hongbao-action clearfix"><div class="support l">'+
-                                                    '<span class="support__up">顶&nbsp;&nbsp;<number class="support__up-num">'+ ret.results[i].up +'</number></span><span class="support__down">踩&nbsp;&nbsp;<number class="support__down-num">'+ ret.results[i].down +'</number></span>'+
+                                                    '<span class="support__up">顶&nbsp;&nbsp;<number data-upid = '+ ret.results[i].id +' class="support__up-num">'+ ret.results[i].up +'</number></span>'+
+                                                    '<span class="support__down">踩&nbsp;&nbsp;<number data-downid = '+ ret.results[i].id +' class="support__down-num">'+ ret.results[i].down +'</number></span>'+
                                                 '</div><div class="hongbao-rb r">'+
                                                     '<span class="hongbao__time">'+ ret.results[i].startTime +'</span><span class="hongbao__source">'+ ret.results[i].provider +'</span><a class="btn m-green m-hongbao-link" href="'+ ret.results[i].url +'">查看详情</a>'+
                                                 '</div></div></div></li>';
@@ -800,15 +798,21 @@
                 // 点赞部分
                 var upFlag = 0;     //点攒控制开关
                 var downFlag = 0;     //踩控制开关
-                $('.support__up').click(function(){
+                $('.hongbao-box').on('click','.support__up', function(){
+                    var self = this;
+                    var upid = $(self).find('.support__up-num').data("upid");
+                    console.log(upid);
+                    var newurl = '/updown_welfare/' + upid + '/?click=up';
+                    console.log(newurl);
                     if (upFlag == 0) {
                         $.ajax({
-                            url: '/updown_welfare/7/?click=up',
+                            url: newurl,
                             dataType: "json",
                             type: "get",
                             success: function() {
-                                var upNum = parseInt($('.support__up-num').text()) + 1;
-                                $('.support__up-num').text(upNum);
+                                var upText = $(self).find('.support__up-num').text()
+                                var upNum = parseInt(upText) + 1;
+                                $(self).find('.support__up-num').text(upNum);
                                 upFlag++;
                                 console.log(upFlag);
                             },
@@ -820,15 +824,23 @@
                         return false;
                     }
                 })
-                $('.support__down').click(function(){
+                // $('.support__up').click(function(){
+                // })
+                $('.hongbao-box').on('click','.support__down', function(){
+                    var self = this;
+                    var downid = $(self).find('.support__down-num').data("downid");
+                    console.log(downid);
+                    var newurl = '/updown_welfare/' + downid + '/?click=down';
+                    console.log(newurl);
                     if (downFlag == 0) {
                         $.ajax({
-                            url: '/updown_welfare/7/?click=down',
+                            url: newurl,
                             dataType: "json",
                             type: "get",
                             success: function() {
-                                var downNum = parseInt($('.support__down-num').text()) + 1;
-                                $('.support__down-num').text(downNum);
+                                var upText = $(self).find('.support__down-num').text()
+                                var upNum = parseInt(upText) + 1;
+                                $(self).find('.support__down-num').text(upNum);
                                 downFlag++;
                                 console.log(downFlag);
                             },
@@ -836,15 +848,22 @@
                                 alert(JSON.stringify(ret));
                             }
                         });
-                    } else if (downFlag != 0) {
+                    } else if(downFlag != 0) {
                         return false;
                     }
                 })
-                // 点赞部分---end
-                $('.title-link').click(function(){
-                    $(this).addClass('on').siblings().removeClass('on');
-                    console.log($(this).index())
-                })
+                // $('.support__down').click(function(){
+                // })
+                // // 点赞部分---end
+                //              选项卡切换部分
+                $('.vip-tab').tab({
+                    tabActiveClass: 'on',
+                    tabType: 'mouseover'
+                });
+                // $('.title-link').click(function(){
+                //     $(this).addClass('on').siblings().removeClass('on');
+                //     console.log($(this).index())
+                // })
 //              选项卡切换部分---end
 //              计算器部分
                 var total_revenue,          //总收益
