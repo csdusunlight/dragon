@@ -179,12 +179,12 @@
                 <ul class="hongbao-box">
                     {% for news in hongbao_list %}
                     <li class="hongbao">
-                        <h2 class="hongbao__title">{{news.title}}<span class="hongbao__title-two">{{news.htype}}</span></h2>
+                        <h2 class="hongbao__title">{{news.title}}<span class="hongbao__title-two">{{news.subtitle}}</span></h2>
                         <div class="hongbao-detail">
                             <img class="hongbao__img" src="" alt="" />
                             <span class="hongbao__look">阅读量:&nbsp;&nbsp;<number class="hongbao__look-num">{{news.view_count}}</number></span>
                             <div class="hongbao__detailbox">
-                                <p class="hongbao__detail">{{news.strategy}}</p>
+                                <p class="hongbao__detail">{{news.seo_description}}</p>
                             </div>
                             <div class="hongbao-action clearfix">
                                 <div class="support l">
