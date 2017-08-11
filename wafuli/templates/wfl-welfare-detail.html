@@ -151,13 +151,13 @@
         <script src="/static/js/wfl-popup.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			$(function(){
-                // $('.show-ewm').click(function(){
-                //     $.warning({
-                //         Title: '手机扫二维码体验',
-                //         Content: '<img style="width:100%" src="{{news.pic.url}}" alt="" />',
-                //         Confirm: '关闭'
-                //     });
-                // })
+                $('.show-ewm').click(function(){
+                    $.warning({
+                        Title: '手机扫二维码体验',
+                        Content: '<img style="width:100%" src="{{news.exp_code}}" alt="" />',
+                        Confirm: '关闭'
+                    });
+                })
 			});
 		</script>
 	</body>

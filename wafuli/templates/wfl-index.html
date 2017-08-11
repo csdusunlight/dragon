@@ -732,23 +732,24 @@
                         type: "get",
                         pagesize: "4",
                         success: function(ret) {
-                            console.log(ret.results);
-                            console.log(ret.results[0].view_count);
-                            $('.hongbao').each(function(i,obj){
-                                console.log(i);
-                                console.log(obj);
-                                console.log('sdfs');
-                                $(obj).find('.hongbao__title').text(ret.results[i].title);
-                                $(obj).find('.hongbao__title-two').text(ret.results[i].subtitle);
-                                $(obj).find('.hongbao__look-num').text(ret.results[i].view_count);
-                                $(obj).find('.hongbao__detail').text(ret.results[i].seo_description);
-                                $(obj).find('.support__up-num').text(ret.results[i].up);
-                                $(obj).find('.support__down-num').text(ret.results[i].down);
-                                $(obj).find('.hongbao__time').text(ret.results[i].startTime);
-                                $(obj).find('.hongbao__source').text(ret.results[i].provider);
-                                $(obj).find('.m-hongbao-link').attr('href',ret.results[i].url);
-                                $(obj).find('.hongbao__img').attr('src',ret.results[i].pic);
-                            })
+                            if (ret.results.length > 0) {
+                                var innerhtml = "";
+                                for (var i=0; i<ret.results.length; i++) {
+                                    innerhtml += '<li class="hongbao">' +
+                                        '<h2 class="hongbao__title">'+ ret.results[i].title +'<span class="hongbao__title-two">'+ ret.results[i].subtitle +'</span></h2>'+
+                                        '<div class="hongbao-detail"><img class="hongbao__img" src="'+ ret.results[i].pic +'" alt="" />'+
+                                            '<span class="hongbao__look">阅读量:&nbsp;&nbsp;<number class="hongbao__look-num">'+ ret.results[i].view_count +'</number></span>'+
+                                            '<div class="hongbao__detailbox"><p class="hongbao__detail">'+ ret.results[i].seo_description + '</p></div>'+
+                                            '<div class="hongbao-action clearfix"><div class="support l">'+
+                                                    '<span class="support__up">顶&nbsp;&nbsp;<number class="support__up-num">'+ ret.results[i].up +'</number></span><span class="support__down">踩&nbsp;&nbsp;<number class="support__down-num">'+ ret.results[i].down +'</number></span>'+
+                                                '</div><div class="hongbao-rb r">'+
+                                                    '<span class="hongbao__time">'+ ret.results[i].startTime +'</span><span class="hongbao__source">'+ ret.results[i].provider +'</span><a class="btn m-green m-hongbao-link" href="'+ ret.results[i].url +'">查看详情</a>'+
+                                                '</div></div></div></li>';
+                                }
+                                $('.hongbao-box').html(innerhtml);
+                            } else if (ret.results.length == 0) {
+                                $('.hongbao-box').html('没有数据');
+                            }
                         },
                         error: function(ret) {
                             alert(JSON.stringify(ret));
@@ -771,22 +772,24 @@
                         type: "get",
                         pagesize: "4",
                         success: function(ret) {
-                            console.log(ret.results);
-                            console.log(ret.results[0].view_count);
-                            $('.hongbao').each(function(i,obj){
-                                console.log(i);
-                                console.log(obj);
-                                $(obj).find('.hongbao__title').text(ret.results[i].title);
-                                $(obj).find('.hongbao__title-two').text(ret.results[i].subtitle);
-                                $(obj).find('.hongbao__look-num').text(ret.results[i].view_count);
-                                $(obj).find('.hongbao__detail').text(ret.results[i].seo_description);
-                                $(obj).find('.support__up-num').text(ret.results[i].up);
-                                $(obj).find('.support__down-num').text(ret.results[i].down);
-                                $(obj).find('.hongbao__time').text(ret.results[i].startTime);
-                                $(obj).find('.hongbao__source').text(ret.results[i].provider);
-                                $(obj).find('.m-hongbao-link').attr('href',ret.results[i].url);
-                                $(obj).find('.hongbao__img').attr('src',ret.results[i].pic);
-                            })
+                            if (ret.results.length > 0) {
+                                var innerhtml = "";
+                                for (var i=0; i<ret.results.length; i++) {
+                                    innerhtml += '<li class="hongbao">' +
+                                        '<h2 class="hongbao__title">'+ ret.results[i].title +'<span class="hongbao__title-two">'+ ret.results[i].subtitle +'</span></h2>'+
+                                        '<div class="hongbao-detail"><img class="hongbao__img" src="'+ ret.results[i].pic +'" alt="" />'+
+                                            '<span class="hongbao__look">阅读量:&nbsp;&nbsp;<number class="hongbao__look-num">'+ ret.results[i].view_count +'</number></span>'+
+                                            '<div class="hongbao__detailbox"><p class="hongbao__detail">'+ ret.results[i].seo_description + '</p></div>'+
+                                            '<div class="hongbao-action clearfix"><div class="support l">'+
+                                                    '<span class="support__up">顶&nbsp;&nbsp;<number class="support__up-num">'+ ret.results[i].up +'</number></span><span class="support__down">踩&nbsp;&nbsp;<number class="support__down-num">'+ ret.results[i].down +'</number></span>'+
+                                                '</div><div class="hongbao-rb r">'+
+                                                    '<span class="hongbao__time">'+ ret.results[i].startTime +'</span><span class="hongbao__source">'+ ret.results[i].provider +'</span><a class="btn m-green m-hongbao-link" href="'+ ret.results[i].url +'">查看详情</a>'+
+                                                '</div></div></div></li>';
+                                }
+                                $('.hongbao-box').html(innerhtml);
+                            } else if (ret.results.length == 0) {
+                                $('.hongbao-box').html('没有数据');
+                            }
                         },
                         error: function(ret) {
                             alert(JSON.stringify(ret));
