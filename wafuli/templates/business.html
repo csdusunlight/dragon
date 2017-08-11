@@ -26,7 +26,7 @@
       <div class="hot-nav">热门商家</div>
       <div class="list">
       {%for business in hot_business_list%}
-      <a href="{%url 'welfare_list'%}?business={{business.name}}">
+      <a href="{%url 'welfare'%}?business={{business.name}}">
       	<img src="{{business.logo.url}}" class="list_img">
       </a>
       {%endfor%}
@@ -42,7 +42,7 @@
       </form>
       <div class="whole-content">
       {%for business in business_list%}
-      	<a href="{%url 'welfare_list'%}?business={{business.name}}">
+      	<a href="{%url 'welfare'%}?business={{business.name}}">
       	<img src="{{business.logo.url}}" class="list_img">
       	</a>
       {%endfor%}

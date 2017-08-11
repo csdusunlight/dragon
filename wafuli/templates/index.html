@@ -115,7 +115,7 @@ function getText(n) {
 <div class="box_back">
   <div id="index_12">
     <div class="index_13" style="display: block;">
-    	<h2>免费福利</h2><h3>抢到就是赚到</h3><a href="{%url 'welfare_list' %}" class="more">更多 &gt;</a>
+    	<h2>免费福利</h2><h3>抢到就是赚到</h3><a href="{%url 'welfare' %}" class="more">更多 &gt;</a>
         <div class="index_13_nav">
         <a>红包</a>
         <a>9.9包邮</a>
@@ -141,7 +141,7 @@ function getText(n) {
           {% endif %}
         </li>
 {% endfor %}
-      <a href="{% url 'welfare_list' type='hb' %}" class="more-content">更多红包>></a>
+      <a href="{% url 'welfare' %}" class="more-content">更多红包>></a>
       </ul>
 
       <ul>
@@ -157,7 +157,7 @@ function getText(n) {
           {% endif %}
         </li>
 {% endfor %}
-      <a href="{% url 'welfare_list' type='by' %}" class="more-content">更多包邮>></a>
+      <a href="{% url 'welfare' %}" class="more-content">更多包邮>></a>
       </ul>
 
       <ul>
@@ -173,7 +173,7 @@ function getText(n) {
           {% endif %}
         </li>
 {% endfor %}
-      <a href="{% url 'welfare_list' type='yhq' %}" class="more-content">更多优惠>></a>
+      <a href="{% url 'welfare' %}" class="more-content">更多优惠>></a>
       </ul>
     </div>
 
