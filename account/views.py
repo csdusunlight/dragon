@@ -336,7 +336,8 @@ def account(request):
 
 def signin(request):
 
-
+    if not request.is_ajax():
+        raise Http404
 
     result={'code':-1, 'url':''}
     if not request.user.is_authenticated():
