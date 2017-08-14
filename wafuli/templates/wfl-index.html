@@ -391,6 +391,7 @@
         <script src="/static/js/wfl-common.js" type="text/javascript" charset="utf-8"></script>
         <script src="/static/js/wfl-tab.js" type="text/javascript" charset="utf-8"></script>
         <script src="/static/js/wfl-guide.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/static/js/cookie.js" type="text/javascript" charset="utf-8"></script>
         <script type="text/javascript">
             $(document).ready(function(){
                 $('.nav__item:eq(0)').addClass('active');
@@ -807,8 +808,15 @@
                         }
                     });
                 });
-
-                createGuide();
+				
+                var reg=getCookie('guide');
+                var domain = document.domain;
+                alert(domain);
+                if(!reg){
+                	createGuide();
+                	setCookie('guide',1,100,domain,'');
+                }
+                
             });
         </script>
 
