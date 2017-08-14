@@ -2,6 +2,7 @@
 a.link:hover {
     color: #91C11D;
 }
+img {width: 100%;}
 /*快捷样式*/
 .wleft {
     width: 930px;
@@ -290,6 +291,8 @@ a.wflbox__more:hover {
 }
 .footer__iconimg {
     margin-left: 4px;
+    width: 32px;
+    height: 32px;
     vertical-align: middle;
 }
 .footer__friend-item,
