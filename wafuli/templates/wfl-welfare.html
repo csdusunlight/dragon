@@ -329,7 +329,7 @@
             console.log(upid);
             var newurl = '/updown_welfare/' + upid + '/?click=up';
             console.log(newurl);
-            if (!$(self).parent().hasClass('jzy')) {
+            if (!$(self).parent().hasClass('handled')) {
                 $.ajax({
                     url: newurl,
                     dataType: "json",
@@ -338,7 +338,7 @@
                         var upText = $(self).find('.support__up-num').text()
                         var upNum = parseInt(upText) + 1;
                         $(self).find('.support__up-num').text(upNum);
-                        $(self).parent().addClass('jzy');
+                        $(self).parent().addClass('handled');
                         console.log('chengong');
                     },
                     error: function(ret) {
@@ -346,7 +346,6 @@
                     }
                 });
             } else {
-                $(self).addClass('no-jzy');
                 console.log('shibai');
                 return false;
             }
@@ -357,7 +356,7 @@
             console.log(downid);
             var newurl = '/updown_welfare/' + downid + '/?click=down';
             console.log(newurl);
-            if (!$(self).hasClass('jzy')) {
+            if (!$(self).parent().hasClass('handled')) {
                 $.ajax({
                     url: newurl,
                     dataType: "json",
@@ -366,7 +365,7 @@
                         var upText = $(self).find('.support__down-num').text()
                         var upNum = parseInt(upText) + 1;
                         $(self).find('.support__down-num').text(upNum);
-                        $(self).addClass('jzy');
+                        $(self).parent().addClass('handled');
                     },
                     error: function(ret) {
                         alert(JSON.stringify(ret));
