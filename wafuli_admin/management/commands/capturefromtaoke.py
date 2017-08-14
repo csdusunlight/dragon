@@ -8,6 +8,7 @@ import cookielib
 import urllib
 import urllib2
 import logging
+import re
 
 from bs4 import BeautifulSoup
 from django.core.management import BaseCommand
@@ -74,7 +75,7 @@ def updateFuligou():
     good_list = soup.find('div', class_='goods-list').find_all('li')
     for i in range(4):
         item = good_list[i]
-        href = url + item.a['href']
+        href = url + re.sub('\s', '', item.a['href'])
         img_src = item.img['src']
         buy_price = item.find('span', class_='price').b.text.strip()[1:]
         old_price = item.find('span', class_='old-price').text.strip()[1:]
