@@ -808,13 +808,14 @@
                 // 红包部分---end
                 // 点赞部分
                 $('.hongbao-box').on('click','.support__up', function(){
-                var upFlag = 0;     //点攒控制开关
+                // var upFlag = 0;     //点攒控制开关
                     var self = this;
                     var upid = $(self).find('.support__up-num').data("upid");
                     console.log(upid);
                     var newurl = '/updown_welfare/' + upid + '/?click=up';
                     console.log(newurl);
-                    if (upFlag == 0) {
+                    if ($(self).hasClass('jzy')) {
+                    // if (upFlag == 0) {
                         $.ajax({
                             url: newurl,
                             dataType: "json",
@@ -823,21 +824,23 @@
                                 var upText = $(self).find('.support__up-num').text()
                                 var upNum = parseInt(upText) + 1;
                                 $(self).find('.support__up-num').text(upNum);
-                                upFlag++;
+                                // upFlag++;
+                                $(self).addClass('jzy');
                                 console.log(upFlag);
                             },
                             error: function(ret) {
                                 alert(JSON.stringify(ret));
                             }
                         });
-                    } else if(upFlag != 0) {
+                    } else {
+                    // } else if(upFlag != 0) {
                         return false;
                     }
                 })
                 // $('.support__up').click(function(){
                 // })
                 $('.hongbao-box').on('click','.support__down', function(){
-                var downFlag = 0;     //踩控制开关
+                // var downFlag = 0;     //踩控制开关
                     var self = this;
                     var downid = $(self).find('.support__down-num').data("downid");
                     console.log(downid);
