@@ -92,8 +92,8 @@ class Gongzhonghao(models.Model):
     
 class UserStatis(models.Model):
     user = models.OneToOneField(MyUser,related_name="withdraw_statis")
-    week_statis = models.IntegerField()
-    month_statis = models.IntegerField()
+    week_statis = models.IntegerField(default=0)
+    month_statis = models.IntegerField(default=0)
     def username_display(self):
         username = self.user.username
         if len(username) > 4:
