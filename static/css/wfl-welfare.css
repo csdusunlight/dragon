@@ -223,10 +223,16 @@
 }
 .fuligou__title,
 .jifen__title {
-	/*line-height: 30px;*/
+	line-height: 24px;
 }
 .fuligou__title {
     margin-bottom: 6px;
+}
+.fuligou:hover .fuligou__title {
+	color: #91c11d;
+}
+.jifen:hover .jifen__title {
+	color: #91c11d;
 }
 .price {
     height: 20px;
