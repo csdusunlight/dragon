@@ -188,7 +188,7 @@
                             </div>
                             <div class="hongbao-action clearfix">
                                 <div class="support l">
-                                    <span class="support__up">顶&nbsp;&nbsp;<number class="support__up-num">{{news.up}}</number></span><span class="support__down">踩&nbsp;&nbsp;<number class="support__down-num">{{news.down}}</number></span>
+                                    <span class="support__up">顶&nbsp;&nbsp;<number data-upid = "{{news.id}}" class="support__up-num">{{news.up}}</number></span><span class="support__down">踩&nbsp;&nbsp;<number data-downid = "{{news.id}}" class="support__down-num">{{news.down}}</number></span>
                                 </div>
                                 <div class="hongbao-rb r">
                                     <span class="hongbao__time">{{news.pub_date}}</span><span class="hongbao__source">{{news.provider}}</span><a class="btn m-green m-hongbao-link" href="{{news.url}}">查看详情</a>
@@ -807,9 +807,8 @@
                 })
                 // 红包部分---end
                 // 点赞部分
-                var upFlag = 0;     //点攒控制开关
-                var downFlag = 0;     //踩控制开关
                 $('.hongbao-box').on('click','.support__up', function(){
+                var upFlag = 0;     //点攒控制开关
                     var self = this;
                     var upid = $(self).find('.support__up-num').data("upid");
                     console.log(upid);
@@ -838,6 +837,7 @@
                 // $('.support__up').click(function(){
                 // })
                 $('.hongbao-box').on('click','.support__down', function(){
+                var downFlag = 0;     //踩控制开关
                     var self = this;
                     var downid = $(self).find('.support__down-num').data("downid");
                     console.log(downid);
