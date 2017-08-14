@@ -177,7 +177,7 @@
                     </ul>
                 </div>
                 <ul class="hongbao-box">
-                    {% for news in hongbao_list %}
+                    <!-- {% for news in hongbao_list %}
                     <li class="hongbao">
                         <h2 class="hongbao__title">{{news.title}}<span class="hongbao__title-two">{{news.subtitle}}</span></h2>
                         <div class="hongbao-detail">
@@ -196,7 +196,7 @@
                             </div>
                         </div>
                     </li>
-                    {% endfor %}
+                    {% endfor %} -->
                     <!-- <li class="hongbao">
                         <h2 class="hongbao__title">京东618优惠券总攻略<span class="hongbao__title-two">两天即领</span></h2>
                         <div class="hongbao-detail">
@@ -707,6 +707,37 @@
                     slideshowSpeed: 500000
                 });
 //              轮播部分---end
+
+                $.ajax({        //初始红包部分
+                    url: '/hongbaolist/?state=1&pageSize=4&is_qualified=true&ordering=-startTime',
+                    dataType: "json",
+                    type: "get",
+                    pagesize: "4",
+                    success: function(ret) {
+                        if (ret.results.length > 0) {
+                            var innerhtml = "";
+                            for (var i=0; i<ret.results.length; i++) {
+                                innerhtml += '<li class="hongbao">' +
+                                    '<h2 class="hongbao__title">'+ ret.results[i].title +'<span class="hongbao__title-two">'+ ret.results[i].subtitle +'</span></h2>'+
+                                    '<div class="hongbao-detail"><img class="hongbao__img" src="'+ ret.results[i].pic +'" alt="" />'+
+                                        '<span class="hongbao__look">阅读量:&nbsp;&nbsp;<number class="hongbao__look-num">'+ ret.results[i].view_count +'</number></span>'+
+                                        '<div class="hongbao__detailbox"><p class="hongbao__detail">'+ ret.results[i].seo_description + '</p></div>'+
+                                        '<div class="hongbao-action clearfix"><div class="support l">'+
+                                                '<span class="support__up">顶&nbsp;&nbsp;<number data-upid = '+ ret.results[i].id +' class="support__up-num">'+ ret.results[i].up +'</number></span>'+
+                                                '<span class="support__down">踩&nbsp;&nbsp;<number data-downid = '+ ret.results[i].id +' class="support__down-num">'+ ret.results[i].down +'</number></span>'+
+                                            '</div><div class="hongbao-rb r">'+
+                                                '<span class="hongbao__time">'+ ret.results[i].startTime +'</span><span class="hongbao__source">'+ ret.results[i].provider +'</span><a class="btn m-green m-hongbao-link" href="'+ ret.results[i].url +'">查看详情</a>'+
+                                            '</div></div></div></li>';
+                            }
+                            $('.hongbao-box').html(innerhtml);
+                        } else if (ret.results.length == 0) {
+                            $('.hongbao-box').html('没有数据');
+                        }
+                    },
+                    error: function(ret) {
+                        alert(JSON.stringify(ret));
+                    }
+                });
 
                 // 红包部分
                 var htype = '';
