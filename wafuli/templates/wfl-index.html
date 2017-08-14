@@ -811,7 +811,9 @@
 				
                 var reg=getCookie('guide');
                 var domain = document.domain;
-                alert(domain);
+                if (domain != '127.0.0.1'){
+                	domain = 'wafuli.cn';
+                }
                 if(!reg){
                 	createGuide();
                 	setCookie('guide',1,100,domain,'');
