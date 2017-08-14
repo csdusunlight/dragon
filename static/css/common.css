@@ -2,7 +2,7 @@
 a.link:hover {
     color: #91C11D;
 }
-img {width: 100%;}
+img {max-width: 100%;}
 /*快捷样式*/
 .wleft {
     width: 930px;
