@@ -230,16 +230,16 @@
 		<script type="text/javascript" src="{% static 'js/page.js' %}"></script>
 		<script type="text/javascript">
 			$(function(){
-				var data2 = '<li class="hongbao"><img class="hongbao__img" src="" alt="" /><h3>{title}</h3>'+
-							'<p class="hongbao__detail">京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略</p>'+
-							'<div class="hongbao-action clearfix">'+
-							'<div class="support l"><span class="support__up">顶（<number>345</number>）</span><span class="support__down">踩（<number>345</number>）</span></div>'+
-							'<div class="hongbao-rb r"><span class="hongbao__time">06-12 15:30</span><span class="hongbao__source">京东</span><a class="btn m-green m-hongbao-link" href="#">直达链接</a></div>'+
-							'</div></div></li>'
+				// var data2 = '<li class="hongbao"><img class="hongbao__img" src="" alt="" /><h3>{title}</h3>'+
+				// 			'<p class="hongbao__detail">京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略</p>'+
+				// 			'<div class="hongbao-action clearfix">'+
+				// 			'<div class="support l"><span class="support__up">顶（<number>345</number>）</span><span class="support__down">踩（<number>345</number>）</span></div>'+
+				// 			'<div class="hongbao-rb r"><span class="hongbao__time">06-12 15:30</span><span class="hongbao__source">京东</span><a class="btn m-green m-hongbao-link" href="#">直达链接</a></div>'+
+				// 			'</div></div></li>'
 				var data='[results]<li class="hongbao"><h2 class="hongbao__title">{title}<span class="hongbao__title-two">{subtitle}</span></h2>'+
                         '<div class="hongbao-detail"><img class="hongbao__img" src="{pic}" alt="" /><span class="hongbao__look">阅读量:&nbsp;&nbsp;{view_count}</span>'+
                             '<div class="hongbao__detailbox"><p class="hongbao__detail">{seo_description}</p></div><div class="hongbao-action clearfix">'+
-                                '<div class="support l"><span class="support__up">顶&nbsp;&nbsp;<number>{up}</number></span><span class="support__down">踩&nbsp;&nbsp;<number>{down}</number></span></div>'+
+                                '<div class="support l"><span class="support__up">顶&nbsp;&nbsp;<number data-upid = "{id}" class="support__up-num">{up}</number></span><span class="support__down">踩&nbsp;&nbsp;<number data-downid = "{id}" class="support__down-num">{down}</number></span></div>'+
                                 '<div class="hongbao-rb r"><span class="hongbao__time">{startTime}</span><span class="hongbao__source">{provider}</span><a class="btn m-green m-hongbao-link" href="{url}">查看详情</a>'+
                                 '</div></div></div></li>[/results]';
 			  // var url = "{% url 'get_finance_page' %}" + "?page={page}&size={pageSize}";
@@ -320,6 +320,63 @@
 				$('.hot-txt').click(function() {
 					$('.hongbao-input').val($(this).text());
 				})
+
+				// 点赞部分
+        $('.hongbao-box').on('click','.support__up', function(){
+            var self = this;
+            console.log($(self));
+            var upid = $(self).find('.support__up-num').data("upid");
+            console.log(upid);
+            var newurl = '/updown_welfare/' + upid + '/?click=up';
+            console.log(newurl);
+            if (!$(self).parent().hasClass('handled')) {
+                $.ajax({
+                    url: newurl,
+                    dataType: "json",
+                    type: "get",
+                    success: function() {
+                        var upText = $(self).find('.support__up-num').text()
+                        var upNum = parseInt(upText) + 1;
+                        $(self).find('.support__up-num').text(upNum);
+                        $(self).parent().addClass('handled');
+                        console.log('chengong');
+                    },
+                    error: function(ret) {
+                        alert(JSON.stringify(ret));
+                    }
+                });
+            } else {
+                console.log('shibai');
+                return false;
+            }
+        })
+        $('.hongbao-box').on('click','.support__down', function(){
+            var self = this;
+            var downid = $(self).find('.support__down-num').data("downid");
+            console.log(downid);
+            var newurl = '/updown_welfare/' + downid + '/?click=down';
+            console.log(newurl);
+            if (!$(self).parent().hasClass('handled')) {
+                $.ajax({
+                    url: newurl,
+                    dataType: "json",
+                    type: "get",
+                    success: function() {
+                        var upText = $(self).find('.support__down-num').text()
+                        var upNum = parseInt(upText) + 1;
+                        $(self).find('.support__down-num').text(upNum);
+                        $(self).parent().addClass('handled');
+                    },
+                    error: function(ret) {
+                        alert(JSON.stringify(ret));
+                    }
+                });
+            } else {
+                return false;
+            }
+        })
+        // // 点赞部分---end
+
 			})
 		</script>
 	</body>

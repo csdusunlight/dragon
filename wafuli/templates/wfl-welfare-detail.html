@@ -28,7 +28,7 @@
     		              <a class="btn m-green m-detailmain show-ewm">直达链接</a>
                         {% endif %}
     		            <div class="support d-ib">
-                            <span class="support__up">顶（<number class="support__up-num">{{news.up}}</number>）</span><span class="support__down">踩（<number class="support__down-num">{{news.down}}</number>）</span>
+                            <span class="support__up">顶（<number data-upid = "{{news.id}}" class="support__up-num">{{news.up}}</number>）</span><span class="support__down">踩（<number data-downid = "{{news.id}}" class="support__down-num">{{news.down}}</number>）</span>
                         </div>
     		        </div>
     		    </div>
@@ -178,50 +178,60 @@
 
 
                 // 点赞部分
-                var upFlag = 0;     //点攒控制开关
-                var downFlag = 0;     //踩控制开关
-                $('.support__up').click(function(){
-                    if (upFlag == 0) {
+                $('.support').on('click','.support__up', function(){
+                    var self = this;
+                    console.log($(self));
+                    var upid = $(self).find('.support__up-num').data("upid");
+                    console.log(upid);
+                    var newurl = '/updown_welfare/' + upid + '/?click=up';
+                    console.log(newurl);
+                    if (!$(self).parent().hasClass('handled')) {
                         $.ajax({
-                            url: '/updown_welfare/7/?click=up',
+                            url: newurl,
                             dataType: "json",
                             type: "get",
                             success: function() {
-                                console.log(parseInt($('.support__up-num').text(),10))
-                                var upNum = parseInt($('.support__up-num').text(),10) + 1;
-                                $('.support__up-num').text(upNum);
-                                upFlag++;
-                                console.log(upFlag);
+                                var upText = $(self).find('.support__up-num').text()
+                                var upNum = parseInt(upText) + 1;
+                                $(self).find('.support__up-num').text(upNum);
+                                $(self).parent().addClass('handled');
+                                console.log('chengong');
                             },
                             error: function(ret) {
                                 alert(JSON.stringify(ret));
                             }
                         });
-                    } else if(upFlag != 0) {
+                    } else {
+                        console.log('shibai');
                         return false;
                     }
                 })
-                $('.support__down').click(function(){
-                    if (downFlag == 0) {
+                $('.support').on('click','.support__down', function(){
+                    var self = this;
+                    var downid = $(self).find('.support__down-num').data("downid");
+                    console.log(downid);
+                    var newurl = '/updown_welfare/' + downid + '/?click=down';
+                    console.log(newurl);
+                    if (!$(self).parent().hasClass('handled')) {
                         $.ajax({
-                            url: '/updown_welfare/7/?click=down',
+                            url: newurl,
                             dataType: "json",
                             type: "get",
                             success: function() {
-                                var downNum = parseInt($('.support__down-num').text(),10) + 1;
-                                $('.support__down-num').text(downNum);
-                                downFlag++;
-                                console.log(downFlag);
+                                var upText = $(self).find('.support__down-num').text()
+                                var upNum = parseInt(upText) + 1;
+                                $(self).find('.support__down-num').text(upNum);
+                                $(self).parent().addClass('handled');
                             },
                             error: function(ret) {
                                 alert(JSON.stringify(ret));
                             }
                         });
-                    } else if (downFlag != 0) {
+                    } else {
                         return false;
                     }
                 })
-                // 点赞部分---end
+                // // 点赞部分---end
 			});
 		</script>
 	</body>

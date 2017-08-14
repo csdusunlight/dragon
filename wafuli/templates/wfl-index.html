@@ -188,7 +188,7 @@
                             </div>
                             <div class="hongbao-action clearfix">
                                 <div class="support l">
-                                    <span class="support__up">顶&nbsp;&nbsp;<number class="support__up-num">{{news.up}}</number></span><span class="support__down">踩&nbsp;&nbsp;<number class="support__down-num">{{news.down}}</number></span>
+                                    <span class="support__up">顶&nbsp;&nbsp;<number data-upid = "{{news.id}}" class="support__up-num">{{news.up}}</number></span><span class="support__down">踩&nbsp;&nbsp;<number data-downid = "{{news.id}}" class="support__down-num">{{news.down}}</number></span>
                                 </div>
                                 <div class="hongbao-rb r">
                                     <span class="hongbao__time">{{news.pub_date}}</span><span class="hongbao__source">{{news.provider}}</span><a class="btn m-green m-hongbao-link" href="{{news.url}}">查看详情</a>
@@ -807,15 +807,14 @@
                 })
                 // 红包部分---end
                 // 点赞部分
-                var upFlag = 0;     //点攒控制开关
-                var downFlag = 0;     //踩控制开关
                 $('.hongbao-box').on('click','.support__up', function(){
                     var self = this;
+                    console.log($(self));
                     var upid = $(self).find('.support__up-num').data("upid");
                     console.log(upid);
                     var newurl = '/updown_welfare/' + upid + '/?click=up';
                     console.log(newurl);
-                    if (upFlag == 0) {
+                    if (!$(self).parent().hasClass('handled')) {
                         $.ajax({
                             url: newurl,
                             dataType: "json",
@@ -824,26 +823,25 @@
                                 var upText = $(self).find('.support__up-num').text()
                                 var upNum = parseInt(upText) + 1;
                                 $(self).find('.support__up-num').text(upNum);
-                                upFlag++;
-                                console.log(upFlag);
+                                $(self).parent().addClass('handled');
+                                console.log('chengong');
                             },
                             error: function(ret) {
                                 alert(JSON.stringify(ret));
                             }
                         });
-                    } else if(upFlag != 0) {
+                    } else {
+                        console.log('shibai');
                         return false;
                     }
                 })
-                // $('.support__up').click(function(){
-                // })
                 $('.hongbao-box').on('click','.support__down', function(){
                     var self = this;
                     var downid = $(self).find('.support__down-num').data("downid");
                     console.log(downid);
                     var newurl = '/updown_welfare/' + downid + '/?click=down';
                     console.log(newurl);
-                    if (downFlag == 0) {
+                    if (!$(self).parent().hasClass('handled')) {
                         $.ajax({
                             url: newurl,
                             dataType: "json",
@@ -852,19 +850,16 @@
                                 var upText = $(self).find('.support__down-num').text()
                                 var upNum = parseInt(upText) + 1;
                                 $(self).find('.support__down-num').text(upNum);
-                                downFlag++;
-                                console.log(downFlag);
+                                $(self).parent().addClass('handled');
                             },
                             error: function(ret) {
                                 alert(JSON.stringify(ret));
                             }
                         });
-                    } else if(downFlag != 0) {
+                    } else {
                         return false;
                     }
                 })
-                // $('.support__down').click(function(){
-                // })
                 // // 点赞部分---end
                 //              选项卡切换部分
                 $('.vip-tab').tab({
