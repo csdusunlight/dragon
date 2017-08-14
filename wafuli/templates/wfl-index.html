@@ -33,7 +33,7 @@
                     <a class="left-iconnav-05 iconnav__item">借点钱</a>
                 </li>
                 <li class="left-iconnav__itembox d-ib">
-                    <a href="{% url 'task' %}" class="left-iconnav-06 iconnav__item">信用卡</a>
+                    <a class="left-iconnav-06 iconnav__item">信用卡</a>
                 </li>
             </ul>
             <div class="banner l">
@@ -820,6 +820,11 @@
                 });
 //              计算器部分---end
                 $('.left-iconnav-05').click(function() {
+                    $.prompt({
+                        Content: '板块正在开发，敬请期待！'
+                    })
+                });
+                $('.left-iconnav-06').click(function() {
                     $.prompt({
                         Content: '板块正在开发，敬请期待！'
                     })
