@@ -218,7 +218,7 @@
 	word-wrap: normal;
 }
 .discover {
-	padding: 0 10px 10px;
+	padding: 0 10px 16px;
 }
 .discover-content {
 	height: 414px;
@@ -230,6 +230,7 @@
 }
 .discover__txt {
 	margin-top: 12px;
+	line-height: 30px;
 }
 /*推荐、发现---end*/
 /*红包、积分会员*/
@@ -333,6 +334,7 @@
 	line-height: 1;
 }
 .support {
+		position: relative;
     height: 36px;
     line-height: 36px;
     border: 1px solid #e4e4e4;
