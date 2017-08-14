@@ -60,6 +60,8 @@
 .user-img {
 	float: left;
 	margin-right: 20px;
+	width: 70px;
+	height: 70px;
 }
 .user-info {
 	display: table;

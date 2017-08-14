@@ -243,7 +243,7 @@ $(function(){
                         	<ul>
                             	<li>
                                 	<div class="bing-top-li">
-                                    	<div class="Bin-img"><div class="Bin-mi"><img src="{% static 'images/phone.png' %}" /></div></div>
+                                    	<div class="Bin-img"><div class="Bin-mi"><img style="width: 32px" src="{% static 'images/phone.png' %}" /></div></div>
                                         <div class="Bin-right">
                                         	<strong>手机（{{user.mobile}}）</strong>
                                             <span>已绑定</span>
@@ -254,7 +254,7 @@ $(function(){
                             	<li style="display: none;">
                             		{% if user.is_email_authenticated %}
                             		<div class="bing-top-li">
-                                    	<div class="Bin-img"><div class="Bin-mi"><img src="{% static 'images/pic5.png' %}" /></div></div>
+                                    	<div class="Bin-img"><div class="Bin-mi"><img style="width: 32px" src="{% static 'images/pic5.png' %}" /></div></div>
                                         <div class="Bin-right">
                                         	<strong>邮箱（{{user.email}}）</strong>
                                             <span>已激活</span>
@@ -262,7 +262,7 @@ $(function(){
                                     </div>
                                     {% else %}
                                 	<div class="bing-top-li">
-                                    	<div class="Bin-img"><div class="Bin-mi ons"><img src="{% static 'images/pic5.png' %}" /></div></div>
+                                    	<div class="Bin-img"><div class="Bin-mi ons"><img style="width: 32px" src="{% static 'images/pic5.png' %}" /></div></div>
                                         <div class="Bin-right">
                                         	<strong>邮箱（{{user.email}}）</strong>
                                             <a class="acti-jump" id="acti1">我要激活</a>
@@ -273,7 +273,7 @@ $(function(){
                                 </li>
                                 <li style="border-right: none; border-bottom: 1px solid #ebebeb">
                                 	<div class="bing-top-li">
-                                    	<div class="Bin-img"><div class="Bin-mi"><img src="{% static 'images/pic6.png' %}" /></div></div>
+                                    	<div class="Bin-img"><div class="Bin-mi"><img style="width: 32px" src="{% static 'images/pic6.png' %}" /></div></div>
                                         <div class="Bin-right">
                                         	<strong>登陆密码</strong>
                                             <span>已设置</span><a class="login-modify">修改</a>
@@ -284,7 +284,7 @@ $(function(){
                                 <li>
                                 {% if user.pay_password %}
                                 	<div class="bing-top-li">
-                                    	<div class="Bin-img"><div class="Bin-mi"><img src="{% static 'images/pic7.png' %}" /></div></div>
+                                    	<div class="Bin-img"><div class="Bin-mi"><img style="width: 32px" src="{% static 'images/pic7.png' %}" /></div></div>
                                         <div class="Bin-right">
                                         	<strong>支付密码</strong>
                                             <span>已设置</span><a class="Pay-modify">修改</a>
@@ -292,7 +292,7 @@ $(function(){
                                     </div>
                                  {% else %}
                                 	<div class="bing-top-li">
-                                    	<div class="Bin-img"><div class="Bin-mi ons"><img src="{% static 'images/pic7.png' %}" /></div></div>
+                                    	<div class="Bin-img"><div class="Bin-mi ons"><img style="width: 32px" src="{% static 'images/pic7.png' %}" /></div></div>
                                         <div class="Bin-right">
                                         	<strong>支付密码</strong>
                                             <a class="acti-jump" id="acti2">我要设置</a>
