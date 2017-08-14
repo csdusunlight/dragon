@@ -108,7 +108,7 @@ class Welfare(Base):
                          upload_settings={"imageMaxSize":120000},settings={},command=None,blank=True)
 #     advert = models.ForeignKey("Advertisement",blank=True, null=True, on_delete=models.SET_NULL)
     isonMobile = models.BooleanField(u'是否只限移动端（pc端显示二维码）？', default= False)
-    exp_url = models.CharField(u"活动地址（已废弃）", blank=True, max_length=200)
+#     exp_url = models.CharField(u"活动地址（已废弃）", blank=True, max_length=200)
     exp_url_pc = models.CharField(u"活动地址pc", blank=True, max_length=200)
     exp_url_mobile = models.CharField(u"活动地址mobile", blank=True, max_length=200)
     exp_code = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, verbose_name=u"上传二维码")
@@ -460,6 +460,7 @@ ADLOCATION_NEW = (
     ('01', u'首页推荐位（200*200），配不超过20字的文字描述'),
     ('02', u'首页发现位（280*200），配不超过30字的文字描述'),
     ('03', u'首页中间广告位（1250*110）'),
+    ('04', u'首页下面的广告位（870*110）'),
     ('10', u'红包页大banner（680*380）'),
     ('11', u'红包页小banner（275*185）'),
 )

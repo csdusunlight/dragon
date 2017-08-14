@@ -92,7 +92,7 @@ def index(request):
 def wfl_index(request):
     ad_list = MAdvert_PC.objects.filter(location='00', is_hidden=False)[0:6]
     announce_list = Press.objects.filter(type='1')[0:2]
-    hongbao_list = Hongbao.objects.filter(is_qualified=True,state='1')[0:4]
+    hongbao_list = Hongbao.objects.filter(is_qualified=True,state='1').order_by("-startTime")[0:4]
     fuligou_main = Fuligou.objects.filter(is_main=True)[0:4]
     fuligou_side = Fuligou.objects.filter(is_main=False)[0:4]
     task_list = Task.objects.filter(state='1').order_by("-news_priority","-pub_date")[0:4]
@@ -101,7 +101,8 @@ def wfl_index(request):
     info = Information.objects.filter(is_display=True).first()
     recom_list = MAdvert_PC.objects.filter(location='01',is_hidden=False)[0:4]
     find = MAdvert_PC.objects.filter(location='02',is_hidden=False).first()
-    adv_index = MAdvert_PC.objects.filter(location='03',is_hidden=False).first()
+    adv_middle = MAdvert_PC.objects.filter(location='03',is_hidden=False).first()
+    adv_bottom = MAdvert_PC.objects.filter(location='04',is_hidden=False).first()
     credit_list = CreditCard.objects.all()[0:4]
     loan_list = Loan.objects.all()[0:4]
     week_statis = UserStatis.objects.order_by('-week_statis')[0:8]
@@ -116,13 +117,14 @@ def wfl_index(request):
                'commodity_list': commodity_list,#边栏积分商品，6个
                'recom_list': recom_list,#热门推荐，4个
                'find': find,#发现，1个
-               'adv_index':adv_index,#首页中部横幅广告位
+               'adv_middle':adv_middle,#首页中部横幅广告位
+               'adv_bottom':adv_bottom,#首页底部广告位
                'credit_list': credit_list,#信用卡，4个
                'loan_list': loan_list,#借点钱，4个
                'week_statis':week_statis,#提现金额周排名前8
                'month_statis':month_statis,#提现金额月排名前8
     }
-    
+
 
     try:
         statis = DayStatis.objects.get(date=date.today())
@@ -155,18 +157,18 @@ def wfl_index(request):
 #     ret = []
 #     for item in hongbao_list:
 #         ret.append({
-#             'subtitle':        
+#             'subtitle':
 #         })
-#         
+#
 class HongbaoList(generics.ListCreateAPIView):
     queryset = Hongbao.objects.all()
     serializer_class = HongbaoSerializer
     filter_backends = (SearchFilter, django_filters.rest_framework.DjangoFilterBackend, OrderingFilter)
-    filter_fields = ['state','htype']
+    filter_fields = ['state','htype','is_qualified']
     ordering_fields = ('up','startTime')
     search_fields = ('title', 'subtitle', 'provider', 'seo_description')
     pagination_class = ProjectPageNumberPagination
-    
+
 def hongbao(request, id):
     if id is None:
         ad_list = MAdvert_PC.objects.filter(location='10', is_hidden=False)[0:6]
@@ -183,13 +185,30 @@ def hongbao(request, id):
     else:
         id = int(id)
         news = Hongbao.objects.get(id=id)
-        other_hongbao_list = Hongbao.objects.filter(state='1').order_by('-pub_date')[0:6]
+        other_hongbao_list = Hongbao.objects.filter(state='1').order_by('-up')[0:6]
+        like_hongbao_list = Hongbao.objects.filter(state='1',htype=news.htype).order_by('-startTime')[0:4]
+        next = Hongbao.objects.filter(id__gt=id).order_by('id').first()
+        prev = Hongbao.objects.filter(id__lt=id).order_by('-id').first()
         context = {
                    'news':news,
                    'other_hongbao_list':other_hongbao_list,
+                   'like_hongbao_list':like_hongbao_list,
+                   'next':next,
+                   'prev':prev,
         }
         return render(request, 'wfl-welfare-detail.html', context)
-    
+def updown_hongbao(request, id):
+    click = request.GET.get('click', 'up')
+    hongbao = Hongbao.objects.get(id=id)
+    if click == 'up':
+        hongbao.up = F('up') + 1
+        hongbao.save(update_fields=['up',])
+    elif click == 'down':
+        hongbao.down = F('down') + 1
+        hongbao.save(update_fields=['down',])
+    return JsonResponse({})
+
+
 def finance(request, id=None):
     if id is None:
         ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='4'),is_hidden=False)[0:8]
