@@ -117,14 +117,14 @@ def wfl_index(request):
                'commodity_list': commodity_list,#边栏积分商品，6个
                'recom_list': recom_list,#热门推荐，4个
                'find': find,#发现，1个
-               'adv_index':adv_middle,#首页中部横幅广告位
-               'adv_index':adv_bottom,#首页底部广告位
+               'adv_middle':adv_middle,#首页中部横幅广告位
+               'adv_bottom':adv_bottom,#首页底部广告位
                'credit_list': credit_list,#信用卡，4个
                'loan_list': loan_list,#借点钱，4个
                'week_statis':week_statis,#提现金额周排名前8
                'month_statis':month_statis,#提现金额月排名前8
     }
-    
+
 
     try:
         statis = DayStatis.objects.get(date=date.today())
@@ -157,9 +157,9 @@ def wfl_index(request):
 #     ret = []
 #     for item in hongbao_list:
 #         ret.append({
-#             'subtitle':        
+#             'subtitle':
 #         })
-#         
+#
 class HongbaoList(generics.ListCreateAPIView):
     queryset = Hongbao.objects.all()
     serializer_class = HongbaoSerializer
@@ -168,7 +168,7 @@ class HongbaoList(generics.ListCreateAPIView):
     ordering_fields = ('up','startTime')
     search_fields = ('title', 'subtitle', 'provider', 'seo_description')
     pagination_class = ProjectPageNumberPagination
-    
+
 def hongbao(request, id):
     if id is None:
         ad_list = MAdvert_PC.objects.filter(location='10', is_hidden=False)[0:6]
@@ -207,8 +207,8 @@ def updown_hongbao(request, id):
         hongbao.down = F('down') + 1
         hongbao.save(update_fields=['down',])
     return JsonResponse({})
-    
-        
+
+
 def finance(request, id=None):
     if id is None:
         ad_list = Advertisement.objects.filter(Q(location='0')|Q(location='4'),is_hidden=False)[0:8]

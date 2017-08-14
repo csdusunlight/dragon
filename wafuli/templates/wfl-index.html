@@ -146,12 +146,10 @@
                     <h1 class="wflbox__title">发现</h1>
                 </div>
                 <div class="discover">
-                    {% for news in find %}
-                    <a href="{{news.url}}">
-                        <img class="discover__img" src="{{news.pic.url}}" alt="" />
-                        <p class="discover__txt">{{news.description}}</p>
+                    <a href="{{find.url}}">
+                        <img class="discover__img" src="{{find.pic.url}}" alt="" />
+                        <p class="discover__txt">{{find.description}}</p>
                     </a>
-                    {% endfor %}
                     <!-- <img class="discover__img" src="#" alt="" />
                     <p class="discover__txt">国美金融新手红包+返利，年化超30%</p> -->
                 </div>
@@ -430,7 +428,7 @@
         </div>
         <!--福利购---end-->
         <div class="wfl-wrap ad-box">
-            <img src=""/>
+            <a href="{{adv_middle.url}}"><img src="{{adv_middle.pic.url}}"/></a>
         </div>
         <!--任务赚-->
         <div class="wfl-wrap">
@@ -667,7 +665,9 @@
                             <a href="#" class="btn m-green m-creditcard">免费申请</a>
                         </div>
                     </li> -->
-                    <li class="creditcard-ad"><img class="creditcard-ad-img" src="" alt="" /></li>
+                    <li class="creditcard-ad">
+                        <a href="{{adv_bottom.url}}"><img class="creditcard-ad-img" src="{{adv_bottom.pic.url}}"/></a>
+                    </li>
                 </ul>
             </div>
             <div class="wflbox discover wright r">
