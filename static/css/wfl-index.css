@@ -404,6 +404,7 @@
 .vip-content {
 	padding: 0 8px 4px;
 	display: none;
+	height: 334px;
 }
 .vip-item {
 	margin-bottom: 6px;
@@ -478,7 +479,7 @@
 	text-decoration: line-through;
 }
 .quan {
-	width: 48px;
+	width: 50px;
 	height: 21px;
 	font-size: 12px;
 	line-height: 21px;
@@ -486,7 +487,13 @@
 	background: url(../images/coupon.png) center center/100% auto no-repeat;
 }
 .fulitou__txt {
+	display: -webkit-box;
+	text-overflow: ellipsis;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
 	margin-top: 16px;
+	height: 48px;
+	overflow: hidden;
 	color: #666;
 }
 

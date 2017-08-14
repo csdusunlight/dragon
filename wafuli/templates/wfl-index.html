@@ -73,17 +73,17 @@
                     <div class="flexslider2">
                         <ul class="slides slides-box">
                             <li>
-                                <p class="oneline"><a>截止到今天，已累计上线&nbsp;&nbsp;<span>{{all_wel_num}}</span>&nbsp;&nbsp;个福利</a></p>
-                                <p class="oneline"><a>截止到今天，已累计返现&nbsp;&nbsp;<span>{{withdraw_total}}</span>&nbsp;&nbsp;个福币</a></p>
+                                <p class="oneline"><a>截止到今天，已累计上线&nbsp;&nbsp;<span style="color: #ffbe00">{{all_wel_num}}</span>&nbsp;&nbsp;个福利</a></p>
+                                <p class="oneline"><a>截止到今天，已累计返现&nbsp;&nbsp;<span style="color: #ffbe00">{{withdraw_total}}</span>&nbsp;&nbsp;个福币</a></p>
                             </li>
                             <li>
                                 {% for news in announce_list %}
-                                <p class="oneline"><a href="{{news.url}}">{{news.summary}}</a></p>
+                                <p class="oneline"><a href="{{news.url}}" target="_blank">{{news.summary}}</a></p>
                                 {% endfor %}
                             </li>
                             <li>
                                 {% for news in finance_list %}
-                                <p class="oneline"><a href="{{news.url}}">理财精选：{{news.title}}</a></p>
+                                <p class="oneline"><a href="{{news.url}}" target="_blank">理财精选：{{news.title}}</a></p>
                                 {% endfor %}
                             </li>
                       </ul>
@@ -111,7 +111,7 @@
                 </div>
                 <ul class="hot-recommend-box">
                     {% for news in recom_list %}
-                    <li class="hot-recommend"><a href="{{news.url}}">
+                    <li class="hot-recommend"><a href="{{news.url}}" target="_blank">
                         <img class="hot-recommend__img" src="{{news.pic.url}}" alt="" />
                         <p class="hot-recommend__txt">{{news.title}}</p>
                     </a></li>
@@ -162,7 +162,7 @@
                     </div>
                     <ul class="jifen-box">
                         {% for news in commodity_list %}
-                        <li class="jifen"><a href="{{news.url}}">
+                        <li class="jifen"><a href="{{news.url}}" target="_blank">
                             <img class="jifen__img" src="{{news.pic.url}}" alt="" />
                             <div>
                                 <h3 class="jifen__title">{{news.name}}</h3>
@@ -175,7 +175,7 @@
                 <div class="wflbox m-vip vip-tab">
                     <div class="wflbox__titlebox clearfix  m-vip">
                         <h1 class="wflbox__title">会员收益排行榜</h1>
-                        <div class="wflbox__more" href="#"><a class="on title-link navitem">本周</a><a class="title-link navitem">本月</a></div>
+                        <div class="wflbox__more"><a class="on title-link navitem">本周</a><a class="title-link navitem">本月</a></div>
                     </div>
                     <div>
                         <ul class="vip-content conitem" style="display: block;">
@@ -203,7 +203,7 @@
                 <div class="fuligou-content clearfix">
                     <ul class="fuligou-box fs-0 l">
                         {% for news in fuligou_main %}
-                        <li class="fuligou d-ib"><a href="{{news.href}}">
+                        <li class="fuligou d-ib"><a href="{{news.href}}" target="_blank">
                             <img class="fuligou__img" src="{{news.img_src}}" alt="" />
                             <div class="fuligou__price clearfix">
                                 <div class="price l"><span class="price__now">￥<number>{{news.buy_price}}</number></span><span class="price__tag">券后价</span><span class="price__before">￥{{news.old_price}}</span></div>
@@ -215,7 +215,7 @@
                     </ul>
                     <ul class="fuligou-right-content fs-0 r">
                         {% for news in fuligou_side %}
-                        <li class="fuligou-right-item d-ib"><a href="{{news.href}}">
+                        <li class="fuligou-right-item d-ib"><a href="{{news.href}}" target="_blank">
                             <img class="fuligou-right-img" src="{{news.img_src}}" alt="" />
                             <span class="fuligou-right-title bg-red">9.9包邮</span>
                         </a></li>
@@ -238,7 +238,7 @@
                 <div class="clearfix">
                     <ul class="task-box fs-0 l">
                         {% for news in task_list %}
-                        <li class="task d-ib"><a href="{{news.url}}">
+                        <li class="task d-ib"><a href="{{news.url}}" target="_blank">
                             <img class="task__img" src="{{news.pic.url}}" alt="" />
                             <div class="task__detail clearfix">
                                 <h2 class="task__title">{{news.title}}</h2>
@@ -261,8 +261,8 @@
                         </ul>
 
                         <p class="task-ask">
-                            <a href="/press/29/">1、任务审核一般需要多长时间？</a><br />
-                            <a href="/press/30/">2、体验任务时的注意事项？</a>
+                            <a href="/press/29/" target="_blank">1、任务审核一般需要多长时间？</a><br />
+                            <a href="/press/30/" target="_blank">2、体验任务时的注意事项？</a>
                         </p>
                     </ul>
                 </div>
@@ -288,7 +288,7 @@
                             <p class="finance__column"><span class="finance__column-title">标期长度</span><span class="finance__date">{{news.investTime}}</span></p>
                             <p class="finance__column"><span class="finance__column-title">补贴收益</span><span class="finance__profit">+投资额{{news.benefit}}</span></p>
                             <p class="finance__column"><span class="finance__column-title">预计年化收益</span><span class="finance__year">{{news.revenue}}</span></p>
-                            <a class="btn m-green m-finance" href="{{news.url}}">立即投资</a>
+                            <a class="btn m-green m-finance" href="{{news.url}}" target="_blank">立即投资</a>
                         </li>
                         {% endfor %}
                     </ul>
@@ -360,7 +360,7 @@
                         <div class="creditcard__detail">
                             <h2 class="creditcard__title">{{news.title}}</h2>
                             <p class="creditcard__persons">已有<number>{{news.apply_num}}</number>人申请</p>
-                            <a href="#" class="btn m-green m-creditcard">免费申请</a>
+                            <a href="#" class="btn m-green m-creditcard" target="_blank">免费申请</a>
                         </div>
                     </li>
                     {% endfor %}
@@ -424,7 +424,7 @@
                                                 '<span class="support__up">顶&nbsp;&nbsp;<number data-upid = '+ ret.results[i].id +' class="support__up-num">'+ ret.results[i].up +'</number></span>'+
                                                 '<span class="support__down">踩&nbsp;&nbsp;<number data-downid = '+ ret.results[i].id +' class="support__down-num">'+ ret.results[i].down +'</number></span>'+
                                             '</div><div class="hongbao-rb r">'+
-                                                '<span class="hongbao__time">'+ ret.results[i].startTime +'</span><span class="hongbao__source">'+ ret.results[i].provider +'</span><a class="btn m-green m-hongbao-link" href="'+ ret.results[i].url +'">查看详情</a>'+
+                                                '<span class="hongbao__time">'+ ret.results[i].startTime +'</span><span class="hongbao__source">'+ ret.results[i].provider +'</span><a class="btn m-green m-hongbao-link" href="'+ ret.results[i].url +'" target="_blank">查看详情</a>'+
                                             '</div></div></div></li>';
                             }
                             $('.hongbao-box').html(innerhtml);
@@ -473,7 +473,7 @@
                                                     '<span class="support__up">顶&nbsp;&nbsp;<number data-upid = '+ ret.results[i].id +' class="support__up-num">'+ ret.results[i].up +'</number></span>'+
                                                     '<span class="support__down">踩&nbsp;&nbsp;<number data-downid = '+ ret.results[i].id +' class="support__down-num">'+ ret.results[i].down +'</number></span>'+
                                                 '</div><div class="hongbao-rb r">'+
-                                                    '<span class="hongbao__time">'+ ret.results[i].startTime +'</span><span class="hongbao__source">'+ ret.results[i].provider +'</span><a class="btn m-green m-hongbao-link" href="'+ ret.results[i].url +'">查看详情</a>'+
+                                                    '<span class="hongbao__time">'+ ret.results[i].startTime +'</span><span class="hongbao__source">'+ ret.results[i].provider +'</span><a class="btn m-green m-hongbao-link" href="'+ ret.results[i].url +'" target="_blank">查看详情</a>'+
                                                 '</div></div></div></li>';
                                 }
                                 $('.hongbao-box').html(innerhtml);
@@ -521,7 +521,7 @@
                                                     '<span class="support__up">顶&nbsp;&nbsp;<number data-upid = '+ ret.results[i].id +' class="support__up-num">'+ ret.results[i].up +'</number></span>'+
                                                     '<span class="support__down">踩&nbsp;&nbsp;<number data-downid = '+ ret.results[i].id +' class="support__down-num">'+ ret.results[i].down +'</number></span>'+
                                                 '</div><div class="hongbao-rb r">'+
-                                                    '<span class="hongbao__time">'+ ret.results[i].startTime +'</span><span class="hongbao__source">'+ ret.results[i].provider +'</span><a class="btn m-green m-hongbao-link" href="'+ ret.results[i].url +'">查看详情</a>'+
+                                                    '<span class="hongbao__time">'+ ret.results[i].startTime +'</span><span class="hongbao__source">'+ ret.results[i].provider +'</span><a class="btn m-green m-hongbao-link" href="'+ ret.results[i].url +'" target="_blank">查看详情</a>'+
                                                 '</div></div></div></li>';
                                 }
                                 $('.hongbao-box').html(innerhtml);
