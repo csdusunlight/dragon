@@ -16,7 +16,7 @@ from django.db import transaction
 
 from wafuli.models import Fuligou
 
-url = 'http://fuligou.wafuli.cn/'
+url = 'http://fuligou.wafuli.cn'
 url_nine = 'http://fuligou.wafuli.cn/index.php?r=nine&u=699467'
 logger = logging.getLogger('wafuli')
 
