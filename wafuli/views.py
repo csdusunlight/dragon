@@ -101,7 +101,8 @@ def wfl_index(request):
     info = Information.objects.filter(is_display=True).first()
     recom_list = MAdvert_PC.objects.filter(location='01',is_hidden=False)[0:4]
     find = MAdvert_PC.objects.filter(location='02',is_hidden=False).first()
-    adv_index = MAdvert_PC.objects.filter(location='03',is_hidden=False).first()
+    adv_middle = MAdvert_PC.objects.filter(location='03',is_hidden=False).first()
+    adv_bottom = MAdvert_PC.objects.filter(location='04',is_hidden=False).first()
     credit_list = CreditCard.objects.all()[0:4]
     loan_list = Loan.objects.all()[0:4]
     week_statis = UserStatis.objects.order_by('-week_statis')[0:8]
@@ -116,7 +117,8 @@ def wfl_index(request):
                'commodity_list': commodity_list,#边栏积分商品，6个
                'recom_list': recom_list,#热门推荐，4个
                'find': find,#发现，1个
-               'adv_index':adv_index,#首页中部横幅广告位
+               'adv_index':adv_middle,#首页中部横幅广告位
+               'adv_index':adv_bottom,#首页底部广告位
                'credit_list': credit_list,#信用卡，4个
                'loan_list': loan_list,#借点钱，4个
                'week_statis':week_statis,#提现金额周排名前8
@@ -184,7 +186,7 @@ def hongbao(request, id):
         id = int(id)
         news = Hongbao.objects.get(id=id)
         other_hongbao_list = Hongbao.objects.filter(state='1').order_by('-up')[0:6]
-        like_hongbao_list = Hongbao.objects.filter(state='1',htype=news.htype).order_by('-startTime')[0:8]
+        like_hongbao_list = Hongbao.objects.filter(state='1',htype=news.htype).order_by('-startTime')[0:4]
         next = Hongbao.objects.filter(id__gt=id).order_by('id').first()
         prev = Hongbao.objects.filter(id__lt=id).order_by('-id').first()
         context = {
