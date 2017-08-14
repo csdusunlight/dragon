@@ -402,12 +402,12 @@
 	color: #91c11d;
 }
 .vip-content {
-	padding: 0 8px 4px;
+	padding: 20px 8px 4px;
 	display: none;
 	height: 334px;
 }
 .vip-item {
-	margin-bottom: 6px;
+	margin-bottom: 14px;
 }
 .vip-num,
 .vip-account,
