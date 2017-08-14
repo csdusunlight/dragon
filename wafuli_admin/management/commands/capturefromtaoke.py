@@ -73,7 +73,7 @@ def updateFuligou():
     allhtml = browser.get(url_nine)
     soup = BeautifulSoup(allhtml, "html.parser")
     good_list = soup.find('div', class_='goods-list').find_all('li')
-    for i in range(4):
+    for i in range(5):
         item = good_list[i]
         href = url + re.sub('\s', '', item.a['href'])
         img_src = item.img['src']
@@ -92,6 +92,6 @@ def updateFuligou():
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        logger.info("******Capture Fuligou is finished*********")
+        logger.info("******Capture Fuligou is beginning*********")
         updateFuligou()
         logger.info("******Capture Fuligou is finished*********")
