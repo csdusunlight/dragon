@@ -175,7 +175,21 @@
 				      content:data,
 				      complete:pagecallback,
 				  });
-				})
+				});
+				$('.hongbao-input').on('keypress',function(e){
+					if(e.keyCode == 13) {
+						var newurl = url + '&search=' + $('.hongbao-input').val();
+						console.log(newurl);
+						$("#pagedata1").ajaxPage({
+					      url:newurl,
+					      pageId:$("#page1"),
+					      pageSize:2,
+					      run:true,
+					      content:data,
+					      complete:pagecallback,
+					  });
+					}
+				});
 				$('.hongbao-nav__item').click(function(){
 					$(this).addClass('on').siblings().removeClass('on');
 					if ($(this).index() == 0) {
