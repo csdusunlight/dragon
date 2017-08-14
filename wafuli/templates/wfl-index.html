@@ -180,7 +180,7 @@
                     <div>
                         <ul class="vip-content conitem" style="display: block;">
                             {% for news in week_statis %}
-                            <li class="vip-item"><span class="vip-num">1</span><span class="vip-account">{{news.username_display}}</span><span class="vip-withdrow">提现<number>{{news.with_total}}</number>福币</span></li>
+                            <li class="vip-item"><span class="vip-num">1</span><span class="vip-account">{{news.username_display}}</span><span class="vip-withdrow">提现<number>{{news.month_statis}}</number>福币</span></li>
                             {% endfor %}
                          </ul>
                         <ul class="vip-content conitem">
@@ -426,7 +426,7 @@
                                                 '<span class="support__up">顶&nbsp;&nbsp;<number data-upid = '+ ret.results[i].id +' class="support__up-num">'+ ret.results[i].up +'</number></span>'+
                                                 '<span class="support__down">踩&nbsp;&nbsp;<number data-downid = '+ ret.results[i].id +' class="support__down-num">'+ ret.results[i].down +'</number></span>'+
                                             '</div><div class="hongbao-rb r">'+
-                                                '<span class="hongbao__time">'+ ret.results[i].startTime +'</span><span class="hongbao__source">'+ ret.results[i].provider +'</span><a class="btn m-green m-hongbao-link" href="'+ ret.results[i].url +'">查看详情</a>'+
+                                                '<span class="hongbao__time">'+ ret.results[i].startTime.slice(5,16).replace('T',' ') +'</span><span class="hongbao__source">'+ ret.results[i].provider +'</span><a class="btn m-green m-hongbao-link" href="'+ ret.results[i].url +'">查看详情</a>'+
                                             '</div></div></div></li>';
                             }
                             $('.hongbao-box').html(innerhtml);
@@ -475,7 +475,7 @@
                                                     '<span class="support__up">顶&nbsp;&nbsp;<number data-upid = '+ ret.results[i].id +' class="support__up-num">'+ ret.results[i].up +'</number></span>'+
                                                     '<span class="support__down">踩&nbsp;&nbsp;<number data-downid = '+ ret.results[i].id +' class="support__down-num">'+ ret.results[i].down +'</number></span>'+
                                                 '</div><div class="hongbao-rb r">'+
-                                                    '<span class="hongbao__time">'+ ret.results[i].startTime +'</span><span class="hongbao__source">'+ ret.results[i].provider +'</span><a class="btn m-green m-hongbao-link" href="'+ ret.results[i].url +'">查看详情</a>'+
+                                                    '<span class="hongbao__time">'+ ret.results[i].startTime.slice(5,16).replace('T',' ') +'</span><span class="hongbao__source">'+ ret.results[i].provider +'</span><a class="btn m-green m-hongbao-link" href="'+ ret.results[i].url +'">查看详情</a>'+
                                                 '</div></div></div></li>';
                                 }
                                 $('.hongbao-box').html(innerhtml);
