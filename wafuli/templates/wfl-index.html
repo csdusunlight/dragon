@@ -21,7 +21,7 @@
                     <a href="{% url 'welfare' %}" class="left-iconnav-01 iconnav__item">红包福利</a>
                 </li>
                 <li class="left-iconnav__itembox d-ib">
-                    <a href="#" class="left-iconnav-02 iconnav__item">福利购</a>
+                    <a href="http://fuligou.wafuli.cn" class="left-iconnav-02 iconnav__item">福利购</a>
                 </li>
                 <li class="left-iconnav__itembox d-ib">
                     <a href="{% url 'task' %}" class="left-iconnav-03 iconnav__item">任务赚</a>
@@ -30,10 +30,10 @@
                     <a href="{% url 'finance' %}" class="left-iconnav-04 iconnav__item">P2P返利</a>
                 </li>
                 <li class="left-iconnav__itembox d-ib">
-                    <a href="#" class="left-iconnav-05 iconnav__item">借点钱</a>
+                    <a href="{% url 'task' %}" class="left-iconnav-05 iconnav__item">借点钱</a>
                 </li>
                 <li class="left-iconnav__itembox d-ib">
-                    <a href="#" class="left-iconnav-06 iconnav__item">信用卡</a>
+                    <a class="left-iconnav-06 iconnav__item">信用卡</a>
                 </li>
             </ul>
             <div class="banner l">
@@ -43,11 +43,6 @@
                             <li onclick="location='{{adv.url}}'" style="background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li>
                             <!-- <script>textarray.push("{{adv.navigation}}");</script> -->
                         {%endfor%}
-                        <!-- <li style="background:url(/static/images/test-img1.jpg) 50% 0 no-repeat;"></li>
-                        <li style="background:url(/static/images/test-img2.jpg) 50% 0 no-repeat;"></li>
-                        <li style="background:url(/static/images/test-img3.jpg) 50% 0 no-repeat;"></li>
-                        <li style="background:url(/static/images/test-img4.jpg) 50% 0 no-repeat;"></li>
-                        <li style="background:url(/static/images/test-img5.jpg) 50% 0 no-repeat;"></li> -->
                     </ul>
 
                 </div>
@@ -69,8 +64,6 @@
                             <p class="user-detail-num clearfix"><span class="user-fubi l">福币：{{user.balance}}</span><span class="user-jifen r">积分：{{user.scores}}</span></p>
                         </div>
                         {% endif %}
-                        <!-- <p class="user-info-detail d-tc">Hi,<span>你好</span><br />
-                        <a href="{% url 'login' %}" class="login-link">登录</a>发现更多精彩</p> -->
                     </div>
                 </div>
                 <a href="#" class="btn-signin btn bg-green">签到领积分</a>
@@ -123,21 +116,6 @@
                         <p class="hot-recommend__txt">{{news.title}}</p>
                     </a></li>
                     {% endfor %}
-                    <!-- <li class="hot-recommend"><a href="#">
-                            <img class="hot-recommend__img" src="" alt="" />
-                            <p class="hot-recommend__txt">历史低价，618疯抢，史前最低。</p>
-                        </a></li>
-                    <li class="hot-recommend"><a href="#">
-                            <img class="hot-recommend__img" src="" alt="" />
-                            <p class="hot-recommend__txt">历史低价，618疯抢，史前最低历史低价，618疯抢，史前最低</p>
-                        </a></li>
-                    <li class="hot-recommend"><a href="#">
-                            <img class="hot-recommend__img" src="" alt="" />
-                            <p class="hot-recommend__txt">历史低价，618疯抢，史前最低</p>
-                        </a></li>
-                    <li class="hot-recommend"><a href="#">
-                            <img class="hot-recommend__img" src="" alt="" />
-                            <p class="hot-recommend__txt">历史低价，618疯抢，史前最低</p>
                         </a></li> -->
                 </ul>
             </div>
@@ -150,8 +128,6 @@
                         <img class="discover__img" src="{{find.pic.url}}" alt="" />
                         <p class="discover__txt">{{find.title}}</p>
                     </a>
-                    <!-- <img class="discover__img" src="#" alt="" />
-                    <p class="discover__txt">国美金融新手红包+返利，年化超30%</p> -->
                 </div>
             </div>
         </div>
@@ -175,88 +151,8 @@
                     </ul>
                 </div>
                 <ul class="hongbao-box">
-                    <!-- {% for news in hongbao_list %}
-                    <li class="hongbao">
-                        <h2 class="hongbao__title">{{news.title}}<span class="hongbao__title-two">{{news.subtitle}}</span></h2>
-                        <div class="hongbao-detail">
-                            <img class="hongbao__img" src="{{news.pic.url}}" alt="" />
-                            <span class="hongbao__look">阅读量:&nbsp;&nbsp;<number class="hongbao__look-num">{{news.view_count}}</number></span>
-                            <div class="hongbao__detailbox">
-                                <p class="hongbao__detail">{{news.seo_description}}</p>
-                            </div>
-                            <div class="hongbao-action clearfix">
-                                <div class="support l">
-                                    <span class="support__up">顶&nbsp;&nbsp;<number data-upid = "{{news.id}}" class="support__up-num">{{news.up}}</number></span><span class="support__down">踩&nbsp;&nbsp;<number data-downid = "{{news.id}}" class="support__down-num">{{news.down}}</number></span>
-                                </div>
-                                <div class="hongbao-rb r">
-                                    <span class="hongbao__time">{{news.pub_date}}</span><span class="hongbao__source">{{news.provider}}</span><a class="btn m-green m-hongbao-link" href="{{news.url}}">查看详情</a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    {% endfor %} -->
-                    <!-- <li class="hongbao">
-                        <h2 class="hongbao__title">京东618优惠券总攻略<span class="hongbao__title-two">两天即领</span></h2>
-                        <div class="hongbao-detail">
-                            <img class="hongbao__img" src="" alt="" />
-                            <span class="hongbao__look">阅读量:&nbsp;&nbsp;<number class="hongbao__look-num">2344</number></span>
-                            <div class="hongbao__detailbox">
-                                <p class="hongbao__detail">京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略
-                            京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略
-                            京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优</p>
-                            </div>
-                            <div class="hongbao-action clearfix">
-                                <div class="support l">
-                                    <span class="support__up">顶&nbsp;&nbsp;<number class="support__up-num">348885</number></span><span class="support__down">踩&nbsp;&nbsp;<number class="support__down-num">345</number></span>
-                                </div>
-                                <div class="hongbao-rb r">
-                                    <span class="hongbao__time">06-12 15:30</span><span class="hongbao__source">京东</span><a class="btn m-green m-hongbao-link" href="#">查看详情</a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="hongbao">
-                        <h2 class="hongbao__title">京东618优惠券总攻略<span class="hongbao__title-two">两天即领</span></h2>
-                        <div class="hongbao-detail">
-                            <img class="hongbao__img" src="" alt="" />
-                            <span class="hongbao__look">阅读量:&nbsp;&nbsp;<number class="hongbao__look-num">2344</number></span>
-                            <div class="hongbao__detailbox">
-                                <p class="hongbao__detail">京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略
-                            京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略
-                            京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优</p>
-                            </div>
-                            <div class="hongbao-action clearfix">
-                                <div class="support l">
-                                    <span class="support__up">顶&nbsp;&nbsp;<number class="support__up-num">348885</number></span><span class="support__down">踩&nbsp;&nbsp;<number class="support__down-num">345</number></span>
-                                </div>
-                                <div class="hongbao-rb r">
-                                    <span class="hongbao__time">06-12 15:30</span><span class="hongbao__source">京东</span><a class="btn m-green m-hongbao-link" href="#">查看详情</a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="hongbao">
-                        <h2 class="hongbao__title">京东618优惠券总攻略<span class="hongbao__title-two">两天即领</span></h2>
-                        <div class="hongbao-detail">
-                            <img class="hongbao__img" src="" alt="" />
-                            <span class="hongbao__look">阅读量:&nbsp;&nbsp;<number class="hongbao__look-num">2344</number></span>
-                            <div class="hongbao__detailbox">
-                                <p class="hongbao__detail">京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略
-                            京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略
-                            京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优</p>
-                            </div>
-                            <div class="hongbao-action clearfix">
-                                <div class="support l">
-                                    <span class="support__up">顶&nbsp;&nbsp;<number class="support__up-num">348885</number></span><span class="support__down">踩&nbsp;&nbsp;<number class="support__down-num">345</number></span>
-                                </div>
-                                <div class="hongbao-rb r">
-                                    <span class="hongbao__time">06-12 15:30</span><span class="hongbao__source">京东</span><a class="btn m-green m-hongbao-link" href="#">查看详情</a>
-                                </div>
-                            </div>
-                        </div>
-                    </li> -->
-                    <li class="hongbao-more"><a style="display: block" href="{% url 'welfare' %}">查看更多</a></li>
                 </ul>
+                <div class="hongbao-more"><a style="display: block" href="{% url 'welfare' %}">查看更多</a></div>
             </div>
             <div class="sidebar wright r">
                 <div class="wflbox">
@@ -274,48 +170,6 @@
                             </div>
                         </a></li>
                         {% endfor %}
-                        <!-- <li class="jifen"><a href="#">
-                            <img class="jifen__img" src="" alt="" />
-                            <div>
-                                <h3 class="jifen__title">iPhone7全网通全网通全网通</h3>
-                                <p class="jifen__num">积分：777888</p>
-                            </div>
-                        </a></li>
-                        <li class="jifen"><a href="#">
-                            <img class="jifen__img" src="" alt="" />
-                            <div>
-                                <h3 class="jifen__title">iPhone7全网通全网通全网通</h3>
-                                <p class="jifen__num">积分：777888</p>
-                            </div>
-                        </a></li>
-                        <li class="jifen"><a href="#">
-                            <img class="jifen__img" src="" alt="" />
-                            <div>
-                                <h3 class="jifen__title">iPhone7全网通全网通全网通</h3>
-                                <p class="jifen__num">积分：777888</p>
-                            </div>
-                        </a></li>
-                        <li class="jifen"><a href="#">
-                            <img class="jifen__img" src="" alt="" />
-                            <div>
-                                <h3 class="jifen__title">iPhone7全网通全网通全网通</h3>
-                                <p class="jifen__num">积分：777888</p>
-                            </div>
-                        </a></li>
-                        <li class="jifen"><a href="#">
-                            <img class="jifen__img" src="" alt="" />
-                            <div>
-                                <h3 class="jifen__title">iPhone7全网通全网通全网通</h3>
-                                <p class="jifen__num">积分：777888</p>
-                            </div>
-                        </a></li>
-                        <li class="jifen"><a href="#">
-                            <img class="jifen__img" src="" alt="" />
-                            <div>
-                                <h3 class="jifen__title">iPhone7全网通全网通全网通</h3>
-                                <p class="jifen__num">积分：777888</p>
-                            </div>
-                        </a></li> -->
                     </ul>
                 </div>
                 <div class="wflbox m-vip vip-tab">
@@ -328,15 +182,7 @@
                             {% for news in week_statis %}
                             <li class="vip-item"><span class="vip-num">1</span><span class="vip-account">{{news.username_display}}</span><span class="vip-withdrow">提现<number>{{news.with_total}}</number>福币</span></li>
                             {% endfor %}
-                            <!-- <li class="vip-item"><span class="vip-num">1</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
-                            <li class="vip-item"><span class="vip-num">2</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
-                            <li class="vip-item"><span class="vip-num">3</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
-                            <li class="vip-item"><span class="vip-num">4</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
-                            <li class="vip-item"><span class="vip-num">5</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
-                            <li class="vip-item"><span class="vip-num">6</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
-                            <li class="vip-item"><span class="vip-num">7</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li>
-                            <li class="vip-item"><span class="vip-num">8</span><span class="vip-account">w15233334566</span><span class="vip-withdrow">提现<number>133432434</number>福币</span></li> -->
-                        </ul>
+                         </ul>
                         <ul class="vip-content conitem">
                             {% for news in month_statis %}
                             <li class="vip-item"><span class="vip-num">1</span><span class="vip-account">{{news.username_display}}</span><span class="vip-withdrow">提现<number>{{news.week_statis}}</number>福币</span></li>
@@ -352,7 +198,7 @@
             <div class="wflbox">
                 <div class="wflbox__titlebox clearfix">
                     <h1 class="wflbox__title">福利购</h1>
-                    <a class="wflbox__more" href="#">查看更多</a>
+                    <a class="wflbox__more" href="http://fuligou.wafuli.cn">查看更多</a>
                 </div>
                 <div class="fuligou-content clearfix">
                     <ul class="fuligou-box fs-0 l">
@@ -366,62 +212,14 @@
                             <p class="fulitou__txt">{{news.title}}</p>
                         </a></li>
                         {% endfor %}
-                        <!-- <li class="fuligou d-ib"><a href="#">
-                            <img class="fuligou__img" src="" alt="" />
-                            <div class="fuligou__price clearfix">
-                                <div class="price l"><span class="price__now">￥<number>24.5</number></span><span class="price__tag">券后价</span><span class="price__before">￥34.5</span></div>
-                                <div class="quan r color-red">券￥<number>10</number></div>
-                            </div>
-                            <p class="fulitou__txt">历史低价，618疯抢，史前最低。</p>
-                        </a></li>
-                        <li class="fuligou d-ib"><a href="#">
-                            <img class="fuligou__img" src="" alt="" />
-                            <div class="fuligou__price clearfix">
-                                <div class="price l"><span class="price__now">￥<number>24.5</number></span><span class="price__tag">券后价</span><span class="price__before">￥34.5</span></div>
-                                <div class="quan r color-red">券￥<number>10</number></div>
-                            </div>
-                            <p class="fulitou__txt">历史低价，618疯抢，史前最低。</p>
-                        </a></li>
-                        <li class="fuligou d-ib"><a href="#">
-                            <img class="fuligou__img" src="" alt="" />
-                            <div class="fuligou__price clearfix">
-                                <div class="price l"><span class="price__now">￥<number>24.5</number></span><span class="price__tag">券后价</span><span class="price__before">￥34.5</span></div>
-                                <div class="quan r color-red">券￥<number>10</number></div>
-                            </div>
-                            <p class="fulitou__txt">历史低价，618疯抢，史前最低。</p>
-                        </a></li>
-                        <li class="fuligou d-ib"><a href="#">
-                            <img class="fuligou__img" src="" alt="" />
-                            <div class="fuligou__price clearfix">
-                                <div class="price l"><span class="price__now">￥<number>24.5</number></span><span class="price__tag">券后价</span><span class="price__before">￥34.5</span></div>
-                                <div class="quan r color-red">券￥<number>10</number></div>
-                            </div>
-                            <p class="fulitou__txt">历史低价，618疯抢，史前最低。</p>
-                        </a></li> -->
                     </ul>
                     <ul class="fuligou-right-content fs-0 r">
                         {% for news in fuligou_side %}
                         <li class="fuligou-right-item d-ib"><a href="{{news.href}}">
                             <img class="fuligou-right-img" src="{{news.img_src}}" alt="" />
-                            <span class="fuligou-right-title bg-red">{{news.title}}</span>
+                            <span class="fuligou-right-title bg-red">9.9包邮</span>
                         </a></li>
                         {% endfor %}
-                        <!-- <li class="fuligou-right-item d-ib"><a href="#">
-                            <img class="fuligou-right-img" src="" alt="" />
-                            <span class="fuligou-right-title bg-red">9.9包邮</span>
-                        </a></li>
-                        <li class="fuligou-right-item d-ib"><a href="#">
-                            <img class="fuligou-right-img" src="" alt="" />
-                            <span class="fuligou-right-title bg-red">9.9包邮</span>
-                        </a></li>
-                        <li class="fuligou-right-item d-ib"><a href="#">
-                            <img class="fuligou-right-img" src="" alt="" />
-                            <span class="fuligou-right-title bg-red">9.9包邮</span>
-                        </a></li>
-                        <li class="fuligou-right-item d-ib"><a href="#">
-                            <img class="fuligou-right-img" src="" alt="" />
-                            <span class="fuligou-right-title bg-red">9.9包邮</span>
-                        </a></li> -->
                     </ul>
                 </div>
             </div>
@@ -450,42 +248,6 @@
                             </div>
                         </a></li>
                         {% endfor %}
-                        <!-- <li class="task d-ib"><a href="#">
-                            <img class="task__img" src="" alt="" />
-                            <div class="task__detail clearfix">
-                                <h2 class="task__title">给你花给你花给你花给你花给你花</h2>
-                                <p class="task__reward">奖励福币：<number>600</number></p>
-                                <p class="task__person">剩余名额：<number>45</number></p>
-                                <p class="task__time">截止时间：<number>2017.08.20</number></p>
-                            </div>
-                        </a></li>
-                        <li class="task d-ib"><a href="#">
-                            <img class="task__img" src="" alt="" />
-                            <div class="task__detail clearfix">
-                                <h2 class="task__title">给你花给你花给你花给你花给你花</h2>
-                                <p class="task__reward">奖励福币：<number>600</number></p>
-                                <p class="task__person">剩余名额：<number>45</number></p>
-                                <p class="task__time">截止时间：<number>2017.08.20</number></p>
-                            </div>
-                        </a></li>
-                        <li class="task d-ib"><a href="#">
-                            <img class="task__img" src="" alt="" />
-                            <div class="task__detail clearfix">
-                                <h2 class="task__title">给你花给你花给你花给你花给你花</h2>
-                                <p class="task__reward">奖励福币：<number>600</number></p>
-                                <p class="task__person">剩余名额：<number>45</number></p>
-                                <p class="task__time">截止时间：<number>2017.08.20</number></p>
-                            </div>
-                        </a></li>
-                        <li class="task d-ib"><a href="#">
-                            <img class="task__img" src="" alt="" />
-                            <div class="task__detail clearfix">
-                                <h2 class="task__title">给你花给你花给你花给你花给你花</h2>
-                                <p class="task__reward">奖励福币：<number>600</number></p>
-                                <p class="task__person">剩余名额：<number>45</number></p>
-                                <p class="task__time">截止时间：<number>2017.08.20</number></p>
-                            </div>
-                        </a></li> -->
                     </ul>
                     <ul class="task-flow-content r">
                         <h2 class="task-flow-title">新人任务流程图解</h2>
@@ -529,39 +291,9 @@
                             <a class="btn m-green m-finance" href="{{news.url}}">立即投资</a>
                         </li>
                         {% endfor %}
-                        <!-- <li class="finance d-ib">
-                            <img class="finance__img" src="" alt="商家logo">
-                            <p class="finance__name finance__column">绿能宝一期<span class="finance__mark">首投</span></p>
-                            <p class="finance__column"><span class="finance__column-title">官网利率</span><span class="finance__interest">6.3%</span></p>
-                            <p class="finance__column"><span class="finance__column-title">起投金额</span><span class="finance__invest">10000</span></p>
-                            <p class="finance__column"><span class="finance__column-title">标期长度</span><span class="finance__date">3个月</span></p>
-                            <p class="finance__column"><span class="finance__column-title">补贴收益</span><span class="finance__profit">+投资额4.2%</span></p>
-                            <p class="finance__column"><span class="finance__column-title">预计年化收益</span><span class="finance__year">19.4%</span></p>
-                            <a class="btn m-green m-finance" href="/finance/34/">立即投资</a>
-                        </li>
-                        <li class="finance d-ib">
-                            <img class="finance__img" src="" alt="商家logo">
-                            <p class="finance__name finance__column">绿能宝一期<span class="finance__mark">首投</span></p>
-                            <p class="finance__column"><span class="finance__column-title">官网利率</span><span class="finance__interest">6.3%</span></p>
-                            <p class="finance__column"><span class="finance__column-title">起投金额</span><span class="finance__invest">10000</span></p>
-                            <p class="finance__column"><span class="finance__column-title">标期长度</span><span class="finance__date">3个月</span></p>
-                            <p class="finance__column"><span class="finance__column-title">补贴收益</span><span class="finance__profit">+投资额4.2%</span></p>
-                            <p class="finance__column"><span class="finance__column-title">预计年化收益</span><span class="finance__year">19.4%</span></p>
-                            <a class="btn m-green m-finance" href="/finance/34/">立即投资</a>
-                        </li>
-                        <li class="finance d-ib">
-                            <img class="finance__img" src="" alt="商家logo">
-                            <p class="finance__name finance__column">绿能宝一期<span class="finance__mark">首投</span></p>
-                            <p class="finance__column"><span class="finance__column-title">官网利率</span><span class="finance__interest">6.3%</span></p>
-                            <p class="finance__column"><span class="finance__column-title">起投金额</span><span class="finance__invest">10000</span></p>
-                            <p class="finance__column"><span class="finance__column-title">标期长度</span><span class="finance__date">3个月</span></p>
-                            <p class="finance__column"><span class="finance__column-title">补贴收益</span><span class="finance__profit">+投资额4.2%</span></p>
-                            <p class="finance__column"><span class="finance__column-title">预计年化收益</span><span class="finance__year">19.4%</span></p>
-                            <a class="btn m-green m-finance" href="/finance/34/">立即投资</a>
-                        </li> -->
                     </ul>
                     <ul class="profit-calc r">
-                        <h2 class="profit-calc-title">b2b收益计算器</h2>
+                        <h2 class="profit-calc-title">P2P收益计算器</h2>
                         <div class="calc-box">
                             <div class="calc-item">
                                 <span class="calc-item-name">金额</span><input id="money" class="calc-input" type="text" onkeyup="value=value.replace(/[^\d.]/g,'')"/>&nbsp;元
@@ -573,7 +305,6 @@
                             </div>
                             <div class="calc-item">
                                 <span class="calc-item-name">还款方式</span>
-                                <!--<input id="back_type" class="calc-input" type="text" />-->
                                 <select style="width: 160px;" name="selectType" id="back_type" class="calc-input">
                                     <option value="0">一次性还本付息</option>
                                     <option value="1">月还息到期还本</option>
@@ -620,7 +351,7 @@
             <div class="wflbox wleft l">
                 <div class="wflbox__titlebox clearfix">
                     <h1 class="wflbox__title">信用卡</h1>
-                    <a class="wflbox__more" href="#">查看更多</a>
+                    <a class="wflbox__more" href="{% url 'task' %}">查看更多</a>
                 </div>
                 <ul class="creditcard-box fs-0 l">
                     {% for news in credit_list %}
@@ -633,38 +364,6 @@
                         </div>
                     </li>
                     {% endfor %}
-                    <!-- <li class="creditcard d-ib">
-                        <img class="creditcard__img" src="" alt="信用卡图片" />
-                        <div class="creditcard__detail">
-                            <h2 class="creditcard__title">交通银行标准信用卡</h2>
-                            <p class="creditcard__persons">已有<number>345454</number>人申请</p>
-                            <a href="#" class="btn m-green m-creditcard">免费申请</a>
-                        </div>
-                    </li>
-                    <li class="creditcard d-ib">
-                        <img class="creditcard__img" src="" alt="信用卡图片" />
-                        <div class="creditcard__detail">
-                            <h2 class="creditcard__title">交通银行标准信用卡</h2>
-                            <p class="creditcard__persons">已有<number>345454</number>人申请</p>
-                            <a href="#" class="btn m-green m-creditcard">免费申请</a>
-                        </div>
-                    </li>
-                    <li class="creditcard d-ib">
-                        <img class="creditcard__img" src="" alt="信用卡图片" />
-                        <div class="creditcard__detail">
-                            <h2 class="creditcard__title">交通银行标准信用卡</h2>
-                            <p class="creditcard__persons">已有<number>345454</number>人申请</p>
-                            <a href="#" class="btn m-green m-creditcard">免费申请</a>
-                        </div>
-                    </li>
-                    <li class="creditcard d-ib">
-                        <img class="creditcard__img" src="" alt="信用卡图片" />
-                        <div class="creditcard__detail">
-                            <h2 class="creditcard__title">交通银行标准信用卡</h2>
-                            <p class="creditcard__persons">已有<number>345454</number>人申请</p>
-                            <a href="#" class="btn m-green m-creditcard">免费申请</a>
-                        </div>
-                    </li> -->
                     <li class="creditcard-ad">
                         <a href="{{adv_bottom.url}}"><img class="creditcard-ad-img" src="{{adv_bottom.pic.url}}"/></a>
                     </li>
@@ -675,9 +374,8 @@
                     <h1 class="wflbox__title">借点钱</h1>
                 </div>
                 <div class="discover-content pl10">
-                    <p style="margin-top: 20px;text-align: center; font-size: 20px;">不借！</p>
-                    <p style="margin-top: 20px;text-align: center; font-size: 20px;">不借！</p>
-                    <p style="margin-top: 20px;text-align: center; font-size: 20px;">不借！</p>
+                    <!-- <p style="margin-top: 20px;text-align: center; font-size: 20px;">板块正在开发<br>敬请期待</p> -->
+                    <!-- <img class="developing" src="/static/images/developing.png" alt=""> -->
                 </div>
             </div>
         </div>
@@ -687,6 +385,48 @@
         {% include "footer.html" %}
         <!--浮动窗口-->
         {% include "outline.html" %}
+        <!-- 引导页部分 -->
+        <div class="guide-box">
+            <ul class="guide">
+                <li style="display: block; left: 600px; top: 66px;" class="guide__01 guide__item">
+                    <img src="/static/images/guide-welfare.png" alt="">
+                    <a class="guide__btn01 guide__btn">
+                        <img class="guide__btn" src="/static/images/guide-next-btn.png" alt="">
+                    </a>
+                </li>
+                <li style="display: none; left: 694px; top: 100px;" class="guide__02 guide__item">
+                    <img src="/static/images/guide-task.png" alt="">
+                    <a class="guide__btn02 guide__btn">
+                        <img style="margin-left: -100px;" class="guide__btn" src="/static/images/guide-next-btn.png" alt="">
+                    </a>
+                </li>
+                <li style="display: none; left: 794px; top: 100px;" class="guide__03 guide__item">
+                    <img src="/static/images/guide-p2p.png" alt="">
+                    <a class="guide__btn03 guide__btn">
+                        <img style="margin-left: -200px;" class="guide__btn" src="/static/images/guide-next-btn.png" alt="">
+                    </a>
+                </li>
+                <li style="display: none; left: 700px; top: 100px;" class="guide__03 guide__item">
+                    <img src="/static/images/guide-money.png" alt="">
+                    <a class="guide__btn03 guide__btn">
+                        <img style="margin-left: -200px;" class="guide__btn" src="/static/images/guide-next-btn.png" alt="">
+                    </a>
+                </li>
+                <li style="display: none; left: 0; top: 160px;" class="guide__03 guide__item next-hongbao">
+                    <img src="/static/images/guide-lefticon.png" alt="">
+                    <a class="guide__btn03 guide__btn">
+                        <img style="margin-left: 400px;" class="guide__btn" src="/static/images/guide-next-btn.png" alt="">
+                    </a>
+                </li>
+                <li style="display: none; left: 250px; top: 30px;" class="guide__04 guide__item now-hongbao guide-end">
+                    <img src="/static/images/guide-support.png" alt="">
+                    <a class="guide__btn04 guide__btn">
+                        <img style="margin-left: 200px;" class="guide__btn" src="/static/images/guide-know.png" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- 引导页部分---end -->
 
         <script src="/static/js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="/static/js/wfl-flexslider-min.js" type="text/javascript" charset="utf-8"></script>
@@ -1082,6 +822,51 @@
                 });
 //              计算器部分---end
 
+                // 引导部分
+                document.getElementsByTagName("body")[0].style.overflow='hidden';
+                $('.guide__btn').click(function() {
+
+                    $(this).parent().next().css('display', 'block');
+                    $(this).parent().css('display', 'none');
+                    if ($(this).parent().hasClass('next-hongbao')) {
+                        window.scrollTo(0,900);
+                    }
+                    if ($(this).parent().hasClass('now-hongbao')) {
+                        window.scrollTo(0,0);
+                    }
+                    if ($(this).parent().hasClass('guide-end')) {
+                        $(this).parent().parent().parent().css('display', 'none');
+                        document.getElementsByTagName("body")[0].style.overflow='auto';
+                    }
+                });
+                // 引导部分---end
+                $('.left-iconnav-06').click(function() {
+                    $.prompt({
+                        Content: '板块正在开发，敬请期待！'
+                    })
+                });
+                $(".btn-signin").click(function(){
+                    console.log('sdf');
+                    $.ajax({
+                        url:"{%url 'signin' %}",
+                        dataType:"json",
+                        success:function(ret){
+                            if(ret.code==0){
+                                prompt({Content:"签到成功！连续签到有惊喜呢~"});
+                            }
+                            else if((ret.code==1)){
+                                prompt({Content:"今日已经签到过了~"});
+                            }
+                            else if(ret.code==-1){
+                                prompt({Content:"该页面已过期，请重新登录！"});
+                                window.location.href = ret.url;
+                            }
+                        },
+                        error:function(){
+                            alert("请检查网络连接");
+                        }
+                    });
+                });
             });
         </script>
 

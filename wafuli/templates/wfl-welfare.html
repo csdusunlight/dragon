@@ -20,11 +20,6 @@
 							{% for adv in ad_list %}
                   <li onclick="location='{{adv.url}}'" style="background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li>
               {%endfor%}
-					    <!-- <li style="background:url(images/img1.jpg) 50% 0 no-repeat;"></li>
-					    <li style="background:url(images/img2.jpg) 50% 0 no-repeat;"></li>
-					    <li style="background:url(images/img3.jpg) 50% 0 no-repeat;"></li>
-					    <li style="background:url(images/img4.jpg) 50% 0 no-repeat;"></li>
-					    <li style="background:url(images/img5.jpg) 50% 0 no-repeat;"></li> -->
 				  	</ul>
 
 				</div>
@@ -33,10 +28,6 @@
 				{% for adv in ad_list2 %}
 	          <li onclick="location='{{adv.url}}'" style="background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li>
 	      {%endfor%}
-				<!-- <img class="hongbao-recommend-item" src=""/>
-				<img class="hongbao-recommend-item" src=""/>
-				<img class="hongbao-recommend-item" src=""/>
-				<img class="hongbao-recommend-item" src=""/> -->
 			</div>
 		</div>
 		<!--banner-container--end-->
@@ -69,32 +60,6 @@
 					</ul>
 				</div>
 				<ul id="pagedata1" class="hongbao-box">
-					<!-- <li class="hongbao">
-						<img class="hongbao__img" src="" alt="" />
-						<div class="hongbao-detail">
-							<h3>京东618优惠券总攻略</h3>
-							<p class="hongbao__detail">京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略</p>
-							<div class="hongbao-action clearfix">
-								<div class="support l">
-									<span class="support__up">顶（<number>345</number>）</span><span class="support__down">踩（<number>345</number>）</span>
-								</div>
-								<div class="hongbao-rb r">
-									<span class="hongbao__time">06-12 15:30</span><span class="hongbao__source">京东</span><a class="btn m-green m-hongbao-link" href="#">直达链接</a>
-								</div>
-							</div>
-						</div>
-					</li> -->
-
-					<!--分页部分-->
-					<!-- <div class="changes-p">
-						<div class="page" id="page2"><span class="disable">&lt; 上一页</span><span class="on">1</span>
-							<a href="javascript:;" class="a_href" data-i="2">2</a>
-							<a href="javascript:;" class="a_href" data-i="3">3</a>
-							<a href="javascript:;" class="a_href" data-i="4">4</a>
-							<a href="javascript:;" class="a_href" data-i="5">5</a>
-							<a href="javascript:;" class="a_next">下一页 &gt;</a><span class="href"><label for="pageText">到第</label><input autocomplete="off" type="text" class="a_text" value="1"><label for="pageText">页</label><input type="button" value="转到" class="a_button"></span></div>
-					</div> -->
-					<!--分页部分---end-->
 				</ul>
 				<div class="changes-p">
 			      <div class="page"  id="page1">
@@ -105,7 +70,7 @@
 				<div class="wflbox">
 					<div class="wflbox__titlebox clearfix">
 						<h1 class="wflbox__title">福利购</h1>
-						<a class="wflbox__more" href="#">查看全部</a>
+						<a class="wflbox__more" href="http://fuligou.wafuli.cn">查看全部</a>
 					</div>
 					<ul class="fuligou-box">
 						{% for news in fuligou_side %}
@@ -117,48 +82,13 @@
 							</div>
 						</a></li>
             {% endfor %}
-						<!-- <li class="fuligou"><a href="#">
-							<img class="fuligou__img" src="" alt="" />
-							<div>
-								<h3 class="fuligou__title">iPhone7全网通全网通全网通</h3>
-								<div class="price l"><span class="price__now">￥<number>24.5</number></span><span class="price__tag">券后价</span><span class="price__before">￥34.5</span></div>
-							</div>
-						</a></li>
-						<li class="fuligou"><a href="#">
-							<img class="fuligou__img" src="" alt="" />
-							<div>
-								<h3 class="fuligou__title">iPhone7全网通全网通全网通</h3>
-								<div class="price l"><span class="price__now">￥<number>24.5</number></span><span class="price__tag">券后价</span><span class="price__before">￥34.5</span></div>
-							</div>
-						</a></li>
-						<li class="fuligou"><a href="#">
-							<img class="fuligou__img" src="" alt="" />
-							<div>
-								<h3 class="fuligou__title">iPhone7全网通全网通全网通</h3>
-								<div class="price l"><span class="price__now">￥<number>24.5</number></span><span class="price__tag">券后价</span><span class="price__before">￥34.5</span></div>
-							</div>
-						</a></li>
-						<li class="fuligou"><a href="#">
-							<img class="fuligou__img" src="" alt="" />
-							<div>
-								<h3 class="fuligou__title">iPhone7全网通全网通全网通</h3>
-								<div class="price l"><span class="price__now">￥<number>24.5</number></span><span class="price__tag">券后价</span><span class="price__before">￥34.5</span></div>
-							</div>
-						</a></li>
-						<li class="fuligou"><a href="#">
-							<img class="fuligou__img" src="" alt="" />
-							<div>
-								<h3 class="fuligou__title">iPhone7全网通全网通全网通</h3>
-								<div class="price l"><span class="price__now">￥<number>24.5</number></span><span class="price__tag">券后价</span><span class="price__before">￥34.5</span></div>
-							</div>
-						</a></li> -->
 					</ul>
 				</div>
 
 				<div class="wflbox">
 					<div class="wflbox__titlebox m-mt clearfix">
 						<h1 class="wflbox__title">积分商城</h1>
-						<a class="wflbox__more" href="#">查看全部</a>
+						<a class="wflbox__more" href="href="{% url 'mall' %}">查看全部</a>
 					</div>
 					<ul class="jifen-box">
 						{% for news in commodity_list %}
@@ -170,41 +100,6 @@
                 </div>
             </a></li>
             {% endfor %}
-						<!-- <li class="jifen"><a href="#">
-							<img class="jifen__img" src="" alt="" />
-							<div>
-								<h3 class="jifen__title">iPhone7全网通全网通全网通</h3>
-								<p class="jifen__num">积分：777888</p>
-							</div>
-						</a></li>
-						<li class="jifen"><a href="#">
-							<img class="jifen__img" src="" alt="" />
-							<div>
-								<h3 class="jifen__title">iPhone7全网通全网通全网通</h3>
-								<p class="jifen__num">积分：777888</p>
-							</div>
-						</a></li>
-						<li class="jifen"><a href="#">
-							<img class="jifen__img" src="" alt="" />
-							<div>
-								<h3 class="jifen__title">iPhone7全网通全网通全网通</h3>
-								<p class="jifen__num">积分：777888</p>
-							</div>
-						</a></li>
-						<li class="jifen"><a href="#">
-							<img class="jifen__img" src="" alt="" />
-							<div>
-								<h3 class="jifen__title">iPhone7全网通全网通全网通</h3>
-								<p class="jifen__num">积分：777888</p>
-							</div>
-						</a></li>
-						<li class="jifen"><a href="#">
-							<img class="jifen__img" src="" alt="" />
-							<div>
-								<h3 class="jifen__title">iPhone7全网通全网通全网通</h3>
-								<p class="jifen__num">积分：777888</p>
-							</div>
-						</a></li> -->
 					</ul>
 				</div>
 			</div>

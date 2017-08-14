@@ -95,7 +95,7 @@
     font-size: 14px;
     line-height: 24px;
     color: #fff;
-    background-color: #f08519;
+    background-color: #ffbe00;
     border-radius: 2px;
 }
 .user-fubi,
@@ -218,8 +218,11 @@
 	word-wrap: normal;
 }
 .discover {
-	padding-left: 10px;
-	height: 288px;
+	padding: 0 10px 10px;
+}
+.discover-content {
+	height: 414px;
+	background: url(../images/developing.png) center center no-repeat #f5f5f5;
 }
 .discover__img {
 	width: 280px;
@@ -503,8 +506,9 @@
 	top: 0;
 	left: 0;
 	width: 58px;
-	height: 22px;
 	line-height: 22px;
+	color: #fff;
+	background-color: #f47e7e;
 	text-align: center;
 }
 /*福利购---end*/
@@ -764,5 +768,29 @@
 .creditcard-ad-img {
 	width: 870px;
 	height: 110px;
+	margin-bottom: 14px
 }
 /*信用卡借点钱---end*/
+/*引导页部分*/
+.guide-box {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0,0,0,0.5);
+	z-index: 20;
+}
+.guide {
+	position: relative;
+	width: 1250px;
+	margin: 0 auto;
+}
+.guide__item {
+	position: absolute;
+}
+.guide__btn {
+	display: block;
+	margin-top: 70px
+}
+/*引导页部分---end*/
