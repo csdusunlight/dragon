@@ -112,16 +112,7 @@
                 $('.support').on('click','.support__up', function(){
                     var self = this;
 
-                    var show_amount = document.createElement('span');
-                    show_amount.className = 'show-amount';
-                    show_amount.innerText = '+1';
-                    $(self).parent().append(show_amount);
-                    $('.show-amount').animate({
-                        top: -500px,
-                        opcity: 0},
-                        speed, function() {
-                        $('.show-amount').hide();
-                    });
+
 
                     var upid = $(self).find('.support__up-num').data("upid");
                     var newurl = '/updown_welfare/' + upid + '/?click=up';
@@ -136,6 +127,25 @@
                                 $(self).find('.support__up-num').text(upNum);
                                 $(self).parent().addClass('handled');
                                 console.log('chengong');
+
+                                var show_amount = document.createElement('span');
+                                show_amount.className = 'show-amount show-amount-up';
+                                show_amount.innerText = '+1';
+                                $(self).parent().append(show_amount);
+                                $('.show-amount').css({
+                                    'position': 'absolute',
+                                    'top': '0',
+                                    'left': '30px',
+                                    'color': '#ffbe00',
+                                    'font-size': '20px',
+                                    'opcity': '1'
+                                });
+                                $('.show-amount').animate({
+                                    top: -40,
+                                    opcity: 0},
+                                    500, function() {
+                                    $('.show-amount').remove();
+                                });
                             },
                             error: function(ret) {
                                 alert(JSON.stringify(ret));
@@ -162,6 +172,25 @@
                                 var upNum = parseInt(upText) + 1;
                                 $(self).find('.support__down-num').text(upNum);
                                 $(self).parent().addClass('handled');
+
+                                var show_amount = document.createElement('span');
+                                show_amount.className = 'show-amount show-amount-up';
+                                show_amount.innerText = '+1';
+                                $(self).parent().append(show_amount);
+                                $('.show-amount').css({
+                                    'position': 'absolute',
+                                    'top': '0',
+                                    'left': '170px',
+                                    'color': '#ffbe00',
+                                    'font-size': '20px',
+                                    'opcity': '1'
+                                });
+                                $('.show-amount').animate({
+                                    top: 40,
+                                    opcity: 0},
+                                    500, function() {
+                                    $('.show-amount').remove();
+                                });
                             },
                             error: function(ret) {
                                 alert(JSON.stringify(ret));
