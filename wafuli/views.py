@@ -183,10 +183,16 @@ def hongbao(request, id):
     else:
         id = int(id)
         news = Hongbao.objects.get(id=id)
-        other_hongbao_list = Hongbao.objects.filter(state='1').order_by('-pub_date')[0:6]
+        other_hongbao_list = Hongbao.objects.filter(state='1').order_by('-up')[0:6]
+        like_hongbao_list = Hongbao.objects.filter(state='1',htype=news.htype).order_by('-startTime')[0:8]
+        next = Hongbao.objects.filter(id__gt=id).order_by('id').first()
+        prev = Hongbao.objects.filter(id__lt=id).order_by('-id').first()
         context = {
                    'news':news,
                    'other_hongbao_list':other_hongbao_list,
+                   'like_hongbao_list':like_hongbao_list,
+                   'next':next,
+                   'prev':prev,
         }
         return render(request, 'wfl-welfare-detail.html', context)
 def updown_hongbao(request, id):

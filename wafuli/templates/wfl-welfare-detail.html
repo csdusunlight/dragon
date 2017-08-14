@@ -36,13 +36,21 @@
     		          {{news.strategy|safe}}
     		    </div>
     		    <div class="near">
-    		        <p class="near__pre">上一福利<a class="near__link" href="">可口可乐汽水300ml*24瓶整箱</a></p>
-    		        <p class="near__next">上一福利<a class="near__link" href="">可口可乐汽水300ml*24瓶整箱</a></p>
+    		        <p class="near__pre">上一福利
+    		        {% if prev %}
+    		        <a class="near__link" href="{{prev.url}}">{{prev.title}}</a>
+    		        {% endif %}
+    		        </p>
+    		        <p class="near__next">下一福利
+    		        {% if next %}
+    		        <a class="near__link" href="{{next.url}}">{{next.title}}</a>
+    		        {% endif %}
+    		        </p>
     		    </div>
     		    <div class="other-recommend">
                     <h3 class="other-recommend__title">您可能还喜欢</h3>
                     <ul class="other-recommend__box">
-                        {% for news in other_hongbao_list %}
+                        {% for news in like_hongbao_list %}
                         <li class="other-recommend__item"><a href="{{news.url}}">
                             <img class="other-recommend__img" src="{{news.pic.url}}" alt="" />
                             <p class="other-recommend__txt">{{news.title}}</p>
