@@ -810,6 +810,7 @@
                 $('.hongbao-box').on('click','.support__up', function(){
                 // var upFlag = 0;     //点攒控制开关
                     var self = this;
+                    console.log($(self));
                     var upid = $(self).find('.support__up-num').data("upid");
                     console.log(upid);
                     var newurl = '/updown_welfare/' + upid + '/?click=up';
@@ -826,7 +827,7 @@
                                 $(self).find('.support__up-num').text(upNum);
                                 // upFlag++;
                                 $(self).addClass('jzy');
-                                console.log(upFlag);
+                                console.log('chengong');
                             },
                             error: function(ret) {
                                 alert(JSON.stringify(ret));
@@ -834,6 +835,8 @@
                         });
                     } else {
                     // } else if(upFlag != 0) {
+                        $(self).addClass('no-jzy');
+                        console.log('shibai');
                         return false;
                     }
                 })
