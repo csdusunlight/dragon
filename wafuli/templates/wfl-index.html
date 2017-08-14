@@ -180,12 +180,12 @@
                     <div>
                         <ul class="vip-content conitem" style="display: block;">
                             {% for news in week_statis %}
-                            <li class="vip-item"><span class="vip-num">1</span><span class="vip-account">{{news.username_display}}</span><span class="vip-withdrow">提现<number>{{news.month_statis}}</number>福币</span></li>
+                            <li class="vip-item"><span class="vip-num">{{forloop.counter}}</span><span class="vip-account">{{news.username_display}}</span><span class="vip-withdrow">提现<number>{{news.week_statis}}</number>福币</span></li>
                             {% endfor %}
                          </ul>
                         <ul class="vip-content conitem">
                             {% for news in month_statis %}
-                            <li class="vip-item"><span class="vip-num">1</span><span class="vip-account">{{news.username_display}}</span><span class="vip-withdrow">提现<number>{{news.week_statis}}</number>福币</span></li>
+                            <li class="vip-item"><span class="vip-num">{{forloop.counter}}</span><span class="vip-account">{{news.username_display}}</span><span class="vip-withdrow">提现<number>{{news.month_statis}}</number>福币</span></li>
                             {% endfor %}
                         </ul>
                     </div>
