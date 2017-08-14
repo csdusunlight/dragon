@@ -54,6 +54,11 @@ body {
     margin-left: 36px;
     background-image: url(../images/click-down.png);
 }
+.show-amount {
+    position: absolute;
+    top: 0;
+    color: #ffbe00;
+}
 
 .detail-html {
     margin-top: 30px;
