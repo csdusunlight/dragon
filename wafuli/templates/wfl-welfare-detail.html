@@ -170,50 +170,61 @@
 
 
                 // 点赞部分
-                var upFlag = 0;     //点攒控制开关
-                var downFlag = 0;     //踩控制开关
-                $('.support__up').click(function(){
-                    if (upFlag == 0) {
+                $('.hongbao-box').on('click','.support__up', function(){
+                    var self = this;
+                    console.log($(self));
+                    var upid = $(self).find('.support__up-num').data("upid");
+                    console.log(upid);
+                    var newurl = '/updown_welfare/' + upid + '/?click=up';
+                    console.log(newurl);
+                    if (!$(self).parent().hasClass('jzy')) {
                         $.ajax({
-                            url: '/updown_welfare/7/?click=up',
+                            url: newurl,
                             dataType: "json",
                             type: "get",
                             success: function() {
-                                console.log(parseInt($('.support__up-num').text(),10))
-                                var upNum = parseInt($('.support__up-num').text(),10) + 1;
-                                $('.support__up-num').text(upNum);
-                                upFlag++;
-                                console.log(upFlag);
+                                var upText = $(self).find('.support__up-num').text()
+                                var upNum = parseInt(upText) + 1;
+                                $(self).find('.support__up-num').text(upNum);
+                                $(self).parent().addClass('jzy');
+                                console.log('chengong');
                             },
                             error: function(ret) {
                                 alert(JSON.stringify(ret));
                             }
                         });
-                    } else if(upFlag != 0) {
+                    } else {
+                        $(self).addClass('no-jzy');
+                        console.log('shibai');
                         return false;
                     }
                 })
-                $('.support__down').click(function(){
-                    if (downFlag == 0) {
+                $('.hongbao-box').on('click','.support__down', function(){
+                    var self = this;
+                    var downid = $(self).find('.support__down-num').data("downid");
+                    console.log(downid);
+                    var newurl = '/updown_welfare/' + downid + '/?click=down';
+                    console.log(newurl);
+                    if (!$(self).hasClass('jzy')) {
                         $.ajax({
-                            url: '/updown_welfare/7/?click=down',
+                            url: newurl,
                             dataType: "json",
                             type: "get",
                             success: function() {
-                                var downNum = parseInt($('.support__down-num').text(),10) + 1;
-                                $('.support__down-num').text(downNum);
-                                downFlag++;
-                                console.log(downFlag);
+                                var upText = $(self).find('.support__down-num').text()
+                                var upNum = parseInt(upText) + 1;
+                                $(self).find('.support__down-num').text(upNum);
+                                $(self).addClass('jzy');
                             },
                             error: function(ret) {
                                 alert(JSON.stringify(ret));
                             }
                         });
-                    } else if (downFlag != 0) {
+                    } else {
                         return false;
                     }
                 })
-                // 点赞部分---end
+                // // 点赞部分---end
 			});
 		</script>
 	</body>
