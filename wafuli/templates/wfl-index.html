@@ -831,13 +831,13 @@
                         dataType:"json",
                         success:function(ret){
                             if(ret.code==0){
-                                prompt({Content:"签到成功！连续签到有惊喜呢~"});
+                                $.prompt({Content:'签到成功！连续签到有惊喜呢~'});
                             }
                             else if((ret.code==1)){
-                                prompt({Content:"今日已经签到过了~"});
+                                $.prompt({Content:'今日已经签到过了~'});
                             }
                             else if(ret.code==-1){
-                                prompt({Content:"该页面已过期，请重新登录！"});
+                                $.prompt({Content:'该页面已过期，请重新登录！'});
                                 window.location.href = ret.url;
                             }
                         },
@@ -846,14 +846,14 @@
                         }
                     });
                 });
-				
+
                 var reg=getCookie('guide');
                 var domain = document.domain;
                 if(!reg){
                 	createGuide();
                 	setCookie('guide',1,100,domain,'');
                 }
-                
+
             });
         </script>
 
