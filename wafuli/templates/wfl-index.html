@@ -30,10 +30,10 @@
                     <a href="{% url 'finance' %}" class="left-iconnav-04 iconnav__item">P2P返利</a>
                 </li>
                 <li class="left-iconnav__itembox d-ib">
-                    <a href="{% url 'task' %}" class="left-iconnav-05 iconnav__item">借点钱</a>
+                    <a class="left-iconnav-05 iconnav__item">借点钱</a>
                 </li>
                 <li class="left-iconnav__itembox d-ib">
-                    <a class="left-iconnav-06 iconnav__item">信用卡</a>
+                    <a href="{% url 'task' %}" class="left-iconnav-06 iconnav__item">信用卡</a>
                 </li>
             </ul>
             <div class="banner l">
@@ -391,37 +391,40 @@
                 <li style="display: block; left: 600px; top: 66px;" class="guide__01 guide__item">
                     <img src="/static/images/guide-welfare.png" alt="">
                     <a class="guide__btn01 guide__btn">
-                        <img class="guide__btn" src="/static/images/guide-next-btn.png" alt="">
+                        <img src="/static/images/guide-next-btn.png" alt="">
+                    </a>
+                    <a style="margin-left: 250px; margin-top: 80px" class="guide__pass guide__btn">
+                        <img src="/static/images/guide-pass.png" alt="">
                     </a>
                 </li>
                 <li style="display: none; left: 694px; top: 100px;" class="guide__02 guide__item">
                     <img src="/static/images/guide-task.png" alt="">
                     <a class="guide__btn02 guide__btn">
-                        <img style="margin-left: -100px;" class="guide__btn" src="/static/images/guide-next-btn.png" alt="">
+                        <img style="margin-left: -100px;" src="/static/images/guide-next-btn.png" alt="">
                     </a>
                 </li>
                 <li style="display: none; left: 794px; top: 100px;" class="guide__03 guide__item">
                     <img src="/static/images/guide-p2p.png" alt="">
                     <a class="guide__btn03 guide__btn">
-                        <img style="margin-left: -200px;" class="guide__btn" src="/static/images/guide-next-btn.png" alt="">
+                        <img style="margin-left: -200px;" src="/static/images/guide-next-btn.png" alt="">
                     </a>
                 </li>
                 <li style="display: none; left: 700px; top: 100px;" class="guide__03 guide__item">
                     <img src="/static/images/guide-money.png" alt="">
                     <a class="guide__btn03 guide__btn">
-                        <img style="margin-left: -200px;" class="guide__btn" src="/static/images/guide-next-btn.png" alt="">
+                        <img style="margin-left: -200px;" src="/static/images/guide-next-btn.png" alt="">
                     </a>
                 </li>
                 <li style="display: none; left: 0; top: 160px;" class="guide__03 guide__item next-hongbao">
                     <img src="/static/images/guide-lefticon.png" alt="">
                     <a class="guide__btn03 guide__btn">
-                        <img style="margin-left: 400px;" class="guide__btn" src="/static/images/guide-next-btn.png" alt="">
+                        <img style="margin-left: 400px;" src="/static/images/guide-next-btn.png" alt="">
                     </a>
                 </li>
-                <li style="display: none; left: 250px; top: 30px;" class="guide__04 guide__item now-hongbao guide-end">
+                <li style="display: none; left: 260px; top: 26px;" class="guide__04 guide__item now-hongbao guide-end">
                     <img src="/static/images/guide-support.png" alt="">
                     <a class="guide__btn04 guide__btn">
-                        <img style="margin-left: 200px;" class="guide__btn" src="/static/images/guide-know.png" alt="">
+                        <img style="margin-left: 200px;" src="/static/images/guide-know.png" alt="">
                     </a>
                 </li>
             </ul>
@@ -839,8 +842,13 @@
                         document.getElementsByTagName("body")[0].style.overflow='auto';
                     }
                 });
+                $('.guide__pass').click(function() {
+                    $(this).parent().parent().parent().css('display', 'none');
+                    document.getElementsByTagName("body")[0].style.overflow='auto';
+                });
+
                 // 引导部分---end
-                $('.left-iconnav-06').click(function() {
+                $('.left-iconnav-05').click(function() {
                     $.prompt({
                         Content: '板块正在开发，敬请期待！'
                     })

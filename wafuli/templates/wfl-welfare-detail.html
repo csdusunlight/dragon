@@ -111,11 +111,12 @@
                 // 点赞部分
                 $('.support').on('click','.support__up', function(){
                     var self = this;
-                    console.log($(self));
+
+                    var show_amount = document.createElement('span');
+                    $(self).parent().append(show_amount);
+
                     var upid = $(self).find('.support__up-num').data("upid");
-                    console.log(upid);
                     var newurl = '/updown_welfare/' + upid + '/?click=up';
-                    console.log(newurl);
                     if (!$(self).parent().hasClass('handled')) {
                         $.ajax({
                             url: newurl,

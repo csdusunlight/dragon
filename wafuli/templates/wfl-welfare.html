@@ -24,11 +24,11 @@
 
 				</div>
 			</div>
-			<div class="hongbao-recommend fs-0 r">
+			<ul class="hongbao-recommend fs-0 r">
 				{% for adv in ad_list2 %}
 	          <li onclick="location='{{adv.url}}'" style="background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li>
 	      {%endfor%}
-			</div>
+			</ul>
 		</div>
 		<!--banner-container--end-->
 		<div class="wfl-wrap">
@@ -88,7 +88,7 @@
 				<div class="wflbox">
 					<div class="wflbox__titlebox m-mt clearfix">
 						<h1 class="wflbox__title">积分商城</h1>
-						<a class="wflbox__more" href="href="{% url 'mall' %}">查看全部</a>
+						<a class="wflbox__more" href="{% url 'mall' %}">查看全部</a>
 					</div>
 					<ul class="jifen-box">
 						{% for news in commodity_list %}
