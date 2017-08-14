@@ -98,6 +98,9 @@ body {
     line-height: 30px;
     word-wrap: normal;
 }
+.other-recommend__item:hover .other-recommend__txt {
+    color: #91c11d;
+}
 /*热门推荐*/
 .recommend-box {
 	margin-top: -6px;
@@ -114,6 +117,9 @@ body {
 }
 .recommend__title {
 	line-height: 30px;
+}
+.recommend:hover .recommend__title {
+    color: #91c11d;
 }
 .recommend__detail {
     margin-top: 10px;

@@ -217,6 +217,9 @@
 	line-height: 30px;
 	word-wrap: normal;
 }
+.hot-recommend:hover .hot-recommend__txt {
+	color: #91C11D;
+}
 .discover {
 	padding: 0 10px 16px;
 }
@@ -231,6 +234,9 @@
 .discover__txt {
 	margin-top: 12px;
 	line-height: 30px;
+}
+.discover:hover .discover__txt {
+	color: #91C11D;
 }
 /*推荐、发现---end*/
 /*红包、积分会员*/
@@ -385,6 +391,9 @@
 .jifen__title {
 	line-height: 30px;
 }
+.jifen:hover .jifen__title {
+	color: #91c11d;
+}
 .jifen__num {
 	color: #91c11d;
 }
@@ -486,7 +495,7 @@
 	text-align: center;
 	background: url(../images/coupon.png) center center/100% auto no-repeat;
 }
-.fulitou__txt {
+.fuligou__txt {
 	display: -webkit-box;
 	text-overflow: ellipsis;
 	-webkit-box-orient: vertical;
@@ -495,6 +504,9 @@
 	height: 48px;
 	overflow: hidden;
 	color: #666;
+}
+.fuligou:hover .fuligou__txt {
+	color: #91c11d;
 }
 
 .fuligou-right-content {
@@ -546,6 +558,9 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+}
+.task:hover .task__title {
+	color: #91c11d;
 }
 .task__reward, .task__person, .task__time {
 	margin-top: 24px;
