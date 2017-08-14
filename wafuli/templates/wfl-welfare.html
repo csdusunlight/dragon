@@ -24,12 +24,12 @@
 
 				</div>
 			</div>
-			<ul class="hongbao-recommend fs-0 r">
+			<div class="hongbao-recommend fs-0 r">
 				{% for adv in ad_list2 %}
 	          <!-- <li onclick="location='{{adv.url}}'" style="background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li> -->
-	          <li><a href="{{adv.url}}"><img src="{{adv.pic.url}}" alt=""></a></li>
+	          <a href="{{adv.url}}"><img src="{{adv.pic.url}}" alt=""></a>
 	      {%endfor%}
-			</ul>
+			</div>
 		</div>
 		<!--banner-container--end-->
 		<div class="wfl-wrap">
