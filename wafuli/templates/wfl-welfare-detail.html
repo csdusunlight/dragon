@@ -10,7 +10,7 @@
 	<body>
 		{% include "header.html" %}
 		<div class="wfl-wrap m-welfare-detail clearfix">
-		    <p class="crumb">当前位置：&nbsp;&nbsp;<a href="#">免费领</a>&nbsp;>&nbsp;<a href="{% url 'welfare' %}">红包福利</a>&nbsp;>&nbsp;<a href="#">{{news.title}}</a></p>
+		    <p class="crumb">当前位置：&nbsp;&nbsp;<a href="#">免费领</a>&nbsp;>&nbsp;<a href="{% url 'welfare' %}">红包福利</a>&nbsp;>&nbsp;<a href="{% url 'welfare' %}">{{news.title}}</a></p>
 		    <div class="leftcontainer l wleft">
     		    <div class="detailmain">
     		        <img class="detailmain__img" src="{{news.pic.url}}" alt="" />
@@ -53,25 +53,11 @@
                         {% for news in like_hongbao_list %}
                         <li class="other-recommend__item"><a href="{{news.url}}">
                             <img class="other-recommend__img" src="{{news.pic.url}}" alt="" />
-                            <p class="other-recommend__txt">{{news.title}}</p>
+                            <div class="txtbox line-2">
+                                <p class="other-recommend__txt">{{news.title}}</p>
+                            </div>
                         </a></li>
                         {%endfor%}
-                        <!-- <li class="other-recommend__item"><a href="#">
-                            <img class="other-recommend__img" src="" alt="" />
-                            <p class="other-recommend__txt">历史低价，618疯抢，史前最低。</p>
-                        </a></li>
-                        <li class="other-recommend__item"><a href="#">
-                            <img class="other-recommend__img" src="" alt="" />
-                            <p class="other-recommend__txt">历史低价，618疯抢，史前最低。</p>
-                        </a></li>
-                        <li class="other-recommend__item"><a href="#">
-                            <img class="other-recommend__img" src="" alt="" />
-                            <p class="other-recommend__txt">历史低价，618疯抢，史前最低。</p>
-                        </a></li>
-                        <li class="other-recommend__item"><a href="#">
-                            <img class="other-recommend__img" src="" alt="" />
-                            <p class="other-recommend__txt">历史低价，618疯抢，史前最低。</p>
-                        </a></li> -->
                     </ul>
                 </div>
 		    </div>            <!--leftcontainer---end-->
@@ -80,60 +66,20 @@
     			<div class="wflbox">
     				<div class="wflbox__titlebox clearfix">
     					<h1 class="wflbox__title">热门推荐</h1>
-    					<a class="wflbox__more" href="#">查看全部</a>
+    					<a class="wflbox__more" href="{% url 'welfare' %}">查看全部</a>
     				</div>
     				<ul class="recommend-box">
                         {% for news in other_hongbao_list %}
                         <li class="recommend"><a href="{{news.url}}">
                             <img class="recommend__img" src="{{news.pic.url}}" alt="" />
                             <div>
-                                <h3 class="recommend__title">{{news.title}}</h3>
+                                <div class="txtbox line-2">
+                                    <h3 class="recommend__title txtinline">{{news.title}}</h3>
+                                </div>
                                 <div class="recommend__detail clearfix"><span class="recommend__support-up">顶&nbsp;&nbsp;<number>{{news.up}}</number></span><span class="recommend__source">{{news.provider}}</span></div>
                             </div>
                         </a></li>
                         {%endfor%}
-    					<!-- <li class="recommend"><a href="#">
-    						<img class="recommend__img" src="" alt="" />
-    						<div>
-    							<h3 class="recommend__title">iPhone7全网通全网通全网通</h3>
-    							<div class="recommend__detail clearfix"><span class="recommend__support-up">顶&nbsp;&nbsp;<number>345</number></span><span class="recommend__source">京东</span></div>
-    						</div>
-    					</a></li>
-    					<li class="recommend"><a href="#">
-                            <img class="recommend__img" src="" alt="" />
-                            <div>
-                                <h3 class="recommend__title">iPhone7全网通全网通全网通</h3>
-                                <div class="recommend__detail clearfix"><span class="recommend__support-up">顶&nbsp;&nbsp;<number>345</number></span><span class="recommend__source">京东</span></div>
-                            </div>
-                        </a></li>
-                        <li class="recommend"><a href="#">
-                            <img class="recommend__img" src="" alt="" />
-                            <div>
-                                <h3 class="recommend__title">iPhone7全网通全网通全网通</h3>
-                                <div class="recommend__detail clearfix"><span class="recommend__support-up">顶&nbsp;&nbsp;<number>345</number></span><span class="recommend__source">京东</span></div>
-                            </div>
-                        </a></li>
-                        <li class="recommend"><a href="#">
-                            <img class="recommend__img" src="" alt="" />
-                            <div>
-                                <h3 class="recommend__title">iPhone7全网通全网通全网通</h3>
-                                <div class="recommend__detail clearfix"><span class="recommend__support-up">顶&nbsp;&nbsp;<number>345</number></span><span class="recommend__source">京东</span></div>
-                            </div>
-                        </a></li>
-                        <li class="recommend"><a href="#">
-                            <img class="recommend__img" src="" alt="" />
-                            <div>
-                                <h3 class="recommend__title">iPhone7全网通全网通全网通</h3>
-                                <div class="recommend__detail clearfix"><span class="recommend__support-up">顶&nbsp;&nbsp;<number>345</number></span><span class="recommend__source">京东</span></div>
-                            </div>
-                        </a></li>
-                        <li class="recommend"><a href="#">
-                            <img class="recommend__img" src="" alt="" />
-                            <div>
-                                <h3 class="recommend__title">iPhone7全网通全网通全网通</h3>
-                                <div class="recommend__detail clearfix"><span class="recommend__support-up">顶&nbsp;&nbsp;<number>345</number></span><span class="recommend__source">京东</span></div>
-                            </div>
-                        </a></li> -->
     				</ul>
     			</div>
     		</div>
@@ -144,18 +90,8 @@
   <!--浮动窗口-->
   {% include "outline.html" %}
 
-		<!-- <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"slide":{"type":"slide","bdImg":"0","bdPos":"left","bdTop":"106.5"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
-        <script>
-            var _hmt = _hmt || [];
-            (function() {
-              var hm = document.createElement("script");
-              hm.src = "//hm.baidu.com/hm.js?967fce306a35a615082120cd7cf7d616";
-              var s = document.getElementsByTagName("script")[0];
-              s.parentNode.insertBefore(hm, s);
-            })();
-        </script> -->
-
 		<script src="/static/js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/static/js/wfl-common.js" type="text/javascript" charset="utf-8"></script>
         <script src="/static/js/wfl-popup.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			$(function(){
@@ -180,11 +116,11 @@
                 // 点赞部分
                 $('.support').on('click','.support__up', function(){
                     var self = this;
-                    console.log($(self));
+
+
+
                     var upid = $(self).find('.support__up-num').data("upid");
-                    console.log(upid);
                     var newurl = '/updown_welfare/' + upid + '/?click=up';
-                    console.log(newurl);
                     if (!$(self).parent().hasClass('handled')) {
                         $.ajax({
                             url: newurl,
@@ -196,6 +132,25 @@
                                 $(self).find('.support__up-num').text(upNum);
                                 $(self).parent().addClass('handled');
                                 console.log('chengong');
+
+                                var show_amount = document.createElement('span');
+                                show_amount.className = 'show-amount show-amount-up';
+                                show_amount.innerText = '+1';
+                                $(self).parent().append(show_amount);
+                                $('.show-amount').css({
+                                    'position': 'absolute',
+                                    'top': '0',
+                                    'left': '30px',
+                                    'color': '#ffbe00',
+                                    'font-size': '20px',
+                                    'opcity': '1'
+                                });
+                                $('.show-amount').animate({
+                                    top: -40,
+                                    opcity: 0},
+                                    500, function() {
+                                    $('.show-amount').remove();
+                                });
                             },
                             error: function(ret) {
                                 alert(JSON.stringify(ret));
@@ -222,6 +177,25 @@
                                 var upNum = parseInt(upText) + 1;
                                 $(self).find('.support__down-num').text(upNum);
                                 $(self).parent().addClass('handled');
+
+                                var show_amount = document.createElement('span');
+                                show_amount.className = 'show-amount show-amount-up';
+                                show_amount.innerText = '+1';
+                                $(self).parent().append(show_amount);
+                                $('.show-amount').css({
+                                    'position': 'absolute',
+                                    'top': '0',
+                                    'left': '170px',
+                                    'color': '#ffbe00',
+                                    'font-size': '20px',
+                                    'opcity': '1'
+                                });
+                                $('.show-amount').animate({
+                                    top: 40,
+                                    opcity: 0},
+                                    500, function() {
+                                    $('.show-amount').remove();
+                                });
                             },
                             error: function(ret) {
                                 alert(JSON.stringify(ret));

@@ -5,7 +5,7 @@ body {font:14px/24px Helvetica, "microsoft yahei",arial;background:#f5f5f5; colo
 table{border-collapse:collapse;border-spacing:0;}
 html,body,img {border:0;}
 img {max-width: 100%; vertical-align: middle;}
-h1,h2,h3,h4,h5,h6,strong,b{line-height: 1; color: #222; font-weight:normal;}
+h1,h2,h3,h4,h5,h6,strong,b{color: #222; font-weight:normal;}
 i,em{font-style:normal;}
 li{list-style:none;}
 a,button{cursor:pointer;}
@@ -66,7 +66,7 @@ select {
 .bg-green {
 	background-color: #91C11D;
 }
-.oneline {
+.one-line {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -80,6 +80,10 @@ select {
 .clearfix:after {
 	clear: both;
 }
+.line-2 {height: 60px;}
+.line-2s {height: 48px;}
+.line-3 {height: 90px;}
+.line-3s {height: 72px;}
 /*组件定义*/
 .wfl-wrap {
 	width: 1250px;
@@ -136,6 +140,21 @@ a.wflbox__more:hover {
 }
 .btn.m-green:active {
 	background-color: #628314;
+}
+
+.txtbox {
+    position: relative;
+    overflow: hidden;
+}
+/*.txtinline {}*/
+.toolong::after {
+  content: "...";
+  position: absolute;
+  bottom: 2px;
+  right: 0;
+  height: 20px;
+  padding: 0 4px 0px 10px;
+  background: linear-gradient(to right, transparent, #fff 40%);
 }
 
 .popup {
@@ -222,7 +241,7 @@ a.wflbox__more:hover {
     padding: 0 15px;
 }
 .headermain-box {
-    border-bottom: 1px solid #999;
+    border-bottom: 1px solid #e6e5e5;
 }
 .headermain {
     margin: 0 auto;
@@ -270,8 +289,9 @@ a.wflbox__more:hover {
     opacity: 0;
     width: 118px;
     padding: 10px 0;
+    border-radius: 4px;
     background-color: #fff;
-    box-shadow: 0 -1px 5px #999;
+    box-shadow: 0 0px 8px rgba(0,0,0,0.3);
     text-align: center;
     z-index: 2;
     transition: all 0.6s ease-in;
@@ -285,7 +305,7 @@ a.wflbox__more:hover {
     height: 14px;
     transform: rotate(45deg);
     background-color: #fff;
-    box-shadow: -2px -2px 3px #999;
+    box-shadow: -2px -2px 3px rgba(0,0,0,0.2);
     z-index: 1;
 }
 .subnav__item {

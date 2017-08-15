@@ -18,6 +18,7 @@ body {
 }
 .detailmain__title {
     padding: 20px 0;
+    line-height: 1;
 }
 .detail__p1 {
     margin-top: 20px;
@@ -32,6 +33,7 @@ body {
     line-height: 42px;
 }
 .support {
+    position: relative;
     height: 28px;
     line-height: 1;
     vertical-align: bottom;
@@ -72,6 +74,9 @@ body {
 .other-recommend {
     margin-top: 16px;
 }
+.other-recommend__title {
+    line-height: 1;
+}
 .other-recommend__box {
     margin-top: 8px;
     font-size: 0;
@@ -91,11 +96,13 @@ body {
     height: 204px;
 }
 .other-recommend__txt {
-    height: 60px;
     overflow: hidden;
     margin-top: 12px;
     line-height: 30px;
     word-wrap: normal;
+}
+.other-recommend__item:hover .other-recommend__txt {
+    color: #91c11d;
 }
 /*热门推荐*/
 .recommend-box {
@@ -113,6 +120,9 @@ body {
 }
 .recommend__title {
 	line-height: 30px;
+}
+.recommend:hover .recommend__title {
+    color: #91c11d;
 }
 .recommend__detail {
     margin-top: 10px;

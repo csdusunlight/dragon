@@ -132,7 +132,7 @@ border-radius: 2px;
 }
 
 button:hover {
-	background: #EA7A07;
+	/*background: #EA7A07;*/
 	outline:none;
 }
 

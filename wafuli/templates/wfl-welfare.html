@@ -20,23 +20,15 @@
 							{% for adv in ad_list %}
                   <li onclick="location='{{adv.url}}'" style="background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li>
               {%endfor%}
-					    <!-- <li style="background:url(images/img1.jpg) 50% 0 no-repeat;"></li>
-					    <li style="background:url(images/img2.jpg) 50% 0 no-repeat;"></li>
-					    <li style="background:url(images/img3.jpg) 50% 0 no-repeat;"></li>
-					    <li style="background:url(images/img4.jpg) 50% 0 no-repeat;"></li>
-					    <li style="background:url(images/img5.jpg) 50% 0 no-repeat;"></li> -->
 				  	</ul>
 
 				</div>
 			</div>
 			<div class="hongbao-recommend fs-0 r">
 				{% for adv in ad_list2 %}
-	          <li onclick="location='{{adv.url}}'" style="background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li>
+	          <!-- <li onclick="location='{{adv.url}}'" style="background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li> -->
+	          <a href="{{adv.url}}"><img class="hongbao-recommend-item" src="{{adv.pic.url}}" alt=""></a>
 	      {%endfor%}
-				<!-- <img class="hongbao-recommend-item" src=""/>
-				<img class="hongbao-recommend-item" src=""/>
-				<img class="hongbao-recommend-item" src=""/>
-				<img class="hongbao-recommend-item" src=""/> -->
 			</div>
 		</div>
 		<!--banner-container--end-->
@@ -46,7 +38,7 @@
 			    <input class="hongbao-input" name="key" type="text">
 			    <input class="hongbao-submit" type="submit" value="">
 			  <!-- </form> -->
-			  <p class="hot-search">热搜：<span class="hot-txt">热搜01</span><span class="hot-txt">热搜02</span><span class="hot-txt">热搜03</span><span class="hot-txt">热搜04</span></p>
+			  <p class="hot-search">热搜：<span class="hot-txt">红包</span><span class="hot-txt">优惠</span><span class="hot-txt">折扣</span><span class="hot-txt">限时</span></p>
 			</div>
 		</div>
 		<!--红包、积分、福利购-->
@@ -56,12 +48,12 @@
 					<h4 class="hongbao-nav-name l">红包分类：</h4>
 					<ul class="hongbao-nav l">
 						<li class="hongbao-nav__item on">精选</li>
-						<li class="hongbao-nav__item">微信<span class="hongbao-nav__num">1234</span></li>
-						<li class="hongbao-nav__item">支付宝<span class="hongbao-nav__num">1234</span></li>
-						<li class="hongbao-nav__item">购物<span class="hongbao-nav__num">1234</span></li>
-						<li class="hongbao-nav__item">话费<span class="hongbao-nav__num">1234</span></li>
-						<li class="hongbao-nav__item">流量<span class="hongbao-nav__num">1234</span></li>
-						<li class="hongbao-nav__item">理财<span class="hongbao-nav__num">1234</span></li>
+						<li class="hongbao-nav__item">微信红包<!-- <span class="hongbao-nav__num">1234</span> --></li>
+						<li class="hongbao-nav__item">支付宝红包</li>
+						<li class="hongbao-nav__item">购物红包</li>
+						<li class="hongbao-nav__item">话费红包</li>
+						<li class="hongbao-nav__item">流量红包</li>
+						<li class="hongbao-nav__item">理财红包</li>
 					</ul>
 					<ul class="hongbao-choose fs-0 r">
 						<li class="hongbao-choose__item on">最新</li>
@@ -69,32 +61,6 @@
 					</ul>
 				</div>
 				<ul id="pagedata1" class="hongbao-box">
-					<!-- <li class="hongbao">
-						<img class="hongbao__img" src="" alt="" />
-						<div class="hongbao-detail">
-							<h3>京东618优惠券总攻略</h3>
-							<p class="hongbao__detail">京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略</p>
-							<div class="hongbao-action clearfix">
-								<div class="support l">
-									<span class="support__up">顶（<number>345</number>）</span><span class="support__down">踩（<number>345</number>）</span>
-								</div>
-								<div class="hongbao-rb r">
-									<span class="hongbao__time">06-12 15:30</span><span class="hongbao__source">京东</span><a class="btn m-green m-hongbao-link" href="#">直达链接</a>
-								</div>
-							</div>
-						</div>
-					</li> -->
-
-					<!--分页部分-->
-					<!-- <div class="changes-p">
-						<div class="page" id="page2"><span class="disable">&lt; 上一页</span><span class="on">1</span>
-							<a href="javascript:;" class="a_href" data-i="2">2</a>
-							<a href="javascript:;" class="a_href" data-i="3">3</a>
-							<a href="javascript:;" class="a_href" data-i="4">4</a>
-							<a href="javascript:;" class="a_href" data-i="5">5</a>
-							<a href="javascript:;" class="a_next">下一页 &gt;</a><span class="href"><label for="pageText">到第</label><input autocomplete="off" type="text" class="a_text" value="1"><label for="pageText">页</label><input type="button" value="转到" class="a_button"></span></div>
-					</div> -->
-					<!--分页部分---end-->
 				</ul>
 				<div class="changes-p">
 			      <div class="page"  id="page1">
@@ -105,64 +71,31 @@
 				<div class="wflbox">
 					<div class="wflbox__titlebox clearfix">
 						<h1 class="wflbox__title">福利购</h1>
-						<a class="wflbox__more" href="#">查看全部</a>
+						<a class="wflbox__more" href="http://fuligou.wafuli.cn">查看全部</a>
 					</div>
 					<ul class="fuligou-box">
 						{% for news in fuligou_side %}
-            <li class="fuligou"><a href="{{news.href}}">
+            <li class="fuligou"><a href="{{news.href}}" target="_blank">
 							<img class="fuligou__img" src="{{news.img_src}}" alt="" />
 							<div>
-								<h3 class="fuligou__title">{{news.title}}</h3>
+                <div class="txtbox line-3s">
+                    <h3 class="fuligou__title txtinline">{{news.title}}</h3>
+                </div>
 								<div class="price l"><span class="price__now">￥<number>{{news.buy_price}}</number></span><span class="price__tag">券后价</span><span class="price__before">￥{{news.old_price}}</span></div>
 							</div>
 						</a></li>
             {% endfor %}
-						<!-- <li class="fuligou"><a href="#">
-							<img class="fuligou__img" src="" alt="" />
-							<div>
-								<h3 class="fuligou__title">iPhone7全网通全网通全网通</h3>
-								<div class="price l"><span class="price__now">￥<number>24.5</number></span><span class="price__tag">券后价</span><span class="price__before">￥34.5</span></div>
-							</div>
-						</a></li>
-						<li class="fuligou"><a href="#">
-							<img class="fuligou__img" src="" alt="" />
-							<div>
-								<h3 class="fuligou__title">iPhone7全网通全网通全网通</h3>
-								<div class="price l"><span class="price__now">￥<number>24.5</number></span><span class="price__tag">券后价</span><span class="price__before">￥34.5</span></div>
-							</div>
-						</a></li>
-						<li class="fuligou"><a href="#">
-							<img class="fuligou__img" src="" alt="" />
-							<div>
-								<h3 class="fuligou__title">iPhone7全网通全网通全网通</h3>
-								<div class="price l"><span class="price__now">￥<number>24.5</number></span><span class="price__tag">券后价</span><span class="price__before">￥34.5</span></div>
-							</div>
-						</a></li>
-						<li class="fuligou"><a href="#">
-							<img class="fuligou__img" src="" alt="" />
-							<div>
-								<h3 class="fuligou__title">iPhone7全网通全网通全网通</h3>
-								<div class="price l"><span class="price__now">￥<number>24.5</number></span><span class="price__tag">券后价</span><span class="price__before">￥34.5</span></div>
-							</div>
-						</a></li>
-						<li class="fuligou"><a href="#">
-							<img class="fuligou__img" src="" alt="" />
-							<div>
-								<h3 class="fuligou__title">iPhone7全网通全网通全网通</h3>
-								<div class="price l"><span class="price__now">￥<number>24.5</number></span><span class="price__tag">券后价</span><span class="price__before">￥34.5</span></div>
-							</div>
-						</a></li> -->
 					</ul>
 				</div>
 
 				<div class="wflbox">
 					<div class="wflbox__titlebox m-mt clearfix">
 						<h1 class="wflbox__title">积分商城</h1>
-						<a class="wflbox__more" href="#">查看全部</a>
+						<a class="wflbox__more" href="{% url 'mall' %}">查看全部</a>
 					</div>
 					<ul class="jifen-box">
 						{% for news in commodity_list %}
-            <li class="jifen"><a href="{{news.url}}">
+            <li class="jifen"><a href="{{news.url}}" target="_blank">
                 <img class="jifen__img" src="{{news.pic.url}}" alt="" />
                 <div>
                     <h3 class="jifen__title">{{news.name}}</h3>
@@ -170,41 +103,6 @@
                 </div>
             </a></li>
             {% endfor %}
-						<!-- <li class="jifen"><a href="#">
-							<img class="jifen__img" src="" alt="" />
-							<div>
-								<h3 class="jifen__title">iPhone7全网通全网通全网通</h3>
-								<p class="jifen__num">积分：777888</p>
-							</div>
-						</a></li>
-						<li class="jifen"><a href="#">
-							<img class="jifen__img" src="" alt="" />
-							<div>
-								<h3 class="jifen__title">iPhone7全网通全网通全网通</h3>
-								<p class="jifen__num">积分：777888</p>
-							</div>
-						</a></li>
-						<li class="jifen"><a href="#">
-							<img class="jifen__img" src="" alt="" />
-							<div>
-								<h3 class="jifen__title">iPhone7全网通全网通全网通</h3>
-								<p class="jifen__num">积分：777888</p>
-							</div>
-						</a></li>
-						<li class="jifen"><a href="#">
-							<img class="jifen__img" src="" alt="" />
-							<div>
-								<h3 class="jifen__title">iPhone7全网通全网通全网通</h3>
-								<p class="jifen__num">积分：777888</p>
-							</div>
-						</a></li>
-						<li class="jifen"><a href="#">
-							<img class="jifen__img" src="" alt="" />
-							<div>
-								<h3 class="jifen__title">iPhone7全网通全网通全网通</h3>
-								<p class="jifen__num">积分：777888</p>
-							</div>
-						</a></li> -->
 					</ul>
 				</div>
 			</div>
@@ -214,48 +112,30 @@
   <!--浮动窗口-->
   {% include "outline.html" %}
 
-		<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"slide":{"type":"slide","bdImg":"0","bdPos":"left","bdTop":"106.5"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
-        <script>
-            var _hmt = _hmt || [];
-            (function() {
-              var hm = document.createElement("script");
-              hm.src = "//hm.baidu.com/hm.js?967fce306a35a615082120cd7cf7d616";
-              var s = document.getElementsByTagName("script")[0];
-              s.parentNode.insertBefore(hm, s);
-            })();
-        </script>
-
 		<script src="/static/js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/wfl-common.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/static/js/wfl-flexslider-min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="{% static 'js/page.js' %}"></script>
 		<script type="text/javascript">
 			$(function(){
-				// var data2 = '<li class="hongbao"><img class="hongbao__img" src="" alt="" /><h3>{title}</h3>'+
-				// 			'<p class="hongbao__detail">京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略</p>'+
-				// 			'<div class="hongbao-action clearfix">'+
-				// 			'<div class="support l"><span class="support__up">顶（<number>345</number>）</span><span class="support__down">踩（<number>345</number>）</span></div>'+
-				// 			'<div class="hongbao-rb r"><span class="hongbao__time">06-12 15:30</span><span class="hongbao__source">京东</span><a class="btn m-green m-hongbao-link" href="#">直达链接</a></div>'+
-				// 			'</div></div></li>'
-				var data='[results]<li class="hongbao"><h2 class="hongbao__title">{title}<span class="hongbao__title-two">{subtitle}</span></h2>'+
+				var data='[results]<li class="hongbao"><a href="{url}" target="_blank"><h2 class="hongbao__title">{title}<span class="hongbao__title-two">{subtitle}</span></h2></a>'+
                         '<div class="hongbao-detail"><img class="hongbao__img" src="{pic}" alt="" /><span class="hongbao__look">阅读量:&nbsp;&nbsp;{view_count}</span>'+
                             '<div class="hongbao__detailbox"><p class="hongbao__detail">{seo_description}</p></div><div class="hongbao-action clearfix">'+
                                 '<div class="support l"><span class="support__up">顶&nbsp;&nbsp;<number data-upid = "{id}" class="support__up-num">{up}</number></span><span class="support__down">踩&nbsp;&nbsp;<number data-downid = "{id}" class="support__down-num">{down}</number></span></div>'+
-                                '<div class="hongbao-rb r"><span class="hongbao__time">{startTime}</span><span class="hongbao__source">{provider}</span><a class="btn m-green m-hongbao-link" href="{url}">查看详情</a>'+
+                                '<div class="hongbao-rb r"><span class="hongbao__time">{startTime}</span><span class="hongbao__source">{provider}</span><a class="btn m-green m-hongbao-link" href="{url}" target="_blank">查看详情</a>'+
                                 '</div></div></div></li>[/results]';
-			  // var url = "{% url 'get_finance_page' %}" + "?page={page}&size={pageSize}";
-			  // var url ='/hongbaolist/?htype=&ordering=up&state=1'
 			  var htype = '';
-			  var ordering = 'startTime';
-			  var url ='/hongbaolist/?state=1';
+			  var ordering = '-startTime';
+			  var url ='/hongbaolist/?state=1&page={page}&size={pageSize}';
 			  function pagecallback(){
 			  	console.log('after');
 					$(".lc-h2.new").append('<img src="/static/images/new_cont.png" class="new_cont2">');
 				  $(".end").text("已结束");
 				}
 			  $("#pagedata1").ajaxPage({
-			      url:url + '&htype=' + htype + '&ordering=' + ordering,
+			      url:url + '&is_qualified=true&htype=' + htype + '&ordering=' + ordering,
 			      pageId:$("#page1"),
-			      pageSize:2,
+			      // pageSize:2,
 			      run:true,
 			      content:data,
 			      complete:pagecallback,
@@ -274,25 +154,44 @@
 					$("#pagedata1").ajaxPage({
 				      url:newurl,
 				      pageId:$("#page1"),
-				      pageSize:2,
+				      // pageSize:2,
 				      run:true,
 				      content:data,
 				      complete:pagecallback,
 				  });
-				})
+				});
+				$('.hongbao-input').on('keypress',function(e){
+					if(e.keyCode == 13) {
+						var newurl = url + '&search=' + $('.hongbao-input').val();
+						console.log(newurl);
+						$("#pagedata1").ajaxPage({
+					      url:newurl,
+					      pageId:$("#page1"),
+					      pageSize:2,
+					      run:true,
+					      content:data,
+					      complete:pagecallback,
+					  });
+					}
+				});
+
+        var typeindex = 0;
 				$('.hongbao-nav__item').click(function(){
 					$(this).addClass('on').siblings().removeClass('on');
-					if ($(this).index() == 0) {
-							htype = '';
-					} else {
-						htype = $(this).index() - 1;
-					}
-					var newurl = url + '&htype=' + htype + '&ordering=' + ordering;
-					console.log(newurl);
+          var newurl = url;
+          typeindex = $(this).index();
+          if (typeindex == 0) {
+            newurl += '&is_qualified=true';
+          } else {
+              htype = typeindex - 1;
+              newurl += '&htype=' + htype;
+          }
+          newurl += '&ordering=' + ordering;
+          console.log(newurl);
 					$("#pagedata1").ajaxPage({
 				      url:newurl,
 				      pageId:$("#page1"),
-				      pageSize:2,
+				      // pageSize:2,
 				      run:true,
 				      content:data,
 				      complete:pagecallback,
@@ -310,7 +209,7 @@
 					$("#pagedata1").ajaxPage({
 				      url:newurl,
 				      pageId:$("#page1"),
-				      pageSize:2,
+				      // pageSize:2,
 				      run:true,
 				      content:data,
 				      complete:pagecallback,
@@ -340,6 +239,25 @@
                         $(self).find('.support__up-num').text(upNum);
                         $(self).parent().addClass('handled');
                         console.log('chengong');
+
+                        var show_amount = document.createElement('span');
+                        show_amount.className = 'show-amount show-amount-up';
+                        show_amount.innerText = '+1';
+                        $(self).parent().append(show_amount);
+                        $('.show-amount').css({
+                            'position': 'absolute',
+                            'top': '0',
+                            'left': '30px',
+                            'color': '#ffbe00',
+                            'font-size': '20px',
+                            'opcity': '1'
+                        });
+                        $('.show-amount').animate({
+                            top: -40,
+                            opcity: 0},
+                            500, function() {
+                            $('.show-amount').remove();
+                        });
                     },
                     error: function(ret) {
                         alert(JSON.stringify(ret));
@@ -366,6 +284,25 @@
                         var upNum = parseInt(upText) + 1;
                         $(self).find('.support__down-num').text(upNum);
                         $(self).parent().addClass('handled');
+
+                        var show_amount = document.createElement('span');
+                        show_amount.className = 'show-amount show-amount-up';
+                        show_amount.innerText = '+1';
+                        $(self).parent().append(show_amount);
+                        $('.show-amount').css({
+                            'position': 'absolute',
+                            'top': '0',
+                            'left': '110px',
+                            'color': '#ffbe00',
+                            'font-size': '20px',
+                            'opcity': '1'
+                        });
+                        $('.show-amount').animate({
+                            top: 40,
+                            opcity: 0},
+                            500, function() {
+                            $('.show-amount').remove();
+                        });
                     },
                     error: function(ret) {
                         alert(JSON.stringify(ret));

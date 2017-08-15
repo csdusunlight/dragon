@@ -1,3 +1,4 @@
+h1,h2,h3,h4,h5,h6 {line-height: 1;}
 /*banner-container*/
 .banner-container {
 	height: 402px;
@@ -95,7 +96,7 @@
     font-size: 14px;
     line-height: 24px;
     color: #fff;
-    background-color: #f08519;
+    background-color: #ffbe00;
     border-radius: 2px;
 }
 .user-fubi,
@@ -208,25 +209,34 @@
 .hot-recommend__img {
 	width: 200px;
 	height: 200px;
+	margin-bottom: 12px;
 	vertical-align: middle;
 }
 .hot-recommend__txt {
-	height: 60px;
 	overflow: hidden;
-	margin-top: 12px;
 	line-height: 30px;
 	word-wrap: normal;
 }
+.hot-recommend:hover .hot-recommend__txt {
+	color: #91C11D;
+}
 .discover {
-	padding-left: 10px;
-	height: 288px;
+	padding: 0 10px 16px;
+}
+.discover-content {
+	height: 414px;
+	background: url(../images/developing.png) center center no-repeat #f5f5f5;
 }
 .discover__img {
 	width: 280px;
 	height: 200px;
+	margin-bottom: 12px;
 }
 .discover__txt {
-	margin-top: 12px;
+	line-height: 30px;
+}
+.discover:hover .discover__txt {
+	color: #91C11D;
 }
 /*推荐、发现---end*/
 /*红包、积分会员*/
@@ -296,6 +306,9 @@
 .hongbao__title {
     margin-bottom: 20px;
 }
+.hongbao__title:hover {
+	color: #ffbe00;
+}
 .hongbao__title-two {
     margin-left: 10px;
     color: #91C11D;
@@ -330,6 +343,7 @@
 	line-height: 1;
 }
 .support {
+		position: relative;
     height: 36px;
     line-height: 36px;
     border: 1px solid #e4e4e4;
@@ -380,6 +394,9 @@
 .jifen__title {
 	line-height: 30px;
 }
+.jifen:hover .jifen__title {
+	color: #91c11d;
+}
 .jifen__num {
 	color: #91c11d;
 }
@@ -397,11 +414,12 @@
 	color: #91c11d;
 }
 .vip-content {
-	padding: 0 8px 4px;
+	padding: 20px 8px 4px;
 	display: none;
+	height: 334px;
 }
 .vip-item {
-	margin-bottom: 6px;
+	margin-bottom: 14px;
 }
 .vip-num,
 .vip-account,
@@ -450,6 +468,7 @@
 }
 .fuligou__price {
     margin-top: 20px;
+    margin-bottom: 16px;
 }
 .price {
 	height: 20px;
@@ -470,18 +489,22 @@
 .price__before {
 	color: #999;
 	font-size: 12px;
+	text-decoration: line-through;
 }
 .quan {
-	width: 48px;
+	width: 50px;
 	height: 21px;
 	font-size: 12px;
 	line-height: 21px;
 	text-align: center;
 	background: url(../images/coupon.png) center center/100% auto no-repeat;
 }
-.fulitou__txt {
-	margin-top: 16px;
+.fuligou__txt {
+	overflow: hidden;
 	color: #666;
+}
+.fuligou:hover .fuligou__txt {
+	color: #91c11d;
 }
 
 .fuligou-right-content {
@@ -493,6 +516,10 @@
 	height: 139px;
 	margin-right: 20px;
 	margin-bottom: 20px;
+	transition: all 0.4s ease;
+}
+.fuligou-right-item:hover {
+	transform: translateY(-4px);
 }
 .fuligou-right-img {
 	width: 100%;
@@ -503,8 +530,9 @@
 	top: 0;
 	left: 0;
 	width: 58px;
-	height: 22px;
 	line-height: 22px;
+	color: #fff;
+	background-color: #f47e7e;
 	text-align: center;
 }
 /*福利购---end*/
@@ -528,10 +556,8 @@
 	margin-right: 24px;
 	float: left;
 }
-.task__title {
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space: nowrap;
+.task:hover .task__title {
+	color: #91c11d;
 }
 .task__reward, .task__person, .task__time {
 	margin-top: 24px;
@@ -648,7 +674,7 @@
 	font-size: 12px;
 	line-height: 1;
 	border-radius: 4px;
-	background-color: #ff8d52;
+	background-color: #ffbe00;
 }
 .finance__column-title {
     display: inline-block;
@@ -764,5 +790,29 @@
 .creditcard-ad-img {
 	width: 870px;
 	height: 110px;
+	margin-bottom: 14px
 }
 /*信用卡借点钱---end*/
+/*引导页部分*/
+.guide-box {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0,0,0,0.5);
+	z-index: 20;
+}
+.guide {
+	position: relative;
+	width: 1250px;
+	margin: 0 auto;
+}
+.guide__item {
+	position: absolute;
+}
+.guide__btn {
+	display: block;
+	margin-top: 70px
+}
+/*引导页部分---end*/

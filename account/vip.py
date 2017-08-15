@@ -25,9 +25,9 @@ def get_vip_bonus(user, amount, type):
         cash = amount*VIP_BONUS[level][type]
         translist = charge_money(user, '0', cash, u'vip奖励')
 def vip_judge(user, with_amount):
-    obj=UserStatis.objects.get_or_create(user=user)
+    obj, created = UserStatis.objects.get_or_create(user=user)
     obj.week_statis = F('week_statis') + with_amount
-    obj.month_statis = F('week_statis') + with_amount
+    obj.month_statis = F('month_statis') + with_amount
     obj.save(update_fields=['week_statis', 'month_statis'])
     if user.is_channel:
         return

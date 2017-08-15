@@ -1,4 +1,4 @@
-;(function($) {
+;(function($,window,document,undefined) {
     $.fn.tab = function(options) {
         var defaults = {
             tabActiveClass: 'active',
@@ -6,7 +6,7 @@
             tabCont: '.conitem',
             tabType: 'click'
         };
- 
+
         var endOptions = $.extend(defaults, options);
         $(this).each(function() {
             var _this = $(this);
@@ -17,4 +17,4 @@
             });
         });
     };
-})(jQuery);
+})(jQuery,window,document);

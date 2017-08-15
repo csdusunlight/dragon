@@ -132,6 +132,10 @@
 }
 .hongbao__title {
     margin-bottom: 20px;
+    line-height: 1;
+}
+.hongbao__title:hover {
+  color: #ffbe00;
 }
 .hongbao__title-two {
     margin-left: 10px;
@@ -167,6 +171,7 @@
 	line-height: 1;
 }
 .support {
+		position: relative;
     height: 36px;
     line-height: 36px;
     border: 1px solid #e4e4e4;
@@ -222,10 +227,16 @@
 }
 .fuligou__title,
 .jifen__title {
-	line-height: 30px;
+	line-height: 24px;
 }
 .fuligou__title {
     margin-bottom: 6px;
+}
+.fuligou:hover .fuligou__title {
+	color: #91c11d;
+}
+.jifen:hover .jifen__title {
+	color: #91c11d;
 }
 .price {
     height: 20px;
@@ -246,6 +257,7 @@
 .price__before {
     color: #999;
     font-size: 12px;
+    text-decoration: line-through;
 }
 .jifen__num {
 	color: #91c11d;

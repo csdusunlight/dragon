@@ -10,9 +10,11 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/welfare.css' %}" />
+<link rel="stylesheet" type="text/css" href="/static/css/wfl-flesslider.css"/>
 <link rel="stylesheet" type="text/css" href="{% static 'css/page.css' %}" />
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/jquery.flexslider-min.js' %}"></script>
+<!-- <script type="text/javascript" src="{% static 'js/jquery.flexslider-min.js' %}"></script> -->
+<script src="/static/js/wfl-flexslider-min.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="{% static 'js/jQuery.infiniteCarousel.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/MSClass.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/page.js' %}"></script>
@@ -35,10 +37,10 @@ function switchpage(attr){
 	    pageSize:16,
 	    run:true,
 	    content:data,
-	});	
+	});
 }
 $(function(){
- 	$('.mall_h a').toggleClass("vo");
+    $('.nav__item:eq(3)').addClass('active');
  	var type = "{{type}}"
  	if (type){
  	 	obj = $("#"+type);
@@ -73,14 +75,23 @@ $(function(){
 {% include "header.html" %}
 <div id="content">
    <div id="index-banner">
-    <div class="flexslider">
+
+    <div style="height: 307px" class="flexslider">
+        <ul class="slides">
+            {% for adv in ad_list %}
+                <li onclick="location='{{adv.url}}'" style="height: 307px;background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li>
+            {%endfor%}
+        </ul>
+
+    </div>
+    <!-- <div class="flexslider">
       <ul class="slides">
 	  {% for adv in ad_list %}
         <li onclick="location='{{adv.url}}'" style="background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li>
       {%endfor%}
-      </ul>
+      </ul> -->
 
-    
+
     </div>
   </div>
     <div class="conte">
@@ -122,12 +133,12 @@ $(function(){
                 </ul>
             </div>
              <img src="{% static 'images/rr.png' %}" class="re-imge" style="float:left;"/>
-                
+
         </div>
          <div class="ews-right">
         	<div class="lk-o">
             	<div class="er-h2"><span>奖品列表</span></div>
-                <ul id="pagedata">   	
+                <ul id="pagedata">
                     <li class="op-li">
                     	<a href="#"><img src="{% static 'images/jf3.png' %}" class="op-limg"/></a>
                        <a href="#"> <p class="po-p">数码一游戏鼠标</p></a>
@@ -141,17 +152,17 @@ $(function(){
             </div>
         </div>
         </div>
-        
-        
-        
-       
-       
+
+
+
+
+
     </div>
 </div>
 <div style="clear:both"></div>
  <!--底部-->
   {% include "footer.html" %}
-  <!--浮动窗口-->  
+  <!--浮动窗口-->
   {% include "outline.html" %}
 </body>
 </html>
