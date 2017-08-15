@@ -128,7 +128,9 @@
                 <div class="discover">
                     <a href="{{find.url}}">
                         <img class="discover__img" src="{{find.pic.url}}" alt="" />
-                        <p class="discover__txt">{{find.title}}</p>
+                        <div class="txtbox line-2">
+                            <p class="discover__txt">{{find.title}}</p>
+                        </div>
                     </a>
                 </div>
             </div>
@@ -211,7 +213,7 @@
                                 <div class="price l"><span class="price__now">￥<number>{{news.buy_price}}</number></span><span class="price__tag">券后价</span><span class="price__before">￥{{news.old_price}}</span></div>
                                 <div class="quan r color-red">￥<number>{{news.coupon_value}}</number></div>
                             </div>
-                            <div class="txtbox line-2">
+                            <div class="txtbox line-2s">
                                 <p class="fuligou__txt txtinline">{{news.title}}</p>
                             </div>
                         </a></li>
@@ -245,7 +247,7 @@
                         <li class="task d-ib"><a href="{{news.url}}" target="_blank">
                             <img class="task__img" src="{{news.pic.url}}" alt="" />
                             <div class="task__detail clearfix">
-                                <h2 class="task__title add-title">{{news.title}}</h2>
+                                <h2 class="task__title oneline">{{news.title}}</h2>
                                 <p class="task__reward">奖励福币：<number>{{news.moneyToAdd}}</number></p>
                                 <p class="task__person">剩余名额：<number>{{news.left_num}}</number></p>
                                 <p class="task__time">截止时间：<number>{{news.time_limit}}</number></p>
@@ -362,7 +364,7 @@
                         <li class="creditcard d-ib">
                         <img class="creditcard__img" src="{{news.pic.url}}" alt="信用卡图片" />
                         <div class="creditcard__detail">
-                            <h2 class="creditcard__title">{{news.title}}</h2>
+                            <h2 class="creditcard__title oneline">{{news.title}}</h2>
                             <p class="creditcard__persons">已有<number>{{news.apply_num}}</number>人申请</p>
                             <a href="#" class="btn m-green m-creditcard" target="_blank">免费申请</a>
                         </div>
@@ -863,12 +865,14 @@
                 // 超出隐藏部分
                 $('.txtinline').each(function(index, el) {
                     var overFlag = $(this).height()-$(this).parent().height();
+                    console.log($(this).height());
+                    console.log($(this).parent().height());
                     if (overFlag > 0) {
                         $(this).addTitle();
                         $(this).parent().addClass('toolong')
                     }
                 });
-                $('.add-title').addTitle();
+                $('.oneline').addTitle();
                 // var text_box = document.getElementById("text_box"),
                 //     intro = document.getElementById("intro");
                 // var box_height = text_box.offsetHeight - intro.offsetHeight;

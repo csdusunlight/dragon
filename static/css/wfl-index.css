@@ -208,12 +208,12 @@
 .hot-recommend__img {
 	width: 200px;
 	height: 200px;
+	margin-bottom: 12px;
 	vertical-align: middle;
 }
 .hot-recommend__txt {
 	height: 60px;
 	overflow: hidden;
-	margin-top: 12px;
 	line-height: 30px;
 	word-wrap: normal;
 }
@@ -230,9 +230,9 @@
 .discover__img {
 	width: 280px;
 	height: 200px;
+	margin-bottom: 12px;
 }
 .discover__txt {
-	margin-top: 12px;
 	line-height: 30px;
 }
 .discover:hover .discover__txt {
@@ -465,6 +465,7 @@
 }
 .fuligou__price {
     margin-top: 20px;
+    margin-bottom: 16px;
 }
 .price {
 	height: 20px;
@@ -496,11 +497,6 @@
 	background: url(../images/coupon.png) center center/100% auto no-repeat;
 }
 .fuligou__txt {
-	display: -webkit-box;
-	text-overflow: ellipsis;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;
-	margin-top: 16px;
 	height: 48px;
 	overflow: hidden;
 	color: #666;
@@ -553,11 +549,6 @@
 	height: 132px;
 	margin-right: 24px;
 	float: left;
-}
-.task__title {
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space: nowrap;
 }
 .task:hover .task__title {
 	color: #91c11d;
@@ -774,9 +765,6 @@
 }
 .creditcard__title {
 	margin-top: 10px;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space: nowrap;
 }
 .creditcard__persons {
 	margin-top: 22px;
