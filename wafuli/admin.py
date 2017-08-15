@@ -21,7 +21,8 @@ class NewsAdmin(admin.ModelAdmin):
 class FinanceAdmin(NewsAdmin):
     readonly_fields = ('url','pub_date','change_user')
     filter_horizontal = ('marks',)
-    list_display = ('title','state',)
+    list_display = ('title','state','news_priority')
+    list_priority=('news_priority',)
 #     def formfield_for_foreignkey(self, db_field, request, **kwargs): 
 #         if db_field.name == "company": 
 #             kwargs["queryset"] = Company.objects.order_by("pinyin") 
