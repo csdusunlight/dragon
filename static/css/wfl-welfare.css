@@ -132,6 +132,7 @@
 }
 .hongbao__title {
     margin-bottom: 20px;
+    line-height: 1;
 }
 .hongbao__title:hover {
   color: #ffbe00;

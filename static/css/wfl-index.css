@@ -1,3 +1,4 @@
+h1,h2,h3,h4,h5,h6 {line-height: 1;}
 /*banner-container*/
 .banner-container {
 	height: 402px;
@@ -518,7 +519,7 @@
 	transition: all 0.4s ease;
 }
 .fuligou-right-item:hover {
-	transform: translateY(-2px);
+	transform: translateY(-4px);
 }
 .fuligou-right-img {
 	width: 100%;
