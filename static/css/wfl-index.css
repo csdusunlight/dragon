@@ -212,7 +212,6 @@
 	vertical-align: middle;
 }
 .hot-recommend__txt {
-	height: 60px;
 	overflow: hidden;
 	line-height: 30px;
 	word-wrap: normal;
@@ -497,7 +496,6 @@
 	background: url(../images/coupon.png) center center/100% auto no-repeat;
 }
 .fuligou__txt {
-	height: 48px;
 	overflow: hidden;
 	color: #666;
 }
