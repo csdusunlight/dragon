@@ -118,20 +118,12 @@
 		<script type="text/javascript" src="{% static 'js/page.js' %}"></script>
 		<script type="text/javascript">
 			$(function(){
-				// var data2 = '<li class="hongbao"><img class="hongbao__img" src="" alt="" /><h3>{title}</h3>'+
-				// 			'<p class="hongbao__detail">京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略京东618优惠券总攻略</p>'+
-				// 			'<div class="hongbao-action clearfix">'+
-				// 			'<div class="support l"><span class="support__up">顶（<number>345</number>）</span><span class="support__down">踩（<number>345</number>）</span></div>'+
-				// 			'<div class="hongbao-rb r"><span class="hongbao__time">06-12 15:30</span><span class="hongbao__source">京东</span><a class="btn m-green m-hongbao-link" href="#">直达链接</a></div>'+
-				// 			'</div></div></li>'
-				var data='[results]<li class="hongbao"><a href="{url}" target="_blank"><h2 class="hongbao__title">{title}<span class="hongbao__title-two">{subtitle}</span></h2><a>'+
+				var data='[results]<li class="hongbao"><a href="{url}" target="_blank"><h2 class="hongbao__title">{title}<span class="hongbao__title-two">{subtitle}</span></h2></a>'+
                         '<div class="hongbao-detail"><img class="hongbao__img" src="{pic}" alt="" /><span class="hongbao__look">阅读量:&nbsp;&nbsp;{view_count}</span>'+
                             '<div class="hongbao__detailbox"><p class="hongbao__detail">{seo_description}</p></div><div class="hongbao-action clearfix">'+
                                 '<div class="support l"><span class="support__up">顶&nbsp;&nbsp;<number data-upid = "{id}" class="support__up-num">{up}</number></span><span class="support__down">踩&nbsp;&nbsp;<number data-downid = "{id}" class="support__down-num">{down}</number></span></div>'+
                                 '<div class="hongbao-rb r"><span class="hongbao__time">{startTime}</span><span class="hongbao__source">{provider}</span><a class="btn m-green m-hongbao-link" href="{url}" target="_blank">查看详情</a>'+
                                 '</div></div></div></li>[/results]';
-			  // var url = "{% url 'get_finance_page' %}" + "?page={page}&size={pageSize}";
-			  // var url ='/hongbaolist/?page={page}&size={pageSize}&htype=&ordering=up&state=1'
 			  var htype = '';
 			  var ordering = '-startTime';
 			  var url ='/hongbaolist/?state=1&page={page}&size={pageSize}';
@@ -194,13 +186,6 @@
               htype = typeindex - 1;
               newurl += '&htype=' + htype;
           }
-					// if ($(this).index() == 0) {
-					// 		htype = '';
-					// } else {
-					// 	htype = $(this).index() - 1;
-					// }
-					// var newurl = url + '&htype=' + htype + '&ordering=' + ordering;
-					// console.log(newurl);
           newurl += '&ordering=' + ordering;
           console.log(newurl);
 					$("#pagedata1").ajaxPage({
