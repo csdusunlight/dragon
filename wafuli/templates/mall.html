@@ -10,9 +10,11 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/welfare.css' %}" />
+<link rel="stylesheet" type="text/css" href="/static/css/wfl-flesslider.css"/>
 <link rel="stylesheet" type="text/css" href="{% static 'css/page.css' %}" />
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/jquery.flexslider-min.js' %}"></script>
+<!-- <script type="text/javascript" src="{% static 'js/jquery.flexslider-min.js' %}"></script> -->
+<script src="/static/js/wfl-flexslider-min.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="{% static 'js/jQuery.infiniteCarousel.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/MSClass.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/page.js' %}"></script>
@@ -73,12 +75,21 @@ $(function(){
 {% include "header.html" %}
 <div id="content">
    <div id="index-banner">
-    <div class="flexslider">
+
+    <div style="height: 307px" class="flexslider">
+        <ul class="slides">
+            {% for adv in ad_list %}
+                <li onclick="location='{{adv.url}}'" style="height: 307px;background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li>
+            {%endfor%}
+        </ul>
+
+    </div>
+    <!-- <div class="flexslider">
       <ul class="slides">
 	  {% for adv in ad_list %}
         <li onclick="location='{{adv.url}}'" style="background:url({{adv.pic.url}}) 50% 0 no-repeat;cursor:pointer;"></li>
       {%endfor%}
-      </ul>
+      </ul> -->
 
 
     </div>
