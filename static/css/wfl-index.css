@@ -774,6 +774,9 @@
 }
 .creditcard__title {
 	margin-top: 10px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
 .creditcard__persons {
 	margin-top: 22px;

@@ -80,6 +80,10 @@ select {
 .clearfix:after {
 	clear: both;
 }
+line-2 {height: 60px;}
+line-2s {height: 48px;}
+line-3 {height: 90px;}
+line-3s {height: 720px;}
 /*组件定义*/
 .wfl-wrap {
 	width: 1250px;
@@ -136,6 +140,21 @@ a.wflbox__more:hover {
 }
 .btn.m-green:active {
 	background-color: #628314;
+}
+
+.txtbox {
+    position: relative;
+    overflow: hidden;
+}
+/*.txtinline {}*/
+.toolong::after {
+  content: "...";
+  position: absolute;
+  bottom: 2px;
+  right: 0;
+  height: 20px;
+  padding: 0 4px 0px 10px;
+  background: linear-gradient(to right, transparent, #fff 40%);
 }
 
 .popup {
