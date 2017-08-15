@@ -133,6 +133,9 @@
 .hongbao__title {
     margin-bottom: 20px;
 }
+.hongbao__title:hover {
+  color: #ffbe00;
+}
 .hongbao__title-two {
     margin-left: 10px;
     color: #91C11D;

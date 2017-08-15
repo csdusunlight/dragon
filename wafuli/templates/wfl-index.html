@@ -393,6 +393,7 @@
         <script src="/static/js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="/static/js/wfl-flexslider-min.js" type="text/javascript" charset="utf-8"></script>
         <script src="/static/js/wfl-common.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/static/js/wfl-popup.js" type="text/javascript" charset="utf-8"></script>
         <script src="/static/js/wfl-tab.js" type="text/javascript" charset="utf-8"></script>
         <script src="/static/js/wfl-guide.js" type="text/javascript" charset="utf-8"></script>
         <script src="/static/js/cookie.js" type="text/javascript" charset="utf-8"></script>
@@ -423,7 +424,7 @@
                             var innerhtml = "";
                             for (var i=0; i<ret.results.length; i++) {
                                 innerhtml += '<li class="hongbao">' +
-                                    '<h2 class="hongbao__title">'+ ret.results[i].title +'<span class="hongbao__title-two">'+ ret.results[i].subtitle +'</span></h2>'+
+                                    '<a href="'+ ret.results[i].url +'" target="_blank"><h2 class="hongbao__title">'+ ret.results[i].title +'<span class="hongbao__title-two">'+ ret.results[i].subtitle +'</span></h2></a>'+
                                     '<div class="hongbao-detail"><img class="hongbao__img" src="'+ ret.results[i].pic +'" alt="" />'+
                                         '<span class="hongbao__look">阅读量:&nbsp;&nbsp;<number class="hongbao__look-num">'+ ret.results[i].view_count +'</number></span>'+
                                         '<div class="hongbao__detailbox"><p class="hongbao__detail">'+ ret.results[i].seo_description + '</p></div>'+
@@ -472,7 +473,7 @@
                                 var innerhtml = "";
                                 for (var i=0; i<ret.results.length; i++) {
                                     innerhtml += '<li class="hongbao">' +
-                                        '<h2 class="hongbao__title">'+ ret.results[i].title +'<span class="hongbao__title-two">'+ ret.results[i].subtitle +'</span></h2>'+
+                                        '<a href="'+ ret.results[i].url +'" target="_blank"><h2 class="hongbao__title">'+ ret.results[i].title +'<span class="hongbao__title-two">'+ ret.results[i].subtitle +'</span></h2></a>'+
                                         '<div class="hongbao-detail"><img class="hongbao__img" src="'+ ret.results[i].pic +'" alt="" />'+
                                             '<span class="hongbao__look">阅读量:&nbsp;&nbsp;<number class="hongbao__look-num">'+ ret.results[i].view_count +'</number></span>'+
                                             '<div class="hongbao__detailbox"><p class="hongbao__detail">'+ ret.results[i].seo_description + '</p></div>'+
@@ -520,7 +521,7 @@
                                 var innerhtml = "";
                                 for (var i=0; i<ret.results.length; i++) {
                                     innerhtml += '<li class="hongbao">' +
-                                        '<h2 class="hongbao__title">'+ ret.results[i].title +'<span class="hongbao__title-two">'+ ret.results[i].subtitle +'</span></h2>'+
+                                        '<a href="'+ ret.results[i].url +'" target="_blank"><h2 class="hongbao__title">'+ ret.results[i].title +'<span class="hongbao__title-two">'+ ret.results[i].subtitle +'</span></h2></a>'+
                                         '<div class="hongbao-detail"><img class="hongbao__img" src="'+ ret.results[i].pic +'" alt="" />'+
                                             '<span class="hongbao__look">阅读量:&nbsp;&nbsp;<number class="hongbao__look-num">'+ ret.results[i].view_count +'</number></span>'+
                                             '<div class="hongbao__detailbox"><p class="hongbao__detail">'+ ret.results[i].seo_description + '</p></div>'+
@@ -862,28 +863,7 @@
                 	setCookie('guide',1,100,domain,'');
                 }
 
-                // 超出隐藏部分
-                $('.txtinline').each(function(index, el) {
-                    var overFlag = $(this).height()-$(this).parent().height();
-                    console.log($(this).height());
-                    console.log($(this).parent().height());
-                    if (overFlag > 0) {
-                        $(this).addTitle();
-                        $(this).parent().addClass('toolong')
-                    }
-                });
-                $('.oneline').addTitle();
-                // var text_box = document.getElementById("text_box"),
-                //     intro = document.getElementById("intro");
-                // var box_height = text_box.offsetHeight - intro.offsetHeight;
-                // if(box_height<0){
-                //     var oTitle = null;
-                //     var sTitle = null;
 
-                //     text_box.setAttribute("class","text-box toolong");
-                // }
-                // $('.add-title').addTitle();
-                // 超出隐藏部分---end
 
             });
         </script>
