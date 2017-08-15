@@ -61,7 +61,7 @@ def updateFuligou():
         old_price = olddiv.p.text.strip()[1:]
         old_price = float(old_price)
         newdiv = item.find("div", class_="buy-price")
-        buy_price = newdiv.text.strip()[1:]
+        buy_price = newdiv.text.strip()
         buy_price = float(buy_price)
         # coupin_value = old_price - buy_price
         img_src = item.img['src'].strip()
