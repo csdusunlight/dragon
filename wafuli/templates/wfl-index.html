@@ -65,11 +65,7 @@
                         {% endif %}
                     </div>
                 </div>
-                {% if isSigned %}
-                    <a class="btn-signin on btn bg-green">签到领积分</a>
-                {% else %}
-                    <a style="background-color: #d4d4d4;" class="btn-signin off btn">已签到</a>
-                {% endif %}
+                <a class="btn-signin on btn bg-green">签到领积分</a>
 
                 <div class="welfare-top">
                     <h2>福利头条</h2>
@@ -834,7 +830,7 @@
                     })
                 });
                 $(".btn-signin.on").click(function(){
-                    console.log('sdf');
+                    var obj = $(this);
                     $.ajax({
                         url:"{%url 'signin' %}",
                         dataType:"json",
@@ -849,11 +845,13 @@
                                 $.prompt({Content:'该页面已过期，请重新登录！'});
                                 window.location.href = ret.url;
                             }
+                            obj.addClass("off").removeClass("on");
                         },
                         error:function(){
                             alert("请检查网络连接");
                         }
                     });
+                    // obj.unbind("click");
                 });
 
                 var reg=getCookie('guide');
