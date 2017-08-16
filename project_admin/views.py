@@ -428,7 +428,7 @@ def export_investdata_excel(request):
     name__contains = request.GET.get("name__contains", None)
     if name__contains:
         item_list = item_list.filter(project__name__contains=name__contains)
-    project = request.GET.get("project", None)
+    project = request.GET.get("project_id", None)
     if project:
         item_list = item_list.filter(project_id=project)
     investtime_0 = request.GET.get("investtime_0", None)
@@ -436,12 +436,12 @@ def export_investdata_excel(request):
     audittime_0 = request.GET.get("audittime_0", None)
     audittime_1 = request.GET.get("audittime_1", None)
     if investtime_0 and investtime_1:
-        s = datetime.date.strptime(investtime_0,'%Y-%m-%d')
-        e = datetime.date.strptime(investtime_1,'%Y-%m-%d')
+        s = datetime.datetime.strptime(investtime_0,'%Y-%m-%d')
+        e = datetime.datetime.strptime(investtime_1,'%Y-%m-%d')
         item_list = item_list.filter(invest_time__range=(s,e))
     if audittime_0 and audittime_1:
-        s = datetime.datetime.strptime(audittime_0,'%Y-%m-%dT%H:%M')
-        e = datetime.datetime.strptime(audittime_1,'%Y-%m-%dT%H:%M')
+        s = datetime.datetime.strptime(audittime_0,'%Y-%m-%d')
+        e = datetime.datetime.strptime(audittime_1,'%Y-%m-%d')
         item_list = item_list.filter(audit_time__range=(s,e))
   
     item_list = item_list.select_related('project').order_by('invest_time')
