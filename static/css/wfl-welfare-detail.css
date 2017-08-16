@@ -94,10 +94,10 @@ body {
 .other-recommend__img {
     width: 204px;
     height: 204px;
+    margin-bottom: 12px;
 }
 .other-recommend__txt {
     overflow: hidden;
-    margin-top: 12px;
     line-height: 30px;
     word-wrap: normal;
 }
