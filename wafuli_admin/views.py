@@ -1190,7 +1190,7 @@ def get_admin_with_page(request):
     if not page or size <= 0:
         raise Http404
 
-    item_list = UserEvent.objects.filter(event_type='2', audit_state=state).select_related('user').order_by('time')
+    item_list = UserEvent.objects.filter(event_type='2', audit_state=state).select_related('user').order_by('time','invest_amount')
     startTime = request.GET.get("startTime", None)
     endTime = request.GET.get("endTime", None)
     startTime2 = request.GET.get("startTime2", None)
@@ -1281,7 +1281,7 @@ def export_withdraw_excel(request):
     if not ( user.is_authenticated() and user.is_staff):
         raise Http404
     state = request.GET.get("state",'1')
-    item_list = UserEvent.objects.filter(event_type='2', audit_state=state).select_related('user').order_by('time')
+    item_list = UserEvent.objects.filter(event_type='2', audit_state=state).select_related('user').order_by('time','invest_amount')
     startTime = request.GET.get("startTime", None)
     endTime = request.GET.get("endTime", None)
     startTime2 = request.GET.get("startTime2", None)
