@@ -65,7 +65,11 @@
                         {% endif %}
                     </div>
                 </div>
-                <a href="" class="btn-signin btn bg-green">签到领积分</a>
+                {% if isSigned %}
+                    <a class="btn-signin on btn bg-green">签到领积分</a>
+                {% else %}
+                    <a style="background-color: #d4d4d4;" class="btn-signin off btn">已签到</a>
+                {% endif %}
 
                 <div class="welfare-top">
                     <h2>福利头条</h2>
@@ -829,7 +833,7 @@
                         Content: '板块正在开发，敬请期待！'
                     })
                 });
-                $(".btn-signin").click(function(){
+                $(".btn-signin.on").click(function(){
                     console.log('sdf');
                     $.ajax({
                         url:"{%url 'signin' %}",
