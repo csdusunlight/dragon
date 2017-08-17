@@ -92,7 +92,7 @@ def index(request):
 def wfl_index(request):
     ad_list = MAdvert_PC.objects.filter(location='00', is_hidden=False)[0:6]
     announce_list = Press.objects.filter(type='1')[0:2]
-    hongbao_list = Hongbao.objects.filter(is_qualified=True,state='1').order_by("-startTime")[0:4]
+#     hongbao_list = Hongbao.objects.filter(is_qualified=True,state='1').order_by("-startTime")[0:4]
     fuligou_main = Fuligou.objects.filter(is_main=True)[0:4]
     fuligou_side = Fuligou.objects.filter(is_main=False)[0:4]
     task_list = Task.objects.filter(state='1').order_by("-news_priority","-pub_date")[0:4]
@@ -108,7 +108,7 @@ def wfl_index(request):
     week_statis = UserStatis.objects.order_by('-week_statis')[0:8]
     month_statis = UserStatis.objects.order_by('-month_statis')[0:8]
     context = {'ad_list':ad_list, #banner
-               'hongbao_list': hongbao_list, #红包精选4个
+#                'hongbao_list': hongbao_list, #红包精选4个
                'fuligou_main': fuligou_main, #福利购正文部分的4个
                'fuligou_side': fuligou_side,#福利购边栏4个
                'task_list': task_list, #任务福利4个
