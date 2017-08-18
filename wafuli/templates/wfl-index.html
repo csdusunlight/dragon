@@ -65,7 +65,11 @@
                         {% endif %}
                     </div>
                 </div>
-                <a class="btn-signin on btn bg-green">签到领积分</a>
+                {%if user.isSigned %}
+                    <a class="btn-signin off btn bg-green" style="background-color: #666">已签到</a>
+                {% else %}
+                    <a class="btn-signin on btn bg-green">签到领积分</a>
+                {%endif%}
 
                 <div class="welfare-top">
                     <h2>福利头条</h2>
@@ -843,7 +847,7 @@
                             }
                             else if(ret.code==-1){
                                 $.prompt({Content:'该页面已过期，请重新登录！'});
-                                window.location.href = ret.url;
+                                window.location.href = 'account/login/?next=' + window.location.pathname;
                             }
                             obj.addClass("off").removeClass("on");
                         },
