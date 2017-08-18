@@ -846,7 +846,6 @@
                                 $.prompt({Content:'今日已经签到过了~'});
                             }
                             else if(ret.code==-1){
-                                $.prompt({Content:'该页面已过期，请重新登录！'});
                                 window.location.href = 'account/login/?next=' + window.location.pathname;
                             }
                             obj.addClass("off").removeClass("on");
