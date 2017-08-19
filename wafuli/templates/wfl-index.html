@@ -444,7 +444,7 @@
                         }
                     },
                     error: function(ret) {
-                        alert(JSON.stringify(ret));
+                        console.log(JSON.stringify(ret));
                     }
                 });
 
@@ -493,7 +493,7 @@
                             }
                         },
                         error: function(ret) {
-                            alert(JSON.stringify(ret));
+                            console.log(JSON.stringify(ret));
                         }
                     });
                 })
@@ -541,7 +541,7 @@
                             }
                         },
                         error: function(ret) {
-                            alert(JSON.stringify(ret));
+                            console.log(JSON.stringify(ret));
                         }
                     });
                 })
@@ -586,7 +586,7 @@
                                 });
                             },
                             error: function(ret) {
-                                alert(JSON.stringify(ret));
+                                console.log(JSON.stringify(ret));
                             }
                         });
                     } else {
@@ -631,7 +631,7 @@
                                 });
                             },
                             error: function(ret) {
-                                alert(JSON.stringify(ret));
+                                console.log(JSON.stringify(ret));
                             }
                         });
                     } else {
@@ -851,7 +851,7 @@
                             obj.addClass("off").removeClass("on");
                         },
                         error:function(){
-                            alert("请检查网络连接");
+                            console.log("请检查网络连接");
                         }
                     });
                     // obj.unbind("click");
