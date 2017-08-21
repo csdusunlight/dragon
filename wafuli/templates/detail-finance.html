@@ -235,11 +235,7 @@
       <ul class="submit-item-box">
         <li class="submit-item item-01">
           <select id="project_select" class="project_select height-add01" placeholder="选择项目">
-            <option value="0">--</option>
-            <option value="1">小诺理财五期</option>
-            {% for x in flist %}
-            <option value="{{x.id}}">{{x.title}}</option>
-            {%endfor%}
+            <option value="{{news.id}}">{{news.title}}</option>
           </select>
         </li>
         <li class="submit-item item-02"><input type="text" class="height-add02 time date_picker" id="date_picker" placeholder="选择日期">
