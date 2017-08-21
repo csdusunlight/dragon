@@ -353,7 +353,7 @@
 <!-- 体验福利改变部分 -->
 <div class="td-msg">
 	<div class="msg-ti"><img src="{% static 'images/task-02.png' %}" class="ms-pd" /><span class="mag-pp">任务提交</span></div>
-	<div class="ma-div">注册手机号：<input type="text" placeholder="输入您的手机号，若有多个请分别提交" class="ms-input" id='telnum' /></div>
+	<div class="ma-div" style="margin-left: 256px;">注册手机号：<input type="text" placeholder="输入您的手机号，若有多个请分别提交" class="ms-input" id='telnum' /></div>
 	<div class="img-up">
 		{%csrf_token%}
 		<input type="file" name="picfile" id="choose" accept="image/jpeg,image/png" multiple>

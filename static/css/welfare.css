@@ -787,26 +787,6 @@ padding: 15px;}
   border-radius: 20px;
   transition: all 0.4s ease;
 }
-/*
-.contact {
-  background-position: 4px center;
-  background-repeat: no-repeat;
-  padding-left: 30px;
-  background-size: auto 50%;
-}
-.contact-qq {
-  background-image: url(../images/contact-qq.png);
-}
-.contact-kefu {
-  background-image: url(../images/contact-kefu.png);
-}
-.taste-btn button:hover,
-.contact:hover {
-  background-color: #ea7a07;
-}
-.finance-popup div {
-  margin-left: 0;
-}*/
 /*理财改版add-css-end*/
 
 .te-mo+span {
@@ -1099,8 +1079,8 @@ padding-left: 7px;}
   border: 1px solid rgb(204, 204, 204);
 }
 .ma-div{
-  margin: 20px 0px 0px 256px;
-  /*margin: 20px 0px 0px 0;*/
+  /*margin: 20px 0px 0px 256px;*/
+  margin: 20px 0px 0px 0;
   font-size: 16px;
   width: 500px;
   text-align: right;

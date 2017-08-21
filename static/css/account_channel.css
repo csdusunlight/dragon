@@ -519,7 +519,6 @@ table td {
 
 
 /*弹窗部分*/
-
 .popup-box {
 	display: none;
 	position: fixed;
@@ -570,7 +569,7 @@ table td {
 	margin-top: 10px;
 	border-radius: 20px;
 	color: rgb(255, 255, 255);
-	background: rgb(240, 134, 25) none repeat scroll 0% 0%;
+	background: #91C11D none repeat scroll 0% 0%;
 	line-height: 1;
 	cursor: pointer;
 }
@@ -583,7 +582,7 @@ table td {
 	padding: 6px 30px;
 	border-radius: 20px;
 	color: rgb(255, 255, 255);
-	background: rgb(240, 134, 25) none repeat scroll 0% 0%;
+	background: #91c11d none repeat scroll 0% 0%;
 	cursor: pointer;
 }
 
