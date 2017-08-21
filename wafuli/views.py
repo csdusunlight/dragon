@@ -11,7 +11,7 @@ from django.http import JsonResponse
 from account.transaction import charge_score
 from django.db.models import F,Q
 import logging
-from datetime import date
+from datetime import date, datetime
 from wafuli_admin.models import DayStatis, GlobalStatis, RecommendRank,\
     UserStatis
 from account.models import MyUser
@@ -348,47 +348,38 @@ def expsubmit_finance(request):
     url = ''
     if not request.user.is_authenticated():
         url = reverse('login') + '?next=' + request.META['HTTP_REFERER']
-        result = {'code':code, 'url':url}
+        result = {'code':-1, 'url':url}
         return JsonResponse(result)
-    news_id = request.POST.get('id', None)
-    telnum = request.POST.get('telnum', '').strip()
-    remark = request.POST.get('remark', '')
-    term = request.POST.get('term', '').strip()
-    amount = request.POST.get('amount',0)
-    amount = Decimal(amount)
-    if not (news_id and telnum):
-        logger.error("news_id or news_type is missing!!!")
-        raise Http404
-    if len(telnum)>100 or len(remark)>200:
-        code = '3'
-        msg = u'账号或备注过长！'
-        result = {'code':code, 'msg':msg}
-        return JsonResponse(result)
-    news = None
-#     if news.state != '1':
-#         code = '4'
-#         msg = u'该项目已结束或未开始！'
-#         result = {'code':code, 'msg':msg}
-#         return JsonResponse(result)
-    news = Finance.objects.get(pk=news_id)
-#     is_futou = news.is_futou
-#     info_str = "news_id:" + news_id + "| invest_account:" + telnum + "| is_futou:" + str(is_futou)
-#     logger.info(info_str)
-#     if is_futou:
-#         remark = u"复投：" + remark
-    try:
-        if not news.is_multisub_allowed and news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
-            raise ValueError('This invest_account is repective in project:' + str(news.id))
-        else:
-            UserEvent.objects.create(user=request.user, event_type='1', invest_account=telnum, invest_term=term,
-                             invest_amount=int(amount), content_object=news, audit_state='1',remark=remark,)
-            code = '1'
-            msg = u'提交成功，请通过用户中心查询！'
-    except Exception, e:
-        logger.info(e)
-        code = '2'
-        msg = u'该注册手机号已被提交过，请不要重复提交！'
-    result = {'code':code, 'msg':msg}
+    ret = {}
+    data = request.POST.get('data','')
+    if not data:
+        ret['code'] = 1
+        ret['msg'] = u'参数缺失'
+        return JsonResponse(ret)
+    table = data.split('$')
+    suc_num = 0
+    exist_num = 0   #jzy
+    exist_phone = ""   #jzy
+    for row in table:
+        temp = row.split('|')
+        news = Finance.objects.get(id=temp[0])
+        time = datetime.strptime(temp[1],'%Y-%m-%d')
+        telnum = temp[2]
+        amount = temp[3]
+        term = temp[4]
+        remark = temp[5]
+        try:
+            if not news.is_multisub_allowed and news.user_event.filter(invest_account=telnum).exclude(audit_state='2').exists():
+                exist_num += 1   #jzy
+                exist_phone = exist_phone + telnum + ", "   #jzy
+                raise ValueError('This invest_account is repective in project:' + str(news.id))
+            else:
+                UserEvent.objects.create(user=request.user, invest_time=time, event_type='1', invest_account=telnum, invest_term=term,
+                                 invest_amount=int(amount), content_object=news, audit_state='1',remark=remark,)
+                suc_num += 1
+        except Exception, e:
+            logger.info(e)
+    result = {'code':0, 'suc_num':suc_num, 'exist_num':exist_num, 'exist_phone':exist_phone}   #jzy
     return JsonResponse(result)
 
 def expsubmit_task(request):
