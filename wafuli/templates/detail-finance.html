@@ -533,6 +533,7 @@
             'data': data
           },
           success: function(ret) {
+        	  console.log(ret);
             if(ret.code == 0) {
               $(".data-item-submit").text(repeat_num + ret.exist_num + ret.suc_num);
               // $(".data-item-repeat").text(repeat_num);
@@ -553,7 +554,11 @@
               $(".data-item-exist-phone").text(ret.exist_phone);
               $(".data-item-valid").text(ret.suc_num);
               popupInItem();
-            } else {
+            } 
+            else if(ret.code==-1){
+            	location.href = ret.url;
+            }
+            else {
               $(".hint-msg").text(ret.msg);
               popupInError();
             }
