@@ -26,6 +26,7 @@ def media_submit(request):
         remark = request.POST.get('remark', '')
         amount = request.POST.get('amount', '')
         term = request.POST.get('term', '')
+        print telnum, news_id, amount, term
         if not (news_id and telnum and amount and term):
             raise Http404
         news = MediaProject.objects.get(pk=news_id)
@@ -45,24 +46,25 @@ def media_submit(request):
             result = {'code':2, 'msg':u"该注册手机号已被提交过，请不要重复提交！"}
             return JsonResponse(result)
         else:
-            imgurl_list = []
-            if len(request.FILES)>6:
-                result = {'code':-2, 'msg':u"上传图片数量不能超过6张"}
-                userlog.delete()
-                return JsonResponse(result)
-            for key in request.FILES:
-                block = request.FILES[key]
-                if block.size > 100*1024:
-                    result = {'code':-1, 'msg':u"每张图片大小不能超过100k，请重新上传"}
+            if request.FILES:
+                imgurl_list = []
+                if len(request.FILES)>6:
+                    result = {'code':-2, 'msg':u"上传图片数量不能超过6张"}
                     userlog.delete()
                     return JsonResponse(result)
-            for key in request.FILES:
-                block = request.FILES[key]
-                imgurl = saveImgAndGenerateUrl(key, block)
-                imgurl_list.append(imgurl)
-            invest_image = ';'.join(imgurl_list)
-            userlog.invest_image = invest_image
-            userlog.save(update_fields=['invest_image'])
+                for key in request.FILES:
+                    block = request.FILES[key]
+                    if block.size > 100*1024:
+                        result = {'code':-1, 'msg':u"每张图片大小不能超过100k，请重新上传"}
+                        userlog.delete()
+                        return JsonResponse(result)
+                for key in request.FILES:
+                    block = request.FILES[key]
+                    imgurl = saveImgAndGenerateUrl(key, block)
+                    imgurl_list.append(imgurl)
+                invest_image = ';'.join(imgurl_list)
+                userlog.invest_image = invest_image
+                userlog.save(update_fields=['invest_image'])
         result = {'code':code, 'msg':msg}
         return JsonResponse(result)
     else:
