@@ -70,4 +70,6 @@ urlpatterns = [
     
     url(r'^media_submit/$', mediaproject.media_submit, name='media_submit'),
     url(r'^usereventlist/$', rest.UserEventList.as_view()),
+    
+    url(r'^userevent/(?P<pk>[0-9]+)/$', rest.UserEventDetail.as_view()),
 ]
