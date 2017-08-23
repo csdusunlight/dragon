@@ -20,7 +20,7 @@ var data2 = '<table width="100%"><tr><th>用户名</th><th>投资手机号</th>'
 	'<td>{project}</td><td>{invest_term}</td><td>{invest_amount}</td><td>{invest_time}</td><td>{state_des}</td>'+
   '<td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
 	'<span class="img-up"><img src="/static/images/task-suoluetu.jpg" alt="截图上传图片" /></span></a></td>'+
-	'<td>{admin}</td><td>{time_admin}</td>'+
+	'<td>{admin}</td><td>{audit_time}</td>'+
 	'<td>{ret_amount}</td><td>{score}</td><td>{remark}</td></tr>[/results]</table>';
 // var url = "{% url 'get_admin_task_page' %}" + "?page={page}&size={pageSize}";
 var url = '/usereventlist/?event_type=8';
@@ -121,14 +121,14 @@ $(document).ready(function(){
 		endTime = $("#endTime").val();
 		newurl = url;
 		if(startTime && endTime){
-			newurl += "&startTime="+startTime;
-			newurl += "&endTime="+endTime;
+			newurl += "&investtime_0="+startTime;
+			newurl += "&investtime_1="+endTime;
 		}
 		startTime2 = $("#startTime2").val();
 		endTime2 = $("#endTime2").val();
 		if(startTime2 && endTime2){
-			newurl += "&startTime2="+startTime2;
-			newurl += "&endTime2="+endTime2;
+			newurl += "&audittime_0="+startTime2;
+			newurl += "&audittime_1="+endTime2;
 		}
 		username = $("#username").val();
 		mobile = $("#mobile").val();
@@ -136,7 +136,7 @@ $(document).ready(function(){
 			newurl += "&username="+username;
 		}
 		if(mobile){
-			newurl += "&mobile="+mobile;
+			newurl += "&invest_account="+mobile;
 		}
 		// companyname = $("#companyname").val();
 		projectname = $("#projectname").val();
@@ -144,7 +144,7 @@ $(document).ready(function(){
 		// 	newurl += "&companyname="+companyname;
 		// }
 		if(projectname){
-			newurl += "&projectname="+projectname;
+			newurl += "&project_title_contains="+projectname;
 		}
 		// adminname = $("#adminname").val();
   //   if(adminname){
@@ -167,6 +167,63 @@ $(document).ready(function(){
 		    content:newdata,
 		});
 	});
+
+  $("#export").click(function() {
+    var html = '<form action="' + "{% url 'export_media_excel' %}" + '" method="get" target="_self" id="postData_form">';
+    startTime = $("#startTime").val();
+    endTime = $("#endTime").val();
+    if(startTime && endTime) {
+      html += '<input name="investtime_0" type="hidden" value="' + startTime + '"/>';
+      html += '<input name="audittime_1" type="hidden" value="' + endTime + '"/>';
+    }
+    startTime2 = $("#startTime2").val();
+    endTime2 = $("#endTime2").val();
+    if(startTime2 && endTime2) {
+      html += '<input name="audittime_0" type="hidden" value="' + startTime2 + '"/>';
+      html += '<input name="audittime_1" type="hidden" value="' + endTime2 + '"/>';
+    }
+    username = $("#username").val();
+    mobile = $("#mobile").val();
+    if(username) {
+      html += '<input name="username" type="hidden" value="' + username + '"/>';
+    }
+    if(mobile) {
+      html += '<input name="invest_account" type="hidden" value="' + mobile + '"/>';
+    }
+    // companyname = $("#companyname").val();
+    projectname = $("#projectname").val();
+    // if(companyname) {
+    //   html += '<input name="companyname" type="hidden" value="' + companyname + '"/>';
+    // }
+    if(projectname) {
+      html += '<input name="project_title_contains" type="hidden" value="' + projectname + '"/>';
+    }
+    // adminname = $("#adminname").val();
+    state = $("#state").val();
+    // if(adminname) {
+    //   html += '<input name="adminname" type="hidden" value="' + adminname + '"/>';
+    // }
+    if(state) {
+      html += '<input name="audit_state" type="hidden" value="' + state + '"/>';
+    }
+    // var usertype = $("#usertype").val();
+    // if(usertype) {
+    //   html += '<input name="usertype" type="hidden" value="' + usertype + '"/>';
+    // }
+    // if(usertype == '2') {
+    //   var chalevel = $("#chalevel").val();
+    //   if(chalevel) {
+    //     html += '<input name="chalevel" type="hidden" value="' + chalevel + '"/>';
+    //   }
+    // }
+    html += '</form>';
+    var iframe = document.getElementById('myIFrame');
+    iframe.contentWindow.document.open();
+    iframe.contentWindow.document.write(html);
+    iframe.contentWindow.document.close();
+    document.getElementById('myIFrame').contentWindow.document.getElementById('postData_form').submit();
+  });
+
 });
 </script>
 {% endblock js %}
@@ -280,5 +337,6 @@ $(document).ready(function(){
             </form>
         </div>
     </div>
+    <iframe id="myIFrame" scrolling="yes" src="abount:blank" style="display:none" frameborder=1></iframe>
     <!--end-->
 	{% endblock modal %}
