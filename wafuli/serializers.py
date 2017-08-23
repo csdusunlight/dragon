@@ -23,3 +23,5 @@ class UserEventSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserEvent
         fields = '__all__'
+        read_only_fields = ('id', 'audit_state', 'event_type', 'time', 'content_type',
+                            'object_id', 'user')

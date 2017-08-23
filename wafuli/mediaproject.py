@@ -11,9 +11,11 @@ from django.http.response import Http404, JsonResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from wafuli.tools import saveImgAndGenerateUrl
+from django.views.decorators.csrf import csrf_exempt
 logger = logging.getLogger('wafuli')
     
 @login_required
+@csrf_exempt
 def media_submit(request):
     if request.method == 'POST':
         if not request.user.is_authenticated():
