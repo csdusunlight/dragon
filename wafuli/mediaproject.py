@@ -65,5 +65,5 @@ def media_submit(request):
         return JsonResponse(result)
     else:
         projects = MediaProject.objects.filter(state='1')
-        render(request, 'media_submit.html', {'projects':projects,})
+        render(request, 'media-submit.html', {'projects':projects,})
     

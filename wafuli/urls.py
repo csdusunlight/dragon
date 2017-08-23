@@ -63,7 +63,7 @@ urlpatterns = [
     url(r'^screenshot/$', 'wafuli.views.display_screenshot', name='screenshot'),
 
     url(r'^APP_download/$', TemplateView.as_view(template_name="download_app.html"), name='APP_download'),
-    
+
     url(r'^hongbaolist/$', views.HongbaoList.as_view()),
     url(r'^welfare/(?:(?P<id>[0-9]*)/)?$', views.hongbao, name='welfare'),
     url(r'^updown_welfare/(?:(?P<id>[0-9]*)/)?$', views.updown_hongbao, name='updown_welfare'),
