@@ -349,7 +349,12 @@
 		</form>
 	</div>
 </div>
-
+<div>
+	<span>当前还存在未审核数据的项目有：</span>
+	{% for item in unaudited_pronames %}
+	<span>{{item}} </span>
+	{%endfor%}
+</div>
 <div class="Tin-table">
 	<div id="pagedata">
 	</div>
