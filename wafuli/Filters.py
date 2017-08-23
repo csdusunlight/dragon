@@ -13,4 +13,4 @@ class UserEventFilter(django_filters.rest_framework.FilterSet):
     username = django_filters.CharFilter(name="user", lookup_expr='username')
     class Meta:
         model = UserEvent
-        fields = ['audittime', 'project_title_contains', 'investtime','audit_state', 'invest_account', ]
+        fields = ['event_type','audittime', 'project_title_contains', 'investtime','audit_state', 'invest_account', ]
