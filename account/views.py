@@ -32,7 +32,7 @@ import time as ttime
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from wafuli.models import (UserEvent, Finance, Task, ExchangeRecord,
-    ScoreTranlist, TransList, Coupon, Message)
+    ScoreTranlist, TransList, Coupon, Message, MediaProject)
 from django.db.models import Sum, Count
 from .transaction import charge_money, charge_score
 from account.tools import send_mail, get_client_ip
@@ -382,6 +382,7 @@ def get_user_wel_page(request):
         return JsonResponse(res)
     tpage = request.GET.get("tpage", None)
     fpage = request.GET.get("fpage", None)
+    mpage = request.GET.get("mpage", None)
     size = request.GET.get("size", 10)
     filter = request.GET.get("filter",0)
     try:
@@ -392,7 +393,7 @@ def get_user_wel_page(request):
         filter = int(filter)
     except ValueError:
         filter = 0
-    if not tpage and not fpage or size <= 0 or filter < 0 or filter > 3:
+    if not tpage and not fpage and not mpage or size <= 0 or filter < 0 or filter > 3:
         raise Http404
     item_list = []
     if tpage:
@@ -401,6 +402,9 @@ def get_user_wel_page(request):
     elif fpage:
         page = fpage
         etype = ContentType.objects.get_for_model(Finance)
+    elif mpage:
+        page = mpage
+        etype = ContentType.objects.get_for_model(MediaProject)
     item_list = UserEvent.objects.filter(user=request.user, content_type = etype)
     if filter == 1:
         item_list = item_list.filter(audit_state='0')
@@ -430,7 +434,9 @@ def get_user_wel_page(request):
              "time":con.time.strftime("%Y-%m-%d %H:%M:%S"),
              "state":con.get_audit_state_display(),
              "reason":reason,
-             "id":con.id
+             "id":con.id,
+             "amount":con.invest_amount,
+             "term":con.invest_term,
              }
         data.append(i)
     if data:
