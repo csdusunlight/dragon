@@ -20,10 +20,10 @@ var data2 = '<table width="100%"><tr><th>用户名</th><th>投资手机号</th>'
 	'<td>{project}</td><td>{invest_term}</td><td>{invest_amount}</td><td>{invest_time}</td><td>{state_des}</td>'+
   '<td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
 	'<span class="img-up"><img src="/static/images/task-suoluetu.jpg" alt="截图上传图片" /></span></a></td>'+
-	'<td>{admin}</td><td>{audit_time}</td>'+
-	'<td>{ret_amount}</td><td>{score}</td><td>{remark}</td></tr>[/results]</table>';
+	'<td>{admin_user}</td><td>{audit_time}</td>'+
+	'<td>{ret_money}</td><td>{ret_score}</td><td>{remark}</td></tr>[/results]</table>';
 // var url = "{% url 'get_admin_task_page' %}" + "?page={page}&size={pageSize}";
-var url = '/usereventlist/?event_type=8';
+var url = '/usereventlist/?event_type=8&page={page}&size={pageSize}';
 function pass(id){
 	$(".BackNow").css("display","block");
 	$("input#ret_event_id").val(id);
