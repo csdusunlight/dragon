@@ -43,8 +43,11 @@ $(document).ready(function(){
 	    content:data,
 	});
 	$(".none-x").click(function(){
-		$(this).parent().parent().css("display","none");<!--隐藏-->
+		$(this).parent().parent().css("display","none");
 	})
+  $(".none-x-s").click(function(){
+    $(this).parent().parent().parent().parent().css("display","none");
+  })
 	$('.Finnow input[type="submit"]').click(function(){
 		id = $("input#ret_event_id").val();
 		cash = $("input#add_cash").val();
@@ -53,7 +56,7 @@ $(document).ready(function(){
 			return;
 		}
 		$.ajax({
-			url:"{%url 'admin_task' %}",
+			url:"{%url 'admin_media' %}",
 			dataType:"json",
 			type:"POST",
 			data:{
@@ -87,7 +90,7 @@ $(document).ready(function(){
 			return;
 		}
 		$.ajax({
-			url:"{%url 'admin_task' %}",
+			url:"{%url 'admin_media' %}",
 			dataType:"json",
 			type:"POST",
 			data:{
