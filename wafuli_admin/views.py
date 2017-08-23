@@ -1981,9 +1981,6 @@ def admin_media(request):
             event.audit_state = '2'
             log.audit_result = False
             log.reason = reason
-            task = event.content_object
-            task.left_num = F("left_num")+1
-            task.save(update_fields=['left_num'])
             res['code'] = 0
 
             msg_content = u'您提交的"' + event.content_object.title + u'"媒体单审核未通过，原因：' + reason
@@ -2005,7 +2002,7 @@ def admin_media(request):
 
 @login_required
 @has_permission('009')
-def export_mediaproject_excel(request):
+def export_media_excel(request):
     user = request.user
     item_list = []
     item_list = UserEvent.objects
