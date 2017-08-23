@@ -132,19 +132,19 @@ $(document).ready(function(){
 		if(mobile){
 			newurl += "&mobile="+mobile;
 		}
-		companyname = $("#companyname").val();
-		projectname = $("#projectname").val();
-		if(companyname){
-			newurl += "&companyname="+companyname;
-		}
+		// companyname = $("#companyname").val();
+		// projectname = $("#projectname").val();
+		// if(companyname){
+		// 	newurl += "&companyname="+companyname;
+		// }
 		if(projectname){
 			newurl += "&projectname="+projectname;
 		}
-		adminname = $("#adminname").val();
+		// adminname = $("#adminname").val();
+  //   if(adminname){
+  //     newurl += "&adminname="+adminname;
+  //   }
 		state = $("#state").val();
-		if(adminname){
-			newurl += "&adminname="+adminname;
-		}
 		if(state){
 			newurl += "&state="+state;
 		}
@@ -197,29 +197,30 @@ $(document).ready(function(){
                                             	<i style="letter-spacing:2px;">用户手机号：</i>
                                                 <input id="mobile" type="text" />
                                             </td>
-                                        	<td>
+                                        	<!-- <td>
                                             	<i style="letter-spacing:4.8px;">公司名称：</i>
                                                 <input id="companyname" type="text" />
-                                            </td>
-                                        </tr>
-                                        <tr>
+                                            </td> -->
                                         	<td>
                                             	<i style="letter-spacing:4.8px;">项目名称：</i>
                                                 <input id="projectname" type="text" />
                                             </td>
+                                          <td>
+                                            <i style="letter-spacing:4.8px;">处理状态：</i>
+                                              <select name="selectAge" id="state">
+                                                  <option value="1">未审核</option>
+                                                  <option value="0">审核通过</option>
+                                                  <option value="2">审核拒绝</option>
+                                              </select>
+                                          </td>
+                                        </tr>
+                                        <!-- <tr>
                                         	<td>
                                             	<i>处&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;理&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人：</i>
                                                 <input id="adminname" type="text" />
                                             </td>
-                                        	<td>
-                                            	<i style="letter-spacing:4.8px;">处理状态：</i>
-                                                <select name="selectAge" id="state">
-											        <option value="1">未审核</option>
-											        <option value="0">审核通过</option>
-											        <option value="2">审核拒绝</option>
-											    </select>
-                                            </td>
-                                        </tr>
+
+                                        </tr> -->
                                     </table>
                                     <div class="Submit-in">
                                     	<input id="search" type="button" value="搜索" />

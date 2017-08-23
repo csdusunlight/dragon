@@ -194,7 +194,7 @@
       formdata.append('remark', remark);
       formdata.append('csrfmiddlewaretoken', csrfmiddlewaretoken);
 
-      xhr.open('post', '/expsubmit/task/');
+      xhr.open('post', '/media_submit/');
       xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
       maskIn();
       xhr.onreadystatechange = function() {
@@ -316,7 +316,9 @@
   <div class="ma-div" style="margin-left: 256px;">投资平台：
     <select id="project" placeholder="选择项目">
                       <option value="0">--</option>
-                      <option value="1">媒体单项目1</option>
+                      {% for x in projects %}
+                      <option value="{{x.id}}">{{x.title}}</option>
+                      {%endfor%}
                     </select>
   </div>
   <div class="ma-div" style="margin-left: 256px;">注册手机号：<input type="text" onkeyup="this.value =this.value.replace(/[^\0-9\.]/g,'');" placeholder="输入您的手机号，若有多个请分别提交" class="ms-input" id='telnum' /></div>
