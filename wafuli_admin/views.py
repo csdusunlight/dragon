@@ -1956,7 +1956,7 @@ def admin_medialist(request):
                 # translist = charge_money(event_user, '0', cash, u'福利返现')
                 translist = charge_money(event_user, '0', cash, project_title)  #jzy
                 if event.content_object.is_vip_bonus:
-                    get_vip_bonus(event_user, cash, 'task')
+                    get_vip_bonus(event_user, cash, 'finance')
                 scoretranslist = charge_score(event_user, '0', score, u'福利返现（积分）')
                 if translist and scoretranslist:
                     event.audit_state = '0'
@@ -1965,8 +1965,8 @@ def admin_medialist(request):
                     scoretranslist.user_event = event
                     scoretranslist.save(update_fields=['user_event'])
                     res['code'] = 0
-                    msg_content = u'您提交的"' + event.content_object.title + u'"体验福利已审核通过。'
-                    Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
+                    msg_content = u'您提交的"' + event.content_object.title + u'"媒体单已审核通过。'
+                    Message.objects.create(user=event_user, content=msg_content, title=u"媒体单审核");
                 else:
                     res['code'] = -4
                     res['res_msg'] = "注意，重复提交时只提交失败项目，成功的可以输入0。\n"
@@ -1985,11 +1985,11 @@ def admin_medialist(request):
             task.save(update_fields=['left_num'])
             res['code'] = 0
 
-            msg_content = u'您提交的"' + event.content_object.title + u'"体验福利审核未通过，原因：' + reason
-            Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
+            msg_content = u'您提交的"' + event.content_object.title + u'"媒体单审核未通过，原因：' + reason
+            Message.objects.create(user=event_user, content=msg_content, title=u"媒体单审核");
 
         if res['code'] == 0:
-            admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='1')
+            admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='11')
             if translist:
                 translist.admin_event = admin_event
                 translist.save(update_fields=['admin_event'])

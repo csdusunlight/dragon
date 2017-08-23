@@ -35,21 +35,22 @@ var data2 = '<table width="100%"><thead><tr><th width="20%">项目</th><th width
 	+ '</tbody></table>';
 var data_media = '<table width="100%"><thead><tr><th>平台</th><th>手机号</th>'+
     '<th>提交时间</th><th>金额</th><th>期限</th><th>状态</th><th>任务截图</th><th>备注</th></tr></thead><tbody>'+
-    '[data]<tr><td>{title}</td><td>{username}</td><td>{time}</td><td>金额</td><td>期限</td><td>{state}</td><td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
+    '[data]<tr><td>{title}</td><td>{username}</td><td>{time}</td><td>{amount}</td><td>{term}</td><td>{state}</td><td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
     '<span class="img-up"><img src="{% static 'images/task-suoluetu.jpg' %}" alt="截图上传图片" /></span></a></td><td>{reason}</td></tr>[/data]'
     + '</tbody></table>';
 var data_media2 = '<table width="100%"><thead><tr><th>平台</th><th>手机号</th>'+
     '<th>提交时间</th><th>金额</th><th>期限</th><th>状态</th><th>任务截图</th><th>备注</th><th>操作</th></tr></thead><tbody>'+
-    '[data]<tr><td>{title}</td><td>{username}</td><td>{time}</td><td>金额</td><td>期限</td><td>{state}</td><td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
+    '[data]<tr><td>{title}</td><td>{username}</td><td>{time}</td><td>{amount}</td><td>{term}</td><td>{state}</td><td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
     '<span class="img-up"><img src="{% static 'images/task-suoluetu.jpg' %}" alt="截图上传图片" /></span></a></td><td>{reason}</td><td><a class="revise-data" onclick=reviseData({id},this)>修改</a></td></tr>[/data]'
     + '</tbody></table>';
 var data_media3 = '<table width="100%"><thead><tr><th>平台</th><th>手机号</th>'+
     '<th>提交时间</th><th>金额</th><th>期限</th><th>状态</th><th>任务截图</th><th>拒绝原因</th></tr></thead><tbody>'+
-    '[data]<tr><td>{title}</td><td>{username}</td><td>{time}</td><td>金额</td><td>期限</td><td>{state}</td><td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
+    '[data]<tr><td>{title}</td><td>{username}</td><td>{time}</td><td>{amount}</td><td>{term}</td><td>{state}</td><td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
     '<span class="img-up"><img src="{% static 'images/task-suoluetu.jpg' %}" alt="截图上传图片" /></span></a></td><td>{reason}</td></tr>[/data]'
     + '</tbody></table>';
 var turl = "{% url 'get_user_wel_page' %}" + "?tpage={page}&size={pageSize}&filter=";
 var furl = "{% url 'get_user_wel_page' %}" + "?fpage={page}&size={pageSize}&filter=";
+var murl = "{% url 'get_user_wel_page' %}" + "?mpage={page}&size={pageSize}&filter=";
 function emptydisplay(obj){
 	pic_url = "{%static 'images/picin.png' %}";
 	obj.html('<div class="Defa-in"><img src="' + pic_url + '">'+
@@ -114,7 +115,7 @@ $(function(){
 	    content:data3,
 	});
 	$("#pagedata3").ajaxPage({
-        url:turl+0,
+        url:murl+0,
         pageId:$("#page3"),
         pageSize:6,
         run:true,
@@ -169,7 +170,7 @@ $(function(){
             }
             $("#page3").empty();
             $("#pagedata3").ajaxPage({
-                url:turl+index,
+                url:murl+index,
                 pageId:$("#page3"),
                 pageSize:6,
                 run:true,

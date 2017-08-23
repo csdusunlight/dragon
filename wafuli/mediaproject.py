@@ -38,7 +38,8 @@ def media_submit(request):
                 raise ValueError('This invest_account is repective in project:' + str(news.id))
             else:
                 userlog = UserEvent.objects.create(user=request.user, event_type='8', invest_account=telnum,
-                                 invest_image='', content_object=news, audit_state='1',remark=remark,)
+                                 invest_image='', content_object=news, audit_state='1',remark=remark,
+                                 invest_amount=amount, invest_term=term)
                 code = 1
                 msg = u'提交成功，请通过用户中心查询！'
         except Exception, e:
