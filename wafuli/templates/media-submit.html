@@ -218,7 +218,9 @@
             return;
           }else if(ret.code==1){
             // $("#hint").text("任务完成，请耐心等待工作人员审核!")
-            $.prompt({Content: '任务完成，请耐心等待工作人员审核!'});
+            $.confirm({Content: '任务提交成功，可在【个人中心】-【福利管理】查看。请耐心等待工作人员审核。',
+                      NeedCancle: false,
+                      ConfirmFunc: "history.go(0);$.PopupClose(Id);"});
             // popupIn();
           }else{
             // $("#hint").text(ret.msg)
