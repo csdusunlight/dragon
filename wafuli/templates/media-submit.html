@@ -19,7 +19,7 @@
 <!-- <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script> -->
 </head>
 <script type="text/javascript">
-  var isImgNone = false;   //是否允许不上传截图
+  var isNeedImg = 'True';   //是否允许不上传截图
   $.ajaxSetup({
       data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
   });
@@ -166,6 +166,15 @@
       });
     }
 
+    $('#project').change(function(){
+      var isNeedImg = $('#project option:selected').data('is_need_screenshot');
+      console.log(isNeedImg);
+      if (isNeedImg == 'True') {
+          $('.img-up').show();
+      } else {
+          $('.img-up').hide();
+      }
+    })
     function submit(){
       var xhr = new XMLHttpRequest();
       var formdata = getFormData();
@@ -174,8 +183,10 @@
       var money = $('input#money').val();
       var days = $('input#days').val();
       var remark = $('input#remark').val();
+      var isNeedImg = $('#project option:selected').data('is_need_screenshot');
+      console.log(isNeedImg);
       console.log(project_id+', '+telnum+', '+money+', '+days+', '+remark);
-      if (!isImgNone) {
+      if (isNeedImg == 'True') {
         if (file_list.length==0){
           // alert("请上传任务完成截图");
           $.prompt({Content: '请上传任务完成截图'});
@@ -309,13 +320,13 @@
 <body>
 
 
-<div class="td-msg">
+<div class="td-msg" style="background-color: #fff;">
   <div class="msg-ti"><img src="{% static 'images/task-02.png' %}" class="ms-pd" /><span class="mag-pp">媒体单提交</span></div>
   <div class="ma-div" style="margin-left: 256px;">投资平台：
     <select id="project" placeholder="选择项目">
                       <option value="0">--</option>
                       {% for x in projects %}
-                      <option value="{{x.id}}">{{x.title}}</option>
+                      <option value="{{x.id}}" data-is_need_screenshot="{{x.is_need_screenshot}}">{{x.title}}</option>
                       {%endfor%}
                     </select>
   </div>
@@ -349,7 +360,7 @@
   <div class="msg-ti"><img src="{% static 'images/task-03.png' %}" class="ms-pd" /><span class="mag-pp">注意事项</span></div>
   <div class="detail-html">
   {% for x in projects %}
-  {{x.attention}}
+  {{x.attention}}{{x.is_need_screenshot}}
   {%endfor%}
   </div>
 </div>
