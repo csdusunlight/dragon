@@ -192,7 +192,6 @@
       formdata.append('amount', money);
       formdata.append('term', days);
       formdata.append('remark', remark);
-      formdata.append('csrfmiddlewaretoken', csrfmiddlewaretoken);
 
       xhr.open('post', '/media_submit/');
       xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
@@ -326,7 +325,6 @@
   <div class="ma-div" style="margin-left: 282px;">投资标期：<input type="text" onkeyup="this.value =this.value.replace(/[^\0-9\.]/g,'');" placeholder="输入您的投资标期，仅限数字" class="ms-input" id='days' />&nbsp;&nbsp;天</div>
   <div class="ma-div3 task-remark">备注：<input type="text" placeholder="QQ号、qq昵称，选填" class="ms-input" id='remark'/></div>
   <div class="img-up">
-  {%csrf_token%}
     <input type="file" name="picfile" id="choose" accept="image/jpeg,image/png" multiple>
     <ul class="img-list"></ul>
     <div class="img-btn">
@@ -350,6 +348,10 @@
 </div>
 <div class="td-msgs">
   <div class="msg-ti"><img src="{% static 'images/task-03.png' %}" class="ms-pd" /><span class="mag-pp">注意事项</span></div>
-  <div class="detail-html">{{news.rules|safe}}</div>
+  <div class="detail-html">
+  {% for x in projects %}
+  {{x.attention}}
+  {%endfor%}
+  </div>
 </div>
 </body>
