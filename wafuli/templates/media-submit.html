@@ -169,7 +169,6 @@
     function submit(){
       var xhr = new XMLHttpRequest();
       var formdata = getFormData();
-      var csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
       var project_id = $('#project option:selected').val();
       var telnum = $('input#telnum').val();
       var money = $('input#money').val();
