@@ -23,6 +23,10 @@ class UserEventSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
     project = serializers.CharField(source='content_object.title', read_only=True)
     state_des = serializers.CharField(source='get_audit_state_display', read_only=True)
+    admin_user = serializers.CharField(source='audited_logs.first.user.username')
+    refuse_reason = serializers.CharField(source='audited_logs.first.reason')
+    ret_money = serializers.CharField(source='translist.first.transAmount')
+    ret_score = serializers.CharField(source='score_translist.first.transAmount')
     class Meta:
         model = UserEvent
         fields = '__all__'
