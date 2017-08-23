@@ -238,7 +238,7 @@ def load_gzh(name):
         t += 1
     for c in contents:
         url = c['picture']
-        title_pre = c['title'][:3]
+        title_pre = c['title'][:3].replace('/', '')
         sub = re.findall("wx_fmt=([a-z]+)", url)
         stype = sub[0] if sub else 'jpg'
         picture = browser.get(url)

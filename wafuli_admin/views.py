@@ -2001,7 +2001,7 @@ def admin_media(request):
         return JsonResponse(res)
 
 @login_required
-@has_permission('009')
+@has_permission('002')
 def export_media_excel(request):
     user = request.user
     item_list = []
