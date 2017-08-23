@@ -1893,3 +1893,111 @@ def send_multiple_msg(request):
         res['res_msg'] = u"没有选中任何手机号码"
     return JsonResponse(res)
 
+def admin_medialist(request):
+    admin_user = request.user
+    if request.method == "GET":
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            return redirect(reverse('admin:login') + "?next=" + reverse('admin_medialist'))
+        return render(request,"admin_medialist.html")
+    if request.method == "POST":
+        res = {}
+        if not request.is_ajax():
+            raise Http404
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            res['code'] = -1
+            res['url'] = reverse('admin:login') + "?next=" + reverse('admin_medialist')
+            return JsonResponse(res)
+        if not admin_user.has_admin_perms('002'):
+            res['code'] = -5
+            res['res_msg'] = u'您没有操作权限！'
+            return JsonResponse(res)
+        event_id = request.POST.get('id', None)
+        cash = request.POST.get('cash', None)
+        score = request.POST.get('score', None)
+        type = request.POST.get('type', None)
+        reason = request.POST.get('reason', None)
+        type = int(type)
+        if not event_id or type==1 and not (cash and score) or type==2 and not reason or type!=1 and type!=2:
+            res['code'] = -2
+            res['res_msg'] = u'传入参数不足，请联系技术人员！'
+            return JsonResponse(res)
+        event = UserEvent.objects.get(id=event_id)
+        event_user = event.user
+
+        project = event.content_object   #jzy
+        project_title = project.title   # jzy
+
+        log = AuditLog(user=admin_user,item=event)
+        translist = None
+        scoretranslist = None
+        if type==1:
+            try:
+                cash = float(cash)*100
+                cash = int(cash)
+                score = int(score)
+            except:
+                res['code'] = -2
+                res['res_msg'] = u"操作失败，输入不合法！"
+                return JsonResponse(res)
+            if cash < 0 or score < 0:
+                res['code'] = -2
+                res['res_msg'] = u"操作失败，输入不合法！"
+                return JsonResponse(res)
+            if event.audit_state != '1':
+                res['code'] = -3
+                res['res_msg'] = u'该项目已审核过，不要重复审核！'
+                return JsonResponse(res)
+            if event.translist.exists():
+                logger.critical("Returning cash is repetitive!!!")
+                res['code'] = -3
+                res['res_msg'] = u"操作失败，返现重复！"
+            else:
+                log.audit_result = True
+                # translist = charge_money(event_user, '0', cash, u'福利返现')
+                translist = charge_money(event_user, '0', cash, project_title)  #jzy
+                if event.content_object.is_vip_bonus:
+                    get_vip_bonus(event_user, cash, 'task')
+                scoretranslist = charge_score(event_user, '0', score, u'福利返现（积分）')
+                if translist and scoretranslist:
+                    event.audit_state = '0'
+                    translist.user_event = event
+                    translist.save(update_fields=['user_event'])
+                    scoretranslist.user_event = event
+                    scoretranslist.save(update_fields=['user_event'])
+                    res['code'] = 0
+                    msg_content = u'您提交的"' + event.content_object.title + u'"体验福利已审核通过。'
+                    Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
+                else:
+                    res['code'] = -4
+                    res['res_msg'] = "注意，重复提交时只提交失败项目，成功的可以输入0。\n"
+                    if not translist:
+                        logger.error(u"Charging cash is failed!!!")
+                        res['res_msg'] += u"现金记账失败，请检查输入合法性后再次提交！"
+                    if not scoretranslist:
+                        logger.error(u"Charging score is failed!!!")
+                        res['res_msg'] += u"积分记账失败，请检查输入合法性后再次提交！"
+        else:
+            event.audit_state = '2'
+            log.audit_result = False
+            log.reason = reason
+            task = event.content_object
+            task.left_num = F("left_num")+1
+            task.save(update_fields=['left_num'])
+            res['code'] = 0
+
+            msg_content = u'您提交的"' + event.content_object.title + u'"体验福利审核未通过，原因：' + reason
+            Message.objects.create(user=event_user, content=msg_content, title=u"福利审核");
+
+        if res['code'] == 0:
+            admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='1')
+            if translist:
+                translist.admin_event = admin_event
+                translist.save(update_fields=['admin_event'])
+            if scoretranslist:
+                scoretranslist.admin_event = admin_event
+                scoretranslist.save(update_fields=['admin_event'])
+            log.admin_item = admin_event
+            log.save()
+            event.audit_time = log.time
+            event.save(update_fields=['audit_state','audit_time'])
+        return JsonResponse(res)

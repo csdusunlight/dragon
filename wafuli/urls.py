@@ -67,7 +67,7 @@ urlpatterns = [
     url(r'^hongbaolist/$', views.HongbaoList.as_view()),
     url(r'^welfare/(?:(?P<id>[0-9]*)/)?$', views.hongbao, name='welfare'),
     url(r'^updown_welfare/(?:(?P<id>[0-9]*)/)?$', views.updown_hongbao, name='updown_welfare'),
-    
+
     url(r'^media_submit/$', mediaproject.media_submit, name='media_submit'),
     url(r'^usereventlist/$', rest.UserEventList.as_view()),
     
