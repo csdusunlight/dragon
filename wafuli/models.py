@@ -580,6 +580,7 @@ class MediaProject(models.Model):
     is_multisub_allowed = models.BooleanField(u"是否允许同一手机号多次提交", default=False)
     is_need_screenshot = models.BooleanField(u'是否需要截图', default=True)
     attention = models.TextField(u'注意事项', max_length=500)
+    user_event = GenericRelation("UserEvent",related_query_name='mediaproject')
     class Meta:
         verbose_name = u"媒体单项目"
         verbose_name_plural = u"媒体单项目"
