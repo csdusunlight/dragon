@@ -20,6 +20,8 @@ class MediaProjectSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'pub_date')
 
 class UserEventSerializer(serializers.ModelSerializer):
+    project = serializers.CharField(source='content_object.title')
+    state_des = serializers.CharField(source='get_audit_state_display', read_only=True)
     class Meta:
         model = UserEvent
         fields = '__all__'
