@@ -144,7 +144,16 @@ def admin_finance(request):
     if request.method == "GET":
         if not ( admin_user.is_authenticated() and admin_user.is_staff):
             return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
-        return render(request,"admin_finance.html")
+        task_type = ContentType.objects.get_for_model(Finance)
+        item_list = UserEvent.objects.filter(content_type = task_type.id, audit_state='1').values_list('object_id').distinct().order_by('object_id')
+        project_list = ()
+        for item in item_list:
+            project_list += item
+        projects = Finance.objects.filter(id__in=project_list)
+        unaudited_pronames = []
+        for project in projects:
+            unaudited_pronames.append(project.title)
+        return render(request,"admin_finance.html", {'unaudited_pronames':unaudited_pronames})
     if request.method == "POST":
         res = {}
         if not request.is_ajax():

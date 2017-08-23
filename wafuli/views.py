@@ -870,5 +870,3 @@ def display_screenshot(request):
         img_list.append({'name':name,'url':url})
     return render(request, 'screenshot.html', {'img_list':img_list})
 
-def media_submit(request):          #jzy
-    return render(request, 'media-submit.html')
