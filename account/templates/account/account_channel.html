@@ -416,7 +416,7 @@
 				$(".submit-content").on("focus", ".date_picker", function() {
 					$('.date_picker').date_input();
 				})
-
+				var need_refresh = false;
 				var add_data_btn = document.getElementById('add_data_btn');
 				var remove_data_btn = document.getElementById('remove_data_btn');
 				var submit_data_container = document.getElementById('submit_data_container');
@@ -568,6 +568,12 @@
 									// $(".data-item-repeat").text(repeat_num);
 									// console.log(repeat_num);
 									// console.log(ret.exist_num);
+									if (ret && ret.exist_num==0){
+										need_refresh = true;
+									}
+									else{
+										need_refresh = false;
+									}
 									if(!repeat_num) {
 										$(".repeat-phonenumber").hide();
 									} else {
@@ -657,6 +663,9 @@
 				// 再次提交调用函数
 				function popupOutItem() {
 					$(".popup-box-04").removeClass("in");
+					if (need_refresh){
+						location.reload();
+					}
 				}
 				$("#export").click(function() {
 					var fid = $("select#project_select_out").val();

@@ -442,6 +442,7 @@
     var repeat_num = 0; //存储重复提交条数
     var re_phone = ""; //重复手机号
     var repeat_phone = ""; //存储重复手机号
+    var need_refresh = false;
     $("#upload_byitem").on("click", function() {
       $(".submit-item-box").each(function(index, domEle) {
         var project_select01 = $(this).find(".project_select"),
@@ -539,6 +540,12 @@
               // $(".data-item-repeat").text(repeat_num);
               // console.log(repeat_num);
               // console.log(ret.exist_num);
+              if (ret && ret.exist_num==0){
+					need_refresh = true;
+				}
+				else{
+					need_refresh = false;
+				}
               if(!repeat_num) {
                 $(".repeat-phonenumber").hide();
               } else {
@@ -584,6 +591,9 @@
     // 再次提交调用函数
     function popupOutItem() {
       $(".popup-box-04").removeClass("in");
+      	if (need_refresh){
+			location.reload();
+		}
     }
   // })
 

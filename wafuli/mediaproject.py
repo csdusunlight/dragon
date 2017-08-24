@@ -26,8 +26,9 @@ def media_submit(request):
         remark = request.POST.get('remark', '')
         amount = request.POST.get('amount', '')
         term = request.POST.get('term', '')
-        print telnum, news_id, amount, term
-        if not (news_id and telnum and amount and term):
+        invest_time = request.POST.get('date', '')
+        print invest_time
+        if not (news_id and telnum and amount and term and invest_time):
             raise Http404
         news = MediaProject.objects.get(pk=news_id)
         code = None
@@ -39,7 +40,7 @@ def media_submit(request):
             else:
                 userlog = UserEvent.objects.create(user=request.user, event_type='8', invest_account=telnum,
                                  invest_image='', content_object=news, audit_state='1',remark=remark,
-                                 invest_amount=amount, invest_term=term)
+                                 invest_amount=amount, invest_term=term,invest_time=invest_time)
                 code = 1
                 msg = u'提交成功，请通过用户中心查询！'
         except Exception, e:
