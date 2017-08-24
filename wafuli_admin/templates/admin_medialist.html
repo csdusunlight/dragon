@@ -23,7 +23,7 @@ var data2 = '<table width="100%"><tr><th>用户名</th><th>投资手机号</th>'
 	'<td>{admin_user}</td><td>{audit_time}</td>'+
 	'<td>{ret_money}</td><td>{ret_score}</td><td>{remark}</td></tr>[/results]</table>';
 // var url = "{% url 'get_admin_task_page' %}" + "?page={page}&size={pageSize}";
-var url = '/usereventlist/?event_type=8&page={page}&size={pageSize}';
+var url = '/usereventlist/?event_type=9&page={page}&size={pageSize}';
 function pass(id){
 	$(".BackNow").css("display","block");
 	$("input#ret_event_id").val(id);

@@ -146,7 +146,7 @@ def admin_finance(request):
         if not ( admin_user.is_authenticated() and admin_user.is_staff):
             return redirect(reverse('admin:login') + "?next=" + reverse('admin_finance'))
         task_type = ContentType.objects.get_for_model(Finance)
-        item_list = UserEvent.objects.filter(content_type = task_type.id, audit_state='1').values_list('object_id').distinct().order_by('object_id')
+        item_list = UserEvent.objects.filter(content_type = task_type.id, audit_state='1', time__lt=datetime.date.today()).values_list('object_id').distinct().order_by('object_id')
         project_list = ()
         for item in item_list:
             project_list += item
