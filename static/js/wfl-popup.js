@@ -26,7 +26,7 @@
         var Width      = Data.Width      ? Data.Width      : '600';     //弹窗宽度
         var Title      = Data.Title      ? Data.Title      : '标题';      //弹窗标题
         var Content    = Data.Content    ? Data.Content    : '内容文字';        //弹窗内容
-        var NeedCancle   = Data.NeedCancle   ? Data.NeedCancle   : true;        //是否需要取消按钮
+        var NeedCancle   = Data.NeedCancle   ? Data.NeedCancle   : false;        //是否需要取消按钮
         var Cancle     = Data.Cancle     ? Data.Cancle     : '取消';      //取消按钮名称
         var Confirm    = Data.Confirm    ? Data.Confirm    : '确认';      //确认按钮名称
         var CancleFunc    = Data.CancleFunc    ? Data.CancleFunc    : '';       //取消回调函数
@@ -37,10 +37,10 @@
         html +='<div class="popup__top"><h2 class="popup__title">'+Title+'</h2><button type="button" class="popup__close popup__close-btn">×</button></div>';
         html +='<div class="popup__detail">'+Content+'</div>';
         html +='<div class="popup__btnbox">';
-        if(NeedCancle == true){
-            html +='<a class="btn m-green m-popup popup-cancle popup__close-btn">'+Cancle+'</a>';
+        if(NeedCancle === true){
+            html +='<a class="btn m-green m-popup popup-cancle popup__close-btn m-right">'+Cancle+'</a>';
         }
-        html +='<a class="btn m-green m-popup m-left popup-confirm">'+Confirm+'</a>';
+        html +='<a class="btn m-green m-popup popup-confirm popup__close-btn">'+Confirm+'</a>';
         html +='</div></div></div>';
         $(document.body).append(html);
         window.setTimeout(function(){       // 向下滑动渐现

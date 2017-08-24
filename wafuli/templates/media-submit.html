@@ -14,9 +14,17 @@
 <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/component.css' %}" /> -->
 <link rel="stylesheet" type="text/css" href="{% static 'css/welfare.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/wfl-common.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/datePicker.css' %}" />
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/wfl-popup.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.date_input.pack.js' %}"></script>
 <!-- <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script> -->
+<style>
+  .date_selector {
+    box-sizing: content-box;
+    margin-left: 200px;
+  }
+</style>
 </head>
 <script type="text/javascript">
   var isNeedImg = 'True';   //是否允许不上传截图
@@ -25,6 +33,10 @@
   });
   var file_list = [];
   $(function() {
+    $(".media-submit-date").on("focus", ".date_picker", function() {
+      $('.date_picker').date_input();
+    })
+
     $("button.td-tj").click(function() {
       var project_id = $('#project option:selected').val();
       var telnum = $('input#telnum').val();
@@ -179,13 +191,14 @@
       var xhr = new XMLHttpRequest();
       var formdata = getFormData();
       var project_id = $('#project option:selected').val();
+      var date = $('input#date_picker').val();
       var telnum = $('input#telnum').val();
       var money = $('input#money').val();
       var days = $('input#days').val();
       var remark = $('input#remark').val();
       var isNeedImg = $('#project option:selected').data('is_need_screenshot');
       console.log(isNeedImg);
-      console.log(project_id+', '+telnum+', '+money+', '+days+', '+remark);
+      console.log(project_id+', ' +date+', '+telnum+', '+money+', '+days+', '+remark);
       if (isNeedImg == 'True') {
         if (file_list.length==0){
           // alert("请上传任务完成截图");
@@ -198,6 +211,7 @@
       }
       // formdata.append('id', id);
       formdata.append('id', project_id);
+      formdata.append('date', date);
       formdata.append('telnum', telnum);
       formdata.append('amount', money);
       formdata.append('term', days);
@@ -217,14 +231,10 @@
             window.location.href = ret.url;
             return;
           }else if(ret.code==1){
-            // $("#hint").text("任务完成，请耐心等待工作人员审核!")
             $.confirm({Content: '任务提交成功，可在【个人中心】-【福利管理】查看。请耐心等待工作人员审核。',
-                      NeedCancle: false,
-                      ConfirmFunc: "history.go(0);$.PopupClose(Id);"});
-            // popupIn();
+                      ConfirmFunc: 'history.go(0);'
+                    })
           }else{
-            // $("#hint").text(ret.msg)
-            // popupIn()
             $.prompt({Content: ret.msg});
           }
         }
@@ -322,7 +332,7 @@
 <body>
 
 
-<div class="td-msg" style="background-color: #fff;">
+<div class="media-submit td-msg" style="background-color: #fff;">
   <div class="msg-ti"><img src="{% static 'images/task-02.png' %}" class="ms-pd" /><span class="mag-pp">媒体单提交</span></div>
   <div class="ma-div" style="margin-left: 256px;">投资平台：
     <select id="project" placeholder="选择项目">
@@ -332,6 +342,7 @@
                       {%endfor%}
                     </select>
   </div>
+  <div class="media-submit-date ma-div" style="margin-left: 256px;">投资时间：<input type="text" class="date_picker" id="date_picker" placeholder="选择日期"></div>
   <div class="ma-div" style="margin-left: 256px;">注册手机号：<input type="text" onkeyup="this.value =this.value.replace(/[^\0-9\.]/g,'');" placeholder="输入您的手机号，若有多个请分别提交" class="ms-input" id='telnum' /></div>
   <div class="ma-div" style="margin-left: 282px;">投资金额：<input type="text" onkeyup="this.value =this.value.replace(/[^\0-9\.]/g,'');" placeholder="输入您的投资金额，仅限数字" class="ms-input" id='money' />&nbsp;&nbsp;元</div>
   <div class="ma-div" style="margin-left: 282px;">投资标期：<input type="text" onkeyup="this.value =this.value.replace(/[^\0-9\.]/g,'');" placeholder="输入您的投资标期，仅限数字" class="ms-input" id='days' />&nbsp;&nbsp;天</div>

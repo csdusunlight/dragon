@@ -222,8 +222,8 @@ a.wflbox__more:hover {
 .popup__btnbox .btn:hover {
     transform: translateY(0);
 }
-.btn.m-left {
-	margin-left: 100px;
+.btn.m-right {
+	margin-right: 100px;
 }
 /*板块样式*/
 /*header*/
