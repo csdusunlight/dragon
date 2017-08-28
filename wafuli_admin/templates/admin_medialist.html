@@ -21,9 +21,15 @@ var data2 = '<table width="100%"><tr><th>用户名</th><th>投资手机号</th>'
   '<td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
 	'<span class="img-up"><img src="/static/images/task-suoluetu.jpg" alt="截图上传图片" /></span></a></td>'+
 	'<td>{admin_user}</td><td>{audit_time}</td>'+
-	'<td>{ret_money}</td><td>{ret_score}</td><td>{remark}</td></tr>[/results]</table>';
+	'<td class="ret-money">{ret_money}</td><td>{ret_score}</td><td>{remark}</td></tr>[/results]</table>';
 // var url = "{% url 'get_admin_task_page' %}" + "?page={page}&size={pageSize}";
 var url = '/usereventlist/?event_type=9&page={page}&size={pageSize}';
+function pagecallback(){
+    console.log($(".ret-money").text());
+    $(".ret-money").each(function(index, el) {
+        $(this).text(parseInt($(this).text()/100));
+    });
+}
 function pass(id){
 	$(".BackNow").css("display","block");
 	$("input#ret_event_id").val(id);
@@ -41,6 +47,7 @@ $(document).ready(function(){
 	    pageSize:10,
 	    run:true,
 	    content:data,
+        complete:pagecallback,
 	});
 	$(".none-x").click(function(){
 		$(this).parent().parent().css("display","none");
@@ -165,6 +172,7 @@ $(document).ready(function(){
 		    pageSize:10,
 		    run:true,
 		    content:newdata,
+            complete:pagecallback,
 		});
 	});
 
