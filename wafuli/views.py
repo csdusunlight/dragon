@@ -1,5 +1,6 @@
 #coding:utf-8
 from django.shortcuts import render
+
 from django.http.response import Http404
 from wafuli.models import Welfare, Task, Finance, Commodity, Information, \
     ExchangeRecord, Press, UserEvent, Advertisement, Activity, Company,\
@@ -14,7 +15,7 @@ import logging
 from datetime import date, datetime
 from wafuli_admin.models import DayStatis, GlobalStatis, RecommendRank,\
     UserStatis
-from account.models import MyUser
+from account.models import MyUser, UserSignIn
 from django.contrib.contenttypes.models import ContentType
 from django.db import transaction
 from wafuli.tools import update_view_count
@@ -141,6 +142,16 @@ def wfl_index(request):
         withdraw_total = 0#提现总额
         all_wel_num = 0
     context.update({'new_wel_num':new_wel_num, 'all_wel_num':all_wel_num, 'withdraw_total':withdraw_total})
+    if request.user.is_authenticated():
+        isSigned = False
+        try:
+            signin_last = UserSignIn.objects.get(user=request.user, date=date.today())
+        except:
+            isSigned = False
+        else:
+            isSigned = True
+        context.update(isSigned=isSigned)
+    
     return render(request, 'wfl-index.html', context)
 # def get_hongbao_by_type(request):
 #     htype = request.GET.get('type', None)
