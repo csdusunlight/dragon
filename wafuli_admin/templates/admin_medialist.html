@@ -1,5 +1,29 @@
-{% extends "base.html" %}
-{% block js %}
+{% extends "base.html" %} {%load staticfiles%} {% block js %}
+<style>
+    .btn-box {
+        margin-top: 20px;
+        overflow: hidden;
+    }
+    .Submit-in {
+        width: 500px;
+        padding: 0;
+        float: right;
+    }
+    .leading-in {
+        float: left;
+    }
+    .unhandle-box {
+        margin-top: 50px;
+    }
+    .unhandle {
+        display: inline-block;
+        padding: 4px 10px;
+        color: #fff;
+        background-color: #91c11d;
+        border-radius: 4px;
+    }
+</style>
+<script type="text/javascript" src="{%static 'js/ajaxfileupload.js'%}"></script>
 <script type="text/javascript">
 $.ajaxSetup({
     data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
@@ -231,7 +255,36 @@ $(document).ready(function(){
     iframe.contentWindow.document.close();
     document.getElementById('myIFrame').contentWindow.document.getElementById('postData_form').submit();
   });
-
+  $('#import').click(function() {
+        var fileElementId = 'fileupload1';
+        if(!document.getElementById(fileElementId).value) {
+            alert("请先选择文件");
+            return;
+        }
+        $.ajaxFileUpload({
+            // url: "{% url 'import_finance_excel'%}",
+            secureuri: false,
+            fileElementId: fileElementId, //file标签的id
+            dataType: 'json', //返回数据的类型
+            data: {}, //一同上传的数据
+            success: function(data, status) {
+                if(data.code == 0) {
+                    alert("导入成功！ 数量：" + data.num);
+                } else {
+                    alert(data.msg + " 成功数量：" + data.num);
+                }
+            },
+            error: function(data, status, e) {
+                alert(e);
+            }
+        });
+        //  hint.innerHTML = '无';
+    });
+    var choose_file = document.getElementById("input_clone");
+    var hint = document.getElementById("hint");
+    choose_file.onclick = function() {
+        document.getElementById("fileupload1").click();
+    }
 });
 </script>
 {% endblock js %}
@@ -293,9 +346,17 @@ $(document).ready(function(){
 
                                         </tr> -->
                                     </table>
-                                    <div class="Submit-in">
-                                    	<input id="search" type="button" value="搜索" />
-                                        <input id="export" type="button" value="导出" />
+                                    <div class="btn-box">
+                                        <div class="Submit-in">
+                                        	<input id="search" type="button" value="搜索" />
+                                            <input id="export" type="button" value="导出" />
+                                        </div>
+                                        <div class="leading-in">
+                                            <input id="fileupload1" name="file" type="file" onchange='hint.innerHTML = this.files[0].name;' />
+                                            <a id="input_clone" class="input-clone">选择文件</a>
+                                            <p class="hint-box">已选择表格：<b id="hint" class="hint">无</b></p>
+                                            <input id="import" type="button" value="导入" />
+                                        </div>
                                     </div>
                                 </form>
                             </div>
