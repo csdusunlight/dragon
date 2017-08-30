@@ -276,7 +276,7 @@
     </div>
     <div class="popup-box popup-box-04">
       <div class="popup-content">
-        <h3>数据提交成功</h3>
+        <h3>数据提交提示</h3>
         <p>提交数据：<span class="data-item-submit"></span>项</p>
         <!-- <p class="repeat-list">提交重复数据：<span class="data-item-repeat"></span>项</p> -->
         <p class="repeat-phonenumber">重复手机号：<span class="data-item-repeat-phone"></span></p>
@@ -561,7 +561,7 @@
               $(".data-item-exist-phone").text(ret.exist_phone);
               $(".data-item-valid").text(ret.suc_num);
               popupInItem();
-            } 
+            }
             else if(ret.code==-1){
             	location.href = ret.url;
             }

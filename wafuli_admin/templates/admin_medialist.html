@@ -28,29 +28,40 @@
 $.ajaxSetup({
     data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
 });
-var data = '<table width="100%"><tr><th>用户名</th><th>投资手机号</th>'+
-	'<th>投资平台</th><th>投资期限</th><th>投资金额</th><th>提交时间</th><th>处理状态</th><th>任务截图</th>'+
-	'<th>操作</th><th>备注</th></tr>[results]<tr><td>{username}</td><td>{invest_account}</td>'+
-	'<td>{project}</td><td>{invest_term}</td><td>{invest_amount}</td><td>{invest_time}</td><td>{state_des}</td>'+
+var data = '<table width="100%"><tr><th>用户手机号</th><th>投资平台</th><th>投资时间</th><th>投资手机号</th>'+
+	'<th>投资金额</th><th>投资期限</th><th>提交时间</th><th>处理状态</th><th>任务截图</th>'+
+	'<th>操作</th><th>备注</th></tr>[results]<tr><td>{username}</td><td>{project}</td><td>{invest_time}</td><td>{invest_account}</td>'+
+	'<td>{invest_amount}</td><td>{invest_term}</td><td>{time}</td><td>{state_des}</td>'+
   '<td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
 	'<span class="img-up"><img src="/static/images/task-suoluetu.jpg" alt="截图上传图片" /></span></a></td>'+
 	''+
 	'<td id="item_{id}"><a class="fyin" onclick="pass({id})">返现'+
 	'</a> │ <a class="jion-s" onclick="refuse({id})">拒绝</a></td><td>{remark}</td></tr>[/results]</table>';
-var data2 = '<table width="100%"><tr><th>用户名</th><th>投资手机号</th>'+
-	'<th>投资平台</th><th>投资期限</th><th>投资金额</th><th>提交时间</th><th>处理状态</th><th>任务截图</th>'+
+var data2 = '<table width="100%"><tr><th>用户手机号</th><th>投资平台</th><th>投资时间</th><th>投资手机号</th>'+
+	'<th>投资金额</th><th>投资期限</th><th>提交时间</th><th>处理状态</th><th>任务截图</th>'+
 	'<th>审核人</th><th>审核时间</th><th width="6%">返现金额</th><th width="6%">返现积分</th>'+
-	'<th>备注</th></tr>[results]<tr><td>{username}</td><td>{invest_account}</td>'+
-	'<td>{project}</td><td>{invest_term}</td><td>{invest_amount}</td><td>{invest_time}</td><td>{state_des}</td>'+
+	'<th>备注</th></tr>[results]<tr><td>{username}</td><td>{project}</td><td>{invest_time}</td><td>{invest_account}</td>'+
+	'<td>{invest_amount}</td><td>{invest_term}</td><td>{time}</td><td>{state_des}</td>'+
   '<td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
 	'<span class="img-up"><img src="/static/images/task-suoluetu.jpg" alt="截图上传图片" /></span></a></td>'+
 	'<td>{admin_user}</td><td>{audit_time}</td>'+
 	'<td class="ret-money">{ret_money}</td><td>{ret_score}</td><td>{remark}</td></tr>[/results]</table>';
+var data3 = '<table width="100%"><tr><th>用户手机号</th><th>投资平台</th><th>投资时间</th><th>投资手机号</th>'+
+    '<th>投资金额</th><th>投资期限</th><th>提交时间</th><th>处理状态</th><th>任务截图</th>'+
+    '<th>审核人</th><th>审核时间</th><th width="6%">返现金额</th><th width="6%">返现积分</th>'+
+    '<th>拒绝原因</th></tr>[results]<tr><td>{username}</td><td>{project}</td><td>{invest_time}</td><td>{invest_account}</td>'+
+    '<td>{invest_amount}</td><td>{invest_term}</td><td>{time}</td><td>{state_des}</td>'+
+  '<td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
+    '<span class="img-up"><img src="/static/images/task-suoluetu.jpg" alt="截图上传图片" /></span></a></td>'+
+    '<td>{admin_user}</td><td>{audit_time}</td>'+
+    '<td class="ret-money">{ret_money}</td><td>{ret_score}</td><td>{refuse_reason}</td></tr>[/results]</table>';
 // var url = "{% url 'get_admin_task_page' %}" + "?page={page}&size={pageSize}";
 var url = '/usereventlist/?event_type=9&page={page}&size={pageSize}';
 function pagecallback(){
-    console.log($(".ret-money").text());
     $(".ret-money").each(function(index, el) {
+        if ($(this).text() == '无') {
+            return false;
+        }
         $(this).text(parseInt($(this).text()/100));
     });
 }
@@ -186,9 +197,12 @@ $(document).ready(function(){
 			newurl += "&audit_state="+state;
 		}
 		var newdata = data;
-		if(state!='1'){
+		if(state=='0'){
 			newdata = data2;
 		}
+        if(state=='2'){
+            newdata = data3;
+        }
 		$("#page").empty();
 		$("#pagedata").ajaxPage({
 		    url:newurl,
@@ -314,11 +328,11 @@ $(document).ready(function(){
                                         </tr>
                                     	<tr>
                                         	<td>
-                                            	<i>用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;户&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</i>
+                                            	<i>用户手机号：</i>
                                                 <input id="username" type="text" />
                                             </td>
                                         	<td>
-                                            	<i style="letter-spacing:2px;">用户手机号：</i>
+                                            	<i style="letter-spacing:2px;">投资手机号：</i>
                                                 <input id="mobile" type="text" />
                                             </td>
                                         	<!-- <td>
