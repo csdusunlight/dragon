@@ -69,8 +69,11 @@ class PressAdmin(NewsAdmin):
 class ComAdmin(admin.ModelAdmin):
     search_fields = ['name', 'level','site','capital','address','launch_date','trusteeship','background',]
 class UserEventAdmin(admin.ModelAdmin):
+    raw_id_fields = ['user',]
     search_fields = ()
     list_display = ('user','content_object', 'invest_account','time','event_type','audit_state')
+class AdminEventAdmin(admin.ModelAdmin):
+    raw_id_fields = ['admin_user','custom_user']
 class ActivityAdmin(admin.ModelAdmin):
 #     fields = ('title', 'pic1', 'pic2', 'pic3', 'content', 'url')
     search_fields = ['title',]
@@ -84,6 +87,7 @@ class ActivityAdmin(admin.ModelAdmin):
             return fields  
 class TransListAdmin(admin.ModelAdmin):
     search_fields = ['user__mobile',]
+    raw_id_fields = ['user','user_event','admin_event']
 class CouponAdmin(admin.ModelAdmin):
     list_display = ('project','user', 'exchange_code','is_used',)
     search_fields = ['user__mobile',]
@@ -95,7 +99,7 @@ admin.site.register(Task, TaskAdmin)
 admin.site.register(Commodity,CommodityAdmin)
 admin.site.register(UserEvent, UserEventAdmin)
 admin.site.register(AuditLog)
-admin.site.register(AdminEvent)
+admin.site.register(AdminEvent,AdminEventAdmin)
 admin.site.register(ScoreTranlist,TransListAdmin)
 admin.site.register(TransList,TransListAdmin)
 admin.site.register(ExchangeRecord)

@@ -24,6 +24,7 @@ import xlrd
 from django.contrib.contenttypes.models import ContentType
 from account.vip import get_vip_bonus
 from django.contrib.auth.decorators import login_required
+from django.db import transaction
 # Create your views here.
 logger = logging.getLogger('wafuli')
 
@@ -512,48 +513,49 @@ def import_coupon_excel(request):
     suc_num = 0
     try:
         for row in rtable:
-            id = row[0]
-            result = row[1]
-            reason = row[3]
-            event = UserEvent.objects.get(id=id)
-            if event.audit_state != '1' or event.translist.exists():
-                continue
-            log = AuditLog(user=admin_user,item=event)
-            event_user = event.user
-            translist = None
-            if result:
-                amount = int(row[2]*100)
-                log.audit_result = True
-                project = event.content_object.project
-                translist = charge_money(event_user, '0', amount, project.title)
-                if project.is_vip_bonus:
-                    get_vip_bonus(event_user, amount, 'finance')
-                if translist:
-                    event.audit_state = '0'
-                    translist.user_event = event
-                    translist.save(update_fields=['user_event'])
-#                     Invest_Record.objects.create(invest_date=event.time,invest_company=event.content_object.company.name,
-#                                                      user_name=event_user.zhifubao_name,zhifubao=event_user.zhifubao,
-#                                                      invest_mobile=event.invest_account,invest_period=event.invest_term,
-#                                                      invest_amount=event.invest_amount,return_amount=amount/100.0,wafuli_account=event_user.mobile,
-#                                                      return_date=datetime.date.today(),remark=event.remark)
-                else:
-                    logger.error(u"Charging cash is failed!!!")
-                    logger.error("UserEvent:" + str(id) + u" 现金记账失败，请检查原因！！！！")
+            with transaction.atomic():
+                id = row[0]
+                result = row[1]
+                reason = row[3]
+                event = UserEvent.objects.get(id=id)
+                if event.audit_state != '1' or event.translist.exists():
                     continue
-            else:
-                event.audit_state = '2'
-                log.audit_result = False
-                log.reason = reason
-            admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='3')
-            if translist:
-                translist.admin_event = admin_event
-                translist.save(update_fields=['admin_event'])
-            log.admin_item = admin_event
-            log.save()
-            event.audit_time = log.time
-            event.save(update_fields=['audit_state','audit_time'])
-            suc_num += 1
+                log = AuditLog(user=admin_user,item=event)
+                event_user = event.user
+                translist = None
+                if result:
+                    amount = int(row[2]*100)
+                    log.audit_result = True
+                    project = event.content_object.project
+                    translist = charge_money(event_user, '0', amount, project.title)
+                    if project.is_vip_bonus:
+                        get_vip_bonus(event_user, amount, 'finance')
+                    if translist:
+                        event.audit_state = '0'
+                        translist.user_event = event
+                        translist.save(update_fields=['user_event'])
+    #                     Invest_Record.objects.create(invest_date=event.time,invest_company=event.content_object.company.name,
+    #                                                      user_name=event_user.zhifubao_name,zhifubao=event_user.zhifubao,
+    #                                                      invest_mobile=event.invest_account,invest_period=event.invest_term,
+    #                                                      invest_amount=event.invest_amount,return_amount=amount/100.0,wafuli_account=event_user.mobile,
+    #                                                      return_date=datetime.date.today(),remark=event.remark)
+                    else:
+                        logger.error(u"Charging cash is failed!!!")
+                        logger.error("UserEvent:" + str(id) + u" 现金记账失败，请检查原因！！！！")
+                        continue
+                else:
+                    event.audit_state = '2'
+                    log.audit_result = False
+                    log.reason = reason
+                admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='3')
+                if translist:
+                    translist.admin_event = admin_event
+                    translist.save(update_fields=['admin_event'])
+                log.admin_item = admin_event
+                log.save()
+                event.audit_time = log.time
+                event.save(update_fields=['audit_state','audit_time'])
+                suc_num += 1
         ret['code'] = 0
     except Exception as e:
         traceback.print_exc()
