@@ -2081,3 +2081,117 @@ def export_media_excel(request):
     response['Content-Disposition'] = 'attachment; filename=待审核记录.xls'
     response.write(sio.getvalue())
     return response
+
+@csrf_exempt
+@has_permission('002')
+def import_media_excel(request):
+    user = request.user
+    if not ( user.is_authenticated() and user.is_staff):
+        raise Http404
+    ret = {'code':-1}
+    file = request.FILES.get('file')
+#     print file.name
+    with open('./out.xls', 'wb+') as destination:
+        for chunk in file.chunks():
+            destination.write(chunk)
+    data = xlrd.open_workbook('out.xls')
+    table = data.sheets()[0]
+    nrows = table.nrows
+    ncols = table.ncols
+    if ncols!=12:
+        ret['msg'] = u"文件格式与模板不符，请在导出的待审核记录表中更新后将文件导入！"
+        return JsonResponse(ret)
+    rtable = []
+    mobile_list = []
+    try:
+        for i in range(1,nrows):
+            temp = []
+            duplic = False
+            for j in range(ncols):
+                cell = table.cell(i,j)
+                if j==0:
+                    id = int(cell.value)
+                    temp.append(id)
+                elif j==1:
+                    project = cell.value
+                    temp.append(project)
+                elif j==9:
+                    result = cell.value.strip()
+                    if result == u"是":
+                        result = True
+                        temp.append(True)
+                    elif result == u"否":
+                        result = False
+                        temp.append(False)
+                    else:
+                        raise Exception(u"审核结果必须为是或否。")
+                elif j==10:
+                    return_amount = 0
+                    if cell.value:
+                        return_amount = float(cell.value)
+                    elif result:
+                        raise Exception(u"审核结果为是时，返现金额不能为空或零。")
+                    temp.append(return_amount)
+                elif j==11:
+                    reason = cell.value
+                    temp.append(reason)
+                else:
+                    continue;
+            rtable.append(temp)
+    except Exception, e:
+        traceback.print_exc()
+        ret['msg'] = unicode(e)
+        ret['num'] = 0
+        return JsonResponse(ret)
+    admin_user = request.user
+    suc_num = 0
+    try:
+        for row in rtable:
+            id = row[0]
+            result = row[2]
+            reason = row[4]
+            event = UserEvent.objects.get(id=id)
+            if event.audit_state != '1' or event.translist.exists():
+                continue
+            log = AuditLog(user=admin_user,item=event)
+            event_user = event.user
+            translist = None
+            if result:
+                amount = int(row[3]*100)
+                log.audit_result = True
+                translist = charge_money(event_user, '0', amount, row[1])
+                if event.content_object.is_vip_bonus:
+                    get_vip_bonus(event_user, amount, 'finance')
+                if translist:
+                    event.audit_state = '0'
+                    translist.user_event = event
+                    translist.save(update_fields=['user_event'])
+                    Invest_Record.objects.create(invest_date=event.time,invest_company=row[1],
+                                                     user_name=event_user.zhifubao_name,zhifubao=event_user.zhifubao,
+                                                     invest_mobile=event.invest_account,invest_period=event.invest_term,
+                                                     invest_amount=event.invest_amount,return_amount=amount/100.0,wafuli_account=event_user.mobile,
+                                                     return_date=datetime.date.today(),remark=event.remark)
+                else:
+                    logger.error(u"Charging cash is failed!!!")
+                    logger.error("UserEvent:" + str(id) + u" 现金记账失败，请检查原因！！！！")
+                    continue
+            else:
+                event.audit_state = '2'
+                log.audit_result = False
+                log.reason = reason
+            admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='11')
+            if translist:
+                translist.admin_event = admin_event
+                translist.save(update_fields=['admin_event'])
+            log.admin_item = admin_event
+            log.save()
+            event.audit_time = log.time
+            event.save(update_fields=['audit_state','audit_time'])
+            suc_num += 1
+        ret['code'] = 0
+    except Exception as e:
+        traceback.print_exc()
+        ret['code'] = 1
+        ret['msg'] = unicode(e)
+    ret['num'] = suc_num
+    return JsonResponse(ret)

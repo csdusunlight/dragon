@@ -262,7 +262,7 @@ $(document).ready(function(){
             return;
         }
         $.ajaxFileUpload({
-            // url: "{% url 'import_finance_excel'%}",
+            url: "{% url 'import_media_excel'%}",
             secureuri: false,
             fileElementId: fileElementId, //file标签的id
             dataType: 'json', //返回数据的类型
