@@ -21,6 +21,7 @@ class MediaProjectSerializer(serializers.ModelSerializer):
 
 class UserEventSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
+    mobile = serializers.CharField(source='user.mobile', read_only=True)
     project = serializers.CharField(source='content_object.title', read_only=True)
     state_des = serializers.CharField(source='get_audit_state_display', read_only=True)
     admin_user = serializers.CharField(source='audited_logs.first.user.username')
@@ -30,5 +31,4 @@ class UserEventSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserEvent
         fields = '__all__'
-        read_only_fields = ('id', 'audit_state', 'event_type', 'time', 'content_type',
-                            'object_id', 'user', 'username', 'project')
+        read_only_fields = ('id', 'audit_state', 'event_type', 'time', 'content_type', 'object_id', 'user', 'username', 'project')

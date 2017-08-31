@@ -140,6 +140,7 @@ def get_admin_index_page(request):
     res["data"] = data
     return JsonResponse(res)
 
+@transaction.atomic
 def admin_finance(request):
     admin_user = request.user
     if request.method == "GET":
@@ -264,6 +265,7 @@ def admin_finance(request):
             event.save(update_fields=['audit_state','audit_time'])
         return JsonResponse(res)
 
+@transaction.atomic
 def admin_task(request):
     admin_user = request.user
     if request.method == "GET":
@@ -847,6 +849,7 @@ def get_admin_task_page(request):
     res["data"] = data
     return JsonResponse(res)
 
+@transaction.atomic
 def admin_user(request):
     admin_user = request.user
     if request.method == "GET":
@@ -1093,6 +1096,7 @@ def get_admin_user_page(request):
     res["data"] = data
     return JsonResponse(res)
 
+@transaction.atomic
 def admin_withdraw(request):
     admin_user = request.user
     if request.method == "GET":
@@ -1510,6 +1514,8 @@ def import_withdraw_excel(request):
         ret['msg'] = unicode(e)
     ret['num'] = suc_num
     return JsonResponse(ret)
+
+@transaction.atomic
 def admin_score(request):
     admin_user = request.user
     if request.method == "GET":
@@ -1894,6 +1900,7 @@ def send_multiple_msg(request):
         res['res_msg'] = u"没有选中任何手机号码"
     return JsonResponse(res)
 
+@transaction.atomic
 def admin_media(request):
     admin_user = request.user
     if request.method == "GET":
