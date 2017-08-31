@@ -179,6 +179,11 @@
     }
 
     $('#project').change(function(){
+      var isLogin = "{{user.is_authenticated}}";
+      if (isLogin == "False") {
+        window.location.href = '/account/login/?next=' + window.location.pathname;
+      }
+
       var isNeedImg = $('#project option:selected').data('is_need_screenshot');
       console.log(isNeedImg);
       if (isNeedImg == 'True') {
@@ -330,31 +335,33 @@
     }
 </script>
 <body>
-{% if not user.is_authenticated %}
-<li class="d-ib"><a id="login" class="headertop__navitem link">登录</a></li>
-<li class="d-ib"><a class="headertop__navitem link" href="{% url 'register' %}">注册</a></li>
-<script>
-  window.onload = function () {
-      document.getElementById('login').onclick = function() {
-          window.location.href = '/account/login/?next=' + window.location.pathname;
-      }
-  }
-</script>
-{% else %}
-<li class="d-ib"><font>您好，<a class="headertop__navitem">{{user.mobile}}</a></li>
-    {%if user.level > 0 %}
-     （VIP{{user.level}}）
-    {%endif%}
-</font>
-<li class="d-ib"><a id="logout" class="headertop__navitem link">退出</a></li>
-<script>
-  window.onload = function () {
-      document.getElementById('logout').onclick = function() {
-          window.location.href = '/account/login/?next=' + window.location.pathname;
-      }
-  }
-</script>
-{% endif %}
+<div style="width: 1100px; text-align: right;" class="userbox wfl-wrap">
+  {% if not user.is_authenticated %}
+  <li class="d-ib"><a id="login" class="headertop__navitem link">登录</a></li>
+  <li class="d-ib"><a class="headertop__navitem link" href="{% url 'register' %}">注册</a></li>
+  <script>
+    window.onload = function () {
+        document.getElementById('login').onclick = function() {
+            window.location.href = '/account/login/?next=' + window.location.pathname;
+        }
+    }
+  </script>
+  {% else %}
+  <li class="d-ib"><font>您好，<a class="headertop__navitem">{{user.mobile}}</a></li>
+      {%if user.level > 0 %}
+       （VIP{{user.level}}）
+      {%endif%}
+  </font>
+  <li class="d-ib"><a id="logout" class="headertop__navitem link">退出</a></li>
+  <script>
+    window.onload = function () {
+        document.getElementById('logout').onclick = function() {
+            window.location.href = '/account/login/?next=' + window.location.pathname;
+        }
+    }
+  </script>
+  {% endif %}
+</div>
 
 
 <div class="media-submit td-msg" style="background-color: #fff;">
