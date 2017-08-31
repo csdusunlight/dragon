@@ -330,6 +330,31 @@
     }
 </script>
 <body>
+{% if not user.is_authenticated %}
+<li class="d-ib"><a id="login" class="headertop__navitem link">登录</a></li>
+<li class="d-ib"><a class="headertop__navitem link" href="{% url 'register' %}">注册</a></li>
+<script>
+  window.onload = function () {
+      document.getElementById('login').onclick = function() {
+          window.location.href = '/account/login/?next=' + window.location.pathname;
+      }
+  }
+</script>
+{% else %}
+<li class="d-ib"><font>您好，<a class="headertop__navitem">{{user.mobile}}</a></li>
+    {%if user.level > 0 %}
+     （VIP{{user.level}}）
+    {%endif%}
+</font>
+<li class="d-ib"><a id="logout" class="headertop__navitem link">退出</a></li>
+<script>
+  window.onload = function () {
+      document.getElementById('logout').onclick = function() {
+          window.location.href = '/account/login/?next=' + window.location.pathname;
+      }
+  }
+</script>
+{% endif %}
 
 
 <div class="media-submit td-msg" style="background-color: #fff;">
