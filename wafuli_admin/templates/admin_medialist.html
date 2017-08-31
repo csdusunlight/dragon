@@ -54,15 +54,21 @@ var data3 = '<table width="100%"><tr><th>用户手机号</th><th>投资平台</t
   '<td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
     '<span class="img-up"><img src="/static/images/task-suoluetu.jpg" alt="截图上传图片" /></span></a></td>'+
     '<td>{admin_user}</td><td>{audit_time}</td>'+
-    '<td class="ret-money">{ret_money}</td><td>{ret_score}</td><td>{refuse_reason}</td></tr>[/results]</table>';
+    '<td class="ret-money">{ret_money}</td><td class="ret-score">{ret_score}</td><td>{refuse_reason}</td></tr>[/results]</table>';
 // var url = "{% url 'get_admin_task_page' %}" + "?page={page}&size={pageSize}";
 var url = '/usereventlist/?event_type=9&page={page}&size={pageSize}';
 function pagecallback(){
     $(".ret-money").each(function(index, el) {
-        if ($(this).text() == '无') {
-            return false;
+        if ($(this).text() == 'null') {
+            $(this).text('无');
+        } else {
+            $(this).text(parseInt($(this).text()/100));
         }
-        $(this).text(parseInt($(this).text()/100));
+    });
+    $(".ret-score").each(function(index, el) {
+        if ($(this).text() == 'null') {
+            $(this).text('无');
+        }
     });
 }
 function pass(id){
