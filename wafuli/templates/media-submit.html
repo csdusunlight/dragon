@@ -338,11 +338,14 @@
 <div style="width: 1100px; text-align: right;" class="userbox wfl-wrap">
   {% if not user.is_authenticated %}
   <li class="d-ib"><a id="login" class="headertop__navitem link">登录</a></li>
-  <li class="d-ib"><a class="headertop__navitem link" href="{% url 'register' %}">注册</a></li>
+  <li class="d-ib"><a id="regiter" class="headertop__navitem link">注册</a></li>
   <script>
     window.onload = function () {
         document.getElementById('login').onclick = function() {
             window.location.href = '/account/login/?next=' + window.location.pathname;
+        }
+        document.getElementById('regiter').onclick = function() {
+            window.location.href = '/account/register/?next=' + window.location.pathname;
         }
     }
   </script>
@@ -352,14 +355,7 @@
        （VIP{{user.level}}）
       {%endif%}
   </font>
-  <li class="d-ib"><a id="logout" class="headertop__navitem link">退出</a></li>
-  <script>
-    window.onload = function () {
-        document.getElementById('logout').onclick = function() {
-            window.location.href = '/account/login/?next=' + window.location.pathname;
-        }
-    }
-  </script>
+  <li class="d-ib"><a class="headertop__navitem link" href="{%url 'logout' %}">退出</a></li>
   {% endif %}
 </div>
 

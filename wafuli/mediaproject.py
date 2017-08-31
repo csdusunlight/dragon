@@ -13,8 +13,8 @@ from django.contrib.auth.decorators import login_required
 from wafuli.tools import saveImgAndGenerateUrl
 from django.views.decorators.csrf import csrf_exempt
 logger = logging.getLogger('wafuli')
-    
-@login_required
+
+# @login_required
 @csrf_exempt
 def media_submit(request):
     if request.method == 'POST':
@@ -72,4 +72,4 @@ def media_submit(request):
     else:
         projects = MediaProject.objects.filter(state='1')
         return render(request, 'media-submit.html', {'projects':projects,})
-    
+
