@@ -27,9 +27,9 @@ def media_submit(request):
         amount = request.POST.get('amount', '')
         term = request.POST.get('term', '')
         invest_time = request.POST.get('date', '')
-        print invest_time
         if not (news_id and telnum and amount and term and invest_time):
             raise Http404
+        amount = float(amount)
         news = MediaProject.objects.get(pk=news_id)
         code = None
         msg = ''
