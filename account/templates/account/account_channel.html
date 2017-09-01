@@ -435,10 +435,13 @@
 					popupOutInfo();
 				})
 
+				var	select_id = 1;
+				$('.project_select').searchableSelect();
+				$('.invest-project').searchableSelect();
 				function addData() {
 					var ul = document.createElement('ul');
 					ul.className = 'submit-item-box';
-					ul.innerHTML = '<li class="submit-item item-01"><select class="project_select height-add01">' +
+					ul.innerHTML = '<li class="submit-item item-01"><select class="project_select select_id_' + select_id + ' height-add01">' +
 						$('#project_select').html() +
 						'</select></li>' +
 						'<li class="submit-item item-02"><input type="text" class="height-add02 time date_picker"></li>' +
@@ -448,6 +451,12 @@
 						'<li class="submit-item item-06"><input type="text" class="remark"></li>' +
 						'<li class="delete-item item-07">删除</li>';
 					submit_data_container.appendChild(ul);
+
+					var select_dom = '.select_id_'+select_id;
+					console.log(select_dom);
+					$(select_dom).searchableSelect();
+					console.log(select_id);
+					select_id++;
 				}
 				// 删除提示信息弹窗调用函数
 				function popupInInfo() {
@@ -785,9 +794,16 @@
 						}
 					});
 				});
-				$(function(){
-    				$('#project_select').searchableSelect();
-  				});
+
+				// $(".submit-content").on("focus", ".project_select", function() {
+				// 	$('.project_select').searchableSelect();
+				// })
+				// $(function(){
+    // 				// $('.project_select').searchableSelect();
+    // 				$('.project_select').each(function(index, el) {
+    // 						$(this).searchableSelect();
+    // 				});
+  		// 		});
 			</script>
 	</body>
 

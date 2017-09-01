@@ -611,7 +611,7 @@ table td {
 }
 .popup-box-05 span {
 	display: inline-block;
-	width: 100px;
+	/*width: 100px;*/
 	text-align: right;
 }
 .popup-box-05 select {
