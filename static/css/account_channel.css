@@ -25,6 +25,8 @@ h5 {
 .project-select-head {
 	float: left;
 	padding-left: 10px;
+	margin-right: 20px;
+  margin-top: -7px;
 	font-size: 14px;
 	line-height: 44px;
 }
