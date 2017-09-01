@@ -11,11 +11,12 @@
 		<link rel="stylesheet" type="text/css" href="{% static 'css/page.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/datePicker.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/account_channel.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/jquery.searchableSelect.css' %}" />
 		<script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
-		<script type="text/javascript" src="{% static 'js/jquery-1.7.min.js' %}"></script>
 		<script type="text/javascript" src="{% static 'js/ajaxfileupload.js'%}"></script>
 		<script type="text/javascript" src="{% static 'js/page.js' %}"></script>
 		<script type="text/javascript" src="{% static 'js/jquery.date_input.pack.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.searchableSelect.js' %}"></script>
 		<script>
 		</script>
 	</head>
@@ -62,7 +63,7 @@
 									</ul>
 									<ul class="submit-item-box">
 										<li class="submit-item item-01">
-											<select class="project_select height-add01" placeholder="选择项目">
+											<select id="project_select" class="project_select height-add01" placeholder="选择项目">
 												<option value="0">--</option>
 												{% for x in flist %}
 												<option value="{{x.id}}">{{x.title}}</option>
@@ -784,6 +785,9 @@
 						}
 					});
 				});
+				$(function(){
+    				$('#project_select').searchableSelect();
+  				});
 			</script>
 	</body>
 
