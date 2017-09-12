@@ -120,15 +120,14 @@ class WelfareAdmin(admin.ModelAdmin):
     list_filter = ['news_priority', 'state',]
     readonly_fields = ('pub_date','change_user','url')
     filter_horizontal = ('marks',)
-    list_display = ('title','state',)
+    list_display = ('title','state','id')
     def save_model(self, request, obj, form, change):
         obj.change_user = str(request.user)
 #         if obj.advert is None:
 #             obj.advert = Advertisement.objects.filter(location='7',is_hidden=False).first()
         super(WelfareAdmin,self).save_model (request, obj, form, change)
-        if not change:
-            obj.url = reverse('welfare', kwargs={'id': obj.pk})
-            obj.save(update_fields=['url',])
+        obj.url = reverse('welfare', kwargs={'id': obj.pk})
+        obj.save(update_fields=['url',])
 class HongbaoAdmin(WelfareAdmin):
     def save_model(self, request, obj, form, change):
         if not change:
