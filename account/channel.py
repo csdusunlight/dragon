@@ -127,7 +127,7 @@ def channel(request):
         ret.update(code=0,sun=succ_num, dup1=duplic_num1, dup2=duplic_num2, anum=nrows-1, dupstr=duplic_mobile_list_str)
         return JsonResponse(ret)
     else:
-        flist = list(Finance.objects.filter(state='1', level__in=['channel','all']).order_by('title'))      #jzy
+        flist = list(Finance.objects.filter(state='1', level__in=['channel','all']))     #jzy
         return render(request, 'account/account_channel.html', {'flist':flist})
 
 @login_required
