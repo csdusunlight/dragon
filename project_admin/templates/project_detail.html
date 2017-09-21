@@ -11,16 +11,16 @@
 		'</a> │ <a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/results]</table>';
 	var url = "/project/projects/" + "?page={page}";
 	var url2 = "/project/projects/";
-	
+
 	var project_flag;		// project_flag = -1 时，为导入单条数据；project_flag != -1 时，为修改单条数据
 	var parent;
-	
+
 	function pass(id) {			//弹出修改单条数据弹窗
 		$("input#project_change_id").val(id);
 		project_flag = id;
-		
+
 		parent = "parent" + id;
-		
+
 		$.ajax({
 			url: url2 + project_flag + "/",
 			dataType: "json",
@@ -34,12 +34,12 @@
 				$("#contract_company_change").val(ret.contract_company);
 				$("#settle_detail_change").val(ret.settle_detail);
 				$("#settle_money_change").val(ret.settle);
-				
+
 				$("#chengben_change").val(ret.cost);
 				$("#chengbenbeizhu_change").val(ret.cost_explain);
 				$("#maoli_change").val(ret.profit);
 				$("#remark_change").val(ret.remark);
-				
+
 				var radio_btn = "project-" + ret.state;
 				var dom = document.getElementById(radio_btn);
 				dom.checked = true;
@@ -54,30 +54,30 @@
 			}
 		});
 
-		
-		
+
+
 		$(".change-project").show();
 	}
-	
+
 	function refuse(id) {		//弹出删除项目数据弹窗
 		$("input#project_delete_id").val(id);
 		$(".delete-project").show();
 	}
-	
-	
+
+
 	$(document).ready(function() {
 		$("li.home15").addClass("show-project").toggleClass("on");
 		$("li.home4").toggleClass("show");
 		$(".Tin-table tr:even").css("background-color", "#fcfcfc");
-		
-		
+
+
 		$("#pagedata").ajaxPage({
 			url: url,
 			pageId: $("#page"),
 			run: true,
 			content: data,
 		});
-		
+
 //		获取甲方名称信息
 		$.ajax({
 			url: '/project/platform/',
@@ -98,7 +98,7 @@
 				alert(JSON.stringify(ret));
 			}
 		});
-		
+
 		$('#add_project_btn').click(function() {		//点击新增项目数据
 			var name_add = $("#name_add").val(),
 				platform_add = $("#platform_add").val(),
@@ -109,7 +109,7 @@
 				settle_detail_add = $("#settle_detail_add").val(),
 				settle_money_add = $("#settle_money_add").val(),
 				remark_add = $("#remark_add").val();
-				
+
 			$.ajax({
 				url: url2,
 				dataType: "json",
@@ -135,7 +135,7 @@
 			});
 			$(".add-project").hide();
 		});
-		
+
 
 		$('#change_project_btn').click(function() {		//点击修改项目数据
 			var name_change = $("#name_change").val(),
@@ -146,15 +146,15 @@
 				contract_company_change = $("#contract_company_change").val(),
 				settle_detail_change = $("#settle_detail_change").val(),
 				//				state_change
-				
+
 				settle_money_change = $("#settle_money_change").val(),
 				chengben_change = $("#chengben_change").val(),
 				chengbenbeizhu_change = $("#chengbenbeizhu_change").val(),
 				maoli_change = $("#maoli_change").val(),
 				remark_change = $("#remark_change").val();
 			var state_change = $("input[name='state']:checked").val();
-			
-			
+
+
 			console.log(url2 + project_flag);
 			$.ajax({
 				url: url2 + project_flag + "/",
@@ -197,16 +197,16 @@
 					alert(JSON.stringify(ret));
 				}
 			});
-			
+
 			$(".change-project").hide();
 		});
-		
+
 //		查看已结项项目详情
 		$('#pagedata').on('click', '.look-finish', function(){
 			var state = $(this).text();
 			var finish_id = this.dataset.id;
 			if (state == "已结束") {
-				
+
 				$.ajax({
 					url: url2 + finish_id + "/",
 					dataType: "json",
@@ -224,11 +224,11 @@
 						alert(JSON.stringify(ret));
 					}
 				});
-				
+
 			}
 		})
 //		查看已结项项目详情---end
-		
+
 		$('#delete_project_btn').click(function() {		//点击确认按钮删除单条项目数据
 			project_flag = $("input#project_delete_id").val();
 			console.log(url2 + project_flag);
@@ -248,10 +248,10 @@
 			});
 			$(".delete-project").hide();
 		});
-		
+
 		$("#search").click(function() {			//搜索项目数据
 			var newurl = url;
-			
+
 			dateft_0 = $("#dateft_0").val();
 			dateft_1 = $("#dateft_1").val();
 			project_id = $("#project_id").val();
@@ -261,7 +261,7 @@
 			settleway = $("#settleway").val();
 			contract_company = $("#contract_company").val();
 			state = $("#state").val();
-			
+
 			if(dateft_0) {
 				newurl += "&dateft_0=" + dateft_0;
 			}
@@ -290,7 +290,7 @@
 				newurl += "&state=" + state;
 			}
 			console.log(newurl);
-			
+
 			var newdata = data;
 //			alert(newurl);
 			$("#page").empty();
@@ -301,7 +301,7 @@
 				content: newdata,
 			});
 		});
-		
+
 		$("#export").click(function() {			//导出表格
 			dateft_0 = $("#dateft_0").val();
 			dateft_1 = $("#dateft_1").val();
@@ -312,41 +312,41 @@
 			settleway = $("#settleway").val();
 			contract_company = $("#contract_company").val();
 			state = $("#state").val();
-			
+
 			var html = '<form action="' + "{% url 'export_finance_excel' %}" + '" method="get" target="_self" id="postData_form">';
-			
+
 			if(dateft_0) {
 				html += '<input name="dateft_0" type="hidden" value="' + dateft_0 + '"/>';
 			}
 			if(dateft_1) {
 				html += '<input name="dateft_1" type="hidden" value="' + dateft_1 + '"/>';
 			}
-			
+
 			if(name) {
 				html += '<input name="name" type="hidden" value="' + name + '"/>';
 			}
-			
+
 			if(contact) {
 				html += '<input name="contact" type="hidden" value="' + contact + '"/>';
 			}
 			if(project_id) {
 				html += '<input name="project_id" type="hidden" value="' + project_id + '"/>';
 			}
-			
+
 			if(coopway) {
 				html += '<input name="coopway" type="hidden" value="' + coopway + '"/>';
 			}
 			if(settleway) {
 				html += '<input name="settleway" type="hidden" value="' + settleway + '"/>';
 			}
-			
+
 			if(contract_company) {
 				html += '<input name="contract_company" type="hidden" value="' + contract_company + '"/>';
 			}
 			if(state) {
 				html += '<input name="state" type="hidden" value="' + state + '"/>';
 			}
-			
+
 			html += '</form>';
 			var iframe = document.getElementById('myIFrame');
 			iframe.contentWindow.document.open();
@@ -354,23 +354,23 @@
 			iframe.contentWindow.document.close();
 			document.getElementById('myIFrame').contentWindow.document.getElementById('postData_form').submit();
 		});
-		
-		
+
+
 		$(".project-state:radio").click(function() {
-			
+
 			if ($(this).val() == "start") {
 				$(".show-hide").hide();
 			} else {
 				$(".show-hide").show();
 			}
 		});
-		
+
 		$("#single_import").click(function(){			//弹出单条导入弹窗
 			$(".add-project").show();
 		})
-		
+
 		$(".none-x, .none-x-s").click(function() {		// 关闭或取消 弹窗
-			$(".project-box").hide(); 
+			$(".project-box").hide();
 		})
 
 	});
@@ -514,7 +514,7 @@
 				<span>备注：</span>
 				<input id="remark_add" type="text" />
 			</p>
-			
+
 			<div class="Finnow-Sub">
 				<input id="add_project_btn" type="submit" value="确认" onclick="return false;"/>
 				<input type="button" value="取消" class="none-x-s" />
@@ -551,7 +551,7 @@
 					<option value="cpc">cpc</option>
 					<option value="cps">cps</option>
 					<option value="cpm">cpm</option>
-					<option value="else">其他</option>
+					<option value="other">其他</option>
 				</select>
 			</p>
 			<p>
@@ -595,7 +595,7 @@
 				<span>备注：</span>
 				<input id="remark_change" type="text" />
 			</p>
-			
+
 			<div class="Finnow-Sub">
 				<input id="change_project_btn" type="submit" value="确认" onclick="return false;"/>
 				<input type="button" value="取消" class="none-x-s" />
