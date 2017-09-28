@@ -8,4 +8,4 @@ class SubdomainMiddleware(object):
     def process_request(self, request):
         domain_parts = request.get_host().split('.')
         if len(domain_parts) == 3 and domain_parts[0] != 'www':
-            request.path_info = '/%s/%s' % (domain_parts[0], request.path)
+            request.path_info = '/%s%s' % (domain_parts[0], request.path)
