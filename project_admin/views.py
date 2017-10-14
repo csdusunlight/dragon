@@ -331,6 +331,9 @@ def import_audit_projectdata_excel(request):
             mobile = row[5]
             consume = Decimal(row[8])
             remark = row[12]
+            date = row[4]
+            date = xlrd.xldate.xldate_as_datetime(date, 0)
+
             
             if row[9] == u"是":
                 result = True
@@ -364,6 +367,7 @@ def import_audit_projectdata_excel(request):
             temp['consume'] = consume
             temp['remark'] = remark
             temp['mobile'] = mobile
+            temp['date'] = date
             rtable.append(temp)
     except Exception, e:
         logger.info(unicode(e))
@@ -383,6 +387,7 @@ def import_audit_projectdata_excel(request):
             consume = row['consume']
             project_id = row['project_id']
             state = row['state']
+            date = temp['date']
             event = ProjectInvestData.objects.get(id=id)
 #             if event.state != '1':
 #                 continue
@@ -394,8 +399,9 @@ def import_audit_projectdata_excel(request):
             event.settle_amount = consume
             event.project_id = project_id
             event.invest_mobile = mobile
+            event.invest_time = date
             event.save(update_fields=['state', 'return_amount', 'audit_time', 'source', 'remark', 
-                                      'project_id', 'settle_amount', 'invest_mobile'])
+                                      'project_id', 'settle_amount', 'invest_mobile','invest_time'])
             suc_num += 1
         ret['code'] = 0
     except Exception as e:
