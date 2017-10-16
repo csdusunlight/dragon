@@ -377,6 +377,7 @@ def import_audit_projectdata_excel(request):
     ####开始去重
         admin_user = request.user
     suc_num = 0
+    print rtable
     try:
         for row in rtable:
             id = row['id']
@@ -387,7 +388,7 @@ def import_audit_projectdata_excel(request):
             consume = row['consume']
             project_id = row['project_id']
             state = row['state']
-            date = temp['date']
+            date = row['date']
             event = ProjectInvestData.objects.get(id=id)
 #             if event.state != '1':
 #                 continue
@@ -466,12 +467,13 @@ def export_investdata_excel(request):
         invest_amount = con.invest_amount
         invest_term = con.invest_term
         settle_amount = con.settle_amount
+        return_amount = ''
+        result = ''
         if con.state=='0':
             result = u'是'
             return_amount = con.return_amount
-        else:
+        elif con.state=='2':
             result = u'否'
-            return_amount = ''
         source = con.get_source_display()
         remark = con.remark
         data.append([id, project_id, project_name, is_futou, invest_time, invest_mobile, invest_amount, invest_term, settle_amount,
