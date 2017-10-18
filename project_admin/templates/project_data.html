@@ -231,6 +231,31 @@
 			});
 			//	hint.innerHTML = '无';
 		});
+		$('#audit_import_except').click(function() {			//导入表格
+			var fileElementId = 'fileupload1';
+			if(!document.getElementById(fileElementId).value) {
+				alert("请先选择文件");
+				return;
+			}
+			$.ajaxFileUpload({
+				url: "{% url 'import_audit_projectdata_excel_except'%}",
+				secureuri: false,
+				fileElementId: fileElementId, //file标签的id
+				dataType: 'json', //返回数据的类型
+				data: {}, //一同上传的数据
+				success: function(data, status) {
+					if(data.code == 0) {
+						alert("导入成功！ 数量：" + data.num);
+					} else {
+						alert(data.msg + " 成功数量：" + data.num);
+					}
+				},
+				error: function(data, status, e) {
+					alert(e);
+				}
+			});
+			//	hint.innerHTML = '无';
+		});
 
 	});
 </script>
@@ -310,6 +335,7 @@
 				<input id="import" type="button" value="表格导入" />
 				<a class="download-templete" href="/static/download/projectdata_init_template.xls">获取初始导入模版</a>
 				<input id="audit_import" type="button" value="审核数据导入" />
+				<input id="audit_import_except" type="button" value="异常数据导入" />
 			</div>
 		</form>
 	</div>

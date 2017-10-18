@@ -413,6 +413,114 @@ def import_audit_projectdata_excel(request):
     ret['num'] = suc_num
     return JsonResponse(ret)
 
+@csrf_exempt
+@login_required
+@has_permission('008')
+def import_audit_projectdata_excel_except(request):
+    admin_user = request.user
+    if not ( admin_user.is_authenticated() and admin_user.is_staff):
+        raise Http404
+    ret = {'code':-1}
+    file = request.FILES.get('file')
+#     print file.name
+    with open('./out2.xls', 'wb+') as destination:
+        for chunk in file.chunks():
+            destination.write(chunk)
+    data = xlrd.open_workbook('./out2.xls')
+    table = data.sheets()[0]
+    nrows = table.nrows
+    ncols = table.ncols
+    if ncols!=13:
+        ret['msg'] = u"文件格式与模板不符，请下载最新模板填写！"
+        return JsonResponse(ret)
+    rtable = []
+    try:
+        for i in range(1,nrows):
+            row = table.row_values(i)
+            temp = {}
+            id = int(row[0])
+            project_id = int(row[1])
+            mobile = row[5]
+            consume = Decimal(row[8])
+            remark = row[12]
+            date = row[4]
+            date = xlrd.xldate.xldate_as_datetime(date, 0)
+
+            
+            if row[9] == u"是":
+                result = True
+                temp['state'] = '0'
+            elif row[9] == u"否":
+                result = False
+                temp['state'] = '1'
+            else:
+                raise Exception(u"审核结果必须为是或否。")
+            
+            if row[10]:
+                return_amount = Decimal(row[10])
+            else:
+                return_amount = 0
+            
+               
+            if row[11] == u"网站":
+                source = 'site'
+            elif row[11] == u"渠道":
+                source = 'channel'
+            else:
+                raise Exception(u"必须为网站或渠道。")
+            temp['id'] = id
+            temp['project_id'] = project_id
+            temp['source'] = source
+            temp['return_amount'] = return_amount
+            temp['consume'] = consume
+            temp['remark'] = remark
+            temp['mobile'] = mobile
+            temp['date'] = date
+            rtable.append(temp)
+    except Exception, e:
+        logger.info(unicode(e))
+#             traceback.print_exc()
+        ret['msg'] = unicode(e)
+        return JsonResponse(ret)
+    ####开始去重
+        admin_user = request.user
+    suc_num = 0
+    print rtable
+    try:
+        for row in rtable:
+            id = row['id']
+            return_amount = row['return_amount']
+            source = row['source']
+            remark = row['remark']
+            mobile = row['mobile']
+            consume = row['consume']
+            project_id = row['project_id']
+            state = row['state']
+            date = row['date']
+            event = ProjectInvestData.objects.get(id=id)
+#             if event.state != '1':
+#                 continue
+            event.state = state
+            event.return_amount = return_amount
+            event.audit_time = datetime.datetime.now()
+            event.source = source
+            event.remark = remark
+            event.settle_amount = consume
+            event.project_id = project_id
+            event.invest_mobile = mobile
+            event.invest_time = date
+            event.save(update_fields=['state', 'return_amount', 'audit_time', 'source', 'remark', 
+                                      'project_id', 'settle_amount', 'invest_mobile','invest_time'])
+            suc_num += 1
+        ret['code'] = 0
+    except Exception as e:
+        exstr = traceback.format_exc()
+        logger.info(unicode(exstr))
+        ret['code'] = 1
+        ret['msg'] = unicode(e)
+    ret['num'] = suc_num
+    return JsonResponse(ret)
+
 @login_required
 @has_permission('008')
 def export_investdata_excel(request):

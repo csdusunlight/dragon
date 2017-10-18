@@ -48,6 +48,7 @@ urlpatterns += [
 
     url(r'^import_projectdata_excel/$', views.import_projectdata_excel, name='import_projectdata_excel'),
     url(r'^import_audit_projectdata_excel/$', views.import_audit_projectdata_excel, name='import_audit_projectdata_excel'),
+    url(r'^import_audit_projectdata_excel_except/$', views.import_audit_projectdata_excel_except, name='import_audit_projectdata_excel_except'),
     url(r'^export_investdata_excel/$', views.export_investdata_excel, name='export_investdata_excel'),
     url(r'^export_account_bill_excel/$', views.export_account_bill_excel, name='export_account_bill_excel'),
 ]
