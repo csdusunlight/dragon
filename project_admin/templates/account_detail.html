@@ -254,7 +254,7 @@
 				newurl += "&subtype=" + in_out_type;
 			}
 			if(trade_obj) {
-				newurl += "&target=" + trade_obj;
+				newurl += "&target_contains=" + trade_obj;
 			}
 			
 			var newdata = data;
@@ -396,11 +396,11 @@
 				<tr>
 					<td>
 						<i>账单时间-start：</i>
-						<input id="bill_time_start" type="datetime-local" />
+						<input id="bill_time_start" type="date" />
 					</td>
 					<td>
 						<i>账单时间-end：</i>
-						<input id="bill_time_end" type="datetime-local" />
+						<input id="bill_time_end" type="date" />
 					</td>
 					<td>
 						<i style="letter-spacing:4.8px;">账户类型：</i>

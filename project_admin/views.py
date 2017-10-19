@@ -632,7 +632,7 @@ def export_account_bill_excel(request):
         item_list = item_list.filter(subtype=subtype)
     target = request.GET.get("target", None)
     if target:
-        item_list = item_list.filter(target=target)
+        item_list = item_list.filter(target__contains=target)
     timeft_0 = request.GET.get("timeft_0", None)
     timeft_1 = request.GET.get("timeft_1", None)
     if timeft_0 and timeft_1:
