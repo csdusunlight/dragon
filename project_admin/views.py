@@ -24,6 +24,7 @@ import StringIO
 import traceback
 from project_admin.tools import has_permission
 from django.contrib.auth.decorators import login_required
+from datetime import timedelta
 logger = logging.getLogger('wafuli')
 class BaseViewMixin(object):
     authentication_classes = (CsrfExemptSessionAuthentication,)
@@ -636,8 +637,9 @@ def export_account_bill_excel(request):
     timeft_0 = request.GET.get("timeft_0", None)
     timeft_1 = request.GET.get("timeft_1", None)
     if timeft_0 and timeft_1:
-        s = datetime.date.strptime(timeft_0,'%Y-%m-%dT%H:%M')
-        e = datetime.date.strptime(timeft_1,'%Y-%m-%dT%H:%M')
+        s = datetime.datetime.strptime(timeft_0,'%Y-%m-%d')
+        e = datetime.datetime.strptime(timeft_1,'%Y-%m-%d')
+        e += timedelta(days=1)
         item_list = item_list.filter(time__range=(s,e))
     data = []
     for con in item_list:
