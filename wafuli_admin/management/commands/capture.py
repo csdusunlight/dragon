@@ -66,7 +66,7 @@ def getimgcode(imagePath, typeid):
     result = ''
     paramDict = {}
     paramDict['username'] = 'boy28930'
-    paramDict['password'] = 'pl6561066'
+    paramDict['password'] = 'qwe123'
     paramDict['typeid'] = typeid
     paramDict['timeout'] = 60
     paramDict['softid'] = 1
@@ -86,6 +86,7 @@ def getimgcode(imagePath, typeid):
     img.save("upload.gif", format="gif")
     filebytes = open("upload.gif", "rb").read()
     result = client.http_upload_image("http://api.ruokuai.com/create.xml", paramKeys, paramDict, filebytes)
+    print result
     match = re.search(r'<Result>(\S*)</Result>',result)
     result = match.group(1)
     return result
