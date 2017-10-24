@@ -329,6 +329,7 @@ def import_audit_projectdata_excel(request):
             temp = {}
             id = int(row[0])
             project_id = int(row[1])
+            term = int(row[7])
             mobile = row[5]
             consume = Decimal(row[8])
             remark = row[12]
@@ -369,6 +370,7 @@ def import_audit_projectdata_excel(request):
             temp['remark'] = remark
             temp['mobile'] = mobile
             temp['date'] = date
+            temp['term'] = term
             rtable.append(temp)
     except Exception, e:
         logger.info(unicode(e))
@@ -390,6 +392,7 @@ def import_audit_projectdata_excel(request):
             project_id = row['project_id']
             state = row['state']
             date = row['date']
+            term = row['term']
             event = ProjectInvestData.objects.get(id=id)
 #             if event.state != '1':
 #                 continue
@@ -402,7 +405,8 @@ def import_audit_projectdata_excel(request):
             event.project_id = project_id
             event.invest_mobile = mobile
             event.invest_time = date
-            event.save(update_fields=['state', 'return_amount', 'audit_time', 'source', 'remark', 
+            event.invest_term = term
+            event.save(update_fields=['state', 'return_amount', 'audit_time', 'source', 'remark', 'invest_term',
                                       'project_id', 'settle_amount', 'invest_mobile','invest_time'])
             suc_num += 1
         ret['code'] = 0
