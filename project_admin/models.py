@@ -186,7 +186,8 @@ class AccountBill(models.Model):
                 self.account.balance = F('balance') - self.amount
             self.account.save(update_fields=['balance'])
         return models.Model.save(self, force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
-    
+    class Meta:
+        ordering = ['-time']
 class DayAccountStatic(models.Model):
     date = models.DateField(u"日期", primary_key=True)
     income = models.DecimalField(u"收入", max_digits=10, decimal_places=2, null=True)
