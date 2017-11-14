@@ -74,7 +74,7 @@
 			project_id = $("#project_id").val();
 			state = $("#state").val();
 			
-			var html = '<form action="' + "{% url 'export_finance_excel' %}" + '" method="get" target="_self" id="postData_form">';
+			var html = '<form action="' + "{% url 'export_project_statis' %}" + '" method="get" target="_self" id="postData_form">';
 			
 			if(dateft_0) {
 				html += '<input name="dateft_0" type="hidden" value="' + dateft_0 + '"/>';
@@ -95,7 +95,7 @@
 				html += '<input name="id" type="hidden" value="' + project_id + '"/>';
 			}
 			if(state) {
-				html += '<input name="state" type="hidden" value="' + state + '"/>';
+				html += '<input name="project_state" type="hidden" value="' + state + '"/>';
 			}
 			
 			html += '</form>';

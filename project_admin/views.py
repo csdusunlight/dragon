@@ -682,3 +682,56 @@ def export_account_bill_excel(request):
     response['Content-Disposition'] = 'attachment; filename=导出表格.xls'
     response.write(sio.getvalue())
     return response
+
+@login_required
+@has_permission('009')
+def export_project_statis(request):
+    item_list = []
+    item_list = ProjectStatis.objects.all()
+    project_state = request.GET.get("project_state", None)
+    if project_state:
+        item_list = item_list.filter(project__state=project_state)
+    data = []
+    for con in item_list:
+        id = con.project_id
+        time = con.project.time.strftime("%Y-%m-%d")
+        finish_time = con.project.finish_time.strftime("%Y-%m-%d")
+        title = con.project.title
+        topay_amount = con.project.topay_amount
+        consume = con.consume()
+        ret = con.ret()
+        site_consume = con.site_consume
+        site_ret = con.site_return
+        channel_consume = con.channel_consume
+        channel_ret = con.channel_return
+        state = con.project.get_status_display()
+        data.append([id, time, finish_time, title, topay_amount, consume, ret, 
+                     channel_consume, channel_ret, site_consume, site_ret, state])
+    w = Workbook()     #创建一个工作簿
+    ws = w.add_sheet(u'账目明细')     #创建一个工作表
+    title_row = [u'项目编号',u'立项日期',u'结项日期',u'项目名称',u'预计待收/待消耗', u'预计总消耗',
+                 u'总返现金额',u'预估渠道消耗',u'渠道返现金额',u'预估网站消耗',u'网站返现金额',u'项目状态']
+    for i in range(len(title_row)):
+        ws.write(0,i,title_row[i])
+    row = len(data)
+    style1 = easyxf(num_format_str='YY/MM/DD')
+    for i in range(row):
+        lis = data[i]
+        col = len(lis)
+        for j in range(col):
+            if j==1:
+                ws.write(i+1,j,lis[j],style1)
+            elif j==2:
+                if lis[j]:
+                   ws.write(i+1,j,lis[j],style1) 
+                else:
+                   ws.write(i+1,j,lis[j])  
+            else:
+                ws.write(i+1,j,lis[j])
+    sio = StringIO.StringIO()
+    w.save(sio)
+    sio.seek(0)
+    response = HttpResponse(sio.getvalue(), content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=导出表格.xls'
+    response.write(sio.getvalue())
+    return response
