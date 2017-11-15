@@ -684,19 +684,19 @@ def export_account_bill_excel(request):
     return response
 
 @login_required
-@has_permission('009')
+@has_permission('008')
 def export_project_statis(request):
     item_list = []
     item_list = ProjectStatis.objects.all()
     project_state = request.GET.get("project_state", None)
-    if project_state:
+    if project_state=='start' or project_state=='finish':
         item_list = item_list.filter(project__state=project_state)
     data = []
     for con in item_list:
         id = con.project_id
         time = con.project.time.strftime("%Y-%m-%d")
-        finish_time = con.project.finish_time.strftime("%Y-%m-%d")
-        title = con.project.title
+        finish_time = con.project.finish_time.strftime("%Y-%m-%d") if con.project.finish_time else ''
+        title = con.project.name
         topay_amount = con.project.topay_amount
         consume = con.consume()
         ret = con.ret()
@@ -704,7 +704,7 @@ def export_project_statis(request):
         site_ret = con.site_return
         channel_consume = con.channel_consume
         channel_ret = con.channel_return
-        state = con.project.get_status_display()
+        state = con.project.get_state_display()
         data.append([id, time, finish_time, title, topay_amount, consume, ret, 
                      channel_consume, channel_ret, site_consume, site_ret, state])
     w = Workbook()     #创建一个工作簿
