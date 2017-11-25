@@ -476,8 +476,9 @@ class MAdvert_PC(Base):
         verbose_name_plural = u"PC端广告位（新）"
     def clean(self):
         if self.pic:
-            if self.location in ['00', '10', '03'] and self.pic.size > 100000:
-                raise ValidationError({'pic': u'图片大小不能超过100k'})
+            if self.location in ['00', '10', '03']:
+                if self.pic.size > 100000:
+                    raise ValidationError({'pic': u'图片大小不能超过100k'})
             elif self.pic.size > 50000:
                 raise ValidationError({'pic': u'图片大小不能超过50k'})
 class UserWelfare(models.Model):

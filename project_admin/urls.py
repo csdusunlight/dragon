@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^investdata/$', views.ProjectInvestDataList.as_view()),
     url(r'^investdata/(?P<pk>[0-9]+)/$', views.ProjectInvestDataDetail.as_view()),
     url(r'^projectstatis/$', views.ProjectStatisList.as_view()),
+    url(r'^export_project_statis/$', views.export_project_statis, name='export_project_statis'),
     url(r'^daystatis/$', views.DayStatisList.as_view()),
     url(r'^account/$', views.AccountList.as_view()),
     url(r'^account/(?P<pk>[0-9]+)/$', views.AccountDetail.as_view()),
