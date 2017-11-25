@@ -335,8 +335,13 @@ def import_audit_projectdata_excel(request):
             remark = row[12]
             date = row[4]
             date = xlrd.xldate.xldate_as_datetime(date, 0)
-
             
+            try:
+                mobile = str(int(mobile)).strip()
+            except Exception,e:
+                mobile = str(mobile).strip()
+            if len(mobile)!=11:
+                raise Exception(u"手机号必须是11位，请修改后重新提交。")
             if row[9] == u"是":
                 result = True
                 temp['state'] = '0'
