@@ -4,7 +4,7 @@
 /*通用样式*/
 *{ margin:0px; padding:0px;}
 html { color:#333333; background:#FFF; word-break: break-all; word-wrap:break-word; }
-body { width:100%; overflow-x:hidden; }
+body { width:100%; /*overflow-x:hidden;*/ }
 html,body{height: 100%; font-size:12px; font-family:"微软雅黑";}
 select:focus{ outline:none;}
 a { /*color: #0088CC;*/ text-decoration: none; }
@@ -75,7 +75,7 @@ button[disabled], html input[disabled] {
 .div-box { float:left; width:100%; height:auto;}
 .fl-box { float:left; width:auto; height:auto;}
 .fr-box { float:right; width:auto; height:auto;}
-.Content { float:left; width:100%; height:auto;background-color: #fff;}
+.Content { /*float:left;*/ width:1250px;margin: 0 auto; height:auto;background-color: #fff;}
 
 
 /*-------------框架样式---------------*/

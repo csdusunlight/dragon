@@ -111,6 +111,7 @@ a.wflbox__more:hover {
     margin: 0 auto;
     width: 1250px;
     color: #fff;
+    background-color: #333;
 }
 .headertop__welcome {
     line-height: 30px;
@@ -214,6 +215,7 @@ a.wflbox__more:hover {
 
 .wfl-wrap.m-footer {
     text-align: left;
+    background-color: #222;
 }
 
 .footer__friend-item {
