@@ -5,6 +5,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>渠道数据提交</title>
+		<link href="{% static 'images/favicon.ico'%}" rel="shortcut icon"/>
 		<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/User.css' %}" />
@@ -207,12 +208,55 @@
 								<div class="page" id="page">
 								</div>
 							</div>
-							<div class="popup-box popup-box-05">
+							<div class="popup popup-box-05">
+                                <div class="popup__content" style="width: 600px;">
+                                    <div class="popup__top">
+                                        <h2 class="popup__title">数据修改</h2><button type="button" class="popup__close popup__close-btn" onclick="canclePopup(this)">×</button>
+                                    </div>
+                                    <div class="popup__detail">
+                                        <div class="popup__item">
+                                            <span class="popup__itemname">项目名称</span>
+                                            <select class="invest-project height-add01" placeholder="选择项目">
+                                                <option value="0">--</option>
+                                                {% for x in flist %}
+                                                <option value="{{x.id}}">{{x.title}}</option>
+                                                {%endfor%}
+                                            </select>
+                                        </div>
+                                        <div class="popup__item">
+                                            <span class="popup__itemname">投资日期：</span>
+                                            <input type="text" class="height-add02 invest-time date_picker" placeholder="选择投资日期" />
+                                        </div>
+                                        <div class="popup__item">
+                                            <span class="popup__itemname">提交手机号：</span>
+                                            <input id="project_name_change" class="submit-tel" maxlength=11 type="text" onkeyup="value=value.replace(/[^\d.]/g,'')" placeholder="填写正确的手机号" />
+                                        </div>
+                                        <div class="popup__item">
+                                            <span class="popup__itemname">投资标期：</span>
+                                            <input id="contact_person_change" class="invest-days" type="text" onkeyup="value=value.replace(/[^\d.]/g,'')" placeholder="仅限纯数字" />
+                                        </div>
+                                        <div class="popup__item">
+                                            <span class="popup__itemname">投资金额：</span>
+                                            <input id="cooperate_type_change" class="invest-money" type="text" onkeyup="value=value.replace(/[^\d.]/g,'')" placeholder="仅限纯数字" />
+                                        </div>
+                                        <div class="popup__item">
+                                            <span class="popup__itemname">备注：</span>
+                                            <input id="balance_type_change" class="invest-remarks" type="text" placeholder="选填" />
+                                        </div>
+                                    </div>
+                                    <div class="popup__btnbox">
+                                        <a id="cancel" class="cancel confirm popup__btn m-right" onclick="canclePopup(this)">取消</a>
+                                        <a id="confirm_revise" class="confirm popup__btn popup__close-btn">确认</a>
+                                        <!--<a id="cancel" class="cancel confirm" onclick="popupOutInfo()">取&nbsp;&nbsp;&nbsp;&nbsp;消</a>
+                                        <a id="confirm_revise" class="confirm">确认修改</a>-->
+                                    </div>
+                                </div>
+                            </div>
+							<!--<div class="popup-box popup-box-05">
 								<div class="popup-content">
 									<h3>数据修改</h3>
 									<p>
 										<span>项目名称：</span>
-										<!--<input id="create_time_change" type="text" />-->
 										<select class="invest-project height-add01" placeholder="选择项目">
 											<option value="0">--</option>
 											{% for x in flist %}
@@ -244,7 +288,7 @@
 									<a id="cancel" class="cancel confirm" onclick="popupOutInfo()">取&nbsp;&nbsp;&nbsp;&nbsp;消</a>
 									<a id="confirm_revise" class="confirm">确认修改</a>
 								</div>
-							</div>
+							</div>-->
 
 						</div>
 
@@ -437,7 +481,7 @@
 
 				var	select_id = 1;
 				$('.project_select').searchableSelect();
-				$('.invest-project').searchableSelect();
+//				$('.invest-project').searchableSelect();
 				$('.project-select-common').searchableSelect();
 				function addData() {
 					var ul = document.createElement('ul');
@@ -795,7 +839,9 @@
 						}
 					});
 				});
-
+                var canclePopup = function(obj) {       //取消自定义弹窗
+                    $(obj).parent().parent().parent().removeClass('in');
+                }
 			</script>
 	</body>
 

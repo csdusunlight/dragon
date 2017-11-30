@@ -34,79 +34,96 @@ var data2 = '<table width="100%"><thead><tr><th width="20%">项目</th><th width
 	'[data]<tr><td>{title}</td><td>{username}</td><td>{time}</td><td>{state}</td><td class="refuse-reason">{reason}</td></tr>[/data]'
 	+ '</tbody></table>';
 var data_media = '<table width="100%"><thead><tr><th>平台</th><th>手机号</th>'+
-// <<<<<<< HEAD
-//     '<th>投资时间</th><th>金额</th><th>期限</th><th>状态</th><th>任务截图</th><th>备注</th></tr></thead><tbody>'+
-//     '[results]<tr><td>{title}</td><td>{invest_account}</td><td>{invest_time}</td><td>{invest_amount}</td><td>{invest_term}</td><td>{audit_state}</td><td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
-//     '<span class="img-up"><img src="{% static 'images/task-suoluetu.jpg' %}" alt="截图上传图片" /></span></a></td><td>{remark}</td></tr>[/results]'
-//     + '</tbody></table>';
-// var data_media2 = '<table width="100%"><thead><tr><th>平台</th><th>手机号</th>'+
-//     '<th>投资时间</th><th>金额</th><th>期限</th><th>状态</th><th>任务截图</th><th>备注</th><th>操作</th></tr></thead><tbody>'+
-//     '[results]<tr><td>{title}</td><td>{invest_account}</td><td>{invest_time}</td><td>{invest_amount}</td><td>{invest_term}</td><td>{audit_state}</td><td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
-//     '<span class="img-up"><img src="{% static 'images/task-suoluetu.jpg' %}" alt="截图上传图片" /></span></a></td><td>{remark}</td><td><a class="revise-data" onclick=reviseData({id},this)>修改</a></td></tr>[/results]'
-//     + '</tbody></table>';
-// var data_media3 = '<table width="100%"><thead><tr><th>平台</th><th>手机号</th>'+
-//     '<th>投资时间</th><th>金额</th><th>期限</th><th>状态</th><th>任务截图</th><th>拒绝原因</th></tr></thead><tbody>'+
-//     '[results]<tr><td>{title}</td><td>{invest_account}</td><td>{invest_time}</td><td>{invest_amount}</td><td>{invest_term}</td><td>{audit_state}</td><td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
-//     '<span class="img-up"><img src="{% static 'images/task-suoluetu.jpg' %}" alt="截图上传图片" /></span></a></td><td>{remark}</td></tr>[/results]'
-// =======
-    '<th>提交时间</th><th>金额</th><th>期限</th><th>状态</th><th>任务截图</th><th>备注</th></tr></thead><tbody>'+
-    '[data]<tr><td>{title}</td><td>{username}</td><td>{time}</td><td>{amount}</td><td>{term}</td><td>{state}</td><td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
-    '<span class="img-up"><img src="{% static 'images/task-suoluetu.jpg' %}" alt="截图上传图片" /></span></a></td><td>{reason}</td></tr>[/data]'
+    '<th>投资时间</th><th>金额</th><th>期限</th><th>状态</th><th>任务截图</th><th>备注</th></tr></thead><tbody>'+
+    '[results]<tr><td>{project}</td><td>{invest_account}</td><td class="time-limit">{invest_time}</td><td>{invest_amount}</td><td>{invest_term}</td><td class="state{audit_state}">{state_des}</td><td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
+    '<span class="img-up"><img src="{% static 'images/task-suoluetu.jpg' %}" alt="截图上传图片" /></span></a></td><td>{remark}</td></tr>[/results]'
+    + '</tbody></table>';
+var data_media0 = '<table width="100%"><thead><tr><th>平台</th><th>手机号</th>'+
+    '<th>投资时间</th><th>金额</th><th>期限</th><th>返现福币</th><th>任务截图</th><th>备注</th></tr></thead><tbody>'+
+    '[results]<tr><td>{project}</td><td>{invest_account}</td><td class="time-limit">{invest_time}</td><td>{invest_amount}</td><td>{invest_term}</td><td>{ret_money}</td><td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
+    '<span class="img-up"><img src="{% static 'images/task-suoluetu.jpg' %}" alt="截图上传图片" /></span></a></td><td>{remark}</td></tr>[/results]'
+    + '</tbody></table>';
+var data_media1 = '<table width="100%"><thead><tr><th>平台</th><th>手机号</th>'+
+    '<th>投资时间</th><th>金额</th><th>期限</th><th>任务截图</th><th>备注</th><th>修改</th></tr></thead><tbody>'+
+    '[results]<tr><td>{project}</td><td>{invest_account}</td><td class="time-limit">{invest_time}</td><td>{invest_amount}</td><td>{invest_term}</td><td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
+    '<span class="img-up"><img src="{% static 'images/task-suoluetu.jpg' %}" alt="截图上传图片" /></span></a></td><td>{remark}</td><td class="change-num m-midia" onclick="editData_03(this,{id})">修改</td></tr>[/results]'
     + '</tbody></table>';
 var data_media2 = '<table width="100%"><thead><tr><th>平台</th><th>手机号</th>'+
-    '<th>提交时间</th><th>金额</th><th>期限</th><th>状态</th><th>任务截图</th><th>备注</th><th>操作</th></tr></thead><tbody>'+
-    '[data]<tr><td>{title}</td><td>{username}</td><td>{time}</td><td>{amount}</td><td>{term}</td><td>{state}</td><td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
-    '<span class="img-up"><img src="{% static 'images/task-suoluetu.jpg' %}" alt="截图上传图片" /></span></a></td><td>{reason}</td><td><a class="revise-data" onclick=reviseData({id},this)>修改</a></td></tr>[/data]'
-    + '</tbody></table>';
-var data_media3 = '<table width="100%"><thead><tr><th>平台</th><th>手机号</th>'+
-    '<th>提交时间</th><th>金额</th><th>期限</th><th>状态</th><th>任务截图</th><th>拒绝原因</th></tr></thead><tbody>'+
-    '[data]<tr><td>{title}</td><td>{username}</td><td>{time}</td><td>{amount}</td><td>{term}</td><td>{state}</td><td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
-    '<span class="img-up"><img src="{% static 'images/task-suoluetu.jpg' %}" alt="截图上传图片" /></span></a></td><td>{reason}</td></tr>[/data]'
-// >>>>>>> 197c45c7034963afbc05d566230bb39f24ed7b48
-    + '</tbody></table>';
+'<th>投资时间</th><th>金额</th><th>期限</th><th>任务截图</th><th>备注</th><th>拒绝原因</th></tr></thead><tbody>'+
+'[results]<tr><td>{project}</td><td>{invest_account}</td><td class="time-limit">{invest_time}</td><td>{invest_amount}</td><td>{invest_term}</td><td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
+'<span class="img-up"><img src="{% static 'images/task-suoluetu.jpg' %}" alt="截图上传图片" /></span></a></td><td>{remark}</td><td>{refuse_reason}</td></tr>[/results]'
++ '</tbody></table>';
 var turl = "{% url 'get_user_wel_page' %}" + "?tpage={page}&size={pageSize}&filter=";
 var furl = "{% url 'get_user_wel_page' %}" + "?fpage={page}&size={pageSize}&filter=";
-var murl = "{% url 'get_user_wel_page' %}" + "?mpage={page}&size={pageSize}&filter=";
+var murl = "/usereventlist/" + "?mobile={{user.mobile}}&event_type=9&page={page}&size={pageSize}";
 function emptydisplay(obj){
 	pic_url = "{%static 'images/picin.png' %}";
 	obj.html('<div class="Defa-in"><img src="' + pic_url + '">'+
 			'<h2>咦~~ 您还没有相关记录~~</h2></div>');
 }
-
+function pagecallback() {
+    $('.time-limit').each(function(){
+        var submit_time = $(this).text().split('T');
+        $(this).text(submit_time[0]);
+    })
+}
 var project_id;
-var revise_parent;
-function reviseData(id, obj) {
+var parent_dom;
+//function reviseData(id, obj) {
+//  project_id = id;
+//  revise_parent = $(obj).parent().parent();
+//  var parent_dom = $(revise_parent);
+//  var children0 = parent_dom.find("td").eq(0).text(),
+//      children1 = parent_dom.find("td").eq(1).text(),
+//      children2 = parent_dom.find("td").eq(2).text(),
+//      children3 = parent_dom.find("td").eq(3).text(),
+//      children4 = parent_dom.find("td").eq(4).text(),
+//      children7 = parent_dom.find("td").eq(7).text();
+//  //                  console.log(children0+", "+children1+", "+children2+", "+children3+", "+children4+", "+children7+", ");
+//  var option_val;
+//  var options = $(".invest-project option");
+//  //                  var options = $(select).find("option");
+//  for(var i = 0; i < options.length; i++) {
+//      console.log($(options)[i].text);
+//      if($(options)[i].text == children0) {
+//          option_val = options[i].value;
+//      }
+//
+//  }
+//  console.log(option_val);
+//  $(".invest-project").val(option_val);
+////  $(".invest-time").val(children2);
+//  $(".submit-tel").val(children1);
+//  $(".invest-days").val(children3);
+//  $(".invest-money").val(children4);
+//  $(".invest-remarks").val(children7);
+//
+//  //                  console.log($(options)[0].value);
+//  popupOutRevise();
+//};
+function editData_03(obj, id) {
     project_id = id;
-    revise_parent = $(obj).parent().parent();
-    var parent_dom = $(revise_parent);
-    var children0 = parent_dom.find("td").eq(0).text(),
-        children1 = parent_dom.find("td").eq(1).text(),
-        children2 = parent_dom.find("td").eq(2).text(),
-        children3 = parent_dom.find("td").eq(3).text(),
-        children4 = parent_dom.find("td").eq(4).text(),
-        children7 = parent_dom.find("td").eq(7).text();
-    //                  console.log(children0+", "+children1+", "+children2+", "+children3+", "+children4+", "+children7+", ");
-    var option_val;
-    var options = $(".invest-project option");
-    //                  var options = $(select).find("option");
-    for(var i = 0; i < options.length; i++) {
-        console.log($(options)[i].text);
-        if($(options)[i].text == children0) {
-            option_val = options[i].value;
+    parent_dom = $(obj).parent().parent().parent();
+    $.ajax({
+        url: "/userevent/" + project_id + "/",
+        dataType: "json",
+        type: 'get',
+        success: function(ret) {
+            $(".project_03").val(ret.project);
+            $(".date_03").val(ret.invest_time.split('T')[0]);
+            $(".telnum_03").val(ret.invest_account);
+            $(".term_03").val(ret.invest_term);
+            $(".money_03").val(ret.invest_amount);
+            $(".remark_03").val(ret.remark);
+            $('.popup.m-edit-proj_03').addClass('in');
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
+    });
+}
 
-    }
-    console.log(option_val);
-    $(".invest-project").val(option_val);
-//  $(".invest-time").val(children2);
-    $(".submit-tel").val(children1);
-    $(".invest-days").val(children3);
-    $(".invest-money").val(children4);
-    $(".invest-remarks").val(children7);
-
-    //                  console.log($(options)[0].value);
-    popupOutRevise();
-};
 function popupOutRevise() { // 再次提交调用函数
     $(".popup-box-05").addClass("in");
 }
@@ -122,6 +139,7 @@ $(function(){
 	    pageSize:6,
 	    run:true,
 	    content:data,
+	    complete:pagecallback,
 	});
 	$("#pagedata2").ajaxPage({
 	    url:furl+0,
@@ -129,17 +147,15 @@ $(function(){
 	    pageSize:6,
 	    run:true,
 	    content:data3,
+	    complete:pagecallback,
 	});
 	$("#pagedata3").ajaxPage({
-// <<<<<<< HEAD
-//         url:'/usereventlist/?event_type=8',
-// =======
         url:murl+0,
-// >>>>>>> 197c45c7034963afbc05d566230bb39f24ed7b48
         pageId:$("#page3"),
         pageSize:6,
         run:true,
         content:data_media,
+        complete:pagecallback,
     });
 	$("#Swi-Top li").click(function(){
 		if($(this).attr("class")!="on"){
@@ -156,6 +172,7 @@ $(function(){
 			    pageSize:6,
 			    run:true,
 			    content:pdata,
+			    complete:pagecallback,
 			});
 		}
 	});
@@ -174,6 +191,7 @@ $(function(){
 			    pageSize:6,
 			    run:true,
 			    content:pdata,
+			    complete:pagecallback,
 			});
 		}
 	});
@@ -181,29 +199,29 @@ $(function(){
         if($(this).attr("class")!="on"){
             $(this).toggleClass("on").siblings().removeClass("on")
             var index = $(this).index();
-            // if (index == 0) {
-            //     index = '';
-            // } else {
-            //     index--;
-            // }
             var pdata = data_media;
-            if (index==2){
+            var base_url = murl;
+            if (index==0){
                 pdata = data_media;
-            }
-            if (index==3){
-                pdata = data_media3;
+                base_url = murl;
+            } else if (index==1){
+                pdata = data_media0;
+                base_url = murl + "&audit_state=0";
+            } else if (index==2){
+                pdata = data_media1;
+                base_url = murl + "&audit_state=1";
+            } else if (index==3){
+                pdata = data_media2;
+                base_url = murl + "&audit_state=2";
             }
             $("#page3").empty();
             $("#pagedata3").ajaxPage({
-// <<<<<<< HEAD
-//                 url:'/usereventlist/?event_type=8&audit_state=' +index,
-// =======
-                url:murl+index,
-// >>>>>>> 197c45c7034963afbc05d566230bb39f24ed7b48
+                url: base_url,
                 pageId:$("#page3"),
                 pageSize:6,
                 run:true,
                 content:pdata,
+                complete:pagecallback,
             });
         }
     });
@@ -214,22 +232,17 @@ $(function(){
   };
 
     //媒体单修改部分
-
-
-
-
-
     $(".popup-box-05").on("focus", ".date_picker", function() {
         $('.date_picker').date_input();
     })
 
-    $("#confirm_revise").click(function() {
-        var invest_project = $(".invest-project").val(),
-//          invest_time = $(".invest-time").val(),
-            invest_tel = $(".submit-tel").val(),
-            invest_days = $(".invest-days").val(),
-            invest_money = $(".invest-money").val(),
-            invest_remarks = $(".invest-remarks").val();
+    $("#confirm_edit_03").click(function() {
+        var invest_project = $(".project_03").val(),
+            invest_days = $(".date_03").val(),
+            invest_tel = $(".telnum_03").val(),
+            invest_tel = $(".term_03").val(),
+            invest_money = $(".money_03").val(),
+            invest_remarks = $(".remark_03").val();
         console.log(invest_project);
         //                  var bank = $("#bank option:selected").val();
         console.log(project_id + "," + invest_project + "," + invest_tel + "," + invest_days + "," + invest_money + "," + invest_remarks + ",");
@@ -280,7 +293,11 @@ $(function(){
             }
         });
     });//媒体单修改部分---end
+    
 });
+var canclePopup = function(obj) {       //取消自定义弹窗
+    $(obj).parent().parent().parent().removeClass('in');
+}
 </script>
 </head>
 
@@ -308,7 +325,7 @@ $(function(){
                     <span>理财福利：<font>{{statis.fcount_u}}</font> 个</span>
                 </div>
             </div>-->
-            <div class="Welfare">
+            <div class="Welfare" style="margin-top: 0;">
                 <div class="Welfare-T">
                     <strong>体验福利</strong>
                     <ul class="Welfare-li" id="Swi-Top">
@@ -402,6 +419,45 @@ $(function(){
                     <a id="cancel" class="cancel confirm" onclick="popupOutInfo()">取&nbsp;&nbsp;&nbsp;&nbsp;消</a>
                     <a id="confirm_revise" class="confirm">确认修改</a>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="popup m-edit-proj_03">
+        <div class="popup__content" style="width: 600px;">
+            <div class="popup__top">
+                <h2 class="popup__title">编辑媒体单数据</h2><button type="button" class="popup__close popup__close-btn" onclick="canclePopup(this)">×</button>
+            </div>
+            <div class="popup__detail">
+                <div class="popup__item">
+                    <span class="popup__itemname">项目名称</span>
+                    <!--<select class="project_03" placeholder="选择项目">
+                    </select>-->
+                    <input type="text" class="project_03" disabled="disabled" />
+                </div>
+                <div class="popup__item">
+                    <span class="popup__itemname">投资日期：</span>
+                    <input type="text" class="date_03 date_picker" placeholder="选择投资日期" />
+                </div>
+                <div class="popup__item">
+                    <span class="popup__itemname">提交手机号：</span>
+                    <input type="text" class="telnum_03" placeholder="填写提交手机号" />
+                </div>
+                <div class="popup__item">
+                    <span class="popup__itemname">投资标期：</span>
+                    <input type="text" class="term_03" placeholder="填写投资标期" />
+                </div>
+                <div class="popup__item">
+                    <span class="popup__itemname">投资金额：</span>
+                    <input type="text" class="money_03" placeholder="填写投资金额" />
+                </div>
+                <div class="popup__item">
+                    <span class="popup__itemname">备注：</span>
+                    <input type="text" class="remark_03" placeholder="填写备注" />
+                </div>
+            </div>
+            <div class="popup__btnbox">
+                <a class="cancel popup__btn m-right" onclick="canclePopup(this)">取消</a>
+                <a id="confirm_edit_03" class="popup__btn popup__close-btn">确认</a>
             </div>
         </div>
     </div>
