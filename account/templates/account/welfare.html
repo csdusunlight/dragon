@@ -103,7 +103,7 @@ var parent_dom;
 //};
 function editData_03(obj, id) {
     project_id = id;
-    parent_dom = $(obj).parent().parent().parent();
+    parent_dom = $(obj).parent();
     $.ajax({
         url: "/userevent/" + project_id + "/",
         dataType: "json",
@@ -237,23 +237,23 @@ $(function(){
     })
 
     $("#confirm_edit_03").click(function() {
-        var invest_project = $(".project_03").val(),
-            invest_days = $(".date_03").val(),
-            invest_tel = $(".telnum_03").val(),
-            invest_tel = $(".term_03").val(),
-            invest_money = $(".money_03").val(),
-            invest_remarks = $(".remark_03").val();
-        console.log(invest_project);
+        var project = $(".project_03").val(),
+            invest_time = $(".date_03").val(),
+            invest_account = $(".telnum_03").val(),
+            invest_term = $(".term_03").val(),
+            invest_amount = $(".money_03").val(),
+            remark = $(".remark_03").val();
+        console.log(project);
         //                  var bank = $("#bank option:selected").val();
-        console.log(project_id + "," + invest_project + "," + invest_tel + "," + invest_days + "," + invest_money + "," + invest_remarks + ",");
-        if(!invest_project || !invest_tel || !invest_days || !invest_money) {
+        console.log(project_id + "," + project + "," + invest_account + "," + invest_time + "," + invest_term + "," + invest_amount + "," + remark + ",");
+        if(!project || !invest_account || !invest_time || !invest_term || !invest_amount) {
             alert("填写项不能为空");
             return;
         }
-        if(invest_project == 0) {
-            alert("请选择项目");
-            return;
-        }
+//      if(invest_project == 0) {
+//          alert("请选择项目");
+//          return;
+//      }
 
         // var revise_url = "{%url 'revise_project' %}";
         $.ajax({
@@ -262,12 +262,12 @@ $(function(){
             type: 'put',
             data: {
                 // 'project_id': project_id,
-                'invest_project': invest_project,
-//              'invest_time': invest_time,
-                'invest_tel': invest_tel,
-                'invest_days': invest_days,
-                'invest_money': invest_money,
-                'invest_remarks': invest_remarks
+                'project': project,
+                'invest_time': invest_time,
+                'invest_account': invest_account,
+                'invest_term': invest_term,
+                'invest_amount': invest_amount,
+                'remark': remark
             },
             success: function(ret) {
                 if(ret.code == 1) {
@@ -276,13 +276,12 @@ $(function(){
                 } else if(ret.code == 0) {
                     alert("更改数据成功！");
                     console.log(ret.data);
-                    var parent_dom = $(revise_parent);
-                    parent_dom.find("td").eq(0).text(ret.data.content_object);
-//                  parent_dom.find("td").eq(2).text(ret.data.invest_time);
-                    parent_dom.find("td").eq(1).text(ret.data.invest_account);
-                    parent_dom.find("td").eq(3).text(ret.data.invest_term);
-                    parent_dom.find("td").eq(4).text(ret.data.invest_amount);
-                    parent_dom.find("td").eq(7).text(ret.data.remark);
+                    $(parent_dom).find("td").eq(0).text(ret.project);
+                    $(parent_dom).find("td").eq(2).text(ret.invest_time);
+                    $(parent_dom).find("td").eq(1).text(ret.invest_account);
+                    $(parent_dom).find("td").eq(3).text(ret.invest_amount);
+                    $(parent_dom).find("td").eq(4).text(ret.invest_term);
+                    $(parent_dom).find("td").eq(6).text(ret.remark);
                     popupOutInfo();
                 } else {
                     alert(ret.res_msg);
