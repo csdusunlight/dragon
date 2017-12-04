@@ -174,7 +174,7 @@ class AccountBill(models.Model):
     def strftime(self):
         return self.time.strftime("%Y-%m-%d %H:%M")
     def __unicode__(self):
-        return self.account + ' ' + self.get_type_display() + ' ' + str(self.amount)
+        return self.account.name + ' ' + self.get_type_display() + ' ' + str(self.amount)
     def save(self, force_insert=False, force_update=False, using=None, 
         update_fields=None):
         if self.id:
