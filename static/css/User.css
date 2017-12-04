@@ -111,14 +111,14 @@ td {white-space:nowrap;overflow:hidden;}
 .Online-R h6 { font-weight:400; font-size:20px; color:#91C11D; line-height:48px;}
 .Online-R span { display:block; font-size:14px; color:#666666; line-height:32px;}
 .Online-R span font { font-weight:bold; color:#91C11D}
-.Welfare { float:left; width:100%; height:auto; margin-top:20px;}
-.Welfare-T {box-sizing: border-box; float:left; width:100%; height:auto; background:#fff; border:1px solid #ebebeb;}
+.Welfare { /*float:left;*/ width:100%; height:auto; margin-top:20px;}
+.Welfare-T {box-sizing: border-box; /*float:left;*/ width:100%; height:auto; background:#fff; border:1px solid #ebebeb; overflow: hidden;}
 .Welfare-T strong { font-size:18px; color:#91C11D; line-height:44px; float:left; margin-left:13px;}
 .Welfare-li { float:right; width:auto; height:auto; line-height:44px; }
 .Welfare-li li { float:left; width:auto; height:auto; line-height:44px; font-size:15px; color:#91C11D; padding:0 20px; cursor:pointer; border-left:1px solid #ebebeb;}
 .Welfare-li li:hover { background:#91C11D; color:#fff;}
 .Welfare-li .on { background:#91C11D; color:#fff;}
-.Welfare-td { position:relative;float:left; width:100%; height:380px; background:#fff;}
+.Welfare-td {/* position:relative;float:left;*/ width:100%; /*height:380px;*/ background:#fff;}
 .Welfare-td tr { border:1px solid #ebebeb}
 .Welfare-td th { font-weight:400; font-size:16px; color:#666666;  background:#f8f8f8; text-align:center; border-top:1px solid #fff;}
 .Welfare-td tr th {height:44px; line-height:44px;}
@@ -620,4 +620,123 @@ input[type="text"] {padding-left: 10px !important;padding-right: 10px !important
 .Page-in,
 .Page-in-score {
     width: 100% !important;
+}
+.popup {
+    position: fixed;
+    visibility: hidden;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.3);
+    opacity: 0;
+    z-index: 10;
+    transition: all 0.4s ease;
+}
+.popup.in {
+    visibility: visible;
+    opacity: 1;
+}
+.popup input[type="text"],
+.popup select {
+    box-sizing: border-box;
+    padding-left: 8px;
+    width: 300px !important;
+    height: 30px !important;
+    border: 1px solid #e4e4e4;
+}
+.popup__content {
+    box-sizing: border-box;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    padding: 30px 88px;
+    margin-top: -100px;
+    width: 40%;
+    min-width: 600px;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 5px 5px 13px 2px rgba(0,0,0,0.4);
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+.popup.in .popup__content {
+    opacity: 1;
+    margin-top: 0px;
+}
+.popup__title {
+    margin-bottom: 22px;
+    text-align: center;
+    font-size: 18px;
+    color: #222;
+}
+.popup__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    float: right;
+    height: 37px;
+    width: 40px;
+    color: #000;
+    font-size: 28px;
+    line-height: 40px;
+    text-shadow: 0 1px 0 #fff;
+    background: none;
+    opacity: 0.2;
+    border: 0;
+    cursor: pointer;
+}
+.popup__detail {
+    line-height: 30px;
+}
+.popup__item {
+    margin-bottom: 30px;
+}
+.popup__itemname {
+    display: inline-block;
+    width: 86px;
+    font-size: 14px;
+    text-align: left !important;
+}
+.popup__btnbox {
+    margin-top: 22px;
+    text-align: center;
+}
+.popup__btnbox .btn:hover {
+    transform: translateY(0);
+}
+.popup__btn.m-right {
+    margin-right: 100px;
+}
+.popup__btn {
+    display: inline-block;
+    width: 110px;
+    line-height: 36px;
+    text-align: center;
+    color: #fff;
+    border-radius: 4px;
+    background-color: #91C11D;
+    transform: translateY(0);
+    transition: all 0.4s ease;
+}
+.popup__btn:hover {
+    transform: translateY(-4px);
+}
+.Page-in {
+    position: static !important;
+}
+.state0 {
+    color: #91c11d !important;
+}
+.state1 {
+    color: #ffbe00 !important;
+}
+.state2 {
+    color: red !important;
+}
+.change-num {
+    color: #333 !important;
+    text-decoration: underline;
+    cursor: pointer;
 }

@@ -13,19 +13,33 @@
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/page.js' %}"></script>
 <script type="text/javascript">
-var data1 = '<table width="100%"><thead><tr><th width="25%" height="44">项目</th>' +
-'<th width="30%">福币(个)</th><th width="25%">获取时间</th><th width="20%">备注</th></tr></thead><tbody>'+
-'[data]<tr><td height="48">{item}</td><td>{amount}</td><td>{time}</td><td>{remark}</td></tr>[/data]'+
+var data1 = '<table width="100%"><thead><tr><th height="44">变动原因</th><th>初始福币(个)</th>' +
+'<th>变动福币(个)</th><th>获取时间</th><th>备注</th></tr></thead><tbody>'+
+'[results]<tr><td height="48">{reason}</td><td>{initAmount}</td><td data-shouzhi="{transType}" class="shouzhi">{transAmount}</td><td class="time">{time}</td><td>{remark}</td></tr>[/results]'+
 '</tbody></table>';
-var data2 = '<table width="100%"><thead><tr><th width="25%" height="44">项目</th>' +
-'<th width="30%">福币(个)</th><th width="25%">申请时间</th><th width="20%">提现状态</th></tr></thead><tbody>'+
-'[data]<tr><td height="48">{item}</td><td>{amount}</td><td>{time}</td>' +
-'<td reason="{reason}" class="state_{state_int}">{state}</td></tr>[/data]' + '</tbody></table>';
-var url = "{% url 'get_user_money_page' %}" + "?page={page}&size={pageSize}&filter=";
+//var data2 = '<table width="100%"><thead><tr><th width="25%" height="44">项目</th>' +
+//'<th width="30%">福币(个)</th><th width="25%">申请时间</th><th width="20%">提现状态</th></tr></thead><tbody>'+
+//'[data]<tr><td height="48">{item}</td><td>{amount}</td><td>{time}</td>' +
+//'<td reason="{reason}" class="state_{state_int}">{state}</td></tr>[/data]' + '</tbody></table>';
+var url = "/restapi/translist/" + "?page={page}&pageSize={pageSize}&mobile={{user.mobile}}";
 function emptydisplay(obj){
 	pic_url = "{%static 'images/picin.png' %}";
 	obj.html('<div class="Defa-in"><img src="' + pic_url + '">'+
 			'<h2>咦~~ 您还没有相关记录~~</h2></div>');
+}
+function pagecallback() {
+    $('.time').each(function(){
+        var submit_time = $(this).text().split('T');
+        $(this).text(submit_time[0]);
+    })
+    $('.shouzhi').each(function(){
+        console.log($(this).data('shouzhi'))
+        if($(this).data('shouzhi') == '0') {
+            $(this).text('+' + $(this).text());
+        } else if($(this).data('shouzhi') == '1') {
+            $(this).text('-' + $(this).text());
+        }
+    })
 }
 $(function(){
 	$('.back-a8').parent().toggleClass("on");
@@ -38,25 +52,26 @@ $(function(){
 	    pageSize:6,
 	    run:true,
 	    content:data1,
+	    complete:pagecallback,
 	});
-	$(".Detail-T li").click(function(){
-		if($(this).attr("class")!="on"){
-			$(this).toggleClass("on").siblings().removeClass("on")
-			var index = $(this).index();
-			var data = data1
-			if (index==1){
-				data = data2
-			}
-			$("#page").empty();
-			$("#pagedata").ajaxPage({
-			    url:url+index,
-			    pageId:$("#page"),
-			    pageSize:6,
-			    run:true,
-			    content:data,
-			});
-		}
-	});
+//	$(".Detail-T li").click(function(){
+//		if($(this).attr("class")!="on"){
+//			$(this).toggleClass("on").siblings().removeClass("on")
+//			var index = $(this).index();
+//			var data = data1
+//			if (index==1){
+//				data = data2
+//			}
+//			$("#page").empty();
+//			$("#pagedata").ajaxPage({
+//			    url:url+index,
+//			    pageId:$("#page"),
+//			    pageSize:6,
+//			    run:true,
+//			    content:data,
+//			});
+//		}
+//	});
 
     // 审核拒绝原因弹窗
 	$('.Content').on('click','.state_2',function(){
@@ -90,8 +105,8 @@ $(function(){
                     <div class="Detail">
                     	<div class="Detail-T">
                         	<ul>
-                            	<li class="on">收入明细</li>
-                            	<li>支出明细</li>
+                            	<li>收支明细</li>
+                            	<!--<li>支出明细</li>-->
                             </ul>
                         </div>
                         <div class="Detail-B">
