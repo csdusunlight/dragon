@@ -11,7 +11,7 @@
 		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{project}</td><td>{projectname}</td><td>{invest_time}</td><td>{futou_des}</td>' +
 		'<td>{invest_mobile}</td><td>{invest_amount}</td><td>{invest_term}</td><td>{settle_amount}</td><td>{source_des}</td><td>{return_amount}</td>' +
 		'<td>{state_des}</td><td>{audit_time}</td><td>{remark}</td>' +
-		'<td id="item_{id}"><a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/results]</table>';
+		'<td id="item_{id}"><a class="delete-btn" onclick="refuse({id})">删除</a> | <a class="audit-btn" onclick="audit(this,{id})">审核</a></td></tr>[/results]</table>';
     var data_1 = '<table width="100%"><tr><th>项目编号</th><th>项目名称</th><th>投资日期</th><th>是否复投</th><th>提交手机号</th>' +
         '<th>投资金额</th><th>投资标期</th><th>预估消耗</th><th>投资来源</th><th>返现金额</th><th>审核状态</th><th>审核时间</th><th>备注</th>' +
         '<th>操作</th></tr>[results]<tr id="parent{id}"><td>{project}</td><td>{projectname}</td><td>{invest_time}</td><td>{futou_des}</td>' +
@@ -31,8 +31,26 @@
 	}
 	function audit(obj,id) {      //弹出审核项目数据弹窗
         $("input#project_audit_id").val(id);
+        $('input[name="source"]').prop('checked', false);
+        $('#return_amount').val('');
         that = obj;
-        $(".audit-project").show();
+        $.ajax({
+            url: url2 + id + "/",
+            dataType: "json",
+            type: "get",
+            success: function(ret) {
+                console.log(ret);
+                if (ret.state == 0) {
+                    var radio_dom = 'input[value="'+ ret.source +'"]';
+                    $(radio_dom).prop('checked', true);
+                    $('#return_amount').val(ret.return_amount);
+                }
+                $(".audit-project").show();
+            },
+            error: function(ret) {
+                alert(JSON.stringify(ret));
+            }
+        });
     }
 	
 	
@@ -81,8 +99,9 @@
             project_flag = $("input#project_audit_id").val();
             console.log(url2 + project_flag);
             var return_amount = $("#return_amount").val();
-            if (!return_amount) {
-            	alert('返现金额不能为空');
+            var project_source = $("input[name='source']:checked").val();
+            if (!return_amount || !project_source) {
+            	alert('请选择项目来源或填写返现金额');
             	return;
             }
             
@@ -92,6 +111,7 @@
                 type: "put",
                 data: {
                     'state': 0,
+                    'source': project_source,
                     'return_amount': return_amount,
                 },
                 success: function(ret) {
@@ -411,6 +431,11 @@
         <button class="none-x"></button>
         <form class="Finnow set-project">
             <input id="project_audit_id" type="hidden" />
+            <p style="margin-left: -116px;">
+                <span>项目来源：</span>
+                <input id="project-site" class="project-source" type="radio" name="source" value="site" />网站&nbsp;&nbsp;
+                <input id="project-channel" class="project-source" type="radio" name="source" value="channel" />渠道
+            </p>
             <p>
                 <span>返现金额：</span>
                 <input id="return_amount" type="text" />
