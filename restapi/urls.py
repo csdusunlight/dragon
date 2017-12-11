@@ -5,5 +5,5 @@ from wafuli import rest
 
 urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls',namespace='rest_framework')),
-    url(r'^translist/$', views.TranslistList.as_view()),
+    url(r'^translist/$', views.TranslistList.as_view(), kwargs={'partial':True}),
 ]
