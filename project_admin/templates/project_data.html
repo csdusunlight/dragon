@@ -12,6 +12,12 @@
 		'<td>{invest_mobile}</td><td>{invest_amount}</td><td>{invest_term}</td><td>{settle_amount}</td><td>{source_des}</td><td>{return_amount}</td>' +
 		'<td>{state_des}</td><td>{audit_time}</td><td>{remark}</td>' +
 		'<td id="item_{id}"><a class="delete-btn" onclick="refuse({id})">删除</a></td></tr>[/results]</table>';
+    var data_1 = '<table width="100%"><tr><th>项目编号</th><th>项目名称</th><th>投资日期</th><th>是否复投</th><th>提交手机号</th>' +
+        '<th>投资金额</th><th>投资标期</th><th>预估消耗</th><th>投资来源</th><th>返现金额</th><th>审核状态</th><th>审核时间</th><th>备注</th>' +
+        '<th>操作</th></tr>[results]<tr id="parent{id}"><td>{project}</td><td>{projectname}</td><td>{invest_time}</td><td>{futou_des}</td>' +
+        '<td>{invest_mobile}</td><td>{invest_amount}</td><td>{invest_term}</td><td>{settle_amount}</td><td>{source_des}</td><td>{return_amount}</td>' +
+        '<td>{state_des}</td><td>{audit_time}</td><td>{remark}</td>' +
+        '<td id="item_{id}"><a class="delete-btn" onclick="refuse({id})">删除</a> | <a class="audit-btn" onclick="audit({id})">审核</a></td></tr>[/results]</table>';
 	var url = "/project/investdata/" + "?page={page}";
 	var url2 = "/project/investdata/";
 	
@@ -22,6 +28,10 @@
 		$("input#project_delete_id").val(id);
 		$(".delete-project").show();
 	}
+	function audit(id) {      //弹出审核项目数据弹窗
+        $("input#project_audit_id").val(id);
+        $(".audit-project").show();
+    }
 	
 	
 	$(document).ready(function() {
@@ -56,9 +66,6 @@
 				url: url2 + project_flag + "/",
 				dataType: "json",
 				type: "DELETE",
-				data: {
-					'id': project_flag,
-				},
 				success: function(ret) {
 						alert("操作成功！");
 				},
@@ -68,6 +75,32 @@
 			});
 			$(".delete-project").hide();
 		});
+		$('#audit_project_btn').click(function() {       //点击确认按钮审核单条项目数据
+            project_flag = $("input#project_audit_id").val();
+            console.log(url2 + project_flag);
+            var return_amount = $("#return_amount").val();
+            if (!return_amount) {
+            	alert('返现金额不能为空');
+            	return;
+            }
+            
+            $.ajax({
+                url: url2 + project_flag + "/",
+                dataType: "json",
+                type: "put",
+                data: {
+                    'state': 0,
+                    'return_amount': return_amount,
+                },
+                success: function(ret) {
+                        alert("操作成功！");
+                },
+                error: function(ret) {
+                    alert(JSON.stringify(ret));
+                }
+            });
+            $(".audit-project").hide();
+        });
 		
 		$("#search").click(function() {			//搜索项目数据
 			var newurl = url;
@@ -116,6 +149,9 @@
 			console.log(newurl);
 			
 			var newdata = data;
+			if (state == 1) {
+				newdata = data_1;
+			}
 			$("#page").empty();
 			$("#pagedata").ajaxPage({
 				url: newurl,
@@ -364,6 +400,24 @@
 			</div>
 		</form>
 	</div>
+</div>
+<!--审核项目弹窗-->
+<div class="audit-project project-box">
+    <div class="w570-box">
+        <h3>审核数据？</h3>
+        <button class="none-x"></button>
+        <form class="Finnow set-project">
+            <input id="project_audit_id" type="hidden" />
+            <p>
+                <span>返现金额：</span>
+                <input id="return_amount" type="text" />
+            </p>
+            <div class="Finnow-Sub">
+                <input id="audit_project_btn" type="submit" value="确认" class="Deny-box" onclick="return false;" />
+                <input type="button" value="取消" class="none-x-s" />
+            </div>
+        </form>
+    </div>
 </div>
 <iframe id="myIFrame" scrolling="yes" src="abount:blank" style="display:none" frameborder=1></iframe>
 <!--end-->
