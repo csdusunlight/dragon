@@ -17,19 +17,21 @@
         '<th>操作</th></tr>[results]<tr id="parent{id}"><td>{project}</td><td>{projectname}</td><td>{invest_time}</td><td>{futou_des}</td>' +
         '<td>{invest_mobile}</td><td>{invest_amount}</td><td>{invest_term}</td><td>{settle_amount}</td><td>{source_des}</td><td>{return_amount}</td>' +
         '<td>{state_des}</td><td>{audit_time}</td><td>{remark}</td>' +
-        '<td id="item_{id}"><a class="delete-btn" onclick="refuse({id})">删除</a> | <a class="audit-btn" onclick="audit({id})">审核</a></td></tr>[/results]</table>';
+        '<td id="item_{id}"><a class="delete-btn" onclick="refuse({id})">删除</a> | <a class="audit-btn" onclick="audit(this,{id})">审核</a></td></tr>[/results]</table>';
 	var url = "/project/investdata/" + "?page={page}";
 	var url2 = "/project/investdata/";
 	
 	var project_flag;		// project_flag = -1 时，为导入单条数据；project_flag != -1 时，为修改单条数据
 	var parent;
+	var that;
 	
 	function refuse(id) {		//弹出删除项目数据弹窗
 		$("input#project_delete_id").val(id);
 		$(".delete-project").show();
 	}
-	function audit(id) {      //弹出审核项目数据弹窗
+	function audit(obj,id) {      //弹出审核项目数据弹窗
         $("input#project_audit_id").val(id);
+        that = obj;
         $(".audit-project").show();
     }
 	
@@ -93,6 +95,7 @@
                     'return_amount': return_amount,
                 },
                 success: function(ret) {
+                        $(that).parent().html('审核成功');
                         alert("操作成功！");
                 },
                 error: function(ret) {
