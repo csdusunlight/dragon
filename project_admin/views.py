@@ -80,6 +80,11 @@ class ProjectInvestDataList(BaseViewMixin,generics.ListCreateAPIView):
 class ProjectInvestDataDetail(BaseViewMixin,generics.RetrieveUpdateDestroyAPIView):
     queryset = ProjectInvestData.objects.all()
     serializer_class = ProjectInvestDataSerializer
+    def perform_update(self, serializer):
+        if self.request.data.get('state'):
+            serializer.save(audit_time = datetime.datetime.now())
+        else:
+            serializer.save()
 
 class ProjectStatisList(BaseViewMixin,generics.ListCreateAPIView):
     queryset = ProjectStatis.objects.all()
