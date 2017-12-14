@@ -343,7 +343,7 @@ $(function(){
                 $(parent_dom).find("td").eq(3).text(ret.invest_amount);
                 $(parent_dom).find("td").eq(4).text(ret.invest_term);
                 $(parent_dom).find("td").eq(6).text(ret.remark);
-                popupOutInfo();
+                $('.popup.m-edit-proj_02').removeClass('in');
             },
             error: function() {
                 alert("请检查网络连接");
@@ -387,7 +387,7 @@ $(function(){
                 $(parent_dom).find("td").eq(3).text(ret.invest_amount);
                 $(parent_dom).find("td").eq(4).text(ret.invest_term);
                 $(parent_dom).find("td").eq(6).text(ret.remark);
-                popupOutInfo();
+                $('.popup.m-edit-proj_03').removeClass('in');
             },
             error: function() {
                 alert("请检查网络连接");
