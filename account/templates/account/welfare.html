@@ -390,7 +390,7 @@ $(function(){
                 alert("更改数据成功！");
                 console.log(ret.data);
                 $(parent_dom).find("td").eq(0).text(ret.project);
-                $(parent_dom).find("td").eq(2).text(ret.ret.invest_time.split('T')[0]);
+                $(parent_dom).find("td").eq(2).text(ret.invest_time.split('T')[0]);
                 $(parent_dom).find("td").eq(1).text(ret.invest_account);
                 $(parent_dom).find("td").eq(3).text(ret.invest_amount);
                 $(parent_dom).find("td").eq(4).text(ret.invest_term);
