@@ -335,22 +335,15 @@ $(function(){
                 'remark': remark
             },
             success: function(ret) {
-                if(ret.code == 1) {
-                    alert("请重新登录！")
-                    window.location.href = ret.url;
-                } else if(ret.code == 0) {
-                    alert("更改数据成功！");
-                    console.log(ret.data);
-                    $(parent_dom).find("td").eq(0).text(ret.project);
-                    $(parent_dom).find("td").eq(2).text(ret.invest_time);
-                    $(parent_dom).find("td").eq(1).text(ret.invest_account);
-                    $(parent_dom).find("td").eq(3).text(ret.invest_amount);
-                    $(parent_dom).find("td").eq(4).text(ret.invest_term);
-                    $(parent_dom).find("td").eq(6).text(ret.remark);
-                    popupOutInfo();
-                } else {
-                    alert(ret.res_msg);
-                }
+                alert("更改数据成功！");
+                console.log(ret.data);
+                $(parent_dom).find("td").eq(0).text(ret.project);
+                $(parent_dom).find("td").eq(2).text(ret.invest_time);
+                $(parent_dom).find("td").eq(1).text(ret.invest_account);
+                $(parent_dom).find("td").eq(3).text(ret.invest_amount);
+                $(parent_dom).find("td").eq(4).text(ret.invest_term);
+                $(parent_dom).find("td").eq(6).text(ret.remark);
+                popupOutInfo();
             },
             error: function() {
                 alert("请检查网络连接");
@@ -386,22 +379,15 @@ $(function(){
                 'remark': remark
             },
             success: function(ret) {
-                if(ret.code == 1) {
-                    alert("请重新登录！")
-                    window.location.href = ret.url;
-                } else if(ret.code == 0) {
-                    alert("更改数据成功！");
-                    console.log(ret.data);
-                    $(parent_dom).find("td").eq(0).text(ret.project);
-                    $(parent_dom).find("td").eq(2).text(ret.invest_time);
-                    $(parent_dom).find("td").eq(1).text(ret.invest_account);
-                    $(parent_dom).find("td").eq(3).text(ret.invest_amount);
-                    $(parent_dom).find("td").eq(4).text(ret.invest_term);
-                    $(parent_dom).find("td").eq(6).text(ret.remark);
-                    popupOutInfo();
-                } else {
-                    alert(ret.res_msg);
-                }
+                alert("更改数据成功！");
+                console.log(ret.data);
+                $(parent_dom).find("td").eq(0).text(ret.project);
+                $(parent_dom).find("td").eq(2).text(ret.invest_time);
+                $(parent_dom).find("td").eq(1).text(ret.invest_account);
+                $(parent_dom).find("td").eq(3).text(ret.invest_amount);
+                $(parent_dom).find("td").eq(4).text(ret.invest_term);
+                $(parent_dom).find("td").eq(6).text(ret.remark);
+                popupOutInfo();
             },
             error: function() {
                 alert("请检查网络连接");
