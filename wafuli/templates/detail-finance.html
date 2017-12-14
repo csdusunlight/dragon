@@ -230,6 +230,7 @@
         <li class="item-03">注册手机号</li>
         <li class="item-04">投资金额（元）</li>
         <li class="item-05">投资标期（天）</li>
+        <li class="item-08">类型</li>
         <li class="item-06">备注</li>
       </ul>
       <ul class="submit-item-box">
@@ -245,6 +246,12 @@
         <li class="submit-item item-04"><input type="text" class="amount" id="amount" placeholder="仅限纯数字">
         </li>
         <li class="submit-item item-05"><input type="text" class="term" id="term" placeholder="仅限纯数字">
+        </li>
+        <li class="submit-item item-08">
+            <select class="is_futou " placeholder="选择投资类型">
+                <option selected="selected" value="1">首投</option>
+                <option value="2">复投</option>
+            </select>
         </li>
         <li class="submit-item item-06"><input type="text" class="remark" id="remark" placeholder="选填">
         </li>
@@ -411,6 +418,8 @@
         '<li class="submit-item item-03"><input type="text" maxlength=11 class="telnum"></li>' +
         '<li class="submit-item item-04"><input type="text" class="amount"></li>' +
         '<li class="submit-item item-05"><input type="text" class="term"></li>' +
+        '<li class="submit-item item-08"><select class="is_futou " placeholder="选择投资类型">' +
+        '<option selected="selected" value="1">首投</option><option value="2">复投</option></select></li>' +        
         '<li class="submit-item item-06"><input type="text" class="remark"></li>' +
         '<li class="delete-item item-07">删除</li>';
       submit_data_container.appendChild(ul);
@@ -456,8 +465,9 @@
           telnum = telnum01.val(),
           amount = amount01.val(),
           term = term01.val(),
+          is_futou = $(this).find(".is_futou option:selected").val(),
           remark = remark01.val(),
-          data_list = [project_select, time, telnum, amount, term, remark];
+          data_list = [project_select, time, telnum, amount, term, is_futou, remark];
 
         var re = /^1[1,2,3,4,6,5,7,8,9]\d{9}$/, //验证手机号
           re_amount = /^\d+(\.\d+)?$/; //验证数字格式

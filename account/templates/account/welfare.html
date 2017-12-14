@@ -74,7 +74,7 @@ var data_media2 = '<table width="100%"><thead><tr><th>平台</th><th>手机号</
 '<span class="img-up"><img src="{% static 'images/task-suoluetu.jpg' %}" alt="截图上传图片" /></span></a></td><td>{remark}</td><td>{refuse_reason}</td></tr>[/results]'
 + '</tbody></table>';
 var turl = "{% url 'get_user_wel_page' %}" + "?tpage={page}&size={pageSize}&filter=";
-var furl = "/usereventlist" + "?mobile={{user.mobile}}&event_type=1&content_type=22&page={page}&pageSize={pageSize}";
+var furl = "/usereventlist" + "?mobile={{user.mobile}}&event_type=1&content_type=16&page={page}&pageSize={pageSize}";
 var murl = "/usereventlist/" + "?mobile={{user.mobile}}&event_type=9&page={page}&pageSize={pageSize}";
 function emptydisplay(obj){
 	pic_url = "{%static 'images/picin.png' %}";
