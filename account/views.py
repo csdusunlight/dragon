@@ -364,12 +364,13 @@ def welfare(request):
     fcount = Finance.objects.filter(state='1').count()
     ttype = ContentType.objects.get_for_model(Task)
     ftype = ContentType.objects.get_for_model(Finance)
+    mtype = ContentType.objects.get_for_model(MediaProject)
     tcount_u = UserEvent.objects.filter(user=request.user.id, content_type = ttype.id).count()
     fcount_u = UserEvent.objects.filter(user=request.user.id, content_type = ftype.id).count()
     tsum = UserEvent.objects.filter(time__gte=date.today(), content_type = ttype.id).count()
     fsum = UserEvent.objects.filter(time__gte=date.today(), content_type = ftype.id).count()
     statis = {'tcount':tcount,'fcount':fcount,'tcount_u':tcount_u,'fcount_u':fcount_u,'tsum':tsum,'fsum':fsum}
-    return render(request, 'account/welfare.html', {'statis':statis})
+    return render(request, 'account/welfare.html', {'statis':statis, 'ftype':ftype.id, 'ttype':ttype.id, 'mtype':mtype.id})
 
 
 def get_user_wel_page(request):
