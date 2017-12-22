@@ -9,14 +9,18 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/style-i.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-
 <link rel="stylesheet" type="text/css" href="{% static 'css/page.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/datePicker.css' %}" />
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/page.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.date_input.pack.js' %}"></script>
 <style type="text/css">
 	.Welfare-td-03 tr td {
 	    line-height: 1.2;
 	    white-space: normal;
+	}
+	.date_selector {
+	    margin-left: 108px;
 	}
 </style>
 <script type="text/javascript">
@@ -297,6 +301,10 @@ $(function(){
             });
         }
     });
+    $(".popup").on("focus", ".date_picker", function() {
+        $(this).date_input();
+    })
+    
   // 点击图片放大
   $(".img-up img").onclick = function(){
     $(".img-up img").toggleClass("big-img");
@@ -328,29 +336,22 @@ $(function(){
             data: {
                 // 'project_id': project_id,
                 'project': project,
-                'invest_time': invest_time,
+                'invest_time': invest_time+'T00:00',
                 'invest_account': invest_account,
                 'invest_term': invest_term,
                 'invest_amount': invest_amount,
                 'remark': remark
             },
             success: function(ret) {
-                if(ret.code == 1) {
-                    alert("请重新登录！")
-                    window.location.href = ret.url;
-                } else if(ret.code == 0) {
-                    alert("更改数据成功！");
-                    console.log(ret.data);
-                    $(parent_dom).find("td").eq(0).text(ret.project);
-                    $(parent_dom).find("td").eq(2).text(ret.invest_time);
-                    $(parent_dom).find("td").eq(1).text(ret.invest_account);
-                    $(parent_dom).find("td").eq(3).text(ret.invest_amount);
-                    $(parent_dom).find("td").eq(4).text(ret.invest_term);
-                    $(parent_dom).find("td").eq(6).text(ret.remark);
-                    popupOutInfo();
-                } else {
-                    alert(ret.res_msg);
-                }
+                alert("更改数据成功！");
+                console.log(ret.data);
+                $(parent_dom).find("td").eq(0).text(ret.project);
+                $(parent_dom).find("td").eq(2).text(ret.invest_time.split('T')[0]);
+                $(parent_dom).find("td").eq(1).text(ret.invest_account);
+                $(parent_dom).find("td").eq(3).text(ret.invest_amount);
+                $(parent_dom).find("td").eq(4).text(ret.invest_term);
+                $(parent_dom).find("td").eq(6).text(ret.remark);
+                $('.popup.m-edit-proj_02').removeClass('in');
             },
             error: function() {
                 alert("请检查网络连接");
@@ -379,29 +380,22 @@ $(function(){
             data: {
                 // 'project_id': project_id,
                 'project': project,
-                'invest_time': invest_time,
+                'invest_time': invest_time+'T00:00',
                 'invest_account': invest_account,
                 'invest_term': invest_term,
                 'invest_amount': invest_amount,
                 'remark': remark
             },
             success: function(ret) {
-                if(ret.code == 1) {
-                    alert("请重新登录！")
-                    window.location.href = ret.url;
-                } else if(ret.code == 0) {
-                    alert("更改数据成功！");
-                    console.log(ret.data);
-                    $(parent_dom).find("td").eq(0).text(ret.project);
-                    $(parent_dom).find("td").eq(2).text(ret.invest_time);
-                    $(parent_dom).find("td").eq(1).text(ret.invest_account);
-                    $(parent_dom).find("td").eq(3).text(ret.invest_amount);
-                    $(parent_dom).find("td").eq(4).text(ret.invest_term);
-                    $(parent_dom).find("td").eq(6).text(ret.remark);
-                    popupOutInfo();
-                } else {
-                    alert(ret.res_msg);
-                }
+                alert("更改数据成功！");
+                console.log(ret.data);
+                $(parent_dom).find("td").eq(0).text(ret.project);
+                $(parent_dom).find("td").eq(2).text(ret.invest_time.split('T')[0]);
+                $(parent_dom).find("td").eq(1).text(ret.invest_account);
+                $(parent_dom).find("td").eq(3).text(ret.invest_amount);
+                $(parent_dom).find("td").eq(4).text(ret.invest_term);
+                $(parent_dom).find("td").eq(6).text(ret.remark);
+                $('.popup.m-edit-proj_03').removeClass('in');
             },
             error: function() {
                 alert("请检查网络连接");
