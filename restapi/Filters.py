@@ -7,6 +7,7 @@ Created on 2017年8月23日
 import django_filters
 from wafuli.models import TransList, UserEvent
 from account.models import MyUser
+from teaminvest.models import Investlog, Backlog
 #         
 class TranslistFilter(django_filters.rest_framework.FilterSet):
     trans_date = django_filters.DateFromToRangeFilter(name="time")
@@ -17,6 +18,24 @@ class TranslistFilter(django_filters.rest_framework.FilterSet):
         model = TransList
         fields = ['user_mobile', 'user_name', 'reason_contains', 'trans_date', 'transType']
         
+class TeamInvestLogFilter(django_filters.rest_framework.FilterSet):
+    invest_date_ft = django_filters.DateRangeFilter(name="invest_date")
+    submit_time_ft = django_filters.DateFromToRangeFilter(name="submit_time")
+    user_mobile = django_filters.CharFilter('user', lookup_expr='mobile')
+    username = django_filters.CharFilter('user', lookup_expr='username')
+    project_title = django_filters.CharFilter('project', lookup_expr='title__contains')
+    class Meta:
+        model = Investlog
+        fields = ['invest_date_ft', 'submit_time_ft', 'user_mobile', 'username', 'project_title', 'audit_state']
+
+class BackLogFilter(django_filters.rest_framework.FilterSet):
+    back_date_ft = django_filters.DateRangeFilter(name="back_date")
+    user_mobile = django_filters.CharFilter('user', lookup_expr='mobile')
+    username = django_filters.CharFilter('user', lookup_expr='username')
+    project_title = django_filters.CharFilter('project', lookup_expr='title__contains')
+    class Meta:
+        model = Backlog
+        fields = ['back_date_ft', 'user_mobile', 'username', 'project_title']        
 # class UserEventFilter(django_filters.rest_framework.FilterSet):
 #     investtime = django_filters.DateFromToRangeFilter(name="invest_date")
 #     submittime = django_filters.DateFromToRangeFilter(name="submit_time")
