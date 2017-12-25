@@ -12,10 +12,18 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/page.css' %}" />
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/page.js' %}"></script>
+<style type="text/css">
+	.type_1 {
+	    color: red !important;
+	}
+	.type_0 {
+        color: #ffbe00 !important;
+    }
+</style>
 <script type="text/javascript">
 var data1 = '<table width="100%"><thead><tr><th height="44">变动原因</th><th>初始福币(个)</th>' +
 '<th>变动福币(个)</th><th>获取时间</th><th>备注</th></tr></thead><tbody>'+
-'[results]<tr><td height="48">{reason}</td><td>{initAmount}</td><td data-shouzhi="{transType}" class="shouzhi">{transAmount}</td><td class="time">{time}</td><td>{remark}</td></tr>[/results]'+
+'[results]<tr><td height="48">{reason}</td><td>{initAmount}</td><td data-shouzhi="{transType}" class="shouzhi type_{transType}">{transAmount}</td><td class="time">{time}</td><td>{remark}</td></tr>[/results]'+
 '</tbody></table>';
 //var data2 = '<table width="100%"><thead><tr><th width="25%" height="44">项目</th>' +
 //'<th width="30%">福币(个)</th><th width="25%">申请时间</th><th width="20%">提现状态</th></tr></thead><tbody>'+

@@ -11,7 +11,20 @@
 .item-01 {
   width: 16%;
 }
-
+.submit-item.item-01 {
+  font-size: 0;
+}
+.item-01 label {
+    margin-bottom: 0;
+    width: 50%;
+    font-size: 14px;
+    line-height: 20px;
+}
+.item-01 input[name="invest_type"] {
+    margin-top: -2px;
+    width: 20px;
+    vertical-align: middle;
+}
 .item-02 {
   width: 16%;
 }
