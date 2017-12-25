@@ -56,7 +56,8 @@ urlpatterns = [
 
     url(r'^submit_itembyitem/$', 'account.channel.submit_itembyitem', name='submit_itembyitem'),
     url(r'^revise_project/$', 'account.channel.revise_project', name='revise_project'),
-
+	
+	
     url(r'^lookup_teamorder/$',  TemplateView.as_view(template_name="lookup_teamorder.html"), name='account_lookup_teamorder'),
-    url(r'^lookup_teamback/$',  TemplateView.as_view(template_name="lookup_teamoback.html"), name='account_lookup_teamback'),
+    url(r'^lookup_teamback/$',  TemplateView.as_view(template_name="lookup_teamback.html"), name='account_lookup_teamback'),
 ]
