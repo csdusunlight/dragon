@@ -27,6 +27,8 @@ from account.vip import vip_judge, get_vip_bonus
 import json
 from django.db import transaction
 from project_admin.tools import has_permission
+from teaminvest.models import Investlog, Backlog
+from decimal import Decimal
 # Create your views here.
 logger = logging.getLogger('wafuli')
 def index(request):
@@ -2006,6 +2008,101 @@ def admin_media(request):
             log.save()
             event.audit_time = log.time
             event.save(update_fields=['audit_state','audit_time'])
+        return JsonResponse(res)
+
+@transaction.atomic
+def admin_teaminvest(request):
+    admin_user = request.user
+    if request.method == "GET":
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            return redirect(reverse('admin:login') + "?next=" + reverse('admin_media'))
+        return render(request,"admin_medialist.html")
+    if request.method == "POST":
+        res = {}
+        if not request.is_ajax():
+            raise Http404
+        if not ( admin_user.is_authenticated() and admin_user.is_staff):
+            res['code'] = -1
+            res['url'] = reverse('admin:login') + "?next=" + reverse('admin_medialist')
+            return JsonResponse(res)
+        if not admin_user.has_admin_perms('002'):
+            res['code'] = -5
+            res['res_msg'] = u'您没有操作权限！'
+            return JsonResponse(res)
+        logid = request.POST.get('id', None)
+        cash = request.POST.get('cash', None)
+        type = request.POST.get('type', None)
+        reason = request.POST.get('reason', None)
+        type = int(type)
+        if not logid:
+            res['code'] = -2
+            res['res_msg'] = u'传入参数不足，请联系技术人员！'
+            return JsonResponse(res)
+        investlog = Investlog.objects.get(id=logid)
+        event_user = investlog.user
+
+        project = investlog.project   #jzy
+        project_title = project.title   # jzy
+
+        translist = None
+        if type==1:
+            try:
+                cash = float(cash)*100
+                cash = int(cash)
+            except:
+                res['code'] = -2
+                res['res_msg'] = u"操作失败，输入不合法！"
+                return JsonResponse(res)
+            if cash < 0:
+                res['code'] = -2
+                res['res_msg'] = u"操作失败，输入不合法！"
+                return JsonResponse(res)
+            if investlog.audit_state != '1':
+                res['code'] = -3
+                res['res_msg'] = u'该项目已审核过，不要重复审核！'
+                return JsonResponse(res)
+            if investlog.translist.exists():
+                logger.critical("Returning cash is repetitive!!!")
+                res['code'] = -3
+                res['res_msg'] = u"操作失败，返现重复！"
+            else:
+                # translist = charge_money(event_user, '0', cash, u'福利返现')
+                translist = charge_money(event_user, '0', cash, project_title)  #jzy
+                if investlog.project.is_vip_bonus:
+                    get_vip_bonus(event_user, cash, 'finance')
+                if translist:
+                    investlog.audit_state = '0'
+                    translist.user_event = investlog
+                    translist.save(update_fields=['user_event'])
+                    res['code'] = 0
+#                     msg_content = u'您提交的"' + investlog.content_object.title + u'"媒体单已审核通过。'
+#                     Message.objects.create(user=event_user, content=msg_content, title=u"媒体单审核");
+                else:
+                    res['code'] = -4
+                    res['res_msg'] = "注意，重复提交时只提交失败项目，成功的可以输入0。\n"
+                    if not translist:
+                        logger.error(u"Charging cash is failed!!!")
+                        res['res_msg'] += u"现金记账失败，请检查输入合法性后再次提交！"
+        elif type==2:
+            investlog.audit_state = '2'
+            investlog.reason = reason
+            res['code'] = 0
+        elif type==3:
+            back_amount = request.POST.get('cash', None)
+            remark = request.POST.get('remark', None)
+            try:
+                back_amount = Decimal(back_amount)
+            except:
+                res['code'] = -2
+                res['res_msg'] = u"操作失败，输入不合法！"
+                return JsonResponse(res)
+            Backlog.objects.create(user=event_user, project=project, investlog=investlog, back_amount=back_amount, remark=remark)
+            res['code'] = 0
+#             msg_content = u'您提交的"' + investlog.content_object.title + u'"媒体单审核未通过，原因：' + reason
+#             Message.objects.create(user=event_user, content=msg_content, title=u"媒体单审核");
+
+        if res['code'] == 0:
+            investlog.save(update_fields=['audit_state','audit_time'])
         return JsonResponse(res)
 
 @login_required
