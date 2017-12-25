@@ -252,43 +252,21 @@
                                     </div>
                                 </div>
                             </div>
-							<!--<div class="popup-box popup-box-05">
-								<div class="popup-content">
-									<h3>数据修改</h3>
-									<p>
-										<span>项目名称：</span>
-										<select class="invest-project height-add01" placeholder="选择项目">
-											<option value="0">--</option>
-											{% for x in flist %}
-											<option value="{{x.id}}">{{x.title}}</option>
-											{%endfor%}
-										</select>
-									</p>
-									<p>
-										<span>投资日期：</span>
-										<input type="text" class="height-add02 invest-time date_picker" placeholder="选择投资日期" />
-									</p>
-									<p>
-										<span>提交手机号：</span>
-										<input id="project_name_change" class="submit-tel" maxlength=11 type="text" onkeyup="value=value.replace(/[^\d.]/g,'')" placeholder="填写正确的手机号" />
-									</p>
-									<p>
-										<span>投资标期：</span>
-										<input id="contact_person_change" class="invest-days" type="text" onkeyup="value=value.replace(/[^\d.]/g,'')" placeholder="仅限纯数字" />
-									</p>
-									<p>
-										<span>投资金额：</span>
-										<input id="cooperate_type_change" class="invest-money" type="text" onkeyup="value=value.replace(/[^\d.]/g,'')" placeholder="仅限纯数字" />
-									</p>
-									<p>
-										<span>备注：</span>
-										<input id="balance_type_change" class="invest-remarks" type="text" placeholder="选填" />
-									</p>
-
-									<a id="cancel" class="cancel confirm" onclick="popupOutInfo()">取&nbsp;&nbsp;&nbsp;&nbsp;消</a>
-									<a id="confirm_revise" class="confirm">确认修改</a>
-								</div>
-							</div>-->
+                            
+							<div class="popup m-del-proj">
+                                <div class="popup__content" style="width: 600px;">
+                                    <div class="popup__top">
+                                        <h2 class="popup__title">删除理財福利数据</h2><button type="button" class="popup__close popup__close-btn" onclick="canclePopup(this)">×</button>
+                                    </div>
+                                    <div class="popup__detail">
+                                        是否删除该条数据？
+                                    </div>
+                                    <div class="popup__btnbox">
+                                        <a class="cancel popup__btn m-right" onclick="canclePopup(this)">取消</a>
+                                        <a id="confirm_del" class="popup__btn popup__close-btn">确认</a>
+                                    </div>
+                                </div>
+                            </div>
 
 						</div>
 
@@ -318,15 +296,20 @@
 
 			<script type="text/javascript">
 				var data = '<table width="100%"><tr><th width="12%">项目</th><th>投资日期</th><th>提交手机号</th><th>投资标期</th>' +
-					'<th>投资金额</th><th width="15%">备注</th><th>审核结果</th><th>返现福币</th><th width="12%">拒绝原因</th>' +
+					'<th>投资金额</th><th width="15%">备注</th><th>审核结果</th><th>返现福币</th><th width="12%">拒绝原因</th><th>操作</th>' +
 					'</tr>[data]<tr><td>{project}</td><td>{invest_time}</td><td>{mobile}</td>' +
 					'<td>{invest_term}</td><td>{invest_amount}</td><td>{remark}</td><td>{audit_result}</td>' +
-					'<td>{return_amount}</td><td>{refuse_reason}</td></tr>[/data]</table>';
+					'<td>{return_amount}</td><td>{refuse_reason}</td><td><a class="revise-data" onclick=reviseData({id},this)>修改</a> | <a class="del-data" onclick=delData({id},this)>删除</a></td></tr>[/data]</table>';
+			    var data0 = '<table width="100%"><tr><th width="12%">项目</th><th>投资日期</th><th>提交手机号</th><th>投资标期</th>' +
+                    '<th>投资金额</th><th width="15%">备注</th><th>审核结果</th><th>返现福币</th><th width="12%">拒绝原因</th>' +
+                    '</tr>[data]<tr><td>{project}</td><td>{invest_time}</td><td>{mobile}</td>' +
+                    '<td>{invest_term}</td><td>{invest_amount}</td><td>{remark}</td><td>{audit_result}</td>' +
+                    '<td>{return_amount}</td><td>{refuse_reason}</td></tr>[/data]</table>';
 				var data2 = '<table width="100%"><tr><th width="12%">项目</th><th>投资日期</th><th>提交手机号</th><th>投资标期</th>' +
 					'<th>投资金额</th><th width="15%">备注</th><th>审核结果</th><th>返现福币</th><th width="12%">操作</th>' +
 					'</tr>[data]<tr><td>{project}</td><td>{invest_time}</td><td>{mobile}</td>' +
 					'<td>{invest_term}</td><td>{invest_amount}</td><td>{remark}</td><td>{audit_result}</td>' +
-					'<td>{return_amount}</td><td><a class="revise-data" onclick=reviseData({id},this)>修改</a></td></tr>[/data]</table>';
+					'<td>{return_amount}</td><td><a class="revise-data" onclick=reviseData({id},this)>修改</a> | <a class="del-data" onclick=delData({id},this)>删除</a></td></tr>[/data]</table>';
 				var url = "{% url 'get_channel_result_page' %}" + "?page={page}&size={pageSize}";
 				$('.back-a14').parent().toggleClass("on");
 				$.ajaxSetup({
@@ -670,25 +653,21 @@
 						$(this).toggleClass("on").siblings().removeClass("on")
 						var index = $(this).index();
 						$("#page1").empty();
-						if(index == 2) {
-							$("#pagedata").ajaxPage({
-								url: url + "&filter=" + index,
-								pageId: $("#page"),
-								pageSize: 30,
-								run: true,
-								content: data2,
-								//	    complete:pagecallback,
-							});
+						var data_tab;
+						if(index==0) {
+						    data_tab = data;
+						} else if(index == 2) {
+							data_tab = data2;
 						} else {
-							$("#pagedata").ajaxPage({
-								url: url + "&filter=" + index,
-								pageId: $("#page"),
-								pageSize: 30,
-								run: true,
-								content: data,
-								//	    complete:pagecallback,
-							});
+						    data_tab = data0;
 						}
+						$("#pagedata").ajaxPage({
+							url: url + "&filter=" + index,
+							pageId: $("#page"),
+							pageSize: 30,
+							run: true,
+							content: data_tab,
+						});
 					}
 				});
 
@@ -778,6 +757,12 @@
 					//					console.log($(options)[0].value);
 					popupOutRevise();
 				}
+				function delData(id, obj) {
+                    project_id = id;
+                    revise_parent = $(obj).parent().parent();
+                    var parent_dom = $(revise_parent);
+                    $('.popup.m-del-proj').addClass('in');
+                }
 				$(".popup-box-05").on("focus", ".date_picker", function() {
 					$('.date_picker').date_input();
 				})
