@@ -1198,4 +1198,3 @@ def get_user_invite_page(request):
 
 def vip(request):
     return render(request, 'account/account_vip.html')
-
