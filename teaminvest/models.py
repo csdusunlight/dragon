@@ -44,7 +44,7 @@ class Investlog(models.Model):
     settle_amount = models.DecimalField(u'结算金额', max_digits=10, decimal_places=2, null=True)
     audit_time = models.DateTimeField(u'审核时间', default=timezone.now)
     audit_state = models.CharField(max_length=10, choices=AUDIT_STATE, verbose_name=u"审核状态")
-    audit_reason = models.CharField(max_length=100, verbose_name=u"审核说明")
+    audit_reason = models.CharField(max_length=100, verbose_name=u"审核说明", blank=True)
     def __unicode__(self):
         return u"用户：%s 投资项目：%s 投资金额：%s" % (self.user, self.project.title, self.invest_amount)
     class Meta:
