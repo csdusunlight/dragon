@@ -1,0 +1,69 @@
+.wrapper {
+	width: 1100px;
+	margin: 0 auto;
+	position: relative;
+}
+
+.wrapperTop {
+	padding: 10px 10px;
+	border: 1px solid RGB(227, 227, 227);
+	position: relative;
+}
+
+.team {
+	color: RGB(145, 193, 29);
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.wrapperTop select {
+	width: 240px;
+	margin-left: 240px;
+}
+
+.oprateBox {
+	width: 365px;
+	height: 50px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	color: RGB(145, 192, 36);
+}
+
+.oprateBox li {
+	float: left;
+	width: 90px;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	cursor: pointer;
+	border-left: 1px solid RGB(227, 227, 227);
+}
+
+.active {
+	background: RGB(145, 193, 29);
+	color: white;
+}
+
+.contentBox {
+	width: 100%;
+	
+}
+
+th {
+	height: 44px;
+	font-weight: 400;
+	font-size: 16px;
+	color: #666666;
+	text-align: center;
+	border: 1px solid #ebebeb;
+	border-top: none;
+}
+
+td {
+	text-align: center;
+	height: 44px;
+	line-height: 44px;
+	border: 1px solid #ebebeb;
+}
+

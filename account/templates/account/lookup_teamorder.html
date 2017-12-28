@@ -1,11 +1,130 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>交单查询</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/wfl-common.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/lookup_teamorder.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/page.css' %}" />
+		<script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/page.js' %}"></script>
 	</head>
+		<style>
+			.Page-in{
+				position: absolute;
+				width: 100%;
+			}
+			.page{
+				background: RGB(245,245,245);
+			}
+		</style>
 	<body>
-		123
+		<div class="wrapper">
+			<!--
+            	作者：763008201@qq.com
+            	时间：2017-12-26
+            	描述：顶部
+            -->
+			<div class="wrapperTop">
+				<span class="team">组队投资</span>
+				<!--<select>
+					<option value="0">--</option>
+					{% for x in projects %}
+					<option value="{{x.id}}">{{x.title}}</option>
+					{%endfor%}
+				</select>-->
+				<ul class="oprateBox">
+					<li class="active">全部</li>
+					<li id="passTab">已通过</li>
+					<li id="auditTab">审核中</li>
+					<li id="refuseTab">已拒绝</li>
+				</ul>
+			</div>
+			<!--
+            	作者：763008201@qq.com
+            	时间：2017-12-26
+            	描述：内容部分
+           -->
+			<div class="contentBox">
+				<div id="pagedata">
+
+				</div>
+				<div class="Page-in">
+					<div class="page" id="page">
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<script>
+			$(function() {
+				var data = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="20%">投资时间</th>' +
+					'<th width="20%">投资金额</th><th width="15%">状态<th width="25%">备注</th></tr></thead><tbody>' +
+					'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td>{state_desc}</td><td>{remark}</td></tr>[/results]' +
+					'</tbody></table>';
+
+				var passData = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="20%">投资时间</th>' +
+					'<th width="20%">投资金额</th><th width="15%">状态<th width="25%">备注</th></tr></thead><tbody>' +
+					'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td>{state_desc}</td><td>{remark}</td></tr>[/results]' +
+					'</tbody></table>';
+
+				var auditData = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="20%">投资时间</th>' +
+					'<th width="20%">投资金额</th><th width="15%">状态<th width="25%">备注</th></tr></thead><tbody>' +
+					'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td>{state_desc}</td><td>{remark}</td></tr>[/results]' +
+					'</tbody></table>';
+
+				var refuseData = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="20%">投资时间</th>' +
+					'<th width="20%">投资金额</th><th width="15%">状态<th width="25%">备注</th></tr></thead><tbody>' +
+					'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td>{state_desc}</td><td>{remark}</td></tr>[/results]' +
+					'</tbody></table>';
+
+				function pagecallback() {
+					console.log("这是一个回调函数");
+				}
+				var url = "/restapi/investlog/";
+				$("#pagedata").ajaxPage({
+					url: url,
+					pageId: $("#page"),
+					pageSize: 6,
+					run: true,
+					content: data,
+					complete: pagecallback,
+				});
+
+				$(".oprateBox>li").click(function() {
+					var index = $(this).index();
+					console.log(index);
+					$(this).addClass("active").siblings().removeClass("active");
+					if (index == 0) {
+						var pdata = data;
+						var dataUrl = url;
+					} else if(index == 1) {
+						var pdata = passData;
+						var dataUrl = url + "?audit_state=0";
+					} else if(index == 2) {
+						var pdata = auditData;
+						var dataUrl = url + "?audit_state=1";
+					} else if(index == 3) {
+						var pdata = refuseData;
+						var dataUrl = url + "?audit_state=2";
+					}
+					$("#page").empty();
+					$("#pagedata").ajaxPage({
+						url: dataUrl,
+						pageId: $("#page"),
+						pageSize: 6,
+						run: true,
+						content: pdata,
+						complete: pagecallback,
+					});
+				});
+
+			});
+		</script>
 	</body>
+
 </html>

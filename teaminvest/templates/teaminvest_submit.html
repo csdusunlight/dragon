@@ -19,9 +19,11 @@
 			<div class="contentBox">
 				<div class="iptBox">
 					投资平台：
-					<select name="">
-						
-						<option>--</option>
+					<select>
+						<option value="0">--</option>
+						{% for x in projects %}
+						<option value="{{x.id}}">{{x.title}}</option>
+						{%endfor%}
 					</select>
 				</div>
 				<div class="iptBox">
@@ -32,10 +34,10 @@
 					投资金额：
 					<input type="text" name="money" id="money" class="ipt" placeholder="输入您的投资金额，仅限数字" />&nbsp;&nbsp;元
 				</div>
-				<div class="iptBox">
+				<!--<div class="iptBox">
 					投资标期：
-					<input type="text" name="time"  id="time" class="ipt" placeholder="输入您的投资标期，仅限数字" />&nbsp;&nbsp;天
-				</div>
+					<input type="text" name="time" id="time" class="ipt" placeholder="输入您的投资标期，仅限数字" />&nbsp;&nbsp;天
+				</div>-->
 				<div class="iptBox" style="padding-left:40px;">
 					备注：
 					<input type="text" name="remark" id="remark" class="ipt" placeholder="qq号，qq昵称" />
@@ -63,26 +65,29 @@
 	</body>
 	<script>
 		$(function() {
+
 			$(".submit").click(function() {
 				var date = $("#date").val();
+				console.log(date);
 				var money = $("#money").val();
-				var time = $("#time").val();
 				var remark = $("#remark").val();
+				var project = $("select option:selected").val();
 				
-				if (!date || !money || !money || !remark) {
+				if( project==0 || !date || !money || !money || !remark) {
 					alert("填写不能为空");
 				}
-				
+
 				var url = "/restapi/investlog/";
 				$.ajax({
 					url: url,
-					type: 'post', 
-					async: true, 
+					type: 'post',
+					async: false,
 					data: {
-						"date":date,
-						"money":money,
-						"time":time,
-						"remark":remark
+						"project":project,
+//						"audit_time": time,
+						"invest_date": date,
+						"invest_amount": money,
+						"remark": remark
 					},
 					timeout: 5000, //超时时间
 					dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
