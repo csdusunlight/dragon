@@ -20,6 +20,8 @@ class TeamInvestLogSerializer(serializers.ModelSerializer):
 
 class BackLogSerializer(serializers.ModelSerializer):
     state_desc = serializers.CharField(source='get_audit_state_display', read_only=True)
+    invest_date = serializers.DateField(source='investlog.invest_date', read_only=True)
+    invest_amount = serializers.CharField(source='investlog.invest_amount', read_only=True)
     class Meta:
         model = Backlog
         fields = '__all__'
