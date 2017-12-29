@@ -50,7 +50,7 @@ var data_finance0 = '<table width="100%"><thead><tr><th>平台</th><th>手机号
 var data_finance1 = '<table width="100%"><thead><tr><th>平台</th><th>手机号</th>'+
     '<th>投资时间</th><th>金额</th><th>期限</th><th>备注</th><th>修改</th></tr></thead><tbody>'+
     '[results]<tr><td class="change_title">{project}</td><td class="change_account">{invest_account}</td><td class="time-limit change_time">{invest_time}</td><td class="change_amount">{invest_amount}</td><td class="change_term">{invest_term}</td>' +
-    '<td class="change_remark">{remark}</td><td class="m-midia"><a onclick="editData_02(this,{id})">修改</a> | <a onclick="delData_02(this,{id})">删除</a></td></tr>[/results]'
+    '<td class="change_remark">{remark}</td><td class="m-midia"><a onclick="editData_02(this,{id})">修改</a> | <a onclick="delData(this,{id})">删除</a></td></tr>[/results]'
     + '</tbody></table>';
 var data_finance2 = '<table width="100%"><thead><tr><th>平台</th><th>手机号</th>'+
     '<th>投资时间</th><th>金额</th><th>期限</th><th>备注</th><th>拒绝原因</th></tr></thead><tbody>'+
@@ -645,7 +645,7 @@ var canclePopup = function(obj) {       //取消自定义弹窗
     <div class="popup m-del-proj">
         <div class="popup__content" style="width: 600px;">
             <div class="popup__top">
-                <h2 class="popup__title">删除理財福利数据</h2><button type="button" class="popup__close popup__close-btn" onclick="canclePopup(this)">×</button>
+                <h2 class="popup__title">删除理财福利数据</h2><button type="button" class="popup__close popup__close-btn" onclick="canclePopup(this)">×</button>
             </div>
             <div class="popup__detail">
                 是否删除该条数据？

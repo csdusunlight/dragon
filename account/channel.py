@@ -129,7 +129,7 @@ def channel(request):
     else:
         flist = list(Finance.objects.filter(state='1', level__in=['channel','all']).order_by('title'))      #jzy
         ftype = ContentType.objects.get_for_model(Finance)
-        return render(request, 'account/account_channel.html', {'flist':flist, 'ftype':ftype})
+        return render(request, 'account/account_channel.html', {'flist':flist, 'ftype':ftype.id})
 
 @login_required
 def submit_itembyitem(request):
