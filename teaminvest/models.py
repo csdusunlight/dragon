@@ -29,10 +29,10 @@ class Project(models.Model):
 def get_today():
     return datetime.date.today()
 AUDIT_STATE = (
-    ('0', u'审核通过'),
+    ('0', u'待回款'),
     ('1', u'待审核'),
     ('2', u'审核未通过'),
-    ('3', u'复审'),
+    ('3', u'已结清'),
 )
 class Investlog(models.Model):
     user = models.ForeignKey(MyUser, related_name="investlog_submit")
