@@ -2015,8 +2015,8 @@ def admin_teaminvest(request):
     admin_user = request.user
     if request.method == "GET":
         if not ( admin_user.is_authenticated() and admin_user.is_staff):
-            return redirect(reverse('admin:login') + "?next=" + reverse('admin_media'))
-        return render(request,"admin_medialist.html")
+            return redirect(reverse('admin:login') + "?next=" + reverse('admin_teaminvest'))
+        return render(request,"admin_teaminvest.html")
     if request.method == "POST":
         res = {}
         if not request.is_ajax():
@@ -2030,9 +2030,8 @@ def admin_teaminvest(request):
             res['res_msg'] = u'您没有操作权限！'
             return JsonResponse(res)
         logid = request.POST.get('id', None)
-        cash = request.POST.get('cash', None)
+        
         type = request.POST.get('type', None)
-        reason = request.POST.get('reason', None)
         type = int(type)
         if not logid:
             res['code'] = -2
@@ -2040,12 +2039,12 @@ def admin_teaminvest(request):
             return JsonResponse(res)
         investlog = Investlog.objects.get(id=logid)
         event_user = investlog.user
-
         project = investlog.project   #jzy
         project_title = project.title   # jzy
 
         translist = None
         if type==1:
+            cash = request.POST.get('cash', None)
             try:
                 cash = float(cash)*100
                 cash = int(cash)
@@ -2084,6 +2083,7 @@ def admin_teaminvest(request):
                         logger.error(u"Charging cash is failed!!!")
                         res['res_msg'] += u"现金记账失败，请检查输入合法性后再次提交！"
         elif type==2:
+            reason = request.POST.get('reason', None)
             investlog.audit_state = '2'
             investlog.reason = reason
             res['code'] = 0
