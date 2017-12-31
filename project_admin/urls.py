@@ -16,8 +16,9 @@ urlpatterns = [
     url(r'^projects/$', views.ProjectList.as_view()),
     url(r'^projects/(?P<pk>[0-9]+)/$', views.ProjectDetail.as_view(), kwargs={'partial':True}),
     url(r'^investdata/$', views.ProjectInvestDataList.as_view()),
-    url(r'^investdata/(?P<pk>[0-9]+)/$', views.ProjectInvestDataDetail.as_view()),
+    url(r'^investdata/(?P<pk>[0-9]+)/$', views.ProjectInvestDataDetail.as_view(), kwargs={'partial':True}),
     url(r'^projectstatis/$', views.ProjectStatisList.as_view()),
+    url(r'^export_project_statis/$', views.export_project_statis, name='export_project_statis'),
     url(r'^daystatis/$', views.DayStatisList.as_view()),
     url(r'^account/$', views.AccountList.as_view()),
     url(r'^account/(?P<pk>[0-9]+)/$', views.AccountDetail.as_view()),
@@ -48,6 +49,7 @@ urlpatterns += [
 
     url(r'^import_projectdata_excel/$', views.import_projectdata_excel, name='import_projectdata_excel'),
     url(r'^import_audit_projectdata_excel/$', views.import_audit_projectdata_excel, name='import_audit_projectdata_excel'),
+    url(r'^import_audit_projectdata_excel_except/$', views.import_audit_projectdata_excel_except, name='import_audit_projectdata_excel_except'),
     url(r'^export_investdata_excel/$', views.export_investdata_excel, name='export_investdata_excel'),
     url(r'^export_account_bill_excel/$', views.export_account_bill_excel, name='export_account_bill_excel'),
 ]

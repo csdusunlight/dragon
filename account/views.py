@@ -266,6 +266,19 @@ def phoneImageV(request):
         if ret != 0:
             result['message'] = u'图形验证码输入错误！'
             return JsonResponse(result)
+    elif action=="change_bankcard":
+        if not request.user.is_authenticated():
+            result['code'] = 1
+            result['message'] = u"尚未登录"
+            return JsonResponse(result)
+        phone = request.user.mobile
+    elif action=="bind_weixin":
+        phone = request.GET.get('phone', None)
+        openid = request.session.get('openid',None)
+        if not openid:
+            result['code'] = 1
+            result['message'] = u"请在微信中打开网页"
+            return JsonResponse(result)
     stamp = str(phone)
     lasttime = request.session.get(stamp, None)
     now = int(ttime.time())
@@ -364,12 +377,13 @@ def welfare(request):
     fcount = Finance.objects.filter(state='1').count()
     ttype = ContentType.objects.get_for_model(Task)
     ftype = ContentType.objects.get_for_model(Finance)
+    mtype = ContentType.objects.get_for_model(MediaProject)
     tcount_u = UserEvent.objects.filter(user=request.user.id, content_type = ttype.id).count()
     fcount_u = UserEvent.objects.filter(user=request.user.id, content_type = ftype.id).count()
     tsum = UserEvent.objects.filter(time__gte=date.today(), content_type = ttype.id).count()
     fsum = UserEvent.objects.filter(time__gte=date.today(), content_type = ftype.id).count()
     statis = {'tcount':tcount,'fcount':fcount,'tcount_u':tcount_u,'fcount_u':fcount_u,'tsum':tsum,'fsum':fsum}
-    return render(request, 'account/welfare.html', {'statis':statis})
+    return render(request, 'account/welfare.html', {'statis':statis, 'ftype':ftype.id, 'ttype':ttype.id, 'mtype':mtype.id})
 
 
 def get_user_wel_page(request):
@@ -1184,4 +1198,3 @@ def get_user_invite_page(request):
 
 def vip(request):
     return render(request, 'account/account_vip.html')
-

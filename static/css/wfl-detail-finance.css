@@ -9,23 +9,36 @@
 }
 
 .item-01 {
-  width: 18%;
+  width: 16%;
 }
-
+.submit-item.item-01 {
+  font-size: 0;
+}
+.item-01 label {
+    margin-bottom: 0;
+    width: 50%;
+    font-size: 14px;
+    line-height: 20px;
+}
+.item-01 input[name="invest_type"] {
+    margin-top: -2px;
+    width: 20px;
+    vertical-align: middle;
+}
 .item-02 {
-  width: 18%;
+  width: 16%;
 }
 
 .item-03 {
-  width: 15%;
+  width: 14%;
 }
 
 .item-04 {
-  width: 15%;
+  width: 14%;
 }
 
 .item-05 {
-  width: 15%;
+  width: 14%;
 }
 
 .item-06 {
@@ -33,6 +46,9 @@
 }
 
 .item-07 {
+  width: 7%;
+}
+.item-08 {
   width: 7%;
 }
 

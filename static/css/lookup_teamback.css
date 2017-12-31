@@ -1,0 +1,46 @@
+.wrapper {
+	width: 1100px;
+	margin: 0 auto;
+	position: relative;
+}
+
+.wrapperTop {
+	padding: 10px 10px;
+	border: 1px solid RGB(218,218,218);
+	position: relative;
+}
+
+.team {
+	color: RGB(145, 193, 29);
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.wrapperTop select {
+	width: 240px;
+	margin-left: 240px;
+}
+
+
+.contentBox {
+	width: 100%;
+	
+}
+
+th {
+	height: 44px;
+	font-weight: 400;
+	font-size: 16px;
+	color: #666666;
+	text-align: center;
+	border: 1px solid RGB(218,218,218);
+	border-top: none;
+}
+
+td {
+	text-align: center;
+	height: 44px;
+	line-height: 44px;
+	border: 1px solid RGB(218,218,218);
+}
+

@@ -24,6 +24,7 @@ import StringIO
 import traceback
 from project_admin.tools import has_permission
 from django.contrib.auth.decorators import login_required
+from datetime import timedelta
 logger = logging.getLogger('wafuli')
 class BaseViewMixin(object):
     authentication_classes = (CsrfExemptSessionAuthentication,)
@@ -79,6 +80,11 @@ class ProjectInvestDataList(BaseViewMixin,generics.ListCreateAPIView):
 class ProjectInvestDataDetail(BaseViewMixin,generics.RetrieveUpdateDestroyAPIView):
     queryset = ProjectInvestData.objects.all()
     serializer_class = ProjectInvestDataSerializer
+    def perform_update(self, serializer):
+        if self.request.data.get('state'):
+            serializer.save(audit_time = datetime.datetime.now())
+        else:
+            serializer.save()
 
 class ProjectStatisList(BaseViewMixin,generics.ListCreateAPIView):
     queryset = ProjectStatis.objects.all()
@@ -328,10 +334,19 @@ def import_audit_projectdata_excel(request):
             temp = {}
             id = int(row[0])
             project_id = int(row[1])
+            term = int(row[7])
             mobile = row[5]
             consume = Decimal(row[8])
             remark = row[12]
+            date = row[4]
+            date = xlrd.xldate.xldate_as_datetime(date, 0)
             
+            try:
+                mobile = str(int(mobile)).strip()
+            except Exception,e:
+                mobile = str(mobile).strip()
+            if len(mobile)!=11:
+                raise Exception(u"手机号必须是11位，请修改后重新提交。")
             if row[9] == u"是":
                 result = True
                 temp['state'] = '0'
@@ -364,6 +379,8 @@ def import_audit_projectdata_excel(request):
             temp['consume'] = consume
             temp['remark'] = remark
             temp['mobile'] = mobile
+            temp['date'] = date
+            temp['term'] = term
             rtable.append(temp)
     except Exception, e:
         logger.info(unicode(e))
@@ -373,6 +390,7 @@ def import_audit_projectdata_excel(request):
     ####开始去重
         admin_user = request.user
     suc_num = 0
+    print rtable
     try:
         for row in rtable:
             id = row['id']
@@ -383,6 +401,8 @@ def import_audit_projectdata_excel(request):
             consume = row['consume']
             project_id = row['project_id']
             state = row['state']
+            date = row['date']
+            term = row['term']
             event = ProjectInvestData.objects.get(id=id)
 #             if event.state != '1':
 #                 continue
@@ -394,8 +414,118 @@ def import_audit_projectdata_excel(request):
             event.settle_amount = consume
             event.project_id = project_id
             event.invest_mobile = mobile
+            event.invest_time = date
+            event.invest_term = term
+            event.save(update_fields=['state', 'return_amount', 'audit_time', 'source', 'remark', 'invest_term',
+                                      'project_id', 'settle_amount', 'invest_mobile','invest_time'])
+            suc_num += 1
+        ret['code'] = 0
+    except Exception as e:
+        exstr = traceback.format_exc()
+        logger.info(unicode(exstr))
+        ret['code'] = 1
+        ret['msg'] = unicode(e)
+    ret['num'] = suc_num
+    return JsonResponse(ret)
+
+@csrf_exempt
+@login_required
+@has_permission('008')
+def import_audit_projectdata_excel_except(request):
+    admin_user = request.user
+    if not ( admin_user.is_authenticated() and admin_user.is_staff):
+        raise Http404
+    ret = {'code':-1}
+    file = request.FILES.get('file')
+#     print file.name
+    with open('./out2.xls', 'wb+') as destination:
+        for chunk in file.chunks():
+            destination.write(chunk)
+    data = xlrd.open_workbook('./out2.xls')
+    table = data.sheets()[0]
+    nrows = table.nrows
+    ncols = table.ncols
+    if ncols!=13:
+        ret['msg'] = u"文件格式与模板不符，请下载最新模板填写！"
+        return JsonResponse(ret)
+    rtable = []
+    try:
+        for i in range(1,nrows):
+            row = table.row_values(i)
+            temp = {}
+            id = int(row[0])
+            project_id = int(row[1])
+            mobile = row[5]
+            consume = Decimal(row[8])
+            remark = row[12]
+            date = row[4]
+            date = xlrd.xldate.xldate_as_datetime(date, 0)
+
+            
+            if row[9] == u"是":
+                result = True
+                temp['state'] = '0'
+            elif row[9] == u"否":
+                result = False
+                temp['state'] = '1'
+            else:
+                raise Exception(u"审核结果必须为是或否。")
+            
+            if row[10]:
+                return_amount = Decimal(row[10])
+            else:
+                return_amount = 0
+            
+               
+            if row[11] == u"网站":
+                source = 'site'
+            elif row[11] == u"渠道":
+                source = 'channel'
+            else:
+                raise Exception(u"必须为网站或渠道。")
+            temp['id'] = id
+            temp['project_id'] = project_id
+            temp['source'] = source
+            temp['return_amount'] = return_amount
+            temp['consume'] = consume
+            temp['remark'] = remark
+            temp['mobile'] = mobile
+            temp['date'] = date
+            rtable.append(temp)
+    except Exception, e:
+        logger.info(unicode(e))
+#             traceback.print_exc()
+        ret['msg'] = unicode(e)
+        return JsonResponse(ret)
+    ####开始去重
+        admin_user = request.user
+    suc_num = 0
+    print rtable
+    try:
+        for row in rtable:
+            id = row['id']
+            return_amount = row['return_amount']
+            source = row['source']
+            remark = row['remark']
+            mobile = row['mobile']
+            consume = row['consume']
+            project_id = row['project_id']
+            state = row['state']
+            date = row['date']
+            event = ProjectInvestData.objects.get(id=id)
+#             if event.state != '1':
+#                 continue
+            event.state = state
+            event.return_amount = return_amount
+            event.audit_time = datetime.datetime.now()
+            event.source = source
+            event.remark = remark
+            event.settle_amount = consume
+            event.project_id = project_id
+            event.invest_mobile = mobile
+            event.invest_time = date
             event.save(update_fields=['state', 'return_amount', 'audit_time', 'source', 'remark', 
-                                      'project_id', 'settle_amount', 'invest_mobile'])
+                                      'project_id', 'settle_amount', 'invest_mobile','invest_time'])
             suc_num += 1
         ret['code'] = 0
     except Exception as e:
@@ -460,12 +590,13 @@ def export_investdata_excel(request):
         invest_amount = con.invest_amount
         invest_term = con.invest_term
         settle_amount = con.settle_amount
+        return_amount = ''
+        result = ''
         if con.state=='0':
             result = u'是'
             return_amount = con.return_amount
-        else:
+        elif con.state=='2':
             result = u'否'
-            return_amount = ''
         source = con.get_source_display()
         remark = con.remark
         data.append([id, project_id, project_name, is_futou, invest_time, invest_mobile, invest_amount, invest_term, settle_amount,
@@ -516,12 +647,13 @@ def export_account_bill_excel(request):
         item_list = item_list.filter(subtype=subtype)
     target = request.GET.get("target", None)
     if target:
-        item_list = item_list.filter(target=target)
+        item_list = item_list.filter(target__contains=target)
     timeft_0 = request.GET.get("timeft_0", None)
     timeft_1 = request.GET.get("timeft_1", None)
     if timeft_0 and timeft_1:
-        s = datetime.date.strptime(timeft_0,'%Y-%m-%dT%H:%M')
-        e = datetime.date.strptime(timeft_1,'%Y-%m-%dT%H:%M')
+        s = datetime.datetime.strptime(timeft_0,'%Y-%m-%d')
+        e = datetime.datetime.strptime(timeft_1,'%Y-%m-%d')
+        e += timedelta(days=1)
         item_list = item_list.filter(time__range=(s,e))
     data = []
     for con in item_list:
@@ -551,6 +683,59 @@ def export_account_bill_excel(request):
         for j in range(col):
             if j==0:
                 ws.write(i+1,j,lis[j],style1)
+            else:
+                ws.write(i+1,j,lis[j])
+    sio = StringIO.StringIO()
+    w.save(sio)
+    sio.seek(0)
+    response = HttpResponse(sio.getvalue(), content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=导出表格.xls'
+    response.write(sio.getvalue())
+    return response
+
+@login_required
+@has_permission('008')
+def export_project_statis(request):
+    item_list = []
+    item_list = ProjectStatis.objects.all()
+    project_state = request.GET.get("project_state", None)
+    if project_state=='start' or project_state=='finish':
+        item_list = item_list.filter(project__state=project_state)
+    data = []
+    for con in item_list:
+        id = con.project_id
+        time = con.project.time.strftime("%Y-%m-%d")
+        finish_time = con.project.finish_time.strftime("%Y-%m-%d") if con.project.finish_time else ''
+        title = con.project.name
+        topay_amount = con.project.topay_amount
+        consume = con.consume()
+        ret = con.ret()
+        site_consume = con.site_consume
+        site_ret = con.site_return
+        channel_consume = con.channel_consume
+        channel_ret = con.channel_return
+        state = con.project.get_state_display()
+        data.append([id, time, finish_time, title, topay_amount, consume, ret, 
+                     channel_consume, channel_ret, site_consume, site_ret, state])
+    w = Workbook()     #创建一个工作簿
+    ws = w.add_sheet(u'账目明细')     #创建一个工作表
+    title_row = [u'项目编号',u'立项日期',u'结项日期',u'项目名称',u'预计待收/待消耗', u'预计总消耗',
+                 u'总返现金额',u'预估渠道消耗',u'渠道返现金额',u'预估网站消耗',u'网站返现金额',u'项目状态']
+    for i in range(len(title_row)):
+        ws.write(0,i,title_row[i])
+    row = len(data)
+    style1 = easyxf(num_format_str='YY/MM/DD')
+    for i in range(row):
+        lis = data[i]
+        col = len(lis)
+        for j in range(col):
+            if j==1:
+                ws.write(i+1,j,lis[j],style1)
+            elif j==2:
+                if lis[j]:
+                   ws.write(i+1,j,lis[j],style1) 
+                else:
+                   ws.write(i+1,j,lis[j])  
             else:
                 ws.write(i+1,j,lis[j])
     sio = StringIO.StringIO()

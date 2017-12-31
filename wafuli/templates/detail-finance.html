@@ -59,91 +59,7 @@
 				window.open(url_openwindow + "?id=" + id + "&type=" + type);
 			}
 		});
-		// $("button.td-tj").click(function(){
-		// 	var telnum = $('input#telnum').val();
-		// 	// telnum = telnum.replace(/(^\s*)|(\s*$)/g, "");
-		// 	// $('input#telnum').val(telnum);
-		// 	var remark = $('input#remark').val();
-		// 	var re=/^1[1,2,3,4,6,5,7,8,9]\d{9}$/;
-		// 	if(!re.test(telnum)){
-		// 		alert("手机号格式不正确！")
-		// 		return;
-		// 	}
-		// 	// var amount = parseFloat($('input#amount').val());
-  //     var amount = $('input#amount').val();
-  //     var re_amount=/^\d+(\.\d+)?$/;
-		// 	if(!re_amount.test(amount)){
-		// 		alert("投资金额不能为空且必须为纯数字格式！")
-		// 		return;
-		// 	}
-		// 	var term = $('input#term').val();
-		// 	if(!re_amount.test(term)){
-		// 		alert("投资标期不能为空且必须为纯数字格式！")
-		// 		return;
-		// 	}
-		// 	// $('#myModal').modal();
-
-  //     $.ajax({
-  //       url:"{%url 'expsubmit_finance' %}",
-  //       type:'post',
-  //       async:false,
-  //       data:{
-  //         type:type,
-  //         id:id,
-  //         term:term,
-  //         telnum:telnum,
-  //         remark:remark,
-  //         amount: amount
-  //       },
-  //       dataType:"json",
-  //       success:function(ret){
-  //         if(ret.code==0){
-  //           alert("请先登录！")
-  //           window.location.href = ret.url;
-  //         }
-  //         else {
-  //           alert(ret.msg);
-  //         }
-  //       },
-  //       error:function(){
-  //         alert("请检查网络连接");
-  //       }
-  //     });
-  //     popupHide();
-  //   });
-		// $("a#confirm").click(function(){
-		// 	var telnum = $('input#telnum').val();
-		// 	var remark = $('input#remark').val();
-		// 	var amount = parseFloat($('input#amount').val());
-		// 	var term = $('input#term').val();
-		// 	$('#myModal').modal("hide");
-		// 	$.ajax({
-		// 		url:"{%url 'expsubmit_finance' %}",
-		// 		type:'post',
-		// 		async:false,
-		// 		data:{
-		// 			type:type,
-		// 			id:id,
-		// 			term:term,
-		// 			telnum:telnum,
-		// 			remark:remark,
-		// 			amount: amount
-		// 		},
-		// 		dataType:"json",
-		// 		success:function(ret){
-		// 			if(ret.code==0){
-		// 				alert("请先登录！")
-		// 				window.location.href = ret.url;
-		// 			}
-		// 			else {
-		// 				alert(ret.msg);
-		// 			}
-		// 		},
-		// 		error:function(){
-		// 			alert("请检查网络连接");
-		// 		}
-		// 	});
-		// });
+		
 
     // 理财介绍超出隐藏
     var text_box = document.getElementById("text_box"),
@@ -225,7 +141,7 @@
     <img id="add_data_btn" class="add-data-btn" src="{% static 'images/add-data-btn.png' %}" />
     <div id="submit_data_container" class="submit-data-container">
       <ul class="submit-head">
-        <li class="item-01">项目名称</li>
+        <li class="item-01">选择投资类型</li>
         <li class="item-02">投资日期</li>
         <li class="item-03">注册手机号</li>
         <li class="item-04">投资金额（元）</li>
@@ -234,9 +150,10 @@
       </ul>
       <ul class="submit-item-box">
         <li class="submit-item item-01">
-          <select id="project_select" class="project_select height-add01" placeholder="选择项目">
-            <option value="{{news.id}}">{{news.title}}</option>
-          </select>
+          <select class="is_futou " placeholder="选择投资类型">
+                <option selected="selected" value="1">首投</option>
+                <option value="2">复投</option>
+            </select>
         </li>
         <li class="submit-item item-02"><input type="text" class="height-add02 time date_picker" id="date_picker" placeholder="选择日期">
         </li>
@@ -404,9 +321,8 @@
     function addData() {
       var ul = document.createElement('ul');
       ul.className = 'submit-item-box';
-      ul.innerHTML = '<li class="submit-item item-01"><select class="project_select height-add01">' +
-        $('#project_select').html() +
-        '</select></li>' +
+      ul.innerHTML = '<li class="submit-item item-01"><select class="is_futou " placeholder="选择投资类型">' +
+        '<option selected="selected" value="1">首投</option><option value="2">复投</option></select></li>' + 
         '<li class="submit-item item-02"><input type="text" class="height-add02 time date_picker"></li>' +
         '<li class="submit-item item-03"><input type="text" maxlength=11 class="telnum"></li>' +
         '<li class="submit-item item-04"><input type="text" class="amount"></li>' +
@@ -451,25 +367,27 @@
           term01 = $(this).find(".term"),
           remark01 = $(this).find(".remark");
 
-        var project_select = $(this).find(".project_select option:selected").val(),
+//      var project_select = $(this).find(".project_select option:selected").val(),
+        var project_select = '{{news.id}}',
           time = time01.val(),
           telnum = telnum01.val(),
           amount = amount01.val(),
           term = term01.val(),
+          is_futou = $(this).find(".is_futou option:selected").val(),
           remark = remark01.val(),
-          data_list = [project_select, time, telnum, amount, term, remark];
+          data_list = [project_select, time, telnum, amount, term, is_futou, remark];
 
         var re = /^1[1,2,3,4,6,5,7,8,9]\d{9}$/, //验证手机号
           re_amount = /^\d+(\.\d+)?$/; //验证数字格式
 
         var is_repeat = 0; //是否重复参数
 
-        if(project_select == "0") {
-          promptNumber++;
-          project_select01.css("border", "2px solid #ff6767");
-        } else {
-          project_select01.css("border", "1px solid #c1c1c1");
-        }
+//      if(project_select == "0") {
+//        promptNumber++;
+//        project_select01.css("border", "2px solid #ff6767");
+//      } else {
+//        project_select01.css("border", "1px solid #c1c1c1");
+//      }
         if(time == "") {
           promptNumber++;
           time01.css("border", "2px solid #ff6767");

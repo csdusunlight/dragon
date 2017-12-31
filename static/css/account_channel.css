@@ -9,7 +9,7 @@ h5 {
 
 .container-box {
 	position: relative;
-	width: 880px;
+	width: 1020px;
 	float: right;
 	margin: 0 auto;
 	text-align: left;
@@ -106,7 +106,7 @@ h5 {
 .submit-content {
 	position: relative;
 	box-sizing: content-box;
-	width: 845px;
+	width: 100%;
 	padding: 10px 0;
 	margin-top: 20px;
 	border: 1px dashed #e4e4e4;
@@ -138,6 +138,34 @@ h5 {
 
 .item-07 {
 	width: 55px;
+}
+
+.item-01 {
+    width: 18%;
+}
+
+.item-02 {
+    width: 18%;
+}
+
+.item-03 {
+    width: 15%;
+}
+
+.item-04 {
+    width: 15%;
+}
+
+.item-05 {
+    width: 15%;
+}
+
+.item-06 {
+    width: 14%;
+}
+
+.item-07 {
+    width: 5%;
 }
 
 .add-data-btn {
@@ -624,4 +652,8 @@ table td {
 
 .Welfare-td {
 	height: auto;
+}
+.changes-p {
+    box-sizing: border-box;
+    width: 100%;
 }

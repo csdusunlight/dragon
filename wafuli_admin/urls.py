@@ -47,6 +47,8 @@ urlpatterns = [
     
     url(r'^export_media/$', 'wafuli_admin.views.export_media_excel', name='export_media_excel'),
     url(r'^import_media_excel/$', 'wafuli_admin.views.import_media_excel', name='import_media_excel'),
+    
+    url(r'^admin_teaminvest/$', 'wafuli_admin.views.admin_teaminvest', name='admin_teaminvest'),
 ]
 
 

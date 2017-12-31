@@ -1,0 +1,108 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>交单</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/wfl-common.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/teaminvest_submit.css' %}" />
+		<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+	</head>
+
+	<body>
+		<div class="wrapper">
+			<div class="wrapper-top">
+				<img src="{% static 'images/task-02.png' %}" class="ms-pd" />
+				<span class="mag-pp">组队单提交</span>
+			</div>
+			<div class="contentBox">
+				<div class="iptBox">
+					投资平台：
+					<select>
+						<option value="0">--</option>
+						{% for x in projects %}
+						<option value="{{x.id}}">{{x.title}}</option>
+						{%endfor%}
+					</select>
+				</div>
+				<div class="iptBox">
+					投资时间：
+					<input type="date" name="date" id="date" class="ipt" />
+				</div>
+				<div class="iptBox">
+					投资金额：
+					<input type="text" name="money" id="money" class="ipt" placeholder="输入您的投资金额，仅限数字" />&nbsp;&nbsp;元
+				</div>
+				<!--<div class="iptBox">
+					投资标期：
+					<input type="text" name="time" id="time" class="ipt" placeholder="输入您的投资标期，仅限数字" />&nbsp;&nbsp;天
+				</div>-->
+				<div class="iptBox" style="padding-left:40px;">
+					备注：
+					<input type="text" name="remark" id="remark" class="ipt" placeholder="qq号，qq昵称" />
+				</div>
+				<!--<div class="iptBox">
+					<span>平台账号：</span>
+					<span>18570661412稍后公布</span>
+				</div>
+				<div class="iptBox">
+					<span>登陆密码：</span>
+					<span>18570661412稍后公布</span>
+				</div>-->
+				<div class="submit">提交</div>
+			</div>
+
+			<div class="tipsBox">
+				<div class="tipsTop">
+					<img src="{% static 'images/task-03.png' %}" class="ms-pd" />
+					<span class="mag-pp">注意事项单提交</span>
+				</div>
+				<p class="tips">1、请务必使用自己的挖福利账号交单</p>
+				<p class="tips">2、组队之后的本息汇款，默认汇款至挖福利绑定的银行卡账号，请确保自己的账号正确性</p>
+			</div>
+		</div>
+	</body>
+	<script>
+		$(function() {
+
+			$(".submit").click(function() {
+				var date = $("#date").val();
+				console.log(date);
+				var money = $("#money").val();
+				var remark = $("#remark").val();
+				var project = $("select option:selected").val();
+				
+				if( project==0 || !date || !money || !money || !remark) {
+					alert("填写不能为空");
+					return;
+				}
+
+				var url = "/restapi/investlog/";
+				$.ajax({
+					url: url,
+					type: 'post',
+					async: false,
+					data: {
+						"project":project,
+//						"audit_time": time,
+						"invest_date": date,
+						"invest_amount": money,
+						"remark": remark
+					},
+					timeout: 5000, //超时时间
+					dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+					success: function(data) {
+						alert("提交成功");
+						console.log(data);
+					},
+					error: function(xhr, textStatus) {
+						console.log(xhr.responseText);
+					}
+				});
+
+			});
+		});
+	</script>
+
+</html>

@@ -23,8 +23,8 @@ $(function(){
 		varicode = $("#input_varicode").val();
 		amount = $("#withdraw_amount").val();
 		amount = parseInt(amount,0)
-		if (isNaN(amount) || (amount%1000 != 0)){
-			alert("提现福币数量必须为1000的整数倍！");
+		if (isNaN(amount) || (amount%100 != 0) || amount < 10){
+			alert("提现福币数量必须为大于或等于10的整数！");
 			return;
 		}
 		if (!varicode){
@@ -86,7 +86,7 @@ $(function(){
     	{% include "header.html" %}
     	<!--内容-->
     	<div class="Content">
-        	<div class="w1100">
+        	<div class="w1250">
             	{% include "account/left.html" %}
                 <div class="RightCont">
                 	<div class="binding" style=" min-height:515px">
@@ -98,9 +98,10 @@ $(function(){
 
                             	<div class="Cash-input">
                                 	<span>提现福币：</span>
-                                    <input id="withdraw_amount" type="text" />
-                                    <i>（最低提现1000福币）</i>
+                                    <input id="withdraw_amount" type="text" placeholder="最低提现1000福币" />
+                                    <i>（工作日18点前提现当天24点前到账，18点后提现次日24点前到账）</i>
                                 </div>
+                                <!--<p style="margin-left: 110px;">工作日18点前提现当天24点前到账，18点后提现次日24点前到账</p>-->
                                 <div class="Cash-input">
                                 	<span>提现账户：</span>
                                 	{%if not card %}

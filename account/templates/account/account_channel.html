@@ -5,6 +5,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>渠道数据提交</title>
+		<link href="{% static 'images/favicon.ico'%}" rel="shortcut icon"/>
 		<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/User.css' %}" />
@@ -17,8 +18,11 @@
 		<script type="text/javascript" src="{% static 'js/page.js' %}"></script>
 		<script type="text/javascript" src="{% static 'js/jquery.date_input.pack.js' %}"></script>
 		<script type="text/javascript" src="{% static 'js/jquery.searchableSelect.js' %}"></script>
-		<script>
-		</script>
+		<style type="text/css">
+			.popup .date_selector {
+			    margin-left: 90px;
+			} 
+		</style>
 	</head>
 
 	<body>
@@ -26,7 +30,7 @@
 		{% include "header.html" %}
 		<!--内容-->
 		<div class="Content">
-			<div class="w1100">
+			<div style="width: 1250px; margin: 0 auto;" class="w1250">
 				{% include "account/left.html" %}
 				<div class="container-box">
 					<div class="content-box">
@@ -207,44 +211,58 @@
 								<div class="page" id="page">
 								</div>
 							</div>
-							<div class="popup-box popup-box-05">
-								<div class="popup-content">
-									<h3>数据修改</h3>
-									<p>
-										<span>项目名称：</span>
-										<!--<input id="create_time_change" type="text" />-->
-										<select class="invest-project height-add01" placeholder="选择项目">
-											<option value="0">--</option>
-											{% for x in flist %}
-											<option value="{{x.id}}">{{x.title}}</option>
-											{%endfor%}
-										</select>
-									</p>
-									<p>
-										<span>投资日期：</span>
-										<input type="text" class="height-add02 invest-time date_picker" placeholder="选择投资日期" />
-									</p>
-									<p>
-										<span>提交手机号：</span>
-										<input id="project_name_change" class="submit-tel" maxlength=11 type="text" onkeyup="value=value.replace(/[^\d.]/g,'')" placeholder="填写正确的手机号" />
-									</p>
-									<p>
-										<span>投资标期：</span>
-										<input id="contact_person_change" class="invest-days" type="text" onkeyup="value=value.replace(/[^\d.]/g,'')" placeholder="仅限纯数字" />
-									</p>
-									<p>
-										<span>投资金额：</span>
-										<input id="cooperate_type_change" class="invest-money" type="text" onkeyup="value=value.replace(/[^\d.]/g,'')" placeholder="仅限纯数字" />
-									</p>
-									<p>
-										<span>备注：</span>
-										<input id="balance_type_change" class="invest-remarks" type="text" placeholder="选填" />
-									</p>
-
-									<a id="cancel" class="cancel confirm" onclick="popupOutInfo()">取&nbsp;&nbsp;&nbsp;&nbsp;消</a>
-									<a id="confirm_revise" class="confirm">确认修改</a>
-								</div>
-							</div>
+							<div class="popup m-edit-proj_02">
+                                <div class="popup__content" style="width: 600px;">
+                                    <div class="popup__top">
+                                        <h2 class="popup__title">编辑理財福利数据</h2><button type="button" class="popup__close popup__close-btn" onclick="canclePopup(this)">×</button>
+                                    </div>
+                                    <div class="popup__detail">
+                                        <div class="popup__item">
+                                            <span class="popup__itemname">项目名称</span>
+                                            <input type="text" class="project_02" disabled="disabled" />
+                                        </div>
+                                        <div class="popup__item">
+                                            <span class="popup__itemname">投资日期：</span>
+                                            <input type="text" class="date_02 date_picker" placeholder="选择投资日期" />
+                                        </div>
+                                        <div class="popup__item">
+                                            <span class="popup__itemname">提交手机号：</span>
+                                            <input type="text" class="telnum_02" placeholder="填写提交手机号" />
+                                        </div>
+                                        <div class="popup__item">
+                                            <span class="popup__itemname">投资标期：</span>
+                                            <input type="text" class="term_02" placeholder="填写投资标期" />
+                                        </div>
+                                        <div class="popup__item">
+                                            <span class="popup__itemname">投资金额：</span>
+                                            <input type="text" class="money_02" placeholder="填写投资金额" />
+                                        </div>
+                                        <div class="popup__item">
+                                            <span class="popup__itemname">备注：</span>
+                                            <input type="text" class="remark_02" placeholder="填写备注" />
+                                        </div>
+                                    </div>
+                                    <div class="popup__btnbox">
+                                        <a class="cancel popup__btn m-right" onclick="canclePopup(this)">取消</a>
+                                        <a id="confirm_edit_02" class="popup__btn popup__close-btn">确认</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+							<div class="popup m-del-proj">
+                                <div class="popup__content" style="width: 600px;">
+                                    <div class="popup__top">
+                                        <h2 class="popup__title">删除理财福利数据</h2><button type="button" class="popup__close popup__close-btn" onclick="canclePopup(this)">×</button>
+                                    </div>
+                                    <div class="popup__detail">
+                                        是否删除该条数据？
+                                    </div>
+                                    <div class="popup__btnbox">
+                                        <a class="cancel popup__btn m-right" onclick="canclePopup(this)">取消</a>
+                                        <a id="confirm_del" class="popup__btn popup__close-btn">确认</a>
+                                    </div>
+                                </div>
+                            </div>
 
 						</div>
 
@@ -273,29 +291,55 @@
 			{% include "outline.html" %}
 
 			<script type="text/javascript">
-				var data = '<table width="100%"><tr><th width="12%">项目</th><th>投资日期</th><th>提交手机号</th><th>投资标期</th>' +
-					'<th>投资金额</th><th width="15%">备注</th><th>审核结果</th><th>返现福币</th><th width="12%">拒绝原因</th>' +
-					'</tr>[data]<tr><td>{project}</td><td>{invest_time}</td><td>{mobile}</td>' +
-					'<td>{invest_term}</td><td>{invest_amount}</td><td>{remark}</td><td>{audit_result}</td>' +
-					'<td>{return_amount}</td><td>{refuse_reason}</td></tr>[/data]</table>';
-				var data2 = '<table width="100%"><tr><th width="12%">项目</th><th>投资日期</th><th>提交手机号</th><th>投资标期</th>' +
-					'<th>投资金额</th><th width="15%">备注</th><th>审核结果</th><th>返现福币</th><th width="12%">操作</th>' +
-					'</tr>[data]<tr><td>{project}</td><td>{invest_time}</td><td>{mobile}</td>' +
-					'<td>{invest_term}</td><td>{invest_amount}</td><td>{remark}</td><td>{audit_result}</td>' +
-					'<td>{return_amount}</td><td><a class="revise-data" onclick=reviseData({id},this)>修改</a></td></tr>[/data]</table>';
-				var url = "{% url 'get_channel_result_page' %}" + "?page={page}&size={pageSize}";
+				var data_finance = '<table width="100%"><thead><tr><th>平台</th><th>手机号</th>'+
+                    '<th>投资时间</th><th>金额</th><th>期限</th><th>状态</th><th>备注</th><th>操作</th></tr></thead><tbody>'+
+                    '[results]<tr><td class="change_title">{project}</td><td class="change_account">{invest_account}</td><td class="time-limit change_time">{invest_time}</td><td class="change_amount">{invest_amount}</td><td class="change_term">{invest_term}</td><td data-return="{ret_money}" class="state{audit_state} f_state{audit_state}">{state_des}</td>' +
+                    '<td class="change_remark">{remark}</td><td data-state="{audit_state}" class="all-handle m-midia"><a onclick="editData_02(this,{id})">修改</a> | <a onclick="delData(this,{id})">删除</a></td></tr>[/results]'
+                    + '</tbody></table>';
+                var data_finance0 = '<table width="100%"><thead><tr><th>平台</th><th>手机号</th>'+
+                    '<th>投资时间</th><th>金额</th><th>期限</th><th>返现福币</th><th>备注</th></tr></thead><tbody>'+
+                    '[results]<tr><td>{project}</td><td>{invest_account}</td><td class="time-limit">{invest_time}</td><td>{invest_amount}</td><td>{invest_term}</td><td>{ret_money}</td>' +
+                    '<td>{remark}</td></tr>[/results]'
+                    + '</tbody></table>';
+                var data_finance1 = '<table width="100%"><thead><tr><th>平台</th><th>手机号</th>'+
+                    '<th>投资时间</th><th>金额</th><th>期限</th><th>备注</th><th>修改</th></tr></thead><tbody>'+
+                    '[results]<tr><td class="change_title">{project}</td><td class="change_account">{invest_account}</td><td class="time-limit change_time">{invest_time}</td><td class="change_amount">{invest_amount}</td><td class="change_term">{invest_term}</td>' +
+                    '<td class="change_remark">{remark}</td><td class="m-midia"><a onclick="editData_02(this,{id})">修改</a> | <a onclick="delData(this,{id})">删除</a></td></tr>[/results]'
+                    + '</tbody></table>';
+                var data_finance2 = '<table width="100%"><thead><tr><th>平台</th><th>手机号</th>'+
+                    '<th>投资时间</th><th>金额</th><th>期限</th><th>备注</th><th>拒绝原因</th></tr></thead><tbody>'+
+                    '[results]<tr><td>{project}</td><td>{invest_account}</td><td class="time-limit">{invest_time}</td><td>{invest_amount}</td><td>{invest_term}</td>' +
+                    '<td>{remark}</td><td>{refuse_reason}</td></tr>[/results]'
+                    + '</tbody></table>';
+				var furl = "/usereventlist" + "?mobile={{user.mobile}}&event_type=1&content_type={{ftype}}&page={page}&pageSize={pageSize}";
 				$('.back-a14').parent().toggleClass("on");
 				$.ajaxSetup({
 					data: {
 						csrfmiddlewaretoken: '{{ csrf_token }}'
 					},
 				});
+				function pagecallback() {
+                    $('.time-limit').each(function(){
+                        var submit_time = $(this).text().split('T');
+                        $(this).text(submit_time[0]);
+                    })
+                    $('.f_state0').each(function(){
+                        var f_txt = $(this).data('return');
+                        $(this).text('奖励' + f_txt + '福币');
+                    })
+                    $('.all-handle').each(function(){
+                        if ($(this).data('state') != 1){
+                            $(this).html('——');
+                        }
+                    })
+                }
 				$("#pagedata").ajaxPage({
-					url: url,
+					url: furl,
 					pageId: $("#page"),
 					pageSize: 10,
 					run: true,
-					content: data,
+					content: data_finance,
+					complete:pagecallback,
 				});
 				//			var filechooser = document.getElementById("choose");
 				var upload = document.getElementById("upload");
@@ -437,7 +481,7 @@
 
 				var	select_id = 1;
 				$('.project_select').searchableSelect();
-				$('.invest-project').searchableSelect();
+//				$('.invest-project').searchableSelect();
 				$('.project-select-common').searchableSelect();
 				function addData() {
 					var ul = document.createElement('ul');
@@ -626,25 +670,29 @@
 						$(this).toggleClass("on").siblings().removeClass("on")
 						var index = $(this).index();
 						$("#page1").empty();
-						if(index == 2) {
-							$("#pagedata").ajaxPage({
-								url: url + "&filter=" + index,
-								pageId: $("#page"),
-								pageSize: 30,
-								run: true,
-								content: data2,
-								//	    complete:pagecallback,
-							});
-						} else {
-							$("#pagedata").ajaxPage({
-								url: url + "&filter=" + index,
-								pageId: $("#page"),
-								pageSize: 30,
-								run: true,
-								content: data,
-								//	    complete:pagecallback,
-							});
-						}
+						var pdata;
+						var base_url;
+						if (index==0){
+                            pdata = data_finance;
+                            base_url = furl;
+                        } else if (index==1){
+                            pdata = data_finance0;
+                            base_url = furl + "&audit_state=0";
+                        } else if (index==2){
+                            pdata = data_finance1;
+                            base_url = furl + "&audit_state=1";
+                        } else if (index==3){
+                            pdata = data_finance2;
+                            base_url = furl + "&audit_state=2";
+                        }
+						$("#pagedata").ajaxPage({
+							url: base_url,
+							pageId: $("#page"),
+							pageSize: 10,
+							run: true,
+							content: pdata,
+							complete:pagecallback,
+						});
 					}
 				});
 
@@ -702,100 +750,134 @@
 				//				})
 				var project_id;
 				var revise_parent;
-				function reviseData(id, obj) {
-					project_id = id;
-					//					console.log(id);
-					revise_parent = $(obj).parent().parent();
-					var parent_dom = $(revise_parent);
-					var children0 = parent_dom.find("td").eq(0).text(),
-						children1 = parent_dom.find("td").eq(1).text(),
-						children2 = parent_dom.find("td").eq(2).text(),
-						children3 = parent_dom.find("td").eq(3).text(),
-						children4 = parent_dom.find("td").eq(4).text(),
-						children5 = parent_dom.find("td").eq(5).text();
-					//					console.log(children0+", "+children1+", "+children2+", "+children3+", "+children4+", "+children5+", ");
-					var option_val;
-					var options = $(".project_select option");
-					//					var options = $(select).find("option");
-					for(var i = 0; i < options.length; i++) {
-						if($(options)[i].text == children0) {
-							option_val = options[i].value;
-						}
-
-					}
-					console.log(option_val);
-					$(".invest-project").val(option_val);
-					$(".invest-time").val(children1);
-					$(".submit-tel").val(children2);
-					$(".invest-days").val(children3);
-					$(".invest-money").val(children4);
-					$(".invest-remarks").val(children5);
-
-					//					console.log($(options)[0].value);
-					popupOutRevise();
-				}
-				$(".popup-box-05").on("focus", ".date_picker", function() {
+				var parent_dom;
+				function editData_02(obj, id) {
+                    project_id = id;
+                    parent_dom = $(obj).parent().parent();
+                    $.ajax({
+                        url: "/userevent/" + project_id + "/",
+                        dataType: "json",
+                        type: 'get',
+                        success: function(ret) {
+                            $(".project_02").val(ret.project);
+                            $(".date_02").val(ret.invest_time.split('T')[0]);
+                            $(".telnum_02").val(ret.invest_account);
+                            $(".term_02").val(ret.invest_term);
+                            $(".money_02").val(ret.invest_amount);
+                            $(".remark_02").val(ret.remark);
+                            $(".popup.m-edit-proj_02").addClass("in");
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR.responseText);
+                            alert(jqXHR.responseText);
+                        }
+                    });
+                }
+//				function editData_02(id, obj) {
+//					project_id = id;
+//					//					console.log(id);
+//					revise_parent = $(obj).parent().parent();
+//					var parent_dom = $(revise_parent);
+//					var children0 = parent_dom.find("td").eq(0).text(),
+//						children1 = parent_dom.find("td").eq(1).text(),
+//						children2 = parent_dom.find("td").eq(2).text(),
+//						children3 = parent_dom.find("td").eq(3).text(),
+//						children4 = parent_dom.find("td").eq(4).text(),
+//						children5 = parent_dom.find("td").eq(5).text();
+//					//					console.log(children0+", "+children1+", "+children2+", "+children3+", "+children4+", "+children5+", ");
+//					var option_val;
+//					var options = $(".project_select option");
+//					//					var options = $(select).find("option");
+//					for(var i = 0; i < options.length; i++) {
+//						if($(options)[i].text == children0) {
+//							option_val = options[i].value;
+//						}
+//
+//					}
+//					console.log(option_val);
+//					$(".invest-project").val(option_val);
+//					$(".invest-time").val(children1);
+//					$(".submit-tel").val(children2);
+//					$(".invest-days").val(children3);
+//					$(".invest-money").val(children4);
+//					$(".invest-remarks").val(children5);
+//
+//					//					console.log($(options)[0].value);
+//					popupOutRevise();
+//				}
+				function delData(obj,id) {
+                    project_id = id;
+                    parent_dom = $(obj).parent().parent();
+                    $('.popup.m-del-proj').addClass('in');
+                }
+				
+				$(".popup").on("focus", ".date_picker", function() {
 					$('.date_picker').date_input();
 				})
 
-				$("#confirm_revise").click(function() {
-					var invest_project = $(".invest-project").val(),
-						invest_time = $(".invest-time").val(),
-						invest_tel = $(".submit-tel").val(),
-						invest_days = $(".invest-days").val(),
-						invest_money = $(".invest-money").val(),
-						invest_remarks = $(".invest-remarks").val();
-					console.log(invest_project);
-//					var bank = $("#bank option:selected").val();
-					console.log(project_id+","+invest_project+","+invest_time+","+invest_tel+","+invest_days+","+invest_money+","+invest_remarks+",");
-					if(!invest_project || !invest_time || !invest_tel || !invest_days || !invest_money) {
-						alert("填写项不能为空");
-						return;
-					}
-					if(invest_project == 0) {
-						alert("请选择项目");
-						return;
-					}
-
-					var revise_url = "{%url 'revise_project' %}";
-					$.ajax({
-						url: revise_url,
-						dataType: "json",
-						type: 'POST',
-						data: {
-							'project_id': project_id,
-							'invest_project': invest_project,
-							'invest_time': invest_time,
-							'invest_tel': invest_tel,
-							'invest_days': invest_days,
-							'invest_money': invest_money,
-							'invest_remarks': invest_remarks
-						},
-						success: function(ret) {
-							if(ret.code == 1) {
-								alert("请重新登录！")
-								window.location.href = ret.url;
-							} else if(ret.code == 0) {
-								alert("更改数据成功！");
-								console.log(ret.data);
-								var parent_dom = $(revise_parent);
-								parent_dom.find("td").eq(0).text(ret.data.content_object);
-								parent_dom.find("td").eq(1).text(ret.data.invest_time);
-								parent_dom.find("td").eq(2).text(ret.data.invest_account);
-								parent_dom.find("td").eq(3).text(ret.data.invest_term);
-								parent_dom.find("td").eq(4).text(ret.data.invest_amount);
-								parent_dom.find("td").eq(5).text(ret.data.remark);
-								popupOutInfo();
-							} else {
-								alert(ret.res_msg);
-							}
-						},
-						error: function() {
-							alert("请检查网络连接");
-						}
-					});
-				});
-
+				//理财福利修改部分
+                $("#confirm_edit_02").click(function() {
+                    var project = $(".project_02").val(),
+                        invest_time = $(".date_02").val(),
+                        invest_account = $(".telnum_02").val(),
+                        invest_term = $(".term_02").val(),
+                        invest_amount = $(".money_02").val(),
+                        remark = $(".remark_02").val();
+                    console.log(project);
+                    console.log(project_id + "," + project + "," + invest_account + "," + invest_time + "," + invest_term + "," + invest_amount + "," + remark + ",");
+                    if(!project || !invest_account || !invest_time || !invest_term || !invest_amount) {
+                        alert("填写项不能为空");
+                        return;
+                    }
+            
+                    $.ajax({
+                        url: '/userevent/' + project_id + '/',
+                        dataType: "json",
+                        type: 'put',
+                        data: {
+                            // 'project_id': project_id,
+                            'project': project,
+                            'invest_time': invest_time+'T00:00',
+                            'invest_account': invest_account,
+                            'invest_term': invest_term,
+                            'invest_amount': invest_amount,
+                            'remark': remark
+                        },
+                        success: function(ret) {
+                            alert("更改数据成功！");
+                            console.log(ret.data);
+                            $(parent_dom).find(".change_title").text(ret.project);
+                            $(parent_dom).find(".change_time").text(ret.invest_time.split('T')[0]);
+                            $(parent_dom).find(".change_account").text(ret.invest_account);
+                            $(parent_dom).find(".change_amount").text(ret.invest_amount);
+                            $(parent_dom).find(".change_term").text(ret.invest_term);
+                            $(parent_dom).find(".change_remark").text(ret.remark);
+                            $('.popup.m-edit-proj_02').removeClass('in');
+                        },
+                        error: function() {
+                            alert("请检查网络连接");
+                        }
+                    });
+                });//理财福利修改部分---end
+                $("#confirm_del").click(function() {
+                    console.log(project_id);
+                    $.ajax({
+                        url: '/userevent/' + project_id + '/',
+                        dataType: "json",
+                        type: 'delete',
+                        success: function(ret) {
+                            console.log($(parent_dom));
+                            $(parent_dom).remove();
+                            $('.popup.m-del-proj').removeClass('in');
+                        },
+                        error: function() {
+                            alert("请检查网络连接");
+                        }
+                    });
+                });
+                var canclePopup = function(obj) {       //取消自定义弹窗
+                    $(obj).parent().parent().parent().removeClass('in');
+                }
 			</script>
 	</body>
 

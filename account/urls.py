@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
+from django.views.generic.base import TemplateView
 
 urlpatterns = [
     url(r'^$', 'account.views.account', name='account_index'),
@@ -55,6 +56,8 @@ urlpatterns = [
 
     url(r'^submit_itembyitem/$', 'account.channel.submit_itembyitem', name='submit_itembyitem'),
     url(r'^revise_project/$', 'account.channel.revise_project', name='revise_project'),
-
-    url(r'^vip/$', 'account.views.vip', name='account_vip'),
+	url(r'^vip/$', 'account.views.vip', name='account_vip'),
+	
+    url(r'^lookup_teamorder/$',  TemplateView.as_view(template_name="account/lookup_teamorder.html"), name='account_lookup_teamorder'),
+    url(r'^lookup_teamback/$',  TemplateView.as_view(template_name="account/lookup_teamback.html"), name='account_lookup_teamback'),
 ]

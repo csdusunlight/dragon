@@ -72,7 +72,7 @@ class AccountBillSerializer(serializers.ModelSerializer):
 #     strftime = serializers.CharField(source='strftime', read_only=True)
     class Meta:
         model = AccountBill
-        fields = ('id', 'strftime', 'account', 'type', 'subtype', 'target', 'amount', 'remark',
+        fields = ('id', 'time', 'strftime', 'account', 'type', 'subtype', 'target', 'amount', 'remark',
                   'account_type','account_name','account_balance','subtype_des','type_des')        
 
 class DayAccountStatisSerializer(serializers.ModelSerializer):

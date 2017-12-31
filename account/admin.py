@@ -42,5 +42,6 @@ admin.site.register(MobileCode)
 admin.site.register(AdminPermission)
 admin.site.register(DBlock)
 admin.site.register(BankCard)
+admin.site.register(WeiXinUser)
 
 # admin.site.register(User_Envelope,EnvelopeAdmin)

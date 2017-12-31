@@ -30,7 +30,7 @@ class Command(BaseCommand):
                 aggregate(cou=Count('user_id',distinct=True),sum=Sum('invest_amount'))
         with_amount = dict.get('sum') or 0
         with_num = dict.get('cou')
-        dict = UserEvent.objects.filter(audit_time__gte=today,event_type__in=['1','4','6','8'],audit_state='0').\
+        dict = UserEvent.objects.filter(audit_time__gte=today,event_type__in=['1','4','6','8','9'],audit_state='0').\
                 aggregate(cou=Count('user_id',distinct=True),sum1=Sum('translist__transAmount'),sum2=Sum('score_translist__transAmount'))
         ret_amount = dict.get('sum1') or 0
         ret_num = dict.get('cou')
