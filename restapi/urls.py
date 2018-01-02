@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^investlog/(?P<pk>[0-9]+)/$', views.TeamProjectInvestLogDetail.as_view(), kwargs={'partial':True}),
     url(r'^backlog/$', views.BackLogList.as_view()),
     url(r'^backlog/(?P<pk>[0-9]+)/$', views.BackLogDetail.as_view(), kwargs={'partial':True}),
+    url(r'^bankcard/$', views.BankcardList.as_view()),
 ]
