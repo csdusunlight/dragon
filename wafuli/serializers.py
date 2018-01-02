@@ -28,6 +28,7 @@ class UserEventSerializer(serializers.ModelSerializer):
     refuse_reason = serializers.CharField(source='audited_logs.first.reason')
     ret_money = serializers.CharField(source='translist.first.transAmount')
     ret_score = serializers.CharField(source='score_translist.first.transAmount')
+    submit_type_des = serializers.CharField(source='get_submit_type_display', read_only=True)
     class Meta:
         model = UserEvent
         fields = '__all__'
