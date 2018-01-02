@@ -1,10 +1,11 @@
 from wafuli.models import TransList, UserEvent
 from rest_framework import serializers
 from teaminvest.models import Project, Investlog, Backlog
+from account.models import BankCard
 
 # Create your views here.
 class TransListSerializer(serializers.ModelSerializer):
-    mobile = serializers.CharField(source='user.mobile', read_only=True)
+    user_mobile = serializers.CharField(source='user.mobile', read_only=True)
     user_balance = serializers.CharField(source='balance', read_only=True)
     username = serializers.CharField(source='user.username', read_only=True)
     class Meta:
@@ -24,4 +25,9 @@ class BackLogSerializer(serializers.ModelSerializer):
     invest_amount = serializers.CharField(source='investlog.invest_amount', read_only=True)
     class Meta:
         model = Backlog
+        fields = '__all__'
+        
+class BankcardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BankCard
         fields = '__all__'
