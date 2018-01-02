@@ -29,7 +29,7 @@ td {white-space:nowrap;overflow:hidden;}
   background-image: url(../images/channel-bg02.png); color:#fff);
 }
 .RightCont { float:right; width:1020px; height:auto;}
-.Sign-vi { float:left; width:100%; height:auto; border:1px solid #eeeeee; background:#fff; border-top:3px solid #91C11D !important; }
+.Sign-vi {box-sizing: border-box; float:left; width:100%; height:auto; border:1px solid #eeeeee; background:#fff; border-top:3px solid #91C11D !important; }
 .Sign-Time { float:left; width:100%; height:auto; border-bottom:1px solid #eee; text-align:left;}
 .Sign-Time span { font-size:12px; color:#afafaf; line-height:40px; margin-left:13px;}
 .Sign-Info { float:left; width:100%; height:136px; text-align:left;}
@@ -49,7 +49,7 @@ td {white-space:nowrap;overflow:hidden;}
 .Sign-ping .on { cursor:pointer;background:url(../images/Sign.png) no-repeat left top !important;}
 .Sign-ping .off {  background:url(../images/Sign-on.png) no-repeat left top !important;}
 .Sign-on:hover { background-image:url(../images/Sign-v.png)}
-.Balance { float:left; width:100%; height:auto; border:1px solid #eee; background:#fff; margin-top:19px;}
+.Balance {box-sizing: border-box; float:left; width:100%; height:auto; border:1px solid #eee; background:#fff; margin-top:19px;}
 .Balance-T { float:left; width:100%; height:auto; border-bottom:1px solid #ebebeb; padding:35px 0 32px;}
 .Bala-l { float:left; width:160px; height:66px; margin-left:10px; border-right:1px solid #ebebeb;}
 .Bala-l span { font-size:16px; color:#888888; line-height:60px; margin-top:-23px; display:block; text-align:left;}
@@ -69,7 +69,7 @@ td {white-space:nowrap;overflow:hidden;}
 .Balance-y span { font-size:16px; color:#888888; float:left; line-height:89px; margin-left:50px;}
 .Balance-y span font { color:#91C11D;}
 .Balance-y a { line-height:89px; margin-left:32px; color:#91C11D; font-size:16px;}
-.Rience { float:left; width:100%; height:auto; background:#fff; border:1px solid #eee; margin-top:20px;}
+.Rience {box-sizing: border-box; float:left; width:100%; height:auto; background:#fff; border:1px solid #eee; margin-top:20px;}
 .Rience-T { float:left; width:100%; height:auto;}
 .Rience-T strong { float:left; font-size:18px; color:#91C11D; line-height:44px; margin-left:10px;}
 .Rience-T a { font-size:12px; color:#666666; line-height:44px; float:right; margin-right:12px; }
@@ -77,7 +77,7 @@ td {white-space:nowrap;overflow:hidden;}
 .Rience-B tr { border:1px solid #ebebeb;}
 .Rience-B th { background:#f8f8f8; font-weight:400; font-size:16px; color:#666666}
 .Rience-B td { font-size:14px; color:#afafaf}
-.Invite { float:left; width:100%; height:auto; border:1px solid #eee; margin-top:20px; background:#fff;}
+.Invite {box-sizing: border-box; float:left; width:100%; height:auto; border:1px solid #eee; margin-top:20px; background:#fff;}
 .Invite-Ti { float:left; width:100%; height:auto; border-bottom:1px solid #ebebeb;}
 .Invite-Ti strong { float:left; font-size:18px; color:#91C11D; line-height:44px; margin-left:10px;}
 .Invite-Ti a { font-size:12px; color:#666666; line-height:44px; float:right; margin-right:12px; }
@@ -176,7 +176,7 @@ a.chakan { color:#91C11D; font-size:14px;}
 .Info-box p font{ color:#999999; font-size:14px; margin-left:10px;}
 .Close { float:left; width:60px; height:60px; cursor:pointer;}
 
-.binding { float:left; width:100%; height:auto; border:1px solid #eee; background:#fff; padding-bottom:70px;}
+.binding {box-sizing: border-box; float:left; width:100%; height:auto; border:1px solid #eee; background:#fff; padding-bottom:70px;}
 .Binding-Top { float:left; width:100%; height:auto;position:relative;}
 .Binding-Top h2 { font-size:18px; color:#91C11D; line-height:44px; text-indent:12px; border-bottom:1px solid #ebebeb; float:left; width:100%; text-align:left; font-weight:bold;}
 .Binding-Box { float:left; width:auto; height:auto; padding:20px 12px;}
@@ -306,7 +306,7 @@ input[type="text"] {padding-left: 10px !important;padding-right: 10px !important
 .Newlist .on  span { color:#bababa;}
 .Newlist .on  p { color:#cecece;}
 .info-xin { position:absolute; right:20px; top:7px; background:url(../images/info.png) no-repeat center; width:20px; height:18px; line-height:12px; text-align:center; font-size:12px; color:#fff; cursor:pointer;}
-.Top-info { float:left; width:100%; height:auto; border:1px solid #eeeeee; background:#fff;}
+.Top-info {box-sizing: border-box; float:left; width:100%; height:auto; border:1px solid #eeeeee; background:#fff;}
 .Swi-Top { float:left; width:100%; height:44px; background:#fff; border-bottom:1px solid #ebebeb;}
 .Swi-Top li { float:left; width:93px; height:44px; line-height:44px; text-align:center; font-size:15px; color:#666666; position:relative; border-right:1px solid #eee; cursor:pointer;}
 .Swi-Top li:hover { color:#fff; background:#91C11D;}
@@ -330,7 +330,7 @@ input[type="text"] {padding-left: 10px !important;padding-right: 10px !important
 .Swi-info li.jiaxi a {color: #f49714;}
 .Swi-info li.shiyong a {color: #24b6a6;}
 /*.bul { background:#91C11D !important;}*/
-.Bot-info { border:1px solid #eee; background:#fff; width:100%; height:421px; float:left; margin-top:20px;position: relative;}
+.Bot-info {box-sizing: border-box; border:1px solid #eee; background:#fff; width:100%; height:421px; float:left; margin-top:20px;position: relative;}
 .Bot-info h2 {    font-size: 18px; color: #91C11D;  line-height: 44px; text-indent: 12px;  border-bottom: 1px solid #ebebeb;  float: left; width: 100%;  text-align: left;   font-weight: bold;}
 .Bot-info th { font-weight:400; font-size:16px; color:#666666; text-align:center; background:#f8f8f8; height:43px;}
 .Bot-info tr { border-bottom:1px solid #ebebeb;}
@@ -350,7 +350,7 @@ input[type="text"] {padding-left: 10px !important;padding-right: 10px !important
 .Recom-r { float:right; width:220px; height:auto; text-align:left; margin-right:13px;}
 .Recom-r span { display:block; font-size:16px; color:#888888; line-height:50px;}
 
-.binding-cont { float:left; width:100%; height:auto; border:1px solid #eee; background:#fff; margin-bottom:18px;}
+.binding-cont {box-sizing: border-box; float:left; width:100%; height:auto; border:1px solid #eee; background:#fff; margin-bottom:18px;}
 .more-id { position:absolute; right:13px; color:#12px; color:#a3a3a3; line-height:44px; top:0px;}
 .Invite-box { float:left; width:100%; height:auto; text-align:left;}
 .Invite-in { float:left; width:350px; text-align:left; height:auto; margin-left:50px;}
