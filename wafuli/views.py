@@ -387,7 +387,7 @@ def expsubmit_finance(request):
                     exist_phone = exist_phone + telnum + ", "   #jzy
                     raise ValueError('This invest_account is repective in project:' + str(news.id))
             UserEvent.objects.create(user=request.user, invest_time=time, event_type='1', invest_account=telnum, invest_term=term,
-                             invest_amount=int(amount), content_object=news, audit_state='1',remark=remark,)
+                             invest_amount=int(amount), content_object=news, audit_state='1',remark=remark, submit_type=submit_type)
             suc_num += 1
         except Exception, e:
             logger.info(e)

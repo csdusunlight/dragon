@@ -483,7 +483,7 @@ def get_admin_finance_page(request):
              "remark": con.remark or u'无' if con.audit_state!='2' or not con.audited_logs.exists() else con.audited_logs.first().reason,
              "invest_amount": con.invest_amount,
              "term": con.invest_term,
-             "sumbit_type": con.submit_type,
+             "sumbit_type_des": con.get_submit_type_display(),
         }
         data.append(i)
     if data:
