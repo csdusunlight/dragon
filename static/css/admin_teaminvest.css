@@ -26,11 +26,70 @@
 	float: left;
 	text-align: center;
 	cursor: pointer;
-	border-right: 1px solid RGB(220,220,220);
+	border-left: 1px solid RGB(220,220,220);
 	border-top: 1px solid RGB(220,220,220);
 	border-bottom: 1px solid RGB(220,220,220);
+}
+.tab li:nth-child(5){
+	border-right: 1px solid RGB(220,220,220);
 }
 .active{
 	background: RGB(145,193,29);
 	color: white;
+}
+/*-----------模态框----------*/
+.msk{
+	width: 100%;
+	height: 100%;
+	position: fixed;top: 0;left: 0;
+	background:rgba(74,49,49,.2);
+	display: none;
+}
+.mskBox{
+	width: 460px;
+	height: 360px;
+	position: absolute;left: 50%;top: 50%;
+	margin-left: -230px;
+	margin-top: -180px;
+	background: RGB(243,243,243);
+	border: 1px solid RGB(180,180,180);
+}
+.operate{
+	display: block;
+	margin: 10px 150px;
+	font-size: 20px;
+}
+.dataBox{
+	width: 360px;
+	margin: 0 auto;
+	line-height: 40px;
+}
+#backMoney{
+	width: 200px;
+	margin-left: 4px;
+}
+#date{
+	width: 200px;
+	height: 30px;
+	border: 1px solid #e4e4e4;
+}
+#remark{
+	width: 260px;
+	margin-left: 28px;
+}
+.mskBox p{
+	line-height: 30px;
+}
+.mskBtn{
+	margin-top: 10px;
+	width: 120px;
+	height: 40px;
+	background: RGB(22,155,212);
+	display: inline-block;
+	text-align: center;
+	line-height: 40px;
+	margin-left: 60px;
+	border-radius:5px;
+	color: white;
+	cursor: pointer;
 }
