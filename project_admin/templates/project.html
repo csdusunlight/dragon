@@ -131,7 +131,7 @@
 		var date_now_str = date_now.getFullYear()+"-"+(date_now.getMonth()+1)+"-"+1;
 		$.ajax({
 			type:"get",
-			url:"/project/projects/" + "?state=finish&dateft_0=" + date_now_str,
+			url:"/project/projects/" + "?state=finish&finishdate_0=" + date_now_str,
 			data: {
 				'pageSize': 1000,
 			},
