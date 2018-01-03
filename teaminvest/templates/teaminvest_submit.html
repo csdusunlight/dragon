@@ -73,7 +73,7 @@
 				var remark = $("#remark").val();
 				var project = $("select option:selected").val();
 				
-				if( project==0 || !date || !money || !money || !remark) {
+				if( project==0 || !date || !money || !remark) {
 					alert("填写不能为空");
 					return;
 				}
@@ -85,7 +85,6 @@
 					async: false,
 					data: {
 						"project":project,
-//						"audit_time": time,
 						"invest_date": date,
 						"invest_amount": money,
 						"remark": remark

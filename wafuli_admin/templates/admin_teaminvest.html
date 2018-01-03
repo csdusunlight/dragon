@@ -53,9 +53,9 @@
 					<input type="text" id="backMoney" placeholder="请输入返现金额" /><br />回款时间：
 					<input type="date" id="date" /><br /> 备注：
 					<input type="text" id="remark" placeholder="请输入备注" /><br /> 回款账号信息：
-					<p>lilichun</p>
-					<p>工商银行</p>
-					<p>622668521563201451</p>
+					<div class="msgbox">
+						
+					</div>
 				</div>
 				<div class="mskBtn submit">确定</div>
 				<div class="mskBtn cancel">取消</div>
@@ -65,20 +65,20 @@
 			$(function() {
 				//全部数据
 				var allData = '<table width="100%"><thead><tr><th width="12%">项目名称</th>' +
-					'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="9%">处理状态</th><th width="15%">操作</th><th width="20%">备注QQ</th></tr></thead><tbody>' +
-					'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td>{state_desc}</td><td class="all" data-state="{audit_state}"> </td><td>{remark}</td></tr>[/results]' +
+					'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="9%">处理状态</th><th width="20%">备注QQ</th></tr></thead><tbody>' +
+					'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td>{state_desc}</td><td>{remark}</td></tr>[/results]' +
 					'</tbody></table>';
 
 				//待审核
 				var noAuditData = '<table width="100%"><thead><tr><th width="12%">项目名称</th>' +
 					'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="9%">处理状态</th><th width="15%">操作</th><th width="20%">备注QQ</th></tr></thead><tbody>' +
-					'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td>{state_desc}</td><td><a class="cashBack">返现</a>丨<a class="refuse">拒绝</a>丨<a class="jieqing">结清</a></td><td>{remark}</td></tr>[/results]' +
+					'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td>{state_desc}</td><td><a class="cashBack" data-id="{id}">返现</a>丨<a class="refuse" data-id="{id}">拒绝</a>丨<a class="jieqing" data-id="{id}">结清</a></td><td>{remark}</td></tr>[/results]' +
 					'</tbody></table>';
 
 				//待回款
 				var backMoneyData = '<table width="100%"><thead><tr><th width="12%">项目名称</th>' +
 					'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="9%">处理状态</th><th width="15%">操作</th><th width="20%">备注QQ</th></tr></thead><tbody>' +
-					'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td>{state_desc}</td><td><a class="moneyBack">回款</a>丨<a class="refuse">查看</a>丨<a class="jieqing">结清</a></td><td>{remark}</td></tr>[/results]' +
+					'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td>{state_desc}</td><td><a class="moneyBack" data-id="{id}">回款</a>丨<a class="refuse" data-id="{id}">查看</a>丨<a class="jieqing" data-id="{id}">结清</a></td><td>{remark}</td></tr>[/results]' +
 					'</tbody></table>';
 
 				//已拒绝	
@@ -94,26 +94,24 @@
 					'</tbody></table>';
 
 				var url = "/restapi/investlog/";
-
 				function pagecallback() {
 					console.log("这是一个回调函数");
 					$('.sub_time').each(function() {
 						var submit_time = $(this).text().split('T');
 						$(this).text(submit_time[0]);
 					});
-
-					var state = $(".all").attr("data-state");
-					console.log("状态：", state);
+					
+					/*var state = $(".all").attr("data-state");
+					console.log("state状态：", state);
 					if(state == 1) {
 						$(".all").html('<a class="cashBack">返现</a>丨<a class="refuse">拒绝</a>丨<a class="jieqing">结清</a>');
 					} else if(state == 0) {
-						$(".all").html('<a class="moneyBack">回款</a>丨<a class="refuse">查看</a>丨<a class="jieqing">结清</a>');
+						$(".all").html('<a class="moneyBack">回款</a>丨<a class="checkout">查看</a>丨<a class="jieqing">结清</a>');
 					} else if(state == 2) {
 						$(".all").html('<a>/</a>');
 					} else if(state == 3) {
 						$(".all").html('<a class="check">查看回款记录</a>');
-					}
-
+					}*/
 				}
 
 				$("#pagedata").ajaxPage({
@@ -158,9 +156,31 @@
 					});
 
 				});
-
+				
 				/********************** 模态框  ***********************/
 				$(".contentBox").on('click', ".cashBack", function() {
+					$(".msgbox").empty();
+					var backUrl = "/restapi/bankcard/";
+					console.log(backUrl);
+					$.ajax({
+						url: backUrl,
+						type: 'GET', //GET
+						async: true, //或false,是否异步
+						timeout: 5000, //超时时间
+						dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+						success: function(data, textStatus, jqXHR) {
+							console.log(data.results);
+							for (var i in data.results) {
+								str_html = '<p>'+data.results[i].real_name+'</p>' +
+										   '<p>'+data.results[i].bank+'</p>' +
+										   '<p>'+data.results[i].card_number+'</p>';
+							}
+							$(".msgbox").append(str_html);
+						},
+						error: function(xhr, textStatus) {
+							console.log('错误:'+xhr.responseText);
+						}
+					});
 					
 					$(".msk").show();
 				});
@@ -168,23 +188,25 @@
 					$(".msk").hide();
 				});
 
-				/*
-				 *****************返现**************
-				 * llc
-				 * */
-				/*$(".submit").click(function() {
+				/**
+				 *************返现*************
+				 **/
+				
+				
+				$(".submit").click(function() {
 					if(!$("#backMoney").val() || !$("#date").val() || !$("#remark").val()) {
 						alert("输入框不能为空");
 					}
-
 					var pUrl = "/Admin/admin_teaminvest/";
 					$.ajax({
-						url: 'pUrl',
+						url: pUrl,
 						type: 'POST', //GET
 						async: true, //或false,是否异步
 						data: {
-							"remark":$("#remark").val(),
+							"type":1,
 							
+							"remark":$("#remark").val(),
+							"back_date":$("#date").val(),
 						},
 						timeout: 5000, //超时时间
 						dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
@@ -192,15 +214,18 @@
 							console.log(data);
 						},
 						error: function(xhr, textStatus) {
-							console.log('错误'，
-								xhr.responseText);
+							console.log('错误:'+xhr.responseText);
 						}
 					});
 
-				});*/
+				});
 
 			});
 		</script>
 	</body>
 
 </html>
+
+<!--
+	结清：type=4  id  日期 back_date
+-->
