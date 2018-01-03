@@ -59,7 +59,7 @@ var data_finance2 = '<table width="100%"><thead><tr><th>平台</th><th>手机号
     + '</tbody></table>';
 var data_media = '<table width="100%"><thead><tr><th>平台</th><th>手机号</th>'+
     '<th>投资时间</th><th>金额</th><th>期限</th><th>状态</th><th>任务截图</th><th>备注</th><th>操作</th></tr></thead><tbody>'+
-    '[results]<tr><td class="change_title">{project}</td><td class="change_account">{invest_account}</td><td class="time-limit change_time">{invest_time}</td><td class="change_amount">{invest_amount}</td><td class="change_term">{invest_term}</td><td class="state{audit_state}">{state_des}</td><td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
+    '[results]<tr><td class="change_title">{project}</td><td class="change_account">{invest_account}</td><td class="time-limit change_time">{invest_time}</td><td class="change_amount">{invest_amount}</td><td class="change_term">{invest_term}</td><td data-return="{ret_money}" class="state{audit_state} f_state{audit_state}">{state_des}</td><td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
     '<span class="img-up"><img src="{% static 'images/task-suoluetu.jpg' %}" alt="截图上传图片" /></span></a></td><td class="change_remark">{remark}</td><td data-state="{audit_state}" class="all-handle m-midia"><a onclick="editData_03(this,{id})">修改</a> | <a onclick="delData(this,{id})">删除</a></td></tr>[/results]'
     + '</tbody></table>';
 var data_media0 = '<table width="100%"><thead><tr><th>平台</th><th>手机号</th>'+
@@ -193,14 +193,6 @@ function popupOutInfo() {
 
 $(function(){
 	$('.back-a2').parent().toggleClass("on");
-	$("#pagedata1").ajaxPage({
-	    url:turl+0,
-	    pageId:$("#page1"),
-	    pageSize:6,
-	    run:true,
-	    content:data,
-	    complete:pagecallback,
-	});
 	$("#pagedata2").ajaxPage({
 	    url:furl,
 	    pageId:$("#page2"),
@@ -215,6 +207,14 @@ $(function(){
         pageSize:6,
         run:true,
         content:data_media,
+        complete:pagecallback,
+    });
+    $("#pagedata1").ajaxPage({
+        url:turl+0,
+        pageId:$("#page1"),
+        pageSize:6,
+        run:true,
+        content:data,
         complete:pagecallback,
     });
 	$("#Swi-Top li").click(function(){
@@ -469,28 +469,9 @@ var canclePopup = function(obj) {       //取消自定义弹窗
                     <span>理财福利：<font>{{statis.fcount_u}}</font> 个</span>
                 </div>
             </div>-->
-            <div class="Welfare" style="margin-top: 0;">
-            	
-                <div class="Welfare-T">
-                    <strong>体验福利</strong>
-                    <ul class="Welfare-li" id="Swi-Top">
-                        <li class="on">全部</li>
-                        <li>已通过</li>
-                        <li>审核中</li>
-                        <li>已拒绝</li>
-                    </ul>
-                </div>
-                <div class="Welfare-td">
-                    <div id="pagedata1">
-                    </div>
-                    <div class="Page-in">
-                        <div class="page" id="page1">
-                        </div>
-                    </div>
-                </div>
-            </div>
             
-            <div class="Welfare">
+            
+            <div class="Welfare" style="margin-top: 0;">
                 <div class="Welfare-T">
                     <strong>理财福利</strong>
                     <ul class="Welfare-li" id="Swi-Top2">
@@ -528,7 +509,25 @@ var canclePopup = function(obj) {       //取消自定义弹窗
                     </div>
                 </div>
             </div>
-
+            <div class="Welfare">
+                <div class="Welfare-T">
+                    <strong>体验福利</strong>
+                    <ul class="Welfare-li" id="Swi-Top">
+                        <li class="on">全部</li>
+                        <li>已通过</li>
+                        <li>审核中</li>
+                        <li>已拒绝</li>
+                    </ul>
+                </div>
+                <div class="Welfare-td">
+                    <div id="pagedata1">
+                    </div>
+                    <div class="Page-in">
+                        <div class="page" id="page1">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="popup-box popup-box-05">
                 <div class="popup-content">
                     <h3>数据修改</h3>
@@ -584,7 +583,7 @@ var canclePopup = function(obj) {       //取消自定义弹窗
                 </div>
                 <div class="popup__item">
                     <span class="popup__itemname">提交手机号：</span>
-                    <input type="text" class="telnum_01" placeholder="填写提交手机号" />
+                    <input type="text" class="telnum_01" disabled="disabled" placeholder="填写提交手机号" />
                 </div>
                 <div class="popup__item">
                     <span class="popup__itemname">投资标期：</span>
@@ -621,7 +620,7 @@ var canclePopup = function(obj) {       //取消自定义弹窗
                 </div>
                 <div class="popup__item">
                     <span class="popup__itemname">提交手机号：</span>
-                    <input type="text" class="telnum_02" placeholder="填写提交手机号" />
+                    <input type="text" class="telnum_02" disabled="disabled" placeholder="填写提交手机号" />
                 </div>
                 <div class="popup__item">
                     <span class="popup__itemname">投资标期：</span>
@@ -672,7 +671,7 @@ var canclePopup = function(obj) {       //取消自定义弹窗
                 </div>
                 <div class="popup__item">
                     <span class="popup__itemname">提交手机号：</span>
-                    <input type="text" class="telnum_03" placeholder="填写提交手机号" />
+                    <input type="text" class="telnum_03" disabled="disabled" placeholder="填写提交手机号" />
                 </div>
                 <div class="popup__item">
                     <span class="popup__itemname">投资标期：</span>
