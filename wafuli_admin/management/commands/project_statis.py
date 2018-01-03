@@ -64,14 +64,9 @@ class Command(BaseCommand):
         update_fields = {}
         update_fields['start_num'] = Project.objects.filter(state='start').count()
         update_fields['finish_num'] = Project.objects.filter(state='finish').count()
-        update_fields['invest_count'] = ProjectInvestData.objects.filter(invest_time=today).count()
-        statdic = ProjectInvestData.objects.filter(invest_time=today).aggregate(invest_sum=Sum('invest_amount'),
-               consume_sum=Sum('settle_amount'))
-        update_fields['ret_count'] = ProjectInvestData.objects.filter(invest_time=today, state='0').count()
-        statdic_pass = ProjectInvestData.objects.filter(invest_time=today, state='0').aggregate(
-               ret_invest_sum=Sum('invest_amount'), ret_sum=Sum('return_amount'))
-        update_fields.update(statdic)
-        update_fields.update(statdic_pass)
+#         update_fields.update(statdic)
+#         update_fields.update(statdic_pass)
+#         print update_fields
         obj, created = DayStatis.objects.update_or_create(date=today, defaults=update_fields)
 #         cursor.execute("select a.project_id, a.source, sum(a.settle_amount) as sumofsettle, \
 #                             sum(a.return_amount) as sumofret from project_admin_projectinvestdata a \
