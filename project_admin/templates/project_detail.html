@@ -1,5 +1,18 @@
 {% extends "project_base.html" %} {%load staticfiles%} {% block js %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/jquery.searchableSelect.css' %}" />
+<script type="text/javascript" src="{% static 'js/jquery.searchableSelect.js' %}"></script>
 <script type="text/javascript" src="{%static 'js/ajaxfileupload.js'%}"></script>
+<style>
+    .searchable-select {
+        width: 200px;
+    }
+    .searchable-select .searchable-select-caret {
+        width: 2px;
+    }
+    .searchable-select .searchable-select-input {
+        width: 100% !important;
+    }
+</style>
 <script type="text/javascript">
 
 	var data = '<table width="100%"><tr><th>项目编号</th><th>结项日期</th><th>项目名称</th><th>甲方名称</th><th>商务对接人</th>' +
@@ -92,6 +105,7 @@
 					option_item.innerText = ret.results[i].name;
 					option_item.value = ret.results[i].id;
 					$(".platform-select").append(option_item);
+					$('.platform-select').searchableSelect();
 				}
 			},
 			error: function(ret) {
