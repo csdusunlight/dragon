@@ -105,8 +105,8 @@
 					option_item.innerText = ret.results[i].name;
 					option_item.value = ret.results[i].id;
 					$(".platform-select").append(option_item);
-					$('.platform-select').searchableSelect();
 				}
+				$('.platform-select').searchableSelect();
 			},
 			error: function(ret) {
 				alert(JSON.stringify(ret));
