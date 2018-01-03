@@ -42,10 +42,12 @@ class TeamProjectInvestLogList(BaseViewMixin, generics.ListCreateAPIView):
         else:
             return Investlog.objects.filter(user=user)
     def perform_create(self, serializer):
-        try:
-            serializer.save(audit_state='1', user=self.request.user)
-        except:
+        project = serializer.validated_data['project']
+        if Investlog.objects.filter(user=self.request.user, project=project).exclude(audit_state='2').exists():
             raise ValidationError({'detail': u'同一个项目只能参与1次'})
+        else:
+            serializer.save(audit_state='1', user=self.request.user)
+            
 
 # class AdminTeamProjectInvestLogList(TeamProjectInvestLogList):
 #     def get_queryset(self):

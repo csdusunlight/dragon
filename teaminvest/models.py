@@ -49,7 +49,6 @@ class Investlog(models.Model):
         return u"用户：%s 投资项目：%s 投资金额：%s" % (self.user, self.project.title, self.invest_amount)
     class Meta:
         ordering = ["-submit_time",]
-        unique_together = (('user', 'project'),)
     def get_encrypt_mobile(self):
         mobile = self.mobile
         if len(mobile)>=7:
