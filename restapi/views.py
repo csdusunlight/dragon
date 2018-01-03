@@ -10,6 +10,7 @@ import django_filters
 from restapi.Filters import TranslistFilter, TeamInvestLogFilter, BackLogFilter
 from teaminvest.models import Project, Investlog, Backlog
 from account.models import BankCard
+from rest_framework.exceptions import ValidationError
 
 class BaseViewMixin(object):
     authentication_classes = (CsrfExemptSessionAuthentication,)
@@ -40,7 +41,10 @@ class TeamProjectInvestLogList(BaseViewMixin, generics.ListCreateAPIView):
         else:
             return Investlog.objects.filter(user=user)
     def perform_create(self, serializer):
-        serializer.save(audit_state='1', user=self.request.user)
+        try:
+            serializer.save(audit_state='1', user=self.request.user)
+        except:
+            raise ValidationError({'detail': u'同一个项目只能参与1次'})
 
 # class AdminTeamProjectInvestLogList(TeamProjectInvestLogList):
 #     def get_queryset(self):
