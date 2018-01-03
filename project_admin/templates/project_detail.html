@@ -41,6 +41,8 @@
 			success: function(ret) {
 				$("#name_change").val(ret.name);
 				$("#platform_change").val(ret.platform);
+				var searchable_dom = '.searchable-select-item[data-value="'+ ret.platform +'"]';
+				$(searchable_dom).click();
 				$("#contact_change").val(ret.contact);
 				$("#coopway_change").val(ret.coopway);
 				$("#settleway_change").val(ret.settleway);
