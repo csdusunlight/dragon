@@ -2010,6 +2010,7 @@ def admin_media(request):
             event.save(update_fields=['audit_state','audit_time'])
         return JsonResponse(res)
 
+@csrf_exempt
 @transaction.atomic
 def admin_teaminvest(request):
     admin_user = request.user
