@@ -2071,6 +2071,7 @@ def admin_teaminvest(request):
                     get_vip_bonus(event_user, cash, 'finance')
                 if translist:
                     investlog.audit_state = '0'
+                    investlog.audit_time = datetime.datetime.now()
                     translist.user_event = investlog
                     translist.save(update_fields=['user_event'])
                     res['code'] = 0
@@ -2086,23 +2087,30 @@ def admin_teaminvest(request):
             reason = request.POST.get('reason', None)
             investlog.audit_state = '2'
             investlog.reason = reason
+            investlog.audit_time = datetime.datetime.now()
             res['code'] = 0
         elif type==3:
             back_amount = request.POST.get('cash', None)
             remark = request.POST.get('remark', None)
+            back_date = request.POST.get('back_date',None)
+            back_date = datetime.datetime.strptime(back_date, '%Y-%m-%d')
             try:
                 back_amount = Decimal(back_amount)
             except:
                 res['code'] = -2
                 res['res_msg'] = u"操作失败，输入不合法！"
                 return JsonResponse(res)
-            Backlog.objects.create(user=event_user, project=project, investlog=investlog, back_amount=back_amount, remark=remark)
+            Backlog.objects.create(user=event_user, project=project, investlog=investlog, back_amount=back_amount, remark=remark,
+                                   back_date = back_date)
+            res['code'] = 0
+        elif type==4:
+            investlog.audit_state = '3'
             res['code'] = 0
 #             msg_content = u'您提交的"' + investlog.content_object.title + u'"媒体单审核未通过，原因：' + reason
 #             Message.objects.create(user=event_user, content=msg_content, title=u"媒体单审核");
 
         if res['code'] == 0:
-            investlog.save(update_fields=['audit_state','audit_time'])
+            investlog.save(update_fields=['audit_state','audit_time','reason'])
         return JsonResponse(res)
 
 @login_required
