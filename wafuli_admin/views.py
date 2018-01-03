@@ -2087,7 +2087,7 @@ def admin_teaminvest(request):
         elif type==2:
             reason = request.POST.get('reason', None)
             investlog.audit_state = '2'
-            investlog.reason = reason
+            investlog.audit_reason = reason
             investlog.audit_time = datetime.datetime.now()
             res['code'] = 0
         elif type==3:
