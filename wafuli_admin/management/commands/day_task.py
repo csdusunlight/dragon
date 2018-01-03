@@ -32,7 +32,7 @@ class Command(BaseCommand):
             else:
                 project.coupons.filter(is_used=False).delete()
                 
-        UserToken.objects.filter(expire<time.time()*1000).delete()
+        UserToken.objects.filter(expire_lt = time.time()*1000).delete()
         
         today = datetime.date.today()
         for i in range(7):
