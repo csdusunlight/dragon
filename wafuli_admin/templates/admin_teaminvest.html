@@ -77,6 +77,14 @@
 				<div class="mskBtn cancel">取消</div>
 			</div>
 		</div>
+		<div class="cMsk">
+			<div class="mskBox1">
+				<span style="display: block;margin: 10px 160px;font-size: 20px;">操作结算弹窗</span>
+				<p class="ctxt">是否要进行结算？</p>
+				<div class="mskBtn cBtn">确定</div>
+				<div class="mskBtn Ccancel">取消</div>
+			</div>
+		</div>
 		<script>
 			$(function() {
 				//全部数据
@@ -173,14 +181,14 @@
 					});
 
 				});
-				
+
 				var parent;
 				var pUrl = "/Admin/admin_teaminvest/";
 				/********************** 模态框  ***********************/
 				$(".contentBox").on('click', ".cashBack", function() {
 					parent = $(this).parent();
 					var id = $(this).attr("data-id");
-					console.log("当前返现的id：",id);
+					console.log("当前返现的id：", id);
 					$(".msgbox").empty();
 					var backUrl = "/restapi/bankcard/";
 					console.log(backUrl);
@@ -203,10 +211,10 @@
 							console.log('错误:' + xhr.responseText);
 						}
 					});
-					
+
 					//模态框弹出
 					$(".msk").show();
-					
+
 					/**
 					 *************返现*************
 					 **/
@@ -249,7 +257,7 @@
 				});
 
 				/**************拒绝弹出模态框*************/
-				/*$(".contentBox").on('click', ".refuse", function() {
+				$(".contentBox").on('click', ".refuse", function() {
 					parent = $(this).parent();
 					var fId = $(this).attr("data-id");
 					console.log("当前拒绝fId：", fId);
@@ -260,20 +268,19 @@
 						}
 						$.ajax({
 							url: pUrl,
-							type: 'POST',//Post方法
-							async: true,//是否同步
+							type: 'POST', //Post方法
+							async: true, //是否同步
 							data: {
 								"type": 2,
 								"id": fId,
 								"reason": $(".reason").val()
 							},
 							timeout: 5000, //超出时间
-							dataType: 'json',//返回数据格式Json
-							success: function(data, textStatus, jqXHR) {
+							dataType: 'json', //返回数据格式Json
+							success: function(ret) {
 								alert("提交成功");
 								$(".fMsk").hide();
-								console.log(data);
-								parent.replaceWith("<td><span>已拒绝</span></td>");//替换当前内容
+								parent.replaceWith("<td><span>已拒绝</span></td>"); //替换当前内容
 							},
 							error: function(xhr, textStatus) {
 								console.log('错误:' + xhr.responseText);
@@ -285,44 +292,52 @@
 				});
 				$(".cancel").click(function() {
 					$(".fMsk").hide();
-				});*/
+				});
 
 				/************结清ajax**************/
 				$(".contentBox").on('click', ".checkout", function() {
+					$(".cMsk").show();
 					parent = $(this).parent();
 					var cId = $(this).attr("data-id");
 					console.log("当前结清的id", cId);
-					$.ajax({
-						url: pUrl,
-						type: "post", //POST方法
-						async: true, //是否同步
-						data: {
-							"type": 4,
-							"id": cId
-						},
-						timeout: 5000,	//超出时间
-						dataType: 'json', //返回数据格式json
-						success: function(ret) {
-							if(ret.data == 0){
-								alert("成功");
-							}else{
-								alert(ret.res_msg);
+
+					$(".cBtn").click(function() {
+						$.ajax({
+							url: pUrl,
+							type: "post", //POST方法
+							async: true, //是否同步
+							data: {
+								"type": 4,
+								"id": cId
+							},
+							timeout: 5000, //超出时间
+							dataType: 'json', //返回数据格式json
+							success: function(ret) {
+								if(ret.data == 0) {
+									alert("结算成功");
+									$(".cMsk").hide();
+								} else {
+									alert(ret.res_msg);
+								}
+								alert("提交成功");
+								parent.replaceWith("<td><span>已结清</span></td>"); //替换当前内容
+							},
+							error: function(xhr, textStatus) {
+								console.log('错误:' + xhr.responseText);
 							}
-							alert("提交成功");
-							console.log(data);
-							parent.replaceWith("<td><span>已结清</span></td>");//替换当前内容
-						},
-						error: function(xhr, textStatus) {
-							console.log('错误:' + xhr.responseText);
-						}
+						});
+
 					});
+				});
+				$(".Ccancel").click(function() {
+					$(".cMsk").hide();
 				});
 
 				/************回款ajax****************/
-				/*$(".contentBox").on('click', ".moneyBack", function() {
+				$(".contentBox").on('click', ".moneyBack", function() {
 					parent = $(this).parent();
 					var bId = $(this).attr("data-id");
-					console.log("当前回款id:", bId);  
+					console.log("当前回款id:", bId);
 					$(".mskBox1").show();
 					$(".backBtn").click(function() {
 						if(!$(".backMoney").val()) {
@@ -349,12 +364,12 @@
 								console.log('错误:' + xhr.responseText);
 							}
 						});
-						
-						$(".cancel").hide();
-
 					});
 
-				});*/
+				});
+				$(".cancel").click(function() {
+					$(".mskBox1").hide();
+				});
 
 			});
 		</script>

@@ -2111,7 +2111,7 @@ def admin_teaminvest(request):
 #             Message.objects.create(user=event_user, content=msg_content, title=u"媒体单审核");
 
         if res['code'] == 0:
-            investlog.save(update_fields=['audit_state','audit_time','reason'])
+            investlog.save(update_fields=['audit_state','audit_time','audit_reason'])
         return JsonResponse(res)
 
 @login_required

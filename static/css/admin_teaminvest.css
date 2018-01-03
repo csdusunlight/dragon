@@ -164,3 +164,19 @@
 .backBtn{
 	margin-left: 80px;
 }
+.cMsk{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: rgba(74, 49, 49, .2);
+	display: none;
+}
+.ctxt{
+	margin: 30px 160px;
+	display: block;
+}
+.cBtn{
+	margin-left: 80px;
+}

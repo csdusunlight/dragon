@@ -34,10 +34,6 @@
 					投资金额：
 					<input type="text" name="money" id="money" class="ipt" placeholder="输入您的投资金额，仅限数字" />&nbsp;&nbsp;元
 				</div>
-				<!--<div class="iptBox">
-					投资标期：
-					<input type="text" name="time" id="time" class="ipt" placeholder="输入您的投资标期，仅限数字" />&nbsp;&nbsp;天
-				</div>-->
 				<div class="iptBox" style="padding-left:40px;">
 					备注：
 					<input type="text" name="remark" id="remark" class="ipt" placeholder="qq号，qq昵称" />
@@ -73,7 +69,7 @@
 				var remark = $("#remark").val();
 				var project = $("select option:selected").val();
 				
-				if( project==0 || !date || !money || !remark) {
+				if( project==0 || !date || !money ) {
 					alert("填写不能为空");
 					return;
 				}
@@ -97,6 +93,10 @@
 					},
 					error: function(xhr, textStatus) {
 						console.log(xhr.responseText);
+						ret = JSON.parse(xhr.responseText);
+						for ( var item in ret){
+							alert(ret[item]);
+						}
 					}
 				});
 

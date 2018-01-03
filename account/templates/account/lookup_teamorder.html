@@ -11,15 +11,16 @@
 		<script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 		<script type="text/javascript" src="{% static 'js/page.js' %}"></script>
 	</head>
-		<style>
-			.Page-in{
-				position: absolute;
-				width: 100%;
-			}
-			/*.page{
+	<style>
+		.Page-in {
+			position: absolute;
+			width: 100%;
+		}
+		/*.page{
 				background: RGB(245,245,245);
 			}*/
-		</style>
+	</style>
+
 	<body>
 		<div class="wrapper" style="background: white;">
 			<!--
@@ -62,9 +63,9 @@
 
 		<script>
 			$(function() {
-				var data = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="20%">投资时间</th>' +
-					'<th width="20%">投资金额</th><th width="15%">状态<th width="25%">备注</th></tr></thead><tbody>' +
-					'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td>{state_desc}</td><td>{remark}</td></tr>[/results]' +
+				var data = '<table width="100%"><thead><tr><th width="15%">项目</th><th width="15%">投资时间</th>' +
+					'<th width="15%">投资金额</th><th width="15%">状态<th width="25%">备注</th><th width="15%">修改</th></tr></thead><tbody>' +
+					'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td>{state_desc}</td><td>{remark}</td><td class="change" data-state="{audit_state}"></td></tr>[/results]' +
 					'</tbody></table>';
 
 				var passData = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="20%">投资时间</th>' +
@@ -72,9 +73,9 @@
 					'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td>{state_desc}</td><td>{remark}</td></tr>[/results]' +
 					'</tbody></table>';
 
-				var auditData = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="20%">投资时间</th>' +
-					'<th width="20%">投资金额</th><th width="15%">状态<th width="25%">备注</th></tr></thead><tbody>' +
-					'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td>{state_desc}</td><td>{remark}</td></tr>[/results]' +
+				var auditData = '<table width="100%"><thead><tr><th width="15%">项目</th><th width="15%">投资时间</th>' +
+					'<th width="15%">投资金额</th><th width="15%">状态<th width="25%">备注</th><th width="15%">修改</th></tr></thead><tbody>' +
+					'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td>{state_desc}</td><td>{remark}</td><td><a>修改</a>丨<a>删除</a></td></tr>[/results]' +
 					'</tbody></table>';
 
 				var refuseData = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="20%">投资时间</th>' +
@@ -84,6 +85,13 @@
 
 				function pagecallback() {
 					console.log("这是一个回调函数");
+					$(".change").each(function() {
+						if ($(this).attr("data-state") == 1) {
+							$(this).html("<a class='lChange'>修改</a>丨<a>删除</a>");
+						}else{
+							$(this).html("<a>------</a>");
+						}
+					});
 				}
 				var url = "/restapi/investlog/";
 				$("#pagedata").ajaxPage({
@@ -99,7 +107,7 @@
 					var index = $(this).index();
 					console.log(index);
 					$(this).addClass("active").siblings().removeClass("active");
-					if (index == 0) {
+					if(index == 0) {
 						var pdata = data;
 						var dataUrl = url;
 					} else if(index == 1) {
