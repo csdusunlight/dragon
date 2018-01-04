@@ -1,3 +1,4 @@
+#coding:utf-8
 from django.shortcuts import render
 from wafuli.models import TransList, UserEvent
 from rest_framework import generics, permissions

@@ -11,6 +11,9 @@
 	</head>
 
 	<body>
+		<!--头部-->
+		{% include "header.html" %}
+		<!--内容-->
 		<div class="wrapper">
 			<div class="wrapper-top">
 				<img src="{% static 'images/task-02.png' %}" class="ms-pd" />
@@ -34,22 +37,10 @@
 					投资金额：
 					<input type="text" name="money" id="money" class="ipt" placeholder="输入您的投资金额，仅限数字" />&nbsp;&nbsp;元
 				</div>
-				<!--<div class="iptBox">
-					投资标期：
-					<input type="text" name="time" id="time" class="ipt" placeholder="输入您的投资标期，仅限数字" />&nbsp;&nbsp;天
-				</div>-->
 				<div class="iptBox" style="padding-left:40px;">
 					备注：
 					<input type="text" name="remark" id="remark" class="ipt" placeholder="qq号，qq昵称" />
 				</div>
-				<!--<div class="iptBox">
-					<span>平台账号：</span>
-					<span>18570661412稍后公布</span>
-				</div>
-				<div class="iptBox">
-					<span>登陆密码：</span>
-					<span>18570661412稍后公布</span>
-				</div>-->
 				<div class="submit">提交</div>
 			</div>
 
@@ -62,6 +53,10 @@
 				<p class="tips">2、组队之后的本息汇款，默认汇款至挖福利绑定的银行卡账号，请确保自己的账号正确性</p>
 			</div>
 		</div>
+		<!--底部-->
+	  {% include "footer.html" %}
+	  <!--浮动窗口-->
+	  {% include "outline.html" %}
 	</body>
 	<script>
 		$(function() {
@@ -73,7 +68,7 @@
 				var remark = $("#remark").val();
 				var project = $("select option:selected").val();
 				
-				if( project==0 || !date || !money || !money || !remark) {
+				if( project==0 || !date || !money ) {
 					alert("填写不能为空");
 					return;
 				}
@@ -85,7 +80,6 @@
 					async: false,
 					data: {
 						"project":project,
-//						"audit_time": time,
 						"invest_date": date,
 						"invest_amount": money,
 						"remark": remark
@@ -97,7 +91,11 @@
 						console.log(data);
 					},
 					error: function(xhr, textStatus) {
-						console.log(xhr.responseText);
+						
+						ret = JSON.parse(xhr.responseText);
+						for ( var item in ret){
+							alert(ret[item]);
+						}
 					}
 				});
 

@@ -16,14 +16,11 @@
 				width: 100%;
 			}
 			
-			.page {
-				background: RGB(245, 245, 245);
-			}
 		</style>
 	</head>
 
 	<body>
-		<div class="wrapper">
+		<div class="wrapper" style="background: white;">
 			<!--
             	作者：763008201@qq.com
             	时间：2017-12-28
@@ -47,9 +44,9 @@
 
 		<script type="text/javascript">
 			$(function() {
-				var data = '<table width="100%"><thead><tr><th width="15%">项目</th><th width="15%">投资时间</th>' +
-					'<th width="15%">投资金额</th><th width="15%">回款</th><th width="20%">回款时间<th width="20%">回款金额</th></tr></thead><tbody>' +
-					'[results]<tr class="index"><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td> </td><td>{back_date}</td><td>{back_amount}</td></tr>[/results]' +
+				var data = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="20%">投资时间</th>' +
+					'<th width="20%">投资金额</th><th width="20%">回款时间<th width="20%">回款金额</th></tr></thead><tbody>' +
+					'[results]<tr class="index"><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td>{back_date}</td><td>{back_amount}</td></tr>[/results]' +
 					'</tbody></table>';
 
 				function pagecallback() {
