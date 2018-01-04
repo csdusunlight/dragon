@@ -11,9 +11,11 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/page.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/datePicker.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/lookup_teamorder.css'%}" />
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/page.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/jquery.date_input.pack.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/lookup_teamorder.js' %}"></script>
 <style type="text/css">
 	.Welfare-td-03 tr td {
 	    line-height: 1.2;
@@ -565,6 +567,75 @@ var canclePopup = function(obj) {       //取消自定义弹窗
                     <a id="confirm_revise" class="confirm">确认修改</a>
                 </div>
             </div>
+            
+            <div class="wrapper" style="background: white;">
+			<!--
+            	作者：763008201@qq.com
+            	时间：2017-12-26
+            	描述：顶部
+            -->
+			<div class="wrapperTop">
+				<span class="team1">组队投资</span>
+				<ul class="oprateBox">
+					<li class="active">全部</li>
+					<li id="passTab">已通过</li>
+					<li id="auditTab">审核中</li>
+					<li id="refuseTab">已拒绝</li>
+				</ul>
+			</div>
+			<!--
+            	作者：763008201@qq.com
+            	时间：2017-12-26
+            	描述：内容部分
+           -->
+			<div class="contentBox">
+				<div id="pagedata">
+
+				</div>
+				<div class="Page-in">
+					<div class="page" id="page">
+
+					</div>
+				</div>
+			</div>
+			<!--
+            	作者：763008201@qq.com
+            	时间：2018-01-03
+            	描述：修改模态框
+            -->
+			<div class="cMsk">
+				<div class="tipBox">
+					<p class="tips">编辑组队投资数据</p>
+					<div class="dataBox">
+
+					</div>
+					<div class="btn submit" style="margin-left: 1px;">
+						确定
+					</div>
+					<div class="btn cancel">
+						取消
+					</div>
+				</div>
+			</div>
+			<!--
+            	作者：763008201@qq.com
+            	时间：2018-01-03
+            	描述：删除模态框
+            -->
+			<div class="dMsk">
+				<div class="tipBox1">
+					<p class="tips1">是否删除该条数据</p>
+					<div class="btn" id="delete" style="margin-left: 1px;">
+						确定
+					</div>
+					<div class="btn" id="cancel1">
+						取消
+					</div>
+				</div>
+
+			</div>
+		</div>
+            
         </div>
     </div>
     <div class="popup m-edit-proj_01">
