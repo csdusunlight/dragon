@@ -3,8 +3,8 @@ body {
 }
 
 .wrapper {
-	width: 1100px;
-	margin: 0 auto;
+	width: 1200px;
+	margin: 60px auto;
 	background: white;
 }
 
@@ -34,6 +34,7 @@ body {
 }
 .ipt{
 	width: 300px;
+	padding: 5px 5px;
 }
 .submit{
 	width: 80px;
