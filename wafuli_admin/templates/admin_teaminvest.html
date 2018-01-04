@@ -81,31 +81,31 @@
 <script>
 	$(function() {
 		//全部数据
-		var allData = '<table width="100%"><thead><tr><th width="12%">项目名称</th>' +
+		var allData = '<table class="t1" width="100%"><thead><tr><th width="12%">项目名称</th>' +
 			'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="9%">处理状态</th><th width="20%">备注QQ</th></tr></thead><tbody>' +
 			'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td>{state_desc}</td><td>{remark}</td></tr>[/results]' +
 			'</tbody></table>';
 
 		//待审核
-		var noAuditData = '<table width="100%"><thead><tr><th width="12%">项目名称</th>' +
+		var noAuditData = '<table class="t1" width="100%"><thead><tr><th width="12%">项目名称</th>' +
 			'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="15%">操作</th><th width="20%">备注QQ</th></tr></thead><tbody>' +
 			'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td class="node"><a class="cashBack" data-id="{id}">返现</a>丨<a class="refuse" data-id="{id}">拒绝</a>丨<a class="checkout" data-id="{id}">结清</a></td><td>{remark}</td></tr>[/results]' +
 			'</tbody></table>';
 
 		//待回款
-		var backMoneyData = '<table width="100%"><thead><tr><th width="12%">项目名称</th>' +
+		var backMoneyData = '<table class="t1" width="100%"><thead><tr><th width="12%">项目名称</th>' +
 			'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="15%">操作</th><th width="20%">备注QQ</th></tr></thead><tbody>' +
 			'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td><a class="moneyBack" data-id="{id}">回款</a>丨<a class="refuse" data-id="{id}">查看</a>丨<a class="checkout" data-id="{id}">结清</a></td><td>{remark}</td></tr>[/results]' +
 			'</tbody></table>';
 
 		//已拒绝	
-		var refuseData = '<table width="100%"><thead><tr><th width="12%">项目名称</th>' +
+		var refuseData = '<table  class="t1" width="100%"><thead><tr><th width="12%">项目名称</th>' +
 			'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="15%">操作</th><th width="20%">备注QQ</th></tr></thead><tbody>' +
 			'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td><a>/</a></td><td>{remark}</td></tr>[/results]' +
 			'</tbody></table>';
 
 		//已结清	
-		var jieqingData = '<table width="100%"><thead><tr><th width="12%">项目名称</th>' +
+		var jieqingData = '<table class="t1" width="100%"><thead><tr><th width="12%">项目名称</th>' +
 			'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="15%">操作</th><th width="20%">备注QQ</th></tr></thead><tbody>' +
 			'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td><a class="check">查看回款记录</a></td><td>{remark}</td></tr>[/results]' +
 			'</tbody></table>';
