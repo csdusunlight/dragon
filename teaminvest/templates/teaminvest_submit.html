@@ -39,7 +39,11 @@
 				</div>
 				<div class="iptBox" style="padding-left:40px;">
 					备注：
-					<input type="text" name="remark" id="remark" class="ipt" placeholder="qq号，qq昵称" />
+					<input type="text" name="remark" id="remark" class="ipt" placeholder="填写备注" />
+				</div>
+				<div class="iptBox" style="padding-left: 45px;">
+					QQ：
+					<input type="text" name="qq" id="qq" class="ipt" placeholder="请填写qq" />
 				</div>
 				<div class="submit">提交</div>
 			</div>
@@ -67,8 +71,9 @@
 				var money = $("#money").val();
 				var remark = $("#remark").val();
 				var project = $("select option:selected").val();
+				var qq = $("#qq").val();
 				
-				if( project==0 || !date || !money ) {
+				if( project==0 || !date || !money || !qq) {
 					alert("填写不能为空");
 					return;
 				}
@@ -79,6 +84,7 @@
 					type: 'post',
 					async: false,
 					data: {
+						"qq":qq,
 						"project":project,
 						"invest_date": date,
 						"invest_amount": money,
