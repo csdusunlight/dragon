@@ -2061,10 +2061,7 @@ def admin_teaminvest(request):
                 res['code'] = -3
                 res['res_msg'] = u'该项目已审核过，不要重复审核！'
                 return JsonResponse(res)
-            if investlog.translist.exists():
-                logger.critical("Returning cash is repetitive!!!")
-                res['code'] = -3
-                res['res_msg'] = u"操作失败，返现重复！"
+
             else:
                 # translist = charge_money(event_user, '0', cash, u'福利返现')
                 translist = charge_money(event_user, '0', cash, project_title)  #jzy
