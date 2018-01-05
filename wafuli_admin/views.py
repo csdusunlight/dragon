@@ -2070,8 +2070,6 @@ def admin_teaminvest(request):
                 if translist:
                     investlog.audit_state = '0'
                     investlog.audit_time = datetime.datetime.now()
-                    translist.user_event = investlog
-                    translist.save(update_fields=['user_event'])
                     res['code'] = 0
 #                     msg_content = u'您提交的"' + investlog.content_object.title + u'"媒体单已审核通过。'
 #                     Message.objects.create(user=event_user, content=msg_content, title=u"媒体单审核");
@@ -2089,7 +2087,7 @@ def admin_teaminvest(request):
             res['code'] = 0
         elif type==3:
             back_amount = request.POST.get('cash', None)
-            remark = request.POST.get('remark', None)
+            remark = request.POST.get('remark', '')
             back_date = request.POST.get('back_date',None)
             back_date = datetime.datetime.strptime(back_date, '%Y-%m-%d')
             try:

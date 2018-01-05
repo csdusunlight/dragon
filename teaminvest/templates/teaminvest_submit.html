@@ -20,32 +20,35 @@
 				<span class="mag-pp">组队单提交</span>
 			</div>
 			<div class="contentBox">
-				<div class="iptBox">
-					投资平台：
-					<select>
-						<option value="0">--</option>
-						{% for x in projects %}
-						<option value="{{x.id}}">{{x.title}}</option>
-						{%endfor%}
-					</select>
-				</div>
-				<div class="iptBox">
-					投资时间：
-					<input type="date" name="date" id="date" class="ipt" />
-				</div>
-				<div class="iptBox">
-					投资金额：
-					<input type="text" name="money" id="money" class="ipt" placeholder="输入您的投资金额，仅限数字" />&nbsp;&nbsp;元
-				</div>
-				<div class="iptBox" style="padding-left:40px;">
-					备注：
-					<input type="text" name="remark" id="remark" class="ipt" placeholder="填写备注" />
-				</div>
-				<div class="iptBox" style="padding-left: 45px;">
-					QQ：
-					<input type="text" name="qq" id="qq" class="ipt" placeholder="请填写qq" />
-				</div>
-				<div class="submit">提交</div>
+				<form class="myform">
+					<div class="iptBox">
+						投资平台：
+						<select>
+							<option value="0">--</option>
+							{% for x in projects %}
+							<option value="{{x.id}}">{{x.title}}</option>
+							{%endfor%}
+						</select>
+					</div>
+					<div class="iptBox">
+						投资时间：
+						<input type="date" name="date" id="date" class="ipt" />
+					</div>
+					<div class="iptBox">
+						投资金额：
+						<input type="text" name="money" id="money" class="ipt" placeholder="输入您的投资金额，仅限数字" />&nbsp;&nbsp;元
+					</div>
+					<div class="iptBox" style="padding-left:40px;">
+						备注：
+						<input type="text" name="remark" id="remark" class="ipt" placeholder="填写备注 非必填" />
+					</div>
+					<div class="iptBox" style="padding-left: 45px;">
+						QQ：
+						<input type="text" name="qq" id="qq" class="ipt" placeholder="请填写qq" />
+					</div>
+					<input type="submit" class="submit">
+				</form>
+
 			</div>
 
 			<div class="tipsBox">
@@ -58,9 +61,9 @@
 			</div>
 		</div>
 		<!--底部-->
-	  {% include "footer.html" %}
-	  <!--浮动窗口-->
-	  {% include "outline.html" %}
+		{% include "footer.html" %}
+		<!--浮动窗口-->
+		{% include "outline.html" %}
 	</body>
 	<script>
 		$(function() {
@@ -72,8 +75,8 @@
 				var remark = $("#remark").val();
 				var project = $("select option:selected").val();
 				var qq = $("#qq").val();
-				
-				if( project==0 || !date || !money || !qq) {
+
+				if(project == 0 || !date || !money || !qq) {
 					alert("填写不能为空");
 					return;
 				}
@@ -84,8 +87,8 @@
 					type: 'post',
 					async: false,
 					data: {
-						"qq":qq,
-						"project":project,
+						"qq": qq,
+						"project": project,
 						"invest_date": date,
 						"invest_amount": money,
 						"remark": remark
@@ -94,12 +97,13 @@
 					dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
 					success: function(data) {
 						alert("提交成功");
+						
 						console.log(data);
 					},
 					error: function(xhr, textStatus) {
-						
+
 						ret = JSON.parse(xhr.responseText);
-						for ( var item in ret){
+						for(var item in ret) {
 							alert(ret[item]);
 						}
 					}

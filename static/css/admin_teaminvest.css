@@ -15,6 +15,7 @@
 
 .contentBox {
 	width: 100%;
+	padding-top: 70px;
 }
 
 .tab {
@@ -62,7 +63,7 @@
 
 .mskBox {
 	width: 460px;
-	height: 360px;
+	height: 300px;
 	position: absolute;
 	left: 50%;
 	top: 50%;
@@ -152,11 +153,21 @@
 	display: none;
 }
 
+.desc{
+	margin-left: 90px;
+	display: inline-block;
+	font-size: 16px;
+}
+
 .backMoney {
 	padding: 5px 5px;
-	display: block;
 	width: 200px;
-	margin: 20px auto;
+}
+
+.backDate{
+	padding: 5px 5px;
+	width: 200px;
+	margin-top: 10px;
 }
 
 .mskBox1 {
@@ -183,6 +194,7 @@
 }
 .backBtn {
 	margin-left: 80px;
+	margin-top: 30px;
 }
 
 .cMsk {
@@ -203,6 +215,58 @@
 .cBtn {
 	margin-left: 80px;
 }
+/*************查看模态框*****************/
+.lMsk{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: rgba(74, 49, 49, .2);
+	display: none;
+}
+
+.lMskBox{
+	width: 460px;
+	height: 200px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -230px;
+	margin-top: -100px;
+	background: RGB(243, 243, 243);
+	border: 1px solid RGB(180, 180, 180);
+	border-radius:10px;
+}
+
+.close{
+	width: 30px;
+	height: 30px;
+	background: RGB(219,213,213);
+	border-radius: 50%;
+	color: white;
+	font-size: 20px;
+	text-align: center;
+	line-height: 30px;
+	cursor: pointer;
+	position: absolute;right: 10px;top: 5px;
+}
+
+.lDataBox{
+	width: 300px;
+	height: 100%;
+	margin: 0 auto;
+}
+.backtime{
+	font-size: 16px;
+	padding-top: 50px;
+	margin-left: 60px;
+}
+.backamount{
+	font-size: 16px;
+	margin-top: 30px;
+	margin-left: 60px;
+}
 
 .t1 td {
 	height: 52px;
@@ -214,17 +278,20 @@ table th {
 	font-weight: 500;
 }
 
-/*.pageContent {
-	position: relative;right: 0;
-	width: 100%;
-}
-.pageBox{
-	position: absolute;top: 30px;
-}*/
 .Page-in1{
     border-top: none !important;
     height: auto;
     padding: 10px 0;
     text-align: right;
     top: 320px;
+}
+
+.state1{
+	color: RGB(102,102,102);
+}
+.state2{
+	color: RGB(102,102,102);
+}
+.state3{
+	color: RGB(102,102,102);
 }
