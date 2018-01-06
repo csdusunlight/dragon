@@ -106,7 +106,48 @@ var progress = document.getElementById("progress");
             <a href="/press/8/">如何提升会员等级<span>?</span></a>
           </div>
           <div class="intro-content">
-            <img src="{% static 'images/vip-intro.png' %}"/>
+            <!--<img src="{% static 'images/vip-intro.png' %}"/>-->
+            <table style="width: 94%; height: 180px; margin: 0 auto;" border="" cellspacing="" cellpadding="">
+            	<tr>
+            	    <th>会员等级</th>
+            	    <th>LV.1</th>
+            	    <th>LV.2</th>
+            	    <th>LV.3</th>
+            	    <th>LV.4</th>
+            	    <th>LV.5</th>
+            	    <th>LV.6</th>
+            	    <th>...</th>
+            	    <th>LV.13</th>
+            	    <th>...</th>
+            	    <th>LV.n</th>
+            	</tr>
+            	<tr>
+            	    <td>提现福币</td>
+            	    <td>100000</td>
+            	    <td>500000</td>
+            	    <td>1000000</td>
+            	    <td>1000000</td>
+            	    <td>1000000</td>
+            	    <td>1000000</td>
+            	    <td>...</td>
+            	    <td>1000000</td>
+            	    <td>...</td>
+            	    <td>1000000</td>
+            	</tr>
+            	<tr>
+                    <td>升级奖励</td>
+                    <td>2000</td>
+                    <td>5000</td>
+                    <td>10000</td>
+                    <td>11000</td>
+                    <td>12000</td>
+                    <td>13000</td>
+                    <td>...</td>
+                    <td>20000</td>
+                    <td>...</td>
+                    <td>20000</td>
+                </tr>
+            </table>
           </div>
         </div>
         <div class="vip-intro">
@@ -114,15 +155,9 @@ var progress = document.getElementById("progress");
             <h3>会员制度说明</h3>
           </div>
           <div class="intro-content">
-            <p>1、挖福利会员包括五个等级，分别为：VIP1、VIP2、VIP3、VIP4、VIP5；</p>
-            <p>2、提现奖励中的提现金额从会员制度上线之日起开始计算，在会员制度之前的提现数额不计入该体系中。</p>
-            <p>3、部分理财项目不参与到该会员制度中，会在理财板块标记出，同时也会在投资流程中详细说明。</p>
-            <p>4、体验福利奖励为体验福利任务奖励多增加相应的百分比<br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例：项目a任务奖励500福币，则VIP5得到任务返现为：500+500*20%=600<br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;理财福利返现为理财项目挖福利返现额多增加相应的百分比<br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例：项目b挖福利返现60000福币，则VIP5得到总返现为：60000+60000*5%=63000
-              </p>
-            <p>5、升级奖励为一次性奖励，在升级的同时发放。</p>
+            <p>1、挖福利会员等级进行重新修改，取消理财福利、体验福利的额外奖励</p>
+            <p>2、初注册的用户等级为LV.0，会员升级等级不限，提现越多，等级越高，特权越多。</p>
+            <p>3、LV.3级会员之后，没体现10,000元可提升一个等级，升级奖励多增加10元。</p>
           </div>
         </div>
       </div>
