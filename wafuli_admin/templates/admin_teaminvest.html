@@ -417,8 +417,8 @@
 					} else {
 						$(".lMsk").show();
 						for(var i in data.results) {
-							str_html = '<p class="backtime">回款时间：' + data.results[i].invest_date + '</p>' +
-								'<p class="backamount">回款金额：' + data.results[i].invest_amount + '元</p>'
+							str_html = '<p class="backtime">回款时间：' + data.results[i].back_date + '</p>' +
+								'<p class="backamount">回款金额：' + data.results[i].back_amount + '元</p>'
 						}
 						$(".lDataBox").append(str_html);
 					}
