@@ -101,7 +101,7 @@
 		//待审核
 		var noAuditData = '<table class="t1" width="100%"><thead><tr><th width="12%">项目名称</th>' +
 			'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="15%">操作</th><th width="10%">qq</th><th width="10%">备注</th></tr></thead><tbody>' +
-			'[results]<tr><td>{project_title}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td class="node"><a class="cashBack" data-id="{id}">回款</a>丨<a class="refuse" data-id="{id}">拒绝</a></td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
+			'[results]<tr><td>{project_title}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td class="node"><a class="cashBack" data-id="{id}">返现</a>丨<a class="refuse" data-id="{id}">拒绝</a></td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
 			'</tbody></table>';
 
 		//待回款
@@ -125,7 +125,6 @@
 		$("li.home16").toggleClass("on");
 
 		var url = "/restapi/investlog/?page={page}&pageSize={pageSize}";
-		//		var url = '/restapi/investlog/';
 
 		function pagecallback() {
 			console.log("这是一个回调函数");
@@ -227,7 +226,7 @@
 		});
 
 		/**
-		 *************待审核回款*************
+		 *************待审核返现*************
 		 **/
 		$(".submit").click(function() {
 			console.log("---------------,llcid", id)
