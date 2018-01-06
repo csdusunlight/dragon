@@ -266,8 +266,8 @@ $(function() {
 
 	/***********已通过查看**********/
 	$(".contentBox").on('click', '.look', function() {
+//		$(".lookMsk").show();
 		$(".lookData").empty();
-		$(".lookMsk").show();
 		var id = $(this).attr("data-id");
 		$.ajax({
 			//				url: '/restapi/backlog/?investlog=2',
@@ -277,11 +277,13 @@ $(function() {
 			timeout: 5000, //超出时间
 			dataType: 'json', //返回数据格式Json
 			success: function(data) {
-				console.log(data.results.length);
+//				console.log(data.results.length);
 				if(data.results.length == 0) {
+					console.log(1)
 					alert("暂无数据");
 				} else {
-					$(".lMsk").show();
+					console.log(2)
+					$(".lookMsk").show();
 					for(var i in data.results) {
 						str_html = '<p class="backtime">回款时间：' + data.results[i].back_date + '</p>' +
 							'<p class="backamount">回款金额：' + data.results[i].back_amount + '元</p>'
