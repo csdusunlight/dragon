@@ -29,7 +29,7 @@ $(function() {
 			}
 		});
 	}
-	var url = "/restapi/investlog/";
+	var url = "/restapi/investlog/?page={page}&pageSize={pageSize}";
 	$("#pagedata").ajaxPage({
 		url: url,
 		pageId: $("#page"),

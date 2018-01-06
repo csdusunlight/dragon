@@ -38,7 +38,7 @@
 					<div class="dataBox">
 						返现金额：
 						<input type="text" id="backMoney" placeholder="请输入返现金额" /><br />返现时间：
-						<input type="date" id="date" /><br /> 
+						<input type="date" id="date" /><br />
 						<!--备注：<input type="text" id="remark" placeholder="请输入备注" /><br /> 返现账号信息：-->
 						<div class="msgbox">
 
@@ -124,7 +124,8 @@
 
 		$("li.home16").toggleClass("on");
 
-		var url = "/restapi/investlog/?pageSize=6";
+		var url = "/restapi/investlog/?page={page}&pageSize={pageSize}";
+		//		var url = '/restapi/investlog/';
 
 		function pagecallback() {
 			console.log("这是一个回调函数");
@@ -149,7 +150,7 @@
 		$("#pagedata").ajaxPage({
 			url: url,
 			pageId: $("#page"),
-			//			pageSize: 6,
+			pageSize: 6,
 			run: true,
 			content: allData,
 			complete: pagecallback,
@@ -226,17 +227,23 @@
 		});
 
 		/**
-		 *************返现*************
+		 *************待审核回款*************
 		 **/
 		$(".submit").click(function() {
-			console.log("---------------,llcid",id)
+			console.log("---------------,llcid", id)
 			console.log(parent);
-			if(!$("#backMoney").val() || !$("#date").val() || !$("#remark").val()) {
+			if(!$("#backMoney").val() || !$("#date").val()) {
 				alert("输入框不能为空");
 			}
 			var backMoney = $("#backMoney").val();
 			var remark = $("#remark").val();
 			var date = $("#date").val();
+			//正则表达式验证：
+			var reg = new RegExp("^[0-9]*$");
+			if(!reg.test($("#backMoney").val())) {
+				alert("回款金额只能是数字！");
+			}
+
 			$.ajax({
 				url: '/Admin/admin_teaminvest/',
 				type: 'POST', //请求方式
@@ -356,6 +363,11 @@
 			$(".backBtn").click(function() {
 				if(!$(".backMoney").val() || !$(".backDate").val()) {
 					alert("回款不能为空！");
+				}
+				//正则表达式验证：
+				var reg = new RegExp("^[0-9]*$");
+				if(!reg.test($(".backMoney").val())) {
+					alert("回款金额只能是数字！");
 				}
 				$.ajax({
 					url: '/Admin/admin_teaminvest/',

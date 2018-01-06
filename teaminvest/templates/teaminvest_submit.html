@@ -80,7 +80,17 @@
 					alert("填写不能为空");
 					return;
 				}
-
+				//正则表达式验证：
+				var reg = new RegExp("^[0-9]*$");
+				if(!reg.test($("#money").val())) {
+					alert("投资金额只能是数字！");
+				}
+				//验证qq
+				 var qqReg=/^\d{5,10}$/;    
+				if(!reg.test(qq)) {
+					alert("qq只能是数字！");
+				}
+				
 				var url = "/restapi/investlog/";
 				$.ajax({
 					url: url,
