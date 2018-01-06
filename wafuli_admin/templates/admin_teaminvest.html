@@ -442,7 +442,6 @@
 			$(".lDataBox").empty();
 			var id = $(this).attr("data-id");
 			$.ajax({
-				//				url: '/restapi/backlog/?investlog=2',
 				url: '/restapi/backlog/?investlog=' + id,
 				type: "get", //提交方式post
 				async: true, //是否同步
@@ -450,13 +449,14 @@
 				dataType: 'json', //返回数据格式Json
 				success: function(data) {
 					console.log(data.results.length);
+					var str_html = "";
 					if(data.results.length == 0) {
 						alert("暂无数据");
 					} else {
 						$(".lMsk").show();
 						for(var i in data.results) {
-							str_html = '<p class="backtime">回款时间：' + data.results[i].back_date + '</p>' +
-								'<p class="backamount">回款金额：' + data.results[i].back_amount + '元</p>'
+							str_html += '<span class="backtime">回款时间：' + data.results[i].back_date + '</span>' +
+								'<span class="backamount">回款金额：' + data.results[i].back_amount + '元</span>'
 						}
 						$(".lDataBox").append(str_html);
 					}
