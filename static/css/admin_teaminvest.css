@@ -63,12 +63,12 @@
 
 .mskBox {
 	width: 460px;
-	height: 360px;
+	height: 300px;
 	position: absolute;
 	left: 50%;
 	top: 50%;
 	margin-left: -230px;
-	margin-top: -180px;
+	margin-top: -150px;
 	background: RGB(243, 243, 243);
 	border: 1px solid RGB(180, 180, 180);
 }

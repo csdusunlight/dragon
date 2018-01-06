@@ -34,15 +34,12 @@
 
 			<div class="msk">
 				<div class="mskBox">
-					<span class="operate">操作返现弹窗</span>
+					<span class="operate">操作回款弹窗</span>
 					<div class="dataBox">
 						<form>
-							回款金额：<input type="text" id="backMoney" placeholder="请输入返现金额" /><br />回款时间：
+							回款金额：<input type="text" id="backMoney" placeholder="请输入回款金额" /><br />回款时间：
 							<input type="date" id="date" /><br />
 						</form>
-						返现金额：
-						
-						<!--备注：<input type="text" id="remark" placeholder="请输入备注" /><br /> 返现账号信息：-->
 						<div class="msgbox">
 
 						</div>
@@ -61,12 +58,12 @@
 				</div>
 			</div>
 			<div class="bMsk">
-				<div class="mskBox1">
-					<span style="display: block;margin: 10px 160px;font-size: 20px;">操作回款弹窗</span>
-					<span class="desc">回款金额：</span><input type="text" class="backMoney back" placeholder="请输入回款金额" /><br />
-					<span class="desc">回款日期：</span><input type="date" class="backDate back" />
-					<div class="mskBtn backBtn">确定</div>
-					<div class="mskBtn cancel1">取消</div>
+				<div class="mskBox1" style="position: relative;">
+					<span style="display: block;margin: 10px 160px;font-size: 20px;">操作返现弹窗</span>
+					<span class="desc">返现金额：</span><input type="text" class="backMoney back" placeholder="请输入返现金额" /><br />
+					<!--<span class="desc">回款日期：</span><input type="date" class="backDate back" />-->
+					<input type="submit" class="mskBtn backBtn">
+					<input type="button" class="mskBtn cancel1" value="取消" style="position: absolute;right: 75px;top: 96px;">
 				</div>
 			</div>
 			<div class="cMsk">
@@ -200,7 +197,7 @@
 			console.log("当前回款id:", bId);
 			$(".bMsk").show();
 			$(".backBtn").click(function() {
-				if(!$(".backMoney").val() || !$(".backDate").val()) {
+				if(!$(".backMoney").val()) {
 					alert("回款不能为空！");
 				}
 				//正则表达式验证：
@@ -208,7 +205,7 @@
 				if(!reg.test($(".backMoney").val())) {
 					alert("回款金额只能是数字！");
 				}
-				$.ajax({
+				/*$.ajax({
 					url: '/Admin/admin_teaminvest/',
 					type: "post", //提交方式post
 					async: true, //是否同步
@@ -230,7 +227,7 @@
 					error: function(xhr, textStatus) {
 						console.log('错误:' + xhr.responseText);
 					}
-				});
+				});*/
 			});
 		});
 		

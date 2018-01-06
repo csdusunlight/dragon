@@ -5,7 +5,7 @@ $(function() {
 		'</tbody></table>';
 
 	var passData = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="20%">投资时间</th>' +
-		'<th width="20%">投资金额</th><th width="15%">状态<th width="15%">备注</th><th width="10%">查看</th></tr></thead><tbody>' +
+		'<th width="20%">投资金额</th><th width="15%">状态<th width="15%">备注</th><th width="10%">操作</th></tr></thead><tbody>' +
 		'[results]<tr><td>{project_title}</td><td>{invest_date}</td><td>{invest_amount}</td><td>{state_desc}</td><td>{remark}</td><td><a data-id="{id}" class="look">查看</a></td></tr>[/results]' +
 		'</tbody></table>';
 
@@ -24,7 +24,9 @@ $(function() {
 		$(".change").each(function() {
 			if($(this).attr("data-state") == 1) {
 				$(this).html("<a class='lChange'>修改</a>丨<a class='delete'>删除</a>");
-			} else {
+			} else if ($(this).attr("data-state") == 0) {
+				$(this).html("<a class='look'>查看</a>");
+			}else{
 				$(this).html("<a>------</a>");
 			}
 		});
