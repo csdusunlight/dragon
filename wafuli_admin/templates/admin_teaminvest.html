@@ -205,12 +205,12 @@
 				if(!reg.test($(".backMoney").val())) {
 					alert("回款金额只能是数字！");
 				}
-				/*$.ajax({
+				$.ajax({
 					url: '/Admin/admin_teaminvest/',
 					type: "post", //提交方式post
 					async: true, //是否同步
 					data: {
-						"type": 3,
+						"type": 1,
 						"id": bId,
 						"cash": $(".backMoney").val(),
 						"back_date": $(".backDate").val()
@@ -227,7 +227,7 @@
 					error: function(xhr, textStatus) {
 						console.log('错误:' + xhr.responseText);
 					}
-				});*/
+				});
 			});
 		});
 		
@@ -258,7 +258,7 @@
 				type: 'POST', //请求方式
 				async: true, //或false,是否异步
 				data: {
-					"type": 1,
+					"type": 3,
 					"id": id,
 					"cash": backMoney,
 					"remark": remark,
@@ -268,7 +268,7 @@
 				dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
 				success: function(ret) {
 					console.log(ret.code);
-					if(ret.code == -3) {
+					if(ret.code == 0) {
 						$(".msk").hide();
 						parent.replaceWith("<td><span>已回款</span></td>");
 					}
