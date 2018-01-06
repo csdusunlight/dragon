@@ -16,7 +16,9 @@
 	color: RGB(145, 193, 29);
 	font-size: 20px;
 	font-weight: 600;
-	position: absolute;left: 10px;top: 10px;
+	position: absolute;
+	left: 10px;
+	top: 10px;
 }
 
 .wrapperTop select {
@@ -165,7 +167,7 @@ td {
 	margin-top: 40px;
 }
 
-.aMsk{
+.aMsk {
 	width: 100%;
 	height: 100%;
 	background: rgba(74, 49, 49, .2);
@@ -174,19 +176,71 @@ td {
 	left: 0;
 	display: none;
 }
-.aTipBox{
+
+.aTipBox {
 	width: 460px;
-    height: 300px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -230px;
-    margin-top: -150px;
-    background: RGB(243, 243, 243);
-    border: 1px solid RGB(180, 180, 180);
+	height: 300px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -230px;
+	margin-top: -150px;
+	background: RGB(243, 243, 243);
+	border: 1px solid RGB(180, 180, 180);
+	border-radius: 10px;
 }
-.aDataBox{
+
+.aDataBox {
 	width: 400px;
 	height: 200px;
 	margin: 0 auto;
+}
+
+.lookMsk {
+	width: 100%;
+	height: 100%;
+	background: rgba(74, 49, 49, .2);
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+}
+
+.lookBox {
+	width: 460px;
+	height: 200px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -230px;
+	margin-top: -100px;
+	background: RGB(243, 243, 243);
+	border: 1px solid RGB(180, 180, 180);
+	border-radius: 10px;
+	position: relative;
+}
+
+.close {
+	width: 30px;
+	height: 30px;
+	background: RGB(219, 213, 213);
+	border-radius: 50%;
+	color: white;
+	font-size: 20px;
+	text-align: center;
+	line-height: 30px;
+	cursor: pointer;
+	position: absolute;
+	right: 10px;
+	top: 5px;
+}
+
+.backtime {
+	font-size: 16px;
+	padding-top: 50px;
+}
+
+.backamount {
+	font-size: 16px;
+	margin-top: 30px;
 }

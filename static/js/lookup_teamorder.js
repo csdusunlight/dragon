@@ -5,8 +5,8 @@ $(function() {
 		'</tbody></table>';
 
 	var passData = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="20%">投资时间</th>' +
-		'<th width="20%">投资金额</th><th width="15%">状态<th width="25%">备注</th></tr></thead><tbody>' +
-		'[results]<tr><td>{project_title}</td><td>{invest_date}</td><td>{invest_amount}</td><td>{state_desc}</td><td>{remark}</td></tr>[/results]' +
+		'<th width="20%">投资金额</th><th width="15%">状态<th width="15%">备注</th><th width="10%">查看</th></tr></thead><tbody>' +
+		'[results]<tr><td>{project_title}</td><td>{invest_date}</td><td>{invest_amount}</td><td>{state_desc}</td><td>{remark}</td><td><a data-id="{id}" class="look">查看</a></td></tr>[/results]' +
 		'</tbody></table>';
 
 	var auditData = '<table width="100%"><thead><tr><th width="15%">项目</th><th width="15%">投资时间</th>' +
@@ -77,7 +77,7 @@ $(function() {
 		$(".cMsk").show();
 		id = $(this).parent().attr("data-id"); //获取当前tr的id
 		$.ajax({
-			url: '/restapi/investlog/'+ id +'/',
+			url: '/restapi/investlog/' + id + '/',
 			type: 'GET', //GET 
 			async: true, //或false,是否异步
 			timeout: 5000, //超时时间
@@ -87,15 +87,14 @@ $(function() {
 				var str_html;
 				for(let i in ret) {
 					str_html = '<table style="width:100%;">' +
-						'<tr><td class="td1">项目</td><td class="t2"><input type="text" value="'+ ret.project_title +'"  disabled="disabled" style="width:200px;" /></td></tr>' +
-						'<tr><td class="td1">投资日期</td class="t2"><td><input type="date" class="date" value="'+ ret.invest_date +'" style="width:222px;" /></td></tr>' +
-						'<tr><td class="td1">投资金额</td class="t2"><td><input type="text" class="amount" value="'+ ret.invest_amount +'" style="width:200px;" /></td></tr>' +
-						'<tr><td class="td1">备注</td><td class="t2"><input type="text" class="remark" value="'+ ret.remark +'"  style="width:200px;"/></td></tr>' +
+						'<tr><td class="td1">项目</td><td class="t2"><input type="text" value="' + ret.project_title + '"  disabled="disabled" style="width:200px;" /></td></tr>' +
+						'<tr><td class="td1">投资日期</td class="t2"><td><input type="date" class="date" value="' + ret.invest_date + '" style="width:222px;" /></td></tr>' +
+						'<tr><td class="td1">投资金额</td class="t2"><td><input type="text" class="amount" value="' + ret.invest_amount + '" style="width:200px;" /></td></tr>' +
+						'<tr><td class="td1">备注</td><td class="t2"><input type="text" class="remark" value="' + ret.remark + '"  style="width:200px;"/></td></tr>' +
 						'</table>';
 				}
 				$(".dataBox").append(str_html);
-				
-				
+
 			},
 			error: function(xhr, textStatus) {
 				console.log('错误:' + xhr.responseText);
@@ -118,7 +117,7 @@ $(function() {
 			data: {
 				"invest_amount": $(".amount").val(),
 				"invest_date": $(".date").val(),
-				"remark":$(".remark").val()
+				"remark": $(".remark").val()
 			},
 			dataType: 'json',
 			success: function(ret) {
@@ -183,7 +182,7 @@ $(function() {
 		id = id = $(this).attr("data-id");
 		console.log('未审核修改id', id);
 		$.ajax({
-			url: '/restapi/investlog/'+ id +'/',
+			url: '/restapi/investlog/' + id + '/',
 			type: 'GET', //GET 
 			async: true, //或false,是否异步
 			timeout: 5000, //超时时间
@@ -208,7 +207,7 @@ $(function() {
 		});
 
 	});
-	$(".cSubmit").click(function(){
+	$(".cSubmit").click(function() {
 		console.log("当前修改数据的id：", id);
 		if(!$(".date").val() || !$(".amount").val()) {
 			alert("输入框不能为空！");
@@ -221,7 +220,7 @@ $(function() {
 			data: {
 				"invest_amount": $(".amount").val(),
 				"invest_date": $(".date").val(),
-				"remark":$(".beizhu").val()
+				"remark": $(".beizhu").val()
 			},
 			dataType: 'json',
 			success: function(ret) {
@@ -236,7 +235,7 @@ $(function() {
 			}
 		});
 	});
-	
+
 	/*********审核中状态删除**********/
 	$(".contentBox").on('click', '.aDelete', function() {
 		id = $(this).attr("data-id");
@@ -260,9 +259,43 @@ $(function() {
 		});
 
 	});
-	
-	$(".cCancel").click(function(){
+
+	$(".cCancel").click(function() {
 		$(".aMsk").hide();
 	});
 
+	/***********已通过查看**********/
+	$(".contentBox").on('click', '.look', function() {
+		$(".lookData").empty();
+		$(".lookMsk").show();
+		var id = $(this).attr("data-id");
+		$.ajax({
+			//				url: '/restapi/backlog/?investlog=2',
+			url: '/restapi/backlog/?investlog=' + id,
+			type: "get", //提交方式post
+			async: true, //是否同步
+			timeout: 5000, //超出时间
+			dataType: 'json', //返回数据格式Json
+			success: function(data) {
+				console.log(data.results.length);
+				if(data.results.length == 0) {
+					alert("暂无数据");
+				} else {
+					$(".lMsk").show();
+					for(var i in data.results) {
+						str_html = '<p class="backtime">回款时间：' + data.results[i].back_date + '</p>' +
+							'<p class="backamount">回款金额：' + data.results[i].back_amount + '元</p>'
+					}
+					$(".lookData").append(str_html);
+				}
+
+			},
+			error: function(xhr, textStatus) {
+				console.log('错误:' + xhr.responseText);
+			}
+		});
+	});
+	$(".close").click(function() {
+		$(".lookMsk").hide();
+	})
 });

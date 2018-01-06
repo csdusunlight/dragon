@@ -36,16 +36,19 @@
 				<div class="mskBox">
 					<span class="operate">操作返现弹窗</span>
 					<div class="dataBox">
+						<form>
+							回款金额：<input type="text" id="backMoney" placeholder="请输入返现金额" /><br />回款时间：
+							<input type="date" id="date" /><br />
+						</form>
 						返现金额：
-						<input type="text" id="backMoney" placeholder="请输入返现金额" /><br />返现时间：
-						<input type="date" id="date" /><br />
+						
 						<!--备注：<input type="text" id="remark" placeholder="请输入备注" /><br /> 返现账号信息：-->
 						<div class="msgbox">
 
 						</div>
 					</div>
-					<div class="mskBtn submit">确定</div>
-					<div class="mskBtn cancel">取消</div>
+					<input type="submit" class="mskBtn submit" />
+					<input type="button" class="mskBtn cancel" value="取消" />
 				</div>
 			</div>
 			<!--拒绝-->
@@ -194,35 +197,46 @@
 		/********************** 模态框  ***********************/
 		$(".contentBox").on('click', ".cashBack", function() {
 			parent = $(this).parent();
-			console.log(parent); //当前的tr
-			id = $(this).attr("data-id");
-			console.log("当前返现的id：", id);
-			$(".msgbox").empty();
-			var backUrl = "/restapi/bankcard/";
-			console.log(backUrl);
-			$.ajax({
-				url: backUrl,
-				type: 'GET', //GET
-				async: true, //或false,是否异步
-				timeout: 5000, //超时时间
-				dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
-				success: function(data, textStatus, jqXHR) {
-					console.log(data.results);
-					for(var i in data.results) {
-						str_html = '<p>' + data.results[i].real_name + '</p>' +
-							'<p>' + data.results[i].bank + '</p>' +
-							'<p>' + data.results[i].card_number + '</p>';
-					}
-					$(".msgbox").append(str_html);
-				},
-				error: function(xhr, textStatus) {
-					console.log('错误:' + xhr.responseText);
+			var bId = $(this).attr("data-id");
+			console.log("当前回款id:", bId);
+			$(".bMsk").show();
+			$(".backBtn").click(function() {
+				if(!$(".backMoney").val() || !$(".backDate").val()) {
+					alert("回款不能为空！");
 				}
+				//正则表达式验证：
+				var reg = new RegExp("^[0-9]*$");
+				if(!reg.test($(".backMoney").val())) {
+					alert("回款金额只能是数字！");
+				}
+				$.ajax({
+					url: '/Admin/admin_teaminvest/',
+					type: "post", //提交方式post
+					async: true, //是否同步
+					data: {
+						"type": 3,
+						"id": bId,
+						"cash": $(".backMoney").val(),
+						"back_date": $(".backDate").val()
+					},
+					timeout: 5000, //超出时间
+					dataType: 'json', //返回数据格式Json
+					success: function(ret) {
+						if(ret.code == 0) {
+							$(".bMsk").hide();
+							parent.replaceWith("<td><a>已回款</a></td>");
+						}
+
+					},
+					error: function(xhr, textStatus) {
+						console.log('错误:' + xhr.responseText);
+					}
+				});
 			});
-
-			//模态框弹出
-			$(".msk").show();
-
+		});
+		
+		$(".cancel1").click(function(){
+			$(".bMsk").hide();
 		});
 
 		/**
@@ -258,9 +272,9 @@
 				dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
 				success: function(ret) {
 					console.log(ret.code);
-					if(ret.code == 0) {
+					if(ret.code == -3) {
 						$(".msk").hide();
-						parent.replaceWith("<td><span>已返现</span></td>");
+						parent.replaceWith("<td><span>已回款</span></td>");
 					}
 
 				},
@@ -356,46 +370,38 @@
 		/************回款ajax****************/
 		$(".contentBox").on('click', ".moneyBack", function() {
 			parent = $(this).parent();
-			var bId = $(this).attr("data-id");
-			console.log("当前回款id:", bId);
-			$(".bMsk").show();
-			$(".backBtn").click(function() {
-				if(!$(".backMoney").val() || !$(".backDate").val()) {
-					alert("回款不能为空！");
-				}
-				//正则表达式验证：
-				var reg = new RegExp("^[0-9]*$");
-				if(!reg.test($(".backMoney").val())) {
-					alert("回款金额只能是数字！");
-				}
-				$.ajax({
-					url: '/Admin/admin_teaminvest/',
-					type: "post", //提交方式post
-					async: true, //是否同步
-					data: {
-						"type": 3,
-						"id": bId,
-						"cash": $(".backMoney").val(),
-						"back_date": $(".backDate").val()
-					},
-					timeout: 5000, //超出时间
-					dataType: 'json', //返回数据格式Json
-					success: function(ret) {
-						if(ret.code == 0) {
-							$(".bMsk").hide();
-							parent.replaceWith("<td><a>已回款</a></td>");
-						}
-
-					},
-					error: function(xhr, textStatus) {
-						console.log('错误:' + xhr.responseText);
+			console.log(parent); //当前的tr
+			id = $(this).attr("data-id");
+			console.log("当前返现的id：", id);
+			$(".msgbox").empty();
+			var backUrl = "/restapi/bankcard/";
+			console.log(backUrl);
+			$.ajax({
+				url: backUrl,
+				type: 'GET', //GET
+				async: true, //或false,是否异步
+				timeout: 5000, //超时时间
+				dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+				success: function(data, textStatus, jqXHR) {
+					console.log(data.results);
+					for(var i in data.results) {
+						str_html = '<p>' + data.results[i].real_name + '</p>' +
+							'<p>' + data.results[i].bank + '</p>' +
+							'<p>' + data.results[i].card_number + '</p>';
 					}
-				});
+					$(".msgbox").append(str_html);
+				},
+				error: function(xhr, textStatus) {
+					console.log('错误:' + xhr.responseText);
+				}
 			});
+
+			//模态框弹出
+			$(".msk").show();
 
 		});
 		$(".cancel1").click(function() {
-			$(".bMsk").hide();
+			$(".msk").hide();
 		});
 
 		/*************查看**************/
@@ -403,7 +409,6 @@
 			$(".lDataBox").empty();
 			var id = $(this).attr("data-id");
 			$.ajax({
-				//				url: '/restapi/backlog/?investlog=2',
 				url: '/restapi/backlog/?investlog=' + id,
 				type: "get", //提交方式post
 				async: true, //是否同步
@@ -436,6 +441,7 @@
 
 		/*************查看回款记录************/
 		$(".contentBox").on("click", ".check", function() {
+
 			$(".lDataBox").empty();
 			var id = $(this).attr("data-id");
 			$.ajax({
@@ -452,8 +458,8 @@
 					} else {
 						$(".lMsk").show();
 						for(var i in data.results) {
-							str_html = '<p class="backtime">回款时间：' + data.results[i].invest_date + '</p>' +
-								'<p class="backamount">回款金额：' + data.results[i].invest_amount + '元</p>'
+							str_html = '<p class="backtime">回款时间：' + data.results[i].back_date + '</p>' +
+								'<p class="backamount">回款金额：' + data.results[i].back_amount + '元</p>'
 						}
 						$(".lDataBox").append(str_html);
 					}

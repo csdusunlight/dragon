@@ -63,7 +63,7 @@
 
 .mskBox {
 	width: 460px;
-	height: 300px;
+	height: 360px;
 	position: absolute;
 	left: 50%;
 	top: 50%;
@@ -120,6 +120,7 @@
 	border-radius: 5px;
 	color: white;
 	cursor: pointer;
+	border: none;
 }
 
 .fMsk {
