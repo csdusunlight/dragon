@@ -228,13 +228,12 @@
 }
 
 .lMskBox{
+	padding: 20px;
 	width: 460px;
-	height: 200px;
 	position: absolute;
 	left: 50%;
-	top: 50%;
+	top: 20%;
 	margin-left: -230px;
-	margin-top: -100px;
 	background: RGB(243, 243, 243);
 	border: 1px solid RGB(180, 180, 180);
 	border-radius:10px;
@@ -265,7 +264,7 @@
 }
 .backamount{
 	font-size: 16px;
-	margin-top: 30px;
+	/*margin-top: 30px;*/
 	margin-left: 60px;
 }
 

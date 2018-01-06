@@ -411,14 +411,15 @@
 				timeout: 5000, //超出时间
 				dataType: 'json', //返回数据格式Json
 				success: function(data) {
+					var str_html = "";
 					console.log(data.results.length);
 					if(data.results.length == 0) {
 						alert("暂无数据");
 					} else {
 						$(".lMsk").show();
 						for(var i in data.results) {
-							str_html = '<p class="backtime">回款时间：' + data.results[i].back_date + '</p>' +
-								'<p class="backamount">回款金额：' + data.results[i].back_amount + '元</p>'
+							str_html += '<span class="backtime">回款时间：' + data.results[i].back_date + '</span><br />' +
+								'<p class="backamount">回款金额：' + data.results[i].back_amount + '元</p><br />'
 						}
 						$(".lDataBox").append(str_html);
 					}
