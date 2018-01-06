@@ -45,16 +45,16 @@ $(function() {
 		$(this).addClass("active").siblings().removeClass("active");
 		if(index == 0) {
 			var pdata = data;
-			var dataUrl = url;
+			var dataUrl = '/restapi/investlog/?page={page}&pageSize={pageSize}';
 		} else if(index == 1) {
 			var pdata = passData;
-			var dataUrl = url + "?audit_state=0";
+			var dataUrl = url + "&audit_state=0";
 		} else if(index == 2) {
 			var pdata = auditData;
-			var dataUrl = url + "?audit_state=1";
+			var dataUrl = url + "&audit_state=1";
 		} else if(index == 3) {
 			var pdata = refuseData;
-			var dataUrl = url + "?audit_state=2";
+			var dataUrl = url + "&audit_state=2";
 		}
 		$("#page").empty();
 		$("#pagedata").ajaxPage({
