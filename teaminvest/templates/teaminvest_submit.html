@@ -23,7 +23,7 @@
 				<form class="myform">
 					<div class="iptBox">
 						投资平台：
-						<select>
+						<select class="selt">
 							<option value="0">--</option>
 							{% for x in projects %}
 							<option value="{{x.id}}">{{x.title}}</option>
@@ -38,15 +38,15 @@
 						投资金额：
 						<input type="text" name="money" id="money" class="ipt" placeholder="输入您的投资金额，仅限数字" />&nbsp;&nbsp;元
 					</div>
+					<div class="iptBox" style="padding-left: 12px;">
+						QQ/昵称：
+						<input type="text" name="qq" id="qq" class="ipt" placeholder="请填写qq/昵称" />
+					</div>
 					<div class="iptBox" style="padding-left:40px;">
 						备注：
-						<input type="text" name="remark" id="remark" class="ipt" placeholder="填写备注 非必填" />
+						<input type="text" name="remark" id="remark" class="ipt" placeholder="请填写备注 非必填" />
 					</div>
-					<div class="iptBox" style="padding-left: 45px;">
-						QQ：
-						<input type="text" name="qq" id="qq" class="ipt" placeholder="请填写qq" />
-					</div>
-					<input type="submit" class="submit">
+					<input type="button" class="submit" value="提交">
 				</form>
 
 			</div>
@@ -76,9 +76,25 @@
 				var project = $("select option:selected").val();
 				var qq = $("#qq").val();
 
-				if(project == 0 || !date || !money || !qq) {
+				/*if(project == 0 || !date || !money || !qq) {
 					alert("填写不能为空");
 					return;
+				}*/
+				if (project == 0) {
+					alert("请选择项目！");
+					$(".selt").css("border","2px solid red");
+				}
+				if (!money) {
+					$("#money").css("border","2px solid red");
+					alert("请输入投资金额！");
+				}
+				if(!date){
+					alert("请选择投资日期！");
+					$("#date").css("border","2px solid red");
+				}
+				if (!qq) {
+					alert("请输入QQ和昵称！");
+					$("#qq").css("border","2px solid red");
 				}
 				//正则表达式验证：
 				var reg = new RegExp("^[0-9]*$");
@@ -86,10 +102,10 @@
 					alert("投资金额只能是数字！");
 				}
 				//验证qq
-				 var qqReg=/^\d{5,10}$/;    
+				/*var qqReg=/^\d{5,10}$/;    
 				if(!reg.test(qq)) {
 					alert("qq只能是数字！");
-				}
+				}*/
 				
 				var url = "/restapi/investlog/";
 				$.ajax({
@@ -107,7 +123,7 @@
 					dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
 					success: function(data) {
 						alert("提交成功");
-						
+						window.location.href=window.location.href;
 						console.log(data);
 					},
 					error: function(xhr, textStatus) {
@@ -124,3 +140,9 @@
 	</script>
 
 </html>
+
+<!--
+	
+	window.location.href=window.location.href;
+	
+-->

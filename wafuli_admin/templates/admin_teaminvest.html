@@ -405,7 +405,7 @@
 			$(".lDataBox").empty();
 			var id = $(this).attr("data-id");
 			$.ajax({
-				url: '/restapi/backlog/?investlog=' + id,
+				url: '/restapi/backlog/?investlog=' + id +"/",
 				type: "get", //提交方式post
 				async: true, //是否同步
 				timeout: 5000, //超出时间
