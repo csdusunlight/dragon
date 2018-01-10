@@ -117,14 +117,14 @@ class ProjectStatis(models.Model):
         ordering = ["-project__time"]
 class DayStatis(models.Model):
     date = models.DateField(u"日期", primary_key=True)
-    start_num = models.IntegerField(u"正在进行的项目数")
-    finish_num = models.IntegerField(u"已结项的项目数")
-    invest_count = models.IntegerField(u"投资人数")
-    ret_count = models.IntegerField(u"返现人数")
-    invest_sum = models.DecimalField(u"投资金额", max_digits=10, decimal_places=2, null=True)
-    consume_sum = models.DecimalField(u"消耗金额", max_digits=10, decimal_places=2, null=True)
-    ret_invest_sum = models.DecimalField(u"返现投资金额", max_digits=10, decimal_places=2, null=True)
-    ret_sum = models.DecimalField(u"返现费用", max_digits=10, decimal_places=2, null=True)
+    start_num = models.IntegerField(u"正在进行的项目数", default =0)
+    finish_num = models.IntegerField(u"已结项的项目数", default =0)
+    invest_count = models.IntegerField(u"投资人数", default =0)
+    ret_count = models.IntegerField(u"返现人数", default =0)
+    invest_sum = models.DecimalField(u"投资金额", max_digits=10, decimal_places=2, null=True, default =0)
+    consume_sum = models.DecimalField(u"消耗金额", max_digits=10, decimal_places=2, null=True, default =0)
+    ret_invest_sum = models.DecimalField(u"返现投资金额", max_digits=10, decimal_places=2, null=True, default =0)
+    ret_sum = models.DecimalField(u"返现费用", max_digits=10, decimal_places=2, null=True, default =0)
     def __unicode__(self):
         return self.date.strftime("%Y-%m-%d")
     class Meta:
