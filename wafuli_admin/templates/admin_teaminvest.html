@@ -18,13 +18,30 @@
 
 	<body>
 		<div class="wrapper">
-			<ul class="tab">
+			<div class="searchBox">
+				<span class="project">项目名称：</span>
+				<input type="text" class="projectBox" />
+				<span class="phoneNum">用户手机号：</span>
+				<input class="numberBox" type="text" /><br /><br />
+				<span class="auditState">处理状态：</span>
+				<select class="auditBox">
+					<option>全部</option>
+					<option>待审核</option>
+					<option>待回款</option>
+					<option>已拒绝</option>
+					<option>已结清</option>
+				</select><br />
+				<input type="button" class="search" value="搜索" />
+				<input type="button" class="export" value="导出" />
+
+			</div>
+			<!--<ul class="tab">
 				<li class="active">全部</li>
 				<li>待审核</li>
 				<li>待回款</li>
 				<li>已拒绝</li>
 				<li>已结清</li>
-			</ul>
+			</ul>-->
 			<div class="contentBox" style="margin-top: 10px;">
 				<div id="pagedata"></div>
 				<div class="Page-in1">
@@ -79,7 +96,7 @@
 				<div class="lMskBox">
 					<div class="close">×</div>
 					<div class="lDataBox">
-						
+
 					</div>
 				</div>
 			</div>
@@ -92,33 +109,33 @@
 <script>
 	$(function() {
 		//全部数据
-		var allData = '<table class="t1" width="100%"><thead><tr><th width="12%">项目名称</th>' +
-			'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="9%">处理状态</th><th width="10%">qq</th><th width="10%">备注</th></tr></thead><tbody>' +
-			'[results]<tr><td>{project_title}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td class="state{audit_state}">{state_desc}</td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
+		var allData = '<table class="t1" width="100%"><thead><tr><th width="12.5%">项目名称</th><th width="12.5%">电话号码</th>' +
+			'<th width="12.5%">投资时间</th><th width="10%">投资金额</th><th width="12%">提交时间</th><th width="12.5%">处理状态</th><th width="15%">qq</th><th width="13%">备注</th></tr></thead><tbody>' +
+			'[results]<tr><td>{project_title}</td><td>{user_mobile}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td class="state{audit_state}">{state_desc}</td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
 			'</tbody></table>';
 
 		//待审核
-		var noAuditData = '<table class="t1" width="100%"><thead><tr><th width="12%">项目名称</th>' +
-			'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="15%">操作</th><th width="10%">qq</th><th width="10%">备注</th></tr></thead><tbody>' +
-			'[results]<tr><td>{project_title}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td class="node"><a class="cashBack" data-id="{id}">返现</a>丨<a class="refuse" data-id="{id}">拒绝</a></td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
+		var noAuditData = '<table class="t1" width="100%"><thead><tr><th width="12.5%">项目名称</th><th width="12.5%">电话号码</th>' +
+			'<th width="12.5%">投资时间</th><th width="12.5%">投资金额</th><th width="12%">提交时间</th><th width="15%">操作</th><th width="12.5%">qq</th><th width="10%">备注</th></tr></thead><tbody>' +
+			'[results]<tr><td>{project_title}</td><td>{user_mobile}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td class="node"><a class="cashBack" data-id="{id}">返现</a>丨<a class="refuse" data-id="{id}">拒绝</a></td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
 			'</tbody></table>';
 
 		//待回款
-		var backMoneyData = '<table class="t1" width="100%"><thead><tr><th width="12%">项目名称</th>' +
-			'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="15%">操作</th><th width="10%">qq</th><th width="10%">备注</th></tr></thead><tbody>' +
-			'[results]<tr><td>{project_title}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td><a class="moneyBack" data-id="{id}">回款</a>丨<a class="look" data-id="{id}">查看</a>丨<a class="checkout" data-id="{id}">结清</a></td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
+		var backMoneyData = '<table class="t1" width="100%"><thead><tr><th width="12%">项目名称</th><th width="12.5%">电话号码</th>' +
+			'<th width="12.5%">投资时间</th><th width="12.5%">投资金额</th><th width="12%">提交时间</th><th width="15%">操作</th><th width="12.5%">qq</th><th width="10%">备注</th></tr></thead><tbody>' +
+			'[results]<tr><td>{project_title}</td>{user_mobile}<td></td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td><a class="moneyBack" data-id="{id}">回款</a>丨<a class="look" data-id="{id}">查看</a>丨<a class="checkout" data-id="{id}">结清</a></td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
 			'</tbody></table>';
 
 		//已拒绝	
-		var refuseData = '<table  class="t1" width="100%"><thead><tr><th width="12%">项目名称</th>' +
-			'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="15%">操作</th><th width="10%">qq</th><th width="10%">备注</th></tr></thead><tbody>' +
-			'[results]<tr><td>{project_title}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td><a>/</a></td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
+		var refuseData = '<table  class="t1" width="100%"><thead><tr><th width="12%">项目名称</th><th width="12.5%">电话号码</th>' +
+			'<th width="12.5%">投资时间</th><th width="12.5%">投资金额</th><th width="12%">提交时间</th><th width="15%">操作</th><th width="12.5%">qq</th><th width="10%">备注</th></tr></thead><tbody>' +
+			'[results]<tr><td>{project_title}</td><td>{user_mobile}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td><a>/</a></td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
 			'</tbody></table>';
 
 		//已结清	
-		var jieqingData = '<table class="t1" width="100%"><thead><tr><th width="12%">项目名称</th>' +
-			'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="15%">操作</th><th width="10%">qq</th><th width="10%">备注</th></tr></thead><tbody>' +
-			'[results]<tr><td>{project_title}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td><a class="check">查看回款记录</a></td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
+		var jieqingData = '<table class="t1" width="100%"><thead><tr><th width="12%">项目名称</th><th width="12.5%">电话号码</th>' +
+			'<th width="12.5%">投资时间</th><th width="12.5%">投资金额</th><th width="12%">提交时间</th><th width="15%">操作</th><th width="12.5%">qq</th><th width="10%">备注</th></tr></thead><tbody>' +
+			'[results]<tr><td>{project_title}</td>user_mobile<td></td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td><a class="check">查看回款记录</a></td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
 			'</tbody></table>';
 
 		$("li.home16").toggleClass("on");
@@ -132,17 +149,6 @@
 				$(this).text(submit_time[0]);
 			});
 
-			/*var state = $(".all").attr("data-state");
-			console.log("state状态：", state);
-			if(state == 1) {
-				$(".all").html('<a class="cashBack">返现</a>丨<a class="refuse">拒绝</a>丨<a class="jieqing">结清</a>');
-			} else if(state == 0) {
-				$(".all").html('<a class="moneyBack">回款</a>丨<a class="checkout">查看</a>丨<a class="jieqing">结清</a>');
-			} else if(state == 2) {
-				$(".all").html('<a>/</a>');
-			} else if(state == 3) {
-				$(".all").html('<a class="check">查看回款记录</a>');
-			}*/
 		}
 
 		$("#pagedata").ajaxPage({
@@ -154,7 +160,13 @@
 			complete: pagecallback,
 		});
 
-		$(".tab>li").click(function() {
+		$(".search").click(function() {
+			var project_title = $(".projectBox").val(); //获取项目名称
+			var user_mobile = $(".numberBox").val(); //获取电话号码
+
+		});
+
+		/*$(".tab>li").click(function() {
 			var index = $(this).index();
 			console.log("当前序号：", index)
 			$(this).addClass("active").siblings().removeClass("active");
@@ -164,11 +176,11 @@
 				var dataUrl = url;
 			} else
 			if(index == 1) {
-				var pdata = backMoneyData;
-				var dataUrl = url + '&audit_state=0'
-			} else if(index == 2) {
 				var pdata = noAuditData;
 				var dataUrl = url + '&audit_state=1'
+			} else if(index == 2) {
+				var pdata = backMoneyData;
+				var dataUrl = url + '&audit_state=0'
 			} else if(index == 3) {
 				var pdata = refuseData;
 				var dataUrl = url + '&audit_state=2'
@@ -186,7 +198,7 @@
 				complete: pagecallback,
 			});
 
-		});
+		});*/
 
 		var parent;
 		var id;
@@ -230,8 +242,8 @@
 				});
 			});
 		});
-		
-		$(".cancel1").click(function(){
+
+		$(".cancel1").click(function() {
 			$(".bMsk").hide();
 		});
 
@@ -405,7 +417,7 @@
 			$(".lDataBox").empty();
 			var id = $(this).attr("data-id");
 			$.ajax({
-				url: '/restapi/backlog/?investlog' + id +"/",
+				url: '/restapi/backlog/?investlog' + id + "/",
 				type: "get", //提交方式post
 				async: true, //是否同步
 				timeout: 5000, //超出时间
@@ -442,7 +454,7 @@
 			$(".lDataBox").empty();
 			var id = $(this).attr("data-id");
 			$.ajax({
-				url: '/restapi/backlog/?investlog' + id,
+				url: '/restapi/backlog/?investlog' + id + '/',
 				type: "get", //提交方式post
 				async: true, //是否同步
 				timeout: 5000, //超出时间
@@ -472,3 +484,18 @@
 	});
 </script>
 {% endblock js %}
+
+<!--
+	2.4 绝对路径 相对路径  2.5 tr  td
+	3 × √ × × ×
+	
+	<dl>
+	  <dt>美国大学</dt>
+	  <dd>1.清华大学</dd>
+	  <dd>2.北京大学</dd>
+	  <dd>3.浙江大学</dd>
+	</dl>
+	
+	
+	
+-->
