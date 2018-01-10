@@ -25,14 +25,23 @@
 				<input class="numberBox" type="text" /><br /><br />
 				<span class="auditState">处理状态：</span>
 				<select class="auditBox">
-					<option>全部</option>
-					<option>待审核</option>
-					<option>待回款</option>
-					<option>已拒绝</option>
-					<option>已结清</option>
+					<option value="">全部</option>
+					<option value="1">待审核</option>
+					<option value="0">待回款</option>
+					<option value="2">已拒绝</option>
+					<option value="3">已结清</option>
 				</select><br />
+				<div style="position: relative;">
+					<input type="file" id="upFile" class="file" onchange='hint.innerHTML = this.files[0].name;' />
+					<a class="input-clone">请选择文件</a>
+					<p style="display: inline-block;position: absolute;top: 30px;">已选择表格：<b id="hint" style="font-weight: bold;">无</b></p>
+					<input type="button" class="upload" value="导入返现数据" />
+					<input type="button" class="backupload" value="导入回款数据" />
+				</div>
+				<br />
 				<input type="button" class="search" value="搜索" />
-				<input type="button" class="export" value="导出" />
+				<input type="button" class="export" value="导出返现数据" />
+				<input type="button" class="backexport" value="导出回款数据" />
 
 			</div>
 			<!--<ul class="tab">
@@ -106,6 +115,7 @@
 
 </html>
 {%endblock%} {% block js %}
+<script type="text/javascript" src="{% static 'js/ajaxfileupload.js' %}"></script>
 <script>
 	$(function() {
 		//全部数据
@@ -123,7 +133,7 @@
 		//待回款
 		var backMoneyData = '<table class="t1" width="100%"><thead><tr><th width="12%">项目名称</th><th width="12.5%">电话号码</th>' +
 			'<th width="12.5%">投资时间</th><th width="12.5%">投资金额</th><th width="12%">提交时间</th><th width="15%">操作</th><th width="12.5%">qq</th><th width="10%">备注</th></tr></thead><tbody>' +
-			'[results]<tr><td>{project_title}</td>{user_mobile}<td></td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td><a class="moneyBack" data-id="{id}">回款</a>丨<a class="look" data-id="{id}">查看</a>丨<a class="checkout" data-id="{id}">结清</a></td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
+			'[results]<tr><td>{project_title}</td><td>{user_mobile}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td><a class="moneyBack" data-id="{id}">回款</a>丨<a class="look" data-id="{id}">查看</a>丨<a class="checkout" data-id="{id}">结清</a></td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
 			'</tbody></table>';
 
 		//已拒绝	
@@ -135,7 +145,7 @@
 		//已结清	
 		var jieqingData = '<table class="t1" width="100%"><thead><tr><th width="12%">项目名称</th><th width="12.5%">电话号码</th>' +
 			'<th width="12.5%">投资时间</th><th width="12.5%">投资金额</th><th width="12%">提交时间</th><th width="15%">操作</th><th width="12.5%">qq</th><th width="10%">备注</th></tr></thead><tbody>' +
-			'[results]<tr><td>{project_title}</td>user_mobile<td></td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td><a class="check">查看回款记录</a></td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
+			'[results]<tr><td>{project_title}</td><td>{user_mobile}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td><a class="check">查看回款记录</a></td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
 			'</tbody></table>';
 
 		$("li.home16").toggleClass("on");
@@ -163,8 +173,100 @@
 		$(".search").click(function() {
 			var project_title = $(".projectBox").val(); //获取项目名称
 			var user_mobile = $(".numberBox").val(); //获取电话号码
-			
-			
+			var state_desc = $(".auditBox option:selected").val(); //获取Select里面的值
+			console.log("------状态" + state_desc);
+			var newUrl = url;
+			if(project_title) {
+				newUrl += "&project_title=" + project_title;
+			}
+			if(user_mobile) {
+				newUrl += "&user_mobile=" + user_mobile;
+			}
+			if(state_desc) {
+				newUrl += "&audit_state=" + state_desc;
+			}
+			var pdata;
+			if(state_desc == "") {
+				pdata = allData;
+			} else if(state_desc == 1) {
+				pdata = noAuditData;
+			} else if(state_desc == 2) {
+				pdata = refuseData;
+			} else if(state_desc == 3) {
+				pdata = jieqingData;
+			} else if(state_desc == 0) {
+				pdata = backMoneyData;
+			}
+
+			console.log("---------newUrl", newUrl);
+			$("#pagedata").ajaxPage({
+				url: newUrl,
+				pageId: $("#page"),
+				pageSize: 6,
+				run: true,
+				content: pdata,
+				complete: pagecallback,
+			});
+
+		});
+
+		//点击导入图片
+		var hint = document.getElementById("hint");
+		$(".input-clone").click(function() {
+			$(".file").click();
+		});
+		//导入返现数据
+		$(".upload").click(function() {
+			if(!$(".file").val()) {
+				alert("请先选择文件");
+				return;
+			}
+			//上传导入的文件
+			var upFile = "upFile";
+			$.ajaxFileUpload({
+//				url: "{% url 'import_finance_excel'%}",
+				url:'/Admin/import_investlog_settle/',
+				secureuri: false,
+				fileElementId: upFile, //file标签的id
+				dataType: 'json', //返回数据的类型
+				data: {}, //一同上传的数据
+				success: function(data, status) {
+					if(data.code == 0) {
+						alert("导入成功！ 数量：" + data.num);
+					} else {
+						alert(data.msg + " 成功数量：" + data.num);
+					}
+				},
+				error: function(data, status, e) {
+					alert(e);
+				}
+			});
+
+		});
+		//导入回款数据文件
+		$(".backupload").click(function(){
+			if(!$(".file").val()) {
+				alert("请先选择文件");
+				return;
+			}
+			$.ajaxFileUpload({
+//				url: "{% url 'import_finance_excel'%}",
+				url:'/Admin/import_investlog_back/',
+				secureuri: false,
+				fileElementId: upFile, //file标签的id
+				dataType: 'json', //返回数据的类型
+				data: {}, //一同上传的数据
+				success: function(data, status) {
+					if(data.code == 0) {
+						alert("导入成功！ 数量：" + data.num);
+					} else {
+						alert(data.msg + " 成功数量：" + data.num);
+					}
+				},
+				error: function(data, status, e) {
+					alert(e);
+				}
+			});
 			
 		});
 
@@ -488,16 +590,6 @@
 {% endblock js %}
 
 <!--
-	2.4 绝对路径 相对路径  2.5 tr  td
-	3 × √ × × ×
-	
-	<dl>
-	  <dt>美国大学</dt>
-	  <dd>1.清华大学</dd>
-	  <dd>2.北京大学</dd>
-	  <dd>3.浙江大学</dd>
-	</dl>
-	
-	
-	
+	返现接口：Admin/import_investlog_settle
+	回款接口：Admin/import_investlog_back
 -->

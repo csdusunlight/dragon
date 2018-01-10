@@ -48,7 +48,7 @@
 }
 
 .searchBox {
-	width: 800px;
+	/*width: 800px;*/
 	padding: 5px 5px;
 	width: 600px;
 }
@@ -92,7 +92,8 @@
 	border: none;
 	margin-top: 20px;
 }
-.export{
+
+.export {
 	width: 150px;
 	height: 30px;
 	font-size: 16px;
@@ -103,17 +104,91 @@
 	background: url(../wafuli_admin/images/ico2.png) no-repeat 80% #4daa84;
 	border: none;
 	margin-top: 20px;
-	margin-left: 50px;
+	margin-left: 200px;
 }
-.auditState{
+
+.backexport{
+	width: 150px;
+	height: 30px;
+	font-size: 16px;
+	color: #fff;
+	padding: 0 40px 0 0;
+	box-sizing: border-box;
+	min-width: 80px;
+	background: url(../wafuli_admin/images/ico2.png) no-repeat 80% #4daa84;
+	border: none;
+	margin-top: 20px;
+	position: absolute;left:566px;top: 145px;
+}
+
+.auditState {
 	font-size: 16px;
 }
 
-.auditBox{
+.auditBox {
 	width: 150px;
 	height: 30px;
 	border: 1px solid #4daa84;
 }
+
+.upload {
+	width: 150px;
+	height: 30px;
+	font-size: 16px;
+	color: #fff;
+	padding: 0 40px 0 0;
+	box-sizing: border-box;
+	min-width: 80px;
+	background: url(../wafuli_admin/images/ico2.png) no-repeat 80% #4daa84;
+	border: none;
+	margin-top: 20px;
+	margin-left: 200px;
+}
+
+.backupload{
+	display: inline-block;
+	width: 150px;
+	height: 30px;
+	font-size: 16px;
+	color: #fff;
+	padding: 0 40px 0 0;
+	box-sizing: border-box;
+	min-width: 80px;
+	background: url(../wafuli_admin/images/ico2.png) no-repeat 80% #4daa84;
+	border: none;
+	margin-top: 20px;
+	margin-left: 200px;
+	position: absolute;left: 360px;top:0;
+}
+
+.file {
+	display: inline-block;
+	width: 150px;
+	height: 30px;
+	background-color: #4daa84;
+	border: none;
+	color: #fff;
+	font-size: 16px;
+	box-sizing: border-box;
+	min-width: 80px;
+	vertical-align: bottom;
+}
+
+.input-clone {
+	display: inline-block;
+	width: 150px;
+	height: 30px;
+	background-color: #4daa84;
+	border: none;
+	color: #fff;
+	font-size: 16px;
+	box-sizing: border-box;
+	min-width: 80px;
+	vertical-align: bottom;
+	text-align: center;
+	line-height: 30px;
+}
+
 
 /*-----------模态框----------*/
 
