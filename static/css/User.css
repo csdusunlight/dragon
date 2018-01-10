@@ -433,8 +433,11 @@ input[type="text"] {padding-left: 10px !important;padding-right: 10px !important
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  line-height: 20px;
+  color: #fff;
+  background-color: #FFBE00;
+  border-radius: 4px;
 }
 .vip-right {
   margin: 0;
