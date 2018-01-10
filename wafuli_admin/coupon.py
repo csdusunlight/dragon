@@ -22,7 +22,7 @@ from xlwt.Style import easyxf
 import traceback
 import xlrd
 from django.contrib.contenttypes.models import ContentType
-from account.vip import get_vip_bonus
+# from account.vip import get_vip_bonus
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 # Create your views here.
@@ -209,8 +209,8 @@ def admin_coupon(request):
                 log.audit_result = True
                 translist = charge_money(event_user, '0', cash, u'优惠券兑换')
                 project = event.content_object.project
-                if project.is_vip_bonus:
-                    get_vip_bonus(event_user, cash, 'finance')
+#                 if project.is_vip_bonus:
+#                     get_vip_bonus(event_user, cash, 'finance')
                 scoretranslist = charge_score(event_user, '0', score, u'优惠券兑换')
                 if translist and scoretranslist:
                     event.audit_state = '0'
@@ -528,8 +528,8 @@ def import_coupon_excel(request):
                     log.audit_result = True
                     project = event.content_object.project
                     translist = charge_money(event_user, '0', amount, project.title)
-                    if project.is_vip_bonus:
-                        get_vip_bonus(event_user, amount, 'finance')
+#                     if project.is_vip_bonus:
+#                         get_vip_bonus(event_user, amount, 'finance')
                     if translist:
                         event.audit_state = '0'
                         translist.user_event = event

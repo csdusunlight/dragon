@@ -572,6 +572,7 @@ def export_investdata_excel(request):
     if audittime_0 and audittime_1:
         s = datetime.datetime.strptime(audittime_0,'%Y-%m-%d')
         e = datetime.datetime.strptime(audittime_1,'%Y-%m-%d')
+        e += timedelta(days=1)
         item_list = item_list.filter(audit_time__range=(s,e))
   
     item_list = item_list.select_related('project').order_by('invest_time')

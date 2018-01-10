@@ -19,7 +19,7 @@ class ProjectFilter(django_filters.rest_framework.FilterSet):
 
 class ProjectInvestDateFilter(django_filters.rest_framework.FilterSet):
     investtime = django_filters.DateFromToRangeFilter(name="invest_time")
-    audittime = django_filters.DateTimeFromToRangeFilter(name="audit_time")
+    audittime = django_filters.DateFromToRangeFilter(name="audit_time")
     name__contains = django_filters.CharFilter(name="project", lookup_expr='name__contains')
     class Meta:
         model = ProjectInvestData

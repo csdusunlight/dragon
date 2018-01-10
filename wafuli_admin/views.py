@@ -23,12 +23,13 @@ import traceback
 import xlrd
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from account.vip import vip_judge, get_vip_bonus
+# from account.vip import vip_judge, get_vip_bonus
 import json
 from django.db import transaction
 from project_admin.tools import has_permission
 from teaminvest.models import Investlog, Backlog
 from decimal import Decimal
+from account.vip import vip_process
 # Create your views here.
 logger = logging.getLogger('wafuli')
 def index(request):
@@ -216,8 +217,8 @@ def admin_finance(request):
 
                 # translist = charge_money(event_user, '0', cash, u'福利返现')
                 translist = charge_money(event_user, '0', cash, project_title)  #jzy
-                if event.content_object.is_vip_bonus:
-                    get_vip_bonus(event_user, cash, 'finance')
+#                 if event.content_object.is_vip_bonus:
+#                     get_vip_bonus(event_user, cash, 'finance')
                 scoretranslist = charge_score(event_user, '0', score, u'福利返现（积分）')
                 if translist and scoretranslist:
                     event.audit_state = '0'
@@ -330,8 +331,8 @@ def admin_task(request):
                 log.audit_result = True
                 # translist = charge_money(event_user, '0', cash, u'福利返现')
                 translist = charge_money(event_user, '0', cash, project_title)  #jzy
-                if event.content_object.is_vip_bonus:
-                    get_vip_bonus(event_user, cash, 'task')
+#                 if event.content_object.is_vip_bonus:
+#                     get_vip_bonus(event_user, cash, 'task')
                 scoretranslist = charge_score(event_user, '0', score, u'福利返现（积分）')
                 if translist and scoretranslist:
                     event.audit_state = '0'
@@ -725,8 +726,8 @@ def import_finance_excel(request):
                     amount = int(row[3]*100)
                     log.audit_result = True
                     translist = charge_money(event_user, '0', amount, row[1])
-                    if event.content_object.is_vip_bonus:
-                        get_vip_bonus(event_user, amount, 'finance')
+#                     if event.content_object.is_vip_bonus:
+#                         get_vip_bonus(event_user, amount, 'finance')
                     if translist:
                         event.audit_state = '0'
                         translist.user_event = event
@@ -1155,7 +1156,7 @@ def admin_withdraw(request):
             trans_withdraw = event.translist.first()
             if trans_withdraw:
                 amount = trans_withdraw.transAmount
-                vip_judge(event.user, amount)
+                vip_process(event.user, amount)
                 trans_withdraw.admin_event = admin_event
                 trans_withdraw.save(update_fields=['admin_event'])
             msg_content = u'您提现的' + str(event.invest_amount) + u'福币，已发放到您的银行卡中，请注意查收'
@@ -1483,7 +1484,7 @@ def import_withdraw_excel(request):
                     trans_withdraw = event.translist.first()
                     if trans_withdraw:
                         amount = trans_withdraw.transAmount
-                        vip_judge(event.user, amount)
+                        vip_process(event.user, amount)
                         trans_withdraw.admin_event = admin_event
                         trans_withdraw.save(update_fields=['admin_event'])
                     msg_content = u'您提现的' + str(event.invest_amount) + u'福币，已发放到您的银行卡中，请注意查收'
@@ -1966,8 +1967,8 @@ def admin_media(request):
                 log.audit_result = True
                 # translist = charge_money(event_user, '0', cash, u'福利返现')
                 translist = charge_money(event_user, '0', cash, project_title)  #jzy
-                if event.content_object.is_vip_bonus:
-                    get_vip_bonus(event_user, cash, 'finance')
+#                 if event.content_object.is_vip_bonus:
+#                     get_vip_bonus(event_user, cash, 'finance')
                 scoretranslist = charge_score(event_user, '0', score, u'福利返现（积分）')
                 if translist and scoretranslist:
                     event.audit_state = '0'
@@ -2065,8 +2066,8 @@ def admin_teaminvest(request):
             else:
                 # translist = charge_money(event_user, '0', cash, u'福利返现')
                 translist = charge_money(event_user, '0', cash, project_title)  #jzy
-                if investlog.project.is_vip_bonus:
-                    get_vip_bonus(event_user, cash, 'finance')
+#                 if investlog.project.is_vip_bonus:
+#                     get_vip_bonus(event_user, cash, 'finance')
                 if translist:
                     investlog.audit_state = '0'
                     investlog.audit_time = datetime.datetime.now()
@@ -2270,8 +2271,8 @@ def import_media_excel(request):
                     amount = int(row[3]*100)
                     log.audit_result = True
                     translist = charge_money(event_user, '0', amount, row[1])
-                    if event.content_object.is_vip_bonus:
-                        get_vip_bonus(event_user, amount, 'finance')
+#                     if event.content_object.is_vip_bonus:
+#                         get_vip_bonus(event_user, amount, 'finance')
                     if translist:
                         event.audit_state = '0'
                         translist.user_event = event
