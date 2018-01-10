@@ -107,6 +107,7 @@ var progress = document.getElementById("progress");
           </div>
           <div class="intro-content">
             <!--<img src="{% static 'images/vip-intro.png' %}"/>-->
+            <p>vip等级：{{user.level}}---总共提现福币：{{user.with_total}}----当前等级提现福币：{{user.with_level}}</p>
             <table style="width: 94%; height: 180px; margin: 0 auto;" border="" cellspacing="" cellpadding="">
             	<tr>
             	    <th>会员等级</th>
