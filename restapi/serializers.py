@@ -15,6 +15,7 @@ class TransListSerializer(serializers.ModelSerializer):
 class TeamInvestLogSerializer(serializers.ModelSerializer):
     state_desc = serializers.CharField(source='get_audit_state_display', read_only=True)
     project_title = serializers.CharField(source='project.title', read_only=True)
+    user_mobile = serializers.CharField(source='user.mobile', read_only=True)
     class Meta:
         model = Investlog
         fields = '__all__'

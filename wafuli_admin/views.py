@@ -2306,3 +2306,68 @@ def import_media_excel(request):
         ret['msg'] = unicode(e)
     ret['num'] = suc_num
     return JsonResponse(ret)
+
+@login_required
+def export_investlog(request):
+    user = request.user
+    item_list = []
+    item_list = Investlog.objects
+    if not user.is_staff:
+        raise Http404
+    state = request.GET.get("audit_state",'1')
+    mobile = request.GET.get("user_mobile", None)
+    if mobile:
+        item_list = item_list.filter(user__mobile=mobile)
+    projectname = request.GET.get("project_title_contains", None)
+    if projectname:
+        item_list = item_list.filter(project__title__contains=projectname)
+    adminname = request.GET.get("admin_user", None)
+    if adminname:
+        item_list = item_list.filter(admin_user__username=adminname)
+    item_list = item_list.filter(audit_state=state).select_related('user', 'project').order_by('submit_time')
+    data = []
+    for con in item_list:
+        project = con.project
+        project_name=project.title
+        invest_mobile=con.invest_mobile
+        user_mobile = con.user.mobile
+        invest_date=con.invest_date
+        id=con.id
+        remark= con.remark
+        invest_amount= con.invest_amount
+        qq_number = con.user.qq_number + '/' +  con.user.qq_name
+        result = ''
+        settle_amount = ''
+        settle_price = con.get_project_price()
+        reason = con.audit_reason
+        submit_type = con.get_submit_type_display()
+        if con.audit_state=='0':
+            result = u'是'
+            settle_amount = str(con.settle_amount)
+        elif con.audit_state=='2':
+            result = u'否'
+        data.append([id, project_name, invest_date, user_mobile, invest_mobile, 
+                     invest_amount, remark, result, settle_amount, reason, ])
+    w = Workbook()     #创建一个工作簿
+    ws = w.add_sheet(u'待审核记录')     #创建一个工作表
+    title_row = [u'记录ID',u'项目名称',u'投资日期', u'挖福利账号', u'注册手机号' ,u'投资金额', u'备注',
+                 u'审核通过',u'返现金额',u'拒绝原因',u'回款记录']
+    for i in range(len(title_row)):
+        ws.write(0,i,title_row[i])
+    row = len(data)
+    style1 = easyxf(num_format_str='YY/MM/DD')
+    for i in range(row):
+        lis = data[i]
+        col = len(lis)
+        for j in range(col):
+            if j==2:
+                ws.write(i+1,j,lis[j],style1)
+            else:
+                ws.write(i+1,j,lis[j])
+    sio = StringIO.StringIO()
+    w.save(sio)
+    sio.seek(0)
+    response = HttpResponse(sio.getvalue(), content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=投资记录表.xls'
+    response.write(sio.getvalue())
+    return response
