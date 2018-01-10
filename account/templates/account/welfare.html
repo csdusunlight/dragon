@@ -164,6 +164,7 @@ function delData(obj, id) {
     $('.popup.m-del-proj').addClass('in');
 }
 function editData_03(obj, id) {
+	
     project_id = id;
     parent_dom = $(obj).parent().parent();
     $.ajax({
@@ -359,6 +360,7 @@ $(function(){
                 'remark': remark
             },
             success: function(ret) {
+            	console.log(parent_dom);
                 alert("更改数据成功！");
                 console.log(ret.data);
                 $(parent_dom).find(".change_title").text(ret.project);
@@ -634,6 +636,29 @@ var canclePopup = function(obj) {       //取消自定义弹窗
 				</div>
 
 			</div>
+			
+			<div class="aMsk">
+				<div class="aTipBox">
+					<p class="tips">编辑组队投资数据</p>
+					<div class="aDataBox">
+
+					</div>
+					<div class="btn cSubmit" style="margin-left: 1px;">
+						确定
+					</div>
+					<div class="btn cCancel">
+						取消
+					</div>
+				</div>
+			</div>
+			
+			<div class="lookMsk">
+				<div class="lookBox">
+					<div class="close">×</div>
+					<div class="lookData"></div>
+				</div>
+			</div>
+			
 		</div>
             
         </div>
