@@ -42,7 +42,7 @@ class Investlog(models.Model):
     invest_amount = models.DecimalField(u'投资金额', max_digits=10, decimal_places=2)
     invest_date = models.DateField(u'投资日期', default=get_today)
     remark = models.CharField(u"备注", max_length=100, blank=True)
-    settle_amount = models.DecimalField(u'结算金额', max_digits=10, decimal_places=2, null=True)
+    settle_amount = models.IntegerField(u'结算金额', default=0)
     audit_time = models.DateTimeField(u'审核时间', default=timezone.now)
     audit_state = models.CharField(max_length=10, choices=AUDIT_STATE, verbose_name=u"审核状态")
     audit_reason = models.CharField(max_length=100, verbose_name=u"审核说明", blank=True)

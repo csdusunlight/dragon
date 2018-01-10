@@ -2071,6 +2071,7 @@ def admin_teaminvest(request):
                 if translist:
                     investlog.audit_state = '0'
                     investlog.audit_time = datetime.datetime.now()
+                    investlog.settle_amount = cash
                     res['code'] = 0
 #                     msg_content = u'您提交的"' + investlog.content_object.title + u'"媒体单已审核通过。'
 #                     Message.objects.create(user=event_user, content=msg_content, title=u"媒体单审核");
@@ -2107,7 +2108,7 @@ def admin_teaminvest(request):
 #             Message.objects.create(user=event_user, content=msg_content, title=u"媒体单审核");
 
         if res['code'] == 0:
-            investlog.save(update_fields=['audit_state','audit_time','audit_reason'])
+            investlog.save(update_fields=['audit_state','audit_time','audit_reason','settle_amount'])
         return JsonResponse(res)
 
 @login_required
@@ -2307,7 +2308,8 @@ def import_media_excel(request):
     ret['num'] = suc_num
     return JsonResponse(ret)
 
-@login_required
+@csrf_exempt
+@has_permission('002')
 def export_investlog(request):
     user = request.user
     item_list = []
@@ -2329,29 +2331,30 @@ def export_investlog(request):
     for con in item_list:
         project = con.project
         project_name=project.title
-        invest_mobile=con.invest_mobile
         user_mobile = con.user.mobile
         invest_date=con.invest_date
         id=con.id
         remark= con.remark
         invest_amount= con.invest_amount
-        qq_number = con.user.qq_number + '/' +  con.user.qq_name
+        qq_number = con.qq
         result = ''
         settle_amount = ''
-        settle_price = con.get_project_price()
         reason = con.audit_reason
-        submit_type = con.get_submit_type_display()
         if con.audit_state=='0':
             result = u'是'
-            settle_amount = str(con.settle_amount)
+            settle_amount = str(con.settle_amount/100)
         elif con.audit_state=='2':
             result = u'否'
-        data.append([id, project_name, invest_date, user_mobile, invest_mobile, 
-                     invest_amount, remark, result, settle_amount, reason, ])
+        backlog = ''
+        backlog_list = con.backlogs.all()
+        for item in backlog_list:
+            backlog += str(item.back_date) + u'回款' + str(item.back_amount) + u"元；"
+        data.append([id, project_name, invest_date, user_mobile, qq_number,
+                     invest_amount, remark, result, settle_amount, reason, backlog, '', '', '' ])
     w = Workbook()     #创建一个工作簿
     ws = w.add_sheet(u'待审核记录')     #创建一个工作表
-    title_row = [u'记录ID',u'项目名称',u'投资日期', u'挖福利账号', u'注册手机号' ,u'投资金额', u'备注',
-                 u'审核通过',u'返现金额',u'拒绝原因',u'回款记录']
+    title_row = [u'记录ID',u'项目名称',u'投资日期', u'挖福利账号', u'QQ号' ,u'投资金额', u'备注',
+                 u'审核通过',u'返现金额',u'拒绝原因',u'回款记录',u'回款金额（导入用）',u'回款日期（导入用）',u'回款备注（导入用）',]
     for i in range(len(title_row)):
         ws.write(0,i,title_row[i])
     row = len(data)
@@ -2371,3 +2374,189 @@ def export_investlog(request):
     response['Content-Disposition'] = 'attachment; filename=投资记录表.xls'
     response.write(sio.getvalue())
     return response
+
+@csrf_exempt
+@has_permission('002')
+def import_investlog_settle(request):
+    user = request.user
+    if not ( user.is_authenticated() and user.is_staff):
+        raise Http404
+    ret = {'code':-1}
+    file = request.FILES.get('file')
+#     print file.name
+    with open('./out.xls', 'wb+') as destination:
+        for chunk in file.chunks():
+            destination.write(chunk)
+    data = xlrd.open_workbook('out.xls')
+    table = data.sheets()[0]
+    nrows = table.nrows
+    ncols = table.ncols
+    if ncols!=14:
+        ret['msg'] = u"文件格式与模板不符，请在导出的待审核记录表中更新后将文件导入！"
+        return JsonResponse(ret)
+    rtable = []
+    mobile_list = []
+    try:
+        for i in range(1,nrows):
+            temp = []
+            duplic = False
+            for j in range(ncols):
+                cell = table.cell(i,j)
+                result = False
+                if j==0:
+                    id = int(cell.value)
+                    temp.append(id)
+                elif j==1:
+                    name = u'组队：' + cell.value
+                    temp.append(name)
+                elif j==7:
+                    result = cell.value.strip()
+                    if result == u"是":
+                        result = True
+                        temp.append(True)
+                    elif result == u"否":
+                        result = False
+                        temp.append(False)
+                    else:
+                        raise Exception(u"审核结果必须为是或否。")
+                elif j==8:
+                    return_amount = 0
+                    if cell.value:
+                        return_amount = float(cell.value)
+                    elif result:
+                        raise Exception(u"审核结果为是时，返现金额不能为空或零。")
+                    temp.append(return_amount)
+                elif j==9:
+                    reason = cell.value
+                    if not result and not reason:
+                        raise Exception(u"审核结果为否时，拒绝原因不能为空。")
+                    temp.append(reason)
+                else:
+                    continue;
+            rtable.append(temp)
+    except Exception, e:
+        traceback.print_exc()
+        ret['msg'] = unicode(e)
+        ret['num'] = 0
+        return JsonResponse(ret)
+    admin_user = request.user
+    suc_num = 0
+    try:
+        for row in rtable:
+            with transaction.atomic():
+                id = row[0]
+                result = row[2]
+                reason = row[4]
+                event = Investlog.objects.get(id=id)
+                if event.audit_state != '1':
+                    continue
+                event_user = event.user
+                translist = None
+                if result:
+                    amount = int(row[3]*100)
+                    translist = charge_money(event_user, '0', amount, row[1])
+#                     if event.content_object.is_vip_bonus:
+#                         get_vip_bonus(event_user, amount, 'finance')
+                    if translist:
+                        event.audit_state = '0'
+                        event.settle_amount = amount
+                    else:
+                        logger.error("Investlog:" + str(id) + u" 现金记账失败，请检查原因！！！！")
+                        continue
+                else:
+                    event.audit_state = '2'
+                    event.audit_reason = '2'
+                admin_event = AdminEvent.objects.create(admin_user=admin_user, custom_user=event_user, event_type='11')
+                if translist:
+                    translist.admin_event = admin_event
+                    translist.save(update_fields=['admin_event'])
+                event.audit_time = datetime.datetime.now()
+                event.save(update_fields=['audit_state','audit_time','settle_amount','audit_reason'])
+                suc_num += 1
+        ret['code'] = 0
+    except Exception as e:
+        logger.error(e)
+        ret['code'] = 1
+        ret['msg'] = unicode(e)
+    ret['num'] = suc_num
+    return JsonResponse(ret)
+
+@csrf_exempt
+@has_permission('002')
+def import_investlog_back(request):
+    user = request.user
+    if not ( user.is_authenticated() and user.is_staff):
+        raise Http404
+    ret = {'code':-1}
+    file = request.FILES.get('file')
+#     print file.name
+    with open('./out.xls', 'wb+') as destination:
+        for chunk in file.chunks():
+            destination.write(chunk)
+    data = xlrd.open_workbook('out.xls')
+    table = data.sheets()[0]
+    nrows = table.nrows
+    ncols = table.ncols
+    if ncols!=14:
+        ret['msg'] = u"文件格式与模板不符，请在导出的待审核记录表中更新后将文件导入！"
+        return JsonResponse(ret)
+    rtable = []
+    mobile_list = []
+    try:
+        for i in range(1,nrows):
+            temp = []
+            duplic = False
+            for j in range(ncols):
+                cell = table.cell(i,j)
+                result = False
+                value = cell.value
+                if j==0:
+                    id = int(value)
+                    temp.append(id)
+                elif j==11:
+                    return_amount = 0
+                    try:
+                        return_amount = float(value)
+                        assert return_amount > 0
+                    except:
+                        raise Exception(u"回款金额必须大于0")
+                    temp.append(return_amount)
+                elif j==12:
+                    if(cell.ctype!=3):
+                        raise Exception(u"投资日期列格式错误，请修改后重新提交。")
+                    else:
+                        time = xlrd.xldate.xldate_as_datetime(value, 0)
+                        temp.append(time)
+                elif j==13:
+                    temp.append(value)
+                else:
+                    continue;
+            rtable.append(temp)
+    except Exception, e:
+        traceback.print_exc()
+        ret['msg'] = unicode(e)
+        ret['num'] = 0
+        return JsonResponse(ret)
+    admin_user = request.user
+    suc_num = 0
+    try:
+        for row in rtable:
+            with transaction.atomic():
+                id = row[0]
+                amount = row[1]
+                back_date = row[2]
+                remark = row[3]
+                event = Investlog.objects.get(id=id)
+                if event.audit_state != '0':
+                    raise Exception(u"发现审核未通过数据，中断")
+                event_user = event.user
+                Backlog.objects.create(user=event.user, project=event.project, investlog=event, back_amount=amount,
+                                       back_date=back_date, remark=remark)
+                suc_num += 1
+        ret['code'] = 0
+    except Exception as e:
+        logger.error(e)
+        ret['code'] = 1
+        ret['msg'] = unicode(e)
+    ret['num'] = suc_num
+    return JsonResponse(ret)
