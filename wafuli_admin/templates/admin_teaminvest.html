@@ -1,382 +1,474 @@
-{% load staticfiles %}
+{% extends "base.html" %} {% load staticfiles %}
 <!DOCTYPE html>
 <html>
 
 	<head>
 		<meta charset="UTF-8">
-		<title>用户后台管理页面</title>
-		<link rel="stylesheet" type="text/css" href="{% static 'css/wfl-common.css' %}" />
+		<title></title>
+
+		<!--<link rel="stylesheet" type="text/css" href="{% static 'css/wfl-common.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/admin_teaminvest.css' %}" />
-		<link rel="stylesheet" type="text/css" href="{% static 'css/page.css' %}" />
-		<script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
-		<script type="text/javascript" src="{% static 'js/page.js' %}"></script>
-		<style>
-			table td {
-				height: 52px;
-				text-align: center;
-				border-bottom: 2px solid #f5f5f5;
-			}
-			
-			table th {
-				font-weight: 500;
-			}
-			
-			.Page-in {
-				position: absolute;
-				width: 100%;
-			}
-		</style>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/page.css' %}" />-->
+
+		<!--<script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/page.js' %}"></script>-->
+
 	</head>
+	{% block right %}
 
 	<body>
 		<div class="wrapper">
-			<span class="title">用户后台管理页面</span>
 			<ul class="tab">
 				<li class="active">全部</li>
-				<li>待回款</li>
 				<li>待审核</li>
+				<li>待回款</li>
 				<li>已拒绝</li>
 				<li>已结清</li>
 			</ul>
 			<div class="contentBox" style="margin-top: 10px;">
 				<div id="pagedata"></div>
-				<div class="Page-in">
+				<div class="Page-in1">
 					<div class="page" id="page"></div>
 				</div>
 			</div>
-		</div>
-		<div class="msk">
-			<div class="mskBox">
-				<span class="operate">操作返现弹窗</span>
-				<div class="dataBox">
-					回款金额：
-					<input type="text" id="backMoney" placeholder="请输入返现金额" /><br />回款时间：
-					<input type="date" id="date" /><br /> 备注：
-					<input type="text" id="remark" placeholder="请输入备注" /><br /> 回款账号信息：
-					<div class="msgbox">
 
+			<div class="msk">
+				<div class="mskBox">
+					<span class="operate">操作回款弹窗</span>
+					<div class="dataBox">
+						<form>
+							回款金额：<input type="text" id="backMoney" placeholder="请输入回款金额" /><br />回款时间：
+							<input type="date" id="date" /><br />
+						</form>
+						<div class="msgbox">
+
+						</div>
+					</div>
+					<input type="submit" class="mskBtn submit" />
+					<input type="button" class="mskBtn cancel" value="取消" />
+				</div>
+			</div>
+			<!--拒绝-->
+			<div class="fMsk">
+				<div class="mskBox">
+					<span style="display: block;margin: 10px 160px;font-size: 20px;">操作拒绝弹窗</span>
+					<textarea class="reason"></textarea>
+					<div class="mskBtn fBtn">确定</div>
+					<div class="mskBtn fcancel">取消</div>
+				</div>
+			</div>
+			<div class="bMsk">
+				<div class="mskBox1" style="position: relative;">
+					<span style="display: block;margin: 10px 160px;font-size: 20px;">操作返现弹窗</span>
+					<span class="desc">返现金额：</span><input type="text" class="backMoney back" placeholder="请输入返现金额" /><br />
+					<!--<span class="desc">回款日期：</span><input type="date" class="backDate back" />-->
+					<input type="submit" class="mskBtn backBtn">
+					<input type="button" class="mskBtn cancel1" value="取消" style="position: absolute;right: 75px;top: 96px;">
+				</div>
+			</div>
+			<div class="cMsk">
+				<div class="mskBox2">
+					<span style="display: block;margin: 10px 160px;font-size: 20px;">操作结算弹窗</span>
+					<p class="ctxt">是否要进行结算？</p>
+					<div class="mskBtn cBtn">确定</div>
+					<div class="mskBtn Ccancel">取消</div>
+				</div>
+			</div>
+			<!--查看弹窗-->
+			<div class="lMsk">
+				<div class="lMskBox">
+					<div class="close">×</div>
+					<div class="lDataBox">
+						
 					</div>
 				</div>
-				<div class="mskBtn submit">确定</div>
-				<div class="mskBtn cancel">取消</div>
 			</div>
 		</div>
-		<div class="fMsk">
-			<div class="mskBox">
-				<span style="display: block;margin: 10px 160px;font-size: 20px;">操作拒绝弹窗</span>
-				<textarea class="reason"></textarea>
-				<div class="mskBtn fBtn">确定</div>
-				<div class="mskBtn cancel">取消</div>
-			</div>
-		</div>
-		<div class="bMsk">
-			<div class="mskBox1">
-				<span style="display: block;margin: 10px 160px;font-size: 20px;">操作回款弹窗</span>
-				<input type="text" class="backMoney" placeholder="请输入回款金额" />
-				<div class="mskBtn backBtn">确定</div>
-				<div class="mskBtn cancel">取消</div>
-			</div>
-		</div>
-		<div class="cMsk">
-			<div class="mskBox1">
-				<span style="display: block;margin: 10px 160px;font-size: 20px;">操作结算弹窗</span>
-				<p class="ctxt">是否要进行结算？</p>
-				<div class="mskBtn cBtn">确定</div>
-				<div class="mskBtn Ccancel">取消</div>
-			</div>
-		</div>
-		<script>
-			$(function() {
-				//全部数据
-				var allData = '<table width="100%"><thead><tr><th width="12%">项目名称</th>' +
-					'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="9%">处理状态</th><th width="20%">备注QQ</th></tr></thead><tbody>' +
-					'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td>{state_desc}</td><td>{remark}</td></tr>[/results]' +
-					'</tbody></table>';
 
-				//待审核
-				var noAuditData = '<table width="100%"><thead><tr><th width="12%">项目名称</th>' +
-					'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="15%">操作</th><th width="20%">备注QQ</th></tr></thead><tbody>' +
-					'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td class="node"><a class="cashBack" data-id="{id}">返现</a>丨<a class="refuse" data-id="{id}">拒绝</a>丨<a class="checkout" data-id="{id}">结清</a></td><td>{remark}</td></tr>[/results]' +
-					'</tbody></table>';
-
-				//待回款
-				var backMoneyData = '<table width="100%"><thead><tr><th width="12%">项目名称</th>' +
-					'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="15%">操作</th><th width="20%">备注QQ</th></tr></thead><tbody>' +
-					'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td><a class="moneyBack" data-id="{id}">回款</a>丨<a class="refuse" data-id="{id}">查看</a>丨<a class="checkout" data-id="{id}">结清</a></td><td>{remark}</td></tr>[/results]' +
-					'</tbody></table>';
-
-				//已拒绝	
-				var refuseData = '<table width="100%"><thead><tr><th width="12%">项目名称</th>' +
-					'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="15%">操作</th><th width="20%">备注QQ</th></tr></thead><tbody>' +
-					'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td><a>/</a></td><td>{remark}</td></tr>[/results]' +
-					'</tbody></table>';
-
-				//已结清	
-				var jieqingData = '<table width="100%"><thead><tr><th width="12%">项目名称</th>' +
-					'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="15%">操作</th><th width="20%">备注QQ</th></tr></thead><tbody>' +
-					'[results]<tr><td>{project}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td><a class="check">查看回款记录</a></td><td>{remark}</td></tr>[/results]' +
-					'</tbody></table>';
-
-				var url = "/restapi/investlog/";
-
-				function pagecallback() {
-					console.log("这是一个回调函数");
-					$('.sub_time').each(function() {
-						var submit_time = $(this).text().split('T');
-						$(this).text(submit_time[0]);
-					});
-
-					/*var state = $(".all").attr("data-state");
-					console.log("state状态：", state);
-					if(state == 1) {
-						$(".all").html('<a class="cashBack">返现</a>丨<a class="refuse">拒绝</a>丨<a class="jieqing">结清</a>');
-					} else if(state == 0) {
-						$(".all").html('<a class="moneyBack">回款</a>丨<a class="checkout">查看</a>丨<a class="jieqing">结清</a>');
-					} else if(state == 2) {
-						$(".all").html('<a>/</a>');
-					} else if(state == 3) {
-						$(".all").html('<a class="check">查看回款记录</a>');
-					}*/
-				}
-
-				$("#pagedata").ajaxPage({
-					url: url,
-					pageId: $("#page"),
-					pageSize: 6,
-					run: true,
-					content: allData,
-					complete: pagecallback,
-				});
-
-				$(".tab>li").click(function() {
-					var index = $(this).index();
-					console.log("当前序号：", index)
-					$(this).addClass("active").siblings().removeClass("active");
-
-					if(index == 0) {
-						var pdata = allData;
-						var dataUrl = url;
-					} else
-					if(index == 1) {
-						var pdata = backMoneyData;
-						var dataUrl = url + '?audit_state=0'
-					} else if(index == 2) {
-						var pdata = noAuditData;
-						var dataUrl = url + '?audit_state=1'
-					} else if(index == 3) {
-						var pdata = refuseData;
-						var dataUrl = url + '?audit_state=2'
-					} else if(index == 4) {
-						var pdata = jieqingData;
-						var dataUrl = url + '?audit_state=3'
-					}
-
-					$("#pagedata").ajaxPage({
-						url: dataUrl,
-						pageId: $("#page"),
-						pageSize: 6,
-						run: true,
-						content: pdata,
-						complete: pagecallback,
-					});
-
-				});
-
-				var parent;
-				var pUrl = "/Admin/admin_teaminvest/";
-				/********************** 模态框  ***********************/
-				$(".contentBox").on('click', ".cashBack", function() {
-					parent = $(this).parent();
-					var id = $(this).attr("data-id");
-					console.log("当前返现的id：", id);
-					$(".msgbox").empty();
-					var backUrl = "/restapi/bankcard/";
-					console.log(backUrl);
-					$.ajax({
-						url: backUrl,
-						type: 'GET', //GET
-						async: true, //或false,是否异步
-						timeout: 5000, //超时时间
-						dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
-						success: function(data, textStatus, jqXHR) {
-							console.log(data.results);
-							for(var i in data.results) {
-								str_html = '<p>' + data.results[i].real_name + '</p>' +
-									'<p>' + data.results[i].bank + '</p>' +
-									'<p>' + data.results[i].card_number + '</p>';
-							}
-							$(".msgbox").append(str_html);
-						},
-						error: function(xhr, textStatus) {
-							console.log('错误:' + xhr.responseText);
-						}
-					});
-
-					//模态框弹出
-					$(".msk").show();
-
-					/**
-					 *************返现*************
-					 **/
-					$(".submit").click(function() {
-						if(!$("#backMoney").val() || !$("#date").val() || !$("#remark").val()) {
-							alert("输入框不能为空");
-						}
-						var backMoney = $("#backMoney").val();
-						var remark = $("#remark").val();
-						var date = $("#date").val();
-						$.ajax({
-							url: pUrl,
-							type: 'POST', //请求方式
-							async: true, //或false,是否异步
-							data: {
-								"type": 1,
-								"id": id,
-								"cash": backMoney,
-								"remark": remark,
-								"back_date": date
-							},
-							timeout: 5000, //超时时间
-							dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
-							success: function(data, textStatus, jqXHR) {
-								alert("提交成功");
-								console.log(data);
-								$(".msk").hide();
-								parent.replaceWith("<td><span>已返现</span></td>");
-							},
-							error: function(xhr, textStatus) {
-								console.log('错误:' + xhr.responseText);
-							}
-						});
-
-					});
-
-				});
-				$(".cancel").click(function() {
-					$(".msk").hide();
-				});
-
-				/**************拒绝弹出模态框*************/
-				$(".contentBox").on('click', ".refuse", function() {
-					parent = $(this).parent();
-					var fId = $(this).attr("data-id");
-					console.log("当前拒绝fId：", fId);
-					$(".fMsk").show();
-					$(".fBtn").click(function() {
-						if(!$(".reason").val()) {
-							alert("填写不能为空！")
-						}
-						$.ajax({
-							url: pUrl,
-							type: 'POST', //Post方法
-							async: true, //是否同步
-							data: {
-								"type": 2,
-								"id": fId,
-								"reason": $(".reason").val()
-							},
-							timeout: 5000, //超出时间
-							dataType: 'json', //返回数据格式Json
-							success: function(ret) {
-								alert("提交成功");
-								$(".fMsk").hide();
-								parent.replaceWith("<td><span>已拒绝</span></td>"); //替换当前内容
-							},
-							error: function(xhr, textStatus) {
-								console.log('错误:' + xhr.responseText);
-							}
-						});
-
-					});
-
-				});
-				$(".cancel").click(function() {
-					$(".fMsk").hide();
-				});
-
-				/************结清ajax**************/
-				$(".contentBox").on('click', ".checkout", function() {
-					$(".cMsk").show();
-					parent = $(this).parent();
-					var cId = $(this).attr("data-id");
-					console.log("当前结清的id", cId);
-
-					$(".cBtn").click(function() {
-						$.ajax({
-							url: pUrl,
-							type: "post", //POST方法
-							async: true, //是否同步
-							data: {
-								"type": 4,
-								"id": cId
-							},
-							timeout: 5000, //超出时间
-							dataType: 'json', //返回数据格式json
-							success: function(ret) {
-								if(ret.data == 0) {
-									alert("结算成功");
-									$(".cMsk").hide();
-								} else {
-									alert(ret.res_msg);
-								}
-								alert("提交成功");
-								parent.replaceWith("<td><span>已结清</span></td>"); //替换当前内容
-							},
-							error: function(xhr, textStatus) {
-								console.log('错误:' + xhr.responseText);
-							}
-						});
-
-					});
-				});
-				$(".Ccancel").click(function() {
-					$(".cMsk").hide();
-				});
-
-				/************回款ajax****************/
-				$(".contentBox").on('click', ".moneyBack", function() {
-					parent = $(this).parent();
-					var bId = $(this).attr("data-id");
-					console.log("当前回款id:", bId);
-					$(".mskBox1").show();
-					$(".backBtn").click(function() {
-						if(!$(".backMoney").val()) {
-							alert("回款不能为空！");
-						}
-						$.ajax({
-							url: pUrl,
-							type: "post", //提交方式post
-							async: true, //是否同步
-							data: {
-								"type": 3,
-								"id": bId,
-								"cash": $(".backMoney").val()
-							},
-							timeout: 5000, //超出时间
-							dataType: 'json', //返回数据格式Json
-							success: function(data, textStatus, jqXHR) {
-								alert("提交成功");
-								$(".mskBox1").hide();
-								parent.replaceWith("<td><a>已回款</a></td>");
-								console.log(data);
-							},
-							error: function(xhr, textStatus) {
-								console.log('错误:' + xhr.responseText);
-							}
-						});
-					});
-
-				});
-				$(".cancel").click(function() {
-					$(".mskBox1").hide();
-				});
-
-			});
-		</script>
 	</body>
 
 </html>
+{%endblock%} {% block js %}
+<script>
+	$(function() {
+		//全部数据
+		var allData = '<table class="t1" width="100%"><thead><tr><th width="12%">项目名称</th>' +
+			'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="9%">处理状态</th><th width="10%">qq</th><th width="10%">备注</th></tr></thead><tbody>' +
+			'[results]<tr><td>{project_title}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td class="state{audit_state}">{state_desc}</td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
+			'</tbody></table>';
 
-<!--
-	结清：type=4  id  日期 back_date
--->
+		//待审核
+		var noAuditData = '<table class="t1" width="100%"><thead><tr><th width="12%">项目名称</th>' +
+			'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="15%">操作</th><th width="10%">qq</th><th width="10%">备注</th></tr></thead><tbody>' +
+			'[results]<tr><td>{project_title}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td class="node"><a class="cashBack" data-id="{id}">返现</a>丨<a class="refuse" data-id="{id}">拒绝</a></td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
+			'</tbody></table>';
+
+		//待回款
+		var backMoneyData = '<table class="t1" width="100%"><thead><tr><th width="12%">项目名称</th>' +
+			'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="15%">操作</th><th width="10%">qq</th><th width="10%">备注</th></tr></thead><tbody>' +
+			'[results]<tr><td>{project_title}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td><a class="moneyBack" data-id="{id}">回款</a>丨<a class="look" data-id="{id}">查看</a>丨<a class="checkout" data-id="{id}">结清</a></td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
+			'</tbody></table>';
+
+		//已拒绝	
+		var refuseData = '<table  class="t1" width="100%"><thead><tr><th width="12%">项目名称</th>' +
+			'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="15%">操作</th><th width="10%">qq</th><th width="10%">备注</th></tr></thead><tbody>' +
+			'[results]<tr><td>{project_title}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td><a>/</a></td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
+			'</tbody></table>';
+
+		//已结清	
+		var jieqingData = '<table class="t1" width="100%"><thead><tr><th width="12%">项目名称</th>' +
+			'<th width="10%">投资时间</th><th width="11%">投资金额</th><th width="11.5%">提交时间</th><th width="15%">操作</th><th width="10%">qq</th><th width="10%">备注</th></tr></thead><tbody>' +
+			'[results]<tr><td>{project_title}</td><td>{invest_date}</td><td>{invest_amount}</td><td class="sub_time">{submit_time}</td><td><a class="check">查看回款记录</a></td><td>{qq}</td><td>{remark}</td></tr>[/results]' +
+			'</tbody></table>';
+
+		$("li.home16").toggleClass("on");
+
+		var url = "/restapi/investlog/?page={page}&pageSize={pageSize}";
+
+		function pagecallback() {
+			console.log("这是一个回调函数");
+			$('.sub_time').each(function() {
+				var submit_time = $(this).text().split('T');
+				$(this).text(submit_time[0]);
+			});
+
+			/*var state = $(".all").attr("data-state");
+			console.log("state状态：", state);
+			if(state == 1) {
+				$(".all").html('<a class="cashBack">返现</a>丨<a class="refuse">拒绝</a>丨<a class="jieqing">结清</a>');
+			} else if(state == 0) {
+				$(".all").html('<a class="moneyBack">回款</a>丨<a class="checkout">查看</a>丨<a class="jieqing">结清</a>');
+			} else if(state == 2) {
+				$(".all").html('<a>/</a>');
+			} else if(state == 3) {
+				$(".all").html('<a class="check">查看回款记录</a>');
+			}*/
+		}
+
+		$("#pagedata").ajaxPage({
+			url: url,
+			pageId: $("#page"),
+			pageSize: 6,
+			run: true,
+			content: allData,
+			complete: pagecallback,
+		});
+
+		$(".tab>li").click(function() {
+			var index = $(this).index();
+			console.log("当前序号：", index)
+			$(this).addClass("active").siblings().removeClass("active");
+
+			if(index == 0) {
+				var pdata = allData;
+				var dataUrl = url;
+			} else
+			if(index == 1) {
+				var pdata = backMoneyData;
+				var dataUrl = url + '&audit_state=0'
+			} else if(index == 2) {
+				var pdata = noAuditData;
+				var dataUrl = url + '&audit_state=1'
+			} else if(index == 3) {
+				var pdata = refuseData;
+				var dataUrl = url + '&audit_state=2'
+			} else if(index == 4) {
+				var pdata = jieqingData;
+				var dataUrl = url + '&audit_state=3'
+			}
+
+			$("#pagedata").ajaxPage({
+				url: dataUrl,
+				pageId: $("#page"),
+				pageSize: 6,
+				run: true,
+				content: pdata,
+				complete: pagecallback,
+			});
+
+		});
+
+		var parent;
+		var id;
+		/********************** 模态框  ***********************/
+		$(".contentBox").on('click', ".cashBack", function() {
+			parent = $(this).parent();
+			var bId = $(this).attr("data-id");
+			console.log("当前回款id:", bId);
+			$(".bMsk").show();
+			$(".backBtn").click(function() {
+				if(!$(".backMoney").val()) {
+					alert("回款不能为空！");
+				}
+				//正则表达式验证：
+				var reg = new RegExp("^[0-9]*$");
+				if(!reg.test($(".backMoney").val())) {
+					alert("回款金额只能是数字！");
+				}
+				$.ajax({
+					url: '/Admin/admin_teaminvest/',
+					type: "post", //提交方式post
+					async: true, //是否同步
+					data: {
+						"type": 1,
+						"id": bId,
+						"cash": $(".backMoney").val(),
+						"back_date": $(".backDate").val()
+					},
+					timeout: 5000, //超出时间
+					dataType: 'json', //返回数据格式Json
+					success: function(ret) {
+						if(ret.code == 0) {
+							$(".bMsk").hide();
+							parent.replaceWith("<td><a>已回款</a></td>");
+						}
+
+					},
+					error: function(xhr, textStatus) {
+						console.log('错误:' + xhr.responseText);
+					}
+				});
+			});
+		});
+		
+		$(".cancel1").click(function(){
+			$(".bMsk").hide();
+		});
+
+		/**
+		 *************待审核返现*************
+		 **/
+		$(".submit").click(function() {
+			console.log("---------------,llcid", id)
+			console.log(parent);
+			if(!$("#backMoney").val() || !$("#date").val()) {
+				alert("输入框不能为空");
+			}
+			var backMoney = $("#backMoney").val();
+			var remark = $("#remark").val();
+			var date = $("#date").val();
+			//正则表达式验证：
+			var reg = new RegExp("^[0-9]*$");
+			if(!reg.test($("#backMoney").val())) {
+				alert("回款金额只能是数字！");
+			}
+
+			$.ajax({
+				url: '/Admin/admin_teaminvest/',
+				type: 'POST', //请求方式
+				async: true, //或false,是否异步
+				data: {
+					"type": 3,
+					"id": id,
+					"cash": backMoney,
+					"remark": remark,
+					"back_date": date
+				},
+				timeout: 5000, //超时时间5s
+				dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+				success: function(ret) {
+					console.log(ret.code);
+					if(ret.code == 0) {
+						$(".msk").hide();
+						parent.replaceWith("<td><span>已回款</span></td>");
+					}
+
+				},
+				error: function(xhr, textStatus) {
+					console.log('错误:' + xhr.responseText);
+				}
+			});
+
+		});
+
+		//点击取消 模态框消失
+		$(".cancel").click(function() {
+			$(".msk").hide();
+		});
+
+		/**************拒绝弹出模态框*************/
+		$(".contentBox").on('click', ".refuse", function() {
+			parent = $(this).parent();
+			var fId = $(this).attr("data-id");
+			console.log("当前拒绝fId：", fId);
+			$(".fMsk").show();
+			$(".fBtn").click(function() {
+				if(!$(".reason").val()) {
+					alert("填写不能为空！")
+				}
+				$.ajax({
+					url: '/Admin/admin_teaminvest/',
+					type: 'POST', //Post方法
+					async: true, //是否同步
+					data: {
+						"type": 2,
+						"id": fId,
+						"reason": $(".reason").val()
+					},
+					timeout: 5000, //超出时间
+					dataType: 'json', //返回数据格式Json
+					success: function(ret) {
+						if(ret.code == 0) {
+							$(".fMsk").hide();
+							parent.replaceWith("<td><span>已拒绝</span></td>"); //替换当前内容
+						}
+					},
+					error: function(xhr, textStatus) {
+						console.log('错误:' + xhr.responseText);
+					}
+				});
+
+			});
+
+		});
+		$(".fcancel").click(function() {
+			$(".fMsk").hide();
+		});
+
+		/************结清ajax**************/
+		$(".contentBox").on('click', ".checkout", function() {
+			$(".cMsk").show();
+			parent = $(this).parent();
+			var cId = $(this).attr("data-id");
+			console.log("当前结清的id", cId);
+
+			$(".cBtn").click(function() {
+				$.ajax({
+					url: '/Admin/admin_teaminvest/',
+					type: "post", //POST方法
+					async: true, //是否同步
+					data: {
+						"type": 4,
+						"id": cId
+					},
+					timeout: 5000, //超出时间
+					dataType: 'json', //返回数据格式json
+					success: function(ret) {
+						if(ret.code == 0) {
+							alert("结算成功");
+							$(".cMsk").hide();
+						} else {
+							alert(ret.res_msg);
+						}
+						parent.replaceWith("<td><span>已结清</span></td>"); //替换当前内容
+					},
+					error: function(xhr, textStatus) {
+						console.log('错误:' + xhr.responseText);
+					}
+				});
+
+			});
+		});
+		$(".Ccancel").click(function() {
+			$(".cMsk").hide();
+		});
+
+		/************回款ajax****************/
+		$(".contentBox").on('click', ".moneyBack", function() {
+			parent = $(this).parent();
+			console.log(parent); //当前的tr
+			id = $(this).attr("data-id");
+			console.log("当前返现的id：", id);
+			$(".msgbox").empty();
+			var backUrl = "/restapi/bankcard/";
+			console.log(backUrl);
+			$.ajax({
+				url: backUrl,
+				type: 'GET', //GET
+				async: true, //或false,是否异步
+				timeout: 5000, //超时时间
+				dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+				success: function(data, textStatus, jqXHR) {
+					console.log(data.results);
+					for(var i in data.results) {
+						str_html = '<p>' + data.results[i].real_name + '</p>' +
+							'<p>' + data.results[i].bank + '</p>' +
+							'<p>' + data.results[i].card_number + '</p>';
+					}
+					$(".msgbox").append(str_html);
+				},
+				error: function(xhr, textStatus) {
+					console.log('错误:' + xhr.responseText);
+				}
+			});
+
+			//模态框弹出
+			$(".msk").show();
+
+		});
+		$(".cancel1").click(function() {
+			$(".msk").hide();
+		});
+
+		/*************查看**************/
+		$(".contentBox").on("click", ".look", function() {
+			$(".lDataBox").empty();
+			var id = $(this).attr("data-id");
+			$.ajax({
+				url: '/restapi/backlog/?investlog' + id +"/",
+				type: "get", //提交方式post
+				async: true, //是否同步
+				timeout: 5000, //超出时间
+				dataType: 'json', //返回数据格式Json
+				success: function(data) {
+					var str_html = "";
+					console.log(data.results.length);
+					if(data.results.length == 0) {
+						alert("暂无数据");
+					} else {
+						$(".lMsk").show();
+						for(var i in data.results) {
+							str_html += '<span class="backtime">回款时间：' + data.results[i].back_date + '</span><br />' +
+								'<p class="backamount">回款金额：' + data.results[i].back_amount + '元</p><br />'
+						}
+						$(".lDataBox").append(str_html);
+					}
+
+				},
+				error: function(xhr, textStatus) {
+					console.log('错误:' + xhr.responseText);
+				}
+			});
+
+		});
+
+		$(".close").click(function() {
+			$(".lMsk").hide();
+		});
+
+		/*************查看回款记录************/
+		$(".contentBox").on("click", ".check", function() {
+
+			$(".lDataBox").empty();
+			var id = $(this).attr("data-id");
+			$.ajax({
+				url: '/restapi/backlog/?investlog' + id,
+				type: "get", //提交方式post
+				async: true, //是否同步
+				timeout: 5000, //超出时间
+				dataType: 'json', //返回数据格式Json
+				success: function(data) {
+					console.log(data.results.length);
+					var str_html = "";
+					if(data.results.length == 0) {
+						alert("暂无数据");
+					} else {
+						$(".lMsk").show();
+						for(var i in data.results) {
+							str_html += '<p class="backtime">回款时间：' + data.results[i].back_date + '</p>' +
+								'<p class="backamount">回款金额：' + data.results[i].back_amount + '元</p>'
+						}
+						$(".lDataBox").append(str_html);
+					}
+
+				},
+				error: function(xhr, textStatus) {
+					console.log('错误:' + xhr.responseText);
+				}
+			});
+
+		});
+
+	});
+</script>
+{% endblock js %}

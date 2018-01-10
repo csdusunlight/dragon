@@ -11,42 +11,44 @@
 	</head>
 
 	<body>
+		<!--头部-->
+		{% include "header.html" %}
+		<!--内容-->
 		<div class="wrapper">
 			<div class="wrapper-top">
 				<img src="{% static 'images/task-02.png' %}" class="ms-pd" />
 				<span class="mag-pp">组队单提交</span>
 			</div>
 			<div class="contentBox">
-				<div class="iptBox">
-					投资平台：
-					<select>
-						<option value="0">--</option>
-						{% for x in projects %}
-						<option value="{{x.id}}">{{x.title}}</option>
-						{%endfor%}
-					</select>
-				</div>
-				<div class="iptBox">
-					投资时间：
-					<input type="date" name="date" id="date" class="ipt" />
-				</div>
-				<div class="iptBox">
-					投资金额：
-					<input type="text" name="money" id="money" class="ipt" placeholder="输入您的投资金额，仅限数字" />&nbsp;&nbsp;元
-				</div>
-				<div class="iptBox" style="padding-left:40px;">
-					备注：
-					<input type="text" name="remark" id="remark" class="ipt" placeholder="qq号，qq昵称" />
-				</div>
-				<!--<div class="iptBox">
-					<span>平台账号：</span>
-					<span>18570661412稍后公布</span>
-				</div>
-				<div class="iptBox">
-					<span>登陆密码：</span>
-					<span>18570661412稍后公布</span>
-				</div>-->
-				<div class="submit">提交</div>
+				<form class="myform">
+					<div class="iptBox">
+						投资平台：
+						<select class="selt">
+							<option value="0">--</option>
+							{% for x in projects %}
+							<option value="{{x.id}}">{{x.title}}</option>
+							{%endfor%}
+						</select>
+					</div>
+					<div class="iptBox">
+						投资时间：
+						<input type="date" name="date" id="date" class="ipt" />
+					</div>
+					<div class="iptBox">
+						投资金额：
+						<input type="text" name="money" id="money" class="ipt" placeholder="输入您的投资金额，仅限数字" />&nbsp;&nbsp;元
+					</div>
+					<div class="iptBox" style="padding-left: 12px;">
+						QQ/昵称：
+						<input type="text" name="qq" id="qq" class="ipt" placeholder="请填写qq/昵称" />
+					</div>
+					<div class="iptBox" style="padding-left:40px;">
+						备注：
+						<input type="text" name="remark" id="remark" class="ipt" placeholder="请填写备注 非必填" />
+					</div>
+					<input type="button" class="submit" value="提交">
+				</form>
+
 			</div>
 
 			<div class="tipsBox">
@@ -58,6 +60,10 @@
 				<p class="tips">2、组队之后的本息汇款，默认汇款至挖福利绑定的银行卡账号，请确保自己的账号正确性</p>
 			</div>
 		</div>
+		<!--底部-->
+		{% include "footer.html" %}
+		<!--浮动窗口-->
+		{% include "outline.html" %}
 	</body>
 	<script>
 		$(function() {
@@ -68,19 +74,47 @@
 				var money = $("#money").val();
 				var remark = $("#remark").val();
 				var project = $("select option:selected").val();
-				
-				if( project==0 || !date || !money ) {
+				var qq = $("#qq").val();
+
+				/*if(project == 0 || !date || !money || !qq) {
 					alert("填写不能为空");
 					return;
+				}*/
+				if (project == 0) {
+					alert("请选择项目！");
+					$(".selt").css("border","2px solid red");
 				}
-
+				if (!money) {
+					$("#money").css("border","2px solid red");
+					alert("请输入投资金额！");
+				}
+				if(!date){
+					alert("请选择投资日期！");
+					$("#date").css("border","2px solid red");
+				}
+				if (!qq) {
+					alert("请输入QQ和昵称！");
+					$("#qq").css("border","2px solid red");
+				}
+				//正则表达式验证：
+				var reg = new RegExp("^[0-9]*$");
+				if(!reg.test($("#money").val())) {
+					alert("投资金额只能是数字！");
+				}
+				//验证qq
+				/*var qqReg=/^\d{5,10}$/;    
+				if(!reg.test(qq)) {
+					alert("qq只能是数字！");
+				}*/
+				
 				var url = "/restapi/investlog/";
 				$.ajax({
 					url: url,
 					type: 'post',
 					async: false,
 					data: {
-						"project":project,
+						"qq": qq,
+						"project": project,
 						"invest_date": date,
 						"invest_amount": money,
 						"remark": remark
@@ -89,12 +123,13 @@
 					dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
 					success: function(data) {
 						alert("提交成功");
+						window.location.href=window.location.href;
 						console.log(data);
 					},
 					error: function(xhr, textStatus) {
-						console.log(xhr.responseText);
+
 						ret = JSON.parse(xhr.responseText);
-						for ( var item in ret){
+						for(var item in ret) {
 							alert(ret[item]);
 						}
 					}
@@ -105,3 +140,9 @@
 	</script>
 
 </html>
+
+<!--
+	
+	window.location.href=window.location.href;
+	
+-->

@@ -28,8 +28,8 @@ class Command(BaseCommand):
         from django.db import connection, transaction
         cursor = connection.cursor()
         cursor.execute("select a.project_id, a.source, sum(a.settle_amount) as sumofsettle, \
-                            sum(a.return_amount) as sumofret from project_admin_projectinvestdata a \
-                            group by a.project_id, a.source")
+                            sum(a.return_amount) as sumofret from project_admin_projectinvestdata a join project_admin_project b on a.project_id=b.id\
+                            where b.state='start' group by a.project_id, a.source")
         # 数据修改操作——提交要求
 #         cursor.execute("select b.is_channel,  a.audit_state,  \
 #             sum(invest_amount) as sum, count(*) as count from wafuli_userevent a join account_myuser b\

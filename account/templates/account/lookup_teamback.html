@@ -52,7 +52,7 @@
 				function pagecallback() {
 					console.log("pagecallback是一个回调函数");
 				}
-				var url = "/restapi/backlog/";
+				var url = "/restapi/backlog/?page={page}&pageSize={pageSize}";
 				$("#pagedata").ajaxPage({
 					url: url,
 					pageId: $("#page"),

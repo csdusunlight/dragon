@@ -8,15 +8,16 @@ from account.transaction import charge_money
 from wafuli.models import Message
 from wafuli_admin.models import UserStatis
 from django.db.models import F
+from django.db import transaction
 VIP_BONUS = {
-    0:{'finance':0, 'task':0, 'money':0,},
-    1:{'finance':0.01, 'task':0.10, 'money':500,},
-    2:{'finance':0.02, 'task':0.15, 'money':3000,},
+    0:{'finance':0, 'task':0, 'money':2000,},
+    1:{'finance':0.01, 'task':0.10, 'money':5000,},
+    2:{'finance':0.02, 'task':0.15, 'money':10000,},
     3:{'finance':0.03, 'task':0.16, 'money':20000,},
     4:{'finance':0.04, 'task':0.18, 'money':80000,},
     5:{'finance':0.05, 'task':0.20, 'money':120000,},
 }
-VIP_AMOUNT = {0:0, 1:10000, 2:100000, 3:1000000, 4:5000000, 5:10000000,}
+VIP_AMOUNT = {0:0, 1:100000, 2:100000, 3:1000000, 4:5000000, 5:10000000,}
 def get_vip_bonus(user, amount, type):
     if user.is_channel:
         return
@@ -45,4 +46,52 @@ def vip_judge(user, with_amount):
                 msg_content = u'恭喜您的会员等级提升为VIP' + str(key) + u'！'
                 Message.objects.create(user=user, content=msg_content, title=u"会员升级")
     user.save(update_fields=['level', 'with_total'])
-    
+
+def vip_process(user, with_amount):
+    obj, created = UserStatis.objects.get_or_create(user=user)
+    obj.week_statis = F('week_statis') + with_amount
+    obj.month_statis = F('month_statis') + with_amount
+    obj.save(update_fields=['week_statis', 'month_statis'])
+    level = user.level
+    total = user.with_total + with_amount
+    allamount = user.with_level + with_amount
+    amount, newlevel = level_compute(allamount, level)
+    award = 0
+    for i in range(level, newlevel):
+        level = i + 1
+        if level == 1:
+            award += 2000
+        elif level == 2:
+            award += 5000
+        elif level >= 3 and level < 13:
+            award += 10000 + 1000*(level-3)
+        elif level >= 13:
+            award += 20000
+    charge_money(user, '0', award, u'账户等级提升奖励')
+    if award > 0:
+        msg_content = u'恭喜您的会员等级提升为Lv' + str(newlevel) + u'！'
+        Message.objects.create(user=user, content=msg_content, title=u"会员升级")
+    user.level = newlevel
+    user.with_total = F('with_total') + with_amount
+    user.with_level = F('with_level') + with_amount
+    user.save(update_fields=['level', 'with_total', 'with_level'])
+def level_compute(amount, level):
+    if level == 0:
+        if amount >= 100000:
+            amount -= 100000
+            level += 1
+            amount, level = level_compute(amount, level)
+    elif level == 1:
+        if amount >= 500000:
+            amount -= 500000
+            level += 1
+            amount, level = level_compute(amount, level)
+    elif level >=2:
+        if amount >= 1000000:
+            m = int(amount/1000000)
+            amount -= 1000000 * m
+            level += m
+    return amount, level
+
+if __name__ == '__main__':
+    print level_compute(17000, 3)

@@ -3,8 +3,8 @@ body {
 }
 
 .wrapper {
-	width: 1100px;
-	margin: 0 auto;
+	width: 1200px;
+	margin: 60px auto;
 	background: white;
 }
 
@@ -34,18 +34,21 @@ body {
 }
 .ipt{
 	width: 300px;
+	padding: 5px 5px;
 }
 .submit{
 	width: 80px;
 	height: 30px;
 	border-radius: 15px;
-	text-align: center;
+	color: white;
+	border: none;
+    cursor: pointer;
+    margin: 20px 180px 20px;
+    background: RGB(145,193,31);
+	/*text-align: center;
 	line-height: 30px;
 	margin: 10px auto;
-	background: RGB(145,193,31);
-	color: white;
-	padding-bottom: 10px;
-	cursor: pointer;
+*/
 }
 
 .tipsBox{
