@@ -34,8 +34,6 @@ $(function(){
   var level = {{user.level}};//VIP等级
 
   Vip_next.innerText = level + 1;
-//percent = parseInt(fubi_num/100000);
-//progress.style.width = percent + "%";
   switch(level) {
     case 0:
       fubi_need.innerText = 100000 - with_level;
