@@ -1,7 +1,7 @@
  $(function() {
  	var data = '<table width="100%"><thead><tr><th class="th2" width="15%">项目</th><th class="th2" width="15%">投资时间</th>' +
  		'<th class="th2" width="15%">投资金额</th><th class="th2" width="15%">状态<th class="th2" width="25%">备注</th><th class="th2" width="15%">操作</th></tr></thead><tbody>' +
- 		'[results]<tr><td>{project_title}</td><td class="date1">{invest_date}</td><td class="amount1">{invest_amount}</td><td>{state_desc}</td><td class="remark1">{remark}</td><td class="change" data-id="{id}" data-state="{audit_state}"></td></tr>[/results]' +
+ 		'[results]<tr><td>{project_title}</td><td class="date1">{invest_date}</td><td class="amount1">{invest_amount}</td><td data-fubi="{settle_amount}" class="state{audit_state}">{state_desc}</td><td class="remark1">{remark}</td><td class="change" data-id="{id}" data-state="{audit_state}"></td></tr>[/results]' +
  		'</tbody></table>';
 
  	var passData = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="20%">投资时间</th>' +
@@ -29,6 +29,11 @@
  			} else {
  				$(this).html("<a>------</a>");
  			}
+ 		});
+
+ 		$(".state0").each(function() {
+ 			var f_txt = $(this).attr("data-fubi");
+ 			$(this).text('奖励' + f_txt + '福币');
  		});
  	}
  	var url = "/restapi/investlog/?page={page}&pageSize={pageSize}";
@@ -106,7 +111,7 @@
 
  	//数据修改
  	$(".submit").click(function() {
-// 		console.log("当前修改数据的id：", id);
+ 		// 		console.log("当前修改数据的id：", id);
  		if(!$(".date").val() || !$(".amount").val()) {
  			alert("输入框不能为空！");
  		}
@@ -130,7 +135,7 @@
  				alert("修改成功")
  				$(".cMsk").hide();
  				console.log(ret);
- 				
+
  			},
  			error: function(xhr) {
  				console.log(xhr.responseText);
@@ -180,7 +185,7 @@
  	/*********审核中状态修改**********/
  	var parent_dom1;
  	$(".contentBox").on('click', '.aChange', function() {
-   		parent_dom1 = $(this).parent().parent();
+ 		parent_dom1 = $(this).parent().parent();
  		$(".eDataBox").empty();
  		$(".editorBox").show();
  		id = $(this).attr("data-id");
@@ -257,7 +262,7 @@
  	//删除dom节点
  	$(".dBtn").click(function() {
  		console.log(dId);
-// 		parent_tr.remove();
+ 		// 		parent_tr.remove();
  		$.ajax({
  			url: '/restapi/investlog/' + dId + '/',
  			type: 'delete', //方式
@@ -290,7 +295,7 @@
  			timeout: 5000, //超出时间
  			dataType: 'json', //返回数据格式Json
  			success: function(data) {
- 				var str_html= "";
+ 				var str_html = "";
  				if(data.results.length == 0) {
  					console.log(1)
  					alert("暂无数据");

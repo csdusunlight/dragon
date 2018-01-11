@@ -317,3 +317,14 @@ td {
 .backamount {
 	font-size: 16px;
 }
+
+.state0{
+	color: blue;
+}
+.state1{
+	color: RGB(255,190,0);
+}
+.state2{
+	color: red;
+}
+
