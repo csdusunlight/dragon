@@ -218,12 +218,10 @@ td {
 
 .lookBox {
 	width: 460px;
-	height: 200px;
 	position: absolute;
 	left: 50%;
-	top: 50%;
+	top: 5%;
 	margin-left: -230px;
-	margin-top: -100px;
 	background: white;
 	border: 1px solid RGB(180, 180, 180);
 	border-radius: 10px;
