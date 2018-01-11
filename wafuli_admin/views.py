@@ -30,6 +30,7 @@ from project_admin.tools import has_permission
 from teaminvest.models import Investlog, Backlog
 from decimal import Decimal
 from account.vip import vip_process
+from account.views import bankcard
 # Create your views here.
 logger = logging.getLogger('wafuli')
 def index(request):
@@ -2349,12 +2350,20 @@ def export_investlog(request):
         backlog_list = con.backlogs.all()
         for item in backlog_list:
             backlog += str(item.back_date) + u'回款' + str(item.back_amount) + u"元；"
+        bankcard = con.user.user_bankcard.first()
+        cardnumber, bank, name = '', '', ''
+        if bankcard:
+            cardnumber = bankcard.card_number
+            bank = bankcard.bank
+            name = bankcard.real_name
         data.append([id, project_name, invest_date, user_mobile, qq_number,
-                     invest_amount, remark, result, settle_amount, reason, backlog, '', '', '' ])
+                     invest_amount, remark, result, settle_amount, reason, backlog, 
+                     cardnumber, bank, name,'', '', '' ])
     w = Workbook()     #创建一个工作簿
     ws = w.add_sheet(u'待审核记录')     #创建一个工作表
     title_row = [u'记录ID',u'项目名称',u'投资日期', u'挖福利账号', u'QQ号' ,u'投资金额', u'备注',
-                 u'审核通过',u'返现金额',u'拒绝原因',u'回款记录',u'回款金额（导入用）',u'回款日期（导入用）',u'回款备注（导入用）',]
+                 u'审核通过',u'返现金额',u'拒绝原因',u'回款记录', u'回款账号',u'银行',u'姓名',
+                 u'回款金额（导入用）',u'回款日期（导入用）',u'回款备注（导入用）',]
     for i in range(len(title_row)):
         ws.write(0,i,title_row[i])
     row = len(data)
@@ -2391,7 +2400,7 @@ def import_investlog_settle(request):
     table = data.sheets()[0]
     nrows = table.nrows
     ncols = table.ncols
-    if ncols!=14:
+    if ncols!=17:
         ret['msg'] = u"文件格式与模板不符，请在导出的待审核记录表中更新后将文件导入！"
         return JsonResponse(ret)
     rtable = []
@@ -2497,7 +2506,7 @@ def import_investlog_back(request):
     table = data.sheets()[0]
     nrows = table.nrows
     ncols = table.ncols
-    if ncols!=14:
+    if ncols!=17:
         ret['msg'] = u"文件格式与模板不符，请在导出的待审核记录表中更新后将文件导入！"
         return JsonResponse(ret)
     rtable = []
@@ -2513,7 +2522,7 @@ def import_investlog_back(request):
                 if j==0:
                     id = int(value)
                     temp.append(id)
-                elif j==11:
+                elif j==14:
                     return_amount = 0
                     try:
                         return_amount = float(value)
@@ -2521,13 +2530,13 @@ def import_investlog_back(request):
                     except:
                         raise Exception(u"回款金额必须大于0")
                     temp.append(return_amount)
-                elif j==12:
+                elif j==15:
                     if(cell.ctype!=3):
                         raise Exception(u"投资日期列格式错误，请修改后重新提交。")
                     else:
                         time = xlrd.xldate.xldate_as_datetime(value, 0)
                         temp.append(time)
-                elif j==13:
+                elif j==16:
                     temp.append(value)
                 else:
                     continue;
