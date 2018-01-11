@@ -67,8 +67,16 @@
 	</body>
 	<script>
 		$(function() {
+			//用户未登录状态下选择项目跳转到登录页面
+			$(".selt").change(function() {
+				var isLogin = "{{user.is_authenticated}}";
+				if(isLogin == "False") {
+					window.location.href = '/account/login/?next=' + window.location.pathname;
+				}
+			});
 
 			$(".submit").click(function() {
+
 				var date = $("#date").val();
 				console.log(date);
 				var money = $("#money").val();
@@ -80,21 +88,21 @@
 					alert("填写不能为空");
 					return;
 				}*/
-				if (project == 0) {
+				if(project == 0) {
 					alert("请选择项目！");
-					$(".selt").css("border","2px solid red");
+					$(".selt").css("border", "2px solid red");
 				}
-				if (!money) {
-					$("#money").css("border","2px solid red");
+				if(!money) {
+					$("#money").css("border", "2px solid red");
 					alert("请输入投资金额！");
 				}
-				if(!date){
+				if(!date) {
 					alert("请选择投资日期！");
-					$("#date").css("border","2px solid red");
+					$("#date").css("border", "2px solid red");
 				}
-				if (!qq) {
+				if(!qq) {
 					alert("请输入QQ和昵称！");
-					$("#qq").css("border","2px solid red");
+					$("#qq").css("border", "2px solid red");
 				}
 				//正则表达式验证：
 				var reg = new RegExp("^[0-9]*$");
@@ -106,7 +114,7 @@
 				if(!reg.test(qq)) {
 					alert("qq只能是数字！");
 				}*/
-				
+
 				var url = "/restapi/investlog/";
 				$.ajax({
 					url: url,
@@ -123,7 +131,7 @@
 					dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
 					success: function(data) {
 						alert("提交成功");
-						window.location.href=window.location.href;
+						window.location.href = window.location.href;
 						console.log(data);
 					},
 					error: function(xhr, textStatus) {
