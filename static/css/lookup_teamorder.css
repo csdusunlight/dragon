@@ -82,14 +82,14 @@ td {
 }
 
 .tipBox {
-	width: 460px;
-	height: 300px;
+	width: 600px;
+	height: 400px;
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	margin-left: -230px;
-	margin-top: -150px;
-	background: RGB(243, 243, 243);
+	margin-left: -300px;
+	margin-top: -200px;
+	background: white;
 	border: 1px solid RGB(180, 180, 180);
 }
 
@@ -105,6 +105,15 @@ td {
 	margin: 0 auto;
 }
 
+.dataBox tr {
+	height: 60px;
+}
+
+.dataBox th,
+.dataBox td {
+	border: none;
+}
+
 .td1 {
 	width: 30%;
 }
@@ -118,9 +127,9 @@ td {
 }
 
 .btn {
-	width: 120px;
+	width: 110px;
 	height: 40px;
-	background: RGB(22, 155, 212);
+	background: #91C11D;
 	display: inline-block;
 	text-align: center;
 	line-height: 40px;
@@ -129,6 +138,7 @@ td {
 	color: white;
 	cursor: pointer;
 	margin-left: 70px;
+	margin-top: 70px;
 }
 
 .dMsk {
@@ -149,7 +159,7 @@ td {
 	top: 50%;
 	margin-left: -230px;
 	margin-top: -80px;
-	background: RGB(243, 243, 243);
+	background: white;
 	border: 1px solid RGB(180, 180, 180);
 }
 
@@ -178,14 +188,14 @@ td {
 }
 
 .aTipBox {
-	width: 460px;
-	height: 300px;
+	width: 600px;
+	height: 400px;
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	margin-left: -230px;
-	margin-top: -150px;
-	background: RGB(243, 243, 243);
+	margin-left: -300px;
+	margin-top: -200px;
+	background: white;
 	border: 1px solid RGB(180, 180, 180);
 	border-radius: 10px;
 }
@@ -208,13 +218,11 @@ td {
 
 .lookBox {
 	width: 460px;
-	height: 200px;
 	position: absolute;
 	left: 50%;
-	top: 50%;
+	top: 5%;
 	margin-left: -230px;
-	margin-top: -100px;
-	background: RGB(243, 243, 243);
+	background: white;
 	border: 1px solid RGB(180, 180, 180);
 	border-radius: 10px;
 	position: relative;
@@ -223,7 +231,7 @@ td {
 .close {
 	width: 30px;
 	height: 30px;
-	background: RGB(219, 213, 213);
+	background: RGB(203, 203, 203);
 	border-radius: 50%;
 	color: white;
 	font-size: 20px;
@@ -235,12 +243,77 @@ td {
 	top: 5px;
 }
 
+.editorBox {
+	width: 100%;
+	height: 100%;
+	background: rgba(74, 49, 49, .2);
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+}
+
+.eTipBox{
+	width: 600px;
+	height: 400px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -300px;
+	margin-top: -200px;
+	background: white;
+	border: 1px solid RGB(180, 180, 180);
+	border-radius: 10px;
+}
+
+.eTips{
+	display: block;
+	font-size: 18px;
+	margin: 5px 150px;
+}
+
+.eDataBox{
+	width: 400px;
+	height: 200px;
+	margin: 0 auto;
+}
+
+.eDataBox th,
+.eDataBox td {
+	border: none;
+}
+
+.eDataBox tr {
+	height: 60px;
+}
+
+.deleteBox {
+	width: 100%;
+	height: 100%;
+	background: rgba(74, 49, 49, .2);
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+}
+
+.dTipBox{
+	width: 460px;
+	height: 160px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -230px;
+	margin-top: -80px;
+	background: white;
+	border: 1px solid RGB(180, 180, 180);
+}
+
 .backtime {
 	font-size: 16px;
-	padding-top: 50px;
+	padding-top: 30px;
 }
 
 .backamount {
 	font-size: 16px;
-	margin-top: 30px;
 }
