@@ -74,7 +74,6 @@
  	var parent_dom;
  	$(".contentBox").on('click', '.lChange', function() {
  		parent_dom = $(this).parent().parent();
- 		console.log(parent_dom);
  		$(".dataBox").empty();
  		$(".cMsk").show();
  		id = $(this).parent().attr("data-id"); //获取当前tr的id
@@ -107,11 +106,11 @@
 
  	//数据修改
  	$(".submit").click(function() {
- 		console.log("当前parent_dom",parent_dom);
- 		console.log("当前修改数据的id：", id);
+// 		console.log("当前修改数据的id：", id);
  		if(!$(".date").val() || !$(".amount").val()) {
  			alert("输入框不能为空！");
  		}
+ 		console.log($(parent_dom).find(".remark1")[0]);
  		$.ajax({
  			type: "put",
  			url: '/restapi/investlog/' + id + '/',
@@ -124,12 +123,14 @@
  			},
  			dataType: 'json',
  			success: function(ret) {
+ 				console.log(ret.invest_remark);
+ 				$(parent_dom).find(".date1").text(ret.invest_date);
+ 				$(parent_dom).find(".amount1").text(ret.invest_amount);
+ 				$(parent_dom).find(".remark1").text(ret.remark);
  				alert("修改成功")
  				$(".cMsk").hide();
  				console.log(ret);
- 				$(parent_dom).find(".date1").text(ret.invest_date);
- 				$(parent_dom).find(".amount1").text(ret.invest_amount);
- 				$(parent_dom).find(".remark1").text(ret.invest_remark);
+ 				
  			},
  			error: function(xhr) {
  				console.log(xhr.responseText);
@@ -231,7 +232,7 @@
  				$(".editorBox").hide();
  				$(parent_dom1).find(".date2").text(ret.invest_date);
  				$(parent_dom1).find(".amount2").text(ret.invest_amount);
- 				$(parent_dom1).find(".remark2").text(ret.invest_remark);
+ 				$(parent_dom1).find(".remark2").text(ret.remark);
  			},
  			error: function(xhr) {
  				console.log(xhr.responseText);
