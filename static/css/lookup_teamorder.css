@@ -91,6 +91,7 @@ td {
 	margin-top: -200px;
 	background: white;
 	border: 1px solid RGB(180, 180, 180);
+	box-shadow: 5px 5px 13px 2px rgba(0,0,0,0.4);
 }
 
 .tips {
@@ -161,6 +162,7 @@ td {
 	margin-top: -80px;
 	background: white;
 	border: 1px solid RGB(180, 180, 180);
+	box-shadow: 5px 5px 13px 2px rgba(0,0,0,0.4);
 }
 
 .tips1 {
@@ -226,6 +228,7 @@ td {
 	border: 1px solid RGB(180, 180, 180);
 	border-radius: 10px;
 	position: relative;
+	box-shadow: 5px 5px 13px 2px rgba(0,0,0,0.4);
 }
 
 .close {
@@ -264,6 +267,7 @@ td {
 	background: white;
 	border: 1px solid RGB(180, 180, 180);
 	border-radius: 10px;
+	box-shadow: 5px 5px 13px 2px rgba(0,0,0,0.4);
 }
 
 .eTips{
@@ -307,6 +311,7 @@ td {
 	margin-top: -80px;
 	background: white;
 	border: 1px solid RGB(180, 180, 180);
+	box-shadow: 5px 5px 13px 2px rgba(0,0,0,0.4);
 }
 
 .backtime {
@@ -328,3 +333,6 @@ td {
 	color: red;
 }
 
+/*
+     box-shadow: 5px 5px 13px 2px rgba(0,0,0,0.4);
+ * */
