@@ -107,6 +107,7 @@
 
  	//数据修改
  	$(".submit").click(function() {
+ 		console.log("当前parent_dom",parent_dom);
  		console.log("当前修改数据的id：", id);
  		if(!$(".date").val() || !$(".amount").val()) {
  			alert("输入框不能为空！");
@@ -176,8 +177,9 @@
  		$(".dMsk").hide();
  	});
  	/*********审核中状态修改**********/
+ 	var parent_dom1;
  	$(".contentBox").on('click', '.aChange', function() {
- 		parent_dom = $(this).parent().parent();
+   		parent_dom1 = $(this).parent().parent();
  		$(".eDataBox").empty();
  		$(".editorBox").show();
  		id = $(this).attr("data-id");
@@ -226,10 +228,10 @@
  			dataType: 'json',
  			success: function(ret) {
  				alert("修改成功")
- 				$(".aMsk").hide();
- 				$(parent_dom).find(".date2").text(ret.invest_date);
- 				$(parent_dom).find(".amount2").text(ret.invest_amount);
- 				$(parent_dom).find(".remark2").text(ret.invest_remark);
+ 				$(".editorBox").hide();
+ 				$(parent_dom1).find(".date2").text(ret.invest_date);
+ 				$(parent_dom1).find(".amount2").text(ret.invest_amount);
+ 				$(parent_dom1).find(".remark2").text(ret.invest_remark);
  			},
  			error: function(xhr) {
  				console.log(xhr.responseText);
