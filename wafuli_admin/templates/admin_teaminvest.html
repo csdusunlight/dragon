@@ -32,7 +32,7 @@
 					<option value="3">已结清</option>
 				</select><br />
 				<div style="position: relative;">
-					<input type="file" id="upFile" class="file" onchange='hint.innerHTML = this.files[0].name;' />
+					<input type="file" id="upFile" name="file" class="file" onchange='hint.innerHTML = this.files[0].name;' />
 					<a class="input-clone">请选择文件</a>
 					<p style="display: inline-block;position: absolute;top: 30px;">已选择表格：<b id="hint" style="font-weight: bold;">无</b></p>
 					<input type="button" class="upload" value="导入返现数据" />
@@ -40,8 +40,8 @@
 				</div>
 				<br />
 				<input type="button" class="search" value="搜索" />
-				<input type="button" class="export" value="导出返现数据" />
-				<input type="button" class="backexport" value="导出回款数据" />
+				<input type="button" class="export" value="导出数据" />
+				<!--<input type="button" class="backexport" value="导出回款数据" />-->
 
 			</div>
 			<!--<ul class="tab">
@@ -110,7 +110,7 @@
 				</div>
 			</div>
 		</div>
-
+		<iframe id="myIFrame" scrolling="yes" src="abount:blank" style="display:none" frameborder=1></iframe>
 	</body>
 
 </html>
@@ -221,11 +221,10 @@
 				alert("请先选择文件");
 				return;
 			}
-			//上传导入的文件
-			var upFile = "upFile";
+			//导入返现的文件
+			var upFile = "upFile"; //id
 			$.ajaxFileUpload({
-//				url: "{% url 'import_finance_excel'%}",
-				url:'/Admin/import_investlog_settle/',
+				url: '/Admin/import_investlog_settle/',
 				secureuri: false,
 				fileElementId: upFile, //file标签的id
 				dataType: 'json', //返回数据的类型
@@ -244,14 +243,13 @@
 
 		});
 		//导入回款数据文件
-		$(".backupload").click(function(){
+		$(".backupload").click(function() {
 			if(!$(".file").val()) {
 				alert("请先选择文件");
 				return;
 			}
 			$.ajaxFileUpload({
-//				url: "{% url 'import_finance_excel'%}",
-				url:'/Admin/import_investlog_back/',
+				url: '/Admin/import_investlog_back/',
 				secureuri: false,
 				fileElementId: upFile, //file标签的id
 				dataType: 'json', //返回数据的类型
@@ -267,7 +265,31 @@
 					alert(e);
 				}
 			});
-			
+
+		});
+		//导出返现文件
+		$(".export").click(function() {
+			var html = '<form action="' + "/Admin/export_investlog/" + '" method="get" target="_self" id="postData_form">';
+			var project_title = $(".projectBox").val(); //获取项目名称
+			var user_mobile = $(".numberBox").val(); //获取电话号码
+			var state_desc = $(".auditBox option:selected").val(); //获取Select里面的值
+			console.log("导出返现状态" + state_desc);
+
+			if(project_title) {
+				html += '<input name="project" type="hidden" value="' + project_title + '"/>';
+			}
+			if(user_mobile) {
+				html += '<input name="user_mobile" type="hidden" value="' + user_mobile + '"/>';
+			}
+			if(state_desc) {
+				html += '<input name="state_desc" type="hidden" value="' + state_desc + '"/>';
+			}
+			html += '</form>';
+			var iframe = document.getElementById('myIFrame');
+			iframe.contentWindow.document.open();
+			iframe.contentWindow.document.write(html);
+			iframe.contentWindow.document.close();
+			document.getElementById('myIFrame').contentWindow.document.getElementById('postData_form').submit();
 		});
 
 		/*$(".tab>li").click(function() {
@@ -590,6 +612,8 @@
 {% endblock js %}
 
 <!--
-	返现接口：Admin/import_investlog_settle
-	回款接口：Admin/import_investlog_back
+	导入返现接口：Admin/import_investlog_settle
+	导入回款接口：Admin/import_investlog_back
+	导出返现接口： Admin/export_investlog
+	
 -->
