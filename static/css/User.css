@@ -356,7 +356,7 @@ input[type="text"] {padding-left: 10px !important;padding-right: 10px !important
 .Invite-in { float:left; width:350px; text-align:left; height:auto; margin-left:50px;}
 .Invite-in span { float:left; width:100px; height:auto; line-height:140px; font-size:16px; color:#888888;}
 .Invite-in strong { font-size:24px; color:#000000; line-height:140px; font-weight:500; float:left;}
-.Defa-in { float:left; width:100%; /*border:1px solid #ebebeb;*/ border-top:none !important; height:auto; text-align:center; padding:50px 0px 50px 0; background:#fff;}
+.Defa-in { /*float:left;*/ width:100%; /*border:1px solid #ebebeb;*/ border-top:none !important; height:auto; text-align:center; padding:50px 0px 50px 0; background:#fff;}
 .Defa-in img { width:150px;}
 .Defa-in2 img { width:150px;}
 .Defa-in h2 { font-size:28px; color:#43c7bc; line-height:62px; font-weight:400;text-align:center;}
