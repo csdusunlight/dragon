@@ -73,7 +73,7 @@ def vip_process(user, with_amount):
         Message.objects.create(user=user, content=msg_content, title=u"会员升级")
     user.level = newlevel
     user.with_total = F('with_total') + with_amount
-    user.with_level = F('with_level') + with_amount
+    user.with_level = amount
     user.save(update_fields=['level', 'with_total', 'with_level'])
 def level_compute(amount, level):
     if level == 0:
@@ -94,4 +94,4 @@ def level_compute(amount, level):
     return amount, level
 
 if __name__ == '__main__':
-    print level_compute(17000, 3)
+    print level_compute(5600000, 0)
