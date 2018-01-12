@@ -135,7 +135,6 @@
 						console.log(data);
 					},
 					error: function(xhr, textStatus) {
-
 						ret = JSON.parse(xhr.responseText);
 						for(var item in ret) {
 							alert(ret[item]);
