@@ -171,6 +171,7 @@ class AccountBill(models.Model):
     target = models.CharField(u"交易对象", max_length=100)
     amount = models.DecimalField(u"交易余额", max_digits=10, decimal_places=2)
     remark = models.CharField(u"备注", max_length=100, blank=True)
+    balance = models.DecimalField(u"交易余额", max_digits=10, decimal_places=2, blank=True)
     def strftime(self):
         return self.time.strftime("%Y-%m-%d %H:%M")
     def __unicode__(self):
@@ -185,6 +186,8 @@ class AccountBill(models.Model):
             elif self.type == 'expend':
                 self.account.balance = F('balance') - self.amount
             self.account.save(update_fields=['balance'])
+            self.account.refresh_from_db()
+            self.balance = self.account.balance
         return models.Model.save(self, force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
     class Meta:
         ordering = ['-time']
