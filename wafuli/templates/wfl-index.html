@@ -57,7 +57,7 @@
                         <div class="user-info-detail d-tc">
                             <p class="user-login-detail">Hi,<a href="{% url 'account_index' %}" class="user-account">{{user.mobile}}</a>
                                 {%if user.level > 0 %}
-                                <span class="user-vip-level">VIP{{user.level}}</span>
+                                <span class="user-vip-level">Lv.{{user.level}}</span>
                                 {%endif%}
                             </p>
                             <p class="user-detail-num clearfix"><span class="user-fubi l">福币：{{user.balance}}</span><span class="user-jifen r">积分：{{user.scores}}</span></p>
