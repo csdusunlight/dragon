@@ -2409,9 +2409,9 @@ def import_investlog_settle(request):
         for i in range(1,nrows):
             temp = []
             duplic = False
+            result = False
             for j in range(ncols):
                 cell = table.cell(i,j)
-                result = False
                 if j==0:
                     id = int(cell.value)
                     temp.append(id)
@@ -2428,6 +2428,7 @@ def import_investlog_settle(request):
                         temp.append(False)
                     else:
                         raise Exception(u"审核结果必须为是或否。")
+                    print result
                 elif j==8:
                     return_amount = 0
                     if cell.value:
