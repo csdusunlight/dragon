@@ -1,32 +1,31 @@
-{% extends "base.html" %} {% load staticfiles %}
-		{% block css %}
-		<link rel="stylesheet" type="text/css" href="{% static 'css/admin_teaminvest.css' %}" /> {% endblock css %}
+{% extends "base.html" %} {% load staticfiles %} {% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/admin_teaminvest.css' %}" /> {% endblock css %}
 
-		<!--<link rel="stylesheet" type="text/css" href="{% static 'css/wfl-common.css' %}" />
+<!--<link rel="stylesheet" type="text/css" href="{% static 'css/wfl-common.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/admin_teaminvest.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/page.css' %}" />-->
 
-		<!--<script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
+<!--<script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 		<script type="text/javascript" src="{% static 'js/page.js' %}"></script>-->
 
-	{% block right %}
+{% block right %}
 
-	<body>
-		<div class="wrapper">
-			<div class="searchBox">
-				<span class="project">项目名称：</span>
-				<input type="text" class="projectBox" />
-				<span class="phoneNum">用户手机号：</span>
-				<input class="numberBox" type="text" /><br /><br />
-				<span class="auditState">处理状态：</span>
-				<select class="auditBox">
-					<option value="">全部</option>
-					<option value="1">待审核</option>
-					<option value="0">待回款</option>
-					<option value="2">已拒绝</option>
-					<option value="3">已结清</option>
-				</select><br />
-				<!--<div style="position: relative;">
+<body>
+	<div class="wrapper">
+		<div class="searchBox">
+			<span class="project">项目名称：</span>
+			<input type="text" class="projectBox" />
+			<span class="phoneNum">用户手机号：</span>
+			<input class="numberBox" type="text" /><br /><br />
+			<span class="auditState">处理状态：</span>
+			<select class="auditBox">
+				<option value="">全部</option>
+				<option value="1">待审核</option>
+				<option value="0">待回款</option>
+				<option value="2">已拒绝</option>
+				<option value="3">已结清</option>
+			</select><br />
+			<!--<div style="position: relative;">
 					<input type="file" id="upFile" name="file" class="file" onchange='hint.innerHTML = this.files[0].name;' />
 					<a class="input-clone">请选择文件</a>
 					<p style="display: inline-block;position: absolute;top: 30px;">已选择表格：<b id="hint" style="font-weight: bold;">无</b></p>
@@ -36,77 +35,77 @@
 				<br />
 				<input type="button" class="search" value="搜索" />
 				<input type="button" class="export" value="导出数据" />-->
-				<div class="operteBox">
-					<input type="button" class="search" value="搜索" />
-					<input type="file" id="upFile" name="file" class="file" onchange='hint.innerHTML = this.files[0].name;' />
-					<a class="input-clone">请选择文件</a>
-					<p style="display: inline-block;position: absolute;top:100px;left: 355px;">已选择表格：<b id="hint" style="font-weight: bold;">无</b></p>
-					<input type="button" class="upload" value="导入返现数据" />
-					<input type="button" class="backupload" value="导入回款数据" />
-					<input type="button" class="export" value="导出数据" />
-				</div>
+			<div class="operteBox">
+				<input type="button" class="search" value="搜索" />
+				<input type="file" id="upFile" name="file" class="file" onchange='hint.innerHTML = this.files[0].name;' />
+				<a class="input-clone">请选择文件</a>
+				<p style="display: inline-block;position: absolute;top:100px;left: 355px;">已选择表格：<b id="hint" style="font-weight: bold;">无</b></p>
+				<input type="button" class="upload" value="导入返现数据" />
+				<input type="button" class="backupload" value="导入回款数据" />
+				<input type="button" class="export" value="导出数据" />
 			</div>
-			<div class="contentBox" style="margin-top: 10px;">
-				<div id="pagedata"></div>
-				<div class="Page-in1">
-					<div class="page" id="page"></div>
-				</div>
+		</div>
+		<div class="contentBox" style="margin-top: 10px;">
+			<div id="pagedata"></div>
+			<div class="Page-in1">
+				<div class="page" id="page"></div>
 			</div>
+		</div>
 
-			<div class="msk">
-				<div class="mskBox">
-					<span class="operate">操作回款弹窗</span>
-					<div class="dataBox">
-						<form>
-							回款金额：<input type="text" id="backMoney" placeholder="请输入回款金额" /><br />回款时间：
-							<input type="date" id="date" /><br />
-						</form>
-						<div class="msgbox">
-
-						</div>
-					</div>
-					<input type="submit" class="mskBtn submit" />
-					<input type="button" class="mskBtn cancel" value="取消" />
-				</div>
-			</div>
-			<!--拒绝-->
-			<div class="fMsk">
-				<div class="mskBox">
-					<span style="display: block;margin: 10px 160px;font-size: 20px;">操作拒绝弹窗</span>
-					<textarea class="reason"></textarea>
-					<div class="mskBtn fBtn">确定</div>
-					<div class="mskBtn fcancel">取消</div>
-				</div>
-			</div>
-			<div class="bMsk">
-				<div class="mskBox1" style="position: relative;">
-					<span style="display: block;margin: 20px 160px;font-size: 20px;">操作返现弹窗</span>
-					<span class="desc">返现金额：</span><input type="text" class="backMoney back" placeholder="请输入返现金额" /><br />
-					<!--<span class="desc">回款日期：</span><input type="date" class="backDate back" />-->
-					<input type="submit" class="mskBtn backBtn">
-					<input type="button" class="mskBtn cancel1" value="取消" style="position: absolute;right: 75px;top: 115px;">
-				</div>
-			</div>
-			<div class="cMsk">
-				<div class="mskBox2">
-					<span style="display: block;margin: 10px 160px;font-size: 20px;">操作结算弹窗</span>
-					<p class="ctxt">是否要进行结算？</p>
-					<div class="mskBtn cBtn">确定</div>
-					<div class="mskBtn Ccancel">取消</div>
-				</div>
-			</div>
-			<!--查看弹窗-->
-			<div class="lMsk">
-				<div class="lMskBox">
-					<div class="close">×</div>
-					<div class="lDataBox">
+		<div class="msk">
+			<div class="mskBox">
+				<span class="operate">操作回款弹窗</span>
+				<div class="dataBox">
+					<form>
+						回款金额：<input type="text" id="backMoney" placeholder="请输入回款金额" /><br />回款时间：
+						<input type="date" id="date" /><br />
+					</form>
+					<div class="msgbox">
 
 					</div>
+				</div>
+				<input type="submit" class="mskBtn submit" />
+				<input type="button" class="mskBtn cancel" value="取消" />
+			</div>
+		</div>
+		<!--拒绝-->
+		<div class="fMsk">
+			<div class="mskBox">
+				<span style="display: block;margin: 10px 160px;font-size: 20px;">操作拒绝弹窗</span>
+				<textarea class="reason"></textarea>
+				<div class="mskBtn fBtn">确定</div>
+				<div class="mskBtn fcancel">取消</div>
+			</div>
+		</div>
+		<div class="bMsk">
+			<div class="mskBox1" style="position: relative;">
+				<span style="display: block;margin: 20px 160px;font-size: 20px;">操作返现弹窗</span>
+				<span class="desc">返现金额：</span><input type="text" class="backMoney back" placeholder="请输入返现金额" /><br />
+				<!--<span class="desc">回款日期：</span><input type="date" class="backDate back" />-->
+				<input type="submit" class="mskBtn backBtn">
+				<input type="button" class="mskBtn cancel1" value="取消" style="position: absolute;right: 75px;top: 115px;">
+			</div>
+		</div>
+		<div class="cMsk">
+			<div class="mskBox2">
+				<span style="display: block;margin: 10px 160px;font-size: 20px;">操作结算弹窗</span>
+				<p class="ctxt">是否要进行结算？</p>
+				<div class="mskBtn cBtn">确定</div>
+				<div class="mskBtn Ccancel">取消</div>
+			</div>
+		</div>
+		<!--查看弹窗-->
+		<div class="lMsk">
+			<div class="lMskBox">
+				<div class="close">×</div>
+				<div class="lDataBox">
+
 				</div>
 			</div>
 		</div>
-		<iframe id="myIFrame" scrolling="yes" src="abount:blank" style="display:none" frameborder=1></iframe>
-	</body>
+	</div>
+	<iframe id="myIFrame" scrolling="yes" src="abount:blank" style="display:none" frameborder=1></iframe>
+</body>
 
 {%endblock%} {% block js %}
 <script type="text/javascript" src="{% static 'js/ajaxfileupload.js' %}"></script>
@@ -399,28 +398,29 @@
 			$(".fBtn").click(function() {
 				if(!$(".reason").val()) {
 					alert("填写不能为空！")
-				}
-				$.ajax({
-					url: '/Admin/admin_teaminvest/',
-					type: 'POST', //Post方法
-					async: true, //是否同步
-					data: {
-						"type": 2,
-						"id": fId,
-						"reason": $(".reason").val()
-					},
-					timeout: 5000, //超出时间
-					dataType: 'json', //返回数据格式Json
-					success: function(ret) {
-						if(ret.code == 0) {
-							$(".fMsk").hide();
-							parent.replaceWith("<td><span>已拒绝</span></td>"); //替换当前内容
+				} else {
+					$.ajax({
+						url: '/Admin/admin_teaminvest/',
+						type: 'POST', //Post方法
+						async: true, //是否同步
+						data: {
+							"type": 2,
+							"id": fId,
+							"reason": $(".reason").val()
+						},
+						timeout: 5000, //超出时间
+						dataType: 'json', //返回数据格式Json
+						success: function(ret) {
+							if(ret.code == 0) {
+								$(".fMsk").hide();
+								parent.replaceWith("<td><span>已拒绝</span></td>"); //替换当前内容
+							}
+						},
+						error: function(xhr, textStatus) {
+							console.log('错误:' + xhr.responseText);
 						}
-					},
-					error: function(xhr, textStatus) {
-						console.log('错误:' + xhr.responseText);
-					}
-				});
+					});
+				}
 
 			});
 
