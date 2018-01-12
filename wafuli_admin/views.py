@@ -2321,7 +2321,7 @@ def export_investlog(request):
     mobile = request.GET.get("user_mobile", None)
     if mobile:
         item_list = item_list.filter(user__mobile=mobile)
-    projectname = request.GET.get("project_title_contains", None)
+    projectname = request.GET.get("project_title", None)
     if projectname:
         item_list = item_list.filter(project__title__contains=projectname)
     adminname = request.GET.get("admin_user", None)
@@ -2343,7 +2343,7 @@ def export_investlog(request):
         reason = con.audit_reason
         if con.audit_state=='0':
             result = u'是'
-            settle_amount = str(con.settle_amount/100)
+            settle_amount = str(con.settle_amount/100) if con.settle_amount else ''
         elif con.audit_state=='2':
             result = u'否'
         backlog = ''
