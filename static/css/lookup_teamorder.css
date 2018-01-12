@@ -221,20 +221,26 @@ td {
 }
 
 .lookBox {
-	width: 600px;
+	width: 500px;
+	height: 600px;
 	position: absolute;
 	left: 50%;
-	top: 5%;
-	margin-left: -300px;
+	top: 50%;
+	margin-left: -250px;
+	margin-top: -300px;
 	background: white;
 	border: 1px solid RGB(180, 180, 180);
 	border-radius: 10px;
 	position: relative;
 	box-shadow: 5px 5px 13px 2px rgba(0,0,0,0.4);
+	overflow-y: auto;
 }
 .lookData{
 	padding: 30px;
 	line-height: 30px;
+}
+.lookData span{
+	font-size: 14px;
 }
 .close {
 	width: 30px;
@@ -321,12 +327,23 @@ td {
 }
 
 .backtime {
-	font-size: 16px;
-	padding-top: 30px;
+	display: inline-block;
+	width: 200px;
 }
 
 .backamount {
-	font-size: 16px;
+	display: inline-block;
+	width: 200px;
+}
+
+.back_time{
+	display: inline-block;
+	width: 80px;
+}
+
+.amount{
+	display: inline-block;
+	width: 80px;
 }
 
 .state0{

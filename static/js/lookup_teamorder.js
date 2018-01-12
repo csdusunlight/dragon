@@ -14,9 +14,9 @@
  		'[results]<tr><td>{project_title}</td><td class="date2">{invest_date}</td><td class="amount2">{invest_amount}</td><td>{state_desc}</td><td class="remark2">{remark}</td><td><a data-id="{id}" class="aChange">修改</a>丨<a data-id="{id}" class="aDelete">删除</a></td></tr>[/results]' +
  		'</tbody></table>';
 
- 	var refuseData = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="20%">投资时间</th>' +
- 		'<th width="20%">投资金额</th><th width="15%">状态<th width="25%">备注</th></tr></thead><tbody>' +
- 		'[results]<tr><td>{project_title}</td><td>{invest_date}</td><td>{invest_amount}</td><td>{state_desc}</td><td>{remark}</td></tr>[/results]' +
+ 	var refuseData = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="15%">投资时间</th>' +
+ 		'<th width="15%">投资金额</th><th width="15%">状态<th width="15%">备注</th><th width="20%">拒绝原因</th></tr></thead><tbody>' +
+ 		'[results]<tr><td>{project_title}</td><td>{invest_date}</td><td>{invest_amount}</td><td>{state_desc}</td><td>{remark}</td><td>{audit_reason}</td></tr>[/results]' +
  		'</tbody></table>';
 
  	function pagecallback() {
@@ -303,8 +303,8 @@
  					console.log(2)
  					$(".lookMsk").show();
  					for(var i in data.results) {
- 						str_html += '<span class="backtime">回款时间：' + data.results[i].back_date + '</span>' +
- 							'<span class="backamount">回款金额：' + data.results[i].back_amount + '元</span><br />';
+ 						str_html += '<span class="backtime">回款时间： <span class="back_time">'+ data.results[i].back_date +'</span></span>' +
+ 									'<span class="backamount">回款金额：<span class="amount">'+ data.results[i].back_amount +'</span></span>';
  					}
  					$(".lookData").append(str_html);
  				}

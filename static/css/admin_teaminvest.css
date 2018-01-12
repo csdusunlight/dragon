@@ -204,7 +204,7 @@
 
 .mskBox {
 	width: 460px;
-	height: 300px;
+	height: 350px;
 	position: absolute;
 	left: 50%;
 	top: 50%;
@@ -216,7 +216,7 @@
 
 .operate {
 	display: block;
-	margin: 10px 150px;
+	margin: 20px 150px;
 	font-size: 20px;
 }
 
@@ -293,6 +293,12 @@
 	left: 0;
 	background: rgba(74, 49, 49, .2);
 	display: none;
+}
+
+.cancel1{
+	position: absolute;
+    right: 75px;
+    top: 114px;
 }
 
 .desc {
