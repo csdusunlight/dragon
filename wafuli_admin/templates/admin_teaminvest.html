@@ -1,10 +1,6 @@
 {% extends "base.html" %} {% load staticfiles %}
-<!DOCTYPE html>
-<html>
-
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
+		{% block css %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/admin_teaminvest.css' %}" /> {% endblock css %}
 
 		<!--<link rel="stylesheet" type="text/css" href="{% static 'css/wfl-common.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/admin_teaminvest.css' %}" />
@@ -13,7 +9,6 @@
 		<!--<script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 		<script type="text/javascript" src="{% static 'js/page.js' %}"></script>-->
 
-	</head>
 	{% block right %}
 
 	<body>
@@ -113,7 +108,6 @@
 		<iframe id="myIFrame" scrolling="yes" src="abount:blank" style="display:none" frameborder=1></iframe>
 	</body>
 
-</html>
 {%endblock%} {% block js %}
 <script type="text/javascript" src="{% static 'js/ajaxfileupload.js' %}"></script>
 <script>
@@ -271,8 +265,6 @@
 					alert(e);
 				}
 			});
-			
-			
 
 		});
 		//导出返现文件
@@ -517,7 +509,7 @@
 			$(".lDataBox").empty();
 			var id = $(this).attr("data-id");
 			$.ajax({
-				url: '/restapi/backlog/?investlog='+ id,
+				url: '/restapi/backlog/?investlog=' + id,
 				type: "get", //提交方式post
 				async: true, //是否同步
 				timeout: 5000, //超出时间
