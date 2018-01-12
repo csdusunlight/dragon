@@ -167,7 +167,7 @@
 			content: allData,
 			complete: pagecallback,
 		});
-
+		//搜索
 		$(".search").click(function() {
 			var project_title = $(".projectBox").val(); //获取项目名称
 			var user_mobile = $(".numberBox").val(); //获取电话号码
@@ -246,6 +246,7 @@
 				alert("请先选择文件");
 				return;
 			}
+			var upFile = "upFile"; //id
 			$.ajaxFileUpload({
 				url: '/Admin/import_investlog_back/',
 				secureuri: false,
@@ -263,6 +264,8 @@
 					alert(e);
 				}
 			});
+			
+			
 
 		});
 		//导出返现文件
@@ -271,16 +274,16 @@
 			var project_title = $(".projectBox").val(); //获取项目名称
 			var user_mobile = $(".numberBox").val(); //获取电话号码
 			var state_desc = $(".auditBox option:selected").val(); //获取Select里面的值
-			console.log("导出返现状态" + state_desc);
+			console.log("导出返现状态:" + state_desc);
 
 			if(project_title) {
-				html += '<input name="project" type="hidden" value="' + project_title + '"/>';
+				html += '<input name="project_title" type="hidden" value="' + project_title + '"/>';
 			}
 			if(user_mobile) {
 				html += '<input name="user_mobile" type="hidden" value="' + user_mobile + '"/>';
 			}
 			if(state_desc) {
-				html += '<input name="state_desc" type="hidden" value="' + state_desc + '"/>';
+				html += '<input name="audit_state" type="hidden" value="' + state_desc + '"/>';
 			}
 			html += '</form>';
 			var iframe = document.getElementById('myIFrame');

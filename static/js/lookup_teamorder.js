@@ -303,8 +303,8 @@
  					console.log(2)
  					$(".lookMsk").show();
  					for(var i in data.results) {
- 						str_html += '<p class="backtime">回款时间：' + data.results[i].back_date + '</p>' +
- 							'<p class="backamount">回款金额：' + data.results[i].back_amount + '元</p>';
+ 						str_html += '<span class="backtime">回款时间：' + data.results[i].back_date + '</span>' +
+ 							'<span class="backamount">回款金额：' + data.results[i].back_amount + '元</span><br />';
  					}
  					$(".lookData").append(str_html);
  				}
