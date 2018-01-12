@@ -92,12 +92,13 @@ td {
 	background: white;
 	border: 1px solid RGB(180, 180, 180);
 	box-shadow: 5px 5px 13px 2px rgba(0,0,0,0.4);
+	border-radius: 10px;
 }
 
 .tips {
 	display: block;
 	font-size: 18px;
-	margin: 5px 150px;
+	margin: 20px 150px;
 }
 
 .dataBox {
@@ -163,6 +164,7 @@ td {
 	background: white;
 	border: 1px solid RGB(180, 180, 180);
 	box-shadow: 5px 5px 13px 2px rgba(0,0,0,0.4);
+	border-radius: 10px;
 }
 
 .tips1 {
@@ -219,18 +221,21 @@ td {
 }
 
 .lookBox {
-	width: 460px;
+	width: 600px;
 	position: absolute;
 	left: 50%;
 	top: 5%;
-	margin-left: -230px;
+	margin-left: -300px;
 	background: white;
 	border: 1px solid RGB(180, 180, 180);
 	border-radius: 10px;
 	position: relative;
 	box-shadow: 5px 5px 13px 2px rgba(0,0,0,0.4);
 }
-
+.lookData{
+	padding: 30px;
+	line-height: 30px;
+}
 .close {
 	width: 30px;
 	height: 30px;
@@ -312,6 +317,7 @@ td {
 	background: white;
 	border: 1px solid RGB(180, 180, 180);
 	box-shadow: 5px 5px 13px 2px rgba(0,0,0,0.4);
+	border-radius: 10px;
 }
 
 .backtime {
