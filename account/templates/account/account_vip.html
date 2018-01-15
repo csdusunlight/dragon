@@ -16,8 +16,7 @@ $(function(){
 	$('.back-a15').parent().toggleClass("on");
   // 会员等级制度
 var progress = document.getElementById("progress");
-  var fubi_get = document.getElementById("fubi_get"),
-      fubi_need = document.getElementById("fubi_need"),
+  var fubi_need = document.getElementById("fubi_need"),
     fubi_get2 = document.getElementById("fubi_get2"),
     Vip_logo = document.getElementById("Vip_logo"),
     Vip_next = document.getElementById("Vip_next"),
@@ -33,84 +32,84 @@ var progress = document.getElementById("progress");
   Vip_next2.innerText = level + 1;
   switch(level) {
     case 0:
-      fubi_get.innerText = 0;
+//    fubi_get.innerText = 0;
       fubi_need.innerText = 100000 - with_level;
       fubi_get2.innerText = 2000;
       percent = parseInt(with_level/1000);
       progress.style.width = percent + "%";
       break;
     case 1:
-      fubi_get.innerText = 2000;
+//    fubi_get.innerText = 2000;
       fubi_need.innerText = 500000 - with_level;
       fubi_get2.innerText = 5000;
       percent = parseInt(with_level/5000);
       progress.style.width = percent + "%";
       break;
     case 2:
-      fubi_get.innerText = 7000;
+//    fubi_get.innerText = 7000;
       fubi_need.innerText = 1000000 - with_level;
       fubi_get2.innerText = 10000;
       percent = parseInt(with_level/10000);
       progress.style.width = percent + "%";
       break;
     case 3:
-      fubi_get.innerText = 17000;
+//    fubi_get.innerText = 17000;
       fubi_need.innerText = 1000000 - with_level;
       fubi_get2.innerText = 11000;
       percent = parseInt(with_level/10000);
       progress.style.width = percent + "%";
       break;
     case 4:
-      fubi_get.innerText = 28000;
+//    fubi_get.innerText = 28000;
       fubi_need.innerText = 1000000 - with_level;
       fubi_get2.innerText = 12000;
       percent = parseInt(with_level/10000);
       progress.style.width = percent + "%";
       break;
     case 5:
-      fubi_get.innerText = 40000;
+//    fubi_get.innerText = 40000;
       fubi_need.innerText = 1000000 - with_level;
       fubi_get2.innerText = 13000;
       percent = parseInt(with_level/10000);
       progress.style.width = percent + "%";
       break;
     case 6:
-      fubi_get.innerText = 53000;
+//    fubi_get.innerText = 53000;
       fubi_need.innerText = 1000000 - with_level;
       fubi_get2.innerText = 14000;
       percent = parseInt(with_level/10000);
       progress.style.width = percent + "%";
       break;
     case 7:
-      fubi_get.innerText = 67000;
+//    fubi_get.innerText = 67000;
       fubi_need.innerText = 1000000 - with_level;
       fubi_get2.innerText = 15000;
       percent = parseInt(with_level/10000);
       progress.style.width = percent + "%";
       break;
     case 8:
-      fubi_get.innerText = 82000;
+//    fubi_get.innerText = 82000;
       fubi_need.innerText = 1000000 - with_level;
       fubi_get2.innerText = 16000;
       percent = parseInt(with_level/10000);
       progress.style.width = percent + "%";
       break;
     case 9:
-      fubi_get.innerText = 98000;
+//    fubi_get.innerText = 98000;
       fubi_need.innerText = 1000000 - with_level;
       fubi_get2.innerText = 17000;
       percent = parseInt(with_level/10000);
       progress.style.width = percent + "%";
       break;
     case 10:
-      fubi_get.innerText = 115000;
+//    fubi_get.innerText = 115000;
       fubi_need.innerText = 1000000 - with_level;
       fubi_get2.innerText = 18000;
       percent = parseInt(with_level/10000);
       progress.style.width = percent + "%";
       break;
     case 11:
-      fubi_get.innerText = 133000;
+//    fubi_get.innerText = 133000;
       fubi_need.innerText = 1000000 - with_level;
       fubi_get2.innerText = 19000;
       percent = parseInt(with_level/10000);
@@ -119,21 +118,21 @@ var progress = document.getElementById("progress");
       progress.style.width = percent + "%";
       break;
     case 12:
-      fubi_get.innerText = 152000;
+//    fubi_get.innerText = 152000;
       fubi_need.innerText = 1000000 - with_level;
       fubi_get2.innerText = 20000;
       percent = parseInt(with_level/10000);
       progress.style.width = percent + "%";
       break;
     case 13:
-      fubi_get.innerText = 172000;
+//    fubi_get.innerText = 172000;
       fubi_need.innerText = 1000000 - with_level;
       fubi_get2.innerText = 20000;
       percent = parseInt(with_level/10000);
       progress.style.width = percent + "%";
       break;
     default:
-      fubi_get.innerText = 172000 + (level-13)*20000;
+//    fubi_get.innerText = 172000 + (level-13)*20000;
       fubi_need.innerText = 1000000 - with_level;
       fubi_get2.innerText = 20000;
       percent = parseInt(with_level/10000);
@@ -160,7 +159,7 @@ var progress = document.getElementById("progress");
             <img src="{% static 'images/head.png' %}"/>
             <span id="Vip_logo" class="vip-logo">Lv.{{user.level}}</span>
           </div>
-          <p class="vip-right">已提现<span class="fubi-get">{{user.with_total}}</span>福币，会员等级为Lv.<span>{{user.level}}</span>，已获得<span id="fubi_get"></span>福币奖励<br />
+          <p class="vip-right">已提现<span class="fubi-get">{{user.with_total}}</span>福币，会员等级为Lv.<span>{{user.level}}</span><!--，已获得<span id="fubi_get"></span>福币奖励--><br />
           <span id="Vip_next_hint" class="Vip-next-hint">再提现<span id="fubi_need" class="fubi-need"></span>福币，即可升级为Lv.<span id="Vip_next" class="Vip-next"></span>，可获得<span id="fubi_get2"></span>福币奖励</span></p>
           <div id="vip_rank" class="vip-rank">
             <span id="progress" class="progress"></span>
@@ -226,7 +225,7 @@ var progress = document.getElementById("progress");
           <div class="intro-content">
             <p>1、挖福利会员等级进行重新修改，取消理财福利、体验福利的额外奖励</p>
             <p>2、初注册的用户等级为LV.0，会员升级等级不限，提现越多，等级越高，特权越多。</p>
-            <p>3、LV.3级会员之后，没体现10,000元可提升一个等级，升级奖励多增加10元。</p>
+            <p>3、LV.3级会员之后，每提现10,000元可提升一个等级，升级奖励多增加10元，当升级至LV.13后，奖励金额不再增加。</p>
           </div>
         </div>
       </div>
