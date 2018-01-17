@@ -36,7 +36,7 @@
  			$(this).text('奖励' + f_txt + '福币');
  		});
  	}
- 	var url = "/restapi/investlog/?page={page}&pageSize={pageSize}";
+ 	var url = "/restapi/investlog/?page={page}&pageSize={pageSize}&user_mobile=" + url_mobile;
  	$("#pagedata").ajaxPage({
  		url: url,
  		pageId: $("#page"),
@@ -52,7 +52,7 @@
  		$(this).addClass("active").siblings().removeClass("active");
  		if(index == 0) {
  			var pdata = data;
- 			var dataUrl = '/restapi/investlog/?page={page}&pageSize={pageSize}';
+ 			var dataUrl = '/restapi/investlog/?page={page}&pageSize={pageSize}&user_mobile=' + url_mobile;
  		} else if(index == 1) {
  			var pdata = passData;
  			var dataUrl = url + "&audit_state=0";
