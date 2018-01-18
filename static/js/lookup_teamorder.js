@@ -1,6 +1,6 @@
  $(function() {
  	var data = '<table width="100%"><thead><tr><th class="th2" width="20%">项目</th><th class="th2" width="15%">投资时间</th>' +
- 		'<th class="th2" width="20%">投资金额</th><th class="th2" width="15%"></th><th class="th2" width="10%">操作</th><th class="th2" width="20%">备注</th></tr></thead><tbody>' +
+ 		'<th class="th2" width="20%">投资金额</th><th class="th2" width="15%">状态</th><th class="th2" width="10%">操作</th><th class="th2" width="20%">备注</th></tr></thead><tbody>' +
  		'[results]<tr><td>{project_title}</td><td class="date1">{invest_date}</td><td class="amount1">{invest_amount}</td><td data-fubi="{settle_amount}" class="state{audit_state}">{state_desc}</td><td class="change" data-id="{id}" data-state="{audit_state}"></td><td class="remark1">{remark}</td></tr>[/results]' +
  		'</tbody></table>';
 
