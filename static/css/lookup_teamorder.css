@@ -6,7 +6,7 @@
 
 .wrapperTop {
 	/*padding: 10px 10px;*/
-	width: 100%;
+	/*width: 100%;*/
 	height: 45px;
 	border: 1px solid RGB(227, 227, 227);
 	position: relative;
@@ -27,8 +27,8 @@
 }
 
 .oprateBox {
-	width: 365px;
-	height: 50px;
+	/*width: 365px;
+	height: 50px;*/
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -37,12 +37,16 @@
 
 .oprateBox li {
 	float: left;
-	width: 90px;
-	height: 46px;
+	padding: 0 20px;
 	text-align: center;
 	line-height: 46px;
 	cursor: pointer;
 	border-left: 1px solid RGB(227, 227, 227);
+	font-size: 15px;
+}
+
+.operteBox li:last-child{
+	border-right: 1px solid RGB(227, 227, 227) !important;
 }
 
 .active {
@@ -62,6 +66,7 @@ th {
 	text-align: center;
 	border: 1px solid #ebebeb;
 	border-top: none;
+	background: #f8f8f8;
 }
 
 td {
@@ -69,6 +74,8 @@ td {
 	height: 44px;
 	line-height: 44px;
 	border: 1px solid #ebebeb;
+	font-size: 14px;
+	color: RGB(175,175,175);
 }
 
 .cMsk {
@@ -125,7 +132,8 @@ td {
 }
 
 .date {
-	width: 300px;
+	padding: 0px 5px;
+    width: 210px;
 }
 
 .btn {
@@ -357,5 +365,5 @@ td {
 }
 
 /*
-     box-shadow: 5px 5px 13px 2px rgba(0,0,0,0.4);
- * */
+box-shadow: 5px 5px 13px 2px rgba(0,0,0,0.4);
+*/
