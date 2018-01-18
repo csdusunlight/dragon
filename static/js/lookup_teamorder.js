@@ -25,7 +25,7 @@
  			if($(this).attr("data-state") == 1) {
  				$(this).html("<a class='lChange'>修改</a>丨<a class='delete'>删除</a>");
  			} else if($(this).attr("data-state") == 0) {
- 				$(this).html("<a class='look1'>查看</a>");
+ 				$(this).html("<a class='allLook'>查看</a>");
  			} else if ($(this).attr("data-state") == 3) {
  				$(this).html("<a class='settlement'>查看</a>");
  			}else {
@@ -266,7 +266,7 @@
  		console.log(dId);
  		// 		parent_tr.remove();
  		$.ajax({
- 			url: '/restapi/investlog/' + dId + '/',
+ 			url: '/restapi/investlog=' + dId,
  			type: 'delete', //方式
  			async: true, //或false,是否异步
  			timeout: 5000, //超时时间
@@ -322,7 +322,7 @@
  	});
 
  	/****************全部数据里的查看******************/
- 	$(".contentBox").on('click', '.look1', function() {
+ 	$(".contentBox").on('click', '.allLook', function() {
  		$(".lookData").empty();
  		var id = $(this).parent().attr("data-id");
  		$.ajax({
