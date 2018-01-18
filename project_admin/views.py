@@ -25,6 +25,7 @@ import traceback
 from project_admin.tools import has_permission
 from django.contrib.auth.decorators import login_required
 from datetime import timedelta
+from rest_framework.filters import SearchFilter
 logger = logging.getLogger('wafuli')
 class BaseViewMixin(object):
     authentication_classes = (CsrfExemptSessionAuthentication,)
@@ -117,10 +118,28 @@ class AccountBillList(BaseViewMixin,generics.ListCreateAPIView):
 class AccountBillDetail(BaseViewMixin,generics.RetrieveUpdateDestroyAPIView):
     queryset = AccountBill.objects.all()
     serializer_class = AccountBillSerializer
+    def perform_update(self, serializer):
+        serializer.validated_data.pop('amount', None)
+        serializer.validated_data.pop('subtype', None)
+        serializer.validated_data.pop('type', None)
+        generics.RetrieveUpdateDestroyAPIView.perform_update(self, serializer)
 class DayAccountStatisList(BaseViewMixin,generics.ListCreateAPIView):
     queryset = DayAccountStatic.objects.all()
     serializer_class = DayAccountStatisSerializer
     pagination_class = ProjectPageNumberPagination
+    
+class InvoiceList(BaseViewMixin, generics.ListCreateAPIView):
+    serializer_class = InvoiceSerializer
+    pagination_class = ProjectPageNumberPagination
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,SearchFilter)
+    search_fields = ('our_title','opposite_title')
+    filter_fields = ('date',)
+    queryset = Invoice.objects.all()
+    
+class InvoiceDetail(BaseViewMixin, generics.RetrieveUpdateDestroyAPIView):
+    queryset = Invoice.objects.all()
+    serializer_class = InvoiceSerializer
+    
 # 立项部分增加
 @login_required
 @has_permission('008')
