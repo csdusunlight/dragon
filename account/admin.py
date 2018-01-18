@@ -14,7 +14,7 @@ class MyUserAdmin(UserAdmin):
         (None, {'fields': ('email', 'mobile','username','password')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','is_channel',
                                        'groups', 'user_permissions', 'admin_permissions')}),
-        ('Important dates', {'fields': ('level', 'with_total', 'with_level', 'last_login_time', 'date_joined', 'invite_code')}),
+        ('Important dates', {'fields': ('level', 'with_total', 'last_login_time', 'date_joined', 'invite_code')}),
         ('others', {'fields': ('accu_income','accu_scores','balance','scores','invite_account','invite_income',
                                'invite_scores','inviter','isSigned', 'last_login_time', 'this_login_time',
                                'pay_password','is_email_authenticated','zhifubao','zhifubao_name')}),
@@ -38,10 +38,10 @@ admin.site.register(Channel)
 admin.site.register(UserSignIn)
 admin.site.register(Userlogin)
 admin.site.register(Access_Token)
-admin.site.register(MobileCode)
+# admin.site.register(MobileCode)
 admin.site.register(AdminPermission)
 admin.site.register(DBlock)
-admin.site.register(BankCard)
+# admin.site.register(BankCard)
 admin.site.register(WeiXinUser)
 
 # admin.site.register(User_Envelope,EnvelopeAdmin)
