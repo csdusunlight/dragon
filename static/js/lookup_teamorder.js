@@ -95,10 +95,10 @@
  				var str_html;
  				for(let i in ret) {
  					str_html = '<table style="width:100%;">' +
- 						'<tr><td class="td1">项目</td><td class="t2"><input type="text" value="' + ret.project_title + '"  disabled="disabled" style="width:200px;" /></td></tr>' +
- 						'<tr><td class="td1">投资日期</td class="t2"><td><input type="date" class="date" value="' + ret.invest_date + '" /></td></tr>' +
- 						'<tr><td class="td1">投资金额</td class="t2"><td><input type="text" class="amount" value="' + ret.invest_amount + '" style="width:200px;" /></td></tr>' +
- 						'<tr><td class="td1">备注</td><td class="t2"><input type="text" class="remark" value="' + ret.remark + '"  style="width:200px;"/></td></tr>' +
+ 						'<tr><td class="td1">项目：</td><td class="t2"><input type="text" value="' + ret.project_title + '"  disabled="disabled" style="width:200px;" /></td></tr>' +
+ 						'<tr><td class="td1">投资日期：</td class="t2"><td><input type="date" class="date" value="' + ret.invest_date + '" /></td></tr>' +
+ 						'<tr><td class="td1">投资金额：</td class="t2"><td><input type="text" class="amount" value="' + ret.invest_amount + '" style="width:200px;" /></td></tr>' +
+ 						'<tr><td class="td1">备注：</td><td class="t2"><input type="text" class="remark" value="' + ret.remark + '"  style="width:200px;"/></td></tr>' +
  						'</table>';
  				}
  				$(".dataBox").append(str_html);
@@ -203,10 +203,10 @@
  				var str_html;
  				for(let i in ret) {
  					str_html = '<table style="width:100%;">' +
- 						'<tr><td class="td1">项目</td><td class="t2"><input type="text" value="' + ret.project_title + '" disabled="disabled" style="width:200px;" /></td></tr>' +
- 						'<tr><td class="td1">投资日期</td class="t2"><td><input type="date" class="date" value="' + ret.invest_date + '" /></td></tr>' +
- 						'<tr><td class="td1">投资金额</td class="t2"><td><input type="text" class="amount" value="' + ret.invest_amount + '" style="width:200px;" /></td></tr>' +
- 						'<tr><td class="td1">备注</td><td class="t2"><input type="text" class="beizhu" value="' + ret.remark + '"  style="width:200px;"/></td></tr>' +
+ 						'<tr><td class="td1">项目：</td><td class="t2"><input type="text" value="' + ret.project_title + '" disabled="disabled" style="width:200px;" /></td></tr>' +
+ 						'<tr><td class="td1">投资日期：</td class="t2"><td><input type="date" class="date" value="' + ret.invest_date + '" /></td></tr>' +
+ 						'<tr><td class="td1">投资金额：</td class="t2"><td><input type="text" class="amount" value="' + ret.invest_amount + '" style="width:200px;" /></td></tr>' +
+ 						'<tr><td class="td1">备注：</td><td class="t2"><input type="text" class="beizhu" value="' + ret.remark + '"  style="width:200px;"/></td></tr>' +
  						'</table>';
  				}
  				$(".eDataBox").append(str_html);

@@ -26,6 +26,7 @@
 	}
 </style>
 <script type="text/javascript">
+	
 //	console.log("-------------",{{user.mobile}});
 	var url_mobile = {{user.mobile}};
 var data = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="15%">提交手机号</th>'+
@@ -629,11 +630,12 @@ var canclePopup = function(obj) {       //取消自定义弹窗
             -->
 			<div class="dMsk">
 				<div class="tipBox1">
-					<p class="tips1">是否删除该条数据</p>
-					<div class="btn" id="delete" style="margin-left: 1px;">
+					<p class="tips1">提示</p>
+					<span>是否删除组队投资数据</span>
+					<div class="tipBtn" id="delete" style="margin-left: 1px;">
 						确定
 					</div>
-					<div class="btn" id="cancel1">
+					<div class="tipBtn" id="cancel1">
 						取消
 					</div>
 				</div>
@@ -672,11 +674,12 @@ var canclePopup = function(obj) {       //取消自定义弹窗
 			<!-- 未审核删除msk -->
 			<div class="deleteBox">
 				<div class="dTipBox">
-					<p class="tips1">是否删除该条数据</p>
-					<div class="btn dBtn" style="margin-left: 1px;">
+					<p class="tips1">提示</p>
+					<span>是否删除投资组队数据</span>
+					<div class="tipBtn dBtn" style="margin-left: 1px;">
 						确定
 					</div>
-					<div class="btn dCancel">
+					<div class="tipBtn dCancel">
 						取消
 					</div>
 				</div>	
