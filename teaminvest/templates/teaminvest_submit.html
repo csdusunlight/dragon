@@ -7,7 +7,14 @@
 		<title>交单</title>
 		<link rel="stylesheet" type="text/css" href="{% static 'css/wfl-common.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/teaminvest_submit.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/datePicker.css' %}" />
 		<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.date_input.pack.js' %}"></script>
+		<style>
+			.date_selector{
+				box-sizing: content-box;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -32,7 +39,8 @@
 					</div>
 					<div class="iptBox">
 						投资时间：
-						<input type="date" name="date" id="date" class="ipt" />
+						<!--<input type="date" name="date" id="date" class="ipt" />-->
+						<input type="text" name="date" id="date" class="ipt date_picker" />
 					</div>
 					<div class="iptBox">
 						投资金额：
@@ -67,6 +75,9 @@
 	</body>
 	<script>
 		$(function() {
+			//datePicer插件初始化
+			$('.date_picker').date_input();
+			
 			//用户未登录状态下选择项目跳转到登录页面
 			$(".selt").change(function() {
 				var isLogin = "{{user.is_authenticated}}";

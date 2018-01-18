@@ -120,7 +120,7 @@
  		console.log($(parent_dom).find(".remark1")[0]);
  		$.ajax({
  			type: "put",
- 			url: '/restapi/investlog=' + id,
+ 			url: '/restapi/investlog/' + id,
  			async: true,
  			timeout: 5000,
  			data: {
