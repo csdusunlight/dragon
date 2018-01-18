@@ -172,6 +172,8 @@ class AccountBill(models.Model):
     amount = models.DecimalField(u"交易余额", max_digits=10, decimal_places=2)
     remark = models.CharField(u"备注", max_length=100, blank=True)
     balance = models.DecimalField(u"交易余额", max_digits=10, decimal_places=2, blank=True)
+    invoice_date = models.DateField(u"账单时间", null=True, blank=True)
+    invoice_amount = models.DecimalField(u"开票金额", max_digits=10, decimal_places=2, blank=True)
     def strftime(self):
         return self.time.strftime("%Y-%m-%d %H:%M")
     def __unicode__(self):
