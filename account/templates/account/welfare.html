@@ -15,7 +15,7 @@
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/page.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/jquery.date_input.pack.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/lookup_teamorder.js' %}"></script>
+
 <style type="text/css">
 	.Welfare-td-03 tr td {
 	    line-height: 1.2;
@@ -26,6 +26,9 @@
 	}
 </style>
 <script type="text/javascript">
+	
+//	console.log("-------------",{{user.mobile}});
+	var url_mobile = {{user.mobile}};
 var data = '<table width="100%"><thead><tr><th width="20%">项目</th><th width="15%">提交手机号</th>'+
 	'<th width="20%">提交时间</th><th width="15%">状态</th><th width="10%">任务截图</th><th width="20%">备注</th></tr></thead><tbody>'+
 	'[data]<tr><td>{title}</td><td>{username}</td><td>{time}</td><td>{state}</td><td><a target="_blank" href="{% url 'screenshot' %}?id={id}">' +
@@ -447,6 +450,7 @@ var canclePopup = function(obj) {       //取消自定义弹窗
     $(obj).parent().parent().parent().removeClass('in');
 }
 </script>
+<script type="text/javascript" src="{% static 'js/lookup_teamorder.js' %}"></script>
 </head>
 
 <body>
@@ -591,7 +595,7 @@ var canclePopup = function(obj) {       //取消自定义弹窗
             	描述：内容部分
            -->
 			<div class="contentBox">
-				<div id="pagedata">
+				<div id="pagedata" class="contentPage">
 
 				</div>
 				<div class="Page-in">
@@ -626,11 +630,12 @@ var canclePopup = function(obj) {       //取消自定义弹窗
             -->
 			<div class="dMsk">
 				<div class="tipBox1">
-					<p class="tips1">是否删除该条数据</p>
-					<div class="btn" id="delete" style="margin-left: 1px;">
+					<p class="tips1">提示</p>
+					<span>是否删除组队投资数据</span>
+					<div class="tipBtn" id="delete" style="margin-left: 1px;">
 						确定
 					</div>
-					<div class="btn" id="cancel1">
+					<div class="tipBtn" id="cancel1">
 						取消
 					</div>
 				</div>
@@ -669,11 +674,12 @@ var canclePopup = function(obj) {       //取消自定义弹窗
 			<!-- 未审核删除msk -->
 			<div class="deleteBox">
 				<div class="dTipBox">
-					<p class="tips1">是否删除该条数据</p>
-					<div class="btn dBtn" style="margin-left: 1px;">
+					<p class="tips1">提示</p>
+					<span>是否删除投资组队数据</span>
+					<div class="tipBtn dBtn" style="margin-left: 1px;">
 						确定
 					</div>
-					<div class="btn dCancel">
+					<div class="tipBtn dCancel">
 						取消
 					</div>
 				</div>	

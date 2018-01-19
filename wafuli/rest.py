@@ -4,13 +4,17 @@ Created on 2017年8月22日
 
 @author: lch
 '''
-from rest_framework import generics
+from rest_framework import generics, permissions
 from wafuli.serializers import MediaProjectSerializer, UserEventSerializer
 from wafuli.models import MediaProject, UserEvent
 import django_filters
 from project_admin.Paginations import ProjectPageNumberPagination
-from project_admin.views import BaseViewMixin
 from wafuli.Filters import UserEventFilter
+from restapi.permissions import CsrfExemptSessionAuthentication
+
+class BaseViewMixin(object):
+    authentication_classes = (CsrfExemptSessionAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
 class MediaProjectList(generics.ListCreateAPIView):
     queryset = MediaProject.objects.all()
     serializer_class = MediaProjectSerializer

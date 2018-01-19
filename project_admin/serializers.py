@@ -73,9 +73,14 @@ class AccountBillSerializer(serializers.ModelSerializer):
     class Meta:
         model = AccountBill
         fields = ('id', 'time', 'strftime', 'account', 'type', 'subtype', 'target', 'amount', 'remark','balance',
-                  'account_type','account_name','account_balance','subtype_des','type_des')        
+                  'account_type','account_name','account_balance','subtype_des','type_des','invoice_date','invoice_amount')
 
 class DayAccountStatisSerializer(serializers.ModelSerializer):
     class Meta:
         model = DayAccountStatic
+        fields = '__all__'
+        
+class InvoiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Invoice
         fields = '__all__'

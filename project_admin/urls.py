@@ -25,6 +25,8 @@ urlpatterns = [
     url(r'^accountbill/$', views.AccountBillList.as_view()),
     url(r'^accountbill/(?P<pk>[0-9]+)/$', views.AccountBillDetail.as_view()),
     url(r'^dayaccountstatis/$', views.DayAccountStatisList.as_view()),
+    url(r'^invoice/$', views.InvoiceList.as_view()),
+    url(r'^invoice/(?P<pk>[0-9]+)/$', views.InvoiceDetail.as_view()),
 ]
 from django.conf.urls import include
 

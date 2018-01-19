@@ -36,7 +36,7 @@ AUDIT_STATE = (
 )
 class Investlog(models.Model):
     user = models.ForeignKey(MyUser, related_name="investlog_submit")
-    qq = models.CharField(u"QQ", max_length=15)
+    qq = models.CharField(u"QQ", max_length=100)
     project = models.ForeignKey(Project, related_name="investlogs")
     submit_time = models.DateTimeField(u'提交时间', default=timezone.now)
     invest_amount = models.DecimalField(u'投资金额', max_digits=10, decimal_places=2)
