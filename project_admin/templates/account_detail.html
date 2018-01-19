@@ -227,8 +227,8 @@
                 },
                 success: function(ret) {
                     alert("操作成功！");
-                    $(parent_dom).find(".invoice-date").text(ret.bill_time);
-                    $(parent_dom).find(".invoice-amount").text(ret.account_type);
+                    $(parent_dom).find(".invoice-date").text(ret.invoice_date);
+                    $(parent_dom).find(".invoice-amount").text(ret.invoice_amount);
                 },
                 error: function(ret) {
                     alert(JSON.stringify(ret));
