@@ -23,10 +23,10 @@ urlpatterns = [
     url(r'^account/$', views.AccountList.as_view()),
     url(r'^account/(?P<pk>[0-9]+)/$', views.AccountDetail.as_view()),
     url(r'^accountbill/$', views.AccountBillList.as_view()),
-    url(r'^accountbill/(?P<pk>[0-9]+)/$', views.AccountBillDetail.as_view()),
+    url(r'^accountbill/(?P<pk>[0-9]+)/$', views.AccountBillDetail.as_view(), kwargs={'partial':True}),
     url(r'^dayaccountstatis/$', views.DayAccountStatisList.as_view()),
     url(r'^invoice/$', views.InvoiceList.as_view()),
-    url(r'^invoice/(?P<pk>[0-9]+)/$', views.InvoiceDetail.as_view()),
+    url(r'^invoice/(?P<pk>[0-9]+)/$', views.InvoiceDetail.as_view(), kwargs={'partial':True}),
 ]
 from django.conf.urls import include
 
@@ -46,6 +46,7 @@ urlpatterns += [
     url(r'^finance_pandect/$', views.finance_pandect, name='finance_pandect'),
     url(r'^account_manage/$', views.account_manage, name='account_manage'),
     url(r'^account_detail/$', views.account_detail, name='account_detail'),
+    url(r'^invoice_detail/$', views.invoice_detail, name='invoice_detail'),
     url(r'^contacts_detail/$', views.contacts_detail, name='contacts'),
     url(r'^contacts_detail/(?P<id>[0-9]*)/$', views.contacts_detail, name='contacts_detail'),   #jzy
 

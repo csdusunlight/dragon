@@ -195,6 +195,10 @@ def account_detail(request):
     return render(request,"account_detail.html")
 @login_required
 @has_permission('009')
+def invoice_detail(request):
+    return render(request,"invoice_detail.html")
+@login_required
+@has_permission('009')
 def contacts_detail(request, id):
     return render(request,"contacts_detail.html",{'platform_id':id})
 # 综合管理部分修改----end
