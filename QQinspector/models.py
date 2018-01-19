@@ -7,6 +7,7 @@ from django.db.models.fields.related import ForeignKey
 # Create your models here.
 class QQGroup(models.Model):
     number = CharField(u"QQ群号", max_length=15, primary_key=True)
+    name = CharField(u"群名", max_length=15)
     doc_url = URLField(u"项目清单地址", max_length=200, blank=True)
     def __unicode__(self):
         return self.number

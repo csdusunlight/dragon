@@ -2354,7 +2354,7 @@ def export_investlog(request):
         cardnumber, bank, name = '', '', ''
         if bankcard:
             cardnumber = bankcard.card_number
-            bank = bankcard.bank
+            bank = bankcard.get_bank_display()
             name = bankcard.real_name
         data.append([id, project_name, invest_date, user_mobile, qq_number,
                      invest_amount, remark, result, settle_amount, reason, backlog, 
@@ -2533,7 +2533,7 @@ def import_investlog_back(request):
                     temp.append(return_amount)
                 elif j==15:
                     if(cell.ctype!=3):
-                        raise Exception(u"投资日期列格式错误，请修改后重新提交。")
+                        raise Exception(u"回款日期列格式错误，请修改后重新提交。")
                     else:
                         time = xlrd.xldate.xldate_as_datetime(value, 0)
                         temp.append(time)
