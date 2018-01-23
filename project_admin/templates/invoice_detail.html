@@ -1,0 +1,388 @@
+{% extends "project_base.html" %} {%load staticfiles%} {% block js %}
+<script type="text/javascript" src="{%static 'js/ajaxfileupload.js'%}"></script>
+<script type="text/javascript">
+
+	var data = '<table width="100%"><tr><th>开票日期</th><th>开票公司</th><th>对方公司</th><th>开票金额</th><th>备注</th>' +
+		'<th>操作</th>' +
+		'</tr>[results]<tr id="parent{id}"><td>{date}</td><td>{our_title}</td><td>{opposite_title}</td>' +
+		'<td>{amount}</td><td>{remark}</td>' +
+		'<td id="item_{id}"><a class="revise-btn" onclick="revise(this,{id})">修改</a> │ <a class="delete-btn" onclick="refuse(this,{id})">删除</a></td>' +
+		'</tr>[/results]</table>';
+	var url = "/project/invoice/" + "?page={page}&pageSize={pageSize}";
+	var url2 = "/project/invoice/";
+	
+	var project_flag;	
+	var parent_dom;
+	
+	function revise(obj,id) {			//弹出修改单条数据弹窗
+	    parent_dom = $(obj).parent().parent();
+		project_flag = id;
+		
+		$.ajax({
+            url: url2+project_flag,
+            dataType: "json",
+            type: "get",
+            success: function(ret) {
+                console.log(ret);
+                $("#date_change").val(ret.date);
+                $("#company_change").val(ret.our_title);
+                $("#other_com_change").val(ret.opposite_title);
+                $("#amount_change").val(ret.amount);
+                $("#remark_change").val(ret.remark);
+                
+                $(".change-project").show();
+            },
+            error: function(ret) {
+                alert(JSON.stringify(ret));
+            }
+        });
+			
+		
+			
+		
+
+		
+	}
+//	var parent_dom;
+//	function change_invoice(obj,id) { //弹出修改开票数据
+//	    parent_dom = $(obj).parent();
+//      $("input#project_invoice_id").val(id);
+//      console.log($("input#project_invoice_id").val());      
+//      var invoice_date = $(obj).parent().find(".invoice-date").text(),
+//          invoice_amount = $(obj).parent().find(".invoice-amount").text();
+//
+//      $("#invoice_date_change").val(invoice_date);
+//      $("#invoice_amount_change").val(invoice_amount);
+//      
+//      $(".change-invoice").show();
+//  }
+	function refuse(obj,id) {		//弹出删除项目数据弹窗
+	    parent_dom = $(obj).parent().parent();
+        project_flag = id;
+		$(".delete-project").show();
+	}
+	
+	
+	$(document).ready(function() {
+		$("li.home15").addClass("show-project").toggleClass("on");
+		$("li.home9").toggleClass("show");
+		$(".Tin-table tr:even").css("background-color", "#fcfcfc");
+		
+		
+		$("#pagedata").ajaxPage({
+			url: url,
+			pageId: $("#page"),
+			run: true,
+			content: data,
+		});
+		
+		//		获取账户名称信息
+//		$.ajax({
+//			url: '/project/account/',
+//			dataType: "json",
+//			type: "get",
+//			success: function(ret) {
+//				for (var i=0; i<ret.results.length; i++) {
+//					var option_item = document.createElement('option');
+//					option_item.innerText = ret.results[i].name;
+//					option_item.value = ret.results[i].id;
+//					$(".account-name").append(option_item);
+//				}
+//				$("#account_name").prepend('<option value="0" selected="selected">全部</option>');
+//			},
+//			error: function(ret) {
+//				alert(JSON.stringify(ret));
+//			}
+//		});
+		
+		
+		$('#add_project_btn').click(function() {		//点击新增项目数据
+			var date_add = $("#date_add").val(),
+				company_add = $("#company_add").val(),
+				other_com_add = $("#other_com_add").val(),
+				amount_add = $("#amount_add").val(),
+				remark_add = $("#remark_add").val();
+
+			$.ajax({
+				url: url2,
+				dataType: "json",
+				type: "post",
+				data: {
+					'date': date_add,
+					'our_title': company_add,
+					'opposite_title': other_com_add,
+					'amount': amount_add,
+					'remark': remark_add,
+				},
+				success: function(ret) {
+						alert("操作成功！");
+				},
+				error: function(ret) {
+					alert(JSON.stringify(ret));
+				}
+			});
+			$(".add-project").hide();
+		});
+		
+		
+		$('#change_project_btn').click(function() {		//点击修改项目数据
+			var date_add = $("#date_change").val(),
+                company_add = $("#company_change").val(),
+                other_com_add = $("#other_com_change").val(),
+                amount_add = $("#amount_change").val(),
+                remark_add = $("#remark_change").val();
+			$.ajax({
+				url: url2 + project_flag + "/",
+				dataType: "json",
+				type: "PUT",
+				data: {
+					'date': date_add,
+                    'our_title': company_add,
+                    'opposite_title': other_com_add,
+                    'amount': amount_add,
+                    'remark': remark_add,
+				},
+				success: function(ret) {
+					alert("操作成功！");
+					$(parent_dom).find("td").eq(0).text(ret.date);
+					$(parent_dom).find("td").eq(1).text(ret.our_title);
+					$(parent_dom).find("td").eq(2).text(ret.opposite_title);
+					$(parent_dom).find("td").eq(3).text(ret.amount);
+					$(parent_dom).find("td").eq(4).text(ret.remark);
+					$(".change-project").hide();
+				},
+				error: function(ret) {
+					alert(JSON.stringify(ret));
+				}
+			});
+			
+		});
+		
+//		$('#change_invoice_btn').click(function() {       //点击修改开票数据
+//          var invoice_date_change = $("#invoice_date_change").val(),
+//              invoice_amount_change = $("#invoice_amount_change").val();
+//          var invoice_flag = $("#project_invoice_id").val();
+//          console.log(url2 + project_flag)
+//          $.ajax({
+//              url: url2 + invoice_flag + "/",
+//              dataType: "json",
+//              type: "PUT",
+//              data: {
+//                  'invoice_date': invoice_date_change,
+//                  'invoice_amount': invoice_amount_change,
+//              },
+//              success: function(ret) {
+//                  alert("操作成功！");
+//                  $(parent_dom).find("invoice-date").text(ret.bill_time);
+//                  $(parent_dom).find("invoice-amount").text(ret.account_type);
+//              },
+//              error: function(ret) {
+//                  alert(JSON.stringify(ret));
+//              }
+//          });
+//          
+//          $(".change-invoice").hide();
+//      });
+        
+		$('#delete_project_btn').click(function() {		//点击确认按钮删除单条项目数据
+			$.ajax({
+				url: url2 + project_flag + "/",
+				dataType: "json",
+				type: "DELETE",
+				success: function(ret) {
+					alert("删除成功！");
+					$(parent_dom).remove();
+				},
+				error: function(ret) {
+					alert(JSON.stringify(ret));
+				}
+			});
+			$(".delete-project").hide();
+		});
+		
+		$("#search").click(function() {			//搜索项目数据
+			var newurl = url;
+			
+			var invoice_date = $("#invoice_date").val();
+			var invoice_company = $("#invoice_company").val();
+//			var other_company = $("#other_company").val();
+			
+			if(invoice_date) {
+				newurl += "&date=" + invoice_date;
+			}
+			if(invoice_company) {
+				newurl += "&search=" + invoice_company;
+			}
+//			if(other_company) {
+//				newurl += "&other_company=" + other_company;
+//			}
+			
+			var newdata = data;
+			console.log(newurl);
+			$("#page").empty();
+			$("#pagedata").ajaxPage({
+				url: newurl,
+				pageId: $("#page"),
+				run: true,
+				content: newdata,
+			});
+		});
+		
+		
+		
+		
+		
+		$("#single_import").click(function(){			//弹出单条导入弹窗
+			$(".add-project").show();
+		})
+		
+		$(".none-x, .none-x-s").click(function() {		// 关闭或取消 弹窗
+			$(".project-box").hide(); 
+		})
+	});
+</script>
+{% endblock js %} {% block right %}
+<div class="Criteria">
+	<span>搜索条件</span>
+	<div class="Crite-box">
+		<form>
+			<table width="100%">
+				
+				<tr>
+					<td>
+						<i style="letter-spacing:4.8px;">开票日期：</i>
+						<input id="invoice_date" type="date" />
+					</td>
+					
+					<td>
+						<i style="letter-spacing:4.8px;">公司：</i>
+						<input id="invoice_company" type="text" />
+					</td>
+					<!--<td>
+                        <i style="letter-spacing:4.8px;">对方公司：</i>
+                        <input id="other_company" type="text" />
+                    </td>-->
+				</tr>
+				
+			</table>
+			<div class="Submit-in">
+				<input id="single_import" type="button" value="新建明细" />
+				<input id="search" type="button" value="搜索" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="Tin-table">
+	<div id="pagedata">
+	</div>
+	<div class="Page-in-admin">
+		<div class="page" id="page">
+		</div>
+	</div>
+</div>
+{%endblock%} {% block modal %}
+<div class="add-project project-box">			<!--新增项目数据-->
+	<div class="w570-box">
+		<h3 class="popup-title">新增项目数据</h3>
+		<button class="none-x"></button>
+		<div class="Finnow set-project">
+			<p>
+				<span>开票日期：</span>
+				<input id="date_add" type="date" />
+			</p>
+			<p>
+				<span>开票公司：</span>
+				<input id="company_add" type="text" />
+			</p>
+			<p>
+				<span>对方公司：</span>
+				<input id="other_com_add" type="text" />
+			</p>
+			<p>
+                <span>开票金额：</span>
+                <input id="amount_add" type="text" />
+            </p>
+			<p>
+				<span>备注：</span>
+				<input id="remark_add" type="text" />
+			</p>
+			<div class="Finnow-Sub">
+				<input id="add_project_btn" type="submit" value="确认" onclick="return false;"/>
+				<input type="button" value="取消" class="none-x-s" />
+			</div>
+		</div>
+	</div>
+</div>				<!--新增项目数据---end-->
+
+<div class="change-project project-box">			<!--修改项目数据-->
+	<div class="w570-box">
+		<h3 class="popup-title">修改项目数据</h3>
+		<button class="none-x"></button>
+		<form class="Finnow set-project">
+			<p>
+                <span>开票日期：</span>
+                <input id="date_change" type="date" />
+            </p>
+            <p>
+                <span>开票公司：</span>
+                <input id="company_change" type="text" />
+            </p>
+            <p>
+                <span>对方公司：</span>
+                <input id="other_com_change" type="text" />
+            </p>
+            <p>
+                <span>开票金额：</span>
+                <input id="amount_change" type="text" />
+            </p>
+            <p>
+                <span>备注：</span>
+                <input id="remark_change" type="text" />
+            </p>
+			
+			<div class="Finnow-Sub">
+				<input id="change_project_btn" type="submit" value="确认" onclick="return false;"/>
+				<input type="button" value="取消" class="none-x-s" />
+			</div>
+		</form>
+	</div>
+</div>						<!--修改项目数据---end-->
+<!--<div class="change-invoice project-box">       
+    <div class="w570-box">
+        <h3 class="popup-title">修改开票数据</h3>
+        <button class="none-x"></button>
+        <form class="Finnow set-project">
+                <input id="project_invoice_id" type="hidden" />
+            <p>
+                <span>开票时间：</span>
+                <input id="invoice_date_change" type="text" />
+            </p>
+            <p>
+                <span>开票金额：</span>
+                <input id="invoice_amount_change" type="text" />
+            </p>
+            
+            <div class="Finnow-Sub">
+                <input id="change_invoice_btn" type="submit" value="确认" onclick="return false;"/>
+                <input type="button" value="取消" class="none-x-s" />
+            </div>
+        </form>
+    </div>
+</div>                  -->
+<!--删除项目弹窗-->
+<div class="delete-project project-box">
+	<div class="w570-box">
+		<h3>确认删除该条数据？</h3>
+		<button class="none-x"></button>
+		<form class="Audit-in">
+			<div class="Finnow-Sub">
+				<input id="delete_project_btn" type="submit" value="确认" class="Deny-box" onclick="return false;" />
+				<input type="button" value="取消" class="none-x-s" />
+			</div>
+		</form>
+	</div>
+</div>
+<iframe id="myIFrame" scrolling="yes" src="abount:blank" style="display:none" frameborder=1></iframe>
+<!--end-->
+{% endblock modal %}
