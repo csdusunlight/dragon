@@ -67,7 +67,7 @@ def vip_process(user, with_amount):
             award += 10000 + 1000*(level-3)
         elif level >= 13:
             award += 20000
-    if award > 0:
+    if award > 0 and not user.is_channel:
         charge_money(user, '0', award, u'账户等级提升奖励')
     if award > 0:
         msg_content = u'恭喜您的会员等级提升为Lv' + str(newlevel) + u'！'
