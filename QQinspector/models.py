@@ -30,6 +30,8 @@ class Detail_Statis(models.Model):
     count = PositiveIntegerField(u"出现次数")
     def __unicode__(self):
         return self.item.name
+    def get_qq_name(self):
+        return self.qq.name
     class Meta:
         ordering = ['-item__time']
         verbose_name_plural = u"统计明细"

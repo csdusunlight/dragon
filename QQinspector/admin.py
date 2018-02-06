@@ -8,7 +8,7 @@ class ItemAdmin(admin.ModelAdmin):
 class DetailAdmin(admin.ModelAdmin):
     raw_id_fields = ['item','qq']
     search_fields = ()
-    list_display = ('__unicode__','qq', 'count')
+    list_display = ('__unicode__', 'count','get_qq_name','qq',)
 class QQGroupAdmin(admin.ModelAdmin):
 #     raw_id_fields = ['name','count']
     search_fields = ()
