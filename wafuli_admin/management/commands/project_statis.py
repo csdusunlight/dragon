@@ -56,6 +56,8 @@ class Command(BaseCommand):
             elif source == 'channel':
                 attr['channel_consume'] = consume
                 attr['channel_return'] = ret
+            elif source == '':
+                attr['other_consume'] = consume
 #         print project_dic        
         for id, kwarg in project_dic.items():
             obj,created = ProjectStatis.objects.update_or_create(project_id=id, defaults=kwarg)

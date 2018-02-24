@@ -107,8 +107,9 @@ class ProjectStatis(models.Model):
     channel_return = models.DecimalField(u"渠道返现金额", max_digits=10, decimal_places=2, default=0)
     site_consume = models.DecimalField(u"网站消耗", max_digits=10, decimal_places=2, default=0)
     site_return = models.DecimalField(u"网站返现金额", max_digits=10, decimal_places=2, default=0)
+    other_consume = models.DecimalField(u"其它消耗", max_digits=10, decimal_places=2, default=0)
     def consume(self):
-        return self.channel_consume + self.site_consume
+        return self.channel_consume + self.site_consume + self.other_consume
     def ret(self):
         return self.channel_return + self.site_return
     def __unicode__(self):
