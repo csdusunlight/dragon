@@ -171,7 +171,7 @@
 						dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
 						success: function(data, textStatus, jqXHR) {
 							console.log("数据：", data.results);
-							for(let i in data.results) {
+							for(var i in data.results) {
 								str_html = '<table style="width:100%;">' +
 									'<tr><td class="td1">项目</td><td class="t2"><input type="text" value="' + data.results[i].project + '" disabled="disabled" /></td></tr>' +
 									'<tr><td class="td1">投资日期</td class="t2"><td><input type="date" class="date" value="' + data.results[i].invest_date + '" /></td></tr>' +

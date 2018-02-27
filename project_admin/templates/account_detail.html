@@ -3,10 +3,10 @@
 <script type="text/javascript">
 
 	var data = '<table width="100%"><tr><th>账单时间</th><th>账户ID</th><th>账户类型</th><th>账户名称</th><th>账单类型</th>' +
-		'<th>收/支类型</th><th>交易对象</th><th>交易金额</th><th>账户余额</th><th>备注</th>' +
+		'<th>收/支类型</th><th>交易对象</th><th>交易金额</th><th>账户余额</th><th>开票日期</th><th>开票金额</th><th>备注</th><th>发票操作</th>' +
 		'</tr>[results]<tr id="parent{id}"><td>{strftime}</td><td>{account}</td><td>{account_type}</td>' +
 		'<td data-value={account}>{account_name}</td><td data-value={type}>{type_des}</td><td data-value={subtype}>{subtype_des}</td><td>{target}</td><td>{amount}</td>' +
-		'<td>{balance}</td><td>{remark}</td>' +
+		'<td>{balance}</td><td class="invoice-date">{invoice_date}</td><td class="invoice-amount">{invoice_amount}</td><td class="invoice-remark">{remark}</td><td onclick="change_invoice(this,{id})" class="invoice-handle" data-id="{id}">更改开票数据</td>' +
 //		'<td id="item_{id}"><a class="revise-btn" onclick="pass({id})">修改</a> │ <a class="delete-btn" onclick="refuse({id})">删除</a></td>' +
 		'</tr>[/results]</table>';
 	var url = "/project/accountbill/" + "?page={page}";
@@ -80,7 +80,20 @@
 		
 		$(".change-project").show();
 	}
-	
+	var parent_dom;
+	function change_invoice(obj,id) { //弹出修改开票数据
+	    parent_dom = $(obj).parent();
+        $("input#project_invoice_id").val(id);
+        console.log($("input#project_invoice_id").val());      
+        var invoice_date = $(obj).parent().find(".invoice-date").text(),
+            invoice_amount = $(obj).parent().find(".invoice-amount").text(),
+            invoice_remark = $(obj).parent().find(".invoice-remark").text();
+
+        $("#invoice_date_change").val(invoice_date);
+        $("#invoice_amount_change").val(invoice_amount);
+        $("#invoice_remark_change").val(invoice_remark);
+        $(".change-invoice").show();
+    }
 	function refuse(id) {		//弹出删除项目数据弹窗
 		$("input#project_delete_id").val(id);
 		$(".delete-project").show();
@@ -200,6 +213,35 @@
 			$(".change-project").hide();
 		});
 		
+		$('#change_invoice_btn').click(function() {       //点击修改开票数据
+            var invoice_date_change = $("#invoice_date_change").val(),
+                invoice_amount_change = $("#invoice_amount_change").val(),
+                invoice_remark_change = $("#invoice_remark_change").val();
+            var invoice_flag = $("#project_invoice_id").val();
+            console.log(url2 + project_flag)
+            $.ajax({
+                url: url2 + invoice_flag + "/",
+                dataType: "json",
+                type: "PUT",
+                data: {
+                    'invoice_date': invoice_date_change,
+                    'invoice_amount': invoice_amount_change,
+                    'remark': invoice_remark_change,
+                },
+                success: function(ret) {
+                    alert("操作成功！");
+                    $(parent_dom).find(".invoice-date").text(ret.invoice_date);
+                    $(parent_dom).find(".invoice-amount").text(ret.invoice_amount);
+                    $(parent_dom).find(".invoice-remark").text(ret.remark);
+                },
+                error: function(ret) {
+                    alert(JSON.stringify(ret));
+                }
+            });
+            
+            $(".change-invoice").hide();
+        });
+        
 		$('#delete_project_btn').click(function() {		//点击确认按钮删除单条项目数据
 			project_flag = $("input#project_delete_id").val();
 			console.log(url2 + project_flag);
@@ -488,7 +530,7 @@
 				<!--<input id="project_add_id" type="hidden" />-->
 			<p>
 				<span>账单时间：</span>
-				<input id="bill_time_add" type="datetime-local" />
+				<input id="bill_time_add" type="date" />
 			</p>
 			<p>
 				<span>账户类型：</span>
@@ -551,7 +593,7 @@
 				<input id="project_change_id" type="hidden" />
 			<p>
 				<span>账单时间：</span>
-				<input id="bill_time_change" type="text" />
+				<input id="invoice_date" type="text" />
 			</p>
 			<p>
 				<span>账户类型：</span>
@@ -598,7 +640,31 @@
 		</form>
 	</div>
 </div>						<!--修改项目数据---end-->
-
+<div class="change-invoice project-box">            <!--修改开票数据-->
+    <div class="w570-box">
+        <h3 class="popup-title">修改开票数据</h3>
+        <button class="none-x"></button>
+        <form class="Finnow set-project">
+                <input id="project_invoice_id" type="hidden" />
+            <p>
+                <span>开票时间：</span>
+                <input id="invoice_date_change" type="date" />
+            </p>
+            <p>
+                <span>开票金额：</span>
+                <input id="invoice_amount_change" type="text" />
+            </p>
+            <p>
+                <span>备注：</span>
+                <input id="invoice_remark_change" type="text" />
+            </p>
+            <div class="Finnow-Sub">
+                <input id="change_invoice_btn" type="submit" value="确认" onclick="return false;"/>
+                <input type="button" value="取消" class="none-x-s" />
+            </div>
+        </form>
+    </div>
+</div>                  
 <!--删除项目弹窗-->
 <div class="delete-project project-box">
 	<div class="w570-box">

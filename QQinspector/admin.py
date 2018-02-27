@@ -8,9 +8,12 @@ class ItemAdmin(admin.ModelAdmin):
 class DetailAdmin(admin.ModelAdmin):
     raw_id_fields = ['item','qq']
     search_fields = ()
-    list_display = ('__unicode__','qq', 'count')
-    
+    list_display = ('__unicode__', 'count','get_qq_name','qq',)
+class QQGroupAdmin(admin.ModelAdmin):
+#     raw_id_fields = ['name','count']
+    search_fields = ()
+    list_display = ('number', 'name','doc_url')
 # Register your models here.
 admin.site.register(Item, ItemAdmin)
-admin.site.register(QQGroup)
+admin.site.register(QQGroup, QQGroupAdmin)
 admin.site.register(Detail_Statis, DetailAdmin)

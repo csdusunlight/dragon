@@ -30,6 +30,7 @@ class BackLogSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class BankcardSerializer(serializers.ModelSerializer):
+    bank_desc = serializers.CharField(source='get_bank_display', read_only=True)
     class Meta:
         model = BankCard
         fields = '__all__'

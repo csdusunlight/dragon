@@ -107,8 +107,9 @@ class ProjectStatis(models.Model):
     channel_return = models.DecimalField(u"渠道返现金额", max_digits=10, decimal_places=2, default=0)
     site_consume = models.DecimalField(u"网站消耗", max_digits=10, decimal_places=2, default=0)
     site_return = models.DecimalField(u"网站返现金额", max_digits=10, decimal_places=2, default=0)
+    other_consume = models.DecimalField(u"其它消耗", max_digits=10, decimal_places=2, default=0)
     def consume(self):
-        return self.channel_consume + self.site_consume
+        return self.channel_consume + self.site_consume + self.other_consume
     def ret(self):
         return self.channel_return + self.site_return
     def __unicode__(self):
@@ -164,25 +165,24 @@ BILL_SUBTYPE = (
     ('qtzc', '其他支出'),
 )
 class AccountBill(models.Model):
-    time = models.DateTimeField(u"账单时间", default=timezone.now)
+    time = models.DateField(u"账单时间", default=datetime.date.today)
+    submit_time = models.DateTimeField(u"创建时间", auto_now_add=True)
     account = models.ForeignKey(Account, verbose_name=u"账户", related_name='account_bills')
     type = models.CharField(max_length=6, choices=BILL_TYPE, verbose_name=u"账单类型")
     subtype = models.CharField(max_length=6, choices=BILL_SUBTYPE, verbose_name=u"支出/收入类型")
     target = models.CharField(u"交易对象", max_length=100)
-    amount = models.DecimalField(u"交易余额", max_digits=10, decimal_places=2)
+    amount = models.DecimalField(u"交易金额", max_digits=10, decimal_places=2)
     remark = models.CharField(u"备注", max_length=100, blank=True)
-    balance = models.DecimalField(u"交易余额", max_digits=10, decimal_places=2, blank=True)
-    invoice_date = models.DateField(u"账单时间", null=True, blank=True)
-    invoice_amount = models.DecimalField(u"开票金额", max_digits=10, decimal_places=2, blank=True)
+    balance = models.DecimalField(u"账户余额", max_digits=10, decimal_places=2, blank=True)
+    invoice_date = models.DateField(u"开盘日期", null=True, blank=True)
+    invoice_amount = models.DecimalField(u"开票金额", max_digits=10, decimal_places=2, blank=True, null=True)
     def strftime(self):
-        return self.time.strftime("%Y-%m-%d %H:%M")
+        return self.time.strftime("%Y-%m-%d") if self.time else None
     def __unicode__(self):
         return self.account.name + ' ' + self.get_type_display() + ' ' + str(self.amount)
     def save(self, force_insert=False, force_update=False, using=None, 
         update_fields=None):
-        if self.id:
-            return
-        else:
+        if not self.id:
             if self.type == 'income':
                 self.account.balance = F('balance') + self.amount
             elif self.type == 'expend':
@@ -192,7 +192,7 @@ class AccountBill(models.Model):
             self.balance = self.account.balance
         return models.Model.save(self, force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
     class Meta:
-        ordering = ['-time']
+        ordering = ['-time', '-submit_time']
 class DayAccountStatic(models.Model):
     date = models.DateField(u"日期", primary_key=True)
     income = models.DecimalField(u"收入", max_digits=10, decimal_places=2, null=True)
@@ -200,3 +200,12 @@ class DayAccountStatic(models.Model):
     balance = models.DecimalField(u"收入", max_digits=10, decimal_places=2)
     def __unicode__(self):
         return self.date.strftime("%Y-%m-%d")
+
+class Invoice(models.Model):
+    date = models.DateField(u"开票日期", default=datetime.date.today)
+    our_title = models.CharField(u"开票公司", max_length=100)
+    opposite_title = models.CharField(u"对方公司", max_length=100)
+    amount = models.DecimalField(u"开盘金额", max_digits=10, decimal_places=2)
+    remark = models.CharField(u"备注", max_length=100, blank=True)
+    class Meta:
+        ordering = ['-date']
