@@ -195,7 +195,7 @@
 			} else if(state_desc == 0) {
 				pdata = backMoneyData;
 			}
-
+			
 			console.log("---------newUrl", newUrl);
 			$("#pagedata").ajaxPage({
 				url: newUrl,
@@ -304,9 +304,10 @@
 					alert("回款不能为空！");
 				}
 				//正则表达式验证：
-				var reg = new RegExp("^[0-9]*$");
+				var reg =/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/;
 				if(!reg.test($(".backMoney").val())) {
-					alert("回款金额只能是数字！");
+					alert("请输入正确的金额！");
+					return;
 				}
 				$.ajax({
 					url: '/Admin/admin_teaminvest/',
@@ -351,9 +352,10 @@
 			var remark = $("#remark").val();
 			var date = $("#date").val();
 			//正则表达式验证：
-			var reg = new RegExp("^[0-9]*$");
+			var reg =/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/;
 			if(!reg.test($("#backMoney").val())) {
-				alert("回款金额只能是数字！");
+				alert("请输入正确的金额！");
+				return;
 			}
 
 			$.ajax({
