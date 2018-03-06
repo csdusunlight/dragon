@@ -82,7 +82,7 @@ class ActivityAdmin(admin.ModelAdmin):
         fields=[]
         if request.user.is_superuser:
             return fields
-        else:  
+        else:
             fields=['change_user']
             return fields  
 class TransListAdmin(admin.ModelAdmin):
@@ -93,6 +93,9 @@ class CouponAdmin(admin.ModelAdmin):
     search_fields = ['user__mobile',]
 class AdvertisementAdmin(admin.ModelAdmin):
     list_filter = ('location',)
+class AdvertisementAppAdmin(admin.ModelAdmin):
+    list_filter = ('location',)
+    raw_id_fields = ['wel_id',]
 admin.site.register(Finance,FinanceAdmin)
 admin.site.register(Company, ComAdmin)
 admin.site.register(Task, TaskAdmin)
@@ -110,7 +113,7 @@ admin.site.register(Message)
 admin.site.register(Advertisement, AdvertisementAdmin)
 admin.site.register(Advertisement_Mobile, AdvertisementAdmin)
 admin.site.register(MAdvert, AdvertisementAdmin)
-admin.site.register(MAdvert_App, AdvertisementAdmin)
+admin.site.register(MAdvert_App, AdvertisementAppAdmin)
 admin.site.register(UserWelfare)
 admin.site.register(Activity, ActivityAdmin)
 admin.site.register(LotteryRecord)
