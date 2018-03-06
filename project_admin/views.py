@@ -8,6 +8,7 @@ import django_filters
 from project_admin.Filters import ProjectFilter, ProjectInvestDateFilter,\
      AccountBillFilter, ProjectStatisFilter
 from django.shortcuts import redirect, render
+from django.db.models import Sum
 from django.core.urlresolvers import reverse
 from django.http.response import Http404, JsonResponse, HttpResponse
 from project_admin.Paginations import ProjectPageNumberPagination
@@ -26,6 +27,7 @@ from project_admin.tools import has_permission
 from django.contrib.auth.decorators import login_required
 from datetime import timedelta
 from rest_framework.filters import SearchFilter
+import new
 logger = logging.getLogger('wafuli')
 class BaseViewMixin(object):
     authentication_classes = (CsrfExemptSessionAuthentication,)
@@ -115,6 +117,13 @@ class AccountBillList(BaseViewMixin,generics.ListCreateAPIView):
 #     filter_fields = ('__all__')
     filter_class = AccountBillFilter
     pagination_class = ProjectPageNumberPagination
+    def perform_create(self, serializer):
+        generics.ListCreateAPIView.perform_create(self, serializer)
+        project = serializer.validated_data.get('project', None)
+        if project:
+            dic = project.account_bills.filter(type='income').aggregate(sum=Sum('amount'))
+            project.settle = dic.get('sum') or 0
+            project.save(update_fields=['settle'])
 class AccountBillDetail(BaseViewMixin,generics.RetrieveUpdateDestroyAPIView):
     queryset = AccountBill.objects.all()
     serializer_class = AccountBillSerializer
@@ -122,7 +131,20 @@ class AccountBillDetail(BaseViewMixin,generics.RetrieveUpdateDestroyAPIView):
         serializer.validated_data.pop('amount', None)
         serializer.validated_data.pop('subtype', None)
         serializer.validated_data.pop('type', None)
+        new_project = serializer.validated_data.get('project', None)
+        old_project = serializer.instance.project
         generics.RetrieveUpdateDestroyAPIView.perform_update(self, serializer)
+        if new_project and old_project and new_project.id == old_project:
+            return
+        else:
+            if old_project:
+                dic = old_project.account_bills.filter(type='income').aggregate(sum=Sum('amount'))
+                old_project.settle = dic.get('sum') or 0
+                old_project.save(update_fields=['settle'])
+            if new_project:
+                dic = new_project.account_bills.filter(type='income').aggregate(sum=Sum('amount'))
+                new_project.settle = dic.get('sum') or 0
+                new_project.save(update_fields=['settle'])
 class DayAccountStatisList(BaseViewMixin,generics.ListCreateAPIView):
     queryset = DayAccountStatic.objects.all()
     serializer_class = DayAccountStatisSerializer
