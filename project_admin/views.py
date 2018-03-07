@@ -25,7 +25,7 @@ import StringIO
 import traceback
 from project_admin.tools import has_permission
 from django.contrib.auth.decorators import login_required
-from datetime import timedelta
+import datetime
 from rest_framework.filters import SearchFilter
 import new
 logger = logging.getLogger('wafuli')
@@ -215,7 +215,7 @@ def account_manage(request):
 @has_permission('009')
 def account_detail(request):
     threeMonthsAgo = datetime.date.today() - datetime.timedelta(days=60)
-    projects = Project.objects.filter(time>threeMonthsAgo)
+    projects = Project.objects.filter(time__gte=threeMonthsAgo)
     return render(request,"account_detail.html", {'projects':projects})
 @login_required
 @has_permission('009')
@@ -619,7 +619,7 @@ def export_investdata_excel(request):
     if audittime_0 and audittime_1:
         s = datetime.datetime.strptime(audittime_0,'%Y-%m-%d')
         e = datetime.datetime.strptime(audittime_1,'%Y-%m-%d')
-        e += timedelta(days=1)
+        e += datetime.timedelta(days=1)
         item_list = item_list.filter(audit_time__range=(s,e))
   
     item_list = item_list.select_related('project').order_by('invest_time')
@@ -701,7 +701,7 @@ def export_account_bill_excel(request):
     if timeft_0 and timeft_1:
         s = datetime.datetime.strptime(timeft_0,'%Y-%m-%d')
         e = datetime.datetime.strptime(timeft_1,'%Y-%m-%d')
-        e += timedelta(days=1)
+        e += datetime.timedelta(days=1)
         item_list = item_list.filter(time__range=(s,e))
     data = []
     for con in item_list:

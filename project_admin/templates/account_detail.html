@@ -273,6 +273,7 @@
 			bill_type = $("#bill_type").val();
 			in_out_type = $("#in_out_type").val();
 			trade_obj = $("#trade_obj").val();
+			project_name = $("#project_name").val();
 			
 			if(bill_time_start) {
 				newurl += "&timeft_0=" + bill_time_start;
@@ -298,6 +299,9 @@
 			if(trade_obj) {
 				newurl += "&target__contains=" + trade_obj;
 			}
+			if(project_name) {
+                newurl += "&project_name=" + project_name;
+            }
 			
 			var newdata = data;
 			console.log(newurl);
@@ -496,6 +500,17 @@
 						<input id="trade_obj" type="text" />
 					</td>
 				</tr>
+				<tr>
+                    <td>
+                        <i style="letter-spacing:2px;">关联项目：</i>
+                        <input id="project_name" type="text" />
+                        <!--<select name="selectType" id="project_list">
+                            {% for item in projects %}
+                            <option value="{{item.id}}">{{item.name}}</option>
+                            {%endfor%}
+                        </select>-->
+                    </td>
+                </tr>
 				
 			</table>
 			<div class="Submit-in">
