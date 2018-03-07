@@ -35,9 +35,10 @@ class ProjectStatisFilter(django_filters.rest_framework.FilterSet):
 class AccountBillFilter(django_filters.rest_framework.FilterSet):
     timeft = django_filters.DateFromToRangeFilter(name="time")
     name__contains = django_filters.CharFilter(name="account", lookup_expr='name__contains')
+    project_name = django_filters.CharFilter(name="project", lookup_expr='name__contains')
     account_type = django_filters.CharFilter(name="account", lookup_expr='type')
     target__contains = django_filters.CharFilter(name="target", lookup_expr='contains')
     class Meta:
         model = AccountBill
-        fields = ['type', 'account_type', 'subtype', 'name__contains', 'time','target__contains','account']
+        fields = ['type', 'account_type', 'subtype', 'name__contains', 'time','target__contains','account','project_name']
         

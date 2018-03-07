@@ -214,7 +214,9 @@ def account_manage(request):
 @login_required
 @has_permission('009')
 def account_detail(request):
-    return render(request,"account_detail.html")
+    threeMonthsAgo = datetime.date.today() - datetime.timedelta(days=60)
+    projects = Project.objects.filter(time>threeMonthsAgo)
+    return render(request,"account_detail.html", {'projects':projects})
 @login_required
 @has_permission('009')
 def invoice_detail(request):
