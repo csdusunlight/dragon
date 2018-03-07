@@ -176,7 +176,7 @@ class AccountBill(models.Model):
     balance = models.DecimalField(u"账户余额", max_digits=10, decimal_places=2, blank=True)
     invoice_date = models.DateField(u"开盘日期", null=True, blank=True)
     invoice_amount = models.DecimalField(u"开票金额", max_digits=10, decimal_places=2, blank=True, null=True)
-    project = models.ForeignKey(Project, verbose_name=u"关联项目", related_name='account_bills', null=True, default=None)
+    project = models.ForeignKey(Project, verbose_name=u"关联项目", related_name='account_bills', null=True, default=None, blank=True)
     def strftime(self):
         return self.time.strftime("%Y-%m-%d") if self.time else None
     def __unicode__(self):
