@@ -69,10 +69,11 @@ class AccountBillSerializer(serializers.ModelSerializer):
     account_balance = serializers.CharField(source='account.balance', read_only=True)
     subtype_des = serializers.CharField(source='get_subtype_display', read_only=True)
     type_des = serializers.CharField(source='get_type_display', read_only=True)
+    project_name = serializers.CharField(source='project.name', read_only=True)
 #     strftime = serializers.CharField(source='strftime', read_only=True)
     class Meta:
         model = AccountBill
-        fields = ('id', 'time', 'strftime', 'account', 'type', 'subtype', 'target', 'amount', 'remark','balance',
+        fields = ('id', 'time', 'strftime', 'account', 'type', 'subtype', 'target', 'amount', 'remark','balance','project_name',
                   'account_type','account_name','account_balance','subtype_des','type_des','invoice_date','invoice_amount','project')
 
 class DayAccountStatisSerializer(serializers.ModelSerializer):
