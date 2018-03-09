@@ -555,6 +555,7 @@ def export_finance_excel(request):
         result = ''
         return_amount = ''
         reason = ''
+        submit_type_des = con.get_submit_type_display()
         if con.audit_state=='0':
             result = u'是'
             if con.translist.exists():
@@ -563,11 +564,11 @@ def export_finance_excel(request):
             result = u'否'
             if con.audited_logs.exists():
                 reason = con.audited_logs.first().reason
-        data.append([id, project_name, invest_time, user_mobile,user_type, mobile_sub, term,
+        data.append([id, project_name, invest_time, user_mobile,user_type, submit_type_des, mobile_sub, term,
                      invest_amount, remark, result, return_amount, reason])
     w = Workbook()     #创建一个工作簿
     ws = w.add_sheet(u'待审核记录')     #创建一个工作表
-    title_row = [u'记录ID',u'项目名称',u'投资日期', u'挖福利账号', u'用户类型', u'注册手机号' ,u'投资期限' ,u'投资金额', u'备注',
+    title_row = [u'记录ID',u'项目名称',u'投资日期', u'挖福利账号', u'用户类型', u'首/复投', u'注册手机号' ,u'投资期限' ,u'投资金额', u'备注',
                  u'审核通过',u'返现金额',u'拒绝原因']
     for i in range(len(title_row)):
         ws.write(0,i,title_row[i])
@@ -664,7 +665,7 @@ def import_finance_excel(request):
     table = data.sheets()[0]
     nrows = table.nrows
     ncols = table.ncols
-    if ncols!=12:
+    if ncols!=13:
         ret['msg'] = u"文件格式与模板不符，请在导出的待审核记录表中更新后将文件导入！"
         return JsonResponse(ret)
     rtable = []
@@ -681,7 +682,7 @@ def import_finance_excel(request):
                 elif j==1:
                     project = cell.value
                     temp.append(project)
-                elif j==9:
+                elif j==10:
                     result = cell.value.strip()
                     if result == u"是":
                         result = True
@@ -691,14 +692,14 @@ def import_finance_excel(request):
                         temp.append(False)
                     else:
                         raise Exception(u"审核结果必须为是或否。")
-                elif j==10:
+                elif j==11:
                     return_amount = 0
                     if cell.value:
                         return_amount = float(cell.value)
                     elif result:
                         raise Exception(u"审核结果为是时，返现金额不能为空或零。")
                     temp.append(return_amount)
-                elif j==11:
+                elif j==12:
                     reason = cell.value
                     temp.append(reason)
                 else:
