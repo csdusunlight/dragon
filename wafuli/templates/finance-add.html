@@ -69,7 +69,8 @@ $(function(){
 
 
   $("#pagedata1").ajaxPage({
-      url:url + "&company_name=全部" + "&company_background=不限" + "&invest_account=不限" + "&project_type=3" + "&project_status=0",
+//    url:url + "&company_name=全部" + "&company_background=不限" + "&invest_account=不限" + "&project_type=3" + "&project_status=0",
+      url: url + "&company_name=" + encodeURI("全部") + "&company_background=" + encodeURI("不限") + "&invest_account=" + encodeURI("不限") + "&project_type=3" + "&project_status=0",
       pageId:$("#page1"),
       pageSize:12,
       run:true,
@@ -100,7 +101,7 @@ $(function(){
       var text_item = $(this).children().text();
       project_status = index;
     }
-    newurl=url + "&company_name=" + company_name + "&company_background=" + company_background + "&invest_account=" + invest_account + "&project_type=3" + "&project_status=" + project_status;
+    newurl=url + "&company_name=" + encodeURI(company_name) + "&company_background=" + encodeURI(company_background) + "&invest_account=" + encodeURI(invest_account) + "&project_type=3" + "&project_status=" + project_status;
     console.log(newurl)
 
   	$("#pagedata1").ajaxPage({
