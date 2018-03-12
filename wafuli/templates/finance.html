@@ -1,6 +1,5 @@
 ﻿{% load staticfiles %}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>理财福利，互联网理财平台。</title>
@@ -58,7 +57,7 @@ $(function(){
     project_type = "0",
     project_status = "0";
 
-
+console.log('ajax start');
   $("#pagedata1").ajaxPage({
       url:url + "&company_name=全部" + "&company_background=不限" + "&invest_account=不限" + "&project_type=0" + "&project_status=0",
       pageId:$("#page1"),
