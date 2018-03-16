@@ -45,7 +45,11 @@ class Command(BaseCommand):
             source = item[1]
             consume = item[2]
             ret = item[3]
-            attr = {}
+            attr = {
+                'other_consume':0,
+                'site_consume':0,
+                'channel_consume':0
+            }
             if project_dic.has_key(id):
                 attr = project_dic[id]
             else:
