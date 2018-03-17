@@ -2433,7 +2433,7 @@ def import_investlog_settle(request):
                 elif j==8:
                     return_amount = 0
                     if cell.value:
-                        return_amount = float(cell.value)
+                        return_amount = Decimal(cell.value)
                     elif result:
                         raise Exception(u"审核结果为是时，返现金额不能为空或零。")
                     temp.append(return_amount)
