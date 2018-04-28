@@ -1,5 +1,18 @@
-{% extends "project_base.html" %} {%load staticfiles%} {% block js %}
+{% extends "project_base.html" %} {%load staticfiles%} 
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/jquery.searchableSelect.css' %}" />
+<style type="text/css">
+	.searchable-select-caret {
+	    width: 0 !important;
+	}
+	.searchable-select-input {
+	    width: 100% !important;
+	}
+</style>
+{% endblock css %}
+{% block js %}
 <script type="text/javascript" src="{%static 'js/ajaxfileupload.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.searchableSelect.js' %}"></script>
 <script type="text/javascript">
 
 	var data = '<table width="100%"><tr><th>关联项目</th><th>账单时间</th><th>账户ID</th><th>账户类型</th><th>账户名称</th><th>账单类型</th>' +
@@ -119,7 +132,7 @@
 			run: true,
 			content: data,
 		});
-		
+		$('#project_name_change').searchableSelect();
 		//		获取账户名称信息
 		$.ajax({
 			url: '/project/account/',
@@ -715,7 +728,7 @@
     </div>
 </div>        
 <div class="change-project-name project-box">            <!--修改关联项目-->
-    <div class="w570-box">
+    <div class="w570-box" style="min-height: 400px;">
         <h3 class="popup-title">修改关联项目</h3>
         <button class="none-x"></button>
         <form class="Finnow set-project">
