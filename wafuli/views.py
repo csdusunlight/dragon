@@ -376,7 +376,7 @@ def expsubmit_finance(request):
         news = Finance.objects.get(id=temp[0])
         time = datetime.strptime(temp[1],'%Y-%m-%d')
         telnum = temp[2]
-        amount = temp[3]
+        amount = Decimal(temp[3])
         term = temp[4]
         submit_type = temp[5]
         remark = temp[6]
