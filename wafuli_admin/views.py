@@ -2318,17 +2318,20 @@ def export_investlog(request):
     item_list = Investlog.objects
     if not user.is_staff:
         raise Http404
-    state = request.GET.get("audit_state",'1')
+    state = request.GET.get("audit_state",None)
     mobile = request.GET.get("user_mobile", None)
     if mobile:
         item_list = item_list.filter(user__mobile=mobile)
     projectname = request.GET.get("project_title", None)
     if projectname:
         item_list = item_list.filter(project__title__contains=projectname)
+        print item_list
     adminname = request.GET.get("admin_user", None)
     if adminname:
         item_list = item_list.filter(admin_user__username=adminname)
-    item_list = item_list.filter(audit_state=state).select_related('user', 'project').order_by('submit_time')
+    if state:
+        item_list = item_list.filter(audit_state=state)
+    item_list = item_list.select_related('user', 'project').order_by('submit_time')
     data = []
     for con in item_list:
         project = con.project
