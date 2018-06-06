@@ -15,9 +15,9 @@
 </style>
 <script type="text/javascript">
 
-	var data = '<table width="100%"><tr><th>项目编号</th><th>结项日期</th><th>项目名称</th><th>甲方名称</th><th>商务对接人</th>' +
+	var data = '<table width="100%"><tr><th>项目编号</th><th>结项日期</th><th>项目名称</th><th>交易对象</th><th>甲方名称</th><th>商务对接人</th>' +
 		'<th>合作方式</th><th>结算方式</th><th>签约公司</th><th>结算详情</th><th>项目状态</th><th>结算费用</th><th>备注</th>' +
-		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{id}</td><td>{finish_time}</td><td>{name}</td><td data-platform_id={platform}>{platformname}</td><td>{contact}</td>' +
+		'<th>操作</th></tr>[results]<tr id="parent{id}"><td>{id}</td><td>{finish_time}</td><td>{name}</td><td>{trade_object}</td><td data-platform_id={platform}>{platformname}</td><td>{contact}</td>' +
 		'<td>{coopway}</td><td>{settleway_des}</td><td>{contract_company}</td><td>{settle_detail}</td>' +
 		'<td class="look-{state}" data-id="{id}">{state_des}</td><td>{settle}</td><td>{remark}</td>' +
 		'<td id="item_{id}"><a class="revise-btn revise-{state}" onclick="pass({id})">修改' +
@@ -40,6 +40,7 @@
 			type: "get",
 			success: function(ret) {
 				$("#name_change").val(ret.name);
+				$("#trade_object_change").val(ret.trade_object);
 				$("#platform_change").val(ret.platform);
 				var searchable_dom = '.searchable-select-item[data-value="'+ ret.platform +'"]';
 				$(searchable_dom).click();
@@ -117,6 +118,7 @@
 
 		$('#add_project_btn').click(function() {		//点击新增项目数据
 			var name_add = $("#name_add").val(),
+		    trade_object_add = $("#trade_object_add").val();
 				platform_add = $("#platform_add").val(),
 				contact_add = $("#contact_add").val(),
 				coopway_add = $("#coopway_add").val(),
@@ -132,6 +134,7 @@
 				type: "POST",
 				data: {
 					'name': name_add,
+					'trade_object': trade_object_add,
 					'platform': platform_add,
 					'contact': contact_add,
 					'coopway': coopway_add,
@@ -155,6 +158,7 @@
 
 		$('#change_project_btn').click(function() {		//点击修改项目数据
 			var name_change = $("#name_change").val(),
+			  trade_object_change = $("#trade_object_change").val();
 				platform_change = $("#platform_change").val(),
 				contact_change = $("#contact_change").val(),
 				coopway_change = $("#coopway_change").val(),
@@ -178,6 +182,7 @@
 				type: "PUT",
 				data: {
 					'name': name_change,
+					'trade_object': trade_object_change,
 					'platform': platform_change,
 					'contact': contact_change,
 					'coopway': coopway_change,
@@ -485,6 +490,10 @@
 				<input id="name_add" type="text" />
 			</p>
 			<p>
+        <span>交易对象：</span>
+        <input id="trade_object_add" type="text" />
+      </p>
+			<p>
 				<span>甲方名称：</span>
 				<!--<input id="platform_add" type="text" />-->
 				<select class="platform-select" name="selectType" id="platform_add">
@@ -549,6 +558,10 @@
 				<span>项目名称：</span>
 				<input id="name_change" type="text" />
 			</p>
+			<p>
+        <span>交易对象：</span>
+        <input id="trade_object_change" type="text" />
+      </p>
 			<p>
 				<span>甲方名称：</span>
 				<select name="selectType" class="platform-select" id="platform_change">
