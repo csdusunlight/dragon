@@ -24,7 +24,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = Project
         fields = ('id', 'name', 'platform','platformname','time', 'contact', 'coopway', 'settleway', 'settleway_des', 'state','state_des',
                   'contract_company', 'settle', 'cost', 'cost_explain', 'consume', 'settle_detail',
-                  'topay_amount', 'profit', 'finish_time', 'remark')
+                  'topay_amount', 'profit', 'finish_time', 'remark', 'trade_object')
         read_only_fields = ('id', 'profit','topay_amount','settleway_des','consume','state_des', 'time')
 
 class ProjectInvestDataSerializer(serializers.ModelSerializer):

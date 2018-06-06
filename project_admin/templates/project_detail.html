@@ -202,17 +202,18 @@
 //					$(dom).find("td").eq(0).text(ret.time);
 //					$(dom).find("td").eq(1).text(ret.id);
 					$(dom).find("td").eq(2).text(ret.name);
-					$(dom).find("td").eq(3).text(ret.platformname);
-					$(dom).find("td").eq(4).text(ret.contact);
-					$(dom).find("td").eq(5).text(ret.coopway);
-					$(dom).find("td").eq(6).text(ret.settleway_des);
-					$(dom).find("td").eq(7).text(ret.contract_company);
-					$(dom).find("td").eq(8).text(ret.settle_detail);
-					$(dom).find("td").eq(9).text(ret.state_des);
+					$(dom).find("td").eq(3).text(ret.trade_object);
+					$(dom).find("td").eq(4).text(ret.platformname);
+					$(dom).find("td").eq(5).text(ret.contact);
+					$(dom).find("td").eq(6).text(ret.coopway);
+					$(dom).find("td").eq(7).text(ret.settleway_des);
+					$(dom).find("td").eq(8).text(ret.contract_company);
+					$(dom).find("td").eq(9).text(ret.settle_detail);
+					$(dom).find("td").eq(10).text(ret.state_des);
 					var class_change = "look-" + ret.state
-					$(dom).find("td").eq(9).attr("class", class_change);
-					$(dom).find("td").eq(10).text(ret.settle);
-					$(dom).find("td").eq(11).text(ret.remark);
+					$(dom).find("td").eq(10).attr("class", class_change);
+					$(dom).find("td").eq(11).text(ret.settle);
+					$(dom).find("td").eq(12).text(ret.remark);
 				},
 				error: function(ret) {
 					alert(JSON.stringify(ret));
