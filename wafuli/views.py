@@ -881,7 +881,3 @@ def display_screenshot(request):
         name = url.split('/')[-1]
         img_list.append({'name':name,'url':url})
     return render(request, 'screenshot.html', {'img_list':img_list})
-
-def wifi_intro(request):  #jzy
-    return render(request, 'wifi_intro.html', {})
-
