@@ -16,6 +16,7 @@ from wafuli import views, mediaproject, rest
 # ]
 urlpatterns = [
     url(r'^$', 'wafuli.views.wfl_index', name='index'),     #jzy
+    url(r'^wifi_intro/$', 'wafuli.views.wifi_intro', name='wifi_intro'),     #jzy
 #    url(r'^(?P<board>\S+)/$', 'wafuli.views.board', name='board'),
     # url(r'^finance/$', 'wafuli.views.finance', name='finance'),
     # url(r'^finance/(?P<id>[0-9]*)/$', 'wafuli.views.finance', name='finance_detail'),
